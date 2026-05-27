@@ -1,0 +1,39 @@
+Create a reflective worksheet PDF (A4, portrait) for "Breaking the Silence: Redefining Your Personal Strength"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 5 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. The Inherited Story
+   - What messages did you receive growing up about showing struggle or asking for help? (e.g., 'men don't cry', 'figure it out yourself', 'don't be a burden')
+   - Where did those messages come from — a parent, culture, a specific moment?
+   - Write one belief about strength you absorbed that you now suspect was wrong.
+
+2. The Hidden Weight You're Carrying
+   - Is there something you've been saying 'I'm fine' about that isn't fine? Write it here (no one else reads this).
+   - How long have you been carrying it alone?
+   - What has that silence cost you — in energy, relationships, sleep, or presence?
+
+3. The Double Standard Audit
+   - Would you tell a close friend to 'just push through' the thing you're currently carrying? Why or why not?
+   - You'd hire a trainer for physical strength without shame. List one mental or emotional area where hiring support (therapist, coach, counsellor) would make the same logical sense.
+   - What's the real reason you haven't sought that support yet — social fear, cost, not knowing how, or something else?
+
+4. Making Space — For Yourself and Others
+   - Think of someone in your life who seems 'off' lately. What's one low-pressure way you could check in on them this week?
+   - Recall a time someone made space for you — even a small moment. What did they do that made it feel safe?
+   - Write one sentence you could say to start an honest conversation with someone you trust about something you've been holding alone.
+
+5. Your Next Small Act
+   - What is one concrete thing you will do in the next 7 days to chip at the wall — reach out to a friend, book a therapy consult, journal daily, or simply say 'I'm not okay' to one person?
+   - Who is one specific person you could tell the truth to this week?
+   - Finish this sentence: 'Real strength, for me, now looks like ___________'
+
+
