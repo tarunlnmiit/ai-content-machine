@@ -1,5 +1,5 @@
-# Weekly Analytics — 2026-W19
-*Generated: 2026-05-17 20:00*
+# Weekly Analytics — 2026-W20
+*Generated: 2026-05-24 20:00*
 
 ## Summary
 Summary unavailable — all backends failed.
@@ -9,8 +9,8 @@ Summary unavailable — all backends failed.
 ## YouTube
 
 ### Breath of Data Science
-- Subscribers: 152
-- Total views: 14,366
+- Subscribers: 153
+- Total views: 14,392
 - Videos: 12
 
 Recent videos:
@@ -27,14 +27,14 @@ Recent videos:
 
 Recent videos:
   - [2024-05-24] 8. Why Humans Need Closure to Move On? The Need For Closure — 16 views, 0 likes
-  - [2023-03-01] Why Humans Need Closure to Move On? The Need For Closure — 54 views, 0 likes
+  - [2023-03-01] Why Humans Need Closure to Move On? The Need For Closure — 52 views, 0 likes
   - [2024-05-24] 7. How Morning Rituals Made Me Appreciate Life | Have Positive Energy And Become Mentally Healthy — 11 views, 0 likes
   - [2023-02-15] How Healthy Morning Routine Made Me Appreciate Life | Have Positive Energy & Become Mentally Healthy — 24 views, 0 likes
   - [2024-05-24] 6. How to Process Your Thoughts | Become Friends with Your Thoughts — 23 views, 2 likes
 
 ### Breath of Poetry
 - Subscribers: 7
-- Total views: 776
+- Total views: 779
 - Videos: 22
 
 Recent videos:

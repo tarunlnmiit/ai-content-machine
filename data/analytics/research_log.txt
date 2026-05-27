@@ -739,3 +739,333 @@ NIM error: NIM HTTP 403:
     2. How to Write Dystopian Fiction | 30 min Guided Creative Writing S 
 (12.000)
     3.  4 am poetry - Avinash (1.572)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Loaded 1075 ideas                   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:00
+  After dedup: 656 ideas              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:41
+  Archive has 8 titles                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:00
+  Applying novelty penalty            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:00
+  Classifying:  4 am poetry - Avinash ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9/9 0:00:02
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. Complete Python Course 2026 | Beginner To Advance | Free Certific 
+(103.000)
+    2. Best way to translate machine learning model in Python to SQL scr (1.880)
+    3. What kinds of models are people training with document data? [P] (1.855)
+  life_self_dev:
+    1. need help with discipline motivation and productivity (1.571)
+    2. How to change my mindset/ return lost motivation? (1.563)
+    3. How I turned my habits into an “engine” to get me to my goals (1.556)
+  poetry_quotes:
+    1. LIVE Sand Art | Writing Your Names in Sand 🌟 Real-Time Drawing (30.000)
+    2. How to Write Dystopian Fiction | 30 min Guided Creative Writing S 
+(12.000)
+    3.  4 am poetry - Avinash (1.572)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Loaded 1841 ideas                                     ━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 1841 → 1747 ideas                           ━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 1081 ideas                               ━━━━━━━━━━ 1/1   0:01:31
+  Rank-normalized                                       ━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles                                  ━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty                              ━━━━━━━━━━ 1/1   0:00:00
+  Classifying: “You've gotta dance like there's nobody  ━━━━━━━━━━ 15/15 0:00:04
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. The AI industry in the US is doomed.  Now China owns it all. (1.000)
+    2. Clinical AI has a deployment gap that has nothing to do with the  (1.000)
+    3. data science course (1.000)
+    4. Temporal Contrastive Transformer for Financial Crime Detection: S (1.000)
+    5. 1. The State of Being Alive (Biological) (1.000)
+  life_self_dev:
+    1. Women's Self Help (1.000)
+    2. Mental health advice needed please (1.000)
+    3. how to become a pilot (1.000)
+    4. On Uncertainty (1.000)
+    5. voice of heart#tricks#psychology#quotes#selfimprovement#lifelesso (0.993)
+  poetry_quotes:
+    1.  4 am poetry - Avinash (1.000)
+    2. Colorado school stops student from reading pro-life poem | Nation (1.000)
+    3. poem about nature (1.000)
+    4. Every graveyard is a silent library of unwritten books, unbuilt h (1.000)
+    5. “You've gotta dance like there's nobody watching, Love like you'l (1.000)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Loaded 2606 ideas              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 2606 → 2503 ideas    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 1192 ideas        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:02:31
+  Rank-normalized                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Classifying: poem about nature ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15/15 0:00:04
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. The AI industry in the US is doomed.  Now China owns it all. (1.000)
+    2. Clinical AI has a deployment gap that has nothing to do with the  (1.000)
+    3. Temporal Contrastive Transformer for Financial Crime Detection: S (1.000)
+    4. Our Columbia Island in Washington, DC, Deserves Better Than a Tri (1.000)
+    5. Join the GitHub Finish-Up-A-Thon Challenge: $3,000 Prize Pool! (1.000)
+  life_self_dev:
+    1. Women's Self Help (1.000)
+    2. Mental health advice needed please (1.000)
+    3. Small Town Trafficking (1.000)
+    4. how to become a pilot (1.000)
+    5. voice of heart#tricks#psychology#quotes#selfimprovement#lifelesso (0.993)
+  poetry_quotes:
+    1. Colorado school stops student from reading pro-life poem | Nation (1.000)
+    2.  4 am poetry - Avinash (1.000)
+    3. Hoy (1.000)
+    4. “You've gotta dance like there's nobody watching, Love like you'l (1.000)
+    5. poem about nature (1.000)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Loaded 3325 ideas                                     ━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 3325 → 3212 ideas                           ━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 1302 ideas                               ━━━━━━━━━━ 1/1   0:03:17
+  Rank-normalized                                       ━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles                                  ━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty                              ━━━━━━━━━━ 1/1   0:00:00
+  Classifying: “You've gotta dance like there's nobody  ━━━━━━━━━━ 15/15 0:00:04
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. The AI industry in the US is doomed.  Now China owns it all. (1.000)
+    2. Clinical AI has a deployment gap that has nothing to do with the  (1.000)
+    3. data science course (1.000)
+    4. The Strange Law That Makes Numbers Start With 1 (1.000)
+    5. Join the GitHub Finish-Up-A-Thon Challenge: $3,000 Prize Pool! (1.000)
+  life_self_dev:
+    1. Women's Self Help (1.000)
+    2. Mental health advice needed please (1.000)
+    3. how to become a pilot (1.000)
+    4. El grupo de WhatsApp no miente nunca (1.000)
+    5. voice of heart#tricks#psychology#quotes#selfimprovement#lifelesso (0.993)
+  poetry_quotes:
+    1. Student Banned For Reading This Pro-Life Poem In School (1.000)
+    2.  4 am poetry - Avinash (1.000)
+    3. poem about nature (1.000)
+    4. I TURNED ON A LIGHT (1.000)
+    5. “You've gotta dance like there's nobody watching, Love like you'l (1.000)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Loaded 4030 ideas              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 4030 → 3910 ideas    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 1441 ideas        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:04:21
+  Rank-normalized                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Classifying: poem about nature ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15/15 0:00:04
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. The AI industry in the US is doomed.  Now China owns it all. (1.000)
+    2. Clinical AI has a deployment gap that has nothing to do with the  (1.000)
+    3. 95% of Corporate AI Pilots “Failed” Last Year. That’s Not the Dis (1.000)
+    4. Join the GitHub Finish-Up-A-Thon Challenge: $3,000 Prize Pool! (1.000)
+    5. Imbad0202/academic-research-skills (1.000)
+  life_self_dev:
+    1. Women's Self Help (1.000)
+    2. Mental health advice needed please (1.000)
+    3. They Owned Almost Nothing — But Their Minds Were Freer Than Anyon (1.000)
+    4. how to become a pilot (1.000)
+    5. voice of heart#tricks#psychology#quotes#selfimprovement#lifelesso (0.994)
+  poetry_quotes:
+    1. Student Banned For Reading This Pro-Life Poem In School (1.000)
+    2.  4 am poetry - Avinash (1.000)
+    3. The Hidden Wound (1.000)
+    4. “I'm selfish, impatient and a little insecure. I make mistakes, I (1.000)
+    5. poem about nature (1.000)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Loaded 4802 ideas                                     ━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 4802 → 4672 ideas                           ━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 1613 ideas                               ━━━━━━━━━━ 1/1   0:05:07
+  Rank-normalized                                       ━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles                                  ━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty                              ━━━━━━━━━━ 1/1   0:00:00
+  Classifying: “You've gotta dance like there's nobody  ━━━━━━━━━━ 15/15 0:00:04
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. The AI industry in the US is doomed.  Now China owns it all. (1.000)
+    2. data science course (1.000)
+    3. Latent Cache Flow: Model-to-Model Communication Without Text (1.000)
+    4. The Secret Origin of a Comic Book Dataset (1.000)
+    5. Join the GitHub Finish-Up-A-Thon Challenge: $3,000 Prize Pool! (1.000)
+  life_self_dev:
+    1. Women's Self Help (1.000)
+    2. how to become a pilot (1.000)
+    3. DAY 3 OF OUR TEACHING (1.000)
+    4. Mental health advice needed please (1.000)
+    5. Quirkology — A Writing Challenge (0.995)
+  poetry_quotes:
+    1. Student Banned For Reading This Pro-Life Poem In School (1.000)
+    2.  4 am poetry - Avinash (1.000)
+    3. poem about nature (1.000)
+    4. Rimas perfectas (1.000)
+    5. “You've gotta dance like there's nobody watching, Love like you'l (1.000)

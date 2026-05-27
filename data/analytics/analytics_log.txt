@@ -48,3 +48,16 @@ Summary unavailable — all backends failed.
 
 Summary:
 Summary unavailable — all backends failed.
+───────────────────────────── Analytics Collector ──────────────────────────────
+  NVIDIA NIM failed: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Ollama failed: Ollama HTTP 404
+  YouTube        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4/4 0:00:04
+  Twitter        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:04
+  Instagram      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:04
+  Ollama summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:04
+
+✓ Saved: data/analytics/weekly_insights.md
+
+Summary:
+Summary unavailable — all backends failed.

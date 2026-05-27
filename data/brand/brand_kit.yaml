@@ -1,0 +1,65 @@
+# Tarun Gupta — Brand Kit
+# Single source of truth for all visual + voice config.
+# Read by: generate_carousel.py, generate_buffer.py
+
+# ── Global identity ────────────────────────────────────────────────
+creator: "Tarun Gupta"
+handle: "@mistakenlyhuman"    # Instagram handle (all niches)
+
+# ── Color palette ──────────────────────────────────────────────────
+colors:
+  background:  "#1E1B2E"   # Dark navy — dark slide bg
+  cream:       "#EDE8DC"   # Warm cream — light slide bg
+  slate_blue:  "#6B8FA8"   # Accent 1 — DS/Tech primary
+  golden:      "#B89850"   # Accent 2 — Poetry primary
+  coral:       "#E8705A"   # Pop/CTA — Life primary, universal CTA
+
+# ── Derived 6-token carousel palette (from coral as universal primary) ─
+carousel_palette:
+  BRAND_PRIMARY:  "#E8705A"   # coral — CTA buttons, progress bar fill, icons
+  BRAND_LIGHT:    "#EF9585"   # coral +20% lightness
+  BRAND_DARK:     "#B34A38"   # coral -30% lightness
+  LIGHT_BG:       "#EDE8DC"   # warm cream
+  LIGHT_BORDER:   "#D6D0C4"   # cream darkened slightly
+  DARK_BG:        "#1E1B2E"   # brand background
+
+# ── Per-niche overrides ────────────────────────────────────────────
+niches:
+  data_science_tech:
+    label: "Data Science & Tech"
+    brand_name: "Breath of Data Science"
+    primary_color: "#6B8FA8"    # slate blue
+    light_color:   "#96BAD0"    # blue lightened
+    dark_color:    "#3D5F75"    # blue darkened
+    font_heading: "Space Grotesk"
+    font_body:    "Space Grotesk"
+    font_style:   "Technical / sharp"
+    tone: "analytical, data-backed, no jargon without context"
+    claude_temperature: 0.4
+    claude_model: "claude-opus-4-7"
+
+  life_self_dev:
+    label: "Life & Self-Development"
+    brand_name: "Breath of Life"
+    primary_color: "#E8705A"    # coral
+    light_color:   "#EF9585"
+    dark_color:    "#B34A38"
+    font_heading: "Lora"
+    font_body:    "Nunito Sans"
+    font_style:   "Warm / approachable"
+    tone: "warm, personal, conversational — real stories, no self-help clichés"
+    claude_temperature: 0.85
+    claude_model: "claude-sonnet-4-6"
+
+  poetry_quotes:
+    label: "Poetry & Quotes"
+    brand_name: "Breath of Poetry"
+    primary_color: "#B89850"    # golden
+    light_color:   "#D4BC7A"
+    dark_color:    "#8A6E30"
+    font_heading: "Playfair Display"
+    font_body:    "DM Sans"
+    font_style:   "Editorial / premium"
+    tone: "lyrical, atmospheric, emotionally resonant — spare and precise"
+    claude_temperature: 1.15
+    claude_model: "claude-sonnet-4-6"
