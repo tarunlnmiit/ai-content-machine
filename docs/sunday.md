@@ -57,5 +57,75 @@ cat data/kb/master_brief.md
 # Read before picking Monday's DS topic
 ```
 
+---
+
+## Step 6 — Push top ideas to Notion Contents DB (~1 min)
+
+`daily_ideas.sh` writes top 5/niche to `weekly_ideas.md` at 6am. Sync the fresh set to Notion as `Idea` rows (Topic = Tech/Life/Poetry) so Monday topic pick can happen in Notion.
+
+```bash
+python3 scripts/sync_ideas_to_notion.py --dry-run   # preview
+python3 scripts/sync_ideas_to_notion.py             # real sync (dedupes by title)
+```
+
+Config: reads `NOTION_CONTENTS_DB_ID` + `NOTION_INTEGRATION_SECRET` from `.env`. See [README.md](README.md#notion-integration-flow).
+
 > Twitter + LinkedIn fire automatically via APScheduler once `load_posts.py` runs Saturday.
 > Verify rows exist with correct `scheduled_at` times before closing.
+
+---
+
+## Step 7 — Check + replenish content buffer (~10–15 min)
+
+**Rule: buffer MUST hold 4 weeks per niche at all times. This step is non-negotiable.**
+
+Check current depth:
+```bash
+for niche in data_science_tech life_self_dev poetry_quotes; do
+  count=$(ls content/buffer/week-*/${niche}/*_meta.md 2>/dev/null | wc -l | tr -d ' ')
+  echo "$niche: $count / 4 weeks buffered"
+done
+```
+
+**If any niche < 4:** stop here and fill before next week starts.
+
+```bash
+# 1. Open data/buffer/topics.yaml
+#    Fill every empty week slot (topic + angle)
+#    Check Notion Published first — avoid angles covered last 90 days
+
+# 2. Preview what will generate:
+conda run -n content_engine_env python3 scripts/generate_buffer.py --dry-run
+
+# 3. Generate missing weeks (all niches):
+conda run -n content_engine_env python3 scripts/generate_buffer.py
+
+# Or targeted by week or niche:
+conda run -n content_engine_env python3 scripts/generate_buffer.py --week 4
+conda run -n content_engine_env python3 scripts/generate_buffer.py --niche poetry
+```
+
+Generation auto-applies **AutoTune temps** (DS=0.4 / Life=0.85 / Poetry=1.15) + **STM normalization**.
+Models: DS → `claude-opus-4-7` · Life + Poetry → `claude-sonnet-4-6`.
+
+**Alternative: push this week's live production into buffer instead of generating:**
+```bash
+# If you produced content Mon–Wed, push it into the next empty week slot
+python3 scripts/push_to_buffer.py --niche ds     --week 4 --date YYYY-MM-DD
+python3 scripts/push_to_buffer.py --niche life   --week 4 --date YYYY-MM-DD
+python3 scripts/push_to_buffer.py --niche poetry --week 4 --date YYYY-MM-DD
+# --dry-run first to preview. Omit --date to use latest by file date.
+```
+
+**After consuming a week's buffer (busy week) — restore immediately:**
+```bash
+rm -rf content/buffer/week-1
+mv content/buffer/week-2 content/buffer/week-1
+mv content/buffer/week-3 content/buffer/week-2
+mv content/buffer/week-4 content/buffer/week-3
+# Update week numbers in data/buffer/topics.yaml
+# Fill week-4 topics, then:
+conda run -n content_engine_env python3 scripts/generate_buffer.py --week 4
+```
+
+Log consumed buffer items in Notion: Status → `Script`, add note "consumed from buffer [date]".

@@ -24,6 +24,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | Substack   | [breathofdatascience.substack.com](https://breathofdatascience.substack.com) · [breathofpoetry.substack.com](https://breathofpoetry.substack.com) · [thisisbreathoflife.substack.com](https://thisisbreathoflife.substack.com) |
 | Podcast    | [Breath of Life (Spotify)](https://open.spotify.com/show/26d2VlDaSD0bf6tucQucie) · [Breath of Poetry (Spotify)](https://open.spotify.com/show/0d7GfbQsYPc4t0idLhpYWT) |
 
+## Operational Rules
+
+- **UPDATE GUIDES ALWAYS:** After ANY change to scripts, pipeline, workflow, or tools — update the relevant docs in `docs/` before finishing. Guides that describe the changed thing must reflect the new reality. Never leave docs stale.
+  - Script changed → update `docs/video-production-guide.md` or relevant day guide
+  - New tool/command added → add to setup section of `docs/weekly-operating-guide.md`
+  - Workflow step changed → update the day guide (`docs/saturday.md`, `docs/friday.md`, etc.)
+
 ## Content Rules
 
 - **NOTION FIRST:** Always query Notion Contents DB before writing — avoid angles covered last 90 days
@@ -87,7 +94,13 @@ prompts/      # Reusable prompt templates
 scripts/      # Automation scripts for workflow tasks
 ```
 
-## NOTION CONTENT DATABASE (Contents DB — collection://5c1a6fa3-19f7-481b-9946-5224a579b569)
+## NOTION CONTENT DATABASE (Contents DB — id `df13d49a-bbfc-40cd-a8f1-d4fb98d2d4ec`)
+
+Schema:
+- **Name** (title) · **Status** (Idea/Started/Script/Editing/Ready to publish/Uploaded/Published/Archived) · **Topic** (Tech/Life/Poetry) · **URL** · **Description**
+
+Sync top ideas to DB: `python3 scripts/sync_ideas_to_notion.py` (Sunday step 6).
+
 Before writing any blog or content, ALWAYS:
 1. Query Notion Contents DB filtering Status = 'Published' for this topic/niche
 2. Check Name and Topic fields to list angles already covered in last 90 days (use Publish Date for recency)

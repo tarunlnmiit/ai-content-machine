@@ -4,6 +4,21 @@ DS is self-contained today. Life + Poetry video production moves to Friday.
 
 ---
 
+## Step 0 — Check buffer for DS script (1 min)
+
+```bash
+ls content/buffer/week-1/data_science_tech/*_youtube_script.md 2>/dev/null
+```
+
+**Buffer has script?** → Skip Step 1. Use it directly:
+- Script: `content/buffer/week-1/data_science_tech/*_youtube_script.md`
+
+Jump to Step 2 (validate code blocks). After consuming: log in Notion as `Script`.
+
+**No buffer?** → Proceed with Step 1 below.
+
+---
+
 ## Step 1 — Generate DS YouTube script (~5 min)
 
 Screen recording script with [SCREEN:] cues:
@@ -29,16 +44,30 @@ python3 scripts/ghostwrite.py \
 
 ---
 
-## Step 2 — Screen record DS code walkthrough (30–45 min)
+## Step 2 — Generate teleprompter for DS script (~1 min)
 
-1. Open screen recorder (ScreenFlow · OBS · built-in Mac)
-2. Open IDE showing blog code at 200% zoom for visibility
-3. Follow script — show code, run demos, narrate [SCREEN:] cues
-4. Save: `assets/video/raw/{slug}_screen.mp4`
+```bash
+python3 scripts/generate_teleprompter.py \
+  --script content/scripts/YYYY-MM-DD-data-science-tech-{slug}_yt.md \
+  --open
+```
+
+Output: `assets/teleprompter/{slug}_teleprompter.html` — opens in browser.
+Controls: `Space` start/pause · `↑↓` speed · `R` restart · `F` fullscreen
 
 ---
 
-## Step 3 — Record DS voiceover (15–20 min)
+## Step 3 — Screen record DS code walkthrough (30–45 min)
+
+1. Open teleprompter full-screen on a second monitor (or phone via AirPlay)
+2. Open screen recorder (ScreenFlow · OBS · built-in Mac)
+3. Open IDE showing blog code at 200% zoom for visibility
+4. Follow script — show code, run demos, narrate [SCREEN:] cues
+5. Save: `assets/video/raw/{slug}_screen.mp4`
+
+---
+
+## Step 4 — Record DS voiceover (15–20 min)
 
 1. Read script aloud naturally at ~130 wpm
 2. Clap at [PAUSE] points (visible in waveform for easy trim)
@@ -48,7 +77,7 @@ Tools: Voice Memos (quick) · Audacity (control) · Adobe Audition (pro)
 
 ---
 
-## Step 4 — Generate captions with Whisper (~2 min)
+## Step 5 — Generate captions with Whisper (~2 min)
 
 ```bash
 python3 scripts/generate_captions.py \
@@ -59,69 +88,77 @@ python3 scripts/generate_captions.py \
 
 ---
 
-## Step 5 — Edit DS in DaVinci Resolve (20–30 min)
+## Step 5b — Generate DS thumbnail image (~2 min)
 
-Reference files:
-- Script: `content/scripts/YYYY-MM-DD-data-science-tech-{slug}_yt.md`
-- Captions: `content/scripts/{slug}_captions.srt`
+Thumbnail brief already generated Tuesday. Render it to HTML + PNG now:
 
-Steps:
-1. Import screen recording to video track
-2. Import voiceover to audio track
-3. Optionally add B-roll intro/outro clips (`assets/videos/{slug}/`)
-4. Import captions → Fusion → Caption Editor
-5. Trim dead space, sync audio/video
-6. Add text overlays for section titles
-7. Add music (optional, -15 to -25 dB)
-8. Export → `assets/video/edited/{slug}.mp4` (H.264, YouTube preset, 1080p)
-
-Optional B-roll fetch before editing:
 ```bash
-python3 scripts/fetch_videos.py \
-  --input content/blogs/[monday_ds_blog].md \
-  --niche ds
-# → assets/videos/{slug}/ (6–10 clips for intro/outro)
+conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
+  --blog content/blogs/[monday_ds_blog].md
+
+# Open in browser to verify, then export PNG
+open assets/thumbnails/[ds_slug]_thumbnail.html
+
+conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
+  --blog content/blogs/[monday_ds_blog].md --export
+# → assets/thumbnails/[ds_slug]_thumbnail.png (1280×720)
 ```
+
+Use `--force` to regenerate if design needs adjustment.
 
 ---
 
-## Step 6 — Generate DS reel (~5 min)
+## Step 6 — Auto-edit DS (~5 min)
 
-Find best 60-second moment:
+Reference: `docs/video-production-guide.md`
+
+DS workflow has 2 paths:
+
+**Path A — Talking-head only (recommended for explainer):**
 ```bash
-python3 scripts/find_best_reel_moment.py \
-  --blog content/blogs/[monday_ds_blog].md \
-  --video assets/video/edited/[monday_ds_blog].mp4
-# Returns top 3 timestamps + relevance scores
+python3 scripts/auto_edit.py \
+  --raw assets/raw/[ds_slug].mov \
+  --script content/scripts/YYYY-MM-DD-data-science-tech-[ds_slug]_yt.md \
+  --niche ds \
+  --slug [ds_slug]
+# → assets/video/edited/[ds_slug].mp4 (broll overlay on talking-head + captions)
 ```
 
-Create vertical reel (use top timestamp):
-```bash
-python3 scripts/create_vertical_reels.py \
-  --slug [monday_ds_blog_slug] \
-  --start MM:SS \
-  --duration 60
-# → assets/video/edited/{slug}_reel.mp4 (9:16 vertical)
-```
+**Path B — Screen-recording + talking-head (manual composite):**
+1. Run Path A on talking-head only → base mp4
+2. Open in DaVinci, layer screen-recording on top of broll segments where you want code visible
+3. Re-export
+
+`fetch_videos.py` runs inside `auto_edit.py` automatically (uses `[BROLL:]` cues from script).
 
 ---
 
-## Step 7 — Upload DS to YouTube (~10 min)
+## Step 7 — Auto-generate DS shorts (~3 min)
+
+```bash
+python3 scripts/clip_shorts.py --slug [ds_slug] --count 4
+# → assets/video/edited/shorts/[ds_slug]_short_NN.mp4 (4 vertical clips)
+```
+
+Claude CLI picks best hook segments. Legacy single-reel workflow (`find_best_reel_moment.py` + `create_vertical_reels.py`) still available.
+
+---
+
+## Step 8 — Upload DS to YouTube (~10 min)
 
 Long-form:
 ```bash
 python3 scripts/upload_youtube.py \
-  --video assets/video/edited/[monday_ds_blog].mp4 \
-  --slug [monday_ds_blog_slug]
+  --video assets/video/edited/[ds_slug].mp4 \
+  --slug [ds_slug]
 ```
 
-Short (reel):
+Shorts (loop manifest):
 ```bash
-python3 scripts/upload_youtube.py \
-  --shorts \
-  --slug [monday_ds_blog_slug] \
-  --channel "Breath of Data Science" \
-  --video assets/video/edited/[monday_ds_blog_slug]_reel.mp4
+for f in assets/video/edited/shorts/[ds_slug]_short_*.mp4; do
+  python3 scripts/upload_youtube.py --shorts --slug [ds_slug] \
+    --channel "Breath of Data Science" --video "$f"
+done
 ```
 
 Verify export:
@@ -129,3 +166,16 @@ Verify export:
 ls -la assets/video/edited/
 # Should show {slug}.mp4 + {slug}_reel.mp4
 ```
+
+---
+
+## After production — buffer or keep live?
+
+```bash
+python3 scripts/push_to_buffer.py --auto --dry-run   # preview
+python3 scripts/push_to_buffer.py --auto              # auto-decide all niches
+```
+Buffer < 4 weeks → copied to next empty slot. Buffer full → stays as live content.
+File naming: `content/blogs/YYYY-MM-DD_{niche}_{slug}.md` · scripts: `content/scripts/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md`
+See full naming table: [weekly-operating-guide.md § File Naming Conventions](weekly-operating-guide.md#file-naming-conventions)
+

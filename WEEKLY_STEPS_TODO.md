@@ -1,268 +1,281 @@
-# Weekly Production Steps — Thursday to Saturday
-
-Generated: 2026-05-16 (use next week)
+# Weekly Steps TODO — 2026-05-25 (Sunday catchup)
+All content from 2026-05-21 week. Do in order.
 
 ---
 
-## THURSDAY — Video Production
+## MONDAY LEFTOVERS
 
-**Step 1: Generate voiceover scripts** (~5 min each)
+### [x] Fill PERSONAL_INSERT — DS blog ✅ done
+### [x] Fill PERSONAL_INSERT — Life blog ✅ done
 
+### [x] Add images — DS blog ✅ done
 ```bash
-python3 scripts/ghostwrite.py --source content/blogs/YYYY-MM-DD_data_science_tech_*.md --niche ds --format yt
-python3 scripts/ghostwrite.py --source content/blogs/YYYY-MM-DD_life_self_dev_*.md --niche life --format yt
-python3 scripts/ghostwrite.py --source content/blogs/YYYY-MM-DD_poetry_quotes_*.md --niche poetry --format yt
+python3 scripts/fetch_images.py --input "content/blogs/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110.md" --dry-run
+python3 scripts/fetch_images.py --input "content/blogs/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110.md"
 ```
 
-Outputs: `content/scripts/YYYY-MM-DD-{slug}_yt.md` (3 files)
-
 ---
 
-**Step 2: Fetch B-roll clips** (~10 min)
+## TUESDAY LEFTOVERS
 
+### [x] Add images — Life blog ✅ done
 ```bash
-python3 scripts/fetch_videos.py --script content/scripts/YYYY-MM-DD-data-science-tech-*_yt.md --niche ds
-python3 scripts/fetch_videos.py --script content/scripts/YYYY-MM-DD-life-self-dev-*_yt.md --niche life
-python3 scripts/fetch_videos.py --script content/scripts/YYYY-MM-DD-poetry-quotes-*_yt.md --niche poetry
+python3 scripts/fetch_images.py --input "content/blogs/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.md" --dry-run
+python3 scripts/fetch_images.py --input "content/blogs/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.md"
 ```
 
-Outputs: `assets/videos/{slug}/` + `VIDEO_MAP.json`
-
----
-
-**Step 3: Generate production guides** (~1 min each)
-
+### [ ] DS Production guide (missing — Life + Poetry have it)
 ```bash
-python3 scripts/generate_production_guide.py --script content/scripts/YYYY-MM-DD-life-self-dev-*_yt.md --niche life
-python3 scripts/generate_production_guide.py --script content/scripts/YYYY-MM-DD-poetry-quotes-*_yt.md --niche poetry
+python3 scripts/ghostwrite.py \
+  --source "content/scripts/2026-05-22_2026-05-21-data-science-tech-complete-python-course-2026-beg_yt.md" \
+  --niche ds --format production-guide
+# → content/scripts/..._PRODUCTION_GUIDE.md
 ```
 
-Outputs: `content/scripts/{slug}_PRODUCTION_GUIDE.md` (section → clip mapping)
-
----
-
-**Step 4: Record voiceovers** (~45 min total)
-
-1. Open script: `content/scripts/YYYY-MM-DD-{slug}_yt.md`
-2. Read aloud naturally (~130 wpm)
-3. Mark [PAUSE] points by clapping (visible in waveform)
-4. Record in one continuous take (edit pauses later)
-5. Save: `assets/audio/{slug}_voiceover.wav`
-
-Tools: Voice Memos, Audacity, or Adobe Audition
-
----
-
-**Step 5: CapCut assembly** (~20-30 min per video)
-
-Per video:
-1. Open `content/scripts/{slug}_PRODUCTION_GUIDE.md` + `content/blogs/{slug}_CAPCUT_EDITING_GUIDE.md`
-2. Import B-roll clips (Life/Poetry) or screen recording (DS) to video track
-3. Drag voiceover audio to audio track
-4. Sync clips to voiceover duration (trim as needed)
-5. Add captions: Text → Auto Captions on voiceover
-6. Add music (optional, 15-25 volume)
-7. Add text overlays (section titles, key insights)
-8. Check total runtime matches production guide
-9. Export → `assets/video/edited/{slug}.mp4`
-
----
-
-**Step 6: Generate worksheet outlines for email lead magnets** (~5 min)
-
+### [ ] DS thumbnail brief (verify exists — then done)
 ```bash
-python3 scripts/generate_worksheet_outline.py -i content/blogs/YYYY-MM-DD_data_science_tech_*.md
-python3 scripts/generate_worksheet_outline.py -i content/blogs/YYYY-MM-DD_life_self_dev_*.md
-python3 scripts/generate_worksheet_outline.py -i content/blogs/YYYY-MM-DD_poetry_quotes_*.md
+cat "content/derivatives/2026-05-21-data-science-tech-complete-python-course-2026-beg/thumbnail_brief.json"
 ```
 
-Outputs: `content/worksheets/{slug}_worksheet.json` (auto-skips poetry — reflection format)
-
-Generate Canva prompts:
+### [x] Generate thumbnail images — all 3 niches ✅ done
 ```bash
-python3 scripts/generate_canva_worksheet_prompt.py -i content/worksheets/YYYY-MM-DD_data_science_tech_*_worksheet.json
-python3 scripts/generate_canva_worksheet_prompt.py -i content/worksheets/YYYY-MM-DD_life_self_dev_*_worksheet.json
-```
+conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
+  --blog "content/blogs/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110.md" --export
+# → assets/thumbnails/2026-05-21_data_science_tech_*_thumbnail.png
 
-Copy both prompts to clipboard (ready for Friday Canva design).
+conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
+  --blog "content/blogs/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.md" --export
+# → assets/thumbnails/2026-05-21_life_self_dev_*_thumbnail.png
+
+conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
+  --blog "content/blogs/2026-05-21_poetry_quotes_when-dreams-speak-of-love.md" --export
+# → assets/thumbnails/2026-05-21_poetry_quotes_*_thumbnail.png
+```
+Open each `.html` first to verify design. Use `--force` to regenerate.
 
 ---
 
-## FRIDAY — Reels + YouTube Upload
+## WEDNESDAY LEFTOVERS
 
-**Step 1: Create vertical reels** (~20 min total)
+### [x] Life story sequence — DONE (8 images, renamed from wrong poetry slug)
+`assets/stories/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals_images_1-8.png`
 
+### [x] DS story sequence ✅ done (7 slides + MP4 exported)
+
+### [x] Carousels ✅ done (7 slides each, all 3 niches)
+Export PNGs default-on. Add `--no-export` to skip, `--force` to overwrite.
 ```bash
-python3 scripts/find_best_reel_moment.py --blog content/blogs/YYYY-MM-DD_data_science_tech_*.md --video assets/video/edited/YYYY-MM-DD_data_science_tech_*.mp4
-# (returns top 3 timestamps + scores, pick #1)
-python3 scripts/create_vertical_reels.py --slug YYYY-MM-DD_data_science_tech_* --start MM:SS --duration 60
+conda run -n content_engine_env python3 scripts/generate_carousel.py \
+  --blog "content/blogs/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110.md"
 
-python3 scripts/find_best_reel_moment.py --blog content/blogs/YYYY-MM-DD_life_self_dev_*.md --video assets/video/edited/YYYY-MM-DD_life_self_dev_*.mp4
-python3 scripts/create_vertical_reels.py --slug YYYY-MM-DD_life_self_dev_* --start MM:SS --duration 60
+conda run -n content_engine_env python3 scripts/generate_carousel.py \
+  --blog "content/blogs/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.md"
 
-python3 scripts/find_best_reel_moment.py --blog content/blogs/YYYY-MM-DD_poetry_quotes_*.md --video assets/video/edited/YYYY-MM-DD_poetry_quotes_*.mp4
-python3 scripts/create_vertical_reels.py --slug YYYY-MM-DD_poetry_quotes_* --start MM:SS --duration 60
+conda run -n content_engine_env python3 scripts/generate_carousel.py \
+  --blog "content/blogs/2026-05-21_poetry_quotes_when-dreams-speak-of-love.md"
+# → assets/carousels/{slug}_carousel.html
+# → assets/carousels/slides/{slug}/slide_N.png
 ```
 
-Outputs: `assets/video/edited/{slug}_reel.mp4` (3 files)
-
-Verify: `ls -la assets/video/edited/ | grep reel`
+### [x] Worksheet PDFs ✅ done (DS + Life)
+- `output/worksheets/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110_worksheet.pdf`
+- `output/worksheets/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals_worksheet.pdf`
 
 ---
 
-**Step 2: Load all posts into schedule**
+## THURSDAY LEFTOVERS
 
+### [ ] Record DS video (screen recording)
+- Script: `content/scripts/2026-05-22_2026-05-21-data-science-tech-complete-python-course-2026-beg_yt.md`
+- Production guide: `content/scripts/2026-05-22_2026-05-21-data-science-tech-*_PRODUCTION_GUIDE.md` (generate first — see Tuesday)
+- Save raw to: `assets/raw/complete-python-course-2026-beginner-to-advance-tutorial-110.mov`
+
+### [ ] Auto-edit DS video
+```bash
+python3 scripts/auto_edit.py \
+  --raw "assets/raw/complete-python-course-2026-beginner-to-advance-tutorial-110.mov" \
+  --script "content/scripts/2026-05-22_2026-05-21-data-science-tech-complete-python-course-2026-beg_yt.md" \
+  --niche ds \
+  --slug "complete-python-course-2026-beginner-to-advance-tutorial-110"
+# → assets/video/edited/complete-python-course-2026-beginner-to-advance-tutorial-110.mp4
+```
+
+### [ ] Clip DS reel
+```bash
+python3 scripts/clip_shorts.py \
+  --video "assets/video/edited/complete-python-course-2026-beginner-to-advance-tutorial-110.mp4" \
+  --slug "complete-python-course-2026-beginner-to-advance-tutorial-110"
+# → assets/video/edited/complete-python-course-2026-beginner-to-advance-tutorial-110_reel.mp4
+```
+
+---
+
+## FRIDAY LEFTOVERS
+
+### [ ] Record Life voiceover
+- Script: `content/scripts/2026-05-22_2026-05-21-life-self-dev-how-i-turned-my-habits-into-an-engi_yt.md`
+- Save to: `assets/audio/how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals_voiceover.wav`
+
+### [ ] Record Poetry voiceover
+- Script: `content/scripts/2026-05-22_2026-05-21-poetry-quotes-when-dreams-speak-of-love_yt.md`
+- Save to: `assets/audio/when-dreams-speak-of-love_voiceover.wav`
+
+### [ ] Fetch B-roll — Life
+```bash
+python3 scripts/fetch_videos.py \
+  --script "content/scripts/2026-05-22_2026-05-21-life-self-dev-how-i-turned-my-habits-into-an-engi_yt.md" \
+  --niche life
+```
+
+### [ ] Fetch B-roll — Poetry
+```bash
+python3 scripts/fetch_videos.py \
+  --script "content/scripts/2026-05-22_2026-05-21-poetry-quotes-when-dreams-speak-of-love_yt.md" \
+  --niche poetry
+```
+
+---
+
+## SATURDAY LEFTOVERS
+
+### [ ] Auto-edit Life video
+```bash
+python3 scripts/auto_edit.py \
+  --raw "assets/raw/how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.mov" \
+  --script "content/scripts/2026-05-22_2026-05-21-life-self-dev-how-i-turned-my-habits-into-an-engi_yt.md" \
+  --niche life \
+  --slug "how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals"
+```
+
+### [ ] Auto-edit Poetry video
+```bash
+python3 scripts/auto_edit.py \
+  --raw "assets/raw/when-dreams-speak-of-love.mov" \
+  --script "content/scripts/2026-05-22_2026-05-21-poetry-quotes-when-dreams-speak-of-love_yt.md" \
+  --niche poetry \
+  --slug "when-dreams-speak-of-love"
+```
+
+### [ ] Clip reels — Life + Poetry
+```bash
+python3 scripts/clip_shorts.py --video "assets/video/edited/how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.mp4" --slug "how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals"
+python3 scripts/clip_shorts.py --video "assets/video/edited/when-dreams-speak-of-love.mp4" --slug "when-dreams-speak-of-love"
+```
+
+### [ ] Publish to Medium
+```bash
+python3 scripts/publish_medium.py --input "content/blogs/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110.md" --canonical-url https://breathofdatascience.substack.com/
+python3 scripts/publish_medium.py --input "content/blogs/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.md" --canonical-url https://thisisbreathoflife.substack.com/
+python3 scripts/publish_medium.py --input "content/blogs/2026-05-21_poetry_quotes_when-dreams-speak-of-love.md" --canonical-url https://breathofpoetry.substack.com/
+```
+
+### [ ] Load posts to scheduler
 ```bash
 python3 scripts/load_posts.py
+sqlite3 data/scheduling.db "SELECT platform, scheduled_at, substr(content_text,1,60) FROM posts ORDER BY scheduled_at LIMIT 15"
 ```
-
-Inserts all derivative content into `data/scheduling.db`
 
 ---
 
-**Step 3: Verify scheduler running**
+## SUNDAY TASKS (TODAY)
 
+### [ ] Publish Substack — DS
+Substack MCP or manual: `content/blogs/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110.md`
+→ breathofdatascience.substack.com
+
+### [ ] Publish Substack — Life
+`content/blogs/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.md`
+→ thisisbreathoflife.substack.com
+
+### [ ] Publish Substack — Poetry
+`content/blogs/2026-05-21_poetry_quotes_when-dreams-speak-of-love.md`
+→ breathofpoetry.substack.com
+
+### [ ] Social scheduling via Publer
+Generate CSVs first (if not done):
 ```bash
-ps aux | grep scheduler.py | grep -v grep
+python3 scripts/generate_publer_csv.py 2>/dev/null || echo "check script name"
 ```
+Then import `output/scheduled/publer_ig_fb.csv` + `output/scheduled/publer_threads.csv` into Publer.
 
-If not running:
+### [ ] Twitter threads (manual paste)
 ```bash
-nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
+cat "content/derivatives/2026-05-21-data-science-tech-complete-python-course-2026-beg/twitter_thread.txt"
+cat "content/derivatives/2026-05-21-life-self-dev-how-i-turned-my-habits-into-an-engi/twitter_thread.txt"
+cat "content/derivatives/2026-05-21-poetry-quotes-when-dreams-speak-of-love/twitter_thread.txt"
 ```
 
----
-
-**Step 4: Check queue**
-
+### [ ] Upload YouTube — all 3 long-form + 3 shorts (after videos done above)
 ```bash
-sqlite3 data/scheduling.db 'SELECT platform, scheduled_at, status, substr(content_text,1,60) FROM posts ORDER BY scheduled_at LIMIT 10'
+cat output/scheduled/upload_shorts.sh 2>/dev/null
 ```
 
----
+### [!] CRITICAL — Fill content buffer (all niches at 1/4)
+**Step 1:** Open `data/buffer/topics.yaml` — fill weeks 2, 3, 4 for all 3 niches (9 slots)
+Check Notion Published first — no repeat angles from last 90 days.
 
-**Step 5: Upload YouTube long-form videos** (~10 min each, 30 min total)
-
+**Step 2:** Push this week's content into week-2
 ```bash
-python3 scripts/upload_youtube.py --video assets/video/edited/YYYY-MM-DD_data_science_tech_*.mp4 --slug YYYY-MM-DD_data_science_tech_*
-
-python3 scripts/upload_youtube.py --video assets/video/edited/YYYY-MM-DD_life_self_dev_*.mp4 --slug YYYY-MM-DD_life_self_dev_*
-
-python3 scripts/upload_youtube.py --video assets/video/edited/YYYY-MM-DD_poetry_quotes_*.mp4 --slug YYYY-MM-DD_poetry_quotes_*
+python3 scripts/push_to_buffer.py --auto --date 2026-05-21 --dry-run
+python3 scripts/push_to_buffer.py --auto --date 2026-05-21
 ```
 
----
-
-**Step 6: Upload YouTube Shorts** (~10 min total)
-
+**Step 3:** Generate weeks 3–4
 ```bash
-python3 scripts/upload_youtube.py --shorts --slug YYYY-MM-DD_data_science_tech_* --channel "Breath of Data Science" --video assets/video/edited/YYYY-MM-DD_data_science_tech_*_reel.mp4
-
-python3 scripts/upload_youtube.py --shorts --slug YYYY-MM-DD_life_self_dev_* --channel "Breath of Life" --video assets/video/edited/YYYY-MM-DD_life_self_dev_*_reel.mp4
-
-python3 scripts/upload_youtube.py --shorts --slug YYYY-MM-DD_poetry_quotes_* --channel "Breath of Poetry" --video assets/video/edited/YYYY-MM-DD_poetry_quotes_*_reel.mp4
+conda run -n content_engine_env python3 scripts/generate_buffer.py --dry-run
+conda run -n content_engine_env python3 scripts/generate_buffer.py
 ```
 
----
-
-**Step 7: Design worksheets in Canva** (~10 min per worksheet, 20 min total)
-
-DS Worksheet:
-1. Copy DS prompt from Thursday Step 6 output
-2. Go to Canva.com → Create Design → Custom Size → A4 (210 x 297 mm)
-3. Paste prompt into Canva AI Design (or design manually per structure)
-4. Export as PDF → Save to `output/worksheets/YYYY-MM-DD_data_science_tech_*_worksheet.pdf`
-
-Life Worksheet:
-1. Copy Life prompt from Thursday Step 6 output
-2. Canva.com → Create Design → Custom Size → A4 Portrait
-3. Paste prompt → AI Design → Export PDF
-4. Save to `output/worksheets/YYYY-MM-DD_life_self_dev_*_worksheet.pdf`
-
-Verify: `ls output/worksheets/ | grep worksheet.pdf`
-
----
-
-## SATURDAY — Publishing
-
-**Step 1: Publish to Medium** (~15 min total)
-
+**Step 4:** Verify
 ```bash
-python3 scripts/publish_medium.py --input content/blogs/YYYY-MM-DD_data_science_tech_*.md --canonical-url https://breathofdatascience.substack.com/
-
-python3 scripts/publish_medium.py --input content/blogs/YYYY-MM-DD_life_self_dev_*.md --canonical-url https://thisisbreathoflife.substack.com/
-
-python3 scripts/publish_medium.py --input content/blogs/YYYY-MM-DD_poetry_quotes_*.md --canonical-url https://breathofpoetry.substack.com/
+for niche in data_science_tech life_self_dev poetry_quotes; do
+  count=$(ls content/buffer/week-*/${niche}/*_meta.md 2>/dev/null | wc -l | tr -d ' ')
+  echo "$niche: $count / 4"
+done
 ```
 
----
-
-**Step 2: Instagram + Facebook + Threads via Publer** (~10 min)
-
-1. Open Publer dashboard
-2. Import `output/scheduled/publer_ig_fb.csv` → select Instagram + Facebook → schedule
-3. Import `output/scheduled/publer_threads.csv` → select Threads → schedule
-
----
-
-**Step 3: Twitter** (~10 min)
-
-Auto (fires if load_posts.py ran):
+### [ ] Read KB + pick next Monday's DS topic
 ```bash
-sqlite3 data/scheduling.db "SELECT * FROM posts WHERE platform='twitter' ORDER BY scheduled_at"
+cat data/kb/master_brief.md
+cat data/ideas/weekly_ideas.md
+# Pick top DS idea → Notion Contents DB → Status = In Progress
 ```
 
-Manual fallback:
+### [ ] Notion ideas sync (cron ran 6am — verify)
 ```bash
-cat content/derivatives/YYYY-MM-DD_data_science_tech_*/twitter_thread.txt
-cat content/derivatives/YYYY-MM-DD_life_self_dev_*/twitter_thread.txt
-cat content/derivatives/YYYY-MM-DD_poetry_quotes_*/twitter_thread.txt
-# (paste each into Twitter scheduler)
+python3 scripts/sync_ideas_to_notion.py --dry-run
 ```
 
 ---
 
-**Step 4: Newsletter (optional)** (~5 min)
+## STATUS SUMMARY
 
-```bash
-cat content/derivatives/YYYY-MM-DD_data_science_tech_*/newsletter.txt
-cat content/derivatives/YYYY-MM-DD_life_self_dev_*/newsletter.txt
-cat content/derivatives/YYYY-MM-DD_poetry_quotes_*/newsletter.txt
-# (paste each to Beehiiv → schedule)
-```
-
----
-
-**Step 5: Upload worksheets to ConvertKit + share on Instagram** (~10 min)
-
-DS Worksheet:
-1. ConvertKit → Forms → Create new → Landing Page
-2. Title: "Your Model → SQL Translation Checklist"
-3. Description: "Free worksheet: translate your ML model to warehouse SQL. No API server required."
-4. Upload PDF: `output/worksheets/YYYY-MM-DD_data_science_tech_*_worksheet.pdf`
-5. Save → copy landing page URL
-6. Edit `config/worksheet_config.json` → paste URL in `worksheets[slug].convertkit.landing_page_url`
-7. Add tags: data-science, ml-production, sql
-
-Life Worksheet:
-1. ConvertKit → Create new landing page
-2. Title: "Design Your Check-in for Your Worst Day"
-3. Description: "Free worksheet: redesign your daily habit for the version of you who's tired, busy, and low-energy."
-4. Upload PDF: `output/worksheets/YYYY-MM-DD_life_self_dev_*_worksheet.pdf`
-5. Save → copy URL → update config with URL
-6. Add tags: habits, self-development, design
-
-Share on Instagram:
-1. Pull caption hooks from `config/worksheet_config.json` (`ig_caption_hook` + `ig_cta`)
-2. IG Stories: add link sticker → landing page URL
-3. Grid post: worksheet preview image + caption structure: [hook] + 📋 Free worksheet in link + [key insight] + [CTA] + #hashtags
-4. Pin story for 24h
-
----
-
-## Notes
-
-- Replace `YYYY-MM-DD` with actual dates from your blog filenames
-- Replace `*` with actual slugs if scripts don't support wildcards
-- Cronjobs auto-run Sunday 8pm (analytics) + 10pm (knowledge base rebuild)
-- Check `data/analytics/weekly_insights.md` on Sunday for recap
+| Step | Status |
+|------|--------|
+| Blogs × 3 | ✅ done |
+| YT scripts × 3 | ✅ done |
+| Production guides | ✅ Life + Poetry · ❌ DS missing |
+| Derivatives/repurpose × 3 | ✅ done |
+| Thumbnail briefs × 3 | ✅ done |
+| Thumbnail images × 3 | ✅ done |
+| Claude Design prompts × 3 | ✅ done |
+| Slides PDFs × 3 | ✅ done |
+| Social post images × 3 | ✅ done |
+| Reel covers × 3 | ✅ done |
+| Story sequences | ✅ Poetry (mp4) · ✅ DS (7 slides + mp4) · ✅ Life (8 imgs) |
+| Worksheet JSON | ✅ DS + Life |
+| Worksheet Canva prompts | ✅ DS + Life |
+| Worksheet PDFs | ✅ DS + Life |
+| Carousels (replaces social post set) | ✅ done (7 slides × 3 niches) |
+| PERSONAL_INSERT filled | ✅ DS + Life done |
+| Images added to blogs | ✅ done |
+| Audio recorded | ❌ nothing |
+| Videos edited | ❌ nothing |
+| Reels clipped | ❌ nothing |
+| Medium published | ❌ |
+| Substack published | ❌ |
+| Social scheduled (Publer) | ❌ |
+| Twitter threads posted | ❌ |
+| YouTube uploaded | ❌ |
+| load_posts.py run | ❌ DB has 0 posts |
+| Content buffer | ❌ 1/4 all niches |

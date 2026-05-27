@@ -1,9 +1,39 @@
 # Monday — DS Blog Production (~25 min)
 
+## Step 0 — Check buffer first (1 min)
+
+```bash
+ls content/buffer/week-1/data_science_tech/*_meta.md 2>/dev/null
+```
+
+**Buffer has content?** → Skip Steps 1–4. Use buffer files directly:
+- Script: `content/buffer/week-1/data_science_tech/*_youtube_script.md`
+- Blog: `content/buffer/week-1/data_science_tech/*_substack_post.md`
+- Social: `content/buffer/week-1/data_science_tech/*_social_copy.md`
+
+Jump straight to Tuesday (Life blog) or rest. After consuming: log in Notion as `Script`, then check if Sunday buffer replenishment happened (must be at 4 weeks before this Monday ends).
+
+**No buffer?** → Proceed with Steps 1–4 below. Alert: buffer should never be empty — check Sunday Step 7.
+
+---
+
 ## Step 1 — Pick topic (5 min)
+
+Preferred — pick from Notion Contents DB (`Status=Idea`, `Topic=Tech`):
+- Synced Sunday by `scripts/sync_ideas_to_notion.py`
+- Update picked row's `Status` → `In Progress`
+
+Or local file:
 ```bash
 cat data/ideas/weekly_ideas.md
-# Read top 3 DS ideas. Pick one.
+# Read top 5 DS ideas. Pick one.
+
+# Optional — refresh sources manually before picking:
+python3 scripts/rss_scraper.py                    # Reddit (10 DS subs incl mlops, analytics)
+python3 scripts/fetch_external_feeds.py           # HN, arXiv, Medium tags, DEV.to, GitHub trending
+python3 scripts/fetch_google_suggest.py --quick   # Google + YouTube autocomplete
+python3 scripts/idea_scorer.py                    # rescore + rewrite weekly_ideas.md
+python3 scripts/sync_ideas_to_notion.py           # push to Notion
 ```
 
 ## Step 2 — Produce blog (~2 min running)
@@ -51,3 +81,16 @@ Marker format:
 ```
 
 Images → `content/blogs/{stem}_images/` · Map → `content/blogs/{stem}_images/IMAGE_MAP.md`
+
+---
+
+## After production — buffer or keep live?
+
+```bash
+python3 scripts/push_to_buffer.py --auto --dry-run   # preview
+python3 scripts/push_to_buffer.py --auto              # auto-decide all niches
+```
+Buffer < 4 weeks → copied to next empty slot. Buffer full → stays as live content.
+File naming: `content/blogs/YYYY-MM-DD_{niche}_{slug}.md` · scripts: `content/scripts/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md`
+See full naming table: [weekly-operating-guide.md § File Naming Conventions](weekly-operating-guide.md#file-naming-conventions)
+
