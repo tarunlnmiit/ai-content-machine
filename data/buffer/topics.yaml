@@ -1,0 +1,55 @@
+# 4-Week Content Buffer
+# Fill all 12 topic slots before running: python3 scripts/generate_buffer.py
+#
+# Fields:
+#   topic  — title / main subject (used as Notion page name)
+#   angle  — the specific hook or unexplored angle that makes this unique
+#
+# Niches: data_science_tech | life_self_dev | poetry_quotes
+# Run with --dry-run to preview without generating or syncing.
+
+weeks:
+  - week: 1
+    # STATUS: READY — content exists in content/buffer/week-1/
+    data_science_tech:
+      topic: "Complete Python Course 2026: Beginner to Advanced"
+      angle: "Hands-on walkthrough — what's new in 2026, gaps beginners miss, what actually matters for data science"
+    life_self_dev:
+      topic: "How I Turned My Habits Into an Engine to Get Me to My Goals"
+      angle: "Personal system where habits compound toward goals — not discipline, but design"
+    poetry_quotes:
+      topic: "When Dreams Speak of Love"
+      angle: "Original poem — the language of dreams as a metaphor for unexpressed love"
+
+  - week: 2
+    data_science_tech:
+      topic: ""
+      angle: ""
+    life_self_dev:
+      topic: ""
+      angle: ""
+    poetry_quotes:
+      topic: ""
+      angle: ""
+
+  - week: 3
+    data_science_tech:
+      topic: ""
+      angle: ""
+    life_self_dev:
+      topic: ""
+      angle: ""
+    poetry_quotes:
+      topic: ""
+      angle: ""
+
+  - week: 4
+    data_science_tech:
+      topic: ""
+      angle: ""
+    life_self_dev:
+      topic: ""
+      angle: ""
+    poetry_quotes:
+      topic: ""
+      angle: ""
