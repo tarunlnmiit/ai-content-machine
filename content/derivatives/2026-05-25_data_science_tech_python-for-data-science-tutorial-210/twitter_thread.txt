@@ -1,0 +1,13 @@
+Python gave me a confident wrong number once. Not an error. Not a crash. I summed a column of ages — except they were strings. "28"+"35"+"42" = "283542". No warning. 5 type mistakes Python beginners make in data science:
+
+1/ `type()` is the most underused function in data work. Before any calculation, run `type(column[0])`. If it returns `<class 'str'>`, your pipeline is broken before it starts. Pandas loads mixed columns as objects by default. Always check.
+
+2/ `"42" + "42"` does not equal 84. It equals `"4242"`. Strings concatenate. Ints add. Python will not warn you when you cross that line — it will just give you an answer plausible enough to fool you. `int()`, `float()`, `str()` are your conversion tools.
+
+3/ Lists and dicts serve different purposes. Lists = ordered sequences (rows). Dicts = named records (fields + values). In data science, a list of dicts is the cleanest structure before you ever import pandas. Every CSV row and JSON object maps to this shape.
+
+4/ List comprehensions replace 5-line loops with 1 line: `[s for s in scores if s > 85]`. Not just shorter — it forces you to think in transformations, not mutations. That mental shift matters when your data has a million rows.
+
+5/ If you have copied the same cleaning block across 3 notebooks, you have 3 versions of truth. One bug, three places to fix. A function costs 2 extra lines once and saves hours later. `def calculate_average(values):` — that is it.
+
+Types, lists, dicts, functions — the four foundations before NumPy changes everything. Tutorial 3 is where the math scales. These are what make it not break. Full breakdown: [BLOG_LINK]

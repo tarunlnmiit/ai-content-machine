@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The silence we were taught to mistake for strength is actually brittleness — and breaking it, one honest conversation at a time, is the real act of courage.",
+  "tone": [
+    "honest",
+    "warm",
+    "quietly urgent"
+  ],
+  "visual_metaphor": "A person sitting in a well-lit room surrounded by people, completely unreachable — the kind of alone that looks like togetherness from the outside.",
+  "key_quotes": [
+    "Strength that requires silence is just brittleness waiting for the right amount of pressure.",
+    "Some moments don't need a mechanic. They need a witness.",
+    "Vulnerability isn't the opposite of strength. It's proof of it."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "A person's arm in a cast surrounded by friends smiling and signing it — warm tones, full social permission, everyone leaning in.",
+      "text": "Break a bone. People show up."
+    },
+    {
+      "frame": 2,
+      "visual": "The same person alone at a kitchen table late at night, chest tight, empty chair across from them — cold tones, shadow-heavy.",
+      "text": "Say you're drowning. Room goes quiet."
+    },
+    {
+      "frame": 3,
+      "visual": "Dust-sheeted furniture in an old room — inherited, unused, left in place because nobody ever decided to move it out.",
+      "text": "The stigma is inherited. Not chosen."
+    },
+    {
+      "frame": 4,
+      "visual": "Two people at a table — one leaning forward mid-sentence with a spreadsheet open on a laptop, the other looking down, disconnected, not quite there.",
+      "text": "Some moments need a witness. Not a mechanic."
+    },
+    {
+      "frame": 5,
+      "visual": "Clean split frame: a bright gym on the left with an open door and a trainer inside, a therapy office on the right with a closed door and a question mark on the frosted glass.",
+      "text": "Same logic. Different social response."
+    },
+    {
+      "frame": 6,
+      "visual": "Two materials under identical pressure — one rigid and fracturing into sharp pieces, one flexible and bending but holding its shape — same size, same color.",
+      "text": "Suppression shatters. Honesty bends."
+    },
+    {
+      "frame": 7,
+      "visual": "A concrete wall with a single crack running through it — warm light bleeding through from the other side, barely visible but unmistakably there.",
+      "text": "One conversation at a time."
+    }
+  ]
+}

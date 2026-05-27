@@ -1,0 +1,15 @@
+Your analysis will give you a wrong answer someday. Not an error. A perfectly confident wrong number.
+
+Here is how it happens. Your CSV has a column called age. You load it. You sum it. Python reports the sum. You move on.
+
+Except the column was strings. Python did not add 28 + 35 + 42. It concatenated them — 283542. No crash, no warning. Just a plausible number sitting in your report until someone questions it.
+
+I have been there. Three notebooks with the same 12-line cleaning block copy-pasted across all of them. Every tiny change meant hunting through duplicated code hoping I had not missed a version. The moment I turned that block into a function, the entire workflow changed — fewer silent mistakes, faster iteration, code I could trust six weeks later.
+
+This is the layer most beginners skip. Not libraries. Not models. The foundations that determine whether your analysis is trustworthy before you ever open a CSV.
+
+Four things that seem simple until they bite you on a deadline: the string concatenation silent bug, the difference between a list and a dict in real pipelines, why list comprehensions are a mental model shift not just syntax, and why functions are the first thing that makes data science code maintainable.
+
+If you are building with Python, these are worth understanding before you import pandas. [BLOG_LINK]
+
+#Python #DataScience #MachineLearning

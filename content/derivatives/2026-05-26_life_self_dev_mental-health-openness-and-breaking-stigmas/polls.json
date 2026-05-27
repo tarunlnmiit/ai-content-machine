@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "When someone you care about says 'I'm fine' and clearly isn't — what do you do?",
+    "options": [
+      "Push gently, ask again",
+      "Give them space",
+      "Change the subject",
+      "Depends on the person"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "What's stopped you from seeking support during a hard season?",
+    "options": [
+      "Didn't want to seem weak",
+      "Didn't know who to ask",
+      "Thought I could handle it alone",
+      "Didn't have access or resources"
+    ]
+  }
+]

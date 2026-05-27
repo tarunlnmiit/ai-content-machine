@@ -1,0 +1,32 @@
+Format: carousel
+Why: DS/Tech educational content maps directly to carousel per analytics data — highest save-weighted engagement score (50.9) — and type-by-type explanations need multiple slides to land properly.
+
+Python will give you a wrong answer without telling you.
+
+Not an error. Not a crash. A number that looks right.
+
+It happens when a column of ages loads as strings. Python does not add them — it concatenates. No warning. No flag.
+
+This is why types matter before anything else in data science.
+
+Tutorial 2 covers the four building blocks you need before pandas:
+
+→ int, float, str, bool — and why they behave differently
+→ Lists vs dicts — and when to use which
+→ List comprehensions — one line instead of five
+→ Functions — the thing that makes your code trustworthy
+
+Slide through. Save for when the silent bug finally bites.
+
+[BLOG_LINK]
+
+Slides:
+  1. Python gave me a confident wrong answer
+  2. The silent type bug, explained
+  3. 4 types Python uses (and how they differ)
+  4. Lists vs Dicts: which one you actually need
+  5. List comprehensions in one line
+  6. Functions: write once, trust forever
+  7. What comes next: Tutorial 3
+
+#Python #DataScience #PythonProgramming #LearnPython #DataAnalysis

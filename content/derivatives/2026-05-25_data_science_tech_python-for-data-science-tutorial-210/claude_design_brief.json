@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The quiet dread of realizing your analysis was confidently wrong — and the relief of finally understanding exactly why.",
+  "tone": [
+    "analytical",
+    "grounded",
+    "quietly urgent"
+  ],
+  "visual_metaphor": "A calculator displaying a confident, plausible-looking wrong number — no alarm, no red light, no error — just a screen full of certainty about something false.",
+  "key_quotes": [
+    "Your analysis will give you a wrong answer someday. Not an error. Not a crash. A perfectly confident wrong number.",
+    "Python didn't add 28 + 35 + 42. It concatenated them: '28' + '35' + '42' = '283542'.",
+    "Every silent bug in data analysis traces back to the same root: the programmer didn't understand what kind of thing they were holding."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Laptop screen in a calm, ordinary desk environment showing a Python terminal with sum() returning '283542' — highlighted in amber. No error message anywhere in view.",
+      "text": "No error. Wrong answer."
+    },
+    {
+      "frame": 2,
+      "visual": "Close-up of a dark terminal: type('28') returning <class 'str'> — one line of code, clean monospace font, high contrast.",
+      "text": "Check what you're holding."
+    },
+    {
+      "frame": 3,
+      "visual": "Side-by-side: a list [28, 35, 42] on the left and a dict {'name': 'Tarun', 'age': 28} on the right. Minimal styling, no decoration.",
+      "text": "Lists are rows. Dicts are records."
+    },
+    {
+      "frame": 4,
+      "visual": "A 5-line for loop on the left visually collapsing into a single list comprehension on the right — split view, clean dark-mode editor.",
+      "text": "One line. Same result."
+    },
+    {
+      "frame": 5,
+      "visual": "Three notebook tabs open side by side, each with the same 12-line block highlighted in yellow — then all three replaced by a single def calculate_average(): function.",
+      "text": "One function. Three fixed."
+    },
+    {
+      "frame": 6,
+      "visual": "A minimal data pipeline diagram: Raw CSV → Type Check → Transform → Aggregate → Output. Simple labeled boxes, no decoration, clean sans-serif.",
+      "text": "Types first. Libraries second."
+    },
+    {
+      "frame": 7,
+      "visual": "Terminal showing the corrected output — the same column summing to 105, not '283542'. Green text on dark background. Clean, quiet, resolved.",
+      "text": "That's what trust looks like."
+    }
+  ]
+}

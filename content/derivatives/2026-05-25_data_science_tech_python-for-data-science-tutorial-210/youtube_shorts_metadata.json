@@ -1,0 +1,13 @@
+{
+  "title": "Python Gave Me a Wrong Answer With No Error",
+  "description": "Summed a column of ages. Got '283542'. No error — they were strings.\n\nTypes matter before anything else in data work. Full Tutorial 2 in link. #Shorts #Python #DataScience #LearnPython",
+  "tags": [
+    "Shorts",
+    "Python",
+    "DataScience",
+    "LearnPython",
+    "PythonTutorial"
+  ],
+  "hook_visual": "Screen recording: Python terminal running sum() on a list of string ages — output shows '283542' with a red X overlay and text: 'No error. Wrong answer.' Cut within 2 seconds.",
+  "end_screen_cta": "Subscribe for the full 10-tutorial Python series — drop a question below if this happened to you."
+}

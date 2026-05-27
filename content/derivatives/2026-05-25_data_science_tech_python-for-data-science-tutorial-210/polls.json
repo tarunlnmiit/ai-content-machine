@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "What's caught you out most in Python data work?",
+    "options": [
+      "Silent type errors (strings summing wrong)",
+      "Off-by-one in list slicing",
+      "Float precision giving wrong comparisons",
+      "KeyError on dict access"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "When do you typically catch type issues in Python pipelines?",
+    "options": [
+      "Before running — I check dtypes first",
+      "When results look suspicious",
+      "When someone questions my numbers",
+      "I've never had a silent type bug (yet)"
+    ]
+  }
+]

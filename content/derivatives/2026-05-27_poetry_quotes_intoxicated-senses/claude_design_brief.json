@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The disorienting moment when love quietly overrides your internal operating system — not with chaos, but with the precise, unwanted loss of the coordinates you relied on to navigate yourself.",
+  "tone": [
+    "intimate",
+    "suspended",
+    "precise"
+  ],
+  "visual_metaphor": "A moth in slow orbit around a candle — not falling, not fleeing, just perpetually drawn — against a backdrop with no visible horizon: no ground, no sky, just warm amber light pressing against deep dark.",
+  "key_quotes": [
+    "my heart keeps enjoying the hangover you created",
+    "No ground to stand on. No sky to cover my head with.",
+    "Some people just become part of your physics."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "A cold cup of coffee on a desk at night — laptop open, code on screen, warm but solitary atmosphere, steam long gone",
+      "text": "One day you're fine."
+    },
+    {
+      "frame": 2,
+      "visual": "Close-up of a moth in slow motion orbiting a candle flame, wings catching gold at the edges, dark background, no other light source",
+      "text": "Like a moth to the flame."
+    },
+    {
+      "frame": 3,
+      "visual": "Ocean waves breaking and retreating in slow motion, cool blue-grey, relentless and indifferent, foam pulling back then returning without hesitation",
+      "text": "Like waves to the shore."
+    },
+    {
+      "frame": 4,
+      "visual": "Frost forming across a window pane in time-lapse, cold geometry spreading inward, soft winter light filtering through the growing ice patterns",
+      "text": "Like cold to the winter."
+    },
+    {
+      "frame": 5,
+      "visual": "A rainbow arching over an empty road after rain, saturated colors against grey clouds, no people, just the arc against the grey",
+      "text": "Like a rainbow after the rain."
+    },
+    {
+      "frame": 6,
+      "visual": "A figure standing at a cliff edge in dense fog — no visible ground below, no sky above, just grey suspension on all sides — shot from directly behind",
+      "text": "No ground. No sky."
+    },
+    {
+      "frame": 7,
+      "visual": "Return to the candle from frame 2 — this time tight on the flame itself, steady and warm, burning nothing visible but burning all the same, slight flicker",
+      "text": "The heart wants what it wants."
+    }
+  ]
+}

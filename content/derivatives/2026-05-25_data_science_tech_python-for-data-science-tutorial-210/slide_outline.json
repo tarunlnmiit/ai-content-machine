@@ -1,0 +1,78 @@
+{
+  "format": "Canva",
+  "title_slide": "Python for Data Science — Tutorial 2: Variables, Data Types & Structures",
+  "slides": [
+    {
+      "slide_number": 1,
+      "heading": "Python Will Give You a Wrong Answer Without Telling You",
+      "bullet_points": [
+        "Summing a string column doesn't error — it concatenates",
+        "\"28\" + \"35\" + \"42\" = \"283542\" in Python",
+        "Types encode intention. Python needs to know what you mean."
+      ],
+      "speaker_note": "Open with the silent bug story to create immediate stakes before any syntax."
+    },
+    {
+      "slide_number": 2,
+      "heading": "The 4 Primitive Types",
+      "bullet_points": [
+        "int — whole numbers (28, 100, -5)",
+        "float — decimals (3.14, 0.5, -2.718)",
+        "str — text (\"data\", \"42\", \"True\") — note: \"42\" is not 42",
+        "bool — True or False only"
+      ],
+      "speaker_note": "Emphasise that '42' and 42 are fundamentally different things to Python."
+    },
+    {
+      "slide_number": 3,
+      "heading": "Check and Convert Types",
+      "bullet_points": [
+        "type(x) tells you what Python thinks it is holding",
+        "int(), float(), str() convert between types",
+        "Always check before calculating — especially on loaded CSVs"
+      ],
+      "speaker_note": "Position type() as the first diagnostic habit to build, not an advanced technique."
+    },
+    {
+      "slide_number": 4,
+      "heading": "Lists: Ordered Sequences",
+      "bullet_points": [
+        "Index from 0, slice with [start:end] — end is exclusive",
+        "append() adds to the end",
+        "List comprehensions: [s for s in scores if s > 85]"
+      ],
+      "speaker_note": "Spend time on comprehensions — they represent a mental shift from loops to transformations."
+    },
+    {
+      "slide_number": 5,
+      "heading": "Dictionaries: Named Records",
+      "bullet_points": [
+        "Key-value pairs — one record per dict",
+        "Use .get() for safe access (no KeyError on missing keys)",
+        "List of dicts = the natural shape of a dataset row by row"
+      ],
+      "speaker_note": "The list-of-dicts pattern is how both JSON and CSV rows map to Python — make this concrete."
+    },
+    {
+      "slide_number": 6,
+      "heading": "Functions: Write Once, Trust Forever",
+      "bullet_points": [
+        "def calculate_average(values): — reusable, testable",
+        "Default arguments: is_outlier(value, threshold=2.0)",
+        "One function replaces 3 copies of the same notebook block"
+      ],
+      "speaker_note": "Connect to the personal story about duplicated cleaning code across notebooks."
+    },
+    {
+      "slide_number": 7,
+      "heading": "What's Next: Tutorial 3 — NumPy",
+      "bullet_points": [
+        "These structures scale to millions of rows with NumPy",
+        "Arrays replace lists for numerical work",
+        "Everything from Tutorial 2 underpins everything in Tutorial 3"
+      ],
+      "speaker_note": "End with a bridge that makes the reader want to continue the series."
+    }
+  ],
+  "total_slides": 7
+}

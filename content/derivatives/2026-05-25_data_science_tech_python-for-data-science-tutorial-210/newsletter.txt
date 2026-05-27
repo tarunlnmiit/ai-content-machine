@@ -1,0 +1,16 @@
+Subject: The Python bug that doesn't crash (but should)
+Preview: A confident wrong number. No error, no warning, no clue.
+
+Something went wrong in my early analytics work and I didn't catch it for days.
+
+I had a column called age. I summed it. Got a number. Moved on. The column was stored as strings. Python concatenated instead of added. The result was a plausible-looking nonsense number sitting in a report.
+
+No error. No crash. Just quiet.
+
+That is the topic of Tutorial 2 — not libraries, not models, but the layer of Python that determines whether your analysis is trustworthy before you ever open a CSV.
+
+In this piece: the 4 primitive types and the exact moment each one betrays you, lists vs dicts and why the distinction matters in real pipelines, list comprehensions as a mental model shift not just syntax, and functions — the one habit that makes everything else maintainable.
+
+If you have ever gotten a number that looked right but felt off, this is where to start.
+
+Read Tutorial 2 here: [READ_LINK]
