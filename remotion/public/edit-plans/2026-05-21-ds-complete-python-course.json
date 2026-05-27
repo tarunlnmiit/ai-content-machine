@@ -1,0 +1,70 @@
+{
+  "slug": "2026-05-21-ds-complete-python-course",
+  "niche": "ds",
+  "rawVideo": "videos/2026-05-21-ds-complete-python-course.mp4",
+  "durationSec": 1100.61,
+  "silenceTrimStartSec": 7.382875,
+  "silenceTrimEndSec": 1120.862896,
+  "cutSegments": [
+    {
+      "startSec": 7.38,
+      "endSec": 81.77
+    },
+    {
+      "startSec": 83.38,
+      "endSec": 432.98
+    },
+    {
+      "startSec": 434.58,
+      "endSec": 448.97
+    },
+    {
+      "startSec": 450.57,
+      "endSec": 550.57
+    },
+    {
+      "startSec": 552.17,
+      "endSec": 944.2
+    },
+    {
+      "startSec": 945.8,
+      "endSec": 964.9
+    },
+    {
+      "startSec": 966.5,
+      "endSec": 1029.91
+    },
+    {
+      "startSec": 1031.52,
+      "endSec": 1039.8
+    },
+    {
+      "startSec": 1041.45,
+      "endSec": 1120.86
+    }
+  ],
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "code editor with empty Python file",
+      "clipFile": "broll/2026-05-21-ds-complete-python-course/cue-0.png",
+      "startSec": 286.31,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-1",
+      "description": "two-column comparison visual showing additive vs structural learning",
+      "clipFile": "broll/2026-05-21-ds-complete-python-course/cue-1.png",
+      "startSec": 562.22,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-2",
+      "description": "terminal showing environment creation commands",
+      "clipFile": "broll/2026-05-21-ds-complete-python-course/cue-2.png",
+      "startSec": 841.59,
+      "durationSec": 5.0
+    }
+  ],
+  "captionsFile": "captions/2026-05-21-ds-complete-python-course.json"
+}

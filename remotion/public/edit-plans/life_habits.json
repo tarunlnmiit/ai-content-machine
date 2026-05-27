@@ -1,0 +1,227 @@
+{
+  "slug": "life_habits",
+  "niche": "life",
+  "rawVideo": "videos/life_habits.mp4",
+  "durationSec": 682.36,
+  "silenceTrimStartSec": 1.532625,
+  "silenceTrimEndSec": 683.889187,
+  "cutSegments": [
+    {
+      "startSec": 1.53,
+      "endSec": 683.89
+    }
+  ],
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "slow morning light through a window, hands wrapping around a coffee mug, quiet and unhurried",
+      "clipFile": "broll/life_habits/cue-0.mp4",
+      "startSec": 24.1,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-1",
+      "description": "person walking alone on a path that branches, shot from behind, unhurried pace",
+      "clipFile": "broll/life_habits/cue-1.mp4",
+      "startSec": 43.66,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-2",
+      "description": "person journaling at a window, soft natural light, unhurried, one cup of something warm nearby",
+      "clipFile": "broll/life_habits/cue-2.mp4",
+      "startSec": 66.67,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-3",
+      "description": "someone clearing off a desk, removing unnecessary items, leaving only what's needed",
+      "clipFile": "broll/life_habits/cue-3.mp4",
+      "startSec": 88.47,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-4",
+      "description": "hands adjusting something mechanical, slow and deliberate, workshop or quiet desk",
+      "clipFile": "broll/life_habits/cue-4.mp4",
+      "startSec": 112.54,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-5",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-5.mp4",
+      "startSec": 134.31,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-6",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-6.mp4",
+      "startSec": 157.18,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-7",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-7.mp4",
+      "startSec": 175.97,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-8",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-8.mp4",
+      "startSec": 199.32,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-9",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-9.mp4",
+      "startSec": 219.77,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-10",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-10.mp4",
+      "startSec": 242.53,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-11",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-11.mp4",
+      "startSec": 265.69,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-12",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-12.mp4",
+      "startSec": 285.79,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-13",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-13.mp4",
+      "startSec": 308.49,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-14",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-14.mp4",
+      "startSec": 332.3,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-15",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-15.mp4",
+      "startSec": 353.9,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-16",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-16.mp4",
+      "startSec": 374.61,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-17",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-17.mp4",
+      "startSec": 398.1,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-18",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-18.mp4",
+      "startSec": 420.99,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-19",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-19.mp4",
+      "startSec": 439.79,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-20",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-20.mp4",
+      "startSec": 465.0,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-21",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-21.mp4",
+      "startSec": 486.58,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-22",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-22.mp4",
+      "startSec": 507.16,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-23",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-23.mp4",
+      "startSec": 528.43,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-24",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-24.mp4",
+      "startSec": 553.65,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-25",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-25.mp4",
+      "startSec": 573.18,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-26",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-26.mp4",
+      "startSec": 594.21,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-27",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-27.mp4",
+      "startSec": 616.24,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-28",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-28.mp4",
+      "startSec": 641.26,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-29",
+      "description": "ambient b-roll",
+      "clipFile": "broll/life_habits/cue-29.mp4",
+      "startSec": 662.29,
+      "durationSec": 5.0
+    }
+  ],
+  "captionsFile": "captions/life_habits.json"
+}
