@@ -31,6 +31,14 @@ from lib.slug import slugify
 REPO = Path(__file__).parent.parent
 MODEL = "claude-sonnet-4-6"
 
+# Guard against the headless `claude` occasionally returning a permission/meta
+# stub instead of the worksheet body.
+MIN_WORDS = 150
+META_MARKERS = (
+    "write permission", "approve to save", "awaiting", "waiting for permission",
+    "once approved", "please approve",
+)
+
 NICHES = {"ds": "data_science", "life": "life_self_dev", "poetry": "poetry"}
 NICHE_LABELS = {
     "ds": "Data Science/Tech",
@@ -136,7 +144,16 @@ def run_claude(prompt: str, timeout: int, description: str) -> str:
     if not result.stdout.strip():
         console.print("[error]claude returned empty output[/error]")
         sys.exit(1)
-    return strip_preamble(result.stdout)
+    text = strip_preamble(result.stdout)
+    words = len(text.split())
+    low = text.lower()
+    if words < MIN_WORDS or any(m in low for m in META_MARKERS):
+        console.print(
+            f"[error]Suspect output ({words} words; permission-meta stub or "
+            f"truncated). NOT saved — re-run the command.[/error]"
+        )
+        sys.exit(1)
+    return text
 
 
 def main():
