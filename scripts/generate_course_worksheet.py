@@ -70,6 +70,20 @@ def load(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def strip_preamble(text: str) -> str:
+    """Drop any leading chatter before the first Markdown heading.
+
+    Sonnet occasionally prefixes a confirmation line despite the "Return ONLY
+    the worksheet ... No preamble" instruction. The worksheet always starts with
+    a `#` heading, so the first `#` line is the real start.
+    """
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        if line.lstrip().startswith("#"):
+            return "\n".join(lines[i:]).strip()
+    return text.strip()
+
+
 def build_prompt(
     master_brief: str, niche: str, topic: str, objective: str
 ) -> str:
@@ -122,7 +136,7 @@ def run_claude(prompt: str, timeout: int, description: str) -> str:
     if not result.stdout.strip():
         console.print("[error]claude returned empty output[/error]")
         sys.exit(1)
-    return result.stdout.strip()
+    return strip_preamble(result.stdout)
 
 
 def main():
