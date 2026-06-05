@@ -32,8 +32,12 @@ REPO = Path(__file__).parent.parent
 MODEL = "claude-sonnet-4-6"
 
 # Guard against the headless `claude` occasionally returning a permission/meta
-# stub (e.g. "Awaiting write permission...") instead of the lesson body.
+# stub (e.g. "Awaiting write permission...") instead of the lesson body. Root
+# cause: the inner agent tries to *write* the file rather than print it, so we
+# deny the write tools (it can only print) and retry on any residual stub.
 MIN_WORDS = 250
+MAX_TRIES = 3
+DENY_TOOLS = "Write,Edit,NotebookEdit,Bash"
 META_MARKERS = (
     "write permission", "approve to save", "awaiting", "waiting for permission",
     "once approved", "please approve",
@@ -132,30 +136,43 @@ Return ONLY the lesson script. No preamble."""
 
 
 def run_claude(prompt: str, timeout: int, description: str) -> str:
-    with spinner() as progress:
-        task = progress.add_task(description)
-        result = subprocess.run(
-            ["claude", "-p", "--model", MODEL, prompt],
-            capture_output=True, text=True, timeout=timeout,
-        )
-        progress.update(task, description=f"[success]{description} — done[/success]")
+    last_words = 0
+    for attempt in range(1, MAX_TRIES + 1):
+        label = description if attempt == 1 else f"{description} (retry {attempt - 1})"
+        with spinner() as progress:
+            task = progress.add_task(label)
+            # Prompt goes via stdin: --disallowed-tools is variadic and would
+            # otherwise swallow a trailing prompt arg as a tool name.
+            result = subprocess.run(
+                ["claude", "-p", "--model", MODEL, "--disallowed-tools", DENY_TOOLS],
+                input=prompt, capture_output=True, text=True, timeout=timeout,
+            )
+            progress.update(task, description=f"[success]{label} — done[/success]")
 
-    if result.returncode != 0:
-        console.print(f"[error]claude error:[/error] {result.stderr.strip()}")
-        sys.exit(1)
-    if not result.stdout.strip():
-        console.print("[error]claude returned empty output[/error]")
-        sys.exit(1)
-    text = strip_preamble(result.stdout)
-    words = len(text.split())
-    low = text.lower()
-    if words < MIN_WORDS or any(m in low for m in META_MARKERS):
+        if result.returncode != 0:
+            console.print(
+                f"[warn]claude exited {result.returncode} on attempt "
+                f"{attempt}/{MAX_TRIES}: {result.stderr.strip()[:120]}[/warn]"
+            )
+            continue
+
+        text = strip_preamble(result.stdout)
+        words = len(text.split())
+        low = text.lower()
+        if text and words >= MIN_WORDS and not any(m in low for m in META_MARKERS):
+            return text
+
+        last_words = words
         console.print(
-            f"[error]Suspect output ({words} words; permission-meta stub or "
-            f"truncated). NOT saved — re-run the command.[/error]"
+            f"[warn]Suspect output ({words} words; permission-meta stub or "
+            f"truncated) on attempt {attempt}/{MAX_TRIES}.[/warn]"
         )
-        sys.exit(1)
-    return text
+
+    console.print(
+        f"[error]Still suspect after {MAX_TRIES} tries (last: {last_words} words). "
+        f"NOT saved — re-run later.[/error]"
+    )
+    sys.exit(1)
 
 
 def main():
