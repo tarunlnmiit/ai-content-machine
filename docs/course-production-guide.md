@@ -12,7 +12,7 @@ Platform: **Graphy** (Indian — UPI/net-banking/cards, INR native). Config + pr
 template / checklist), and (3) **repurpose hooks** — free social teasers (YT Short, IG
 carousel, X thread) derived from the recorded lesson to sell the course. A full
 per-lesson outline carrying all three layers lives at
-`content/courses/<niche>/outline.md` (DS done; life/poetry to follow).
+`content/courses/<niche>/outline.md` (all three niches done).
 
 **DS signature differentiators (market moats).** Research showed the field is full of
 no-depth syntax tutorials, clean Kaggle data, and zero feedback. The DS course answers
@@ -23,6 +23,13 @@ that with three assets nobody else offers — record/build these once:
 - **🔑 Real dirty datasets + failure-mode answer key** — anonymise a genuinely messy real
   dataset, write a key of everything wrong with it (L2, reused L3/7/10).
 - **AI-as-practitioner capstone** — L10, plus light "would I trust AI here?" checkpoints.
+
+Every niche has its own moats (full detail in each `outline.md`), but all three share one
+brand thread — a **"watch me actually do it" raw session**:
+- **Life:** 🎥 real systems-teardown (Tarun's own tracker/check-in/review on screen) · 📊
+  "your life as a dataset" tracker kit · built for Indian student pressure.
+- **Poetry:** 🎥 write-along (Tarun drafting from a blank page, crossing out lines) · 📝
+  original prompt deck · share-without-shame ritual.
 
 **Building a course on weekends?** Follow the per-niche weekend guides — hour-blocked,
 checkbox, copy-paste commands, each splits one course across 2–3 weekends:

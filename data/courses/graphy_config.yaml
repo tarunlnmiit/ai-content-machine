@@ -73,6 +73,11 @@ courses:
     price_launch_inr: 149
     price_later_inr: [499, 799]
     early_bird_seats: 50
+    # Signature moats (see content/courses/life_self_dev/outline.md):
+    differentiators:
+      - "Real systems-teardown sessions (Tarun's own tracker/check-in/review on screen) — L1/3/5"
+      - "Your-life-as-a-dataset tracker kit — L1/2/5/6"
+      - "Built for Indian student pressure (academic + family + career, mental-health upkeep) — L3/4"
     graphy_course_id: ""
     enrol_url: ""
     students: 0
@@ -90,6 +95,11 @@ courses:
     price_launch_inr: 99
     price_later_inr: [299, 399]
     early_bird_seats: 50
+    # Signature moats (see content/courses/poetry/outline.md):
+    differentiators:
+      - "Write-along sessions (Tarun writing from blank page on camera, crossing out lines) — L3/4/6"
+      - "Original prompt deck (starter lines students keep) — all lessons"
+      - "Share-without-shame ritual (safe weekly poem share; courage as the product) — L5 + community"
     graphy_course_id: ""
     enrol_url: ""
     students: 0
