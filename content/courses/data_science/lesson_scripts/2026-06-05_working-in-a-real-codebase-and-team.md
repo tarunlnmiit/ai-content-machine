@@ -72,7 +72,7 @@ The data scientists who become senior fast are not usually the ones who write th
 
 ## STORY
 
-[PERSONAL_STORY: Tell the story of the brilliant notebook vs the modest function. A specific project where you built something technically impressive in a notebook — the right setup, the analysis, the model — and then either couldn't reproduce it yourself a month later, or handed it to someone and it completely fell apart. Contrast it with a simple, almost boring function you wrote for the same team that still gets used. What made the simple one survive? What does that tell you about what "good work" actually means in a professional context?]
+`[PERSONAL_STORY: Tell the story of the brilliant notebook vs the modest function. A specific project where you built something technically impressive in a notebook — the right setup, the analysis, the model — and then either couldn't reproduce it yourself a month later, or handed it to someone and it completely fell apart. Contrast it with a simple, almost boring function you wrote for the same team that still gets used. What made the simple one survive? What does that tell you about what "good work" actually means in a professional context?]`
 
 The punchline I want to land here is this: **nobody is using the impressive thing. Everyone is using the boring thing.**
 
@@ -95,3 +95,7 @@ Second: if you don't already have a GitHub account with at least one public repo
 The code you write alone, in a notebook, with nobody watching — that's practice.
 
 The code you write knowing someone else has to read it, run it, and build on it — that's the job.
+
+---
+
+Script saved at `content/courses/data_science/lesson_scripts/2026-06-05_working-in-a-real-codebase-and-team.md`. Three `[PERSONAL_INSERT]` spots + one `[PERSONAL_STORY]` block need your real detail. No regen needed unless you want structural changes.
