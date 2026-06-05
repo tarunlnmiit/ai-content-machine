@@ -23,6 +23,13 @@ productivity hacks. Not therapy. Systems that actually stick.
 
 > Curriculum complete (7 lessons). Draft each with `draft_lesson_script.py`,
 > then personalise.
+>
+> **Signature differentiators** (baked into the outline): 🎥 real systems-teardown
+> sessions — Tarun's *own* tracker/check-in/review on screen (L1/3/5) · 📊 "your life as a
+> dataset" tracker kit (L1/2/5/6) · built for Indian student pressure (L3/4).
+>
+> **Full per-lesson outline** (hooks, stories, companion material, social repurpose
+> hooks, runnable commands): `content/courses/life_self_dev/outline.md`.
 
 ## Production
 
