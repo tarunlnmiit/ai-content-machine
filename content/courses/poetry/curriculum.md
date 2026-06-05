@@ -21,6 +21,13 @@ and doesn't know how to say them. Tarun's personal voice is the differentiator.
 | 5 | Sharing without shame | Fear is normal · share to one person first · feedback ≠ verdict | Share one poem and note what you felt |
 | 6 | Keeping the practice alive | Beat the blank page · a tiny daily ritual · where to go from here | Set a 5-minute daily writing ritual you'll actually keep |
 
+> **Signature differentiators** (baked into the outline): 🎥 write-along sessions — Tarun
+> writing from a blank page on camera, crossing out lines (L3/4/6) · 📝 original prompt
+> deck (all lessons) · share-without-shame ritual (L5 + community).
+>
+> **Full per-lesson outline** (hooks, stories, companion material, social repurpose
+> hooks, runnable commands): `content/courses/poetry/outline.md`.
+
 ## Production
 
 - Draft: `python3 scripts/draft_lesson_script.py --niche poetry --title "…" --point "…" --point "…" --point "…" --story "…"`
