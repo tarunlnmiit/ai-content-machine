@@ -56,6 +56,19 @@ python3 scripts/generate_course_worksheet.py \
 # → content/courses/data_science/worksheets/YYYY-MM-DD_<slug>_worksheet.md
 #   (poetry → content/courses/poetry/prompts/)
 
+# 2b. (DS only) Generate the seeded dirty datasets the worksheets read + answer keys.
+#     Always use the project conda env. --all builds every ds dataset; --name <one> for one.
+conda run -n content_engine_env python scripts/generate_course_dataset.py --niche ds --all
+# → content/courses/data_science/datasets/{loan_applications,transactions,
+#   student_engagement,orders,users}.csv + *_answer_key.md
+#   NOTE: baselines + L7 worksheets run sklearn → students need: pip install scikit-learn
+
+# 2c. (DS only) Build the companion notebooks (needs nbformat: pip install nbformat).
+conda run -n content_engine_env python scripts/build_course_notebooks.py --niche ds --which both
+# → content/courses/data_science/notebooks/{data_audit_starter,
+#   notebook_to_module_refactor_kit}.ipynb
+#   data_audit_starter loads ../datasets/loan_applications.csv — run it from the notebooks/ folder.
+
 # 3. Personalise: fill every [PERSONAL_INSERT] / [PERSONAL_STORY] with real detail.
 grep -n 'PERSONAL' content/courses/<niche>/lesson_scripts/<file>.md
 
@@ -83,6 +96,21 @@ banned-words list in CLAUDE.md.
   original worksheet. Type adapts: ds = code+exercise, life = reflection/journaling,
   poetry = writing prompts. **Ingests no published content** (unlike
   `scripts/generate_worksheet_outline.py`, which derives from a blog).
+
+A third script backs the DS **dirty-dataset moat** (no Claude call — pure seeded numpy/pandas):
+
+- **`generate_course_dataset.py`** — `--niche ds [--name <one> | --all]` → seeded synthetic
+  dirty CSVs the DS worksheets `read_csv`, each with a failure-mode `*_answer_key.md`. A frozen
+  registry per dataset is the single source of truth; every count in the key is re-measured from
+  the **re-read** CSV, and an in-script `verify` enforces each worksheet's binding constraints
+  (e.g. `loan_applications` keeps `age/income/loan_amount` numeric so Task 3 doesn't `TypeError`;
+  `student_engagement` locks the 84/16 split and makes `completion_pct` the unique leakage feature).
+  Deterministic: same `--seed` (default 42) → byte-identical CSV. Run via `conda run -n
+  content_engine_env`. Datasets: loan_applications, transactions, student_engagement, orders, users.
+- **`build_course_notebooks.py`** — `--niche ds [--which audit|refactor|both]` → the two DS
+  companion notebooks (`nbformat.v4`, validated before writing; no Claude call). `data_audit_starter`
+  pairs with the L2 worksheet and loads `../datasets/loan_applications.csv` (**run it from
+  `notebooks/`**); `notebook_to_module_refactor_kit` is self-contained. Needs `pip install nbformat`.
 
 ## Recording
 
