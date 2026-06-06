@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The invisible emotional weight we carry in silence costs us more than the visible burdens we talk about — and acknowledgment, not resolution, is the first way out.",
+  "tone": [
+    "quiet",
+    "unsettling",
+    "honest"
+  ],
+  "visual_metaphor": "a person sitting in a well-lit room that looks normal from outside, carrying something that has no shape — presence without peace, function without ease",
+  "key_quotes": [
+    "Silence has a texture people can feel.",
+    "The carrying itself becomes the familiar thing. Even the weight feels like home.",
+    "You are not as good at hiding it as you think. And even if you were — you deserve to put it down."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Person sitting alone near a window, soft natural light, looking out — not sad, just distant. No phone, no book. Still inside a quiet that has weight.",
+      "text": "There's a version of you most people won't meet."
+    },
+    {
+      "frame": 2,
+      "visual": "Close-up of hands at a keyboard, slightly blurred as if attention is elsewhere. Screen glow, dim room. The work is happening but something else is too.",
+      "text": "Functioning. But running something heavy."
+    },
+    {
+      "frame": 3,
+      "visual": "Two people at a cafe table, both looking in different directions. Not fighting. Just somewhere else. The gap between them has no name.",
+      "text": "Silence has a texture people can feel."
+    },
+    {
+      "frame": 4,
+      "visual": "A person carefully packing something into a bag they never open. Deliberate. Quiet. Like they've done it before and will again.",
+      "text": "Putting it down means looking at it first."
+    },
+    {
+      "frame": 5,
+      "visual": "Overhead shot of a journal open to a blank page, single pen beside it, early morning light. The page is still empty but the intention to write is there.",
+      "text": "Name it. Even only to yourself."
+    },
+    {
+      "frame": 6,
+      "visual": "Person standing outdoors at golden hour, hand flat on chest, eyes closed — not dramatic, just still. A moment of contact with something interior.",
+      "text": "You don't have to resolve it today."
+    },
+    {
+      "frame": 7,
+      "visual": "Same window as frame 1, light shifted slightly warmer. Person still present, but posture fractionally more open. No dramatic change. Just a degree of ease.",
+      "text": "Stop calling it nothing."
+    }
+  ]
+}

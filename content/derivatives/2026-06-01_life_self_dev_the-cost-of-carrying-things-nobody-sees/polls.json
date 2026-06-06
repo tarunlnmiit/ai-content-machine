@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "When something is quietly wrong, what shows up first?",
+    "options": [
+      "Brain fog — can't focus",
+      "Short patience with people",
+      "Physical exhaustion",
+      "Emotional flatness"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "Which is harder to name in yourself?",
+    "options": [
+      "Burnout from overwork",
+      "Exhaustion from holding things",
+      "Both feel the same",
+      "I haven't thought about it"
+    ]
+  }
+]

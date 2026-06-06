@@ -1,0 +1,26 @@
+Format: carousel
+Why: Data Science/Tech step-by-step educational content consistently achieves highest save-weighted engagement as carousel per analytics data (avg score 50.9 vs 28.1 for reels).
+
+Your Python loop is 200x slower than it needs to be.
+
+NumPy isn't just a library. It's a different way of thinking about data.
+
+Instead of writing loops, you write operations — and NumPy applies them to every element at once.
+
+scores[scores > 90]
+
+That one line is filtering, boolean logic, and vectorization in 19 characters. No loop. No append. Just a description of what you want.
+
+Swipe through to see the mental model shift — from Python loops to array operations. This is Tutorial 3/10 in the Python for Data Science series. Full post linked in bio.
+
+Slides:
+  1. Your Python loop is 200x slower than it needs to be
+  2. What NumPy actually is (and why it's faster)
+  3. 3 ways to create arrays you'll actually use
+  4. Stop looping. Start describing.
+  5. Boolean indexing: filter without writing a loop
+  6. Mean, std, percentile — aggregations in one line
+  7. 2D arrays: rows, columns, and the axis problem
+  8. The mental shift that makes Pandas click
+
+#Python #DataScience #NumPy #LearnPython #DataScienceTips

@@ -1,0 +1,87 @@
+{
+  "format": "Canva",
+  "title_slide": "NumPy: The Art of Thinking in Arrays",
+  "slides": [
+    {
+      "slide_number": 1,
+      "heading": "NumPy: The Art of Thinking in Arrays",
+      "bullet_points": [
+        "Tutorial 3/10 — Python for Data Science",
+        "Why Python loops aren't enough",
+        "The mental shift that changes everything"
+      ],
+      "speaker_note": "Frame this as a conceptual upgrade, not just a new library to memorize."
+    },
+    {
+      "slide_number": 2,
+      "heading": "The Performance Problem",
+      "bullet_points": [
+        "Python loops: flexible, slow",
+        "1M numbers: Python loop = 12s, NumPy = 0.08s",
+        "50–200x faster — structural, not marginal"
+      ],
+      "speaker_note": "Lead with the concrete benchmark so the why is clear before showing any code."
+    },
+    {
+      "slide_number": 3,
+      "heading": "What NumPy Arrays Are",
+      "bullet_points": [
+        "All elements must be the same type",
+        "Stored in contiguous memory — no pointer-chasing",
+        "Operations run in compiled C and Fortran"
+      ],
+      "speaker_note": "Explain the tradeoff explicitly: less flexibility, far more performance."
+    },
+    {
+      "slide_number": 4,
+      "heading": "Creating Arrays: 3 Ways",
+      "bullet_points": [
+        "np.array([...]) — from a Python list",
+        "np.zeros(), np.ones(), np.arange() — from scratch",
+        "np.linspace(0, 1, 6) — fixed number of evenly spaced points"
+      ],
+      "speaker_note": "Highlight dtype in the output — it's the first visual difference from Python lists."
+    },
+    {
+      "slide_number": 5,
+      "heading": "Vectorized Operations",
+      "bullet_points": [
+        "scores * 2 — no loop, no append",
+        "scores + 5, scores ** 2, np.sqrt(scores)",
+        "One line, compiled execution, entire array at once"
+      ],
+      "speaker_note": "This is the conceptual core — show the before/after loop comparison explicitly."
+    },
+    {
+      "slide_number": 6,
+      "heading": "Boolean Indexing",
+      "bullet_points": [
+        "scores > 90 → array of True/False",
+        "scores[scores > 90] → filtered result",
+        "Same syntax Pandas uses: df[df['col'] > value]"
+      ],
+      "speaker_note": "Emphasize that learning this here means Pandas filtering won't require a new mental model."
+    },
+    {
+      "slide_number": 7,
+      "heading": "Aggregations and Outlier Detection",
+      "bullet_points": [
+        "mean(), std(), min(), max(), sum()",
+        "np.percentile(arr, 75) — IQR in three lines",
+        "6-line outlier detection using IQR method"
+      ],
+      "speaker_note": "Walk through the IQR outlier code — q25, q75, upper/lower fence, boolean filter."
+    },
+    {
+      "slide_number": 8,
+      "heading": "2D Arrays and the Axis Problem",
+      "bullet_points": [
+        "data[0, 2] → row 0, column 2",
+        "data[:, 2] → all rows, column 2",
+        "axis=0 collapses down; axis=1 collapses across"
+      ],
+      "speaker_note": "Use the mnemonic: 0 down, 1 across — it resolves the confusion faster than explanation."
+    }
+  ],
+  "total_slides": 8
+}

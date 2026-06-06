@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The cold clarity that arrives when you stop being confused about why authenticity is punished and recognize it as a system, not a mistake.",
+  "tone": [
+    "unflinching",
+    "elegiac",
+    "still"
+  ],
+  "visual_metaphor": "A cracked porcelain mask resting face-up on hard concrete — beautiful at distance, hollow underneath, the fracture revealing only more white emptiness",
+  "key_quotes": [
+    "shitting all over the hearts of the good ones",
+    "Only to make themselves happy. Only to make themselves happy.",
+    "The waking up in the first line isn't despair. It's the end of being fooled."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Black screen, single white serif word appears center frame and holds for two seconds before fading",
+      "text": "Notice."
+    },
+    {
+      "frame": 2,
+      "visual": "Slow pan across blurred crowd all facing one direction — one face in sharp focus, looking directly at camera, expression unreadable",
+      "text": "Thoughts driven by exteriority."
+    },
+    {
+      "frame": 3,
+      "visual": "Close-up of an ornate white mask laid face-up on cold stone floor, a single crack running through the center, harsh raking light from one side",
+      "text": "Wearing layers of masks themselves."
+    },
+    {
+      "frame": 4,
+      "visual": "A single open hand extended toward camera, palm up — a second hand enters frame and presses it down out of shot, slowly and deliberately",
+      "text": "Ready to tear down the true faces."
+    },
+    {
+      "frame": 5,
+      "visual": "Empty mirror in a dimly lit room, reflection shows a standing figure — but no one visible in the actual frame, just the mirror",
+      "text": "Only to make themselves happy."
+    },
+    {
+      "frame": 6,
+      "visual": "Same mirror, same room — the reflection is now gone too, just the empty glass and the dark room behind it",
+      "text": "Only to make themselves happy."
+    },
+    {
+      "frame": 7,
+      "visual": "Person seated at a large window, back to camera, pale light coming through, completely still — no motion, no resolution, just presence",
+      "text": "The end of being fooled."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Python loops vs NumPy — the 200x gap explained",
+  "description": "Your Python loop is 200x slower than it has to be.\nOne NumPy line. Same result. Here's why it matters.\n#Shorts #Python #NumPy #DataScience",
+  "tags": [
+    "Shorts",
+    "Python",
+    "NumPy",
+    "DataScience",
+    "PythonTips"
+  ],
+  "hook_visual": "Screen recording: Python loop running with visible cursor delay and a '12.4s' timer counting up — hard cut to a single NumPy line executing with '0.08s' displayed. Text overlay in first 2 seconds: '200x slower'",
+  "end_screen_cta": "Full NumPy tutorial on the channel — link above. Which part clicked last for you: vectorization or the axis parameter?"
+}

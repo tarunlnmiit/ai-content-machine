@@ -1,0 +1,69 @@
+NumPy is 50–200x faster than a Python loop on 1 million numbers.
+
+That's not marginal. That's the difference between watching a cursor blink for 12 seconds and getting the answer before you look up.
+
+Here's what changes when you stop looping and start thinking in arrays:
+
+Python lists are flexible — you can mix integers, strings, booleans in one list.
+
+That flexibility costs you. Every operation has to figure out what it's working with.
+
+NumPy arrays make a different deal: all elements must be the same type. Operations run in compiled C code underneath a familiar Python surface.
+
+The mental shift:
+
+❌ Python:
+for s in scores:
+    result.append(s * 2)
+
+✅ NumPy:
+scores * 2
+
+Same result. One runs element-by-element in interpreted Python. One fires a vectorized C operation across the entire array at once.
+
+Boolean indexing is where it gets genuinely elegant:
+
+scores[scores > 90]
+
+You're not writing a loop. You're describing a relationship: give me every score above 90.
+
+This is the exact syntax Pandas uses: df[df['col'] > value]
+
+Learn it here — Pandas won't feel like magic later.
+
+Outlier detection in 6 lines:
+
+q25 = np.percentile(salaries, 25)
+q75 = np.percentile(salaries, 75)
+iqr = q75 - q25
+upper = q75 + 1.5 * iqr
+lower = q25 - 1.5 * iqr
+outliers = salaries[(salaries > upper) | (salaries < lower)]
+
+Real exploratory analysis. Before any visualization library.
+
+2D arrays. One new concept: axis.
+
+data[0, 2] → row 0, column 2
+data[:, 2] → all rows, column 2
+
+axis=0 collapses down → result per column
+axis=1 collapses across → result per row
+
+Mnemonic: 0 down, 1 across.
+
+This trips everyone up once. After that it's automatic.
+
+I once spent an hour writing nested loops to compute metrics across a dataset.
+
+Felt proud I'd gotten it working.
+
+Then learned the same thing was two NumPy lines.
+
+The sting wasn't the speed difference. It was realizing I'd manually solved a problem NumPy had already solved years ago.
+
+NumPy teaches you to describe what you want, not instruct the machine step by step.
+
+Lists → sequence. Dicts → map. NumPy → operate on the whole thing at once.
+
+Full tutorial with code in the thread above. Follow for the rest of the series — Pandas is Tutorial 5.

@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "When did you find out Python loops were slow and NumPy existed?",
+    "options": [
+      "Before I wrote my first loop",
+      "After one painful slow project",
+      "I still use loops honestly",
+      "What's NumPy"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "What finally made NumPy click for you?",
+    "options": [
+      "Seeing the speed benchmark",
+      "Boolean indexing syntax",
+      "Realizing Pandas is built on it",
+      "Still hasn't fully clicked"
+    ]
+  }
+]

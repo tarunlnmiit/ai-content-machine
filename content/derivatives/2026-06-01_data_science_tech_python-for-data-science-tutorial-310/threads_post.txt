@@ -1,0 +1,7 @@
+Spent an hour writing nested loops to compute metrics across a dataset once. Felt good about finally getting it working.
+
+Then learned the same operation was two NumPy lines.
+
+The speed difference wasn't the sting. It was realizing I'd manually solved a problem that was solved in 2006.
+
+That's the NumPy tutorial. [BLOG_LINK]

@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "When honest content underperforms polished/performative content, what do you do?",
+    "options": [
+      "Keep making the real stuff anyway",
+      "Adjust style toward what spreads",
+      "Take a break from posting",
+      "Haven't figured it out yet"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "Have you ever felt professionally penalized for being too direct or genuine?",
+    "options": [
+      "Yes, more than once",
+      "Once or twice",
+      "Not professionally, but personally",
+      "No — authenticity has helped me"
+    ]
+  }
+]

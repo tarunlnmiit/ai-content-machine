@@ -1,0 +1,18 @@
+{
+  "main_text": "YOUR LOOPS ARE TOO SLOW",
+  "sub_text": "NumPy Changes How You Think About Data",
+  "background_mood": "dark tech grid with blue circuit traces",
+  "colour_palette": [
+    "#7C9CB0",
+    "#E8E0D5",
+    "#1C1C2E"
+  ],
+  "canva_search_term": "dark circuit grid",
+  "niche": "data_science_tech",
+  "blog_slug": "2026-06-01_data_science_tech_python-for-data-science-tutorial-310",
+  "blog_title": "Python for Data Science: Tutorial 3/10 — NumPy and the Art of Thinking in Arrays",
+  "tokens_used": {
+    "input": 0,
+    "output": 0
+  }
+}

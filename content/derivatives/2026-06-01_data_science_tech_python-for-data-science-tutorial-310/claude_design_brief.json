@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The quiet relief of discovering you've been doing something the hard way — and the almost embarrassing simplicity of the better path that was always there.",
+  "tone": [
+    "analytical",
+    "direct",
+    "quietly revelatory"
+  ],
+  "visual_metaphor": "A person carrying buckets of water one at a time, then discovering a pipe that delivers the whole river in a single operation",
+  "key_quotes": [
+    "Python loops are slow, and NumPy arrays are not.",
+    "You don't write loops. You write operations, and NumPy applies them to every element.",
+    "The embarrassing part wasn't the performance difference; it was realizing I'd spent an hour writing code that NumPy had already solved years ago."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Close-up of a laptop screen showing a Python for-loop — warm tungsten light, cursor blinking slowly, a loading spinner in the corner",
+      "text": "Your loop is the problem."
+    },
+    {
+      "frame": 2,
+      "visual": "Same screen, now a single NumPy line — cursor returns instantly, stark visual contrast to frame 1, clean terminal output",
+      "text": "One line. Same result."
+    },
+    {
+      "frame": 3,
+      "visual": "Abstract grid of data cells all lighting up simultaneously in a wave — not one at a time, all at once, like a signal passing through a matrix",
+      "text": "Describe it. Don't instruct it."
+    },
+    {
+      "frame": 4,
+      "visual": "Isolated code snippet: scores[scores > 90] — white text on dark background, nothing else in frame, maximum visual clarity",
+      "text": "Filter without a loop."
+    },
+    {
+      "frame": 5,
+      "visual": "Clean 2D grid diagram, one column highlighted in accent color, labels showing data[:, 2] — technical illustration, no clutter",
+      "text": "Rows. Columns. Axis."
+    },
+    {
+      "frame": 6,
+      "visual": "Person at a desk, slightly slumped, staring at a screen covered in nested loop code — relatable, self-deprecating energy, warm light",
+      "text": "NumPy solved this in 2006."
+    },
+    {
+      "frame": 7,
+      "visual": "Same person, upright, looking at two clean NumPy lines on the same screen — not triumphant, just quietly satisfied",
+      "text": "Think in arrays. Not steps."
+    }
+  ]
+}

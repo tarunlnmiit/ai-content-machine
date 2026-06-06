@@ -1,0 +1,14 @@
+Subject: Why your Python loop is the problem
+Preview: NumPy runs 200x faster — but the real shift is how you think.
+
+There's a specific feeling when you first run a NumPy operation on 100,000 rows and it returns in under a second.
+
+You've been looping over lists for months. You thought Python was slow. It turns out Python loops are slow — but NumPy, running vectorized operations in compiled C underneath, is not.
+
+In this week's tutorial, I break down the mental shift from writing loops to describing operations. We cover creating arrays three ways, vectorized math and boolean indexing (the same pattern Pandas uses for filtering), five aggregations that give you a full statistical summary in one shot, and 2D arrays with the axis parameter that trips everyone up at least once.
+
+The part I find most useful: six lines of IQR-based outlier detection you can drop directly into any exploratory analysis — no visualization library required.
+
+This is Tutorial 3 of 10. Pandas is two weeks out, and every pattern here carries forward directly. You won't be starting over. You'll be adding a layer.
+
+Read the full tutorial with code: [READ_LINK]
