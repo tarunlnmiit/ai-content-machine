@@ -23,6 +23,12 @@ Option A — topic only:
 python3 scripts/produce_blog.py --topic 'YOUR POETRY TOPIC' --niche poetry --humanize
 ```
 
+Optional listicle mode (Top-N poems/themes, e.g. "Top 5 poems on solitude"):
+```bash
+python3 scripts/produce_blog.py --topic 'YOUR POETRY TOPIC' --niche poetry --listicle 5 --humanize
+```
+- `--listicle N` (N ≥ 2) — each numbered item = distinct poem/quote/theme, lyrical bodies ≤100w each. Skip for default poem-first structure.
+
 Option B — have poem file:
 ```bash
 # Store poem in data/poems/[slug].txt
@@ -111,21 +117,49 @@ Prompts auto-save to `content/prompts/[slug]_worksheet_prompt.txt`
 4. Embed ConvertKit form via HTML embed block
 5. Export as shareable link → Save to `config/worksheet_config.json`
 
-## Step 8 — Claude Design: slides + stories + reel covers (~15 min, 3 blogs)
+## Step 8 — Claude Design: slides + stories + reel covers + social (~15 min, 3 blogs)
+
+The design-prompt doc `output/scheduled/claude_design_prompts_{slug}.md` is the **spec**. Claude (in Claude Code) hand-builds one self-contained HTML per artifact in `assets/slides/`, then we render to PNG/PDF/MP4 with the exporters below. Precedent to mirror: any existing `assets/slides/{prior_slug}_{slides,story,social,reel_cover}.html`.
 
 ```bash
-mkdir -p assets/{slides,stories,reels}
+mkdir -p assets/{slides,stories,reels,social_posts}
 ```
 
-For each blog, open `output/scheduled/claude_design_prompts_{slug}.md` and paste into Claude Design:
+**Build** (ask Claude): *"Build the slides/story/social/reel-cover HTML for `{slug}` from its design-prompt doc, mirroring the prior `_slides.html` etc."* Each HTML exposes the export contract used by `export_html_deck.py`:
+`window.__exportFrames = [{file, w, h}, ...]` + `window.__showFrame(i)`. Story HTML instead exposes `window._storyMeta` + `_setStoryTime`/`_storyRender` (read by `export_story_animation.py`). Photographic frames use `<image-slot placeholder="...">` slots to fill later.
+
+**Render:**
+
+```bash
+SLUG={slug}
+
+# 1. Slide deck → PNGs + PDF (1920×1080)
+conda run -n content_engine_env python3 scripts/export_html_deck.py \
+  --html assets/slides/${SLUG}_slides.html \
+  --out-dir assets/slides/${SLUG} \
+  --pdf ${SLUG}_slides.pdf
+
+# 3. Reel cover → 9:16 PNG
+conda run -n content_engine_env python3 scripts/export_html_deck.py \
+  --html assets/slides/${SLUG}_reel_cover.html --out-dir assets/reels
+
+# 4. Social post set → IG/LinkedIn/Twitter/Threads PNGs (per-variant native size)
+conda run -n content_engine_env python3 scripts/export_html_deck.py \
+  --html assets/slides/${SLUG}_social.html --out-dir assets/social_posts
+
+# 2. Instagram Story → MP4 + 7 slide PNGs (1080×1920). Positional args: html, out-dir, slug.
+conda run -n content_engine_env python3 scripts/export_story_animation.py \
+  assets/slides/${SLUG}_story.html assets/stories/${SLUG} ${SLUG}
+```
 
 | Section | Output | Save to |
 |---------|--------|---------|
-| 1. Slide deck | PDF | `assets/slides/{slug}_slides.pdf` |
-| 2. Instagram Story sequence | PNG sequence | `assets/stories/{slug}_story_*.png` |
+| 1. Slide deck | PDF + 9 PNGs | `assets/slides/{slug}/{slug}_slides.pdf` · `slide_N.png` |
+| 2. Instagram Story | MP4 + 7 PNGs | `assets/stories/{slug}/{slug}_story.mp4` · `_story_slide_NN.png` |
 | 3. Reel cover | 9:16 PNG | `assets/reels/{slug}_cover.png` |
+| 4. Social post set | 4 PNGs | `assets/social_posts/{slug}_{instagram,linkedin,twitter,threads}.png` |
 
-Section 4 (social post set) is replaced by carousel generation below.
+Carousels (below) remain the primary IG feed post; the social post set is a lighter single-image variant.
 
 ## Step 9 — Generate carousels (replaces social post set, ~10 min, 3 blogs)
 
@@ -178,9 +212,7 @@ print(CAROUSEL_SYSTEM.format(**b, slides=7, initial='B'))
 
 ```bash
 python3 scripts/push_to_buffer.py --auto --dry-run   # preview
-python3 scripts/push_to_buffer.py --auto              # auto-decide all niches
+python3 scripts/push_to_buffer.py --auto              # run
 ```
-Buffer < 4 weeks → copied to next empty slot. Buffer full → stays as live content.
-File naming: `content/blogs/YYYY-MM-DD_{niche}_{slug}.md` · scripts: `content/scripts/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md`
-See full naming table: [weekly-operating-guide.md § File Naming Conventions](weekly-operating-guide.md#file-naming-conventions)
+→ Decision logic + file naming: [_buffer_decision.md](_buffer_decision.md)
 

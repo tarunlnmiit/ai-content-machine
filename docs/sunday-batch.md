@@ -32,6 +32,8 @@ Do this *only if* you plan to batch Sunday. Otherwise skip.
 4. Open Claude. Run for each:
    ```bash
    python3 scripts/produce_blog.py --slug <slug> --niche <niche>
+   # optional: force Top-N listicle structure
+   python3 scripts/produce_blog.py --slug <slug> --niche <niche> --listicle 5
    ```
 5. Read each draft. Fix voice (banned words check, add personal example). 15 min per blog max.
 
@@ -139,7 +141,7 @@ Pipeline have buffer. One missed Sunday = scheduler post backlog. Real risk only
 ```bash
 # Full batch (run sequentially Sunday)
 python3 scripts/sync_ideas_to_notion.py        # pull fresh ideas
-python3 scripts/produce_blog.py --slug <s>     # x3 niches
+python3 scripts/produce_blog.py --slug <s>     # x3 niches  (add --listicle N for Top-N format)
 python3 scripts/auto_edit.py --slug <s>        # x3 niches
 python3 scripts/clip_shorts.py --slug <s>      # x3 niches
 python3 scripts/generate_design.py --slug <s>  # thumbnails

@@ -1,27 +1,37 @@
-# Video Production Guide — Record → Polished Long-form
+# Video Production Guide — Record → Manual Edit → Publish
 
-End-to-end pipeline. You record. Scripts do the rest.
+Record talking head. Prepare transcription + b-roll. Edit manually in DaVinci.
 
 ## TL;DR
 
 ```bash
 # 1. Record (front cam, looking at camera). Save to assets/raw/
-# 2. Prepare edit plan (transcribe + silence detect + fetch b-roll):
+# 2. Prepare edit metadata (transcribe + silence detect + fetch b-roll):
 python3 scripts/prepare_remotion_edit.py \
   --raw "assets/raw/life_habits.MOV" \
   --script "content/scripts/2026-05-22_..._yt.md" \
   --niche life \
   --slug life_habits
 
-# 3. Preview in browser:
-cd remotion && npx remotion studio
-# → select composition, scrub through
+# 2b. Generate Remotion animation prompts for [ANIMATION:] tags in script:
+python3 scripts/generate_animation_prompts.py "content/scripts/2026-05-22_..._yt.md"
+# → content/prompts/{slug}_animation_prompts.txt  (one prompt per tag, feed to Claude)
 
-# 4. Render final MP4:
-npx remotion render LifeHabits --output ../assets/video/edited/life_habits.mp4
+# 2b (alt). Render animations directly to MP4 (uses built-in brand templates):
+python3 scripts/generate_animation_prompts.py "content/scripts/2026-05-22_..._yt.md" --render
+# → output/animations/{slug}_{n}_{type}.mp4  (one MP4 per animation tag)
+
+# 3. Edit manually in DaVinci:
+# - Trim silence (reference: prepare script output)
+# - Overlay b-roll from assets/videos/life_habits/
+# - Color grade per niche (see niche notes below)
+# - Export to assets/video/edited/life_habits.mp4
+
+# 4. Generate shorts from final MP4:
+python3 scripts/clip_shorts.py --slug life_habits --count 4
 ```
 
-Output: `assets/video/edited/<slug>.mp4` — animated word-by-word captions + stock b-roll.
+Output: `assets/video/edited/<slug>.mp4` edited manually with captions + stock b-roll.
 
 ---
 
@@ -34,16 +44,13 @@ brew install ffmpeg
 
 `.env` needs `PEXELS_API_KEY` + `PIXABAY_API_KEY` for stock b-roll.
 
-Remotion (already installed in `remotion/`):
-```bash
-cd remotion && npm install
-```
+DaVinci (download from blackmagicdesign.com). Free version sufficient for manual editing.
 
 Verify:
 ```bash
 python3 -c "import whisper; print('ok')"
 which ffmpeg
-cd remotion && node -e "require('remotion')" && echo ok
+which davinci  # or open DaVinci app
 ```
 
 ---
@@ -103,6 +110,29 @@ cd remotion && node -e "require('remotion')" && echo ok
 
 Save: `assets/raw/2026-05-21-life-habits.MOV`
 
+### 1b. Generate animation prompts (optional, for scripts with `[ANIMATION:]` tags)
+
+```bash
+python3 scripts/generate_animation_prompts.py \
+  "content/scripts/2026-05-21-data-science-tech-{slug}_yt.md"
+```
+
+Output: `content/prompts/{slug}_animation_prompts.txt`. Each block is a complete Remotion component spec (frame ranges, spring physics, brand colors, required props). Feed each block to Claude → get a `.tsx` file → drop into `remotion/src/compositions/`.
+
+**Or render MP4s directly** using built-in brand templates (no manual TSX step):
+
+```bash
+python3 scripts/generate_animation_prompts.py \
+  "content/scripts/2026-05-21-data-science-tech-{slug}_yt.md" \
+  --render
+```
+
+Output: `output/animations/{slug}_{n}_{type}.mp4`. Writes temp TSX components to `remotion/src/compositions/animations/`, renders via `npx remotion render`, then cleans up.
+
+Classifies tag type automatically: `title_card`, `outro_card`, `lower_third`, `transition`, `generic`.
+
+---
+
 ### 2. Run `prepare_remotion_edit.py`
 
 ```bash
@@ -123,123 +153,97 @@ What it does:
 
 Runtime: ~3–8 min per 10 min of raw on M-series Mac (Whisper dominates).
 
-Flags: none needed for standard run. Edit plan JSON is human-editable if timings feel off.
+**Cut punch-in:** the `TalkingHeadEdit` composition applies a subtle scale punch-in
+(~3.5% over ~0.23s, easing out) at every cut point after the first segment, so clap
+cuts read as intentional human edits instead of jarring jump-cuts. Tunable via
+`CUT_PUNCH_SCALE` / `CUT_PUNCH_FRAMES` in `remotion/src/compositions/TalkingHeadEdit.tsx`.
 
-### 3. Preview in Remotion Studio
+Flags:
 
-```bash
-cd remotion && npx remotion studio
-```
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--subtitles` | off | Burn animated word-by-word captions into the render |
 
-Opens `localhost:3000`. Select composition (`LifeHabits`, `PoetryLove`, etc.).
+Add `--subtitles` to burn in captions. Omit for a clean render (e.g. when platform adds its own captions, or you'll add SRT separately).
 
-What you see:
-- Camera footage with leading/trailing silence trimmed AND every detected clap region cut out (multi-segment stitch)
-- Per-niche color grade: warm peach + soft-light overlay for `life`/`poetry`, cool teal for `ds`; contrast/saturation bumped
-- Volume boosted +4 dB on top of loudnorm (Remotion `volume={1.6}` on main camera)
-- Stock b-roll at **opacity 1.0** with black background — talking head is fully hidden during cue windows
-- Poetry: visible film grain (8% opacity, animated SVG noise) + radial vignette (18%)
-- Life: subtle grain (4%) + lighter vignette (10%)
-- DS: no grain (clean modern look)
-- Animated word-by-word captions with gold highlight on active word (rendered above grain layer for crispness)
+### 3. Manual Edit in DaVinci
 
-To adjust b-roll timing: edit `remotion/public/edit-plans/<slug>.json` → change `brollCues[n].startSec` → Studio hot-reloads.
+Open DaVinci → import `assets/raw/<slug>.MOV`.
 
-### 4. Render
+Reference these prepare script outputs:
+- **Silence trim:** See `remotion/public/edit-plans/<slug>.json` → `silenceTrimStartSec` / `silenceTrimEndSec`
+- **Cut segments (claps):** See `cutSegments` array in same JSON for exact frame boundaries to remove
+- **B-roll clips:** Stored in `assets/videos/<slug>/` — use `remotion/public/edit-plans/<slug>.json` → `brollCues` for timing + descriptions
+- **Captions JSON:** `remotion/public/captions/<slug>.json` has word-level timestamps (Whisper output) if you want to burn captions
 
-```bash
-cd remotion
-npx remotion render LifeHabits --output ../assets/video/edited/life_habits.mp4
-npx remotion render PoetryLove --output ../assets/video/edited/poetry_love.mp4
-```
-
-Render time: ~2–5× video duration (headless Chrome, frame-by-frame). 10 min video ≈ 20–50 min render.
-
----
-
-## Composition IDs (Root.tsx)
-
-| Slug | Composition ID | Niche |
-|------|---------------|-------|
-| `life_habits` | `LifeHabits` | life |
-| `poetry_love` | `PoetryLove` | poetry |
-
-To add a new video: add `prepare_remotion_edit.py` run with new `--slug`, then register composition in `remotion/src/Root.tsx`.
+Editing checklist:
+- Trim leading/trailing silence
+- Cut out clap sync markers + 2s settle time (per `cutSegments`)
+- Layer stock b-roll from `assets/videos/<slug>/` per `brollCues` timings
+- Color grade (see niche specs below)
+- Mix volume (-16 LUFS target, ~-4dB boost on talking head)
+- Export to `assets/video/edited/<slug>.mp4`
 
 ---
 
-## Edit Plan JSON
+## Edit Plan Reference
 
-`remotion/public/edit-plans/<slug>.json` — human-editable:
+`prepare_remotion_edit.py` outputs to `remotion/public/edit-plans/<slug>.json`:
 
 ```json
 {
   "slug": "life_habits",
-  "niche": "life",
-  "rawVideo": "videos/life_habits.mp4",
   "silenceTrimStartSec": 1.5,
   "silenceTrimEndSec": 683.9,
   "cutSegments": [
-    { "startSec": 5.2, "endSec": 312.4 },
-    { "startSec": 318.1, "endSec": 683.9 }
+    { "startSec": 5.2, "endSec": 7.2 },
+    { "startSec": 318.1, "endSec": 320.1 }
   ],
   "brollCues": [
     {
       "id": "cue-0",
-      "description": "morning light...",
+      "description": "morning light through window",
       "startSec": 114.0,
       "durationSec": 5.0,
-      "clipFile": "broll/life_habits/cue-0.mp4"
+      "clipFile": "cue-0.mp4"
     }
   ],
   "captionsFile": "captions/life_habits.json"
 }
 ```
 
-Adjust `startSec` / `durationSec` per cue → Studio reloads live.
-
----
-
-## Output Layout
-
-```
-assets/
-  raw/                          # recorded MOV files go here
-    life_habits.MOV
-  video/
-    edited/                     # FINAL renders
-      life_habits.mp4
-      poetry_love.mp4
-
-remotion/
-  public/
-    videos/                     # symlinks → assets/raw/*.MOV
-    captions/                   # Caption[] JSON per slug
-    broll/<slug>/               # downloaded stock clips
-    edit-plans/                 # edit plan JSON per slug
-  src/
-    compositions/
-      TalkingHeadEdit.tsx       # main composition
-      CaptionPage.tsx           # word-highlight caption component
-    Root.tsx                    # composition registry
-```
+Use `cutSegments` frame boundaries to align clap cuts in DaVinci. Use `brollCues` timing + descriptions to layer stock footage.
 
 ---
 
 ## Per-Niche Notes
 
 ### Life & Self-Development
-- Talking-head full-frame. B-roll for emotional beats.
+- Talking-head full-frame. B-roll for emotional beats + Remotion animation overlays.
 - `--niche life` → Pexels searches for lifestyle/nature/growth visuals.
+- Script contains `[BROLL:]` cues (stock clips) + `[ANIMATION:]` markers (Remotion overlays):
+  - `[ANIMATION: 3-second title card — "Episode Title"]` — before first word
+  - `[ANIMATION: 3-second lower third — "Core insight ≤8 words"]` — at 1–2 key moments mid-script
+  - `[ANIMATION: 5-second outro card — "Next: tease"]` — after final word
+- Render animations Friday (Step 2b) → `output/animations/[slug]_*.mp4` → layer in DaVinci as overlay tracks
+- **Brand auto-detected** from `SHOW: Breath of Life` in script header → warm amber (`#d4885a`) + Georgia font. No flag needed.
 
 ### Poetry / Quotes
-- Heavy b-roll (abstract/nature). `[PAUSE]` markers in script — silence detector leaves intentional pauses intact (only trims leading/trailing silence).
+- Heavy b-roll (abstract/nature) + Remotion animation overlays. `[PAUSE]` markers in script — silence detector leaves intentional pauses intact (only trims leading/trailing silence).
 - `--niche poetry` → abstract/sky/water/contemplative visuals.
+- Script contains `[BROLL:]` cues + `[ANIMATION:]` markers:
+  - `[ANIMATION: 3-second title card — "Poem Title"]` — before first word
+  - `[ANIMATION: 3-second lower third — "key stanza line"]` — at 1–2 key poem moments
+  - `[ANIMATION: 5-second outro card — "Next: tease"]` — after final word
+- Render animations Friday (Step 2b) → `output/animations/[slug]_*.mp4` → layer in DaVinci as overlay tracks
+- **Brand auto-detected** from `SHOW: Breath of Poetry` in script header → violet (`#a78bfa`) + Georgia font. No flag needed.
 
 ### Data Science / Tech
 - Talking-head for context; screen-record code sections separately.
-- Composite talking-head + screen-record in Remotion or DaVinci manually.
+- Composite talking-head + screen-record in DaVinci manually.
 - `--niche ds` → code/data/tech visuals for non-screen b-roll.
+- After editing, HyperFrames works well for DS: code snippets, bar charts, stat cards, flowcharts auto-placed per transcript.
+- **Brand auto-detected** from `SHOW: Breath of Data Science` in script header → blue (`#58a6ff`) + JetBrains Mono font.
 
 ---
 
@@ -250,38 +254,143 @@ remotion/
 | `whisper` import error | `pip install openai-whisper` |
 | `ffmpeg: command not found` | `brew install ffmpeg` |
 | Pexels/Pixabay 0 results | Shorten `[BROLL:]` cue text to 3–5 words |
-| B-roll timing off | Edit `edit-plans/<slug>.json` `startSec` values → Studio reloads |
 | Captions out of sync | Re-run `prepare_remotion_edit.py` with `--whisper-model small` for better accuracy |
-| Remotion Studio blank | Edit plan JSON missing — run `prepare_remotion_edit.py` first |
-| Render OOM | Close other apps; Remotion renders frame-by-frame in Chrome |
-| New video not in Studio | Register composition in `remotion/src/Root.tsx` |
-| Audio still quiet | Delete `remotion/public/videos/<slug>.mp4` and rerun prepare script — loudnorm only bakes on first transcode |
-| Claps still audible | Inspect `cutSegments` in plan JSON — if only 1 segment, tune `CLAP_PEAK_OFFSET_DB` (lower = stricter) or `CLAP_MAX_DURATION` in `prepare_remotion_edit.py` |
-| Want more/less grain | Edit `FilmGrainOverlay` in `remotion/src/compositions/TalkingHeadEdit.tsx` — change `grainOpacity` / `vignetteOpacity` per niche |
-| Color tint wrong | Edit `gradingFor(niche)` in same file — `filter` string + `overlayColor` |
+| B-roll timing reference missing | Ensure `remotion/public/edit-plans/<slug>.json` + `brollCues` exist before editing |
+| Claps not clear in JSON | Inspect `cutSegments` in plan JSON — if timestamps seem wrong, tune `CLAP_PEAK_OFFSET_DB` or `CLAP_MAX_DURATION` in `prepare_remotion_edit.py` |
+| DaVinci missing b-roll clips | Check `assets/videos/<slug>/` — run `prepare_remotion_edit.py` if empty |
+| Audio levels too low | Use loudnorm in DaVinci: `loudnorm=I=-16:TP=-1.5:LRA=11` filter or manual level boost +4dB |
 
 ---
 
 ## What This Does NOT Do (Yet)
 
-- ❌ Jump-cut silence removal mid-video (trims leading/trailing only — but multi-clap regions ARE cut)
-- ❌ Face-tracking crop for shorts
-- ❌ Intro/outro template
+`prepare_remotion_edit.py` handles transcription, silence trimming, and b-roll prep only. Manual editing in DaVinci handles:
+- ❌ Color grading
+- ❌ Caption burning (use captions JSON for reference, burn in DaVinci)
+- ❌ Intro/outro templates
 - ❌ Auto-upload (use `upload_youtube.py` separately)
-- ❌ Shorts generation from Remotion render (use `clip_shorts.py` on output MP4)
+
+Shorts are generated via `clip_shorts.py` on the final MP4.
 
 ---
 
-## Legacy: `auto_edit.py`
+## HyperFrames: Automated Visual Augmentation
 
-Previous ffmpeg-based pipeline still works as fallback:
+Post-production layer runs on **every edited MP4** after manual DaVinci editing. Claude analyzes transcript, picks element types, generates + renders augmented version automatically.
+
+### What it does
+
+1. Extracts audio → Whisper word timestamps
+2. Groups words into smart caption lines (pause/punctuation detection)
+3. Claude analyzes transcript → picks 4–7 elements with timing, position, content
+4. Generates HyperFrames HTML with cinematic captions + overlays
+5. Renders to MP4 via headless Chrome + FFmpeg
+
+### Prerequisites (one-time)
 
 ```bash
-python3 scripts/auto_edit.py \
-  --raw assets/raw/<slug>.MOV \
-  --script content/scripts/<slug>_yt.md \
-  --niche life \
-  --slug <slug>
+pip install openai-whisper
+node --version   # must be 22+
+ffmpeg --version # must be installed
 ```
 
-Faster to render (ffmpeg, not Chrome). Captions are static SRT burn (not animated). Use when Remotion render time is a bottleneck.
+### Usage
+
+```bash
+# Full pipeline — analyze + render (default intensity: light)
+python3 scripts/hyperframes_render.py assets/video/edited/<slug>.mp4
+
+# Control overlay density (default light). minimal/light = human-editor restraint;
+# dense = legacy maximal coverage. Use minimal for courses/teaching content.
+python3 scripts/hyperframes_render.py assets/video/edited/<slug>.mp4 --intensity minimal
+
+# Clip to first N seconds
+python3 scripts/hyperframes_render.py assets/video/edited/<slug>.mp4 --duration 60
+
+# Generate HTML only — inspect/tweak before rendering
+python3 scripts/hyperframes_render.py assets/video/edited/<slug>.mp4 --no-render
+cd /tmp/hf_<slug> && npm run render
+
+# Process ALL shorts for a slug in one command
+python3 scripts/hyperframes_render.py --shorts --slug 2026-05-25_data_science_tech_python-for-data-science-tutorial-210
+# → finds assets/video/edited/shorts/<slug>_short_*.mp4 and runs the full pipeline on each
+
+# Force-rebuild cache (use when shorts get re-exported with same filename)
+python3 scripts/hyperframes_render.py --shorts --slug <slug> --fresh
+
+# All options
+python3 scripts/hyperframes_render.py <video> [--slug name] [--duration N]
+                                               [--model tiny|base|small|medium]
+                                               [--intensity minimal|light|standard|dense]
+                                               [--no-render] [--output-dir path]
+                                               [--shorts] [--shorts-dir path]
+                                               [--fresh]
+```
+
+**Intensity (overlay density):** `--intensity` defaults to `light`. `minimal`/`light` give
+human-editor restraint — sparse overlays on genuine high-value beats, calm slide/fade motion.
+`standard` is moderate; `dense` is the legacy maximal look (overlay every ~12–15s, bouncy
+motion) — usually too much for teaching content. Verified on a 3-min sample: `minimal` → ~1
+overlay/min, no overshoot anims; `dense` → ~1/13s. Elements cache per-slug, so **pass `--fresh`
+after changing `--intensity`** or the prior run's elements are reused.
+
+**Cache behavior:** Project cached at `/tmp/hf_<slug>/`. Auto-invalidates when input video mtime is newer than `assets/clip.mp4`. Use `--fresh` to force wipe (e.g. when filename unchanged but content swapped).
+
+**Render quality (2026-06-04):** Pipeline now emits higher-fidelity MP4s:
+- Source re-encode: `libx264 -preset medium -crf 17 -profile:v high`, rec.709 color tags, AAC 192k/48kHz audio (was `-preset fast -crf 18`, default AAC).
+- Final HyperFrames render: invokes `hyperframes render` directly with `--quality high --crf 16 --fps 30 --browser-gpu` (was bare `npm run render` at default quality).
+- Overlay CSS: real `backdrop-filter: blur(14px)` on glass cards, depth shadow, font-smoothing on all text, softer vignette (38%/0.62), crisper caption shadow, `object-fit: cover` on background video so off-aspect inputs no longer squash.
+- Cost: ~30% longer render time; visibly sharper text, fuller voice, no color drift in downstream tools.
+
+Output: `assets/hyperframes/<date>_<slug>.mp4`
+
+### Element types — Claude picks automatically
+
+| Type | Claude picks it when… |
+|------|-----------------------|
+| `glass-card` | concept intro, metaphor, key definition |
+| `paradox-pair` | two opposing concepts in one sentence |
+| `progress-bars` | speed/time contrast (gradually vs instantly) |
+| `question-flip` | speaker explicitly shifts the question |
+| `flow-arrow` | before→after, cause→effect transition |
+| `icon-card` | emotional peak (heart, shield, star, brain, check, warning…) |
+| `bar-chart` | comparing quantities or rankings with data |
+| `line-chart` | trend, growth, accuracy over time |
+| `stat-card` | key metric/percentage speaker mentions |
+| `flowchart` | 3–4 step process or pipeline |
+| `code-snippet` | programming/technical content with syntax highlight |
+| `comparison-table` | before/after or two-approach contrast |
+| `notification-card` | result, completion, achievement moment |
+
+### Example outputs by niche
+
+**Poetry/emotional** → glass-card, paradox-pair, icon-card (heart), flow-arrow, question-flip
+
+**Data science/tech** → code-snippet, bar-chart, stat-card, flowchart, comparison-table
+
+**Life/self-dev** → question-flip, comparison-table, flow-arrow, notification-card
+
+### Composition rules (enforced automatically)
+
+| Rule | Detail |
+|------|--------|
+| **Safe zones** | Left strip `x < 560px` OR right strip `x > 1360px` |
+| **Vertical** | `top: 220–500px` — clears face + subtitle region |
+| **No face overlap** | Claude instructed never to place elements over `x: 560–1360px` |
+| **No overlapping** | Claude avoids same-position elements at same time |
+| **SVG arrows** | flow-arrow uses `stroke-dashoffset` draw animation — reliable in headless render |
+
+### Tweaking after `--no-render`
+
+Open `/tmp/hf_<slug>/index.html`:
+
+- Caption size: change `sz-md` → `sz-lg`/`sz-xl` on key lines
+- Emphasis: wrap words in `<span class="em">text</span>`
+- Re-run: `cd /tmp/hf_<slug> && npm run render`
+
+### Known limitations
+
+- **Burned-in source captions** conflict with overlays at talking-head shots — use clean export (no baked subs) for best results
+- **Render time**: ~3 min per 60s (headless Chrome, 30fps, 1920×1080)
+- **Chart data**: Claude derives values from transcript context; for exact numbers provide them in your video script
+

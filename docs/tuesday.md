@@ -23,6 +23,12 @@ Option A — topic only:
 python3 scripts/produce_blog.py --topic 'YOUR LIFE TOPIC' --niche life --humanize
 ```
 
+Optional listicle mode (Top-N format, e.g. "Top 3 habits that backfire"):
+```bash
+python3 scripts/produce_blog.py --topic 'YOUR LIFE TOPIC' --niche life --listicle 3 --humanize
+```
+- `--listicle N` (N ≥ 2) — forces Top-N structure with N numbered H2 item sections. Skip for default narrative.
+
 Option B — have notes/transcript:
 ```bash
 python3 scripts/ghostwrite.py --source notes.txt --niche life --voice conversational
@@ -61,9 +67,7 @@ python3 scripts/thumbnail_brief.py --input content/blogs/[monday_ds_blog].md
 
 ```bash
 python3 scripts/push_to_buffer.py --auto --dry-run   # preview
-python3 scripts/push_to_buffer.py --auto              # auto-decide all niches
+python3 scripts/push_to_buffer.py --auto              # run
 ```
-Buffer < 4 weeks → copied to next empty slot. Buffer full → stays as live content.
-File naming: `content/blogs/YYYY-MM-DD_{niche}_{slug}.md` · scripts: `content/scripts/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md`
-See full naming table: [weekly-operating-guide.md § File Naming Conventions](weekly-operating-guide.md#file-naming-conventions)
+→ Decision logic + file naming: [_buffer_decision.md](_buffer_decision.md)
 

@@ -2,7 +2,7 @@
 
 ---
 
-## Step 1 — Prepare Remotion edit: Life (~8 min)
+## Step 1 — Prepare edit metadata: Life (~5 min)
 
 Reference: `docs/video-production-guide.md`
 
@@ -16,21 +16,45 @@ python3 scripts/prepare_remotion_edit.py \
   --slug life_[slug]
 ```
 
-Pipeline: Whisper transcribe → adaptive silence detect → fetch stock b-roll (Pexels/Pixabay) → write `remotion/public/edit-plans/[slug].json` + `remotion/public/captions/[slug].json`.
+Outputs:
+- `remotion/public/edit-plans/[slug].json` — silence trim boundaries + clap cut segments + b-roll cue timings
+- `remotion/public/captions/[slug].json` — word-level timestamps for manual caption burning
+- `assets/videos/[slug]/` — downloaded stock b-roll clips
 
-Then preview + render:
+### Step 1b — Render animation overlays: Life
+
 ```bash
-cd remotion && npx remotion studio
-# Select LifeHabits composition → scrub through, check captions + broll timing
-
-npx remotion render LifeHabits --output ../assets/video/edited/[slug].mp4
+python3 scripts/generate_animation_prompts.py \
+  content/scripts/YYYY-MM-DD-life-self-dev-[life_slug]_yt.md \
+  --render
 ```
 
-Output: `assets/video/edited/[slug].mp4` with animated word-by-word captions + stock b-roll overlay.
+Output: `output/animations/[life_slug]_{n}_{type}.mp4` — title card + lower thirds + outro card. Layer as overlay tracks in DaVinci during manual edit.
+
+Then manually edit in DaVinci (see video-production-guide.md Step 3 for full checklist). Export final to `assets/video/edited/[slug].mp4`.
+
+### HyperFrames augmentation (mandatory)
+
+Apply Claude-powered visual overlay (glass cards, flow arrows, charts, etc.) to the edited MP4:
+
+```bash
+python3 scripts/hyperframes_render.py assets/video/edited/[life_slug].mp4 \
+  --slug life-[slug]-aug
+# → assets/hyperframes/<date>_life-[slug]-aug.mp4
+```
+
+Or inspect before rendering:
+```bash
+python3 scripts/hyperframes_render.py assets/video/edited/[life_slug].mp4 --no-render
+# edit /tmp/hf_*/index.html if needed
+cd /tmp/hf_*/ && npm run render
+```
+
+Reference: `docs/video-production-guide.md` → HyperFrames section.
 
 ---
 
-## Step 2 — Prepare Remotion edit: Poetry (~8 min)
+## Step 2 — Prepare edit metadata: Poetry (~5 min)
 
 ```bash
 python3 scripts/prepare_remotion_edit.py \
@@ -38,20 +62,63 @@ python3 scripts/prepare_remotion_edit.py \
   --script content/scripts/YYYY-MM-DD-poetry-quotes-[poetry_slug]_yt.md \
   --niche poetry \
   --slug poetry_[slug]
-
-cd remotion
-npx remotion render PoetryLove --output ../assets/video/edited/[slug].mp4
 ```
 
-Poetry-specific: heavier b-roll (abstract/nature). `[PAUSE]` markers preserved — silence detector keeps intentional pauses.
+Same output structure as Step 1. Poetry-specific: heavier b-roll (abstract/nature). `[PAUSE]` markers preserved — silence detector keeps intentional pauses intact.
+
+### Step 2b — Render animation overlays: Poetry
+
+```bash
+python3 scripts/generate_animation_prompts.py \
+  content/scripts/YYYY-MM-DD-poetry-quotes-[poetry_slug]_yt.md \
+  --render
+```
+
+Output: `output/animations/[poetry_slug]_{n}_{type}.mp4` — title card (poem title) + lower thirds (key stanza lines) + outro card. Layer as overlay tracks in DaVinci during manual edit.
+
+Then manually edit in DaVinci. Export final to `assets/video/edited/[slug].mp4`.
+
+### HyperFrames augmentation (mandatory)
+
+```bash
+python3 scripts/hyperframes_render.py assets/video/edited/[poetry_slug].mp4 \
+  --slug poetry-[slug]-aug
+# → assets/hyperframes/<date>_poetry-[slug]-aug.mp4
+```
 
 ---
 
-## Step 3 — Auto-generate DS shorts (~3 min)
+## Step 3 — Manual edit + HyperFrames: DS (~10 min)
+
+If editing a DS video (talking-head + screen-record composite):
+
+```bash
+python3 scripts/prepare_remotion_edit.py \
+  --raw assets/raw/[ds_slug].MOV \
+  --script content/scripts/YYYY-MM-DD-data-science-tech-[ds_slug]_yt.md \
+  --niche ds \
+  --slug ds_[slug]
+```
+
+Then manually edit in DaVinci (composite talking-head + screen-record, reference prepare script outputs). Export to `assets/video/edited/[slug].mp4`.
+
+### HyperFrames augmentation (mandatory)
+
+```bash
+python3 scripts/hyperframes_render.py assets/video/edited/[ds_slug].mp4 \
+  --slug ds-[slug]-aug
+# → assets/hyperframes/<date>_ds-[slug]-aug.mp4
+```
+
+Claude picks: code-snippet, bar-chart, stat-card, flowchart, comparison-table elements per transcript.
+
+---
+
+## Step 5 — Auto-generate DS shorts (~3 min)
 
 Slug format: `YYYY-MM-DD_data_science_tech_[slug]` (matches filename in `assets/video/edited/`)
 
-If you hand-edited the rendered video after Remotion, run this first to re-transcribe and generate fresh metadata:
+Generate fresh metadata from edited video:
 ```bash
 python3 scripts/make_shorts_meta.py \
   --slug 2026-05-21_data_science_tech_[ds_slug] \
@@ -59,19 +126,26 @@ python3 scripts/make_shorts_meta.py \
 # Optional: --whisper-model small for better accuracy
 ```
 
+Then clip:
 ```bash
 python3 scripts/clip_shorts.py --slug 2026-05-21_data_science_tech_[ds_slug] --count 4
 # → assets/video/edited/shorts/2026-05-21_data_science_tech_[ds_slug]_short_NN.mp4
 # Manifest: assets/video/edited/shorts/2026-05-21_data_science_tech_[ds_slug]_shorts_manifest.json
 ```
 
+### HyperFrames on DS shorts (mandatory)
+
+```bash
+python3 scripts/hyperframes_render.py --shorts --slug 2026-05-21_data_science_tech_[ds_slug]
+```
+
 ---
 
-## Step 4 — Auto-generate Life shorts (~3 min)
+## Step 6 — Auto-generate Life shorts (~3 min)
 
 Slug format: `YYYY-MM-DD_life_self_dev_[slug]`
 
-If you hand-edited the rendered video after Remotion, run this first to re-transcribe and generate fresh metadata:
+Generate fresh metadata from edited video:
 ```bash
 python3 scripts/make_shorts_meta.py \
   --slug 2026-05-21_life_self_dev_[life_slug] \
@@ -79,29 +153,43 @@ python3 scripts/make_shorts_meta.py \
 # Optional: --whisper-model small for better accuracy
 ```
 
+Then clip:
 ```bash
 python3 scripts/clip_shorts.py --slug 2026-05-21_life_self_dev_[life_slug] --count 4
 # → assets/video/edited/shorts/2026-05-21_life_self_dev_[life_slug]_short_NN.mp4
 # Manifest: assets/video/edited/shorts/2026-05-21_life_self_dev_[life_slug]_shorts_manifest.json
 ```
 
+### HyperFrames on Life shorts (mandatory)
+
+```bash
+python3 scripts/hyperframes_render.py --shorts --slug 2026-05-21_life_self_dev_[life_slug]
+```
+
 Claude CLI picks best 30-60s hook segments from transcript. Cuts + crops 9:16 + burns vertical captions.
 
 ---
 
-## Step 5 — Auto-generate Poetry shorts (~3 min)
+## Step 7 — Auto-generate Poetry shorts (~3 min)
 
 Slug format: `YYYY-MM-DD_poetry_quotes_[slug]`
 
-If hand-edited after Remotion:
+Generate fresh metadata from edited video:
 ```bash
 python3 scripts/make_shorts_meta.py \
   --slug 2026-05-21_poetry_quotes_[poetry_slug] \
   --video assets/video/edited/2026-05-21_poetry_quotes_[poetry_slug].mp4
 ```
 
+Then clip:
 ```bash
 python3 scripts/clip_shorts.py --slug 2026-05-21_poetry_quotes_[poetry_slug] --count 4
+```
+
+### HyperFrames on Poetry shorts (mandatory)
+
+```bash
+python3 scripts/hyperframes_render.py --shorts --slug 2026-05-21_poetry_quotes_[poetry_slug]
 ```
 
 Verify outputs:
@@ -112,11 +200,9 @@ ls -la assets/video/edited/shorts/
 # 8-12 × _short_NN.mp4 (4 per niche × 3 niches if all run)
 ```
 
-Legacy reel script (`find_best_reel_moment.py` + `create_vertical_reels.py`) still works for single-clip workflow.
-
 ---
 
-## Step 6 — Upload Life + Poetry to YouTube (~15 min)
+## Step 8 — Upload Life + Poetry to YouTube (~15 min)
 
 Long-form:
 ```bash
@@ -151,7 +237,7 @@ bash output/scheduled/upload_shorts.sh
 
 ---
 
-## Step 7 — Publish to Medium (~15 min)
+## Step 9 — Publish to Medium (~15 min)
 
 ```bash
 python3 scripts/publish_medium.py \
@@ -169,7 +255,7 @@ python3 scripts/publish_medium.py \
 
 ---
 
-## Step 8 — Load posts into scheduler
+## Step 10 — Load posts into scheduler
 
 ```bash
 python3 scripts/load_posts.py

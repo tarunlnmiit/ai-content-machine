@@ -124,6 +124,10 @@ cd remotion && npm install
 
 Primary editing pipeline: `scripts/prepare_remotion_edit.py` → Remotion Studio preview → `npx remotion render` — see `docs/video-production-guide.md`
 
+Animation prompts: `scripts/generate_animation_prompts.py <script.md>` → `content/prompts/{slug}_animation_prompts.txt` — extracts `[ANIMATION:]` tags, writes Remotion component specs per tag. Add `--render` to render each animation directly to `output/animations/` MP4 using built-in brand templates.
+
+Courses (separate product line, original content, Sonnet-backed): `scripts/draft_lesson_script.py` drafts a lesson script from `--title` + repeated `--point` + `--story`; `scripts/generate_course_worksheet.py` makes an original worksheet from `--topic` + `--objective`. Both route to `claude-sonnet-4-6`. Config + pricing in `data/courses/graphy_config.yaml`; full workflow in `docs/course-production-guide.md`.
+
 DaVinci Resolve (optional, manual polish only):
 - Free version sufficient for music/text overlays on rendered MP4
 
@@ -263,19 +267,26 @@ content/derivatives/{slug}/                      ← 10 files per blog
   └── claude_design_brief.json                   ← emotional core, key quotes, story frames
 
 prompts/claude_design_agent.md                   ← Claude Design art direction system
-output/scheduled/claude_design_prompts_{slug}.md ← 4 design prompts per blog (paste into Claude Design)
+output/scheduled/claude_design_prompts_{slug}.md ← 4 design prompts per blog (spec for the HTML below)
 output/scheduled/validated_code_{slug}.json      ← DS tutorial: tested code blocks
 
 assets/
+  ├── slides/{slug}_slides.html                  ← Claude Design source: 9-slide deck (1920×1080)
+  ├── slides/{slug}_story.html                   ← Claude Design source: 7-frame IG story (1080×1920)
+  ├── slides/{slug}_social.html                  ← Claude Design source: 4 social variants
+  ├── slides/{slug}_reel_cover.html              ← Claude Design source: 9:16 reel cover
+  ├── slides/{slug}/slide_N.png                  ← deck PNGs 1920×1080 (export_html_deck.py)
+  ├── slides/{slug}/{slug}_slides.pdf            ← deck PDF (export_html_deck.py --pdf)
+  ├── slides/photos/{slug}_*.jpg                 ← stock photos filling story/reel image-slots
   ├── carousels/{slug}_carousel.html             ← Instagram carousel (swipeable HTML, export-ready)
-  ├── carousels/slides/{slug}/slide_N.png        ← 1080×1350 PNG exports (--export flag)
-  ├── slides/{slug}_slides.pdf                   ← from Claude Design
-  ├── stories/{slug}_story_*.png                 ← from Claude Design
-  ├── social_posts/{slug}_instagram.png          ← 1080×1080
+  ├── carousels/slides/{slug}/slide_N.png        ← carousel PNGs 1080×1350 (generate_carousel.py --export)
+  ├── stories/{slug}/{slug}_story.mp4            ← IG story video (export_story_animation.py)
+  ├── stories/{slug}/{slug}_story_slide_NN.png   ← 7 story frames
+  ├── social_posts/{slug}_instagram.png          ← 1080×1080  (export_html_deck.py)
   ├── social_posts/{slug}_linkedin.png           ← 1200×628
   ├── social_posts/{slug}_twitter.png            ← 1200×675
   ├── social_posts/{slug}_threads.png            ← 1080×1080
-  ├── reels/{slug}_cover.png                     ← 9:16 from Claude Design
+  ├── reels/{slug}_cover.png                     ← 9:16 reel cover (export_html_deck.py)
   ├── videos/{slug}/{slug}_raw.mp4               ← Life/Poetry: raw talking-head recording (iPhone)
   ├── videos/{slug}/                             ← B-roll clips + VIDEO_MAP.json
   ├── video/edited/{slug}.mp4                    ← long-form YouTube (FINAL)

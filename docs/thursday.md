@@ -44,6 +44,30 @@ python3 scripts/ghostwrite.py \
 
 ---
 
+## Step 1b — Generate animation prompts from script (~1 min)
+
+Extracts every `[ANIMATION: ...]` tag and writes Remotion component prompts.
+
+```bash
+python3 scripts/generate_animation_prompts.py \
+  content/scripts/YYYY-MM-DD-data-science-tech-{slug}_yt.md
+```
+
+Output: `content/prompts/{slug}_animation_prompts.txt` — one prompt per animation tag.
+Feed each prompt to Claude to generate the corresponding `remotion/src/compositions/` component.
+
+**To render MP4s directly** (skips manual TSX step — uses built-in templates):
+
+```bash
+python3 scripts/generate_animation_prompts.py \
+  content/scripts/YYYY-MM-DD-data-science-tech-{slug}_yt.md \
+  --render
+```
+
+Output: `output/animations/{slug}_{n}_{type}.mp4` — one MP4 per animation tag.
+
+---
+
 ## Step 2 — Generate teleprompter for DS script (~1 min)
 
 ```bash
@@ -133,18 +157,38 @@ python3 scripts/auto_edit.py \
 
 ---
 
-## Step 7 — Auto-generate DS shorts (~3 min)
+## Step 7 — HyperFrames visual augmentation (~5 min)
+
+Claude picks element types automatically for DS content (code snippets, bar charts, stat cards, flowcharts, comparison tables).
 
 ```bash
-python3 scripts/clip_shorts.py --slug [ds_slug] --count 4
-# → assets/video/edited/shorts/[ds_slug]_short_NN.mp4 (4 vertical clips)
+# Long-form
+python3 scripts/hyperframes_render.py \
+  assets/video/edited/[ds_slug].mp4 \
+  --slug ds-[slug]-aug
+
+# All shorts in one command (auto-discovers from slug)
+python3 scripts/hyperframes_render.py --shorts --slug [ds_slug]
+```
+
+Output: `assets/hyperframes/<date>_<slug>.mp4`
+
+Reference: `docs/video-production-guide.md` → HyperFrames section.
+
+---
+
+## Step 8 — Auto-generate DS shorts (~3 min)
+
+```bash
+python3 scripts/clip_shorts.py --slug YYYY-MM-DD_data_science_tech_[ds_slug] --count 4
+# → assets/video/edited/shorts/YYYY-MM-DD_data_science_tech_[ds_slug]_short_NN.mp4
 ```
 
 Claude CLI picks best hook segments. Legacy single-reel workflow (`find_best_reel_moment.py` + `create_vertical_reels.py`) still available.
 
 ---
 
-## Step 8 — Upload DS to YouTube (~10 min)
+## Step 9 — Upload DS to YouTube (~10 min)
 
 Long-form:
 ```bash
@@ -173,9 +217,7 @@ ls -la assets/video/edited/
 
 ```bash
 python3 scripts/push_to_buffer.py --auto --dry-run   # preview
-python3 scripts/push_to_buffer.py --auto              # auto-decide all niches
+python3 scripts/push_to_buffer.py --auto              # run
 ```
-Buffer < 4 weeks → copied to next empty slot. Buffer full → stays as live content.
-File naming: `content/blogs/YYYY-MM-DD_{niche}_{slug}.md` · scripts: `content/scripts/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md`
-See full naming table: [weekly-operating-guide.md § File Naming Conventions](weekly-operating-guide.md#file-naming-conventions)
+→ Decision logic + file naming: [_buffer_decision.md](_buffer_decision.md)
 

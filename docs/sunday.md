@@ -119,12 +119,9 @@ python3 scripts/push_to_buffer.py --niche poetry --week 4 --date YYYY-MM-DD
 
 **After consuming a week's buffer (busy week) — restore immediately:**
 ```bash
-rm -rf content/buffer/week-1
-mv content/buffer/week-2 content/buffer/week-1
-mv content/buffer/week-3 content/buffer/week-2
-mv content/buffer/week-4 content/buffer/week-3
-# Update week numbers in data/buffer/topics.yaml
-# Fill week-4 topics, then:
+bash scripts/shift_buffer.sh --dry-run   # verify week-4 has content
+bash scripts/shift_buffer.sh             # rotate: week-2→1, week-3→2, week-4→3
+# Then fill week-4 topics in data/buffer/topics.yaml and regenerate:
 conda run -n content_engine_env python3 scripts/generate_buffer.py --week 4
 ```
 

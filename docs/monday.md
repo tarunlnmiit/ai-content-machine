@@ -44,6 +44,14 @@ python3 scripts/produce_blog.py --topic 'YOUR TOPIC' --niche ds
 python3 scripts/produce_blog.py --topic 'YOUR TOPIC' --niche ds --humanize
 ```
 
+Listicle mode — force a Top-N structure (e.g. "Top 5 Python Libraries..."):
+```bash
+python3 scripts/produce_blog.py --topic 'Python libraries every DS should know' --niche ds --listicle 5
+python3 scripts/produce_blog.py --topic 'mistakes that wreck your week' --niche life --listicle 3 --humanize
+```
+- `--listicle N` (N ≥ 2): produces a numbered Top-N blog. Title starts with "Top N", body has exactly N H2 item sections, balanced length.
+- Works for any niche. Skip flag for default narrative structure.
+
 Option B — have transcript/notes/draft:
 ```bash
 python3 scripts/ghostwrite.py --source path/to/notes.txt --niche ds
@@ -88,9 +96,7 @@ Images → `content/blogs/{stem}_images/` · Map → `content/blogs/{stem}_image
 
 ```bash
 python3 scripts/push_to_buffer.py --auto --dry-run   # preview
-python3 scripts/push_to_buffer.py --auto              # auto-decide all niches
+python3 scripts/push_to_buffer.py --auto              # run
 ```
-Buffer < 4 weeks → copied to next empty slot. Buffer full → stays as live content.
-File naming: `content/blogs/YYYY-MM-DD_{niche}_{slug}.md` · scripts: `content/scripts/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md`
-See full naming table: [weekly-operating-guide.md § File Naming Conventions](weekly-operating-guide.md#file-naming-conventions)
+→ Decision logic + file naming: [_buffer_decision.md](_buffer_decision.md)
 

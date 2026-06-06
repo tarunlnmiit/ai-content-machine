@@ -95,7 +95,7 @@ No DB ID hardcoded in scripts — `.env` is the single source.
 | `rss_scraper.py` | RSS feeds | `data/ideas/external_<date>.json` | launchd 6am |
 | `idea_scorer.py` | `data/ideas/*.json` | `data/ideas/weekly_ideas.md` | daily |
 | `sync_ideas_to_notion.py` | weekly_ideas.md | Notion DB | Sunday + daily |
-| `produce_blog.py` | KB + topic | `content/blogs/<slug>.md` | Mon/Tue/Wed |
+| `produce_blog.py` | KB + topic (opt `--listicle N` for Top-N) | `content/blogs/<slug>.md` | Mon/Tue/Wed |
 | `auto_edit.py` | raw video + script | `assets/video/edited/<slug>.mp4` | Thu/Fri/Sat |
 | `clip_shorts.py` | edited video | `assets/shorts/<slug>_*.mp4` | post-edit |
 | `repurpose_blog.py` | blog markdown | Medium/Substack/LinkedIn drafts | post-blog |
