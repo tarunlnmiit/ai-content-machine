@@ -1,0 +1,41 @@
+# Content Machine — shared configuration constants
+# Import with: import yaml; cfg = yaml.safe_load(Path('data/config.yaml').read_text())
+
+notion:
+  api_version: "2022-06-28"
+  contents_db_id: "df13d49a-bbfc-40cd-a8f1-d4fb98d2d4ec"
+
+ollama:
+  model: "gemma4:e2b"
+  base_url: "http://localhost:11434"
+  timeout_seconds: 10
+  classification_workers: 5  # ThreadPoolExecutor max_workers in idea_scorer
+
+idea_scorer:
+  dedup_similarity_threshold: 0.75
+  novelty_penalty_factor: 0.5
+  novelty_similarity_threshold: 0.6
+  top_n_per_niche: 5
+
+youtube:
+  upload_chunk_bytes: 2097152   # 256 * 1024 * 8 = 2MB chunks
+
+timeouts:
+  claude_cli_seconds: 300
+  claude_cli_blog_seconds: 600
+  ollama_seconds: 10
+  http_default_seconds: 30
+  playwright_seconds: 120
+
+buffer:
+  min_weeks: 4
+  week_dirs:
+    - "week-1"
+    - "week-2"
+    - "week-3"
+    - "week-4"
+
+niches:
+  - "data_science_tech"
+  - "life_self_dev"
+  - "poetry_quotes"
