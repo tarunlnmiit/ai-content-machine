@@ -21,4 +21,5 @@ export interface EditPlan {
   cutSegments?: CutSegment[]; // if present, overrides silenceTrim fields
   brollCues: BrollCue[];
   captionsFile: string; // relative to public/
+  showSubtitles?: boolean; // default false — set true to burn in captions
 }

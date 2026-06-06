@@ -70,6 +70,20 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{ editPlanFile: "edit-plans/2026-05-21-ds-complete-python-course.json" }}
         calculateMetadata={calcMeta}
       />
+      {/* Generic comp for ANY new talking-head video (course lessons, weekly videos).
+          No need to register a new Composition per slug — render with --props override:
+            npx remotion render CourseLesson out.mp4 --props='{"editPlanFile":"edit-plans/<slug>.json"}'
+          Niche grading/grain come from the loaded plan, so any niche works through this one comp. */}
+      <Composition
+        id="CourseLesson"
+        component={TalkingHeadEdit}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={900}
+        defaultProps={{ editPlanFile: "edit-plans/life_habits.json" }}
+        calculateMetadata={calcMeta}
+      />
     </>
   );
 };

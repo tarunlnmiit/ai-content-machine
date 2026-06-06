@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import {
   AbsoluteFill,
+  Easing,
   Img,
+  interpolate,
   OffthreadVideo,
   Sequence,
   staticFile,
@@ -18,6 +20,12 @@ import type { EditPlan, CutSegment } from "../types";
 
 const SWITCH_CAPTIONS_EVERY_MS = 1500;
 const MAIN_VIDEO_VOLUME = 1.6;
+
+// Subtle punch-in at each cut point. A human editor nudges the scale on a cut so
+// the jump reads as intentional rather than a jarring jump-cut. Kept gentle —
+// ~3.5% over ~0.23s, easing out. Applied only to segments after the first.
+const CUT_PUNCH_SCALE = 1.035;
+const CUT_PUNCH_FRAMES = 7;
 
 type Niche = "ds" | "life" | "poetry";
 
@@ -78,6 +86,43 @@ function FilmGrainOverlay({ niche }: FilmGrainOverlayProps) {
 
 export interface TalkingHeadEditProps extends Record<string, unknown> {
   editPlanFile: string;
+}
+
+interface CameraSegmentProps {
+  src: string;
+  trimBefore: number;
+  trimAfter: number;
+  filter: string;
+  /** True for cut points (every segment after the first) — applies the punch-in. */
+  punchIn: boolean;
+}
+
+/** One keep-segment of camera footage, with a subtle scale punch-in on cuts. */
+function CameraSegment({ src, trimBefore, trimAfter, filter, punchIn }: CameraSegmentProps) {
+  const frame = useCurrentFrame();
+  const scale = punchIn
+    ? interpolate(frame, [0, CUT_PUNCH_FRAMES], [CUT_PUNCH_SCALE, 1], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+        easing: Easing.out(Easing.cubic),
+      })
+    : 1;
+
+  return (
+    <OffthreadVideo
+      src={src}
+      trimBefore={trimBefore}
+      trimAfter={trimAfter}
+      volume={MAIN_VIDEO_VOLUME}
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        filter,
+        transform: `scale(${scale})`,
+      }}
+    />
+  );
 }
 
 function getSegments(plan: EditPlan): CutSegment[] {
@@ -160,17 +205,12 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
       {/* Stitched camera footage — one <Video> per keep-segment */}
       {segmentLayouts.map(({ seg, startFrame, endFrame, durationFrames, editOffset }, i) => (
         <Sequence key={`seg-${i}`} from={editOffset} durationInFrames={durationFrames}>
-          <OffthreadVideo
+          <CameraSegment
             src={staticFile(plan.rawVideo)}
             trimBefore={startFrame}
             trimAfter={endFrame}
-            volume={MAIN_VIDEO_VOLUME}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              filter: grading.filter,
-            }}
+            filter={grading.filter}
+            punchIn={i > 0}
           />
         </Sequence>
       ))}
@@ -220,8 +260,8 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
       {/* Film grain + vignette (poetry strong, life subtle, ds none). Under captions. */}
       <FilmGrainOverlay niche={plan.niche} />
 
-      {/* Animated captions — caption timestamps remapped from original video time */}
-      {pages.map((page, index) => {
+      {/* Animated captions — only rendered when showSubtitles: true in edit plan */}
+      {plan.showSubtitles && pages.map((page, index) => {
         const editFrame = originalSecToEditFrame(page.startMs / 1000, segments, fps);
         if (editFrame === null) return null;
 
