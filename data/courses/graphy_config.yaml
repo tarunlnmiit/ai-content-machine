@@ -47,8 +47,9 @@ courses:
     format: "video + original code walkthrough + original worksheet"
     # Signature moats (see content/courses/data_science/outline.md):
     differentiators:
-      - "Inside the Work raw sessions (unedited real problem-solving) — L2/5/8/10"
-      - "Real dirty datasets + failure-mode answer key — L2/3/7/10"
+      - "Inside the Work raw sessions (unedited real problem-solving) — L2/5/8/10 [TODO: record]"
+      - "Real dirty datasets + failure-mode answer key — DONE, 5 built: content/courses/data_science/datasets/{loan_applications,transactions,student_engagement,orders,users}.csv + *_answer_key.md"
+      - "Companion code notebooks — DONE: content/courses/data_science/notebooks/{data_audit_starter,notebook_to_module_refactor_kit}.ipynb"
       - "AI-as-practitioner capstone (when to trust vs override AI) — L10"
     certificate: true
     community: "WhatsApp/Telegram group"

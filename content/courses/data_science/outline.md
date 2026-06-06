@@ -398,18 +398,24 @@ takes a student from "I know syntax" → "I think like someone with 10 years in.
 
 ## Companion material — production notes
 
-| Type | Lessons | How to make |
-|------|---------|-------------|
-| Worksheet | 1, 2, 4 | `generate_course_worksheet.py --niche ds` |
-| Code notebook (`.ipynb`) | 2, 8 | Hand-build starter; ships in the course + as repo |
-| 1-page template | 3, 5, 6, 9 | Worksheet generator or Canva one-pager |
-| Checklist | 7, 10 | Worksheet generator (short form) |
-| **🎥 Inside the Work session** (moat #1) | 2, 5, 8, 10 | Record once — unedited real problem-solving; no script, no polish |
-| **🔑 Real dirty dataset + answer key** (moat #2) | 2 (reused 3, 7, 10) | Anonymise a real messy dataset; write the failure-mode key |
+| Type | Lessons | How to make | Status |
+|------|---------|-------------|--------|
+| Worksheet | 1, 2, 4 | `generate_course_worksheet.py --niche ds` | ✓ 10 built (`worksheets/`) |
+| Code notebook (`.ipynb`) | 2, 8 | `build_course_notebooks.py --niche ds` | ✓ 2 built (`notebooks/`) |
+| 1-page template | 3, 5, 6, 9 | Worksheet generator or Canva one-pager | covered by worksheets |
+| Checklist | 7, 10 | Worksheet generator (short form) | covered by worksheets |
+| **🎥 Inside the Work session** (moat #1) | 2, 5, 8, 10 | Record once — unedited real problem-solving; no script, no polish | ⏳ record-only |
+| **🔑 Real dirty dataset + answer key** (moat #2) | 2, 3, 7, 10 | `generate_course_dataset.py --niche ds --all` | ✓ 5 built (`datasets/`) |
 
-Bundle all companion files into a per-lesson download in Graphy. Keep editable masters
-in the repo under `content/courses/data_science/`. The 4 raw sessions + the dirty dataset
-are the moats — they cost recording time once and can't be cheaply copied.
+**Produced asset masters** (editable, in repo, bundle per-lesson into Graphy):
+- `datasets/{loan_applications,transactions,student_engagement,orders,users}.csv` + `*_answer_key.md`
+  — seeded synthetic, deterministic; the worksheets `read_csv` these directly.
+- `notebooks/data_audit_starter.ipynb` (pairs with L2; loads `../datasets/loan_applications.csv` —
+  run from `notebooks/`) · `notebook_to_module_refactor_kit.ipynb` (L8, self-contained).
+
+The 4 raw "Inside the Work" sessions are the one remaining moat — they cost recording time once
+and can't be cheaply copied. **Student prereqs:** `pip install scikit-learn` (baselines + L7
+worksheets) and `nbformat`/Jupyter to open the notebooks.
 
 ## Repurposing — paid lesson → free funnel
 
@@ -428,7 +434,8 @@ Rules:
 1. Tarun: review/edit this outline — swap hooks, stories, companion types.
 2. Draft Lessons 1–2 scripts + worksheets (pre-sell pair). Commands above.
 3. Personalise `[PERSONAL_*]` markers, record, edit (see `docs/course-production-guide.md`).
-4. Build companion notebooks for L2/L8; **prep the real dirty dataset + answer key** (moat #2, used across L2/3/7/10).
+4. ✓ DONE — companion notebooks (L2/L8) + 5 real dirty datasets & answer keys built and committed.
+   Regenerate any time: `generate_course_dataset.py --niche ds --all` · `build_course_notebooks.py --niche ds`.
 5. **Record the 4 "Inside the Work" raw sessions** (moat #1: L2, L5, L8, L10) — one-take, unedited.
 6. Create Graphy shell; fill `graphy_course_id` + `enrol_url` into `data/courses/graphy_config.yaml`.
 7. After recording, generate per-lesson social teasers + "Inside the Work" clips to drive sales.
