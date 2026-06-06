@@ -1,0 +1,228 @@
+{
+  "slug": "2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt",
+  "niche": "poetry",
+  "rawVideo": "videos/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt.mp4",
+  "durationSec": 526.41,
+  "silenceTrimStartSec": 3.605625,
+  "silenceTrimEndSec": 530.021062,
+  "cutSegments": [
+    {
+      "startSec": 3.61,
+      "endSec": 530.02
+    }
+  ],
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "early morning, one person walking alone, soft diffused light, steam from a cup",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-0.mp4",
+      "startSec": 21.14,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-1",
+      "description": "close shot of hands around a warm mug, window light, steam",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-1.mp4",
+      "startSec": 35.67,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-2",
+      "description": "moth near candle flame, soft focus, warm amber light",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-2.mp4",
+      "startSec": 53.65,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-3",
+      "description": "fault line in dry cracked earth, close or aerial, golden hour",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-3.mp4",
+      "startSec": 70.42,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-4",
+      "description": "single person at a window, city or trees behind them, held still",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-4.mp4",
+      "startSec": 89.46,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-5",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-5.mp4",
+      "startSec": 106.2,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-6",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-6.mp4",
+      "startSec": 124.04,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-7",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-7.mp4",
+      "startSec": 137.8,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-8",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-8.mp4",
+      "startSec": 156.12,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-9",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-9.mp4",
+      "startSec": 171.54,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-10",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-10.mp4",
+      "startSec": 189.27,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-11",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-11.mp4",
+      "startSec": 207.4,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-12",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-12.mp4",
+      "startSec": 222.47,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-13",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-13.mp4",
+      "startSec": 240.14,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-14",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-14.mp4",
+      "startSec": 258.92,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-15",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-15.mp4",
+      "startSec": 275.48,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-16",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-16.mp4",
+      "startSec": 291.17,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-17",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-17.mp4",
+      "startSec": 309.62,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-18",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-18.mp4",
+      "startSec": 327.49,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-19",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-19.mp4",
+      "startSec": 341.25,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-20",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-20.mp4",
+      "startSec": 361.43,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-21",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-21.mp4",
+      "startSec": 377.98,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-22",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-22.mp4",
+      "startSec": 393.53,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-23",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-23.mp4",
+      "startSec": 409.77,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-24",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-24.mp4",
+      "startSec": 429.96,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-25",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-25.mp4",
+      "startSec": 444.46,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-26",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-26.mp4",
+      "startSec": 460.47,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-27",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-27.mp4",
+      "startSec": 477.46,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-28",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-28.mp4",
+      "startSec": 497.45,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-29",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt/cue-29.mp4",
+      "startSec": 513.45,
+      "durationSec": 5.0
+    }
+  ],
+  "captionsFile": "captions/2026-05-29_2026-05-27-poetry-quotes-intoxicated-senses_yt.json",
+  "showSubtitles": false
+}
