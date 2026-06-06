@@ -1,0 +1,39 @@
+Create a reflective worksheet PDF (A4, portrait) for "The Invisible Load Audit: What You're Carrying That Nobody Sees"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 5 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Name What's In the Bag
+   - What's one thing you've been carrying silently for more than 3 months? (An unresolved argument, a loss, a disappointment, a version of events nobody else witnessed.)
+   - When did you last say 'I'm fine' and mean something else entirely? What were you actually feeling?
+   - Is there something you stopped talking about — not because it was resolved, but because you got tired of carrying it in conversation too?
+
+2. Map the Cognitive Tax
+   - Where does this invisible load show up in your daily life? (e.g., 2 a.m. replays, reduced patience, difficulty concentrating, emotional flatness)
+   - Estimate honestly: how many hours per week do you spend mentally managing this unresolved thing — replaying, suppressing, or bracing against it?
+   - What task or relationship is getting a diminished version of you because of what you're quietly carrying?
+
+3. Track the Leak
+   - Who in your life gets the 'slightly less' version of you because of what you're holding? (Less patience, less presence, more distance.)
+   - Think of a recent moment where your reaction was bigger or colder than the situation warranted. What was actually underneath it?
+   - Is there someone you're keeping at arm's length — not because you don't want closeness, but because closeness feels unsafe right now?
+
+4. Understand Why You Haven't Put It Down
+   - Finish this sentence honestly: 'If I actually looked at this thing directly, I'd have to admit ___________.'
+   - Have you made 'handling it' part of your identity? What would it mean about you if you needed help with this?
+   - What's the story you've told yourself about why you can't or shouldn't process this yet?
+
+5. One Small Act of Putting It Down
+   - The work rarely looks dramatic. What is one small, private act that would be honest about what you're carrying? (Writing it down, saying it aloud to yourself, telling one person, booking a session with a therapist.)
+   - What does 'resolution' actually need to look like for this particular thing — not closure necessarily, but something less than carrying it alone?
+   - Write a single sentence that names what you've been holding. Not to share. Just so it exists somewhere outside your head.
+
+

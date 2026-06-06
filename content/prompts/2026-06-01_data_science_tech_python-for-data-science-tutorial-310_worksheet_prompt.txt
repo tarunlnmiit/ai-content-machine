@@ -1,0 +1,31 @@
+Create a professional worksheet PDF (A4, landscape) for "Stop Writing Loops: Your NumPy Array Thinking Upgrade"
+
+Layout:
+- Header (top 20%): Title + tagline about applying ML to production
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Find Your Loop Problem
+   Think of the last time your Python script felt slow or you wrote a `for` loop to process numbers. Describe it briefly. What were you computing? How many rows or values? What happened when you ran it?
+
+2. Rewrite One Loop as a NumPy Operation
+   - Take any list of numbers you care about (exam scores, expenses, steps walked, stock prices). Write them as a NumPy array: `data = np.array([...])`
+   - Now write the loop version of one calculation (e.g., multiply every value by 1.1). Then rewrite it as a single vectorized NumPy expression. What changed in how you *described* the operation?
+
+3. Run Your Own Descriptive Stats
+   - Use your array from Section 2. Compute: mean, std, min, max. Write the actual numbers you got.
+   - Now add one outlier (a value far outside the rest). Recompute mean and std. How much did each shift? What does that tell you about which stat to trust?
+
+4. Build a 2D Array from Your Own Data
+   - Create a 3×4 matrix using numbers you make up or pull from real life (monthly scores, weekly metrics, anything with rows and columns). Print `.shape` and `.ndim`.
+   - Compute the mean of each row (`axis=1`) and each column (`axis=0`). Write what each axis result *means* in the context of your data — not just the number, but what the row average and column average represent.
+
+5. Practice the Mental Shift
+   In one sentence each, complete these: (1) 'Before NumPy, when I needed to filter data I would...' (2) 'With boolean masking, instead I can...' (3) 'The biggest thing that changes when I stop thinking in loops and start thinking in arrays is...'
+
+
