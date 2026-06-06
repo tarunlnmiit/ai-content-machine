@@ -139,6 +139,25 @@ Use `[PAUSE]` for deliberate breath points.
 Use `[CODE_INSERT: filename/function to show]` if you need Tarun to fill in a specific code block later.
 Use `[PERSONAL_INSERT: description]` for anecdotes or specific memory Tarun needs to add.
 
+### Animation tags
+
+Every script must include exactly **three** `[ANIMATION:]` markers — rendered via Remotion, overlaid during editing.
+
+1. **Title card** — immediately before first spoken word:
+   ```
+   [ANIMATION: 5-second title card — "Episode Title Here"]
+   ```
+
+2. **Lower third** — at 1 key concept landing moment mid-script (overlay while Tarun keeps talking):
+   ```
+   [ANIMATION: 3-second lower third — "Concise concept label"]
+   ```
+
+3. **Outro card** — after final spoken word:
+   ```
+   [ANIMATION: 5-second outro card — "Next: brief tease of next tutorial"]
+   ```
+
 ---
 
 ## Technical Writing Checklist
@@ -155,3 +174,4 @@ Use `[PERSONAL_INSERT: description]` for anecdotes or specific memory Tarun need
 - [ ] Close offers concrete next step or question
 - [ ] All banned words removed
 - [ ] Reads aloud naturally — no tongue-trippers
+- [ ] Exactly 3 [ANIMATION:] markers: title card (top) + 1 lower third (mid) + outro card (end)

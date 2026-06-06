@@ -143,6 +143,31 @@ Use `[BROLL: description]` at end of each section as an editorial hint — good 
 Use `[PERSONAL_INSERT: description]` where Tarun's specific memory is needed.
 Use `[MUSIC_CUE: description]` only sparingly, where a background shift genuinely serves the moment.
 
+### Animation tags
+
+Every script must include exactly **three** `[ANIMATION:]` markers — rendered via Remotion, overlaid during editing alongside B-roll.
+
+**Placement rules:**
+
+1. **Title card** — place immediately before the first spoken word (top of script body). Viewer sees animated title over music while Tarun prepares.
+   ```
+   [ANIMATION: 3-second title card — "Episode Title Here"]
+   ```
+
+2. **Lower third(s)** — place at 1–2 key insight or quote moments mid-script, right after the landing sentence. Displayed as overlay while Tarun keeps talking — do NOT stop the script here.
+   - Life: concise reframe or core insight (≤8 words)
+   - Poetry: a key line from the poem
+   ```
+   [ANIMATION: 3-second lower third — "The gap is architecture."]
+   ```
+
+3. **Outro card** — place after the final spoken word. Teases next episode.
+   ```
+   [ANIMATION: 5-second outro card — "Next: brief tease of next episode"]
+   ```
+
+`[ANIMATION:]` tags are editorial markers only — Tarun keeps talking through lower thirds. Title card plays before he speaks; outro card plays after he stops.
+
 ---
 
 ## Post-Writing Checklist
@@ -159,3 +184,4 @@ Use `[MUSIC_CUE: description]` only sparingly, where a background shift genuinel
 - [ ] 1–2 human desires woven through the piece
 - [ ] Opening hooks immediately (no setup)
 - [ ] Close offers one concrete takeaway or next thought
+- [ ] Exactly 3 [ANIMATION:] markers: title card (top) + 1–2 lower thirds (mid) + outro card (end)

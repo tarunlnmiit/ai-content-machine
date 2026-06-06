@@ -1,4 +1,4 @@
-Create a reflective worksheet PDF (A4, portrait) for "Breaking the Silence: Redefining Your Personal Strength"
+Create a reflective worksheet PDF (A4, portrait) for "Breaking the Lie: Where You Learned That Struggle Means Weakness"
 
 Layout:
 - Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
@@ -11,29 +11,29 @@ Layout:
 Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
 
 Sections:
-1. The Inherited Story
-   - What messages did you receive growing up about showing struggle or asking for help? (e.g., 'men don't cry', 'figure it out yourself', 'don't be a burden')
-   - Where did those messages come from — a parent, culture, a specific moment?
-   - Write one belief about strength you absorbed that you now suspect was wrong.
+1. The Inheritance Inventory
+   - Finish this sentence: The version of strength I learned growing up said...
+   - Who taught you that asking for help was weakness? Was it explicit or just... understood?
+   - What's one thing you've never told anyone because it felt like admitting defeat?
 
-2. The Hidden Weight You're Carrying
-   - Is there something you've been saying 'I'm fine' about that isn't fine? Write it here (no one else reads this).
-   - How long have you been carrying it alone?
-   - What has that silence cost you — in energy, relationships, sleep, or presence?
+2. The Cost of Silence — What Has This Cost You?
+   - When you've carried something alone, what happened to your relationships? To your sleep? To how you showed up?
+   - Describe a moment when the 'I'm fine' response made things worse instead of better.
+   - What would change if you named out loud what you're actually struggling with?
 
-3. The Double Standard Audit
-   - Would you tell a close friend to 'just push through' the thing you're currently carrying? Why or why not?
-   - You'd hire a trainer for physical strength without shame. List one mental or emotional area where hiring support (therapist, coach, counsellor) would make the same logical sense.
-   - What's the real reason you haven't sought that support yet — social fear, cost, not knowing how, or something else?
+3. Practice: Creating Space for Someone Else
+   - Think of someone you sense is struggling but hiding. Write the exact question you'd ask them — the one that actually invites honesty, not just a quick fix.
+   - What would it look like to 'shut up and wait' after asking? (No advice. No platitudes. Just presence.)
+   - Who in your life needs permission to not be okay right now?
 
-4. Making Space — For Yourself and Others
-   - Think of someone in your life who seems 'off' lately. What's one low-pressure way you could check in on them this week?
-   - Recall a time someone made space for you — even a small moment. What did they do that made it feel safe?
-   - Write one sentence you could say to start an honest conversation with someone you trust about something you've been holding alone.
+4. Your Own Unspoken Truth
+   - If shame and judgment weren't in the room — if no one would ever know — what would you admit about where you are right now?
+   - What specifically are you carrying alone that deserves to be shared?
+   - Who is one person (therapist, friend, family) you could tell first?
 
-5. Your Next Small Act
-   - What is one concrete thing you will do in the next 7 days to chip at the wall — reach out to a friend, book a therapy consult, journal daily, or simply say 'I'm not okay' to one person?
-   - Who is one specific person you could tell the truth to this week?
-   - Finish this sentence: 'Real strength, for me, now looks like ___________'
+5. One Small Act of Breaking the Pattern
+   - This week, choose: either tell someone one true thing you've been hiding, or create space for someone else to do so.
+   - What's the actual first step? (Not the perfect conversation. The awkward text. The therapy appointment. The 'hey, I'm not doing great.')
+   - What will you do when the discomfort of honesty hits?
 
 
