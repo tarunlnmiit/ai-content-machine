@@ -38,8 +38,13 @@ venv/
 graphify-out/
 
 # ============================================
-# Media — Large binary files (videos, audio)
+# Media — Large binary files (videos, audio, images)
 # ============================================
+assets/
+content/blogs/*/
+content/worksheets/*.pdf
+content/worksheets/*.html
+output/worksheets/
 assets/audio/
 assets/video/
 assets/videos/
@@ -49,6 +54,10 @@ assets/stories_video/
 *.mp3
 *.wav
 *.m4a
+*.png
+*.jpg
+*.jpeg
+*.gif
 
 # ============================================
 # Session & Auth Tokens
