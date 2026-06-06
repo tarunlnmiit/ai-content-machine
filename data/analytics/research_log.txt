@@ -1069,3 +1069,377 @@ NIM error: NIM HTTP 403:
     3. poem about nature (1.000)
     4. Rimas perfectas (1.000)
     5. “You've gotta dance like there's nobody watching, Love like you'l (1.000)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Loaded 5555 ideas                                     ━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 5555 → 5417 ideas                           ━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 1787 ideas                               ━━━━━━━━━━ 1/1   0:06:49
+  Rank-normalized                                       ━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles                                  ━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty                              ━━━━━━━━━━ 1/1   0:00:01
+  Classifying: “I'm selfish, impatient and a little ins ━━━━━━━━━━ 15/15 0:00:03
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. The AI industry in the US is doomed.  Now China owns it all. (1.000)
+    2. data science course (1.000)
+    3. Algometrics: Forecasting Under Algorithmic Feedback (1.000)
+    4. Cosmic Boot-Up: The Chronological Lie and the Illusion of the Pas (1.000)
+    5. Join the GitHub Finish-Up-A-Thon Challenge: $3,000 Prize Pool! (1.000)
+  life_self_dev:
+    1. Women's Self Help (1.000)
+    2. how to become a pilot (1.000)
+    3. Nobody Warns You About Life in Saudi Arabia
+People think coming t (1.000)
+    4. Mental health advice needed please (1.000)
+    5. The Cost of Carrying Things Nobody Sees (0.995)
+  poetry_quotes:
+    1. Student Banned For Reading This Pro-Life Poem In School (1.000)
+    2.  4 am poetry - Avinash (1.000)
+    3. poem about nature (1.000)
+    4. A languidez de Eva. (1.000)
+    5. “I'm selfish, impatient and a little insecure. I make mistakes, I (1.000)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+NIM error: NIM HTTP 403: 
+{"status":403,"title":"Forbidden","detail":"Authorization failed"}
+  Loaded 6324 ideas                                     ━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 6324 → 6178 ideas                           ━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 1958 ideas                               ━━━━━━━━━━ 1/1   0:07:24
+  Rank-normalized                                       ━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles                                  ━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty                              ━━━━━━━━━━ 1/1   0:00:01
+  Classifying: “I'm selfish, impatient and a little ins ━━━━━━━━━━ 15/15 0:00:04
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. The AI industry in the US is doomed.  Now China owns it all. (1.000)
+    2. data science course (1.000)
+    3. Algometrics: Forecasting Under Algorithmic Feedback (1.000)
+    4. Cosmic Boot-Up: The Chronological Lie and the Illusion of the Pas (1.000)
+    5. Join the GitHub Finish-Up-A-Thon Challenge: $3,000 Prize Pool! (1.000)
+  life_self_dev:
+    1. Women's Self Help (1.000)
+    2. how to become a pilot (1.000)
+    3. Nobody Warns You About Life in Saudi Arabia
+People think coming t (1.000)
+    4. Mental health advice needed please (1.000)
+    5. The Cost of Carrying Things Nobody Sees (0.996)
+  poetry_quotes:
+    1. Student Banned For Reading This Pro-Life Poem In School (1.000)
+    2.  4 am poetry - Avinash (1.000)
+    3. poem about nature (1.000)
+    4. A languidez de Eva. (1.000)
+    5. “I'm selfish, impatient and a little insecure. I make mistakes, I (1.000)
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 7095 ideas           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 7095 → 6938 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2126 ideas     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:08:49
+  Rank-normalized             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:01
+⠇ Classifying ideas                                             0/15 0:00:00
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 7863 ideas           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 7863 → 7693 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2305 ideas     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:10:17
+  Rank-normalized             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:01
+⠴ Classifying ideas                                             0/15 0:00:00
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 8590 ideas           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 8590 → 8413 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2434 ideas     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:11:42
+  Rank-normalized             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:01
+⠇ Classifying ideas                                             0/15 0:00:00
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 9318 ideas           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 9318 → 9131 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2568 ideas     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:13:10
+  Rank-normalized             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:01
+⠏ Classifying ideas                                             0/15 0:00:00
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 10091 ideas           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 10091 → 9897 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2745 ideas      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:15:19
+  Rank-normalized              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:01
+⠼ Classifying ideas                                              0/15 0:00:00
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 10861 ideas            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 10861 → 10654 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2909 ideas       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:18:05
+  Rank-normalized               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:01
+⠇ Classifying ideas                                               0/15 0:00:00
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 11635 ideas            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 11635 → 11419 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 3093 ideas       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:21:29
+  Rank-normalized               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:01
+⠴ Classifying ideas                                               0/15 0:00:00
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 11377 ideas            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 11377 → 11231 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2698 ideas       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:16:16
+  Rank-normalized               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 8 titles          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:02
+⠴ Classifying ideas                                               0/15 0:00:00

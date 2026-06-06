@@ -22,15 +22,16 @@ weeks:
       angle: "Original poem — the language of dreams as a metaphor for unexpressed love"
 
   - week: 2
+    # STATUS: READY — content exists in content/buffer/week-2/
     data_science_tech:
-      topic: ""
-      angle: ""
+      topic: "Python For Data Science Tutorial 210"
+      angle: "Why your Python setup matters more than your first program — environment, reproducibility, computational thinking"
     life_self_dev:
-      topic: ""
-      angle: ""
+      topic: "Mental Health Openness and Breaking Stigmas"
+      angle: "Your habits are not the problem — disconnection is; how to rebuild around what actually feeds your goals"
     poetry_quotes:
-      topic: ""
-      angle: ""
+      topic: "Intoxicated Senses"
+      angle: "Safe and alive — original poem on finding the person who holds you steady while you expand"
 
   - week: 3
     data_science_tech:

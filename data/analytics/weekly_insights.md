@@ -1,20 +1,20 @@
-# Weekly Analytics — 2026-W20
-*Generated: 2026-05-24 20:00*
+# Weekly Analytics — 2026-W21
+*Generated: 2026-05-31 20:00*
 
 ## Summary
-Summary unavailable — all backends failed.
+Summary unavailable — Ollama failed.
 
 ---
 
 ## YouTube
 
 ### Breath of Data Science
-- Subscribers: 153
-- Total views: 14,392
+- Subscribers: 154
+- Total views: 14,405
 - Videos: 12
 
 Recent videos:
-  - [2023-07-21] How to Create a Smart Chatbot with Streamlit, Python, and ChatGPT in 80 lines of code — 763 views, 11 likes
+  - [2023-07-21] How to Create a Smart Chatbot with Streamlit, Python, and ChatGPT in 80 lines of code — 764 views, 12 likes
   - [2023-07-03] The Ultimate Guide to Pandas Series for Data Analysis Part 2 — 54 views, 2 likes
   - [2023-07-03] The Ultimate Guide to Pandas Series for Data Analysis Part 1 — 77 views, 2 likes
   - [2023-02-20] Indexing Best Practices Pandas Series in Python | When and how to perform efficient indexing — 125 views, 6 likes
@@ -34,11 +34,11 @@ Recent videos:
 
 ### Breath of Poetry
 - Subscribers: 7
-- Total views: 779
+- Total views: 787
 - Videos: 22
 
 Recent videos:
-  - [2024-04-04] Whispers of the Deserted Mind || Routine || Spoken Word Poetry — 22 views, 0 likes
+  - [2024-04-04] Whispers of the Deserted Mind || Routine || Spoken Word Poetry — 23 views, 0 likes
   - [2024-09-29] 11. Whispers of the Deserted Mind || Routine — 12 views, 0 likes
   - [2023-07-19] Hurts Like Inferno - A Heart-Wrenching Poem of Self-Realization || Spoken Word Poetry — 79 views, 1 likes
   - [2024-09-29] 10. Hurts Like Inferno - A Heart-Wrenching Poem of Self-Realization — 27 views, 0 likes
