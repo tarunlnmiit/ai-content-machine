@@ -1,0 +1,120 @@
+# Animation Prompt — Title Card
+## Context
+Script: /Users/tarungupta/Making It Big/Claude/content-machine/content/scripts/2026-06-03_2026-06-01-poetry-quotes-looking-at-the-world-through-a-refl_yt.md
+Episode: Only to Make Themselves Happy
+Raw tag: [3-second title card — "Only to Make Themselves Happy"]
+
+## Task
+Create a Remotion React component (`TitleCard.tsx`) that renders a 3-second animated title card (90 frames at 30 fps).
+
+## Brand spec
+- Show: Breath of Poetry
+- FPS: 30
+- Background: #0b0912
+- Surface: #130f1e
+- Accent: #a78bfa
+- Accent2: #e879a0
+- Text: #ede9f8
+- Muted: #7c7190
+- Heading font: Georgia
+- Body font: Inter
+
+## Text to display
+"Only to Make Themselves Happy"
+
+## Animation spec
+1. **0–8f**: Background fades in from transparent (opacity 0→1) over `#0b0912`.
+2. **0–12f**: A horizontal accent line (2px, color `#a78bfa`, width=60% of frame) slides in from left using `interpolate(frame, [0,12], ['-100%','0%'])` on `translateX`.
+3. **6–20f**: Show name ("Breath of Poetry") fades and slides up (translateY 20→0, opacity 0→1) using spring physics (`fps`, `damping:80`, `stiffness:200`).
+4. **14–30f**: Main title text fades and slides up with a 3-frame stagger per line if multi-line. Use spring.
+5. **80–90f**: Entire composition fades to black (opacity 1→0).
+
+## Code requirements
+- Single `TitleCard` exported component
+- Accept props: `{ titleText: string; showName: string; durationInFrames: number }`
+- Use `useCurrentFrame`, `useVideoConfig`, `interpolate`, `spring` from `remotion`
+- No external libraries beyond `remotion`
+- Heading font: Georgia
+
+## Output
+Full `TitleCard.tsx` file content, ready to drop into `remotion/src/compositions/`.
+
+========================================================================
+
+# Animation Prompt — Lower Third
+## Context
+Script: /Users/tarungupta/Making It Big/Claude/content-machine/content/scripts/2026-06-03_2026-06-01-poetry-quotes-looking-at-the-world-through-a-refl_yt.md
+Raw tag: [3-second lower third — "Defense, not confidence."]
+
+## Task
+Create a Remotion React component (`LowerThird.tsx`) for a 3-second lower-third overlay (90 frames at 30 fps).
+
+## Brand spec
+- Show: Breath of Poetry
+- FPS: 30
+- Background: #0b0912
+- Surface: #130f1e
+- Accent: #a78bfa
+- Accent2: #e879a0
+- Text: #ede9f8
+- Muted: #7c7190
+- Heading font: Georgia
+- Body font: Inter
+
+## Text to display
+"Defense, not confidence."
+
+## Animation spec
+1. **0–10f**: Accent bar (4px tall, full width, color `#a78bfa`) wipes in left→right.
+2. **5–18f**: Text slides up from bar with spring + fade.
+3. **80–90f**: Reverse — text fades out, bar wipes right→left.
+
+## Code requirements
+- Accept props: `{ text: string; durationInFrames: number }`
+- Use `useCurrentFrame`, `interpolate`, `spring` from `remotion`
+- Body font: Inter
+
+## Output
+Full `LowerThird.tsx` file.
+
+========================================================================
+
+# Animation Prompt — Outro Card
+## Context
+Script: /Users/tarungupta/Making It Big/Claude/content-machine/content/scripts/2026-06-03_2026-06-01-poetry-quotes-looking-at-the-world-through-a-refl_yt.md
+Episode: Only to Make Themselves Happy
+Raw tag: [5-second outro card — "Next: what it costs to take the mask off"]
+
+## Task
+Create a Remotion React component (`OutroCard.tsx`) that renders a 5-second animated outro/end-card (150 frames at 30 fps).
+
+## Brand spec
+- Show: Breath of Poetry
+- FPS: 30
+- Background: #0b0912
+- Surface: #130f1e
+- Accent: #a78bfa
+- Accent2: #e879a0
+- Text: #ede9f8
+- Muted: #7c7190
+- Heading font: Georgia
+- Body font: Inter
+
+## Text to display
+"Next: what it costs to take the mask off"
+
+## Animation spec
+1. **0–8f**: Background fades in (`#0b0912`).
+2. **0–15f**: Subscribe nudge icon (bell emoji or SVG ring icon, color `#e879a0`) bounces in from below using spring (`damping:60`).
+3. **10–25f**: "Next up:" label fades in (muted color `#7c7190`, small caps, 14px).
+4. **18–35f**: Next episode text (main body) slides and fades in with spring.
+5. **138–150f**: Fade to black.
+
+## Code requirements
+- Single `OutroCard` exported component
+- Accept props: `{ nextText: string; episodeTitle: string; durationInFrames: number }`
+- Use `useCurrentFrame`, `useVideoConfig`, `interpolate`, `spring` from `remotion`
+- No external libraries beyond `remotion`
+
+## Output
+Full `OutroCard.tsx` file content, ready to drop into `remotion/src/compositions/`.
