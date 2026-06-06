@@ -255,14 +255,18 @@ without shame, build a lasting practice). The arc takes a student from "I can't 
 
 ## Companion material — production notes
 
-| Type | Lessons | How to make |
-|------|---------|-------------|
-| 📝 Prompt sheet (prompt deck, moat #2) | 1, 2, 3, 4, 6 | `generate_course_worksheet.py --niche poetry` → `content/courses/poetry/prompts/` |
-| Share-without-shame guide (moat #3) | 5 | `generate_course_worksheet.py --niche poetry` (guide form) |
-| **🎥 Write-along session** (moat #1) | 3, 4, 6 | Screen/cam-record Tarun writing from blank page — unedited, crossing out lines |
+| Type | Lessons | How to make | Status |
+|------|---------|-------------|--------|
+| 📝 Prompt sheet (prompt deck, moat #2) | 1, 2, 3, 4, 6 | `generate_course_worksheet.py --niche poetry` → `prompts/` | ✓ 7 built (`prompts/`) |
+| Share-without-shame guide (moat #3) | 5 | `generate_course_worksheet.py --niche poetry` (guide form) | ✓ built (`prompts/`) |
+| **🎥 Write-along session** (moat #1) | 3, 4, 6 | Screen/cam-record Tarun writing from blank page — unedited, crossing out lines | ⏳ record-only |
 
-Bundle the prompt sheets into one downloadable *Prompt Deck* in Graphy. The write-along
-sessions + the original deck are the moats — record once, can't be faked.
+**Produced asset masters** (editable, in repo, one download in Graphy):
+- `prompts/*_worksheet.md` — the 6 lesson sheets + a 40+-line `starter-lines-deck` sheet.
+- `prompts/prompt_deck.md` — all sheets compiled into one deck with a title page + TOC.
+  Rebuild any time: `python scripts/compile_prompt_deck.py --niche poetry`.
+
+The 3 write-along sessions + the original deck are the moats — record once, can't be faked.
 
 ## Repurposing — paid lesson → free funnel
 
@@ -279,7 +283,8 @@ a poem get written and half of it crossed out") as their own teaser class. Rules
 1. Tarun: review/edit this outline — swap hooks, stories, moats.
 2. Draft Lessons 1–2 scripts + prompt sheets (pre-sell pair). Commands above.
 3. Personalise `[PERSONAL_*]` markers, record, edit (see `docs/course-production-guide.md`).
-4. Build the *Prompt Deck* (L1/2/3/4/6) as one reusable download.
+4. ✓ DONE — *Prompt Deck* built: 7 prompt sheets compiled into `prompts/prompt_deck.md`.
+   Rebuild with `python scripts/compile_prompt_deck.py` after adding sheets.
 5. Record the 3 write-along sessions (moat #1: L3, L4, L6).
 6. Create Graphy shell; fill `graphy_course_id` + `enrol_url` into `data/courses/graphy_config.yaml`.
 7. After recording, generate per-lesson social teasers to drive sales.

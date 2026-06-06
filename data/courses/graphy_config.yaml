@@ -77,7 +77,7 @@ courses:
     # Signature moats (see content/courses/life_self_dev/outline.md):
     differentiators:
       - "Real systems-teardown sessions (Tarun's own tracker/check-in/review on screen) — L1/3/5"
-      - "Your-life-as-a-dataset tracker kit — L1/2/5/6"
+      - "Your-life-as-a-dataset tracker kit — DONE, 4 built: content/courses/life_self_dev/templates/{energy_audit_tracker,keystone_habit_designer,weekly_review_template,deep_block_planner}.csv + systems_kit_guide.md — L1/2/5/6"
       - "Built for Indian student pressure (academic + family + career, mental-health upkeep) — L3/4"
     graphy_course_id: ""
     enrol_url: ""
@@ -99,7 +99,7 @@ courses:
     # Signature moats (see content/courses/poetry/outline.md):
     differentiators:
       - "Write-along sessions (Tarun writing from blank page on camera, crossing out lines) — L3/4/6"
-      - "Original prompt deck (starter lines students keep) — all lessons"
+      - "Original prompt deck (starter lines students keep) — DONE: content/courses/poetry/prompts/prompt_deck.md (7 sheets compiled; rebuild via scripts/compile_prompt_deck.py) — all lessons"
       - "Share-without-shame ritual (safe weekly poem share; courage as the product) — L5 + community"
     graphy_course_id: ""
     enrol_url: ""

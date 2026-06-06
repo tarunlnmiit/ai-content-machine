@@ -286,15 +286,21 @@ loops, attention, systems over goals). The arc takes a student from "I keep star
 
 ## Companion material — production notes
 
-| Type | Lessons | How to make |
-|------|---------|-------------|
-| 📊 Tracker / template (kit, moat #2) | 1, 2, 5, 6 | `generate_course_worksheet.py --niche life`; polish as a reusable Notion/Sheet |
-| Reflection / sorter worksheet | 3, 4, 7 | `generate_course_worksheet.py --niche life` |
-| **🎥 Real systems teardown** (moat #1) | 1, 3, 5 | Screen-record Tarun's *own* tracker/check-in/review — real, unpolished |
+| Type | Lessons | How to make | Status |
+|------|---------|-------------|--------|
+| 📊 Tracker / template (kit, moat #2) | 1, 2, 5, 6 | hand-authored CSV masters in `templates/` | ✓ 4 built (`templates/`) |
+| Reflection / sorter worksheet | 3, 4, 7 | `generate_course_worksheet.py --niche life` | ✓ 7 built (`worksheets/`) |
+| **🎥 Real systems teardown** (moat #1) | 1, 3, 5 | Screen-record Tarun's *own* tracker/check-in/review — real, unpolished | ⏳ record-only |
 
-Bundle the trackers into one downloadable *Systems Kit* in Graphy. The teardown sessions +
-the real tracker kit are the moats — they cost recording time once and can't be faked from
-stock advice.
+**Produced asset masters** (editable, in repo, bundle into the Graphy *Systems Kit*):
+- `templates/energy_audit_tracker.csv` (L1, daily) · `keystone_habit_designer.csv` (L2, weekly) ·
+  `weekly_review_template.csv` (L5, weekly) · `deep_block_planner.csv` (L6, weekly).
+- `templates/systems_kit_guide.md` — column meanings, the worksheet rule each tracker encodes,
+  and how to import to Google Sheets / Notion.
+
+The 3 real systems-teardown sessions are the one remaining moat — they cost recording time once
+and can't be faked from stock advice. Keep the CSV masters in repo; link one polished live
+Sheet/Notion copy in Graphy.
 
 ## Repurposing — paid lesson → free funnel
 
@@ -310,7 +316,8 @@ lessons feeding @breathoflife_ + Substack + IG + X. Rules:
 1. Tarun: review/edit this outline — swap hooks, stories, moats.
 2. Draft Lessons 1–2 scripts + trackers (pre-sell pair). Commands above.
 3. Personalise `[PERSONAL_*]` markers, record, edit (see `docs/course-production-guide.md`).
-4. Build the *Systems Kit* trackers (L1/2/5/6) as reusable Notion/Sheets.
+4. ✓ DONE — *Systems Kit* trackers (L1/2/5/6) built as CSV masters + guide in `templates/`.
+   Polish one into a live Notion/Sheet and link it in Graphy.
 5. Record the 3 real systems-teardown sessions (moat #1: L1, L3, L5).
 6. Create Graphy shell; fill `graphy_course_id` + `enrol_url` into `data/courses/graphy_config.yaml`.
 7. After recording, generate per-lesson social teasers to drive sales.

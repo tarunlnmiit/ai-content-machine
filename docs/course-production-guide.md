@@ -73,6 +73,15 @@ conda run -n content_engine_env python scripts/build_course_notebooks.py --niche
 #   notebook_to_module_refactor_kit}.ipynb
 #   data_audit_starter loads ../datasets/loan_applications.csv — run it from the notebooks/ folder.
 
+# 2d. (Life only) The tracker kit is hand-authored static CSV masters — no generator.
+#     Masters live in content/courses/life_self_dev/templates/ (4 CSVs + systems_kit_guide.md);
+#     edit them directly, then polish one into a live Notion/Sheet and link it in Graphy.
+
+# 2e. (Poetry only) Compile the prompt sheets in prompts/ into one downloadable deck.
+conda run -n content_engine_env python scripts/compile_prompt_deck.py --niche poetry
+# → content/courses/poetry/prompts/prompt_deck.md (title page + TOC + every *_worksheet.md sheet)
+#   Re-run after adding a new prompt sheet; deterministic, no Claude call.
+
 # 3. Personalise: fill every [PERSONAL_INSERT] / [PERSONAL_STORY] with real detail.
 grep -n 'PERSONAL' content/courses/<niche>/lesson_scripts/<file>.md
 
@@ -115,6 +124,10 @@ A third script backs the DS **dirty-dataset moat** (no Claude call — pure seed
   companion notebooks (`nbformat.v4`, validated before writing; no Claude call). `data_audit_starter`
   pairs with the L2 worksheet and loads `../datasets/loan_applications.csv` (**run it from
   `notebooks/`**); `notebook_to_module_refactor_kit` is self-contained. Needs `pip install nbformat`.
+- **`compile_prompt_deck.py`** — `--niche poetry` → reads every `prompts/*_worksheet.md` and
+  assembles `prompts/prompt_deck.md` (title page + TOC + one section per sheet, inner headings
+  demoted so they nest). No Claude call; deterministic; re-run after adding a sheet. The Life
+  tracker kit (`life_self_dev/templates/`) has **no** generator — those CSV masters are hand-edited.
 
 ## Recording
 
