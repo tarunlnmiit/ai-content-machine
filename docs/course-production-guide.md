@@ -7,6 +7,10 @@ Sonnet 4.6** (`claude-sonnet-4-6`).
 Platform: **Graphy** (Indian — UPI/net-banking/cards, INR native). Config + pricing:
 `data/courses/graphy_config.yaml`. Curriculum per niche: `content/courses/<niche>/curriculum.md`.
 
+> **New here / want the whole zero→launched path in order?** Start at
+> **`docs/course-setup-end-to-end.md`** — the linear stage spine + the AI-vs-manual map +
+> the Graphy upload walkthrough. This guide is the deeper script/editing/distribution reference behind it.
+
 **Each lesson ships three layers:** (1) the **video** (drafted → personalised → recorded),
 (2) **companion material** the student practises with (worksheet / code notebook /
 template / checklist), and (3) **repurpose hooks** — free social teasers (YT Short, IG
@@ -178,13 +182,10 @@ Launch the Graphy course now; add the Membership tier once the channel qualifies
 
 ## Graphy upload checklist (per course)
 
-1. Create course shell: title, description, cover, price (from `graphy_config.yaml`).
-2. Connect Razorpay / direct UPI. **Test a ₹1 transaction before launch.**
-3. Upload lessons; gate Lesson 1 as free preview (email capture).
-4. Certificate on completion (Canva template + logo + course/student name).
-5. WhatsApp/Telegram group link added; students join on first sale.
-6. Link course in the matching YouTube channel "About" + video descriptions.
-7. Fill `graphy_course_id` + `enrol_url` back into `data/courses/graphy_config.yaml`.
+The authoritative 7-step upload sequence now lives in the end-to-end setup guide →
+**`docs/course-setup-end-to-end.md` → Stage 7**. Create shell + price, connect UPI and
+**test a ₹1 transaction**, gate Lesson 1 free, certificate, community link, cross-link
+from YouTube, then fill `graphy_course_id` + `enrol_url` back into `graphy_config.yaml`.
 
 ## Backups & ownership (do not skip)
 
