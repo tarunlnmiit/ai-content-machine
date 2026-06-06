@@ -14,8 +14,6 @@ import requests
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from dotenv import load_dotenv
-from google import genai
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 KB_DIR = BASE_DIR / "data" / "kb"
 ANALYTICS_DIR = BASE_DIR / "data" / "analytics"
@@ -24,7 +22,6 @@ IDEAS_DIR = BASE_DIR / "data" / "ideas"
 KB_DIR.mkdir(parents=True, exist_ok=True)
 load_dotenv(BASE_DIR / ".env")
 
-GEMINI_API_KEY = os.getenv("GOOGLE_CONSOLE_API_KEY") or os.getenv("GEMINI_API_KEY")
 NOTION_TOKEN = os.getenv("NOTION_INTEGRATION_SECRET")
 NOTION_CONTENT_DB = "5c1a6fa3-19f7-481b-9946-5224a579b569"
 
@@ -189,7 +186,7 @@ def fetch_notion_archive() -> dict:
 
 
 def synthesize_brief(analytics: dict, ideas: dict, notion: dict) -> str:
-    """Use OpenRouter → NIM → Gemini → Ollama for synthesis."""
+    """Use Claude CLI → Ollama for synthesis."""
     # Build context from all sources
     context_parts = [
         "# CREATOR ANALYTICS DATA",
@@ -224,18 +221,6 @@ def synthesize_brief(analytics: dict, ideas: dict, notion: dict) -> str:
     ]
 
     full_context = "\n".join(context_parts)
-
-    # Backend 1: OpenRouter
-    try:
-        from openrouter_client import call_openrouter
-        log("Calling OpenRouter (nemotron-120b)...")
-        text, ok = call_openrouter(prompt, max_tokens=4096)
-        if ok:
-            return text
-        else:
-            log(f"  OpenRouter error: {text[:100]}, trying NIM")
-    except Exception as e:
-        log(f"  OpenRouter error: {e}, trying NIM")
 
     prompt = f"""You are a strategic content advisor analyzing creator data.
 
@@ -300,32 +285,21 @@ Generated: [date]
 Use specific numbers from the analytics. Focus on actionable insights.
 """
 
-    # Backend 2: NVIDIA NIM
-    log("Calling NVIDIA NIM (mistral-large-3-675b)...")
+    # Backend 1: Claude CLI
+    import subprocess as _sp
+    log("Calling claude -p ...")
     try:
-        from nim_client import call_nim, NIM_MODEL_LARGE
-        text, _ = call_nim(prompt, model=NIM_MODEL_LARGE, max_tokens=4096)
-        return text
+        result = _sp.run(
+            ["claude", "-p", prompt],
+            capture_output=True, text=True, timeout=300,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+        log(f"  claude -p failed (exit {result.returncode}), falling back to Ollama")
     except Exception as e:
-        log(f"  NIM error: {e}, trying Gemini")
+        log(f"  claude -p error: {e}, falling back to Ollama")
 
-    # Backend 3: Gemini
-    if GEMINI_API_KEY:
-        log("Calling Gemini API...")
-        try:
-            client = genai.Client(api_key=GEMINI_API_KEY)
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=prompt,
-            )
-            return response.text
-        except Exception as e:
-            if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
-                log(f"  Gemini quota exceeded, falling back to Ollama")
-            else:
-                log(f"  Gemini error: {e}, trying Ollama")
-
-    # Backend 4: Ollama
+    # Backend 2: Ollama
     log("Using Ollama for synthesis...")
     return synthesize_with_ollama(prompt)
 

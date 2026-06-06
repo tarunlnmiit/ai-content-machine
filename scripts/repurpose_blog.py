@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Repurpose a blog post into platform derivatives.
-Fallback chain: NVIDIA NIM → Gemini → Claude Pro
+Backend: Claude Pro (claude -p subprocess).
 Saves each derivative as a separate file under content/derivatives/{slug}/
 """
 
@@ -34,10 +34,7 @@ DERIVATIVE_FILES = {
 }
 
 
-def slugify(text: str) -> str:
-    text = re.sub(r"[^\w\s-]", "", text.lower().strip())
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:60].strip("-")
+from lib.slug import slugify
 
 
 def load(path: Path, required: bool = True) -> str | None:
@@ -85,67 +82,7 @@ def extract_json(text: str) -> dict:
     return json.loads(text)
 
 
-# ── Backend 1: OpenRouter ────────────────────────────────────────────────
-
-def call_openrouter(prompt: str) -> tuple[str, dict]:
-    """Try OPENROUTER_MODEL then OPENROUTER_FALLBACK_MODELS. Returns (text, usage_dict). Raises on error."""
-    from openrouter import OpenRouter
-    api_key = os.getenv("OPENROUTER_API_KEY")
-    if not api_key:
-        raise RuntimeError("OPENROUTER_API_KEY not set in .env")
-
-    primary_model = os.getenv("OPENROUTER_MODEL", "nvidia/nemotron-3-super-120b-a12b:free")
-    fallback_str = os.getenv("OPENROUTER_FALLBACK_MODELS", "")
-    fallback_models = [m.strip() for m in fallback_str.split(",") if m.strip()]
-
-    models = [primary_model] + fallback_models
-    last_error = None
-
-    for model in models:
-        try:
-            with OpenRouter(api_key=api_key) as client:
-                response = client.chat.send(
-                    model=model,
-                    messages=[{"role": "user", "content": prompt}],
-                )
-            usage = {
-                "input_tokens": getattr(response.usage, "input_tokens", 0),
-                "output_tokens": getattr(response.usage, "output_tokens", 0),
-                "backend": f"openrouter-{model}"
-            }
-            return response.choices[0].message.content, usage
-        except Exception as e:
-            last_error = e
-            continue
-
-    raise RuntimeError(f"OpenRouter all models failed. Primary: {primary_model}. Last error: {last_error}")
-
-
-# ── Backend 2: NVIDIA NIM ─────────────────────────────────────────────────
-
-def call_nim(prompt: str) -> tuple[str, dict]:
-    """Returns (text, usage_dict). Raises on error."""
-    from nim_client import call_nim as _nim, NIM_MODEL_LARGE
-    return _nim(prompt, model=NIM_MODEL_LARGE, max_tokens=4096)
-
-
-# ── Backend 3: Gemini ─────────────────────────────────────────────────────
-
-def call_gemini(prompt: str) -> tuple[str, dict]:
-    """Returns (text, usage_dict). Raises on error."""
-    from google import genai
-    api_key = os.getenv("GOOGLE_CONSOLE_API_KEY") or os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        raise RuntimeError("GEMINI_API_KEY not set in .env")
-    client = genai.Client(api_key=api_key)
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=prompt,
-    )
-    return response.text, {"input_tokens": 0, "output_tokens": 0, "backend": "gemini-2.0-flash"}
-
-
-# ── Backend 4: claude -p (Claude Pro subscription) ───────────────────────
+# ── Backend: claude -p (Claude Pro subscription) ─────────────────────────
 
 def call_claude_pro(prompt: str) -> tuple[str, dict]:
     """Returns (text, usage_dict). Raises on subprocess failure."""
@@ -193,18 +130,11 @@ def call_with_retry(prompt: str, call_fn, label: str) -> tuple[dict, dict]:
             )
 
 
-# ── Fallback chain ────────────────────────────────────────────────────────
+# ── Generate ──────────────────────────────────────────────────────────────
 
 def generate(prompt: str) -> tuple[dict, dict]:
-    """
-    Try backends in order: OpenRouter (primary + fallback models) → NIM → Gemini → Claude Pro.
-    Returns (parsed_dict, usage) from first successful backend.
-    """
-    primary_model = os.getenv("OPENROUTER_MODEL", "nvidia/nemotron-3-super-120b-a12b:free")
+    """Call Claude Pro subprocess. Returns (parsed_dict, usage)."""
     backends = [
-        # (f"OpenRouter ({primary_model} + fallback)", call_openrouter),
-        # ("NVIDIA NIM (mistral-large-3-675b)", call_nim),
-        # ("Gemini", call_gemini),
         ("Claude Pro (subprocess)", call_claude_pro),
     ]
 

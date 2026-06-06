@@ -47,7 +47,7 @@ def classify_trend(keyword, niche_keywords):
 
 
 def classify_trend_with_llm(keyword: str) -> str:
-    """Classify trend using LLM chain. Fallback to keyword matching."""
+    """Classify trend using Ollama, fallback to keyword matching."""
     prompt = f"""Classify this Instagram hashtag/trend into ONE category only:
 - data_science_tech: AI, machine learning, programming, tech, data science, software, code
 - life_self_dev: productivity, habits, wellness, mindfulness, mental health, growth, motivation
@@ -57,49 +57,6 @@ Hashtag: {keyword}
 
 Respond with ONLY the category name (e.g., "data_science_tech") or "unclassified"."""
 
-    # Backend 1: OpenRouter
-    try:
-        from openrouter_client import call_openrouter
-        text, ok = call_openrouter(prompt, max_tokens=20)
-        if ok and text:
-            response = text.lower().strip().split()[0]
-            if response in NICHE_KEYWORDS:
-                console.print(f"    [dim]→ {keyword}: {response} [cyan](OpenRouter)[/cyan][/dim]", end=" ")
-                return response
-    except Exception as e:
-        pass
-
-    # Backend 2: NVIDIA NIM
-    try:
-        from nim_client import call_nim, NIM_MODEL_LARGE
-        text, _ = call_nim(prompt, model=NIM_MODEL_LARGE, max_tokens=20)
-        if text:
-            response = text.lower().strip().split()[0]
-            if response in NICHE_KEYWORDS:
-                console.print(f"    [dim]→ {keyword}: {response} [cyan](NIM)[/cyan][/dim]", end=" ")
-                return response
-    except Exception as e:
-        pass
-
-    # Backend 3: Gemini
-    try:
-        gemini_api_key = os.getenv("GEMINI_API_KEY")
-        if gemini_api_key:
-            from google import genai
-            client = genai.Client(api_key=gemini_api_key)
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=prompt,
-            )
-            if response.text:
-                resp_text = response.text.lower().strip().split()[0]
-                if resp_text in NICHE_KEYWORDS:
-                    console.print(f"    [dim]→ {keyword}: {resp_text} [cyan](Gemini)[/cyan][/dim]", end=" ")
-                    return resp_text
-    except Exception as e:
-        pass
-
-    # Backend 4: Ollama
     try:
         response = subprocess.run(
             ["curl", "-s", "http://localhost:11434/api/generate", "-d", json.dumps({
@@ -118,10 +75,9 @@ Respond with ONLY the category name (e.g., "data_science_tech") or "unclassified
                 if resp_text in NICHE_KEYWORDS:
                     console.print(f"    [dim]→ {keyword}: {resp_text} [cyan](Ollama)[/cyan][/dim]", end=" ")
                     return resp_text
-    except Exception as e:
+    except Exception:
         pass
 
-    # Fallback to keyword matching
     niche = classify_trend(keyword, NICHE_KEYWORDS)
     if niche:
         console.print(f"    [dim]→ {keyword}: {niche} [yellow](keyword)[/yellow][/dim]", end=" ")

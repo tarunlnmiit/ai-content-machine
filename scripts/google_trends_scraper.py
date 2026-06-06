@@ -13,12 +13,6 @@ import os
 
 from _console import console, progress_bar
 
-try:
-    from openrouter_client import call_openrouter
-    HAS_OPENROUTER = os.getenv("OPENROUTER_API_KEY") is not None
-except ImportError:
-    HAS_OPENROUTER = False
-
 NICHE_KEYWORDS = {
     "data_science_tech": ["data science", "machine learning", "python", "ai", "algorithm", "neural network", "deep learning", "gpu", "llm", "code", "programming", "software engineering", "database", "api", "github", "npm", "javascript", "react", "tensorflow", "pytorch", "model training"],
     "life_self_dev": ["productivity", "habit building", "motivation", "goal setting", "self improvement", "wellness", "meditation", "mindfulness", "sleep", "exercise", "confidence", "happiness", "discipline", "growth mindset", "stoicism", "mental health"],
@@ -39,27 +33,7 @@ def classify_trend(keyword, niche_keywords):
 
 
 def classify_trend_with_llm(keyword: str) -> str:
-    """Classify trend using LLM. Fallback to keyword matching on error."""
-    if not HAS_OPENROUTER:
-        return classify_trend(keyword, NICHE_KEYWORDS)
-
-    prompt = f"""Classify this trending topic into ONE category only:
-- data_science_tech: AI, machine learning, programming, tech, data science, software
-- life_self_dev: productivity, habits, wellness, mindfulness, mental health, growth
-- poetry_quotes: poetry, creative writing, literature, inspirational content
-
-Trend: {keyword}
-
-Respond with ONLY the category name (e.g., "data_science_tech") or "unclassified"."""
-
-    response, ok = call_openrouter(prompt, max_tokens=20)
-    if not ok or not response:
-        return classify_trend(keyword, NICHE_KEYWORDS)
-
-    response = response.lower().strip().split()[0]  # First word only
-    if response in NICHE_KEYWORDS:
-        return response
-
+    """Classify trend using keyword matching."""
     return classify_trend(keyword, NICHE_KEYWORDS)
 
 

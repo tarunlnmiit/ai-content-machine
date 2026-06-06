@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Shared ffmpeg + whisper helpers for auto_edit and clip_shorts."""
 
+import io
 import json
 import re
 import subprocess
@@ -182,9 +183,82 @@ def overlay_broll(main_video: Path, broll_clips: list, out_path: Path,
     run_ffmpeg(cmd, f"overlay {len(insertions)} broll clips")
 
 
-def crop_vertical(video_in: Path, video_out: Path, srt_in: Optional[Path] = None) -> None:
-    """Crop landscape → 9:16 vertical (center crop), optional caption burn."""
-    vf = "crop=ih*9/16:ih,scale=1080:1920"
+def detect_code_x_center(video: Path, n_samples: int = 5) -> Optional[int]:
+    """Sample frames, find x-center of region with highest edge density (code text).
+    Returns x-center in original video pixels, or None on failure."""
+    try:
+        from PIL import Image, ImageFilter  # type: ignore
+    except ImportError:
+        return None
+    try:
+        dur_out = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-show_entries", "stream=width,height,duration",
+             "-of", "csv=p=0", str(video)],
+            capture_output=True, text=True, check=True
+        )
+        parts = dur_out.stdout.strip().split(",")
+        vid_w, vid_h = int(parts[0]), int(parts[1])
+        duration = float(parts[2]) if len(parts) > 2 else 10.0
+        crop_w = int(vid_h * 9 / 16)
+        if crop_w >= vid_w:
+            return None  # already portrait
+        THUMB_W = 480
+        scale = THUMB_W / vid_w
+        thumb_w = THUMB_W
+        thumb_h = int(vid_h * scale)
+        crop_w_s = int(crop_w * scale)
+        col_energy = [0.0] * thumb_w
+        sample_times = [duration * (i + 1) / (n_samples + 1) for i in range(n_samples)]
+        for t in sample_times:
+            r = subprocess.run(
+                ["ffmpeg", "-ss", f"{t:.3f}", "-i", str(video),
+                 "-frames:v", "1", "-vf", f"scale={thumb_w}:{thumb_h}",
+                 "-f", "image2", "-vcodec", "png", "pipe:1"],
+                capture_output=True
+            )
+            if r.returncode != 0 or not r.stdout:
+                continue
+            img = Image.open(io.BytesIO(r.stdout)).convert("L")
+            edges = list(img.filter(ImageFilter.FIND_EDGES).getdata())
+            w, h = img.size
+            for y in range(h):
+                row_offset = y * w
+                for x in range(w):
+                    col_energy[x] += edges[row_offset + x]
+        # sliding window: find crop_w_s-wide band with max edge energy
+        window = min(crop_w_s, thumb_w)
+        cur = sum(col_energy[:window])
+        best, best_x = cur, 0
+        for x in range(1, thumb_w - window + 1):
+            cur = cur - col_energy[x - 1] + col_energy[x + window - 1]
+            if cur > best:
+                best, best_x = cur, x
+        x_center_scaled = best_x + window // 2
+        x_center = int(x_center_scaled / scale)
+        print(f"  [code-detect] best x-center: {x_center}px (of {vid_w}px wide, crop_w={crop_w})")
+        return x_center
+    except Exception as e:
+        print(f"  [code-detect] failed: {e}")
+        return None
+
+
+def crop_vertical(video_in: Path, video_out: Path, srt_in: Optional[Path] = None,
+                  x_center: Optional[int] = None) -> None:
+    """Crop landscape → 9:16 vertical, optional caption burn.
+    x_center: pixel x-position to crop around (default: center of frame)."""
+    if x_center is not None:
+        r = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-show_entries", "stream=width,height", "-of", "csv=p=0", str(video_in)],
+            capture_output=True, text=True, check=True,
+        )
+        vid_w, vid_h = map(int, r.stdout.strip().split(","))
+        crop_w = int(vid_h * 9 / 16)
+        x_off = max(0, min(x_center - crop_w // 2, vid_w - crop_w))
+        vf = f"crop={crop_w}:{vid_h}:{x_off}:0,scale=1080:1920,setsar=1"
+    else:
+        vf = "crop=ih*9/16:ih,scale=1080:1920,setsar=1"
     if srt_in and srt_in.exists():
         srt_escaped = str(srt_in).replace(":", r"\:").replace("'", r"\'")
         vf += f",subtitles='{srt_escaped}':force_style='{CAPTION_STYLE_PORTRAIT}'"

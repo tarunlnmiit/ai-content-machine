@@ -50,11 +50,7 @@ DESIRES = {
 }
 
 
-def slugify(text: str) -> str:
-    text = text.lower().strip()
-    text = re.sub(r"[^\w\s-]", "", text)
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:60].strip("-")
+from lib.slug import slugify
 
 
 def load(path: Path) -> str:
@@ -155,6 +151,11 @@ def build_prompt(
     else:
         task_instruction = "Apply every instruction in the Ghostwriter Agent Prompt above.\nConvert the source material below into a polished blog post in Tarun's voice.\nPreserve every concrete detail, number, and genuine insight from the source — do not genericize.\nProduce the full blog post in clean Markdown, structured exactly as specified."
 
+    image_insert_requirement = (
+        "\n2. Include at least 1 `[IMAGE_INSERT: concrete pexels search term]` marker in the blog body."
+        if format == "blog" else ""
+    )
+
     return f"""{ghostwriter_agent}
 
 ---
@@ -173,8 +174,7 @@ Voice Style: {voice_instruction}{desire_instruction}{topic_instruction}{word_cou
 {task_instruction}
 
 **MANDATORY REQUIREMENTS (no exceptions):**
-1. If source contains a poem (lines starting with `> ` or inside `[POEM_BLOCKQUOTE_BELOW_PRESERVE_EXACTLY]` markers), embed the COMPLETE poem in one unbroken blockquote block right after the HOOK. Do NOT split across sections.
-2. Include at least 1 `[IMAGE_INSERT: concrete pexels search term]` marker in the blog body.
+1. If source contains a poem (lines starting with `> ` or inside `[POEM_BLOCKQUOTE_BELOW_PRESERVE_EXACTLY]` markers), embed the COMPLETE poem in one unbroken blockquote block right after the HOOK. Do NOT split across sections.{image_insert_requirement}
 
 ---
 
@@ -289,8 +289,8 @@ def main():
 
     blog_text = run_claude(combined_prompt, timeout=600, description="Ghostwriting blog (2–5 min)...")
 
-    # Validate IMAGE_INSERT present; retry once if missing
-    if "[IMAGE_INSERT" not in blog_text:
+    # Validate IMAGE_INSERT present for blog format only; retry once if missing
+    if args.format == "blog" and "[IMAGE_INSERT" not in blog_text:
         console.print("[warn]Warning: No IMAGE_INSERT found. Retrying with reinforced prompt...[/warn]")
         retry_prompt = combined_prompt + "\n\n**CRITICAL: You MUST include at least 1 [IMAGE_INSERT: ...] marker in the blog body.**"
         blog_text = run_claude(retry_prompt, timeout=600, description="Retrying with IMAGE_INSERT enforcement...")

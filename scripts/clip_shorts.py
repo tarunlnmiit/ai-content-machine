@@ -15,16 +15,19 @@ Usage:
 
 import argparse
 import json
+import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 REPO = Path(__file__).parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.video_utils import (  # noqa: E402
-    cut_segment, crop_vertical, slice_srt, parse_srt,
+    cut_segment, crop_vertical, slice_srt, parse_srt, detect_code_x_center,
 )
 from lib.claude_cli import call_claude  # noqa: E402
 
@@ -54,8 +57,9 @@ Return ONLY a JSON array, no prose. Schema:
 Transcript (timestamps in seconds at start of each line):
 {transcript[:12000]}
 """
+    timeout = max(180, count * 25)
     try:
-        out = call_claude(prompt, cache=True, timeout=120).strip()
+        out = call_claude(prompt, cache=True, timeout=timeout).strip()
     except RuntimeError as e:
         print(f"  {e}")
         return []
@@ -68,6 +72,36 @@ Transcript (timestamps in seconds at start of each line):
     except json.JSONDecodeError as e:
         print(f"  JSON parse error: {e}")
         return []
+
+
+def _probe_duration(video: Path) -> float:
+    out = subprocess.check_output([
+        "ffprobe", "-v", "error",
+        "-show_entries", "format=duration",
+        "-of", "default=noprint_wrappers=1:nokey=1",
+        str(video)
+    ], text=True)
+    return float(out.strip())
+
+
+def _whisper_srt(video: Path, out_dir: Path) -> Path:
+    srt_out = out_dir / f"{video.stem}.srt"
+    if srt_out.exists():
+        print(f"  [whisper] SRT exists: {srt_out.name}")
+        return srt_out
+    print("  [whisper] transcribing (base model)…")
+    whisper_bin = Path(sys.executable).parent / "whisper"
+    with tempfile.TemporaryDirectory() as tmpdir:
+        env = {**os.environ, "KMP_DUPLICATE_LIB_OK": "TRUE"}
+        subprocess.run([
+            str(whisper_bin), str(video),
+            "--model", "base",
+            "--output_format", "srt",
+            "--output_dir", tmpdir,
+        ], check=True, env=env)
+        shutil.copy(Path(tmpdir) / f"{video.stem}.srt", srt_out)
+    print(f"  [whisper] wrote {srt_out.name}")
+    return srt_out
 
 
 def fallback_pick(srt_path: Path, count: int, video_duration: float) -> list:
@@ -96,16 +130,31 @@ def main():
     ap.add_argument("--count", type=int, default=4)
     ap.add_argument("--no-claude", action="store_true",
                     help="Skip claude clip selection, use fallback")
+    ap.add_argument("--smart-crop", action="store_true",
+                    help="Detect code region per segment and crop around it (DS videos)")
     args = ap.parse_args()
 
     edited_dir = REPO / "assets" / "video" / "edited"
     long_video = edited_dir / f"{args.slug}.mp4"
     meta_file = edited_dir / f"{args.slug}_edit_meta.json"
 
+    # If slug ends with -aug (hyperframes), fall back to base (_yt) video
+    if not long_video.exists() and args.slug.endswith("-aug"):
+        base_slug = args.slug[:-4]  # strip "-aug"
+        long_video = edited_dir / f"{base_slug}.mp4"
+        meta_file = edited_dir / f"{base_slug}_edit_meta.json"
+        if long_video.exists():
+            print(f"  note: using base video (pre-hyperframes): {long_video.name}")
+
     if not long_video.exists():
         sys.exit(f"long-form not found: {long_video}\nRun auto_edit.py first.")
     if not meta_file.exists():
-        sys.exit(f"meta not found: {meta_file}")
+        print(f"[meta] not found — auto-generating from video…")
+        duration = _probe_duration(long_video)
+        srt_path = _whisper_srt(long_video, edited_dir)
+        meta_data = {"srt": str(srt_path), "duration_sec": duration}
+        meta_file.write_text(json.dumps(meta_data, indent=2))
+        print(f"[meta] wrote {meta_file.name}")
 
     meta = json.loads(meta_file.read_text())
     srt = Path(meta["srt"])
@@ -154,8 +203,9 @@ def main():
         sub_srt = work / f"seg_{i:02d}.srt"
         slice_srt(srt, p["start"], p["end"], sub_srt)
 
+        x_center = detect_code_x_center(seg) if args.smart_crop else None
         final = shorts_dir / f"{args.slug}_short_{i:02d}.mp4"
-        crop_vertical(seg, final, srt_in=sub_srt)
+        crop_vertical(seg, final, srt_in=sub_srt, x_center=x_center)
         outputs.append({"path": str(final), **p})
 
     # Manifest

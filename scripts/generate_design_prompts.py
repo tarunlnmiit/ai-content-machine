@@ -46,10 +46,7 @@ def extract_json_response(text: str) -> dict:
     return json.loads(text)
 
 
-def slugify(text: str) -> str:
-    text = re.sub(r"[^\w\s-]", "", text.lower().strip())
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:60].strip("-")
+from lib.slug import slugify
 
 
 def detect_niche(blog_path: Path) -> str:

@@ -86,11 +86,10 @@ def extract_markers(text: str) -> list[dict]:
     return markers
 
 
+from lib.slug import slugify as _slugify
+
 def slugify(text: str) -> str:
-    text = text.lower().strip()
-    text = re.sub(r"[^\w\s-]", "", text)
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:50].strip("-")
+    return _slugify(text, max_length=50)
 
 
 IMAGE_PROMPT = """<!DOCTYPE html>

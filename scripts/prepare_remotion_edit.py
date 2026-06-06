@@ -65,13 +65,15 @@ def transcribe_whisper(raw: Path, slug: str) -> list:
         ]
         env = {**os.environ, "KMP_DUPLICATE_LIB_OK": "TRUE"}
         r = subprocess.run(cmd, capture_output=True, text=True, env=env)
-        if r.returncode != 0:
-            print(f"  whisper error: {r.stderr[-600:]}")
-            return []
         out_json = Path(tmpdir) / (Path(raw).stem + ".json")
         if not out_json.exists():
-            print("  whisper: no output JSON found")
+            if r.returncode != 0:
+                print(f"  whisper error: {r.stderr[-600:]}")
+            else:
+                print("  whisper: no output JSON found")
             return []
+        if r.returncode != 0:
+            print(f"  whisper warning (exit {r.returncode}): {r.stderr[-200:]}")
         result = json.loads(out_json.read_text())
 
     captions = []
@@ -369,6 +371,8 @@ def main():
     parser.add_argument("--script", required=True)
     parser.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     parser.add_argument("--slug", required=True)
+    parser.add_argument("--subtitles", action="store_true", default=False,
+                        help="Burn animated captions into the render (default: off)")
     args = parser.parse_args()
 
     raw = Path(args.raw)
@@ -437,6 +441,7 @@ def main():
         "cutSegments": cut_segments,
         "brollCues": clips,
         "captionsFile": captions_file,
+        "showSubtitles": args.subtitles,
     }
 
     plan_path = REMOTION_PUBLIC / "edit-plans" / f"{slug}.json"

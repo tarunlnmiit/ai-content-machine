@@ -23,6 +23,32 @@ except ImportError:
     sys.exit(1)
 
 
+def _pick_h264_encoder():
+    """Return (encoder_name, quality_args) for the first available H.264 encoder.
+
+    Preference: libx264 (GPL builds) → h264_videotoolbox (macOS native) →
+    libopenh264. libx264 supports -crf/-preset; the others use target bitrate.
+    """
+    try:
+        listing = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-encoders"],
+            capture_output=True, text=True,
+        ).stdout
+    except Exception:
+        listing = ""
+
+    candidates = [
+        ("libx264", ["-preset", "fast", "-crf", "23"]),
+        ("h264_videotoolbox", ["-b:v", "8M"]),
+        ("libopenh264", ["-b:v", "6M"]),
+    ]
+    for name, args in candidates:
+        if name in listing:
+            return name, args
+    # Last resort: let ffmpeg choose its default H.264 encoder.
+    return "h264", ["-b:v", "8M"]
+
+
 async def export_story_animation(html_path, output_dir, slug):
     """
     Export HTML story animation to MP4 + PNG slides.
@@ -39,12 +65,10 @@ async def export_story_animation(html_path, output_dir, slug):
     print(f"📼 Exporting story: {slug}")
     print(f"📁 Output: {output_dir}")
 
-    # Parse animation timing from HTML
-    # TOTAL = (N-1) * SLIDE_GAP + SLIDE_DUR = 6*3.7 + 4.0 = 26.2s
-    # We'll capture at 30fps
-    total_duration = 26.2
+    # Timing defaults (legacy story)
+    _default_duration = 26.2
+    _default_starts = [0, 3.7, 7.4, 11.1, 14.8, 18.5, 22.2]
     fps = 30
-    total_frames = int(total_duration * fps)
 
     # Create temp directory for frames
     temp_dir = Path(tempfile.mkdtemp())
@@ -64,7 +88,6 @@ async def export_story_animation(html_path, output_dir, slug):
         time.sleep(0.5)  # Let server start
 
         url = f"file://{html_path}"
-        print(f"🌐 Rendering animation ({total_duration}s @ {fps}fps = {total_frames} frames)...")
 
         async with async_playwright() as p:
             browser = await p.chromium.launch()
@@ -74,10 +97,19 @@ async def export_story_animation(html_path, output_dir, slug):
             await page.goto(url, wait_until="networkidle")
             await page.wait_for_load_state("domcontentloaded")
 
-            # Get reference timestamps for slide transitions
-            # Slides at: 0s, 3.7s, 7.4s, 11.1s, 14.8s, 18.5s, 22.2s
-            # Duration each: 4.0s
-            slide_starts = [0, 3.7, 7.4, 11.1, 14.8, 18.5, 22.2]
+            # Read timing from _storyMeta if available, else use defaults
+            meta = await page.evaluate("typeof window._storyMeta !== 'undefined' ? window._storyMeta : null")
+            if meta:
+                total_duration = float(meta["TOTAL"])
+                slide_starts = [float(s) for s in meta["STARTS"]]
+                print(f"  ℹ️  Timing from HTML: {total_duration}s, {len(slide_starts)} slides")
+            else:
+                total_duration = _default_duration
+                slide_starts = _default_starts
+                print(f"  ℹ️  Timing: defaults ({total_duration}s)")
+
+            total_frames = int(total_duration * fps)
+            print(f"🌐 Rendering animation ({total_duration}s @ {fps}fps = {total_frames} frames)...")
 
             # Capture frames
             for frame_idx in range(total_frames):
@@ -116,14 +148,19 @@ async def export_story_animation(html_path, output_dir, slug):
         print(f"🎬 Encoding MP4 video ({total_duration}s)...")
         mp4_path = output_dir / f"{slug}_story.mp4"
 
+        # Pick an available H.264 encoder. libx264 needs a GPL build; many conda
+        # ffmpeg builds ship --disable-gpl, so fall back to the platform-native
+        # VideoToolbox encoder (macOS) or OpenH264. Quality flags differ per encoder.
+        encoder, quality_args = _pick_h264_encoder()
+        print(f"  🎛  Encoder: {encoder}")
+
         # Use FFmpeg to encode frames to MP4
         ffmpeg_cmd = [
             "ffmpeg", "-y",
             "-framerate", str(fps),
             "-i", str(frames_dir / "frame_%06d.png"),
-            "-c:v", "libx264",
-            "-preset", "fast",
-            "-crf", "23",
+            "-c:v", encoder,
+            *quality_args,
             "-pix_fmt", "yuv420p",
             "-t", str(total_duration),
             str(mp4_path)

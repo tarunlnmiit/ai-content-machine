@@ -24,48 +24,73 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 
 
-def parse_script(text: str) -> list[str]:
-    """Strip metadata block, BROLL/PAUSE markers, keep spoken lines."""
+def parse_script(text: str) -> list[str | dict]:
+    """Strip metadata block, BROLL/PAUSE markers, keep spoken lines.
+
+    Returns list of:
+      str  — prose line or '__PAUSE__'
+      dict — {'type': 'poem', 'lines': [...]} for blockquote stanzas
+    """
     # Remove fenced metadata block at top
     text = re.sub(r'^```[\s\S]*?```\s*', '', text, count=1).strip()
 
-    lines = []
+    raw = []
     for line in text.splitlines():
         stripped = line.strip()
-        # Skip horizontal rules and empty
         if not stripped or stripped == '---':
+            raw.append(None)  # blank separator
             continue
-        # Skip BROLL cues
         if re.match(r'\[BROLL:', stripped, re.IGNORECASE):
             continue
-        # Convert [PAUSE] to visual break
         if re.match(r'\[PAUSE\]', stripped, re.IGNORECASE):
-            lines.append('__PAUSE__')
+            raw.append('__PAUSE__')
             continue
-        # Skip PERSONAL_INSERT wrapper markers (keep content inside)
         if stripped.startswith('[PERSONAL_INSERT:'):
-            # Extract the text inside the marker
             inner = re.sub(r'^\[PERSONAL_INSERT:\s*', '', stripped)
             inner = re.sub(r'\]$', '', inner).strip()
             if inner:
-                lines.append(inner)
+                raw.append(inner)
             continue
-        lines.append(stripped)
+        if stripped.startswith('>'):
+            raw.append({'type': 'poem_line', 'text': stripped.lstrip('> ').strip()})
+            continue
+        raw.append(stripped)
 
-    return lines
-
-
-def build_html(lines: list[str], title: str, speed: int, fontsize: int) -> str:
-    paragraphs_html = []
-    for line in lines:
-        if line == '__PAUSE__':
-            paragraphs_html.append('<div class="pause-marker">👏 CLAP</div>')
+    # Group consecutive poem_lines into single poem blocks
+    result = []
+    i = 0
+    while i < len(raw):
+        item = raw[i]
+        if isinstance(item, dict) and item['type'] == 'poem_line':
+            stanza = [item['text']]
+            i += 1
+            while i < len(raw) and isinstance(raw[i], dict) and raw[i]['type'] == 'poem_line':
+                stanza.append(raw[i]['text'])
+                i += 1
+            result.append({'type': 'poem', 'lines': stanza})
+        elif item is None:
+            i += 1  # skip blanks
         else:
-            escaped = (line
-                       .replace('&', '&amp;')
-                       .replace('<', '&lt;')
-                       .replace('>', '&gt;'))
-            paragraphs_html.append(f'<p>{escaped}</p>')
+            result.append(item)
+            i += 1
+
+    return result
+
+
+def _escape(s: str) -> str:
+    return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+
+def build_html(lines: list, title: str, speed: int, fontsize: int) -> str:
+    paragraphs_html = []
+    for item in lines:
+        if item == '__PAUSE__':
+            paragraphs_html.append('<div class="pause-marker">👏 CLAP</div>')
+        elif isinstance(item, dict) and item['type'] == 'poem':
+            inner = '<br>'.join(_escape(l) for l in item['lines'])
+            paragraphs_html.append(f'<p class="poem-block">{inner}</p>')
+        else:
+            paragraphs_html.append(f'<p>{_escape(item)}</p>')
 
     content = '\n'.join(paragraphs_html)
 
@@ -103,6 +128,13 @@ def build_html(lines: list[str], title: str, speed: int, fontsize: int) -> str:
   #scroll-container p.active {{
     opacity: 1;
     color: #fff;
+  }}
+
+  #scroll-container p.poem-block {{
+    line-height: 1.55;
+    margin-bottom: 2em;
+    font-style: italic;
+    color: #e8e0d0;
   }}
 
   .pause-marker {{

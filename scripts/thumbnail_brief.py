@@ -63,10 +63,7 @@ Rules:
 - canva_search_term: abstract, dark-themed, no faces"""
 
 
-def slugify(text: str) -> str:
-    text = re.sub(r"[^\w\s-]", "", text.lower().strip())
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:60].strip("-")
+from lib.slug import slugify
 
 
 def detect_niche(slug: str, path: str) -> str:
@@ -120,37 +117,7 @@ def main():
     raw = None
     tokens_used = {"input": 0, "output": 0}
 
-    # Backend 1: NVIDIA NIM
-    if False:  # disabled: Claude Max subscription
-        try:
-            from nim_client import call_nim, NIM_MODEL_SMALL
-            print("Calling NVIDIA NIM ...", end=" ", flush=True)
-            text, usage = call_nim(prompt, model=NIM_MODEL_SMALL, max_tokens=512)
-            raw = text.strip()
-            tokens_used = {"input": usage["input_tokens"], "output": usage["output_tokens"]}
-            print("OK")
-        except Exception as e:
-            print(f"FAILED ({e})")
-
-    # Backend 2: Ollama
-    if False:  # disabled: Claude Max subscription
-        if raw is None:
-            try:
-                import requests as _req
-                print("Falling back to Ollama ...", end=" ", flush=True)
-                resp = _req.post(
-                    "http://localhost:11434/api/generate",
-                    json={"model": "gemma4:e2b", "prompt": prompt, "stream": False},
-                    timeout=60,
-                )
-                if resp.status_code != 200:
-                    raise RuntimeError(f"Ollama HTTP {resp.status_code}")
-                raw = resp.json().get("response", "").strip()
-                print("OK")
-            except Exception as e:
-                print(f"FAILED ({e})")
-
-    # Backend 3: claude -p (primary: Claude Max subscription)
+    # Backend: claude -p (Claude Max subscription)
     if raw is None:
         try:
             print("Calling claude -p ...", end=" ", flush=True)

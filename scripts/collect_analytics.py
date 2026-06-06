@@ -230,12 +230,6 @@ Data:
 Summary:"""
 
 
-def _summarise_with_nim(prompt: str) -> str:
-    from nim_client import call_nim, NIM_MODEL_SMALL
-    text, _ = call_nim(prompt, model=NIM_MODEL_SMALL, max_tokens=512)
-    return text.strip()
-
-
 def _summarise_with_ollama(prompt: str) -> str:
     resp = requests.post(
         OLLAMA_URL,
@@ -249,14 +243,13 @@ def _summarise_with_ollama(prompt: str) -> str:
 
 def summarise(data: dict) -> str:
     prompt = _make_summary_prompt(data)
-    for label, fn in [("NVIDIA NIM", _summarise_with_nim), ("Ollama", _summarise_with_ollama)]:
-        try:
-            result = fn(prompt)
-            console.print(f"  [success]Summary via {label}[/success]")
-            return result
-        except Exception as e:
-            console.print(f"  [warn]{label} failed: {e}[/warn]")
-    return "Summary unavailable — all backends failed."
+    try:
+        result = _summarise_with_ollama(prompt)
+        console.print("  [success]Summary via Ollama[/success]")
+        return result
+    except Exception as e:
+        console.print(f"  [warn]Ollama failed: {e}[/warn]")
+    return "Summary unavailable — Ollama failed."
 
 
 # ── Save ──────────────────────────────────────────────────────────────────────

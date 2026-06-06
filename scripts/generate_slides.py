@@ -9,17 +9,13 @@ CSV columns: slide_number, title, bullet1, bullet2, bullet3
 import argparse
 import csv
 import json
-import re
 import sys
 from pathlib import Path
 
 REPO = Path(__file__).parent.parent
 
 
-def slugify(text: str) -> str:
-    text = re.sub(r"[^\w\s-]", "", text.lower().strip())
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:60].strip("-")
+from lib.slug import slugify
 
 
 def process_slug(slug: str) -> Path:

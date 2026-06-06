@@ -92,7 +92,7 @@ def fetch_pexels_videos(query: str, per_page: int = 3) -> list:
 
     headers = {"Authorization": PEXELS_API_KEY}
     url = "https://api.pexels.com/v1/videos/search"
-    params = {"query": query, "per_page": per_page}
+    params = {"query": query, "per_page": per_page, "orientation": "landscape"}
 
     try:
         resp = requests.get(url, headers=headers, params=params, timeout=10)
@@ -102,14 +102,19 @@ def fetch_pexels_videos(query: str, per_page: int = 3) -> list:
         videos = []
         for vid in data.get("videos", []):
             video_files = vid.get("video_files", [])
-            if video_files:
-                best = min(video_files, key=lambda x: abs(x.get("height", 1080) - 1080))
-                videos.append({
-                    "url": best["link"],
-                    "title": vid.get("url", ""),
-                    "duration": vid.get("duration", 0),
-                    "source": "pexels"
-                })
+            landscape_files = [
+                f for f in video_files
+                if f.get("width", 0) >= f.get("height", 1) and f.get("width", 0) > 0
+            ]
+            if not landscape_files:
+                continue
+            best = min(landscape_files, key=lambda x: abs(x.get("height", 1080) - 1080))
+            videos.append({
+                "url": best["link"],
+                "title": vid.get("url", ""),
+                "duration": vid.get("duration", 0),
+                "source": "pexels"
+            })
         return videos
     except Exception as e:
         print(f"Pexels error: {e}")
@@ -140,9 +145,14 @@ def fetch_pixabay_videos(query: str, per_page: int = 3) -> list:
             best_url = None
 
             for size in ["large", "medium", "small", "tiny"]:
-                if size in video_urls and video_urls[size].get("url"):
-                    best_url = video_urls[size]["url"]
-                    break
+                v = video_urls.get(size, {})
+                if not v.get("url"):
+                    continue
+                w, h = v.get("width", 0), v.get("height", 1)
+                if w < h:  # skip portrait
+                    continue
+                best_url = v["url"]
+                break
 
             if best_url:
                 videos.append({

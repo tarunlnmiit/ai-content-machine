@@ -16,7 +16,6 @@ Niche shortcuts: ds | life | poetry
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -77,11 +76,7 @@ def detect_niche_from_path(path: Path) -> str:
     return "data_science_tech"
 
 
-def slugify(text: str) -> str:
-    text = text.lower().strip()
-    text = re.sub(r"[^\w\s-]", "", text)
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:60].strip("-")
+from lib.slug import slugify
 
 
 def find_thumbnail_brief(slug: str) -> dict | None:
@@ -160,6 +155,7 @@ Use pure CSS only (no img tags, no external URLs). Create visual interest with:
 - Google Fonts: load only {font_heading} and {font_body} (2 families max)
 - No JavaScript needed — static image
 - No `position:fixed` or viewport units that break at export viewport
+- **Z-index stacking (CRITICAL):** Text content (.left-zone, .main-text, .sub-text, .brand-lockup) must have z-index higher than ALL decorative overlays/fades. Any diagonal cut, fade, or overlay element MUST use z-index ≤ 2. Text containers must use z-index ≥ 10.
 
 ## Task
 

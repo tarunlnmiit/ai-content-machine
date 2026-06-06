@@ -175,12 +175,7 @@ Generate the complete carousel HTML now.
 """
 
 
-def slugify(text: str) -> str:
-    import re
-    text = text.lower().strip()
-    text = re.sub(r"[^\w\s-]", "", text)
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:60].strip("-")
+from lib.slug import slugify
 
 
 def main() -> None:

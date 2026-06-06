@@ -9,6 +9,7 @@ Use Ollama (gemma4:e2b) for classification.
 import argparse
 import json
 import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -212,18 +213,9 @@ def apply_novelty_penalty(ideas, archive_titles, penalty=0.5):
     return ideas
 
 
-def classify_idea(title, niche):
+def classify_idea(title: str, niche: str) -> str:
     prompt = f"Classify this content idea into a brief category (1-3 words):\nNiche: {niche}\nIdea: {title}\nCategory:"
 
-    # Backend 1: NVIDIA NIM
-    try:
-        from nim_client import call_nim, NIM_MODEL_SMALL
-        text, _ = call_nim(prompt, model=NIM_MODEL_SMALL, max_tokens=20, temperature=0.3)
-        return text.strip().split("\n")[0][:50]
-    except Exception as e:
-        console.print(f"[warn]NIM error: {e}[/warn]")
-
-    # Backend 2: Ollama
     try:
         resp = requests.post(
             "http://localhost:11434/api/generate",
@@ -232,6 +224,7 @@ def classify_idea(title, niche):
         )
         if resp.status_code == 200:
             return resp.json().get("response", "").strip().split("\n")[0][:50]
+        console.print(f"[warn]Ollama HTTP {resp.status_code}[/warn]")
     except Exception as e:
         console.print(f"[warn]Ollama error: {e}[/warn]")
 
@@ -277,14 +270,24 @@ def score_ideas(output_dir="data/ideas", top_n=5):
         total_to_classify = sum(min(top_n, len(v)) for v in by_niche.values())
         classify_task = progress.add_task("Classifying ideas", total=total_to_classify)
 
-        final_ideas = {}
-        for niche, niche_ideas in by_niche.items():
-            top = sorted(niche_ideas, key=lambda x: x.get("novelty_adjusted_score", 0), reverse=True)[:top_n]
-            for idea in top:
-                progress.update(classify_task, description=f"Classifying: {idea['title'][:40]}")
-                idea["category"] = classify_idea(idea["title"], niche)
+        # Build top-N per niche, then classify all in parallel
+        top_by_niche = {
+            niche: sorted(ideas, key=lambda x: x.get("novelty_adjusted_score", 0), reverse=True)[:top_n]
+            for niche, ideas in by_niche.items()
+        }
+
+        all_pairs = [(idea, niche) for niche, ideas in top_by_niche.items() for idea in ideas]
+        futures = {}
+        with ThreadPoolExecutor(max_workers=5) as ex:
+            for idea, niche in all_pairs:
+                fut = ex.submit(classify_idea, idea["title"], niche)
+                futures[fut] = idea
+            for fut in as_completed(futures):
+                futures[fut]["category"] = fut.result()
+                progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
                 progress.advance(classify_task)
-            final_ideas[niche] = top
+
+        final_ideas = top_by_niche
 
     # Generate markdown report
     lines = ["# Weekly Ideas Report", f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", ""]

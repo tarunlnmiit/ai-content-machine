@@ -182,10 +182,10 @@ def download_image(photo: dict, dest_path: Path) -> bool:
         return False
 
 
+from lib.slug import slugify as _slugify
+
 def slugify(text: str) -> str:
-    text = re.sub(r"[^\w\s-]", "", text.lower().strip())
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text[:50].strip("-")
+    return _slugify(text, max_length=50)
 
 
 # Section labels inferred from marker position in document

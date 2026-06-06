@@ -189,8 +189,8 @@ def main():
     # Resolve canonical URL (CLI > front-matter)
     canonical_url = args.canonical_url or meta.get("canonical_url") or meta.get("canonical-url")
 
-    # Resolve status (CLI > front-matter)
-    status = meta.get("status", args.status) if args.status == "draft" else args.status
+    # Resolve status: front-matter wins if set, otherwise use CLI arg
+    status = meta.get("status") or args.status
 
     # Build payload
     payload = {
