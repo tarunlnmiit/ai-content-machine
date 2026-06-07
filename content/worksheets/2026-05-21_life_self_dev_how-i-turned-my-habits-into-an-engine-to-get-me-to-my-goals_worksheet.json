@@ -1,0 +1,31 @@
+{
+  "type": "framework",
+  "niche": "life_self_dev",
+  "title": "Map Your Habit Engine: Build a System of Connected Behaviors That Drive Real Goals",
+  "sections": [
+    {
+      "title": "Audit Your Current Habits",
+      "prompt": "List 5\u20137 habits you practice regularly. For each, mark whether it's Foundation (sleep, movement, nutrition), Work (deep focus, iteration), or Reflection (journaling, review). Then ask: is this habit isolated, or does it connect to another habit on your list? Which ones feel disconnected?"
+    },
+    {
+      "title": "Find Your Momentum Points",
+      "prompt": "Pick one Work habit you care about. Trace backward: which Foundation habit creates the conditions for it? Trace forward: how could its output feed into a Reflection habit? Write one specific momentum connection (example: 'Morning meditation \u2192 sharper thinking during deep work \u2192 clarity in evening review')."
+    },
+    {
+      "title": "Spot Your Discipline Drains",
+      "prompt": "Which 2\u20133 habits feel like pure willpower to maintain? For each ask: Is this connected to something I deeply care about? Or does it sit alone? What would need to change for this to feel like it *makes sense* instead of feels forced? Where is discipline covering for poor architecture?"
+    },
+    {
+      "title": "Design Your Feedback Loop",
+      "prompt": "An engine works because you can *see* it working. Pick one goal. What Reflection habit will show you if your Foundation and Work habits are actually supporting it? (Not just logging meditation minutes, but: are you clearer? Faster? More focused?) Design one simple feedback loop that proves the system matters."
+    },
+    {
+      "title": "Plan Your First Iteration",
+      "prompt": "Pick ONE habit that feels disconnected or forced. Remove it, reconnect it to something you care about, or restructure when/how you do it. What's the smallest change you can test this week? The system evolves \u2014 what's your first adjustment?"
+    }
+  ],
+  "cta": "What does your habit engine look like right now? Which connection surprised you in this worksheet? Reply with one habit link you're building or rebuilding this week \u2014 I'm genuinely curious how you're structuring your system.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.md",
+  "slug": "2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals"
+}

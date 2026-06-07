@@ -1,0 +1,51 @@
+{
+  "type": "debugging_framework",
+  "niche": "data_science_tech",
+  "title": "The Silent Bug Audit: Catch Type Errors Before They Poison Your Analysis",
+  "sections": [
+    {
+      "title": "Your Last Analysis \u2014 Type Audit",
+      "prompt": [
+        "Pick a recent script or notebook. List 3 variables you used. For each, write: (a) what type you assumed it was, (b) what type() actually returns.",
+        "Did any column arrive as strings when you expected numbers? How did you find out \u2014 error, wrong output, or never?",
+        "Write one line where a silent concatenation bug could have hit your work."
+      ]
+    },
+    {
+      "title": "Lists vs Dicts \u2014 What Are You Actually Storing?",
+      "prompt": [
+        "You have employee records with name, salary, department. Would you use a list of dicts or a flat list of salaries? Write your reasoning in one sentence.",
+        "Write a list comprehension that filters salaries above your own threshold (pick a number). Don't look it up \u2014 write it from memory first, then verify.",
+        "When does a list of dicts become the wrong tool? Name one scenario where you'd switch to something else."
+      ]
+    },
+    {
+      "title": "Function Refactor \u2014 Your Duplicated Code",
+      "prompt": [
+        "Identify one block of code you've copy-pasted across notebooks or scripts. Write the block here (or describe it in plain English).",
+        "Rewrite it as a named function with at least one parameter. Add a default argument where it makes sense.",
+        "What would break if someone passed the wrong type into your function? How would you catch it?"
+      ]
+    },
+    {
+      "title": "The Four Primitives \u2014 Intention Check",
+      "prompt": [
+        "For each type below, write one real example from your own data work: int / float / str / bool",
+        "Where in your code have you mixed int and float without thinking? What was the result?",
+        "Write the conversion that fixes this: age_column = ['28', '35', '42']. You need to sum it."
+      ]
+    },
+    {
+      "title": "Build Your Personal Type-Safety Checklist",
+      "prompt": [
+        "List 3 columns in datasets you work with regularly. What type should each be? What type does Python often load them as?",
+        "Write a 3-step pre-analysis check you'll run before touching any new CSV.",
+        "After Tutorial 1's average calculation: rewrite it as a function called calculate_average(). Then add a second function is_outlier(value, data, threshold=2.0) that returns True/False. Paste what you built."
+      ]
+    }
+  ],
+  "cta": "Run type() on every variable in your last notebook. Fix one silent type mismatch you find. Share what the wrong value was and what it should have been.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.md",
+  "slug": "2026-05-25_data_science_tech_python-for-data-science-tutorial-210"
+}

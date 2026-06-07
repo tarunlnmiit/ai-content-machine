@@ -1,0 +1,31 @@
+{
+  "type": "framework",
+  "niche": "data_science_tech",
+  "title": "Build Your Python Foundation: Environment, Thinking, and Your First Data Script",
+  "sections": [
+    {
+      "title": "Audit Your Current Environment",
+      "prompt": "Write down your Python setup right now: version, package manager, where packages live, how you'd revert if something breaks. If you don't have isolation (venv/conda), that's your first step \u2014 not optional. Why? The blog shows it prevents 'code works today, breaks next month' disasters."
+    },
+    {
+      "title": "Decompose a Real Problem You Face",
+      "prompt": "Pick one actual data problem: analyzing a spreadsheet, understanding a dataset, processing logs, calculating metrics from records. Now apply decomposition: What's the big problem? Break it into 3-4 smaller pieces. Which piece solves first? Write this *before* opening Python."
+    },
+    {
+      "title": "Write Your 'Hello Data' Script",
+      "prompt": "Create a Python script that: (1) loads real data (CSV, JSON, dict, API response), (2) calculates one meaningful result (average, count, sum, filter), (3) saves output. Run it. What data did you touch? What surprised you? This is computational thinking applied \u2014 not 'Hello World' noise."
+    },
+    {
+      "title": "Break Your Code & Read the Error",
+      "prompt": "Introduce one deliberate bug (wrong key, typo, type mismatch). Run the script. Copy the exact error message here. Now decode it: What line? What went wrong? Why? This skill \u2014 reading errors \u2014 is what separates 'I learned Python' from 'I can debug Python.' Do this three times."
+    },
+    {
+      "title": "Verify Your Foundation",
+      "prompt": "Before moving forward: Do you understand why environment isolation prevents future pain? Can you explain decomposition? Did your script produce real output from real data? If yes to all three, you've built the foundation. If not, which piece needs another cycle?"
+    }
+  ],
+  "cta": "Run your script. Reply with one error you hit and how you fixed it \u2014 that proves you're building the skill that compounds.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110.md",
+  "slug": "2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110"
+}
