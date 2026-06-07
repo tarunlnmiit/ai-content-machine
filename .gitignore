@@ -38,26 +38,10 @@ venv/
 graphify-out/
 
 # ============================================
-# Media — Large binary files (videos, audio, images)
+# Database binaries
 # ============================================
-assets/
-content/blogs/*/
-content/worksheets/*.pdf
-content/worksheets/*.html
-output/worksheets/
-assets/audio/
-assets/video/
-assets/videos/
-assets/reels_video/
-assets/stories_video/
-*.mp4
-*.mp3
-*.wav
-*.m4a
-*.png
-*.jpg
-*.jpeg
-*.gif
+data/scheduling.db
+*.db-journal
 
 # ============================================
 # Session & Auth Tokens
@@ -65,19 +49,29 @@ assets/stories_video/
 scripts/instagram_session.json
 
 # ============================================
-# Database binaries
-# ============================================
-data/scheduling.db
-*.db-journal
-
-# ============================================
 # Temporary & scratch
 # ============================================
 *.log
 *.tmp
 
-# Large raw video files — store locally only
-assets/raw/*.MOV
-assets/raw/*.mov
-assets/raw/*.mp4
-assets/raw/*.MP4
+# ============================================
+# Heavy media — NOT tracked (regeneratable or too big for LFS quota)
+# ============================================
+assets/audio/
+assets/video/
+assets/videos/
+assets/raw/
+assets/hyperframes/
+assets/reels_video/
+assets/stories_video/
+assets/stories/
+content/blogs/*/
+
+# ============================================
+# LFS-tracked critical artifacts (NOT ignored — see .gitattributes)
+#   assets/slides/         (PDFs, HTMLs, PNGs, JPGs, fonts)
+#   assets/social_posts/   (PNGs, HTMLs, fonts)
+#   assets/carousels/      (HTMLs, PNGs)
+#   content/worksheets/    (PDFs, HTMLs, fonts, svgs)
+#   output/worksheets/     (PDFs)
+# ============================================

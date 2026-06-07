@@ -1,0 +1,11 @@
+assets/slides/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+assets/slides/**/*.html filter=lfs diff=lfs merge=lfs -text
+assets/slides/**/*.png filter=lfs diff=lfs merge=lfs -text
+assets/slides/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+assets/social_posts/**/*.png filter=lfs diff=lfs merge=lfs -text
+assets/social_posts/**/*.html filter=lfs diff=lfs merge=lfs -text
+assets/carousels/**/*.html filter=lfs diff=lfs merge=lfs -text
+assets/carousels/**/*.png filter=lfs diff=lfs merge=lfs -text
+content/worksheets/*.pdf filter=lfs diff=lfs merge=lfs -text
+content/worksheets/*.html filter=lfs diff=lfs merge=lfs -text
+output/worksheets/*.pdf filter=lfs diff=lfs merge=lfs -text
