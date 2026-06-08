@@ -10,13 +10,14 @@ REPO = Path(__file__).parent.parent.parent
 
 
 def blog_path(date_str: str, slug: str) -> Path:
-	"""Path to a blog post markdown file."""
-	return REPO / "content" / "blogs" / get_iso_week(date_str) / f"{date_str}_{slug}.md"
+	"""Path to a blog post markdown file. Slug should be full name like '2026-05-21_niche_slug'."""
+	return REPO / "content" / "blogs" / get_iso_week(date_str) / f"{slug}.md"
 
 
 def derivatives_dir(date_str: str, slug: str) -> Path:
-	"""Path to a derivative content directory (contains schedule.json, metadata, etc.)."""
-	return REPO / "content" / "derivatives" / get_iso_week(date_str) / f"{date_str}_{slug}"
+	"""Path to a derivative content directory (contains schedule.json, metadata, etc.).
+	Slug should be full name like '2026-05-21_niche_slug'."""
+	return REPO / "content" / "derivatives" / get_iso_week(date_str) / slug
 
 
 def raw_asset_path(date_str: str, filename: str) -> Path:
