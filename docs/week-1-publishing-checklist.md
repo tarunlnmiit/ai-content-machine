@@ -428,11 +428,20 @@ python3 scripts/db_setup.py
 python3 scripts/load_posts.py
 ```
 
+What `load_posts.py` does:
+- **LinkedIn posts** → inserted into `data/scheduling.db`
+- **Metricool CSVs** generated with:
+  - Medium blog URLs auto-injected into captions: "Full post 👉 {url}"
+  - Images auto-populated from `schedule.json` if available (skipped if missing)
+- **Prompts** (if running interactively):
+  - Blog URL per niche (Medium only — skips if found in `medium_posts.json`)
+  - Image URL per post with local image (Google Drive/Dropbox public link)
+  - Saves both to `schedule.json` for re-runs (idempotent)
+
 Outputs:
 - `data/scheduling.db` — LinkedIn posts queued
-- `output/scheduled/publer_mistakenlyhuman_ig_fb.csv` — Account 1: IG + Facebook (Life + Poetry)
-- `output/scheduled/publer_mistakenlyhuman_threads.csv` — Account 1: Threads (Life + Poetry)
-- `output/scheduled/publer_breathofds_ig_fb.csv` — Account 2: IG + Facebook (DS only)
+- `output/scheduled/metricool_mistakenlyhuman.csv` — Account 1: IG + Facebook + Threads (Life + Poetry)
+- `output/scheduled/metricool_breathofds.csv` — Account 2: IG + Facebook + Threads (DS only)
 
 ```bash
 python3 scripts/scheduler.py &
@@ -444,7 +453,7 @@ pgrep -f scheduler.py
 ```
 
 - [ ] db_setup.py ran without errors
-- [ ] load_posts.py ran — CSV files present in output/scheduled/
+- [ ] load_posts.py ran — Metricool CSVs present in output/scheduled/
 - [ ] scheduler.py daemon running (pgrep shows PID)
 
 Verify LinkedIn posts are queued (3 rows expected — one per niche):
@@ -465,6 +474,13 @@ sqlite3 data/scheduling.db "SELECT slug, scheduled_at FROM posts WHERE platform=
 
 Run `load_posts.py` first if CSVs not yet generated (STEP 5). CSVs schedule automatically to the correct dates (week_offset=1 baked in).
 
+**Before import:** Check if images were populated in the CSVs:
+```bash
+python3 -c "import csv; r=list(csv.DictReader(open('output/scheduled/metricool_mistakenlyhuman.csv')))[0]; print(f'Has images: {r[\"Picture Url 1\"]}')"
+```
+
+If `Picture Url 1` is empty, you either skipped the prompt or ran non-interactively. Add image URLs manually in Metricool after import (Google Drive public link or Dropbox public link).
+
 **Account 1 — mistakenlyhuman** (Life + Poetry: IG + Facebook + Threads):
 1. Open Metricool → Planner → Import CSV
 2. Import `output/scheduled/metricool_mistakenlyhuman.csv`
@@ -473,7 +489,7 @@ Run `load_posts.py` first if CSVs not yet generated (STEP 5). CSVs schedule auto
 3. Switch to Breath of DS brand in Metricool
 4. Import `output/scheduled/metricool_breathofds.csv`
 
-⚠ Images: Metricool requires public URLs — add images manually after import (Google Drive link or Dropbox public link).
+Blog URLs are already injected in captions ("Full post 👉 {url}"). Images populate automatically if saved to `schedule.json` during `load_posts.py` — add manually only if missing.
 
 Scheduled dates in the CSVs:
 - 🟢 Life IG/FB: **Tue Jun 17, 8 AM** · Threads: **Tue Jun 17, 8 PM**
@@ -482,6 +498,7 @@ Scheduled dates in the CSVs:
 
 - [ ] mistakenlyhuman Metricool CSV imported (Life + Poetry IG/FB + Threads)
 - [ ] Breath of DS Metricool CSV imported (DS IG/FB + Threads)
+- [ ] Verified images in CSVs or manually added to Metricool
 
 ---
 

@@ -1,18 +1,15 @@
 {
   "week-1|step_1|0": true,
-  "week-1|step_2a|0": true,
-  "week-1|step_2b|0": true,
-  "week-1|step_2c|0": true,
-  "week-1|life_shorts_breathoflife_|0": true,
   "week-1|ds_shorts_breathofdatascience|0": true,
+  "week-1|life_shorts_breathoflife_|0": true,
   "week-1|poetry_shorts_breathofpoetry|0": true,
-  "week-1|step_5|1": true,
-  "week-1|step_5|2": true,
-  "week-1|step_5|0": true,
   "week-1|step_3|0": true,
   "week-1|step_3|1": true,
   "week-1|step_3|2": true,
   "week-1|step_4|0": true,
   "week-1|step_4|1": true,
-  "week-1|step_4|2": true
+  "week-1|step_4|2": true,
+  "week-1|step_5|0": true,
+  "week-1|step_5|1": true,
+  "week-1|step_5|2": true
 }

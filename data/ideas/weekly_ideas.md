@@ -1,100 +1,98 @@
 # Weekly Ideas Report
-Generated: 2026-05-29 06:08:38
+Generated: 2026-06-08 10:09:45
 
 ## Data Science Tech
 
-### 1. The AI industry in the US is doomed.  Now China owns it all.
+### 1. How Far Did They Go? The Persuasive Tactics of Covert LLM Agents in a Discontinued Field Experiment
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** youtube_2026-05-05
-- **URL:** https://youtu.be/ny_3PRz6Zeg
+- **Source:** arxiv_cs_ai
+- **URL:** https://arxiv.org/abs/2606.05256
 
-### 2. data science course
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** suggest_2026-05-26_google
-- **URL:** 
-
-### 3. Algometrics: Forecasting Under Algorithmic Feedback
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** arxiv_cs_lg
-- **URL:** https://arxiv.org/abs/2605.23978
-
-### 4. Cosmic Boot-Up: The Chronological Lie and the Illusion of the Past
-​Today, I am going to decipher…
+### 2. ANOVA, Geometrically · Part 2 Why Linear Algebra Is the Language of ANOVA
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** medium_data_science
-- **URL:** https://medium.com/@entropidergi/cosmic-boot-up-the-chronological-lie-and-the-illusion-of-the-past-today-i-am-going-to-decipher-f94b0b9fa6fb?source=rss------data_science-5
+- **URL:** https://medium.com/@interestingzhao/anova-geometrically-part-2-why-linear-algebra-is-the-language-of-anova-0175e8ace3b9?source=rss------data_science-5
 
-### 5. Join the GitHub Finish-Up-A-Thon Challenge: $3,000 Prize Pool!
+### 3. chopratejas/headroom
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** devto_top
-- **URL:** https://dev.to/devteam/join-the-github-finish-up-a-thon-challenge-3000-prize-pool-f41
+- **Source:** github_trending_python
+- **URL:** https://github.com/chopratejas/headroom
+
+### 4. data science course
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** suggest_2026-06-06_google
+- **URL:** 
+
+### 5. I'm Tired of Talking to AI
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** hn_algolia
+- **URL:** https://orchidfiles.com/im-tired-of-ai-generated-answers/
 
 ## Life Self Dev
 
-### 1. Women's Self Help
+### 1. I Stopped Fighting My Writing Procrastination. I Automated It.
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** youtube_2026-04-28
-- **URL:** https://youtu.be/4RWTVUsgQ8s
+- **Source:** medium_self_improvement
+- **URL:** https://medium.com/@hellodylanmercer/i-stopped-fighting-my-writing-procrastination-i-automated-it-270a5e08594d?source=rss------self_improvement-5
 
 ### 2. how to become a pilot
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** suggest_2026-05-26_google
+- **Source:** suggest_2026-06-06_google
 - **URL:** 
 
-### 3. Nobody Warns You About Life in Saudi Arabia
-People think coming to Saudi Arabia changes your life…
+### 3. The Simple Habit That Changed My Productivity
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** medium_self_improvement
-- **URL:** https://medium.com/@prime.seller.ksa/nobody-warns-you-about-life-in-saudi-arabia-people-think-coming-to-saudi-arabia-changes-your-life-0c0817d71287?source=rss------self_improvement-5
+- **Source:** youtube_2026-05-29
+- **URL:** https://youtu.be/EQm0jsNKXrQ
 
-### 4. Mental health advice needed please
+### 4. Unnecessary repeated success advice
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** reddit_2026-05-22
-- **URL:** https://www.reddit.com/r/mentalhealth/comments/1tkitm1/mental_health_advice_needed_please/
+- **Source:** reddit_2026-06-05
+- **URL:** https://www.reddit.com/r/productivity/comments/1tx1sc6/unnecessary_repeated_success_advice/
 
-### 5. The Cost of Carrying Things Nobody Sees
-- **Score:** 0.996
+### 5. Do Narcissists Know They’re Lying? A Former Detective Explains the Psychology Behind It
+- **Score:** 0.998
 - **Category:** uncategorized
 - **Source:** medium_self_improvement
-- **URL:** https://medium.com/gary-l-keck-the-pile/the-cost-of-carrying-things-nobody-sees-cebca3e90af6?source=rss------self_improvement-5
+- **URL:** https://medium.com/@ahmedhashir816_67454/do-narcissists-know-theyre-lying-a-former-detective-explains-the-psychology-behind-it-8a81c161666f?source=rss------self_improvement-5
 
 ## Poetry Quotes
 
-### 1. Student Banned For Reading This Pro-Life Poem In School
+### 1. [POEM] Filling the Page. Kate Baer. Her first publication was an anthology of poetry entitled What Kind of Woman (2020). It topped the New York Times Best Seller list.
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** youtube_2026-05-25
-- **URL:** https://youtu.be/SkIVMeEs2X0
+- **Source:** reddit_2026-06-03
+- **URL:** https://www.reddit.com/r/Poetry/comments/1tuq8lj/poem_filling_the_page_kate_baer_her_first/
 
-### 2. [poem] 4 am poetry - Avinash
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** reddit_2026-05-19
-- **URL:** https://www.reddit.com/r/Poetry/comments/1th4k2z/poem_4_am_poetry_avinash/
-
-### 3. poem about nature
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** suggest_2026-05-26_google
-- **URL:** 
-
-### 4. A languidez de Eva.
+### 2. Poetry Dips Its Fingers In Every Colour —
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** medium_poetry
-- **URL:** https://medium.com/@maitellimaribeiro/a-languidez-de-eva-4e8a8b3b1419?source=rss------poetry-5
+- **URL:** https://medium.com/@isaacaju/poetry-dips-its-fingers-in-every-colour-015772359fa9?source=rss------poetry-5
 
-### 5. “I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my be
+### 3. “You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.” ― William W. Purkey
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** goodreads_life
-- **URL:** https://www.goodreads.com/quotes/tag/life
+- **Source:** goodreads_inspirational
+- **URL:** https://www.goodreads.com/quotes/tag/inspirational
+
+### 4. poem about nature
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** suggest_2026-06-06_google
+- **URL:** 
+
+### 5. truth motivational quotes #motivation #changeyourmindsetchangeyourlife
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** youtube_2026-06-02
+- **URL:** https://youtu.be/dfYqGwpy7jk

@@ -52,5 +52,23 @@
     ],
     "published_at": "2026-06-07T11:41:48.749401+00:00",
     "token_used": "personal"
+  },
+  {
+    "title": "Python for Data Science: Tutorial 2/10 — Variables, Data Types, and the Structures That Actually Matter",
+    "medium_url": "https://medium.com/@tarun-gupta/9c291dc6bb4a",
+    "medium_id": "9c291dc6bb4a",
+    "canonical_url": null,
+    "publication": "Humans Are Stories",
+    "source_file": "content/blogs/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.md",
+    "status": "draft",
+    "tags": [
+      "programming",
+      "data-science",
+      "ai",
+      "python",
+      "data-analytics"
+    ],
+    "published_at": "2026-06-08T04:21:32.789483+00:00",
+    "token_used": "personal"
   }
 ]

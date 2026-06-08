@@ -7,9 +7,8 @@ Generate output/scheduled/publer_import.csv for Instagram + Facebook + Threads (
 Schedule logic:
   LinkedIn posts   — Tuesday 8am IST, Thursday 12pm IST  (direct API via scheduler.py)
   Twitter threads  — manual for now (copy content/derivatives/{slug}/twitter_thread.txt)
-  Instagram        — Wednesday 6pm IST, Friday 10am IST  (via Publer CSV)
-  Facebook         — Wednesday 7pm IST, Friday 11am IST  (via Publer CSV)
-  Threads          — Wednesday 8pm IST, Friday 12pm IST  (via Publer CSV)
+  Instagram + FB   — niche-specific times via Metricool CSV (see NICHE_SCHEDULE)
+  Threads          — niche-specific times via Metricool CSV (see NICHE_SCHEDULE)
 
 Run after repurpose_blog.py has produced derivatives for the week.
 Safe to re-run — skips slugs already in DB with status='pending' or 'posted'.
@@ -26,6 +25,15 @@ from dotenv import load_dotenv
 
 from lib.schedule_calc import next_weekday, get_iso_week
 
+def _prompt_user(prompt_text: str) -> str:
+    """Prompt user interactively if stdin is a TTY, otherwise return empty string."""
+    if not sys.stdin.isatty():
+        return ""
+    try:
+        return input(prompt_text).strip()
+    except EOFError:
+        return ""
+
 REPO = Path(__file__).parent.parent
 DB_PATH = REPO / "data" / "scheduling.db"
 load_dotenv(REPO / ".env")
@@ -36,6 +44,32 @@ IST = timezone(timedelta(hours=5, minutes=30))
 
 # LinkedIn slots — direct API via scheduler.py (Tue 8am, Thu 12pm IST)
 LINKEDIN_SLOTS = [(1, 8, 0), (3, 12, 0)]
+
+
+def _load_blog_url_index() -> dict[str, dict]:
+    """
+    Read output/published/medium_posts.json.
+    Return slug → {medium_url, source_file} mapping.
+    Slug is derived from source_file by stripping content/blogs/ prefix and .md suffix.
+    """
+    blog_index = {}
+    published_path = REPO / "output" / "published" / "medium_posts.json"
+    if not published_path.exists():
+        return blog_index
+
+    try:
+        data = json.loads(published_path.read_text(encoding="utf-8"))
+        if not isinstance(data, list):
+            return blog_index
+        for entry in data:
+            source_file = entry.get("source_file", "")
+            medium_url = entry.get("medium_url", "")
+            if source_file and medium_url:
+                slug = source_file.replace("content/blogs/", "").replace(".md", "")
+                blog_index[slug] = {"medium_url": medium_url, "source_file": source_file}
+    except (json.JSONDecodeError, ValueError):
+        pass
+    return blog_index
 
 
 def slug_already_loaded(conn: sqlite3.Connection, slug: str, platform: str) -> bool:
@@ -227,14 +261,16 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
     Rows use Brand name column so both can be imported from a single Metricool workspace
     if the user upgrades; until then import each CSV in the matching brand workspace.
 
-    Images require a publicly accessible URL. Local thumbnail paths are skipped —
-    add image URLs manually in Metricool after import, or host via Google Drive/Dropbox.
+    Images require a publicly accessible URL. Local paths are skipped —
+    Prompts user for public URLs (Google Drive/Dropbox) if images exist locally but no URL stored.
 
     Schedule times are read from schedule.json if present, otherwise computed via next_weekday().
+    Blog URLs are read from schedule.json or medium_posts.json, or prompted from user.
     """
     out_dir = REPO / "output" / "scheduled"
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    blog_index = _load_blog_url_index()
     mh_rows: list[dict] = []   # mistakenlyhuman: Life + Poetry
     ds_rows: list[dict] = []   # breathofds: DS
 
@@ -273,6 +309,37 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
             weekday, hour, minute = sched["threads"]
             thr_dt = next_weekday(weekday, hour, minute, week_offset=1)
 
+        # Blog URL lookup: check schedule.json, then blog_index, then prompt
+        blog_url = None
+        if sched_data:
+            blog_url = sched_data.get("blog_url")
+        if not blog_url:
+            blog_url = blog_index.get(slug, {}).get("medium_url")
+        if not blog_url:
+            print(f"\n[{niche.upper()}] {slug}")
+            user_input = _prompt_user("  Medium URL (enter to skip): ")
+            if user_input:
+                blog_url = user_input
+                if sched_data is None:
+                    sched_data = {}
+                sched_data["blog_url"] = blog_url
+                schedule_file.write_text(json.dumps(sched_data, indent=2), encoding="utf-8")
+
+        # Image URL lookup: check schedule.json, check local file, then prompt
+        image_url = None
+        if sched_data:
+            image_url = sched_data.get("image_url")
+        if not image_url:
+            ig_image_path = REPO / "assets" / "social_posts" / week / f"{slug}_instagram.png"
+            if ig_image_path.exists():
+                user_input = _prompt_user(f"  Image URL (Google Drive/Dropbox, enter to skip): ")
+                if user_input:
+                    image_url = user_input
+                    if sched_data is None:
+                        sched_data = {}
+                    sched_data["image_url"] = image_url
+                    schedule_file.write_text(json.dumps(sched_data, indent=2), encoding="utf-8")
+
         # Social posts publish ONE WEEK after the long-form (week_offset=1)
         # ── IG + FB row
         ig_path = slug_dir / "instagram_caption.txt"
@@ -282,12 +349,15 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
                 l for l in caption.splitlines()
                 if not l.startswith("Format:") and not l.startswith("Why:")
             ).strip()
+            if blog_url:
+                clean = f"{clean}\n\nFull post 👉 {blog_url}"
             target.append(_metricool_row(
                 text=clean,
                 scheduled_dt=ig_dt,
                 instagram=True,
                 facebook=True,
                 ig_post_type=_ig_post_type_from_caption(caption),
+                picture_url=image_url,
                 brand=brand,
             ))
 

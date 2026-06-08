@@ -14,7 +14,7 @@ NICHES = {"ds": "data_science_tech", "life": "life_self_dev", "poetry": "poetry_
 
 
 from lib.slug import slugify
-from lib.schedule_calc import write_schedule_json
+from lib.schedule_calc import write_schedule_json, get_iso_week
 
 
 def load(path: Path) -> str:
@@ -214,7 +214,8 @@ def main():
     today = date.today().isoformat()
     slug  = slugify(args.topic)
     filename = f"{today}_{NICHES[args.niche]}_{slug}.md"
-    out_dir  = REPO / "content" / "blogs"
+    week = get_iso_week(today)
+    out_dir  = REPO / "content" / "blogs" / week
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / filename
     out_path.write_text(blog_text, encoding="utf-8")
@@ -254,7 +255,7 @@ def main():
             f"{code_inserts} [CODE_INSERT], "
             f"{image_inserts} [IMAGE_INSERT] before repurposing."
         )
-        console.print(f"  grep -rn 'INSERT' content/blogs/{filename}")
+        console.print(f"  grep -rn 'INSERT' content/blogs/{week}/{filename}")
 
 
 if __name__ == "__main__":

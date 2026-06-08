@@ -284,7 +284,7 @@ def score_ideas(output_dir="data/ideas", top_n=5):
                 futures[fut] = idea
             for fut in as_completed(futures):
                 futures[fut]["category"] = fut.result()
-                progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                progress.update(classify_task, description=f"Classified {futures[fut].get('category','')[:30]}")
                 progress.advance(classify_task)
 
         final_ideas = top_by_niche

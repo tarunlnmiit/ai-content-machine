@@ -1,6 +1,6 @@
 # Weekly Operating Guide
 
-Last updated: 2026-05-25
+Last updated: 2026-06-08
 
 ## Posting Times at a Glance (IST)
 
@@ -438,13 +438,21 @@ python3 scripts/generate_checklist.py --week 2026-06-09
 
 The checklist reads all `schedule.json` files whose `long_form.publish_at` falls in that week, fills in YouTube upload commands with correct `--publish-at` values, and produces the canonical action list. No manual date entry required.
 
-### Load posts reads schedule.json
+### Load posts: schedule.json + blog URLs + images
 
 `load_posts.py` now:
-1. Checks for `schedule.json` in each slug dir
-2. If present, uses the timestamps from there
-3. Falls back to `next_weekday()` computation if absent (backwards compat)
-4. Result: idempotent — re-running `load_posts.py` always picks the same times
+1. Checks for `schedule.json` in each slug dir — uses timestamps if present
+2. Falls back to `next_weekday()` computation if absent (backwards compat)
+3. **Blog URL lookup** — searches `medium_posts.json` for Medium links, appends to captions
+   - If found in `medium_posts.json`, auto-injected into caption text as "Full post 👉 {url}"
+   - If not found, prompts user (interactive mode only) to enter Medium URL, saves to `schedule.json`
+   - If user skips, caption posts without link
+4. **Image URL lookup** — detects local Instagram images, prompts for public CDN URLs
+   - Checks `assets/social_posts/{week}/{slug}_instagram.png`
+   - If local image exists but no URL in `schedule.json`, prompts user for public URL (Google Drive/Dropbox)
+   - Saves entered URL to `schedule.json`, injects into Metricool CSV `Picture Url 1` field
+   - If user skips, IG/FB posts without image (Metricool will flag error — manual image upload needed)
+5. Result: idempotent — re-running `load_posts.py` skips all prompts (reads from saved `schedule.json`)
 
 ---
 

@@ -280,7 +280,20 @@ python3 scripts/publish_medium.py \
 ```bash
 python3 scripts/load_posts.py
 # Inserts all derivative content into data/scheduling.db
+# Generates Metricool CSVs (Instagram + Facebook + Threads) with blog URLs + images
 ```
+
+What `load_posts.py` does:
+- **LinkedIn posts** → inserted into `data/scheduling.db` (scheduler.py will fire Tue/Thu)
+- **Metricool CSVs** → `output/scheduled/metricool_*.csv` for each brand
+  - Instagram + Facebook captions include Medium blog link: "Full post 👉 {url}"
+  - Image URLs auto-injected if available in `schedule.json`, otherwise skipped (add manually in Metricool)
+  - If running interactively, prompts for missing blog URLs + image URLs, saves to `schedule.json` for re-runs
+
+**Interactive mode** (if using CLI with TTY):
+- Prompts for blog URLs per niche (Medium only — no Substack)
+- Prompts for image URLs (expects public Google Drive/Dropbox links)
+- Non-interactive runs skip prompts (useful for automation)
 
 Verify scheduler running:
 ```bash
@@ -293,4 +306,11 @@ Check queue:
 ```bash
 sqlite3 data/scheduling.db \
   'SELECT platform, scheduled_at, status, substr(content_text,1,60) FROM posts ORDER BY scheduled_at LIMIT 15'
+```
+
+Import Metricool CSVs:
+```bash
+# Live in Metricool → Bulk Import
+# File: output/scheduled/metricool_breathofds.csv (DS niche)
+#       output/scheduled/metricool_mistakenlyhuman.csv (Life + Poetry)
 ```
