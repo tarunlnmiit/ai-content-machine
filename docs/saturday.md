@@ -6,8 +6,8 @@
 |------|--------|------------------|
 | 10:00 AM | Edit Life + Poetry videos (Friday recordings) | — |
 | 12:00 PM | Render Life + Poetry shorts + HyperFrames | — |
-| 2:00 PM | Upload Life + Poetry long-form to YouTube (scheduled for Tue/Fri) | Videos queued (publish at Tue 2 PM / Fri 3 PM) |
-| 3:00 PM | Upload all shorts for Mon–Sun (14 slots × 3 niches) | Shorts queued for entire week |
+| 2:00 PM | Upload Life + Poetry long-form to YouTube (scheduled for next Tue/Fri) | Videos queued (publish **next Tue 2 PM** / **next Fri 3 PM**) |
+| 3:00 PM | Upload all shorts for Mon–Sun (14 slots × 3 niches) | Shorts queued for **next week** (Mon–Sun) |
 | 4:00 PM | Weekly review + Notion sync | — |
 | 5:00 PM | Buffer depth check + replenish if needed | — |
 

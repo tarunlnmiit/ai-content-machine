@@ -176,9 +176,16 @@ def compute(slug: str, niche: str, generation_time: datetime | None = None) -> C
     times = NICHE_TIMES[niche]
     channel = NICHE_CHANNELS[niche]
 
-    # Long-form video
+    # Blog/Substack (week+0) — same day/time as long-form but published this week
     lf_weekday, lf_hour, lf_minute = times["long_form"]
-    lf_publish = next_weekday(lf_weekday, lf_hour, lf_minute)
+    blog_publish = next_weekday(lf_weekday, lf_hour, lf_minute)  # No week_offset
+    blog_social = BlogSchedule(
+        substack_publish_at=blog_publish.isoformat(),
+        medium_publish_at=(blog_publish + timedelta(minutes=5)).isoformat(),
+    )
+
+    # Long-form video (week+1)
+    lf_publish = next_weekday(lf_weekday, lf_hour, lf_minute, week_offset=1)
 
     long_form = LongFormSchedule(
         platform="youtube",
@@ -186,28 +193,22 @@ def compute(slug: str, niche: str, generation_time: datetime | None = None) -> C
         channel=channel,
     )
 
-    # Blog (Substack 5 min before long-form, Medium 5 min after)
-    blog_social = BlogSchedule(
-        substack_publish_at=lf_publish.isoformat(),
-        medium_publish_at=(lf_publish + timedelta(minutes=5)).isoformat(),
-    )
-
-    # Social (LinkedIn, Twitter same-week; IG/FB/Threads +1 week)
+    # Social (all week+1: LinkedIn, Twitter, IG/FB, Threads)
     li_weekday, li_hour, li_minute = times["linkedin"]
     tw_weekday, tw_hour, tw_minute = times["twitter"]
     ig_weekday, ig_hour, ig_minute = times["ig_fb"]
     th_weekday, th_hour, th_minute = times["threads"]
 
     social = SocialSchedule(
-        linkedin_publish_at=next_weekday(li_weekday, li_hour, li_minute).isoformat(),
-        twitter_publish_at=next_weekday(tw_weekday, tw_hour, tw_minute).isoformat(),
+        linkedin_publish_at=next_weekday(li_weekday, li_hour, li_minute, week_offset=1).isoformat(),
+        twitter_publish_at=next_weekday(tw_weekday, tw_hour, tw_minute, week_offset=1).isoformat(),
         ig_fb_publish_at=next_weekday(ig_weekday, ig_hour, ig_minute, week_offset=1).isoformat(),
         threads_publish_at=next_weekday(th_weekday, th_hour, th_minute, week_offset=1).isoformat(),
     )
 
-    # Shorts: 14 slots Mon–Sun, starting next Monday
+    # Shorts: 14 slots Mon–Sun, starting next Monday of week+1
     shorts: list[dict] = []
-    monday_next = next_weekday(0, 10, 0)  # Next Monday 10 AM
+    monday_next = next_weekday(0, 10, 0, week_offset=1)  # Monday of next week
     for slot_num in range(14):
         day_offset = slot_num // 2
         is_pm = slot_num % 2 == 1

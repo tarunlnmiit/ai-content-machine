@@ -6,9 +6,9 @@
 |------|--------|------------------|
 | 9:00 AM | Check buffer / produce Poetry blog | — |
 | 9:30 AM | Repurpose Life blog → derivatives (Mon already done) | — |
-| 10:00 AM | Repurpose Poetry blog → derivatives + schedule.json | **Fri 3 PM** (YouTube + Substack + Medium) |
-| 10:00 AM | Load posts to scheduler DB | LinkedIn posts queued (auto via scheduler.py) |
-| 12:00 PM | DS LinkedIn post + Twitter thread | DS social goes live |
+| 10:00 AM | Repurpose Poetry blog → derivatives + schedule.json | **Fri 3 PM** (Substack + Medium this week) · **Next Fri 3 PM** (YouTube) |
+| 10:00 AM | Load posts to scheduler DB | LinkedIn posts scheduled for next week (manual) |
+| 12:00 PM | DS LinkedIn post + Twitter thread — reference | Reminder: **next Wed** (manual post) |
 | 12:00 PM | IG/FB carousel (DS) posts next Wed | (Week+1) |
 | 1:00 PM | Design assets created (Claude Design) | Asset files for next week |
 

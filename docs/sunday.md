@@ -7,7 +7,7 @@
 | 10:00 AM | Week wrap-up + analytics review | — |
 | 11:00 AM | Buffer depth check + refill week 4 if needed | Week 4 content ready by end of day |
 | 12:00 PM | Notion sync (update Published status) | — |
-| 1:00 PM | Shorts + social continue Mon–Sun | All 14 shorts per niche Mon–Sun + social (week+1) |
+| 1:00 PM | Import Metricool CSVs for next week's social | IG/FB/Threads scheduled for **week+1** Mon–Sun |
 | 8:00 PM | Auto-run: collect analytics → weekly_insights.md | (via launchd cron) |
 | 10:00 PM | Auto-run: build knowledge base | (via launchd cron) |
 
