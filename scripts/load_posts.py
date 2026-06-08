@@ -130,9 +130,11 @@ def insert_linkedin(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_in
     if not text:
         return
 
-    # Check for matching thumbnail
-    thumb = REPO / "assets" / "thumbnails" / f"{slug}_thumb.png"
-    media_path = str(thumb.relative_to(REPO)) if thumb.exists() else None
+    # Check for LinkedIn image in social_posts
+    date_str = slug[:10]
+    week = get_iso_week(date_str)
+    li_img = REPO / "assets" / "social_posts" / week / f"{slug}_linkedin.png"
+    media_path = str(li_img.relative_to(REPO)) if li_img.exists() else None
 
     weekday, hour, minute = LINKEDIN_SLOTS[slot_index % len(LINKEDIN_SLOTS)]
     scheduled_at = next_weekday(weekday, hour, minute).isoformat()
@@ -325,20 +327,12 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
                 sched_data["blog_url"] = blog_url
                 schedule_file.write_text(json.dumps(sched_data, indent=2), encoding="utf-8")
 
-        # Image URL lookup: check schedule.json, check local file, then prompt
-        image_url = None
+        # Per-platform image URLs from schedule.json
+        image_urls = {}
         if sched_data:
-            image_url = sched_data.get("image_url")
-        if not image_url:
-            ig_image_path = REPO / "assets" / "social_posts" / week / f"{slug}_instagram.png"
-            if ig_image_path.exists():
-                user_input = _prompt_user(f"  Image URL (Google Drive/Dropbox, enter to skip): ")
-                if user_input:
-                    image_url = user_input
-                    if sched_data is None:
-                        sched_data = {}
-                    sched_data["image_url"] = image_url
-                    schedule_file.write_text(json.dumps(sched_data, indent=2), encoding="utf-8")
+            image_urls = sched_data.get("image_urls") or {}
+            if not image_urls and sched_data.get("image_url"):
+                image_urls["instagram"] = sched_data["image_url"]
 
         # Social posts publish ONE WEEK after the long-form (week_offset=1)
         # ── IG + FB row
@@ -357,7 +351,7 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
                 instagram=True,
                 facebook=True,
                 ig_post_type=_ig_post_type_from_caption(caption),
-                picture_url=image_url,
+                picture_url=image_urls.get("instagram", ""),
                 brand=brand,
             ))
 
@@ -369,6 +363,7 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
                 text=thr_text,
                 scheduled_dt=thr_dt,
                 threads=True,
+                picture_url=image_urls.get("threads", ""),
                 brand=brand,
             ))
 
