@@ -1,0 +1,78 @@
+{
+  "slug": "2026-05-21_data_science_tech_test-slug",
+  "niche": "ds",
+  "generated_at": "2026-06-08T08:48:25.121848+05:30",
+  "long_form": {
+    "platform": "youtube",
+    "publish_at": "2026-06-11T18:00:00+05:30",
+    "channel": "Breath of Data Science"
+  },
+  "blog": {
+    "substack_publish_at": "2026-06-11T18:00:00+05:30",
+    "medium_publish_at": "2026-06-11T18:05:00+05:30"
+  },
+  "social": {
+    "linkedin_publish_at": "2026-06-10T12:00:00+05:30",
+    "twitter_publish_at": "2026-06-10T13:00:00+05:30",
+    "ig_fb_publish_at": "2026-06-17T08:00:00+05:30",
+    "threads_publish_at": "2026-06-17T20:00:00+05:30"
+  },
+  "shorts": [
+    {
+      "slot": 0,
+      "publish_at": "2026-06-08T10:00:00+05:30"
+    },
+    {
+      "slot": 1,
+      "publish_at": "2026-06-08T20:00:00+05:30"
+    },
+    {
+      "slot": 2,
+      "publish_at": "2026-06-09T10:00:00+05:30"
+    },
+    {
+      "slot": 3,
+      "publish_at": "2026-06-09T20:00:00+05:30"
+    },
+    {
+      "slot": 4,
+      "publish_at": "2026-06-10T10:00:00+05:30"
+    },
+    {
+      "slot": 5,
+      "publish_at": "2026-06-10T20:00:00+05:30"
+    },
+    {
+      "slot": 6,
+      "publish_at": "2026-06-11T10:00:00+05:30"
+    },
+    {
+      "slot": 7,
+      "publish_at": "2026-06-11T20:00:00+05:30"
+    },
+    {
+      "slot": 8,
+      "publish_at": "2026-06-12T10:00:00+05:30"
+    },
+    {
+      "slot": 9,
+      "publish_at": "2026-06-12T20:00:00+05:30"
+    },
+    {
+      "slot": 10,
+      "publish_at": "2026-06-13T10:00:00+05:30"
+    },
+    {
+      "slot": 11,
+      "publish_at": "2026-06-13T20:00:00+05:30"
+    },
+    {
+      "slot": 12,
+      "publish_at": "2026-06-14T10:00:00+05:30"
+    },
+    {
+      "slot": 13,
+      "publish_at": "2026-06-14T20:00:00+05:30"
+    }
+  ]
+}

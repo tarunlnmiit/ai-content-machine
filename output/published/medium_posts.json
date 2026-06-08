@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Python for Data Science: Tutorial 1/10 — Why Your Setup Matters More Than Your First Program",
+    "medium_url": "https://medium.com/@tarun-gupta/f05524d76808",
+    "medium_id": "f05524d76808",
+    "canonical_url": "https://breathofdatascience.substack.com/p/python-for-data-science-tutorial",
+    "publication": "Humans Are Stories",
+    "source_file": "content/blogs/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110.md",
+    "status": "draft",
+    "tags": [
+      "programming",
+      "data-science",
+      "ai",
+      "python",
+      "data-analytics"
+    ],
+    "published_at": "2026-06-07T11:29:42.276248+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "How I Turned My Habits into an \"Engine\" to Get Me to My Goals",
+    "medium_url": "https://medium.com/@tarun-gupta/bec9f9402ec6",
+    "medium_id": "bec9f9402ec6",
+    "canonical_url": "https://thisisbreathoflife.substack.com/p/how-i-turned-my-habits-into-an-engine",
+    "publication": "Humans Are Stories",
+    "source_file": "content/blogs/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals.md",
+    "status": "draft",
+    "tags": [
+      "life",
+      "life-lessons",
+      "self-improvement",
+      "mental-health",
+      "inspiration"
+    ],
+    "published_at": "2026-06-07T11:35:18.415623+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "Safe and Alive",
+    "medium_url": "https://medium.com/@tarun-gupta/df6660f49a19",
+    "medium_id": "df6660f49a19",
+    "canonical_url": "https://breathofpoetry.substack.com/p/safe-and-alive",
+    "publication": "Humans Are Stories",
+    "source_file": "content/blogs/2026-05-21_poetry_quotes_when-dreams-speak-of-love.md",
+    "status": "draft",
+    "tags": [
+      "poetry",
+      "art",
+      "short-story",
+      "love",
+      "relationships"
+    ],
+    "published_at": "2026-06-07T11:41:48.749401+00:00",
+    "token_used": "personal"
+  }
+]

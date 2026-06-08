@@ -29,9 +29,12 @@ PAGES = {
     "🏠 Home": "home",
     "💡 Ideas": "ideas",
     "📅 Daily Guide": "daily_guide",
+    "🗓️ Posting Schedule": "posting_schedule",
     "⚙️ Workflows": "workflows",
     "📂 Files": "files",
     "⬆️ Upload": "upload",
+    "📋 Checklist": "checklist",
+    "🏷️ Medium Tags": "medium_tags",
     "🔗 Slugs": "slugs",
     "📊 Logs": "logs",
     "🩺 System": "system",
@@ -65,6 +68,9 @@ elif page == "files":
 elif page == "upload":
     from pages_lib import upload
     upload.render(REPO)
+elif page == "checklist":
+    from pages_lib import publishing_checklist
+    publishing_checklist.render(REPO)
 elif page == "slugs":
     from pages_lib import slugs
     slugs.render(REPO)
@@ -74,3 +80,9 @@ elif page == "logs":
 elif page == "system":
     from pages_lib import system
     system.render(REPO)
+elif page == "posting_schedule":
+    from pages_lib import posting_schedule
+    posting_schedule.render(REPO)
+elif page == "medium_tags":
+    from pages_lib import medium_tags
+    medium_tags.render(REPO)

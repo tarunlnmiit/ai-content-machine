@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 628px;
+    overflow: hidden;
+    background: #080c14;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  }
+
+  .canvas {
+    width: 1200px;
+    height: 628px;
+    position: relative;
+    display: flex;
+    background: #080c14;
+  }
+
+  /* Subtle grid texture */
+  .canvas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  /* Glow bleeds */
+  .glow-red {
+    position: absolute;
+    top: -80px;
+    left: -80px;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(239,68,68,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .glow-green {
+    position: absolute;
+    bottom: -100px;
+    right: 200px;
+    width: 500px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(16,185,129,0.09) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Left column — main content */
+  .left {
+    flex: 0 0 640px;
+    padding: 52px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6b7280;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .headline {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 48px;
+    line-height: 1.12;
+    color: #f9fafb;
+    font-weight: normal;
+    margin-bottom: 8px;
+  }
+
+  .headline .strike {
+    position: relative;
+    color: #ef4444;
+  }
+
+  .headline .strike::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 52%;
+    height: 2.5px;
+    background: #ef4444;
+  }
+
+  .subhead {
+    font-size: 16px;
+    color: #9ca3af;
+    line-height: 1.5;
+    margin-bottom: 32px;
+    max-width: 420px;
+  }
+
+  /* Terminal block */
+  .terminal {
+    background: #0d1117;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  .terminal-bar {
+    background: #161b22;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid #1f2937;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .terminal-label {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #4b5563;
+    margin-left: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .terminal-body {
+    padding: 14px 18px;
+  }
+
+  .terminal-body code {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    display: block;
+  }
+
+  .cmd { color: #fbbf24; }
+  .flag { color: #93c5fd; }
+  .path { color: #ef4444; }
+  .comment { color: #4b5563; }
+
+  .fatal {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #1f2937;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #ef4444;
+    letter-spacing: 0.02em;
+  }
+
+  /* Bottom row */
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .handle {
+    font-size: 12px;
+    color: #4b5563;
+    letter-spacing: 0.04em;
+  }
+
+  .stat-pill {
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: #10b981;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* Divider */
+  .divider {
+    flex: 0 0 1px;
+    background: linear-gradient(to bottom, transparent, #1f2937 30%, #1f2937 70%, transparent);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Right column — steps */
+  .right {
+    flex: 1;
+    padding: 52px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+
+  .right-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #374151;
+    font-weight: 600;
+    margin-bottom: 28px;
+  }
+
+  /* Recovery steps */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid #111827;
+    position: relative;
+  }
+
+  .step:last-child {
+    border-bottom: none;
+  }
+
+  .step-num {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #374151;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding-top: 2px;
+    flex-shrink: 0;
+    width: 20px;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-cmd {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #f59e0b;
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .step-desc {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.45;
+  }
+
+  .step-result {
+    font-size: 11px;
+    color: #10b981;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* Final stat */
+  .recovery-stat {
+    margin-top: 28px;
+    padding: 18px 20px;
+    background: rgba(16,185,129,0.06);
+    border: 1px solid rgba(16,185,129,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .big-num {
+    font-family: Georgia, serif;
+    font-size: 36px;
+    color: #10b981;
+    line-height: 1;
+    font-weight: normal;
+  }
+
+  .big-num-label {
+    font-size: 11px;
+    color: #6b7280;
+    line-height: 1.4;
+    max-width: 160px;
+  }
+
+  .big-num-label strong {
+    display: block;
+    color: #d1fae5;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="glow-red"></div>
+  <div class="glow-green"></div>
+
+  <!-- Left -->
+  <div class="left">
+    <div>
+      <div class="eyebrow">A data scientist's incident report</div>
+
+      <h1 class="headline">
+        I deleted<br>
+        <span class="strike">3 weeks</span> of content<br>
+        in one command.
+      </h1>
+
+      <p class="subhead" style="margin-top: 16px;">
+        188MB. Slides, carousels, worksheets, blog images —<br>
+        wiped from every commit in my repo's history.
+      </p>
+
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+          <span class="terminal-label">content-machine — bash</span>
+        </div>
+        <div class="terminal-body">
+          <code>
+            <span class="cmd">$ git filter-branch</span> <span class="flag">--index-filter</span> \<br>
+            &nbsp;&nbsp;<span class="path">'git rm -rf --cached assets/'</span> \<br>
+            &nbsp;&nbsp;<span class="flag">--prune-empty --tag-name-filter cat</span> <span class="flag">-- --all</span><br>
+            <span class="comment"># rewrote 247 commits. assets/ gone from all of history.</span>
+          </code>
+          <div class="fatal">✗ 188MB wiped. git status showed nothing wrong.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <span class="handle">@mistakenlyhuman · breathofdatascience.substack.com</span>
+      <span class="stat-pill">Full recovery</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Right -->
+  <div class="right">
+    <div class="right-eyebrow">Claude recovered it in 3 steps</div>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <div class="step-cmd">git reflog</div>
+          <div class="step-desc">Found the pre-filter-branch commit hash.<br>History rewritten — but HEAD positions still logged.</div>
+          <div class="step-result">→ HEAD@{19} = 6d30a69. 186MB restored.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <div class="step-cmd">git fsck --dangling</div>
+          <div class="step-desc">2 PDFs still missing — deleted before filter-branch ran.<br>Surfaced orphaned commits not reachable from any branch.</div>
+          <div class="step-result">→ Dangling commit f5d9a38 contained both files.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <div class="step-cmd">git cat-file blob &lt;hash&gt;</div>
+          <div class="step-desc">Extracted file contents directly from git's object store<br>by blob hash. No branch needed.</div>
+          <div class="step-result">→ Both PDFs recovered byte-perfect.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recovery-stat">
+      <div class="big-num">188<span style="font-size:18px; color: #059669;">MB</span></div>
+      <div class="big-num-label">
+        <strong>All recovered.</strong>
+        Not from backup. From git's own forensics layer —
+        the one most devs never touch.
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

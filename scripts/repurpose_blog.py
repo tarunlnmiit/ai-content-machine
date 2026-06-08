@@ -17,6 +17,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 from _console import console, spinner, progress_bar
 
+from lib.schedule_calc import write_schedule_json
+from lib.content_paths import derivatives_dir
+
 REPO = Path(__file__).parent.parent
 load_dotenv(REPO / ".env")
 
@@ -310,14 +313,30 @@ def main():
 
     parsed, usage = generate(combined_prompt)
 
-    out_dir = REPO / "content" / "derivatives" / slug
+    date_str = slug[:10]  # Extract YYYY-MM-DD from slug prefix
+    out_dir = derivatives_dir(date_str, slug)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     saved = save_derivatives(out_dir, parsed, args.platforms)
 
-    console.print(f"\n[success]✓ {len(saved)} derivatives → content/derivatives/{slug}/[/success]")
+    console.print(f"\n[success]✓ {len(saved)} derivatives → {out_dir.relative_to(REPO)}[/success]")
     for f in saved:
         console.print(f"  [dim]{f}[/dim]")
+
+    # Extract niche from slug (e.g., "2026-05-21_data_science_tech_..." → "ds")
+    niche = "life"  # default
+    if "_data_science_tech_" in slug:
+        niche = "ds"
+    elif "_poetry_quotes_" in slug:
+        niche = "poetry"
+
+    # Write schedule.json if not already present
+    schedule_file = out_dir / "schedule.json"
+    if not schedule_file.exists():
+        schedule_path = write_schedule_json(slug, niche, REPO / "content" / "derivatives")
+        console.print(f"[success]✓ Schedule:[/success] {schedule_path.relative_to(REPO)}")
+    else:
+        console.print(f"[dim]Schedule already exists:[/dim] {schedule_file.relative_to(REPO)}")
 
     console.print(f"\n[dim]Token usage ({usage['backend']}):[/dim]")
     if usage['backend'] == "claude-pro-subprocess":

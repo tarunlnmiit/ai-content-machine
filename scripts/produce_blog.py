@@ -14,6 +14,7 @@ NICHES = {"ds": "data_science_tech", "life": "life_self_dev", "poetry": "poetry_
 
 
 from lib.slug import slugify
+from lib.schedule_calc import write_schedule_json
 
 
 def load(path: Path) -> str:
@@ -218,12 +219,18 @@ def main():
     out_path = out_dir / filename
     out_path.write_text(blog_text, encoding="utf-8")
 
+    # Write schedule.json to derivatives dir
+    full_slug = f"{today}_{NICHES[args.niche]}_{slug}"
+    deriv_dir = REPO / "content" / "derivatives"
+    schedule_path = write_schedule_json(full_slug, args.niche, deriv_dir)
+
     word_count = len(blog_text.split())
     personal_inserts = blog_text.count("[PERSONAL_INSERT")
     code_inserts     = blog_text.count("[CODE_INSERT")
     image_inserts    = blog_text.count("[IMAGE_INSERT")
 
     console.print(f"\n[success]✓ Saved:[/success] {out_path.relative_to(REPO)}")
+    console.print(f"[success]✓ Schedule:[/success] {schedule_path.relative_to(REPO)}")
     console.print(f"  Words:             {word_count:,}")
     console.print(f"  [PERSONAL_INSERT]: {personal_inserts}")
     console.print(f"  [CODE_INSERT]:     {code_inserts}")

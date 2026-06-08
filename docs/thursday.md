@@ -2,6 +2,18 @@
 
 DS is self-contained today. Life + Poetry video production moves to Friday.
 
+## Thursday at a glance
+
+| Time | Action | Output goes live |
+|------|--------|------------------|
+| 12:00 PM | DS LinkedIn posts via scheduler | DS LinkedIn goes live |
+| 1:00 PM | DS Twitter thread posts via reminder | DS Twitter thread goes live |
+| 2:00 PM | Script / Record / Edit DS video | — |
+| 6:00 PM | DS long-form + blog + shorts + Metricool | **DS video goes live on YouTube** · **Substack** · **Medium** · IG/FB/Threads scheduled for next Wed |
+| 9:00 PM | DS shorts post (slot 7) | DS shorts start going live throughout week |
+
+---
+
 ---
 
 ## Step 0 — Check buffer for DS script (1 min)

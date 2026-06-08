@@ -1,0 +1,11 @@
+```json
+[
+  {"start": 0.0, "end": 32.6, "hook_line": "Three years, every single day, I had a productivity app open", "why": "Hooks with relatable paradox: seeming productivity yet missing real goals; sets up universal problem"},
+  {"start": 42.1, "end": 80.6, "hook_line": "What I was building, all that consistency, all those streaks, was activity, not momentum", "why": "Introduces core distinction with content creation example proving the mismatch between effort and progress"},
+  {"start": 85.1, "end": 116.6, "hook_line": "I was not building a system, I was collecting behaviors", "why": "Delivers the aha moment that reframes disconnected habits as the root cause"},
+  {"start": 122.4, "end": 160.6, "hook_line": "A single habit, no matter how well constructed, can only do so much", "why": "Challenges standard habit advice and names the overlooked layer: architecture, not willpower"},
+  {"start": 174.3, "end": 215.5, "hook_line": "What separates a routine from an engine is feedback", "why": "Explains the mechanism: habits amplify each other through feedback loops, not in isolation"},
+  {"start": 249.7, "end": 308.6, "hook_line": "I separated habits into three categories: foundation, work and reflection", "why": "Provides concrete, repeatable framework with specific examples (20-min morning routine) making the abstract tangible"},
+  {"start": 344.1, "end": 397.2, "hook_line": "Most people think discipline keeps a system running. The opposite is true", "why": "Counterintuitive reframe with proof: good architecture requires less willpower, not more"}
+]
+```

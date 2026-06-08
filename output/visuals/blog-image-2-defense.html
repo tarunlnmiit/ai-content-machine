@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 800px;
+    height: 380px;
+    overflow: hidden;
+    background: #080c14;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  }
+
+  .canvas {
+    width: 800px;
+    height: 380px;
+    position: relative;
+    background: #080c14;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 40px;
+  }
+
+  /* Grid */
+  .canvas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #374151;
+    font-weight: 600;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .eyebrow::before,
+  .eyebrow::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: #1f2937;
+  }
+
+  .cards {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .card {
+    flex: 1;
+    border-radius: 10px;
+    padding: 24px 22px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* Card 1 — LFS — amber */
+  .card-1 {
+    background: rgba(245,158,11,0.04);
+    border-color: rgba(245,158,11,0.2);
+  }
+  .card-1::before {
+    background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
+  }
+  .card-1 .num { color: rgba(245,158,11,0.3); }
+  .card-1 .icon-wrap { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.2); }
+  .card-1 .icon { color: #f59e0b; }
+  .card-1 .title { color: #fcd34d; }
+  .card-1 .cmd { color: rgba(245,158,11,0.7); }
+
+  /* Card 2 — Guard Hook — blue */
+  .card-2 {
+    background: rgba(99,102,241,0.04);
+    border-color: rgba(99,102,241,0.2);
+  }
+  .card-2::before {
+    background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  }
+  .card-2 .num { color: rgba(99,102,241,0.3); }
+  .card-2 .icon-wrap { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.2); }
+  .card-2 .icon { color: #818cf8; }
+  .card-2 .title { color: #a5b4fc; }
+  .card-2 .cmd { color: rgba(99,102,241,0.7); }
+
+  /* Card 3 — Recovery Anchors — green */
+  .card-3 {
+    background: rgba(16,185,129,0.04);
+    border-color: rgba(16,185,129,0.2);
+  }
+  .card-3::before {
+    background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
+  }
+  .card-3 .num { color: rgba(16,185,129,0.3); }
+  .card-3 .icon-wrap { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.2); }
+  .card-3 .icon { color: #10b981; }
+  .card-3 .title { color: #6ee7b7; }
+  .card-3 .cmd { color: rgba(16,185,129,0.7); }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .num {
+    font-family: 'Courier New', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .icon {
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .desc {
+    font-size: 11.5px;
+    color: #6b7280;
+    line-height: 1.55;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  .cmd {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .bottom-note {
+    margin-top: 22px;
+    font-size: 11px;
+    color: #374151;
+    letter-spacing: 0.04em;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="eyebrow">Three layers of defense</div>
+
+  <div class="cards">
+
+    <!-- Card 1: Git LFS -->
+    <div class="card card-1">
+      <div class="card-top">
+        <div class="num">01</div>
+        <div class="icon-wrap">
+          <span class="icon">⬡</span>
+        </div>
+      </div>
+      <div class="title">Git LFS</div>
+      <div class="desc">Binaries tracked on LFS servers, not in the repo object store. Filter-branch can't rewrite what it can't see.</div>
+      <div class="cmd">.gitattributes → assets/**/* filter=lfs</div>
+    </div>
+
+    <!-- Card 2: Guard Hook -->
+    <div class="card card-2">
+      <div class="card-top">
+        <div class="num">02</div>
+        <div class="icon-wrap">
+          <span class="icon">⬡</span>
+        </div>
+      </div>
+      <div class="title">Guard Hook</div>
+      <div class="desc">PreToolUse hook blocks filter-branch, reset --hard, and rm -rf on asset paths before any command runs.</div>
+      <div class="cmd">.claude/hooks/guard_destructive.py</div>
+    </div>
+
+    <!-- Card 3: Recovery Anchors -->
+    <div class="card card-3">
+      <div class="card-top">
+        <div class="num">03</div>
+        <div class="icon-wrap">
+          <span class="icon">⬡</span>
+        </div>
+      </div>
+      <div class="title">Recovery Anchors</div>
+      <div class="desc">Tagged commits after every major push. Tags survive filter-branch — permanent pointers into history that gc won't collect.</div>
+      <div class="cmd">git tag recovery-anchor-YYYY-MM-DD</div>
+    </div>
+
+  </div>
+
+  <div class="bottom-note">Built after losing 188MB. None of this existed before.</div>
+
+</div>
+</body>
+</html>

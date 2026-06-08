@@ -8,14 +8,18 @@ USAGE:
     python3 scripts/publish_medium.py --input content/blogs/my-post.md --tags "python,data,ai"
     python3 scripts/publish_medium.py --input content/blogs/my-post.md --token app   # use developer token
     python3 scripts/publish_medium.py --input content/blogs/my-post.md --status public
+    python3 scripts/publish_medium.py --input content/blogs/my-post.md --publication humans-are-stories
+    python3 scripts/publish_medium.py --input content/blogs/my-post.md --publication "Humans Are Stories"
 
 OPTIONS:
-    --input PATH          Path to Markdown blog file (required)
-    --canonical-url URL   Original post URL (overrides front-matter)
-    --tags TAG1,TAG2      Comma-separated tags (overrides front-matter; max 5)
-    --token personal|app  Which token to use (default: personal)
-    --status STATUS       draft | public | unlisted (default: draft)
-    --title TEXT          Override post title
+    --input PATH              Path to Markdown blog file (required)
+    --canonical-url URL       Original post URL (overrides front-matter)
+    --tags TAG1,TAG2          Comma-separated tags (overrides front-matter; max 5)
+    --token personal|app      Which token to use (default: personal)
+    --status STATUS           draft | public | unlisted (default: draft)
+    --title TEXT              Override post title
+    --publication NAME_OR_SLUG  Publication name or URL slug (e.g. "humans-are-stories")
+                              Omit to publish to your personal profile.
 
 FRONT-MATTER (optional YAML block at top of .md file):
     ---
@@ -23,6 +27,7 @@ FRONT-MATTER (optional YAML block at top of .md file):
     tags: [python, data, ai]
     canonical_url: https://mysite.com/my-post
     status: draft
+    publication: humans-are-stories
     ---
 
 OUTPUTS:
@@ -104,9 +109,54 @@ def get_user(token: str) -> dict:
     return resp.json()["data"]
 
 
+def get_publications(token: str, user_id: str) -> list[dict]:
+    resp = requests.get(
+        f"{MEDIUM_API}/users/{user_id}/publications",
+        headers={"Authorization": f"Bearer {token}"},
+        timeout=15,
+    )
+    if resp.status_code == 401:
+        print("ERROR: Invalid or expired token.")
+        sys.exit(1)
+    resp.raise_for_status()
+    return resp.json().get("data", [])
+
+
+def find_publication(pubs: list[dict], query: str) -> dict | None:
+    """Match query against publication name (case-insensitive) or URL slug."""
+    query_lower = query.lower().strip()
+    for pub in pubs:
+        name_match = pub.get("name", "").lower() == query_lower
+        slug = pub.get("url", "").rstrip("/").split("/")[-1]
+        slug_match = slug.lower() == query_lower
+        if name_match or slug_match:
+            return pub
+    return None
+
+
 def create_post(token: str, user_id: str, payload: dict) -> dict:
     resp = requests.post(
         f"{MEDIUM_API}/users/{user_id}/posts",
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+        },
+        json=payload,
+        timeout=30,
+    )
+    if resp.status_code == 401:
+        print("ERROR: Invalid or expired token.")
+        sys.exit(1)
+    if not resp.ok:
+        print(f"ERROR: Medium API returned {resp.status_code}")
+        print(resp.text)
+        sys.exit(1)
+    return resp.json()["data"]
+
+
+def create_publication_post(token: str, pub_id: str, payload: dict) -> dict:
+    resp = requests.post(
+        f"{MEDIUM_API}/publications/{pub_id}/posts",
         headers={
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
@@ -147,6 +197,7 @@ def main():
     parser.add_argument("--status", choices=["draft", "public", "unlisted"],
                         default="draft", help="Publish status (default: draft)")
     parser.add_argument("--title", help="Override post title")
+    parser.add_argument("--publication", help="Publication name or URL slug (omit to publish to profile)")
     args = parser.parse_args()
 
     # Pick token
@@ -192,6 +243,9 @@ def main():
     # Resolve status: front-matter wins if set, otherwise use CLI arg
     status = meta.get("status") or args.status
 
+    # Resolve publication target (CLI > front-matter)
+    publication_query = args.publication or meta.get("publication")
+
     # Build payload
     payload = {
         "title": title,
@@ -204,22 +258,42 @@ def main():
     if canonical_url:
         payload["canonicalUrl"] = canonical_url
 
+    # Authenticate
+    user = get_user(token)
+
+    # Resolve publication if requested
+    pub_name = None
+    pub_id = None
+    if publication_query:
+        pubs = get_publications(token, user["id"])
+        matched = find_publication(pubs, publication_query)
+        if not matched:
+            available = ", ".join(p.get("name", "") for p in pubs) or "(none)"
+            print(f"ERROR: Publication not found: {publication_query!r}")
+            print(f"  Your publications: {available}")
+            sys.exit(1)
+        pub_name = matched.get("name")
+        pub_id = matched.get("id")
+
     # Show plan
+    target = f"publication: {pub_name}" if pub_name else "personal profile"
     print(f"\nPublishing to Medium")
     print(f"  File:          {args.input}")
     print(f"  Title:         {title}")
+    print(f"  Target:        {target}")
     print(f"  Status:        {status}")
     print(f"  Tags:          {', '.join(tags) or '(none)'}")
     print(f"  Canonical URL: {canonical_url or '(none)'}")
     print(f"  Token:         {token_label}")
     print()
 
-    # Authenticate
-    user = get_user(token)
     print(f"  Authenticated as: {user.get('name')} (@{user.get('username')})")
 
     # Publish
-    post = create_post(token, user["id"], payload)
+    if pub_id:
+        post = create_publication_post(token, pub_id, payload)
+    else:
+        post = create_post(token, user["id"], payload)
     post_url = post.get("url", "")
 
     # Log
@@ -228,6 +302,7 @@ def main():
         "medium_url": post_url,
         "medium_id": post.get("id"),
         "canonical_url": canonical_url,
+        "publication": pub_name,
         "source_file": str(args.input),
         "status": status,
         "tags": tags,

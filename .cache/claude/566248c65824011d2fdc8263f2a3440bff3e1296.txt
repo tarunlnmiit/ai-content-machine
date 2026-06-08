@@ -1,0 +1,46 @@
+```json
+[
+  {
+    "start": 0.0,
+    "end": 35.8,
+    "hook_line": "You are going to write your first Python program soon... and then you will feel nothing",
+    "why": "Opens with relatable pain point—tutorials teach syntax but not purpose or outcome—immediately establishes the problem this lesson solves"
+  },
+  {
+    "start": 35.8,
+    "end": 77.5,
+    "hook_line": "There are two paths: additive (collect syntax rules like trading cards) or structural (learn to think about problems first)",
+    "why": "Clear framework contrasting two learning approaches with concrete examples; viewers instantly know which trap they've fallen into"
+  },
+  {
+    "start": 101.0,
+    "end": 141.4,
+    "hook_line": "Most people's first data science projects fail silently—the code runs, you get an answer, but you can't recreate it",
+    "why": "Fear appeal + cause-and-effect story; explains why environment setup is not optional, drives urgency"
+  },
+  {
+    "start": 178.2,
+    "end": 232.0,
+    "hook_line": "This source bin activate line—that's the most important line in your Python journey. Every time you sit down to code, run it",
+    "why": "Practical walkthrough of the critical command; framing it as 'most important' creates memorable takeaway with high stakes"
+  },
+  {
+    "start": 301.8,
+    "end": 349.4,
+    "hook_line": "Before we write a single program, we need to talk about how to think like a programmer. There is a difference between running code that works and understanding why it works",
+    "why": "Shifts viewer mindset from syntax-first to thinking-first; decomposition framework with concrete data science examples"
+  },
+  {
+    "start": 381.2,
+    "end": 423.1,
+    "hook_line": "One of the biggest shifts in my own work happened when I stopped asking 'what code should I write' and started asking 'what are the actual pieces of this problem'",
+    "why": "Personal story with relatable workflow (video repurposing); shows real-world payoff of decomposition thinking"
+  },
+  {
+    "start": 782.6,
+    "end": 823.5,
+    "hook_line": "The one skill that matters the most: reading error messages. You are going to write broken code today, tomorrow, forever. The only difference is how you respond to errors",
+    "why": "Reframes errors as inevitable feedback, not failure; contrasts growth vs. fixed mindset on the path to mastery"
+  }
+]
+```

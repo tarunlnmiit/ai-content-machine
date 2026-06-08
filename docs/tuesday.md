@@ -1,5 +1,18 @@
 # Tuesday — Life Blog + Repurpose DS (~35 min)
 
+## Tuesday at a glance
+
+| Time | Action | Output goes live |
+|------|--------|------------------|
+| 9:00 AM | Check buffer / produce Life blog | — |
+| 9:15 AM | Repurpose DS blog → derivatives + schedule.json | **Thu 6 PM** (YouTube + Substack + Medium) |
+| 10:00 AM | Repurpose Life blog → derivatives + schedule.json | **Tue 2 PM** (YouTube + Substack + Medium) |
+| 10:00 AM | Load posts to scheduler DB | LinkedIn queued (auto via scheduler.py) |
+| 2:00 PM | Life long-form + blog publish | Life video goes live on YouTube · Substack · Medium |
+| 8:00 PM | IG/FB carousel (Life) posts next Tue | (Week+1) |
+
+---
+
 ## Step 0 — Check buffer first (1 min)
 
 ```bash

@@ -2,17 +2,116 @@
 
 Last updated: 2026-05-25
 
+## Posting Times at a Glance (IST)
+
+### Week N — Long-form + Blog (YouTube · Substack · Medium)
+
+| Day | Time IST | Niche | Platform(s) | Content type |
+|-----|----------|-------|-------------|--------------|
+| Tue | 2:00 PM  | 🟢 Life   | YouTube · Substack · Medium | Long-form + Blog |
+| Thu | 6:00 PM  | 🔵 DS     | YouTube · Substack · Medium | Long-form + Blog |
+| Fri | 3:00 PM  | 🟣 Poetry | YouTube · Substack · Medium | Long-form + Blog |
+
+### Week N+1 — Social (one week after long-form)
+
+> **Pivot rule:** IG, Facebook, Threads, Twitter threads all publish the week AFTER the long-form goes live. LinkedIn is the only exception — it goes same week (auto via scheduler.py).
+
+| Day | Time IST | Niche | Platform(s) | Content type |
+|-----|----------|-------|-------------|--------------|
+| Tue | 8:00 AM  | 🟢 Life   | LinkedIn *(auto — scheduler.py)* | LinkedIn post |
+| Tue | 8:00 AM  | 🔵 DS     | LinkedIn *(auto — scheduler.py)* | LinkedIn post |
+| Tue | 8:00 AM  | 🟣 Poetry | LinkedIn *(auto — scheduler.py)* | LinkedIn post |
+| Mon | 1:00 PM  | 🟢 Life   | Twitter/X *(manual — reminder set)* | Twitter thread |
+| Tue | 8:00 AM  | 🟢 Life   | Instagram · Facebook *(Metricool CSV)* | IG carousel |
+| Tue | 8:00 PM  | 🟢 Life   | Threads *(Metricool CSV)* | Threads post |
+| Wed | 8:00 AM  | 🔵 DS     | Instagram · Facebook *(Metricool CSV)* | IG carousel |
+| Wed | 8:00 PM  | 🔵 DS     | Threads *(Metricool CSV)* | Threads post |
+| Fri | 10:00 AM | 🟣 Poetry | Instagram · Facebook *(Metricool CSV)* | IG carousel |
+| Fri | 12:00 PM | 🟣 Poetry | Twitter/X *(manual — reminder set)* | Twitter thread |
+| Fri | 12:00 PM | 🟣 Poetry | Threads *(Metricool CSV)* | Threads post |
+
+### YouTube Shorts — 2/day all niches (Mon–Sun)
+
+| Slot | Day | Time IST | Phase |
+|------|-----|----------|-------|
+| short_00 | Mon | 10 AM | Tease |
+| short_01 | Mon | 8 PM | Tease |
+| short_02 | Tue | 10 AM | Tease |
+| short_03 | Tue | 8 PM | **Life ★** post-long-form · DS/Poetry tease |
+| short_04 | Wed | 10 AM | Life post-long-form · DS/Poetry tease |
+| short_05 | Wed | 8 PM | Life post-long-form · DS/Poetry tease |
+| short_06 | Thu | 10 AM | Life post-long-form · DS/Poetry tease |
+| short_07 | Thu | **9 PM** | Life post-long-form · **DS ★** post-long-form · Poetry tease |
+| short_08 | Fri | 10 AM | DS post-long-form · Poetry tease |
+| short_09 | Fri | 8 PM | DS post-long-form · **Poetry ★** post-long-form |
+| short_10 | Sat | 10 AM | All post-long-form |
+| short_11 | Sat | 8 PM | All post-long-form |
+| short_12 | Sun | 10 AM | All post-long-form |
+| short_13 | Sun | 8 PM | All post-long-form |
+
+★ = first slot after that niche's long-form goes live. Add live video URL to descriptions from ★ onward.
+
+> Dashboard: **🗓️ Posting Schedule** page shows this with actual dates for the current week.
+
+---
+
 ## Week at a Glance
 
 | Day | Focus | Time |
 |-----|-------|------|
-| [Monday](monday.md) | DS Blog — produce, fill, images | ~25 min |
-| [Tuesday](tuesday.md) | Life Blog + Repurpose DS (with design prompts) | ~35 min |
-| [Wednesday](wednesday.md) | Poetry Blog + Repurpose all + Claude Design + Worksheets | ~40 min + 15–20 min Claude Design |
-| [Thursday](thursday.md) | DS video: script → record → edit → reel → upload | ~2 hrs |
-| [Friday](friday.md) | Life + Poetry: scripts → record talking head → B-roll hints for edit | ~2 hrs |
-| [Saturday](saturday.md) | Auto-edit Life + Poetry ([video guide](video-production-guide.md)) → shorts → upload → publish Medium → load scheduler | ~1 hr |
-| [Sunday](sunday.md) | Social scheduling (Publer + Twitter) + review | ~20 min |
+| [Monday](monday.md) | Life: LinkedIn + Twitter thread (social-first, no video yet) | ~15 min |
+| [Tuesday](tuesday.md) | Life: IG carousel → Long-form video → Blog → Newsletter → Short(s) same day | ~2.5 hrs |
+| [Wednesday](wednesday.md) | DS: LinkedIn + Twitter thread + IG carousel | ~20 min |
+| [Thursday](thursday.md) | DS: Long-form video → Blog → Newsletter → Short(s) same evening | ~2 hrs |
+| [Friday](friday.md) | Poetry: LinkedIn + Twitter → Long-form video → Blog → Newsletter → Short(s) same day | ~2.5 hrs |
+| [Saturday](saturday.md) | Buffer replenishment + week review + Notion sync | ~1 hr |
+| [Sunday](sunday.md) | Analytics review + generate week N+4 buffer slot | ~30 min |
+
+### Same-Week Derivatives Rule
+
+**All derivatives from any content piece — including ALL shorts (up to 14 per niche) — must publish in the same Mon–Sun week as the long-form video. No content carries over to the following week.**
+
+#### Shorts cadence: 2 per day per channel × 7 days = 14 max
+
+Each channel has two daily short slots: **10 AM IST** and **8 PM IST**.  
+Upload whichever slots have shorts available; leave empty slots unfilled.
+
+Standard slot assignment per niche (short_00 → slot 0, short_01 → slot 1, etc.):
+
+| Slot | Day | Time IST | Notes |
+|------|-----|----------|-------|
+| 0 | Mon | 10 AM | Tease (long-form not yet live) |
+| 1 | Mon | 8 PM | Tease |
+| 2 | Tue | 10 AM | Tease |
+| 3 | Tue | 8 PM | Tease |
+| 4 | Wed | 10 AM | Tease |
+| 5 | Wed | 8 PM | Tease |
+| 6 | Thu | 10 AM | Tease (Life: post-long-form) |
+| 7 | Thu | 9 PM | Post-long-form (DS: same evening) |
+| 8 | Fri | 10 AM | Post-long-form |
+| 9 | Fri | 8 PM | Post-long-form |
+| 10 | Sat | 10 AM | Post-long-form |
+| 11 | Sat | 8 PM | Post-long-form |
+| 12 | Sun | 10 AM | Post-long-form |
+| 13 | Sun | 8 PM | Post-long-form |
+
+Shorts before the long-form are standalone teasers — no parent-video link required by YouTube. Shorts posted after the long-form should have the video URL in their description (update retroactively if needed).
+
+#### Per-niche publishing order (enforce every week)
+
+1. **Social first** (LinkedIn + Twitter) — prior day or same morning. Drives anticipation, no link needed.
+2. **IG carousel** — 1 day before the long-form (8 AM slot). Teaser visual, no link needed.
+3. **Long-form video + Blog** — simultaneous publish (Substack → Medium canonical).
+   Medium tags (max 5, use `--tags` flag):
+   - Life/Self-dev: `self-improvement,personal-development,habits,productivity,mindset`
+   - Data Science:  `python,data-science,machine-learning,tutorial,programming`
+   - Poetry/Quotes: `poetry,love,writing,quotes,literature`
+4. **Shorts** — 2/day, Mon–Sun, all within same calendar week.
+
+Niche windows:
+- **Life** → Mon social · Tue IG + long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
+- **DS** → Wed social · Wed IG + Thu long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
+- **Poetry** → Fri social + long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
 
 ---
 
@@ -292,8 +391,9 @@ assets/
   ├── video/edited/{slug}.mp4                    ← long-form YouTube (FINAL)
   └── video/edited/{slug}_reel.mp4              ← YouTube Short / reel (FINAL, 9:16)
 
-output/scheduled/publer_ig_fb.csv               ← import with Instagram + Facebook selected
-output/scheduled/publer_threads.csv             ← import with Threads selected
+output/scheduled/publer_mistakenlyhuman_ig_fb.csv   ← Account 1 (mistakenlyhuman): Instagram + Facebook
+output/scheduled/publer_mistakenlyhuman_threads.csv ← Account 1 (mistakenlyhuman): Threads
+output/scheduled/publer_breathofds_ig_fb.csv        ← Account 2 (Breath of DS): Instagram + Facebook
 output/scheduled/upload_shorts.sh               ← pre-filled YouTube Shorts upload commands
 data/scheduling.db                              ← post queue
 data/analytics/scheduler.log                   ← APScheduler activity
@@ -309,6 +409,42 @@ python3 scripts/generate_slides.py                  # → output/scheduled/{slug
 python3 scripts/generate_quote_cards.py             # → output/scheduled/quote_cards.csv
 python3 scripts/generate_canva_prompts.py           # → output/scheduled/canva_prompts.md (thumbnails)
 ```
+
+---
+
+## Schedule Embedded in Content
+
+**Each generated piece of content carries its own schedule.json.**
+
+When you run `produce_blog.py`, `repurpose_blog.py`, or generate shorts metadata, the scripts automatically compute and write `content/derivatives/{slug}/schedule.json` — no manual timestamp management needed.
+
+### Inspecting schedules
+
+```bash
+# See full schedule for a slug
+cat content/derivatives/{slug}/schedule.json | python3 -m json.tool
+
+# Extract just the publish times
+jq '.social, .long_form.publish_at' content/derivatives/{slug}/schedule.json
+```
+
+### Auto-generating the weekly checklist
+
+```bash
+# Generate checklist for a given week (must be a Monday)
+python3 scripts/generate_checklist.py --week 2026-06-09
+# → docs/week-2026-06-09-publishing-checklist.md
+```
+
+The checklist reads all `schedule.json` files whose `long_form.publish_at` falls in that week, fills in YouTube upload commands with correct `--publish-at` values, and produces the canonical action list. No manual date entry required.
+
+### Load posts reads schedule.json
+
+`load_posts.py` now:
+1. Checks for `schedule.json` in each slug dir
+2. If present, uses the timestamps from there
+3. Falls back to `next_weekday()` computation if absent (backwards compat)
+4. Result: idempotent — re-running `load_posts.py` always picks the same times
 
 ---
 

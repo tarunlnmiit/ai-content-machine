@@ -1,0 +1,16 @@
+Date,Text,Link(s),Media URL(s),Title,Label(s),Alt text(s),Comment(s),"Pin board, FB album, or Google category",Post subtype,CTA,Reminder
+06/10/2026 20:00,"Most Python tutorials teach syntax memorization. You collect rules, drown in details, miss the entire point.
+
+Data science Python is different. Environment setup matters. Thinking comes before code. Your first program touches real data, not Hello World.
+
+Here's what tutorials skip: virtual environments, computational thinking, error messages as feedback. That foundation scales.
+
+[BLOG_LINK]",,,Threads,2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110,,,,,,
+06/12/2026 12:00,Python won't warn you when a column of ages sums to '283542' instead of 105. No error. No crash. Just a confident wrong number in your report. Checking types before any calculation isn't advanced — it's the first habit worth building. [BLOG_LINK],,,Threads,2026-05-25_data_science_tech_python-for-data-science-tutorial-210,,,,,,
+06/10/2026 20:00,"Spent an hour writing nested loops to compute metrics across a dataset once. Felt good about finally getting it working.
+
+Then learned the same operation was two NumPy lines.
+
+The speed difference wasn't the sting. It was realizing I'd manually solved a problem that was solved in 2006.
+
+That's the NumPy tutorial. [BLOG_LINK]",,,Threads,2026-06-01_data_science_tech_python-for-data-science-tutorial-310,,,,,,

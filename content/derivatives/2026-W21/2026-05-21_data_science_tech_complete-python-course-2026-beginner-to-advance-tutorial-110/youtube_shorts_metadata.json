@@ -1,0 +1,194 @@
+{
+  "long_form_url": "https://youtu.be/XBw0vuzACuA",
+  "shorts": [
+    {
+      "title": "Stop Learning Python Wrong (Setup Matters First)",
+      "description": "Most tutorials teach syntax before thinking. That's backwards. Setup your environment first—then everything clicks. Tutorial 1/10. #Shorts #Python #DataScience #Coding #Learning",
+      "tags": [
+        "Shorts",
+        "Python",
+        "DataScience",
+        "Programming",
+        "Tutorial"
+      ],
+      "hook_visual": "Large on-screen text: 'You're learning Python wrong.' Cut to confused developer staring at error. Then cut to clean terminal showing 'source env/bin/activate' with checkmarks appearing.",
+      "end_screen_cta": "Watch the full tutorial to build your foundation correctly. Link in bio."
+    },
+    {
+      "title": "Two Ways People Learn Python",
+      "description": "Most learners collect syntax rules like trading cards — and drown by week six. Data science demands the second path: learning to think about problems first, then using Python to express solutions. You're not learning a language. You're learning to communicate with data. #Python #DataScience #Shorts",
+      "tags": [
+        "python for beginners",
+        "learn python",
+        "data science python",
+        "python tutorial",
+        "python thinking",
+        "programming mindset",
+        "python data science",
+        "coding for beginners"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "Wrong Setup Kills Your DS Projects",
+      "description": "Most tutorials skip the part that actually matters: environment setup. Bad isolation means your code runs today, breaks in six months, and you can't trace why. Here's what a real data science environment looks like. #DataScience #Python #Shorts",
+      "tags": [
+        "data science",
+        "python tutorial",
+        "virtual environment",
+        "conda",
+        "reproducibility",
+        "python for beginners",
+        "data science setup"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "Activate This Before Every Python Session",
+      "description": "One line keeps your entire Python environment clean — source env/bin/activate. Run it every single time you sit down to code, or you risk version conflicts and messy global installs. This habit alone saves hours of debugging. #Python #DataScience #Shorts",
+      "tags": [
+        "python virtual environment",
+        "source activate",
+        "python for beginners",
+        "data science setup",
+        "jupyter notebook install",
+        "python environment setup",
+        "learn python",
+        "python tutorial"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "Why Your Code Breaks in Docker",
+      "description": "One project worked on my laptop, completely failed in a container — same code, different environment. I didn't lose time because Python was hard. I lost time because the setup was sloppy. Treat environments like engineering, not cleanup. #DataScience #Python #Shorts",
+      "tags": [
+        "python environments",
+        "docker python",
+        "data science setup",
+        "virtual environments",
+        "python beginners",
+        "AI projects",
+        "reproducible code"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "Think Like a Programmer Before You Code",
+      "description": "Running code that works and understanding why it works are two very different things. Computational thinking — decomposition, pattern recognition, abstraction — is the mental model that separates frustrated beginners from confident programmers. Learn to think first, code second. #Python #DataScience #Shorts",
+      "tags": [
+        "computational thinking",
+        "python for beginners",
+        "learn python",
+        "programming mindset",
+        "data science tutorial",
+        "decomposition programming",
+        "python tutorial"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "Reading Python Errors: The Skill That Compounds",
+      "description": "Most tutorials skip this — but reading error messages is what separates people who learn Python from people who quit. A KeyError tells you exactly what went wrong and where. This is the skill that actually compounds. #Python #Shorts #DataScience",
+      "tags": [
+        "python tutorial",
+        "python errors",
+        "KeyError python",
+        "learn python",
+        "python for beginners",
+        "error messages python",
+        "data science beginner"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "short_07 title — fill in",
+      "description": "short_07 description — fill in. #Shorts #Python #DataScience",
+      "tags": [
+        "Shorts",
+        "Python",
+        "DataScience",
+        "Programming"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "short_08 title — fill in",
+      "description": "short_08 description — fill in. #Shorts #Python #DataScience",
+      "tags": [
+        "Shorts",
+        "Python",
+        "DataScience",
+        "Programming"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "short_09 title — fill in",
+      "description": "short_09 description — fill in. #Shorts #Python #DataScience",
+      "tags": [
+        "Shorts",
+        "Python",
+        "DataScience",
+        "Programming"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "short_10 title — fill in",
+      "description": "short_10 description — fill in. #Shorts #Python #DataScience",
+      "tags": [
+        "Shorts",
+        "Python",
+        "DataScience",
+        "Programming"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "short_11 title — fill in",
+      "description": "short_11 description — fill in. #Shorts #Python #DataScience",
+      "tags": [
+        "Shorts",
+        "Python",
+        "DataScience",
+        "Programming"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "short_12 title — fill in",
+      "description": "short_12 description — fill in. #Shorts #Python #DataScience",
+      "tags": [
+        "Shorts",
+        "Python",
+        "DataScience",
+        "Programming"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    },
+    {
+      "title": "short_13 title — fill in",
+      "description": "short_13 description — fill in. #Shorts #Python #DataScience",
+      "tags": [
+        "Shorts",
+        "Python",
+        "DataScience",
+        "Programming"
+      ],
+      "hook_visual": "",
+      "end_screen_cta": ""
+    }
+  ]
+}

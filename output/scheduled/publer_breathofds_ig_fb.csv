@@ -1,0 +1,78 @@
+Date,Text,Link(s),Media URL(s),Title,Label(s),Alt text(s),Comment(s),"Pin board, FB album, or Google category",Post subtype,CTA,Reminder
+06/10/2026 18:00,"Your first Python program won't teach you anything until you understand this.
+
+Most tutorials skip the actual reason you're learning.
+
+They treat Python like syntax to memorize instead of a thinking tool.
+
+But data science is different. It requires:
+
+→ An isolated environment (so code is reproducible)
+→ Computational thinking (break problems, spot patterns, reuse solutions)
+→ Your first program touching real data (not Hello World)
+→ Error messages treated as feedback (not failure)
+
+Setup matters more than syntax. Thinking matters more than speed.
+
+Tutorial 1 of 10 lays this foundation. Swipe to see the three steps that change everything.
+
+Slides:
+  1. Why Most Tutorials Get It Wrong
+  2. Environment Setup: Non-Negotiable
+  3. Computational Thinking: The Mental Model
+  4. Your First Real Program
+  5. Error Messages as Feedback
+
+#Python #DataScience #Programming #LearningToCode #Tutorial",,,Instagram + Facebook,2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110,,,,,,
+06/12/2026 10:00,"Python will give you a wrong answer without telling you.
+
+Not an error. Not a crash. A number that looks right.
+
+It happens when a column of ages loads as strings. Python does not add them — it concatenates. No warning. No flag.
+
+This is why types matter before anything else in data science.
+
+Tutorial 2 covers the four building blocks you need before pandas:
+
+→ int, float, str, bool — and why they behave differently
+→ Lists vs dicts — and when to use which
+→ List comprehensions — one line instead of five
+→ Functions — the thing that makes your code trustworthy
+
+Slide through. Save for when the silent bug finally bites.
+
+[BLOG_LINK]
+
+Slides:
+  1. Python gave me a confident wrong answer
+  2. The silent type bug, explained
+  3. 4 types Python uses (and how they differ)
+  4. Lists vs Dicts: which one you actually need
+  5. List comprehensions in one line
+  6. Functions: write once, trust forever
+  7. What comes next: Tutorial 3
+
+#Python #DataScience #PythonProgramming #LearnPython #DataAnalysis",,,Instagram + Facebook,2026-05-25_data_science_tech_python-for-data-science-tutorial-210,,,,,,
+06/10/2026 18:00,"Your Python loop is 200x slower than it needs to be.
+
+NumPy isn't just a library. It's a different way of thinking about data.
+
+Instead of writing loops, you write operations — and NumPy applies them to every element at once.
+
+scores[scores > 90]
+
+That one line is filtering, boolean logic, and vectorization in 19 characters. No loop. No append. Just a description of what you want.
+
+Swipe through to see the mental model shift — from Python loops to array operations. This is Tutorial 3/10 in the Python for Data Science series. Full post linked in bio.
+
+Slides:
+  1. Your Python loop is 200x slower than it needs to be
+  2. What NumPy actually is (and why it's faster)
+  3. 3 ways to create arrays you'll actually use
+  4. Stop looping. Start describing.
+  5. Boolean indexing: filter without writing a loop
+  6. Mean, std, percentile — aggregations in one line
+  7. 2D arrays: rows, columns, and the axis problem
+  8. The mental shift that makes Pandas click
+
+#Python #DataScience #NumPy #LearnPython #DataScienceTips",,,Instagram + Facebook,2026-06-01_data_science_tech_python-for-data-science-tutorial-310,,,,,,

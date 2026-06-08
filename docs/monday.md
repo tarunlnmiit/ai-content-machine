@@ -1,5 +1,16 @@
 # Monday — DS Blog Production (~25 min)
 
+## Monday at a glance
+
+| Time | Action | Output goes live |
+|------|--------|------------------|
+| 9:00 AM | Check buffer / generate DS blog | — |
+| 9:30 AM | Repurpose blog → derivatives + schedule.json | **Wed 12 PM** (LinkedIn) · **Wed 1 PM** (Twitter) |
+| 10:00 AM | Load posts to scheduler DB | LinkedIn queued (auto via scheduler.py) |
+| 10:00 AM | Shorts start Mon–Sun | **2/day Mon–Sun** (10 AM & 8 PM IST) |
+
+---
+
 ## Step 0 — Check buffer first (1 min)
 
 ```bash

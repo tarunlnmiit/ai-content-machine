@@ -35,6 +35,7 @@ NOTES:
 
 import argparse
 import json
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -46,6 +47,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
+
+from lib.schedule_calc import get_iso_week
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -59,6 +62,7 @@ ALL_SCOPES = [
     "https://www.googleapis.com/auth/youtube.readonly",
     "https://www.googleapis.com/auth/yt-analytics.readonly",
     "https://www.googleapis.com/auth/youtube.upload",
+    "https://www.googleapis.com/auth/youtube.force-ssl",  # required for commentThreads.insert
 ]
 
 RESUMABLE_CHUNK_SIZE = 256 * 1024 * 8  # 2 MB chunks
@@ -296,6 +300,29 @@ def upload_video(
     return f"https://www.youtube.com/watch?v={response['id']}"
 
 
+def post_comment(youtube, video_id: str, text: str) -> str | None:
+    """Post a top-level comment on a video. Returns comment ID or None on failure."""
+    try:
+        resp = youtube.commentThreads().insert(
+            part="snippet",
+            body={
+                "snippet": {
+                    "videoId": video_id,
+                    "topLevelComment": {
+                        "snippet": {"textOriginal": text}
+                    },
+                }
+            },
+        ).execute()
+        return resp["id"]
+    except HttpError as e:
+        if e.resp.status == 403:
+            print(f"[comment] 403 — re-register channel to add youtube.force-ssl scope: python3 scripts/upload_youtube.py --register")
+        else:
+            print(f"[comment] failed ({e.resp.status}): {e}")
+        return None
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     parser = argparse.ArgumentParser(
@@ -339,6 +366,11 @@ def main():
         action="store_true",
         help="Mark as YouTube Short. Injects #Shorts into description. Video must be vertical (9:16).",
     )
+    parser.add_argument(
+        "--pin-longform-comment",
+        action="store_true",
+        help="After shorts upload, post a comment linking to long_form_url from metadata. Pin manually in Studio.",
+    )
     args = parser.parse_args()
 
     load_dotenv(ENV_FILE)
@@ -364,14 +396,61 @@ def main():
 
     # Auto-load metadata from youtube_shorts_metadata.json when --shorts + --slug provided
     if args.shorts and args.slug and not args.title:
-        shorts_meta_path = BASE_DIR / "content" / "derivatives" / args.slug / "youtube_shorts_metadata.json"
+        date_str = args.slug[:10]
+        week = get_iso_week(date_str)
+        shorts_meta_path = BASE_DIR / "content" / "derivatives" / week / args.slug / "youtube_shorts_metadata.json"
         if shorts_meta_path.exists():
-            meta = json.loads(shorts_meta_path.read_text())
+            raw_meta = json.loads(shorts_meta_path.read_text())
+            long_form_url = ""
+
+            m = re.search(r"short_(\d+)", str(args.video.name))
+            idx = int(m.group(1)) if m else 0
+
+            if isinstance(raw_meta, dict) and "shorts" in raw_meta:
+                # Wrapper format: {"long_form_url": "...", "shorts": [...]}
+                long_form_url = raw_meta.get("long_form_url", "")
+                shorts_list = raw_meta["shorts"]
+                if idx >= len(shorts_list):
+                    sys.exit(
+                        f"ERROR: No metadata for short_{idx:02d} — "
+                        f"shorts array has {len(shorts_list)} entr{'y' if len(shorts_list)==1 else 'ies'} "
+                        f"(indices 0–{len(shorts_list)-1}). Add an entry at index {idx}."
+                    )
+                meta = shorts_list[idx]
+                print(f"Loaded Shorts metadata [index {idx}] from {shorts_meta_path.relative_to(BASE_DIR)}")
+
+            elif isinstance(raw_meta, list):
+                # Plain array format (no long_form_url).
+                if idx >= len(raw_meta):
+                    sys.exit(
+                        f"ERROR: No metadata for short_{idx:02d} — "
+                        f"array has {len(raw_meta)} entr{'y' if len(raw_meta)==1 else 'ies'} "
+                        f"(indices 0–{len(raw_meta)-1}). Add an entry at index {idx}."
+                    )
+                meta = raw_meta[idx]
+                print(f"Loaded Shorts metadata [index {idx}] from {shorts_meta_path.relative_to(BASE_DIR)}")
+
+            else:
+                # Legacy single-object — only valid for short_00.
+                if idx > 0:
+                    sys.exit(
+                        f"ERROR: youtube_shorts_metadata.json is a single object but this is short_{idx:02d}. "
+                        "Convert to wrapper format {\"long_form_url\": \"\", \"shorts\": [...]} so each short gets its own title."
+                    )
+                meta = raw_meta
+                print(f"Loaded Shorts metadata from {shorts_meta_path.relative_to(BASE_DIR)}")
+
             args.title = args.title or meta.get("title", "")
-            args.description = args.description or meta.get("description", "")
+            desc = args.description or meta.get("description", "")
+            if long_form_url:
+                desc = desc.rstrip() + f"\n\nFull video: {long_form_url}"
+            args.description = desc
             if not args.tags and meta.get("tags"):
                 args.tags = ",".join(meta["tags"])
-            print(f"Loaded Shorts metadata from {shorts_meta_path.relative_to(BASE_DIR)}")
+            if long_form_url:
+                print(f"Long-form URL injected: {long_form_url}")
+            else:
+                print("[info] long_form_url is empty — fill it in youtube_shorts_metadata.json after uploading the long-form.")
         else:
             print(f"[warn] No youtube_shorts_metadata.json for slug '{args.slug}' — using provided args")
 
@@ -414,9 +493,13 @@ def main():
     except HttpError as e:
         sys.exit(f"ERROR: YouTube API error during upload: {e}")
 
+    # Normalise to short URL for cleaner storage
+    video_id_m = re.search(r"[?&]v=([A-Za-z0-9_-]{11})", url)
+    short_url = f"https://youtu.be/{video_id_m.group(1)}" if video_id_m else url
+
     print(f"\nUpload complete!")
     print(f"Channel:   {channel['name']} ({channel['id']})")
-    print(f"Video URL: {url}")
+    print(f"Video URL: {short_url}")
 
     if args.publish_at:
         print(f"Scheduled: {args.publish_at}")
@@ -425,6 +508,48 @@ def main():
 
     if args.slug:
         print(f"Slug:      {args.slug}")
+
+    # Auto-save long_form_url into shorts metadata after a non-shorts upload
+    if args.slug and not args.shorts:
+        date_str = args.slug[:10]
+        week = get_iso_week(date_str)
+        meta_path = BASE_DIR / "content" / "derivatives" / week / args.slug / "youtube_shorts_metadata.json"
+        if meta_path.exists():
+            try:
+                meta = json.loads(meta_path.read_text())
+                if isinstance(meta, dict):
+                    meta["long_form_url"] = short_url
+                    meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False))
+                    print(f"[meta] long_form_url saved → {meta_path.relative_to(BASE_DIR)}")
+            except (json.JSONDecodeError, OSError) as e:
+                print(f"[meta] WARNING: could not update long_form_url: {e}")
+
+    # Post long-form link as comment on a short
+    if args.shorts and args.pin_longform_comment:
+        # Resolve long_form_url: from metadata file or already in description
+        longform_url = ""
+        if args.slug:
+            date_str = args.slug[:10]
+        week = get_iso_week(date_str)
+        meta_path = BASE_DIR / "content" / "derivatives" / week / args.slug / "youtube_shorts_metadata.json"
+            if meta_path.exists():
+                try:
+                    meta = json.loads(meta_path.read_text())
+                    if isinstance(meta, dict):
+                        longform_url = meta.get("long_form_url", "")
+                except (json.JSONDecodeError, OSError):
+                    pass
+
+        if longform_url:
+            video_id = video_id_m.group(1) if video_id_m else None
+            if video_id:
+                comment_text = f"Watch the full video: {longform_url}"
+                comment_id = post_comment(youtube, video_id, comment_text)
+                if comment_id:
+                    print(f"[comment] posted → {comment_text}")
+                    print(f"[comment] PIN manually in YouTube Studio → https://studio.youtube.com/video/{video_id}/comments")
+        else:
+            print("[comment] skipped — long_form_url empty in metadata (upload long-form first)")
 
 
 if __name__ == "__main__":

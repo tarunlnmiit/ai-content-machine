@@ -1,0 +1,46 @@
+```json
+[
+  {
+    "start": 0.0,
+    "end": 35.0,
+    "hook_line": "There is a moment in loving someone when you stop protecting them from your life and start wanting to leave them into it.",
+    "why": "Opens with the transformation pivot; ends with the key insight about required bravery"
+  },
+  {
+    "start": 39.0,
+    "end": 91.0,
+    "hook_line": "She said, you made my heart feel safe, but you make it feel alive.",
+    "why": "The poem itself—full, emotionally climactic moment with vivid texture and the dissolution ending"
+  },
+  {
+    "start": 147.0,
+    "end": 192.0,
+    "hook_line": "Safety alone is incomplete, so is aliveness without safety.",
+    "why": "Decodes the paradox with grounded examples; answers what 'safe but alive' actually means in practice"
+  },
+  {
+    "start": 195.0,
+    "end": 238.0,
+    "hook_line": "But here is what the poem really catches and what most love stories get wrong.",
+    "why": "Reveals the core insight: you melt watching your beloved be loved by your family, not being adored yourself"
+  },
+  {
+    "start": 242.0,
+    "end": 274.0,
+    "hook_line": "That's not the fantasy of being chosen. It's the fantasy of being chosen by someone your whole world would also choose.",
+    "why": "Powerful reframe from possession to integration; shifts the stakes of love from personal to familial"
+  },
+  {
+    "start": 276.0,
+    "end": 304.0,
+    "hook_line": "This isn't a memory, it's a dream. That's almost real enough to touch.",
+    "why": "Isolates the unraveling moment—anticipation so vivid it undoes you before it even exists"
+  },
+  {
+    "start": 305.0,
+    "end": 334.0,
+    "hook_line": "Love isn't complete until you can imagine the person in your life, being fully alive in the lives of the people you came from.",
+    "why": "Philosophical synthesis: love requires whole-life integration, not compartmentalization"
+  }
+]
+```

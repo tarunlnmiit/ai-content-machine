@@ -1,5 +1,18 @@
 # Saturday — Edit Life + Poetry + Reels + Upload + Publish (~2 hrs)
 
+## Saturday at a glance
+
+| Time | Action | Output goes live |
+|------|--------|------------------|
+| 10:00 AM | Edit Life + Poetry videos (Friday recordings) | — |
+| 12:00 PM | Render Life + Poetry shorts + HyperFrames | — |
+| 2:00 PM | Upload Life + Poetry long-form to YouTube (scheduled for Tue/Fri) | Videos queued (publish at Tue 2 PM / Fri 3 PM) |
+| 3:00 PM | Upload all shorts for Mon–Sun (14 slots × 3 niches) | Shorts queued for entire week |
+| 4:00 PM | Weekly review + Notion sync | — |
+| 5:00 PM | Buffer depth check + replenish if needed | — |
+
+---
+
 ---
 
 ## Step 1 — Prepare edit metadata: Life (~5 min)
@@ -240,6 +253,7 @@ bash output/scheduled/upload_shorts.sh
 ## Step 9 — Publish to Medium (~15 min)
 
 ```bash
+# Publish to personal profile (default)
 python3 scripts/publish_medium.py \
   --input content/blogs/[monday_ds_blog].md \
   --canonical-url https://breathofdatascience.substack.com/
@@ -251,6 +265,12 @@ python3 scripts/publish_medium.py \
 python3 scripts/publish_medium.py \
   --input content/blogs/[wednesday_poetry_blog].md \
   --canonical-url https://breathofpoetry.substack.com/
+
+# Publish to a publication instead (add --publication flag)
+python3 scripts/publish_medium.py \
+  --input content/blogs/[monday_ds_blog].md \
+  --canonical-url https://breathofdatascience.substack.com/ \
+  --publication humans-are-stories
 ```
 
 ---

@@ -2,6 +2,20 @@
 
 Record both Life and Poetry today. Edit moves to Saturday.
 
+## Friday at a glance
+
+| Time | Action | Output goes live |
+|------|--------|------------------|
+| 9:00 AM | Record Life video (script + B-roll) | — |
+| 11:00 AM | Poetry LinkedIn post via scheduler | Poetry LinkedIn goes live |
+| 12:00 PM | Record Poetry video (script + B-roll) | — |
+| 12:00 PM | Poetry Twitter thread posts via reminder | Poetry Twitter thread goes live |
+| 3:00 PM | Poetry long-form + blog + shorts + Metricool | **Poetry video goes live on YouTube** · **Substack** · **Medium** · IG/FB/Threads scheduled for next Fri |
+| 8:00 PM | Poetry shorts post (slot 9) | Poetry shorts start going live throughout week |
+| 10:00 PM | IG/FB carousel (Poetry) posts next Fri | (Week+1) |
+
+---
+
 ---
 
 ## Step 0 — Check buffer for video scripts (1 min)

@@ -43,12 +43,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 agents/           # Agent definitions for automated content tasks
 assets/
   audio/          # Raw audio files
-  thumbnails/     # Thumbnail assets
-  video/edited/   # Edited video exports
+  broll/          # B-roll video clips (fetched)
+  carousels/      # HTML carousel exports
+  hyperframes/
+    2026-Wnn/     # ISO-week grouped video renders
+  raw/            # Original camera recordings (MOV files)
+  reels_video/    # Reel video compilations
+  slides/         # HTML slide decks + PDFs + per-post PNG exports
+  social_posts/   # Platform-specific social images (Instagram, LinkedIn, Threads, Twitter)
+  stories/        # Story video formats
+  video/          # Edited full-length videos and shorts
 content/
   scripts/        # Video scripts or prompt inputs
-  blogs/          # Long-form blog posts
-  derivatives/    # Repurposed/shortened content from originals
+  blogs/
+    2026-Wnn/     # ISO-week grouped blog posts and image directories
+  derivatives/
+    2026-Wnn/     # ISO-week grouped slug directories (schedule.json, metadata)
+  buffer/         # Pre-scheduling staging (week-1/, week-2/, week-3/ relative structure)
   archive/        # Retired or completed content
 data/
   analytics/      # Raw platform analytics exports (YouTube, Twitter, Instagram, Medium)
@@ -57,10 +68,21 @@ data/
 docs/             # Internal documentation (launchd, setup guides)
 documentation/    # Playbook docs
 output/
-  scheduled/      # Content queued for publishing
-  published/      # Released content records
+  animations/
+    2026-Wnn/     # Remotion title cards, lower thirds, outros
+  scheduled/
+    2026-Wnn/     # Metricool CSVs, Publer exports, design prompts
+  visuals/        # Blog cover images, HTML assets
+  worksheets/
+    2026-Wnn/     # PDF worksheets
 prompts/          # Reusable prompt templates
+remotion/public/  # Remotion project assets
+  broll/          # B-roll clips by week
+  videos/         # Source videos
+  captions/       # SRT/JSON caption files (by week)
+  edit-plans/     # Edit metadata (by week)
 scripts/          # Automation scripts for workflow tasks
+  lib/            # Shared utilities (schedule_calc.py, content_paths.py, etc.)
 ```
 
 ## Project Purpose
@@ -77,22 +99,43 @@ API credentials are stored in `.env`:
 
 ```
 agents/       # Agent definitions for automated content tasks
-assets/       # Raw and edited media (audio/, thumbnails/, video/edited/)
+assets/       # Raw and edited media organized by week (2026-Wnn/ subfolders)
+  raw/        # Original camera recordings
+  hyperframes/ # Processed video renders (grouped by content date, not render date)
+  video/      # Edited full-length exports and shorts
+  social_posts/ # Platform-specific social media images
+  slides/     # Slide decks and exports
 content/      # Written content organized by stage
   scripts/    # Video scripts or prompt inputs
-  blogs/      # Long-form blog posts
-  derivatives/ # Repurposed/shortened content from originals
+  blogs/      # Long-form blog posts (grouped by week in 2026-Wnn/ subfolders)
+  derivatives/ # Repurposed content with schedule.json (grouped by week)
+  buffer/     # Pre-scheduling staging (week-1/, 2/, 3/ relative numbering)
   archive/    # Retired or completed content
 data/
   ideas/      # Content ideas database
   kb/         # Knowledge base (background context, research)
   analytics/  # Performance metrics and tracking data
-output/
-  scheduled/  # Content queued for publishing
-  published/  # Released content records
+output/       # Published and scheduled content
+  animations/  # Remotion renders (grouped by week)
+  scheduled/   # CSVs and scheduling files (grouped by week)
+  worksheets/  # PDF worksheets (grouped by week)
 prompts/      # Reusable prompt templates
-scripts/      # Automation scripts for workflow tasks
+remotion/     # Video editing automation
+  public/broll/ # B-roll footage (grouped by week)
+scripts/      # Automation scripts
+  lib/        # Shared utilities (schedule_calc.py with get_iso_week(), content_paths.py)
 ```
+
+### ISO-Week Organization
+
+Files are grouped into `YYYY-Wnn/` subfolders (ISO week format) within content-holding directories:
+- `2026-W21` covers May 19–25 (dates: 2026-05-21, etc.)
+- `2026-W22` covers May 26–Jun 1 (dates: 2026-05-25, 2026-05-26, 2026-05-27, etc.)
+- `2026-W23` covers Jun 2–8 (dates: 2026-06-01, 2026-06-04, 2026-06-08, etc.)
+
+This replaces the flat structure where all files lived in a single directory. Key utilities:
+- `scripts/lib/schedule_calc.py:get_iso_week(date_str: str) → str` — converts YYYY-MM-DD to YYYY-Wnn
+- `scripts/lib/content_paths.py` — centralized path construction (e.g., `derivatives_dir(date_str, slug)`)
 
 ## NOTION CONTENT DATABASE (Contents DB — id `df13d49a-bbfc-40cd-a8f1-d4fb98d2d4ec`)
 

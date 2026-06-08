@@ -24,6 +24,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from lib.schedule_calc import next_weekday, get_iso_week
+
 REPO = Path(__file__).parent.parent
 DB_PATH = REPO / "data" / "scheduling.db"
 load_dotenv(REPO / ".env")
@@ -32,29 +34,8 @@ load_dotenv(REPO / ".env")
 IST = timezone(timedelta(hours=5, minutes=30))
 
 
-def next_weekday(weekday: int, hour: int, minute: int = 0) -> datetime:
-    """
-    Return the next occurrence of weekday (0=Mon…6=Sun) at given hour:minute IST.
-    If today is the target weekday and time hasn't passed, returns today.
-    """
-    now = datetime.now(IST)
-    days_ahead = weekday - now.weekday()
-    if days_ahead < 0:
-        days_ahead += 7
-    elif days_ahead == 0 and now.hour >= hour:
-        days_ahead = 7
-    target = now + timedelta(days=days_ahead)
-    return target.replace(hour=hour, minute=minute, second=0, microsecond=0)
-
-
-# Platform → list of (weekday, hour, minute) slots
-SCHEDULE = {
-    "linkedin":  [(1, 8, 0), (3, 12, 0)],    # Tue 8am, Thu 12pm  (direct API)
-    "twitter":   [(0, 9, 0), (1, 19, 0)],    # Mon 9am, Tue 7pm   (Publer CSV)
-    "instagram": [(2, 18, 0), (4, 10, 0)],   # Wed 6pm, Fri 10am  (Publer CSV)
-    "facebook":  [(2, 19, 0), (4, 11, 0)],   # Wed 7pm, Fri 11am  (Publer CSV)
-    "threads":   [(2, 20, 0), (4, 12, 0)],   # Wed 8pm, Fri 12pm  (Publer CSV)
-}
+# LinkedIn slots — direct API via scheduler.py (Tue 8am, Thu 12pm IST)
+LINKEDIN_SLOTS = [(1, 8, 0), (3, 12, 0)]
 
 
 def slug_already_loaded(conn: sqlite3.Connection, slug: str, platform: str) -> bool:
@@ -119,7 +100,7 @@ def insert_linkedin(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_in
     thumb = REPO / "assets" / "thumbnails" / f"{slug}_thumb.png"
     media_path = str(thumb.relative_to(REPO)) if thumb.exists() else None
 
-    weekday, hour, minute = SCHEDULE["linkedin"][slot_index % len(SCHEDULE["linkedin"])]
+    weekday, hour, minute = LINKEDIN_SLOTS[slot_index % len(LINKEDIN_SLOTS)]
     scheduled_at = next_weekday(weekday, hour, minute).isoformat()
 
     conn.execute(
@@ -131,109 +112,201 @@ def insert_linkedin(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_in
     print(f"  [queued] linkedin/{slug} — at {scheduled_at}" + (f" + image" if media_path else ""))
 
 
-PUBLER_FIELDS = [
-    "Date",
-    "Text",
-    "Link(s)",
-    "Media URL(s)",
-    "Title",
-    "Label(s)",
-    "Alt text(s)",
-    "Comment(s)",
-    "Pin board, FB album, or Google category",
-    "Post subtype",
-    "CTA",
-    "Reminder",
+# Metricool CSV — exact column order from official template (do not reorder/add/remove)
+METRICOOL_FIELDS = [
+    "Text", "Date", "Time", "Draft",
+    "Facebook", "Twitter/X", "LinkedIn", "GBP", "Instagram", "Pinterest",
+    "TikTok", "Youtube", "Threads", "Bluesky",
+    "Picture Url 1", "Picture Url 2", "Picture Url 3", "Picture Url 4", "Picture Url 5",
+    "Picture Url 6", "Picture Url 7", "Picture Url 8", "Picture Url 9", "Picture Url 10",
+    "Alt text picture 1", "Alt text picture 2", "Alt text picture 3", "Alt text picture 4",
+    "Alt text picture 5", "Alt text picture 6", "Alt text picture 7", "Alt text picture 8",
+    "Alt text picture 9", "Alt text picture 10",
+    "Document title", "Shortener", "Video Thumbnail Url", "Video Cover Frame",
+    "Twitter/X Can reply", "Twitter/X Type", "Twitter/X Poll Duration minutes",
+    "Twitter/X Poll Option 1", "Twitter/X Poll Option 2", "Twitter/X Poll Option 3", "Twitter/X Poll Option 4",
+    "Pinterest Board", "Pinterest Pin Title", "Pinterest Pin Link", "Pinterest Pin New Format",
+    "Instagram Post Type", "Instagram Show Reel On Feed",
+    "Youtube Video Title", "Youtube Video Type", "Youtube Video Privacy",
+    "Youtube video for kids", "Youtube Video Category", "Youtube Video Tags", "Youtube playlist",
+    "GBP Post Type", "Facebook Post Type", "Facebook Title", "First Comment Text",
+    "TikTok Title", "TikTok disable comments", "TikTok disable duet", "TikTok disable stitch",
+    "TikTok Post Privacy", "TikTok Branded Content", "TikTok Your Brand", "TikTok Auto Add Music",
+    "TikTok Photo Cover Index", "TikTok musicId", "TikTok music title", "TikTok music author",
+    "TikTok music previewUrl", "TikTok music thumbnailUrl", "TikTok music soundVolume",
+    "TikTok music originalVolume", "TikTok music startMillis", "TikTok music endMillis",
+    "TikTok Ai generated content",
+    "LinkedIn Type", "LinkedIn Poll Question",
+    "LinkedIn Poll Option 1", "LinkedIn Poll Option 2", "LinkedIn Poll Option 3", "LinkedIn Poll Option 4",
+    "LinkedIn Poll Duration", "LinkedIn Show link preview", "LinkedIn Images as Carousel",
+    "Threads Reply Control", "Threads Is Spoiler", "Threads Post Type",
+    "Brand name",
 ]
 
+# Per-niche canonical schedule (weekday 0=Mon, times IST)
+NICHE_SCHEDULE = {
+    "life":   {"ig_fb": (1,  8, 0), "threads": (1, 20, 0)},   # Tue 8 AM / 8 PM
+    "ds":     {"ig_fb": (2,  8, 0), "threads": (2, 20, 0)},   # Wed 8 AM / 8 PM
+    "poetry": {"ig_fb": (4, 10, 0), "threads": (4, 12, 0)},   # Fri 10 AM / 12 PM
+}
 
-def _publer_row(scheduled_dt: datetime, text: str, image: str = "",
-                subtype: str = "", label: str = "") -> dict:
-    return {
-        "Date": scheduled_dt.strftime("%m/%d/%Y %H:%M"),
-        "Text": text,
-        "Link(s)": "",
-        "Media URL(s)": image,
-        "Title": "",
-        "Label(s)": label,
-        "Alt text(s)": "",
-        "Comment(s)": "",
-        "Pin board, FB album, or Google category": "",
-        "Post subtype": subtype,
-        "CTA": "",
-        "Reminder": "",
-    }
+# Metricool brand names (must match exactly what's in Metricool)
+BRAND_NAMES = {
+    "mistakenlyhuman": "mistakenlyhuman",    # Life + Poetry
+    "breathofds":      "Breath of Data Science",
+}
 
 
-def _parse_ig_subtype(caption_text: str) -> str:
-    """Extract format (carousel/reel/story) from instagram_caption.txt first line."""
-    first = caption_text.splitlines()[0].lower() if caption_text else ""
-    if "reel" in first:
-        return "reel"
-    if "carousel" in first:
-        return ""  # Publer default for carousel is blank subtype
-    if "story" in first:
-        return "story"
-    return ""
+def _metricool_row(
+    text: str,
+    scheduled_dt: datetime,
+    instagram: bool = False,
+    facebook: bool = False,
+    threads: bool = False,
+    ig_post_type: str = "POST",
+    picture_url: str = "",
+    brand: str = "",
+) -> dict:
+    row = {f: "" for f in METRICOOL_FIELDS}
+    row["Text"] = text
+    row["Date"] = scheduled_dt.strftime("%Y-%m-%d")
+    row["Time"] = scheduled_dt.strftime("%H:%M:%S")
+    row["Draft"] = "FALSE"
+    row["Facebook"]  = "TRUE" if facebook  else "FALSE"
+    row["Instagram"] = "TRUE" if instagram else "FALSE"
+    row["Threads"]   = "TRUE" if threads   else "FALSE"
+    row["Twitter/X"] = "FALSE"
+    row["LinkedIn"]  = "FALSE"
+    row["GBP"] = "FALSE"
+    row["Pinterest"] = "FALSE"
+    row["TikTok"]    = "FALSE"
+    row["Youtube"]   = "FALSE"
+    row["Bluesky"]   = "FALSE"
+    if picture_url:
+        row["Picture Url 1"] = picture_url
+    if instagram or facebook:
+        row["Instagram Post Type"] = ig_post_type
+    row["Brand name"] = brand
+    return row
 
 
-def _write_publer_csv(path: Path, rows: list[dict]):
+def _write_metricool_csv(path: Path, rows: list[dict]) -> None:
     with open(path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=PUBLER_FIELDS)
+        writer = csv.DictWriter(f, fieldnames=METRICOOL_FIELDS)
         writer.writeheader()
         writer.writerows(rows)
 
 
-def build_publer_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
+def _niche_from_slug(slug: str) -> str:
+    """Returns 'ds', 'life', or 'poetry' based on slug contents."""
+    s = slug.lower()
+    if "_data_science_tech_" in s:
+        return "ds"
+    if "_poetry_quotes_" in s:
+        return "poetry"
+    return "life"
+
+
+def _ig_post_type_from_caption(caption_text: str) -> str:
+    first = caption_text.splitlines()[0].lower() if caption_text else ""
+    if "reel" in first:
+        return "REEL"
+    if "story" in first:
+        return "STORY"
+    return "POST"
+
+
+def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
     """
-    Generate two Publer bulk import CSVs.
+    Generate two Metricool bulk import CSVs, one per brand/account.
 
-    publer_ig_fb.csv  — 1 row per blog, import with Instagram + Facebook selected
-    publer_threads.csv — 1 row per blog, import with Threads selected
+    Account 1 — mistakenlyhuman (Life + Poetry): IG + FB + Threads
+    Account 2 — Breath of Data Science (DS only): IG + FB + Threads
 
-    Each row = one post sent to ALL accounts selected at import time.
-    Publer does not support per-row account targeting in bulk import.
+    LinkedIn is handled by scheduler.py direct API — not in Metricool CSV.
+    Rows use Brand name column so both can be imported from a single Metricool workspace
+    if the user upgrades; until then import each CSV in the matching brand workspace.
+
+    Images require a publicly accessible URL. Local thumbnail paths are skipped —
+    add image URLs manually in Metricool after import, or host via Google Drive/Dropbox.
+
+    Schedule times are read from schedule.json if present, otherwise computed via next_weekday().
     """
     out_dir = REPO / "output" / "scheduled"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    ig_fb_rows = []
-    threads_rows = []
+    mh_rows: list[dict] = []   # mistakenlyhuman: Life + Poetry
+    ds_rows: list[dict] = []   # breathofds: DS
 
-    for i, slug in enumerate(slugs_data):
-        slug_dir = REPO / "content" / "derivatives" / slug
-        thumb = REPO / "assets" / "thumbnails" / f"{slug}_thumb.png"
-        image = str(thumb) if thumb.exists() else ""
+    for slug in slugs_data:
+        niche = _niche_from_slug(slug)
+        # Find slug_dir under the correct week folder
+        date_str = slug[:10]  # Extract YYYY-MM-DD from slug
+        week = get_iso_week(date_str)
+        slug_dir = REPO / "content" / "derivatives" / week / slug
+        brand = BRAND_NAMES["breathofds"] if niche == "ds" else BRAND_NAMES["mistakenlyhuman"]
+        target = ds_rows if niche == "ds" else mh_rows
 
-        # Instagram + Facebook — one row, same slot, same caption
-        ig_caption_path = slug_dir / "instagram_caption.txt"
-        if ig_caption_path.exists():
-            ig_caption = ig_caption_path.read_text(encoding="utf-8").strip()
-            subtype = _parse_ig_subtype(ig_caption)
-            clean_caption = "\n".join(
-                l for l in ig_caption.splitlines()
+        # Try to read schedule.json; fall back to next_weekday()
+        schedule_file = slug_dir / "schedule.json"
+        if schedule_file.exists():
+            try:
+                sched_data = json.loads(schedule_file.read_text(encoding="utf-8"))
+                ig_publish_at = sched_data.get("social", {}).get("ig_fb_publish_at")
+                thr_publish_at = sched_data.get("social", {}).get("threads_publish_at")
+                ig_dt = datetime.fromisoformat(ig_publish_at) if ig_publish_at else None
+                thr_dt = datetime.fromisoformat(thr_publish_at) if thr_publish_at else None
+            except (json.JSONDecodeError, ValueError):
+                sched_data = None
+                ig_dt = None
+                thr_dt = None
+        else:
+            sched_data = None
+            ig_dt = None
+            thr_dt = None
+
+        # Fallback: compute via next_weekday() if schedule.json not available
+        if not sched_data:
+            sched = NICHE_SCHEDULE.get(niche, NICHE_SCHEDULE["life"])
+            weekday, hour, minute = sched["ig_fb"]
+            ig_dt = next_weekday(weekday, hour, minute, week_offset=1)
+            weekday, hour, minute = sched["threads"]
+            thr_dt = next_weekday(weekday, hour, minute, week_offset=1)
+
+        # Social posts publish ONE WEEK after the long-form (week_offset=1)
+        # ── IG + FB row
+        ig_path = slug_dir / "instagram_caption.txt"
+        if ig_path.exists() and ig_dt:
+            caption = ig_path.read_text(encoding="utf-8").strip()
+            clean = "\n".join(
+                l for l in caption.splitlines()
                 if not l.startswith("Format:") and not l.startswith("Why:")
             ).strip()
-            slots = SCHEDULE["instagram"]
-            weekday, hour, minute = slots[i % len(slots)]
-            scheduled_dt = next_weekday(weekday, hour, minute)
-            ig_fb_rows.append(_publer_row(scheduled_dt, clean_caption, image, subtype, label=slug))
+            target.append(_metricool_row(
+                text=clean,
+                scheduled_dt=ig_dt,
+                instagram=True,
+                facebook=True,
+                ig_post_type=_ig_post_type_from_caption(caption),
+                brand=brand,
+            ))
 
-        # Threads — separate CSV, no image, no subtype
-        threads_path = slug_dir / "threads_post.txt"
-        if threads_path.exists():
-            threads_text = threads_path.read_text(encoding="utf-8").strip()
-            slots = SCHEDULE["threads"]
-            weekday, hour, minute = slots[i % len(slots)]
-            scheduled_dt = next_weekday(weekday, hour, minute)
-            threads_rows.append(_publer_row(scheduled_dt, threads_text, label=slug))
+        # ── Threads row
+        thr_path = slug_dir / "threads_post.txt"
+        if thr_path.exists() and thr_dt:
+            thr_text = thr_path.read_text(encoding="utf-8").strip()
+            target.append(_metricool_row(
+                text=thr_text,
+                scheduled_dt=thr_dt,
+                threads=True,
+                brand=brand,
+            ))
 
-    ig_fb_path = out_dir / "publer_ig_fb.csv"
-    threads_path = out_dir / "publer_threads.csv"
-    _write_publer_csv(ig_fb_path, ig_fb_rows)
-    _write_publer_csv(threads_path, threads_rows)
-
-    return ig_fb_path, threads_path
+    mh_path = out_dir / "metricool_mistakenlyhuman.csv"
+    ds_path = out_dir / "metricool_breathofds.csv"
+    _write_metricool_csv(mh_path, mh_rows)
+    _write_metricool_csv(ds_path, ds_rows)
+    return mh_path, ds_path
 
 
 def build_shorts_upload_script(slugs: list[str]) -> Path | None:
@@ -296,7 +369,14 @@ def main():
     if not deriv_dir.exists():
         sys.exit("content/derivatives/ not found — run repurpose_blog.py first")
 
-    slugs = sorted([d.name for d in deriv_dir.iterdir() if d.is_dir()])
+    # Collect slugs from week-organized subfolders (2026-Wnn/slug/)
+    slugs = []
+    for week_folder in sorted(deriv_dir.iterdir()):
+        if week_folder.is_dir() and week_folder.name[0].isdigit():  # Week folders like 2026-W21
+            for slug_folder in sorted(week_folder.iterdir()):
+                if slug_folder.is_dir():
+                    slugs.append(slug_folder.name)
+
     if not slugs:
         sys.exit("No derivative folders found.")
 
@@ -305,7 +385,10 @@ def main():
     conn = sqlite3.connect(DB_PATH)
 
     for i, slug in enumerate(slugs):
-        slug_dir = deriv_dir / slug
+        # Find slug_dir under the correct week folder
+        date_str = slug[:10]  # Extract YYYY-MM-DD from slug
+        week = get_iso_week(date_str)
+        slug_dir = deriv_dir / week / slug
         print(f"[{i+1}/{len(slugs)}] {slug}")
 
         linkedin_file = slug_dir / "linkedin_post.txt"
@@ -320,12 +403,12 @@ def main():
 
     print(f"\nDB: {total} pending LinkedIn post(s) in scheduling.db")
 
-    # Publer CSVs — two separate imports
-    ig_fb_path, thr_path = build_publer_csvs(slugs)
-    print(f"Publer IG+FB CSV  : {ig_fb_path.relative_to(REPO)}")
-    print("  → Import with Instagram + Facebook accounts selected")
-    print(f"Publer Threads CSV: {thr_path.relative_to(REPO)}")
-    print("  → Import with Threads account selected")
+    # Metricool CSVs — one per brand/account
+    mh_csv, ds_csv = build_metricool_csvs(slugs)
+    print(f"Metricool [mistakenlyhuman — Life + Poetry] : {mh_csv.relative_to(REPO)}")
+    print(f"Metricool [Breath of Data Science — DS]    : {ds_csv.relative_to(REPO)}")
+    print("  → Import each CSV in the matching brand workspace in Metricool")
+    print("  ⚠ Images: add public URLs manually (Google Drive/Dropbox) — local paths not supported")
 
     # YouTube Shorts upload script
     shorts_script = build_shorts_upload_script(slugs)

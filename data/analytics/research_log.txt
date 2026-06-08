@@ -1475,3 +1475,35 @@ Ollama HTTP 404
   Archive has 8 titles          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
   Applying novelty penalty      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:02
 ⠴ Classifying ideas                                               0/15 0:00:00
+Traceback (most recent call last):
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 326, in <module>
+    score_ideas(output_dir=args.dir, top_n=args.top)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tarungupta/Making It Big/Claude/content-machine/scripts/idea_scorer.py", line 287, in score_ideas
+    progress.update(classify_task, description=f"Classified {len(futures[fut].get('category',''))[:30]}")
+                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+TypeError: 'int' object is not subscriptable
+ERROR conda.cli.main_run:execute(142): `conda run python3 scripts/idea_scorer.py` failed. (See above for error)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 11354 ideas            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 11354 → 11218 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2737 ideas       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:16:04
+  Rank-normalized               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 10 titles         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:04
+⠧ Classifying ideas                                               0/15 0:00:00
