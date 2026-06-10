@@ -10,11 +10,13 @@ USAGE:
     python3 scripts/publish_medium.py --input content/blogs/my-post.md --status public
     python3 scripts/publish_medium.py --input content/blogs/my-post.md --publication humans-are-stories
     python3 scripts/publish_medium.py --input content/blogs/my-post.md --publication "Humans Are Stories"
+    python3 scripts/publish_medium.py --input content/blogs/my-post.md --no-auto-tags  # skip auto-selection
 
 OPTIONS:
     --input PATH              Path to Markdown blog file (required)
     --canonical-url URL       Original post URL (overrides front-matter)
     --tags TAG1,TAG2          Comma-separated tags (overrides front-matter; max 5)
+    --no-auto-tags            Skip auto-tag selection (for scripted/CI use)
     --token personal|app      Which token to use (default: personal)
     --status STATUS           draft | public | unlisted (default: draft)
     --title TEXT              Override post title
@@ -43,6 +45,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -54,6 +57,44 @@ load_dotenv()
 
 MEDIUM_API = "https://api.medium.com/v1"
 PUBLISHED_LOG = Path("output/published/medium_posts.json")
+MEDIUM_TAGS_FILE = Path("data/brand/medium_tags.txt")
+
+
+def _load_allowed_tags() -> list[str]:
+    if MEDIUM_TAGS_FILE.exists():
+        return [line.strip() for line in MEDIUM_TAGS_FILE.read_text().splitlines() if line.strip()]
+    return ["technology", "data-science", "programming", "writing", "life",
+            "self-improvement", "artificial-intelligence", "python", "productivity", "mental-health"]
+
+
+def auto_select_tags(blog_text: str) -> list[str]:
+    allowed = _load_allowed_tags()
+    tags_list = ", ".join(allowed)
+    prompt = (
+        "Select exactly 5 tags from the allowed list that best match this blog post. "
+        "Return ONLY a comma-separated list of exactly 5 tags, no explanation.\n\n"
+        f"Allowed tags: {tags_list}\n\n"
+        f"Blog (first 2000 chars):\n{blog_text[:2000]}"
+    )
+    result = subprocess.run(
+        ["claude", "--model", "claude-haiku-4-5-20251001", "--print", "-p", prompt],
+        capture_output=True, text=True, timeout=30,
+    )
+    if result.returncode != 0:
+        print(f"  Warning: Claude CLI failed — {result.stderr.strip()[:100]}")
+        return []
+    return [t.strip() for t in result.stdout.strip().split(",") if t.strip()][:5]
+
+
+def confirm_tags(proposed: list[str]) -> list[str]:
+    print(f"\n  Auto-selected tags: {', '.join(proposed) or '(none)'}")
+    ans = input("  Confirm tags? [Y/n/edit]: ").strip().lower()
+    if ans in ("", "y", "yes"):
+        return proposed
+    if ans in ("n", "no"):
+        return []
+    raw = input("  Enter tags (comma-separated, max 5): ").strip()
+    return [t.strip() for t in raw.split(",") if t.strip()][:5]
 
 
 # ── Front-matter parser ───────────────────────────────────────────────────────
@@ -198,6 +239,8 @@ def main():
                         default="draft", help="Publish status (default: draft)")
     parser.add_argument("--title", help="Override post title")
     parser.add_argument("--publication", help="Publication name or URL slug (omit to publish to profile)")
+    parser.add_argument("--no-auto-tags", action="store_true",
+                        help="Skip auto-tag selection when no tags provided")
     args = parser.parse_args()
 
     # Pick token
@@ -236,6 +279,16 @@ def main():
     else:
         tags = []
     tags = tags[:5]
+
+    if not tags and not args.no_auto_tags:
+        print("  No tags provided — auto-selecting via Claude Haiku...")
+        proposed = auto_select_tags(body)
+        if proposed:
+            tags = confirm_tags(proposed)
+
+    if not tags:
+        print("ERROR: No tags selected. Provide --tags, add tags to front-matter, or confirm auto-selection.")
+        sys.exit(1)
 
     # Resolve canonical URL (CLI > front-matter)
     canonical_url = args.canonical_url or meta.get("canonical_url") or meta.get("canonical-url")

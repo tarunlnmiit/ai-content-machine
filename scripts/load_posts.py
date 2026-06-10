@@ -14,6 +14,7 @@ Run after repurpose_blog.py has produced derivatives for the week.
 Safe to re-run — skips slugs already in DB with status='pending' or 'posted'.
 """
 
+import argparse
 import csv
 import json
 import sqlite3
@@ -200,7 +201,7 @@ def _metricool_row(
     facebook: bool = False,
     threads: bool = False,
     ig_post_type: str = "POST",
-    picture_url: str = "",
+    picture_urls: list[str] | None = None,
     brand: str = "",
 ) -> dict:
     row = {f: "" for f in METRICOOL_FIELDS}
@@ -218,8 +219,8 @@ def _metricool_row(
     row["TikTok"]    = "FALSE"
     row["Youtube"]   = "FALSE"
     row["Bluesky"]   = "FALSE"
-    if picture_url:
-        row["Picture Url 1"] = picture_url
+    for idx, url in enumerate((picture_urls or [])[:10], start=1):
+        row[f"Picture Url {idx}"] = url
     if instagram or facebook:
         row["Instagram Post Type"] = ig_post_type
     row["Brand name"] = brand
@@ -334,8 +335,13 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
             if not image_urls and sched_data.get("image_url"):
                 image_urls["instagram"] = sched_data["image_url"]
 
+        carousel_urls: list[str] = (sched_data or {}).get("carousel_slide_urls") or []
+        ig_picture_urls = carousel_urls or (
+            [image_urls["instagram"]] if image_urls.get("instagram") else []
+        )
+
         # Social posts publish ONE WEEK after the long-form (week_offset=1)
-        # ── IG + FB row
+        # ── IG + FB row (carousel if carousel_slide_urls present, else single image)
         ig_path = slug_dir / "instagram_caption.txt"
         if ig_path.exists() and ig_dt:
             caption = ig_path.read_text(encoding="utf-8").strip()
@@ -343,19 +349,17 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
                 l for l in caption.splitlines()
                 if not l.startswith("Format:") and not l.startswith("Why:")
             ).strip()
-            if blog_url:
-                clean = f"{clean}\n\nFull post 👉 {blog_url}"
             target.append(_metricool_row(
                 text=clean,
                 scheduled_dt=ig_dt,
                 instagram=True,
                 facebook=True,
                 ig_post_type=_ig_post_type_from_caption(caption),
-                picture_url=image_urls.get("instagram", ""),
+                picture_urls=ig_picture_urls,
                 brand=brand,
             ))
 
-        # ── Threads row
+        # ── Threads row (always single image)
         thr_path = slug_dir / "threads_post.txt"
         if thr_path.exists() and thr_dt:
             thr_text = thr_path.read_text(encoding="utf-8").strip()
@@ -363,7 +367,7 @@ def build_metricool_csvs(slugs_data: list[str]) -> tuple[Path, Path]:
                 text=thr_text,
                 scheduled_dt=thr_dt,
                 threads=True,
-                picture_url=image_urls.get("threads", ""),
+                picture_urls=[image_urls["threads"]] if image_urls.get("threads") else [],
                 brand=brand,
             ))
 
@@ -427,6 +431,15 @@ def build_shorts_upload_script(slugs: list[str]) -> Path | None:
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Load social posts from derivatives into scheduling.db")
+    parser.add_argument(
+        "--week",
+        type=str,
+        default=None,
+        help="Week(s) to load (e.g., '2026-W23' or '2026-W22,2026-W23'). Omit to load all weeks.",
+    )
+    args = parser.parse_args()
+
     if not DB_PATH.exists():
         sys.exit(f"DB not found: {DB_PATH}\nRun: python3 scripts/db_setup.py first")
 
@@ -434,10 +447,17 @@ def main():
     if not deriv_dir.exists():
         sys.exit("content/derivatives/ not found — run repurpose_blog.py first")
 
+    # Parse target weeks if specified
+    target_weeks = set()
+    if args.week:
+        target_weeks = set(w.strip() for w in args.week.split(","))
+
     # Collect slugs from week-organized subfolders (2026-Wnn/slug/)
     slugs = []
     for week_folder in sorted(deriv_dir.iterdir()):
         if week_folder.is_dir() and week_folder.name[0].isdigit():  # Week folders like 2026-W21
+            if target_weeks and week_folder.name not in target_weeks:
+                continue
             for slug_folder in sorted(week_folder.iterdir()):
                 if slug_folder.is_dir():
                     slugs.append(slug_folder.name)
@@ -445,7 +465,8 @@ def main():
     if not slugs:
         sys.exit("No derivative folders found.")
 
-    print(f"Loading {len(slugs)} slug(s) into scheduling.db ...\n")
+    week_label = f"week(s) {args.week}" if args.week else "all weeks"
+    print(f"Loading {len(slugs)} slug(s) from {week_label} into scheduling.db ...\n")
 
     conn = sqlite3.connect(DB_PATH)
 

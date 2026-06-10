@@ -4,7 +4,7 @@ Ensures all path building respects ISO-week folder structure.
 """
 
 from pathlib import Path
-from scripts.lib.schedule_calc import get_iso_week
+from .schedule_calc import get_iso_week
 
 REPO = Path(__file__).parent.parent.parent
 
