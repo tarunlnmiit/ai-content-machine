@@ -36,6 +36,7 @@ from lib.claude_cli import call_claude
 
 # Output: remotion/public/scene-plans/{week}/{slug}.json
 SCENE_PLANS_ROOT = REPO / "remotion" / "public" / "scene-plans"
+TEMPLATES_MAP_PATH = REPO / "remotion" / "public" / "templates-map.json"
 
 NICHE_TEMPS = {"ds": 0.4, "life": 0.85, "poetry": 1.15}
 
@@ -51,54 +52,23 @@ EDITOR_TAGS = re.compile(
     re.IGNORECASE,
 )
 
-COMPONENT_CATALOG = """
-Available Remotion components — use ONLY these exact names:
-
-DataVizReveal
-  When: citing a number, statistic, comparison, or data trend.
-  Props: { "title": str, "data": [{"label": str, "value": number}], "chartType": "bar"|"line"|"number" }
-
-CodeAnnotation
-  When: showing or explaining a code snippet, function, or syntax.
-  Props: { "code": str, "language": str, "highlight": [lineNumber], "annotation": str }
-  (highlight and annotation are optional)
-
-ConceptExplainer
-  When: introducing a term, concept, or framework the viewer may not know.
-  Props: { "term": str, "definition": str, "analogy": str }
-  (analogy is optional)
-
-ToolComparison
-  When: comparing two approaches, tools, libraries, or strategies side by side.
-  Props: { "left": {"label": str, "points": [str]}, "right": {"label": str, "points": [str]} }
-
-NumberedTips
-  When: listing 3–5 steps, rules, principles, or tips.
-  Props: { "title": str, "tips": [{"number": int, "text": str}] }
-
-TransformationArc
-  When: describing a before/after shift, problem/solution, or growth story.
-  Props: { "before": str, "after": str, "label": str }
-  (label is optional, e.g. "The shift")
-
-HabitLoop
-  When: describing a cycle, feedback loop, or recurring system or process.
-  Props: { "title": str, "phases": [{"label": str}] }
-
-WordReveal
-  When: a short powerful phrase, key term, or memorable line should land hard.
-  Props: { "words": [str], "emphasis": [int] }
-  (emphasis = 0-based indices of the words to bold)
-
-AtmosphericQuote
-  When: a full-screen quote, thesis statement, poem title, or poetic moment.
-  Props: { "quote": str, "attribution": str }
-  (attribution is optional)
-
-LineReveal
-  When: a poem, verse, lyric, or multi-line revelation should appear line by line.
-  Props: { "lines": [str] }
-"""
+def load_component_catalog(niche: str) -> str:
+    """Build Claude prompt catalog from templates-map.json, filtered for niche."""
+    data = json.loads(TEMPLATES_MAP_PATH.read_text())
+    lines = ["Available Remotion components — use ONLY these exact names:\n"]
+    for comp in data["scene_components"]:
+        affinities = comp.get("niche_affinity", [])
+        if affinities and niche not in affinities:
+            continue
+        source = comp.get("template_source", "custom")
+        source_tag = f" [from {source} template]" if source != "custom" else ""
+        lines.append(
+            f"{comp['componentName']}{source_tag}\n"
+            f"  When: {comp['use_when']}\n"
+            f"  Props: {{ {comp['props']} }}\n"
+            f"  Duration: {comp['duration_hint']}\n"
+        )
+    return "\n".join(lines)
 
 SHORT_INSTRUCTIONS = """
 You are analyzing a YouTube script for the niche: {niche_label}.
@@ -181,10 +151,11 @@ def build_prompt(script_text: str, niche: str, mode: str) -> str:
     instructions = (SHORT_INSTRUCTIONS if mode == "short" else OVERLAY_INSTRUCTIONS).format(
         niche_label=niche_label, niche=niche
     )
+    catalog = load_component_catalog(niche)
     return f"""{instructions}
 
 COMPONENT CATALOG:
-{COMPONENT_CATALOG}
+{catalog}
 
 SCRIPT:
 {script_text}
