@@ -1,0 +1,77 @@
+{
+  "format": "Canva",
+  "title_slide": "Poetry Dips Its Fingers In Every Colour",
+  "slides": [
+    {
+      "slide_number": 1,
+      "heading": "Poetry Dips Its Fingers In Every Colour",
+      "bullet_points": [
+        "A data scientist's confession",
+        "The curiosity that drives both numbers and metaphor",
+        "Where poetry actually finds you"
+      ],
+      "speaker_note": "Open with the contradiction — data scientist who cries at poems — to establish the personal stakes immediately."
+    },
+    {
+      "slide_number": 2,
+      "heading": "Poetry Doesn't Stay in Its Lane",
+      "bullet_points": [
+        "Not just literature classes and soft-cover journals",
+        "Human experience refuses to be sorted",
+        "The lyric form is the one that admits it"
+      ],
+      "speaker_note": "Reframe poetry as something that intrudes — not something you have to seek out."
+    },
+    {
+      "slide_number": 3,
+      "heading": "It Finds You in the Technical",
+      "bullet_points": [
+        "Programmers call elegant code beautiful for a reason",
+        "The best commit messages carry something real",
+        "The boundary between technical and lyrical was always porous"
+      ],
+      "speaker_note": "The server room example — poetry entered the workplace long before anyone invited it."
+    },
+    {
+      "slide_number": 4,
+      "heading": "It Finds You in the Ordinary",
+      "bullet_points": [
+        "Monday, 7:14 AM — burnt toast scraped over the sink",
+        "Poetry is ordinary experience seen clearly for one second",
+        "The grey commute counts. The blue Tuesday counts."
+      ],
+      "speaker_note": "Ground the audience in one hyper-specific sensory moment before expanding to the universal claim."
+    },
+    {
+      "slide_number": 5,
+      "heading": "It Finds You in Grief",
+      "bullet_points": [
+        "You don't miss 'a person' — you miss how they said your name",
+        "Poetry holds specificity without resolving it",
+        "That is not a small mercy"
+      ],
+      "speaker_note": "This is the emotional core — deliver it slowly and let the silence sit before moving on."
+    },
+    {
+      "slide_number": 6,
+      "heading": "It Finds You When You Stop Looking",
+      "bullet_points": [
+        "Poetry comes sideways, not in elevated moments",
+        "A lyric heard forty times that suddenly means something different",
+        "The door doesn't need to be wide — a crack is enough"
+      ],
+      "speaker_note": "End on permission — you don't have to be a 'poetry person' to let this in."
+    },
+    {
+      "slide_number": 7,
+      "heading": "There's No Lesson. That's the Point.",
+      "bullet_points": [
+        "Poetry doesn't sharpen your frameworks",
+        "It makes you someone who has stood inside a colour",
+        "The poem finds you — your only job is to not keep the door entirely shut"
+      ],
+      "speaker_note": "Close with the anti-takeaway — the refusal to resolve is itself the message."
+    }
+  ],
+  "total_slides": 7
+}

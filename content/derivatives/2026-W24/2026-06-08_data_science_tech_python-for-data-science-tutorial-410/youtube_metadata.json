@@ -1,0 +1,16 @@
+{
+  "title": "Data Visualization in Python: Matplotlib & Seaborn Tutorial",
+  "description": "Most data analyses fail not because the code is wrong — but because the plot doesn't communicate the finding. This tutorial fixes that.\n\nIn Tutorial 4 of the Python for Data Science series, we cover Matplotlib fundamentals, Seaborn for statistical visualization, how to choose the right chart type for your story, and the four mistakes that tank your credibility with stakeholders.\n\n[TIMESTAMPS_PLACEHOLDER]\n\nWhat you'll learn:\n- How to use figure and axis objects in Matplotlib (the right way)\n- Seaborn set_style, histplot with kde, and multi-dimensional scatter plots\n- Why choosing a chart type is a framing decision, not a design preference\n- Four specific visualization mistakes — and the cleaned-up versions\n- How to write chart titles that state findings, not variable names\n\nCode and resources: [LINKS_PLACEHOLDER]\n\nThis series is for working data scientists and analysts who want to move from functional Python to production-quality work. New tutorials every week.",
+  "tags": [
+    "data visualization python",
+    "matplotlib tutorial",
+    "seaborn tutorial",
+    "python for data science",
+    "data storytelling",
+    "data science tutorial",
+    "matplotlib seaborn",
+    "python data analysis"
+  ],
+  "thumbnail_concept": "Split screen: left side shows a cluttered unlabeled scatter plot in default Matplotlib colors titled 'Data' with the word 'Before' in red; right side shows the same data as a clean labeled Seaborn plot with a bold finding-based title, the word 'After' in green. Dark background, bold white typography, high contrast.",
+  "end_screen_suggestion": "Tutorial 3 in the Python for Data Science series on data cleaning and wrangling with Pandas, or a full series playlist"
+}

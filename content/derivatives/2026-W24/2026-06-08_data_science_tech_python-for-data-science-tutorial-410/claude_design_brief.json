@@ -1,0 +1,51 @@
+{
+  "emotional_core": "Your analysis only becomes real when someone else can see it — visualization is the moment an insight transfers from your mind to the world.",
+  "tone": [
+    "analytical",
+    "direct",
+    "quietly urgent"
+  ],
+  "visual_metaphor": "A data scientist holding a printed chart up to a window — light passing through reveals the pattern that was invisible on the desk",
+  "key_quotes": [
+    "The code discovers the insight. The visualization transfers it from your mind to someone else's.",
+    "Choosing a visualization is an act of framing.",
+    "Your insight doesn't matter until someone sees it. Make it impossible to miss."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Close-up of a laptop screen showing a messy unlabeled scatter plot in default Matplotlib colors — no title, no axis labels, nothing to read",
+      "text": "Your analysis is invisible."
+    },
+    {
+      "frame": 2,
+      "visual": "Same laptop, same data — now a clean Seaborn plot with a bold finding-based title and labeled axes, subtly glowing against a dark background",
+      "text": "Now they see it."
+    },
+    {
+      "frame": 3,
+      "visual": "Three side-by-side charts — bar, line, scatter — of identical data, each telling a visually distinct story, color-coded to show they share the same source",
+      "text": "Same data. Three truths."
+    },
+    {
+      "frame": 4,
+      "visual": "A data scientist at a whiteboard drawing a simple chart while a small group leans in, one person pointing and nodding — the chart is plain but the title states a clear finding",
+      "text": "Communication, not decoration."
+    },
+    {
+      "frame": 5,
+      "visual": "Before/after split: left shows a visually impressive 3D chart that's impossible to read accurately; right shows a 2D heatmap of the same data that's immediately scannable",
+      "text": "Clarity beats clever."
+    },
+    {
+      "frame": 6,
+      "visual": "Close-up of a chart title being retyped — 'Revenue Over Time' crossed out, replaced by 'Revenue Grew 23% After Q3 Pricing Change' highlighted in warm amber",
+      "text": "State the finding."
+    },
+    {
+      "frame": 7,
+      "visual": "Wide shot of a minimalist desk with a single monitor showing a polished story-driven visualization — warm natural light, no clutter, a feeling of quiet confidence",
+      "text": "Make it impossible to miss."
+    }
+  ]
+}

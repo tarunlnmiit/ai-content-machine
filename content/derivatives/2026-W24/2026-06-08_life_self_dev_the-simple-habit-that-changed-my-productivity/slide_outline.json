@@ -1,0 +1,87 @@
+{
+  "format": "Canva",
+  "title_slide": "7 Simple Habits That Quietly Rewired My Productivity",
+  "slides": [
+    {
+      "slide_number": 1,
+      "heading": "Why Productivity Systems Fail",
+      "bullet_points": [
+        "They require a perfect structure across an imperfect life",
+        "Complexity collapses on hard days",
+        "The fix: habits simple enough to survive your worst day"
+      ],
+      "speaker_note": "Frame the problem before the solution — audiences need to feel seen before they'll listen."
+    },
+    {
+      "slide_number": 2,
+      "heading": "Habit 1: The Shutdown Ritual",
+      "bullet_points": [
+        "Four minutes: scan tasks, note what's open, write one line on what got done",
+        "Say out loud: 'Shutdown complete'",
+        "Gives your nervous system a real closure signal — brains fixate on open loops until you do"
+      ],
+      "speaker_note": "Zeigarnik effect — unfinished tasks occupy working memory until a deliberate closure is registered."
+    },
+    {
+      "slide_number": 3,
+      "heading": "Habit 2: The Weekly Brain Dump",
+      "bullet_points": [
+        "20 minutes, once a week — write everything in your head",
+        "No organization, no categories, just out",
+        "Offloading frees cognitive resources for actual thinking"
+      ],
+      "speaker_note": "Emphasize: the value is in the emptying, not the filing — don't try to organize it."
+    },
+    {
+      "slide_number": 4,
+      "heading": "Habit 3: Eat One Frog",
+      "bullet_points": [
+        "Identify your most dreaded task the night before",
+        "Do it first — and only one",
+        "Avoidance runs in the background like an open program; one frog closes it"
+      ],
+      "speaker_note": "The 'only one' constraint is what most people miss — more frogs multiplies drag, not output."
+    },
+    {
+      "slide_number": 5,
+      "heading": "Habit 4: The Done List",
+      "bullet_points": [
+        "At day's end, write the 5 most meaningful things you did",
+        "Not everything — what moved something",
+        "Corrects your estimate of your own capacity over time"
+      ],
+      "speaker_note": "We chronically underestimate daily output — this is a calibration tool, not a self-congratulation ritual."
+    },
+    {
+      "slide_number": 6,
+      "heading": "Habit 5: One 90-Minute Deep Work Block",
+      "bullet_points": [
+        "First 15–20 minutes are on-ramp; short blocks end right as you hit stride",
+        "Each context switch costs 15–20 minutes of recovery time",
+        "One protected block beats four fragmented Pomodoros for output quality"
+      ],
+      "speaker_note": "Csikszentmihalyi's flow research backs this — the on-ramp is real and short blocks consistently kill it."
+    },
+    {
+      "slide_number": 7,
+      "heading": "Habit 6: Write Tomorrow's Top 3 Tonight",
+      "bullet_points": [
+        "Three priorities, written the night before — three forces a choice, five doesn't",
+        "Night-before planning uses full context; morning planning uses depleted decision capacity",
+        "Morning-you should never decide what to work on — past-you already did"
+      ],
+      "speaker_note": "Decision fatigue starts at zero each morning — the night-before plan sidesteps the worst decision window of the day."
+    },
+    {
+      "slide_number": 8,
+      "heading": "Habit 7: Track One Metric Per Week",
+      "bullet_points": [
+        "One number — whatever matters most this week",
+        "Tracking ten things creates measurement overhead that becomes its own procrastination",
+        "What gets measured gets noticed. Noticing is most of the work."
+      ],
+      "speaker_note": "Close with the pattern: all seven create moments of honest contact with how you're spending attention."
+    }
+  ],
+  "total_slides": 8
+}

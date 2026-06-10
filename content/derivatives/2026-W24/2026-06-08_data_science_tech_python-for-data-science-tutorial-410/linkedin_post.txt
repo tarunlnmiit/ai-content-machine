@@ -1,0 +1,19 @@
+A well-chosen plot does in five seconds what three paragraphs of explanation can't.
+
+Three weeks of work. A real finding. A dashboard screenshot sent to stakeholders.
+
+Two days. No response.
+
+This happens constantly, and it's not because the analysis is wrong. It's because raw data doesn't persuade — stories do.
+
+Visualization is where the transfer happens. The code discovers the insight. The chart moves it from your mind to someone else's. Without that transfer, even a correct analysis stays invisible.
+
+I've been working through this in my Python for Data Science series. The fundamentals — Matplotlib for control, Seaborn for statistical defaults — matter less than the judgment calls underneath them.
+
+Choosing a chart type is an act of framing. A line chart implies trend. A scatter plot reveals relationship. A bar chart emphasizes rank. The same dataset, three different shapes, three completely different conclusions. None are dishonest. All tell different truths.
+
+The discipline is choosing the frame that matches the finding you actually have — then removing every element that doesn't serve that story. No dual y-axes. No 3D effects. Titles that state your claim, not your variable name.
+
+Sometimes the chart is the moment understanding happens.
+
+#DataScience #DataVisualization #Python

@@ -1,0 +1,32 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "Biggest visualization mistake in data science?",
+    "options": [
+      "Too many colors or legends",
+      "No title that states the finding",
+      "Wrong chart type for the data",
+      "3D charts that look good but lie"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "When you receive a data visualization, what do you notice first?",
+    "options": [
+      "Whether the title explains the finding",
+      "Visual clarity and color scheme",
+      "Whether the chart type fits the data",
+      "Source and sample size"
+    ]
+  },
+  {
+    "platform": "YouTube Community",
+    "question": "Which part of the Python for Data Science series is most useful for your work right now?",
+    "options": [
+      "Data cleaning with Pandas",
+      "Visualization with Matplotlib/Seaborn",
+      "Statistical analysis",
+      "Machine learning basics"
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+Subject: Your analysis is invisible (here's the fix)
+Preview: A chart that changes minds vs. one that gets ignored — the gap is smaller than you think.
+
+Three weeks of work. A real finding. A dashboard screenshot sent to stakeholders.
+
+Two days. No response.
+
+If you've been there, this week's tutorial is for you.
+
+Tutorial 4 in the Python for Data Science series is about visualization — not just the syntax (though we cover Matplotlib and Seaborn in full), but the judgment calls that determine whether your insight lands or disappears.
+
+We cover:
+→ The right way to use figure and axis objects in Matplotlib
+→ Three Seaborn moves that add statistical depth without clutter
+→ Why choosing a chart type is a framing decision, not an aesthetic one
+→ Four specific mistakes that tank your credibility with stakeholders
+
+The line I keep coming back to: the code discovers the insight. The visualization transfers it. Without that transfer, even a correct analysis stays invisible.
+
+Read it here: [READ_LINK]
+
+If you've had a chart change someone's mind — or a bad plot bury something important — hit reply. I'd genuinely like to hear it.

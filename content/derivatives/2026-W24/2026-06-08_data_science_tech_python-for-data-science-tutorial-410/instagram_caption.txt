@@ -1,0 +1,25 @@
+Format: carousel
+Why: Data Science/Tech content with a step-by-step framework and multiple distinct tips maps directly to carousel format, which drives the highest engagement score (50.94) in the analytics data and is the primary recommendation for this niche.
+
+Your analysis isn't done until someone else understands it.
+
+Most data scientists treat visualization as decoration — something you do Friday before the presentation.
+
+That's backwards.
+
+The code finds the insight. The chart transfers it. Without the transfer, your analysis is invisible.
+
+Swipe through for the 4 visualization mistakes killing your credibility — and the exact fixes.
+
+Save this for the next time you're building a dashboard or presenting to stakeholders.
+
+Slides:
+  1. Your Analysis Is Invisible Until Someone Sees It
+  2. Matplotlib: Start Here (The Right Way)
+  3. Seaborn: Statistical Defaults That Don't Embarrass You
+  4. Same Data, 3 Different Stories
+  5. 4 Mistakes That Tank Your Credibility
+  6. Write Titles That State Your Finding
+  7. Visualization Is Communication, Not Decoration
+
+#DataScience #Python #DataVisualization #MachineLearning #DataAnalytics

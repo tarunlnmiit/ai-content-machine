@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The tools were different — the curiosity was the same: poetry and data science are not opposites, and pretending they were cost something real.",
+  "tone": [
+    "contemplative",
+    "warm",
+    "quietly defiant"
+  ],
+  "visual_metaphor": "A prism splitting white light into full spectrum colour — both the analytical and the lyrical are present in the same beam; poetry doesn't add colour, it reveals what was already there",
+  "key_quotes": [
+    "Poetry dips its fingers in every colour not because poets are ambitious. Because human experience refuses to be sorted.",
+    "The door doesn't need to be wide. A crack is enough.",
+    "Facts tell you what happened. Poetry tells you what stayed behind after it happened."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Hands on a dark keyboard, terminal glow the only light source — late, intimate, private",
+      "text": "Numbers didn't prepare me for this."
+    },
+    {
+      "frame": 2,
+      "visual": "Open book on a sunlit desk, a prism of light breaking across the pages into full colour spectrum",
+      "text": "Poetry was already there."
+    },
+    {
+      "frame": 3,
+      "visual": "Close-up of burnt toast being scraped over a white sink, morning light, hyper-specific and ordinary",
+      "text": "Monday. 7:14 AM."
+    },
+    {
+      "frame": 4,
+      "visual": "Abstract dark canvas with vivid paint strokes mid-burst — red, blue, gold — unresolved and alive",
+      "text": "Every colour. Even the dark ones."
+    },
+    {
+      "frame": 5,
+      "visual": "A lone figure at the edge of a misty lake at dawn — small in the frame, completely still",
+      "text": "Grief insists on specificity."
+    },
+    {
+      "frame": 6,
+      "visual": "A hand holding a paperback on a commuter train, city blurred behind the window in motion",
+      "text": "It comes sideways."
+    },
+    {
+      "frame": 7,
+      "visual": "A door ajar — warm amber light bleeding through a narrow crack into an otherwise dark hallway",
+      "text": "A crack is enough."
+    }
+  ]
+}

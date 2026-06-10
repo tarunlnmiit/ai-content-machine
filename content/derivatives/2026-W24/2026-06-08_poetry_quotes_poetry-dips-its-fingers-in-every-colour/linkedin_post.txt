@@ -1,0 +1,15 @@
+For most of my career I worked with things that can be measured — and then a poem found the exact nerve no dataset ever mapped.
+
+I spent years treating data science and poetry as separate identities. Work that rewards precision. Work that rewards something else entirely.
+
+Then I noticed the same thing drove both: the desire to understand what people actually feel beneath what they say. One pursuit used numbers. The other used metaphor. The tools were different. The curiosity was the same.
+
+Poetry doesn't stay in its lane. It shows up in a line of code you wrote at 2 AM that reads like confession. In the grief that arrived when a number on a screen told you something true you weren't ready for. In the smell of burnt toast on a Monday morning when nothing is remarkable and everything, briefly, is.
+
+I used to think this was a contradiction worth hiding. A data scientist who reads poetry, who sometimes cries at lines on a page.
+
+Now I think the boundary between technical and lyrical was always porous. The best scientific papers have rhythm. The question is whether you notice when poetry arrives.
+
+It doesn't need a wide-open door. A crack is enough.
+
+#Poetry #DataScience #CreativeThinking

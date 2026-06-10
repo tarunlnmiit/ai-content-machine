@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "Where has a poem unexpectedly found you?",
+    "options": [
+      "In technical work",
+      "In an ordinary moment",
+      "In grief or loss",
+      "Still waiting for it"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "Do you think analytical and creative thinking are opposites?",
+    "options": [
+      "Yes — fundamentally different",
+      "No — same curiosity, different tools",
+      "Used to think yes, changed my mind",
+      "Never really thought about it"
+    ]
+  }
+]

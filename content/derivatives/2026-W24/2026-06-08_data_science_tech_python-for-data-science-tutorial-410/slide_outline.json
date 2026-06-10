@@ -1,0 +1,77 @@
+{
+  "format": "Canva",
+  "title_slide": "Data Visualization & Storytelling with Python: Making Your Analysis Impossible to Ignore",
+  "slides": [
+    {
+      "slide_number": 1,
+      "heading": "The Problem with Raw Data",
+      "bullet_points": [
+        "Numbers don't persuade — stories do",
+        "A story needs: problem → finding → action",
+        "Visualization is the language of data stories"
+      ],
+      "speaker_note": "Open with the stakeholder non-response scenario — makes the problem feel immediately real before touching any code."
+    },
+    {
+      "slide_number": 2,
+      "heading": "Matplotlib: The Foundation",
+      "bullet_points": [
+        "Use fig, ax = plt.subplots() — not plt.plot() shortcuts",
+        "Axis objects give full control at any scale",
+        "Always export with dpi=300, bbox_inches='tight'"
+      ],
+      "speaker_note": "Emphasize that Matplotlib's verbosity is a feature — it means you understand what you're building, not fighting it."
+    },
+    {
+      "slide_number": 3,
+      "heading": "Seaborn: Statistical Defaults That Work",
+      "bullet_points": [
+        "sns.set_style('whitegrid') removes chart junk",
+        "kde=True reveals distribution shape, not just bins",
+        "hue and size encode multiple dimensions cleanly"
+      ],
+      "speaker_note": "Show the before/after: default Matplotlib colors vs. the Seaborn husl palette on identical data."
+    },
+    {
+      "slide_number": 4,
+      "heading": "Choosing a Chart Is an Act of Framing",
+      "bullet_points": [
+        "Line chart → implies trend or sequence",
+        "Bar chart → emphasizes categories and ranking",
+        "Scatter plot → reveals relationships and outliers"
+      ],
+      "speaker_note": "Show the same dataset visualized three ways — same data, completely different impressions, none dishonest."
+    },
+    {
+      "slide_number": 5,
+      "heading": "Mistake 1–3: Common Credibility Killers",
+      "bullet_points": [
+        "Too many colors (6+ becomes unreadable — use gray)",
+        "Dual y-axes (honest subplots instead)",
+        "3D charts (heatmaps are faster and clearer)"
+      ],
+      "speaker_note": "Show a bad example first, then the cleaned-up version — contrast lands harder than explanation alone."
+    },
+    {
+      "slide_number": 6,
+      "heading": "Mistake 4: No Context",
+      "bullet_points": [
+        "Wrong: 'Revenue Over Time'",
+        "Right: 'Revenue Grew 23% After Q3 Pricing Change'",
+        "Assume the reader sees this plot alone"
+      ],
+      "speaker_note": "This is the mistake analysts make even after fixing everything else — title is written last but read first."
+    },
+    {
+      "slide_number": 7,
+      "heading": "Visualization Is Communication, Not Decoration",
+      "bullet_points": [
+        "Spend as much time on the plot as on the code",
+        "Remove every element that doesn't serve the story",
+        "Your insight doesn't matter until someone sees it"
+      ],
+      "speaker_note": "End on the core reframe — this is the shift that changes how people approach their entire workflow."
+    }
+  ],
+  "total_slides": 7
+}

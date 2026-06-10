@@ -1,0 +1,27 @@
+Format: carousel
+Why: A 7-habit listicle maps directly to carousel format, which drives the highest save-weighted engagement for the Life & Self-Dev niche (50.9 avg score vs 28.1 for reels).
+
+The most productive people I know don't have complicated systems.
+
+They have a handful of small habits they actually do.
+
+I spent years building productivity systems that eventually collapsed under their own weight.
+
+Then I stripped back to 7 habits simple enough to survive my worst days.
+
+The shutdown ritual. The weekly brain dump. One frog. The done list. One 90-minute block. Tomorrow's three priorities. One metric.
+
+None require an app. Most take under five minutes.
+
+Slide through — one habit per slide. Start with the one that stings.
+
+Slides:
+  1. You don't have a productivity problem.
+  2. Habit 1: The Shutdown Ritual
+  3. Habit 2: The Weekly Brain Dump
+  4. Habit 3: Eat One Frog (Only One)
+  5. Habit 4: The Done List
+  6. Habit 5: One 90-Minute Block
+  7. Habits 6–7: Tomorrow's 3 + One Metric
+
+#ProductivityTips #SelfDevelopment #DeepWork #HabitBuilding #MindsetShift

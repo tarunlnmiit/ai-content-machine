@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The exhaustion of chasing perfect systems — and the quiet relief of returning to habits honest enough to survive your worst days.",
+  "tone": [
+    "grounded",
+    "anti-hype",
+    "warm"
+  ],
+  "visual_metaphor": "A cluttered desk slowly clearing — not by adding a better organizer, but by removing everything except what's used daily.",
+  "key_quotes": [
+    "Productivity systems fail because they ask you to maintain a perfect structure across an imperfect life.",
+    "The most productive people I know don't have complicated systems. They have a handful of small habits they do.",
+    "The number doesn't have to be impressive. It just has to be real."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Person surrounded by open Notion tabs, color-coded planners, and stacked productivity books — overwhelmed expression, laptop glow in dim room, visual chaos",
+      "text": "Organized. Busy. Not moving."
+    },
+    {
+      "frame": 2,
+      "visual": "Same desk, cleared — single open notebook, one pen, one coffee cup, morning light — calm and deliberate",
+      "text": "7 habits. No system required."
+    },
+    {
+      "frame": 3,
+      "visual": "Hand deliberately closing a laptop at a warm-lit desk, notebook open beside it with a few handwritten lines — the physical act of stopping",
+      "text": "Shutdown complete."
+    },
+    {
+      "frame": 4,
+      "visual": "Person writing rapidly on a blank page — not structured notes, just fast and loose — visible relief in posture, pen moving freely",
+      "text": "Empty the head. Not organize it."
+    },
+    {
+      "frame": 5,
+      "visual": "Close-up of a notebook page with 'DONE TODAY:' at the top and five lines filled in by hand — warm desk lamp, quiet evening atmosphere",
+      "text": "What happened, not what's left."
+    },
+    {
+      "frame": 6,
+      "visual": "Phone screen showing a 90-minute timer, then phone placed face-down deliberately on the desk beside a closed laptop — a small act of commitment",
+      "text": "One block. Protected."
+    },
+    {
+      "frame": 7,
+      "visual": "Person at desk in early morning, coffee steam rising, opening a notebook already filled with tomorrow's priorities — no hesitation, immediate start",
+      "text": "The decision was already made."
+    }
+  ]
+}

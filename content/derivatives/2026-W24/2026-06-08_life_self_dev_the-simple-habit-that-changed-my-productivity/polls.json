@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "Which productivity habit do you find hardest to maintain?",
+    "options": [
+      "Protecting deep work time",
+      "Planning the night before",
+      "Actually shutting down for the day",
+      "Saying no to more tasks"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "When do you plan your next day's priorities?",
+    "options": [
+      "The night before (already)",
+      "Morning before starting",
+      "I figure it out as I go",
+      "I plan weekly, not daily"
+    ]
+  }
+]

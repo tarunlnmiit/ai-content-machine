@@ -1,0 +1,61 @@
+I spent 3 weeks cleaning a dataset. Found something real. Sent the dashboard screenshot to stakeholders.
+
+Two days. No response.
+
+Here's what I learned about why data scientists lose the room — and how to fix it:
+
+The problem isn't your analysis. It's that raw data doesn't persuade — stories do.
+
+A story needs a shape: beginning (here's the problem), middle (here's what I found), end (here's what to do).
+
+Numbers are the evidence. Visualizations are the language.
+
+Matplotlib is the foundation. Verbose? Yes. But that verbosity is honest — you control everything.
+
+One move that changes everything:
+
+Use `fig, ax = plt.subplots()` — not `plt.plot()` shortcuts.
+
+Axis objects scale from a single chart to a 16-panel grid. Shortcuts don't.
+
+Seaborn sits on top of Matplotlib and handles the statistical heavy lifting.
+
+Three moves to steal immediately:
+
+→ `sns.set_style("whitegrid")` removes chart junk
+→ `kde=True` shows distribution shape, not just bins
+→ `hue` and `size` encode multiple dimensions without clutter
+
+Here's the part most tutorials skip:
+
+Choosing a chart is an act of framing.
+
+Bar chart → emphasizes categories and ranking
+Line chart → implies trend or sequence
+Scatter plot → reveals relationships and outliers
+
+Same data. Completely different stories.
+
+3 mistakes that tank your credibility as a data scientist:
+
+1. Too many colors. 6+ and humans stop distinguishing them. Make everything else gray.
+
+2. Dual y-axes. They let you lie. Use subplots instead.
+
+3. 3D plots. They look cool. They're unreadable. Use a heatmap.
+
+The most common mistake — and the one that's easiest to fix:
+
+No context.
+
+Don't title your plot 'Revenue Over Time.'
+
+Title it 'Revenue Grew 23% After Pricing Change in Q3.'
+
+Assume the reader will see this plot alone, without your explanation. Does it still land?
+
+Your insight doesn't matter until someone *sees* it.
+
+Spend as much time on the plot as you spent on the code. Write titles that state your finding, not your variable name. Remove every element that doesn't serve the story.
+
+Make it impossible to miss.
