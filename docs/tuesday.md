@@ -103,22 +103,50 @@ wc -w content/scripts/{week}/{poetry_slug}_yt.md
 
 ---
 
-## Step 2 — Generate Remotion scene plans (~5 min)
+## Step 2 — Generate Remotion scene plans (~5–8 min)
 
-Scene plans drive motion graphic shorts (`DSMotionShort`, `LifeMotionShort`, `PoetryMotionShort`). Each plan maps script sections to animated scene components.
+Scene plans drive motion graphic shorts (`DSMotionShort`, `LifeMotionShort`, `PoetryMotionShort`). Claude Opus 4.8 reads the full script semantically and decides WHERE motion graphics make the most sense — no `[ANIMATION:]` tags required.
 
 ```bash
-python3 scripts/generate_animation_prompts.py \
-  content/scripts/{week}/{ds_slug}_yt.md \
-  --niche ds \
-  --scene-plans
+# DS — motion short (scenes ARE the video):
+python3 scripts/generate_scene_plans.py \
+  --script content/scripts/{week}/{ds_slug}_yt.md \
+  --niche ds --week {week} --mode short
+
+# Life:
+python3 scripts/generate_scene_plans.py \
+  --script content/scripts/{week}/{life_slug}_yt.md \
+  --niche life --week {week} --mode short
+
+# Poetry:
+python3 scripts/generate_scene_plans.py \
+  --script content/scripts/{week}/{poetry_slug}_yt.md \
+  --niche poetry --week {week} --mode short
 ```
 
-This reads `[ANIMATION:]` tags in the script and generates a `ScenePlan[]` JSON array, one entry per animation cue.
+Outputs: `remotion/public/scene-plans/{week}/{slug}.json`
 
-Outputs:
-- `remotion/public/scene-plans/{week}/{ds_slug}_motion.json` — ready for `DSMotionShort`
-- `content/prompts/{week}/{ds_slug}_animation_prompts.txt` — text spec for reference
+**Optional — long-form overlay plan** (scenes appear ON TOP of camera footage at specific narration moments):
+```bash
+python3 scripts/generate_scene_plans.py \
+  --script content/scripts/{week}/{ds_slug}_yt.md \
+  --niche ds --week {week} --mode overlay
+# → remotion/public/scene-plans/{week}/{ds_slug}_overlay.json
+```
+
+**Preview before writing:**
+```bash
+python3 scripts/generate_scene_plans.py \
+  --script content/scripts/{week}/{ds_slug}_yt.md \
+  --niche ds --week {week} --mode short --dry-run
+```
+
+**Regenerate (bypass cache):**
+```bash
+python3 scripts/generate_scene_plans.py ... --no-cache
+```
+
+Cache: results are cached 30 days by script content hash. Re-running with the same script is instant.
 
 ### Scene plan JSON structure
 
