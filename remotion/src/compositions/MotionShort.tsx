@@ -11,6 +11,16 @@ import {
 } from "remotion";
 import { COLORS, FONTS, type Niche, nicheAccent, nicheGrid } from "../styles/chronixel";
 import type { ScenePlan } from "../types";
+import { DataVizReveal } from "./scenes/DataVizReveal";
+import { CodeAnnotation } from "./scenes/CodeAnnotation";
+import { ConceptExplainer } from "./scenes/ConceptExplainer";
+import { ToolComparison } from "./scenes/ToolComparison";
+import { NumberedTips } from "./scenes/NumberedTips";
+import { TransformationArc } from "./scenes/TransformationArc";
+import { HabitLoop } from "./scenes/HabitLoop";
+import { WordReveal } from "./scenes/WordReveal";
+import { AtmosphericQuote } from "./scenes/AtmosphericQuote";
+import { LineReveal } from "./scenes/LineReveal";
 
 // Fade-between-scenes crossfade (12 frames)
 const CROSSFADE_FRAMES = 12;
@@ -92,6 +102,24 @@ function PlaceholderScene({ plan, niche }: PlaceholderSceneProps) {
   );
 }
 
+function SceneRenderer({ plan, niche }: { plan: ScenePlan; niche: Niche }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const p = { ...plan.props, niche } as any;
+  switch (plan.componentName) {
+    case "DataVizReveal":     return <DataVizReveal     {...p} />;
+    case "CodeAnnotation":    return <CodeAnnotation    {...p} />;
+    case "ConceptExplainer":  return <ConceptExplainer  {...p} />;
+    case "ToolComparison":    return <ToolComparison    {...p} />;
+    case "NumberedTips":      return <NumberedTips      {...p} />;
+    case "TransformationArc": return <TransformationArc {...p} />;
+    case "HabitLoop":         return <HabitLoop         {...p} />;
+    case "WordReveal":        return <WordReveal        {...p} />;
+    case "AtmosphericQuote":  return <AtmosphericQuote  {...p} />;
+    case "LineReveal":        return <LineReveal        {...p} />;
+    default:                  return <PlaceholderScene plan={plan} niche={niche} />;
+  }
+}
+
 export interface MotionShortProps extends Record<string, unknown> {
   scenePlanFile: string;
   niche: Niche;
@@ -139,7 +167,7 @@ export function MotionShort({ scenePlanFile, niche, audioFile }: MotionShortProp
 
       {sceneLayouts.map(({ scene, from, durationFrames }) => (
         <Sequence key={scene.sceneId} from={from} durationInFrames={durationFrames}>
-          <PlaceholderScene plan={scene} niche={niche} />
+          <SceneRenderer plan={scene} niche={niche} />
           <SceneFade durationInFrames={durationFrames} />
         </Sequence>
       ))}

@@ -1,5 +1,15 @@
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { Highlight, themes } from "prism-react-renderer";
+import type { Language } from "prism-react-renderer";
 import { COLORS, FONTS, type Niche, nicheAccent, nicheGlow } from "../../styles/chronixel";
+
+const LANG_MAP: Record<string, Language> = {
+  python: "python", py: "python",
+  javascript: "javascript", js: "javascript",
+  typescript: "typescript", ts: "typescript",
+  bash: "bash", sh: "bash",
+  sql: "sql", json: "json", jsx: "jsx", tsx: "tsx",
+};
 
 export interface CodeAnnotationProps extends Record<string, unknown> {
   code: string[];
@@ -99,56 +109,66 @@ export function CodeAnnotation({
           {language}
         </div>
 
-        {/* Code lines */}
-        {code.map((line, i) => {
-          const isHighlighted = i === highlightLine;
-          return (
-            <div
-              key={i}
-              style={{
-                height: lineH,
-                display: "flex",
-                alignItems: "center",
-                paddingLeft: 8,
-                borderRadius: 6,
-                background: isHighlighted
-                  ? `rgba(255,255,255,0.06)`
-                  : "transparent",
-                borderLeft: isHighlighted
-                  ? `3px solid ${accent}`
-                  : "3px solid transparent",
-                transition: "background 0.2s",
-              }}
-            >
-              {/* Line number */}
-              <span
-                style={{
-                  color: COLORS.textDim,
-                  fontFamily: FONTS.mono,
-                  fontSize: fontSize * 0.85,
-                  width: 32,
-                  textAlign: "right",
-                  marginRight: 20,
-                  userSelect: "none",
-                  flexShrink: 0,
-                }}
-              >
-                {i + 1}
-              </span>
-              {/* Code text */}
-              <span
-                style={{
-                  fontFamily: FONTS.mono,
-                  fontSize,
-                  color: isHighlighted ? COLORS.text : COLORS.textMuted,
-                  whiteSpace: "pre",
-                }}
-              >
-                {line}
-              </span>
-            </div>
-          );
-        })}
+        {/* Code lines with syntax highlighting */}
+        <Highlight
+          code={code.join("\n")}
+          language={LANG_MAP[language.toLowerCase()] ?? "python"}
+          theme={themes.vsDark}
+        >
+          {({ tokens: prismLines, getLineProps, getTokenProps }) =>
+            prismLines.map((lineTokens, i) => {
+              const isHighlighted = i === highlightLine;
+              return (
+                <div
+                  key={i}
+                  style={{
+                    height: lineH,
+                    display: "flex",
+                    alignItems: "center",
+                    paddingLeft: 8,
+                    borderRadius: 6,
+                    background: isHighlighted ? `rgba(255,255,255,0.06)` : "transparent",
+                    borderLeft: isHighlighted ? `3px solid ${accent}` : "3px solid transparent",
+                  }}
+                >
+                  {/* Line number */}
+                  <span
+                    style={{
+                      color: COLORS.textDim,
+                      fontFamily: FONTS.mono,
+                      fontSize: fontSize * 0.85,
+                      width: 32,
+                      textAlign: "right",
+                      marginRight: 20,
+                      userSelect: "none",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  {/* Syntax-colored tokens */}
+                  <span style={{ fontFamily: FONTS.mono, fontSize, whiteSpace: "pre" }}>
+                    {lineTokens.map((token, key) => {
+                      const tokenProps = getTokenProps({ token });
+                      return (
+                        <span
+                          key={key}
+                          {...tokenProps}
+                          style={{
+                            ...tokenProps.style,
+                            color: isHighlighted
+                              ? COLORS.text
+                              : (tokenProps.style?.color ?? COLORS.textMuted),
+                          }}
+                        />
+                      );
+                    })}
+                  </span>
+                </div>
+              );
+            })
+          }
+        </Highlight>
       </div>
 
       {/* Annotation tooltip */}

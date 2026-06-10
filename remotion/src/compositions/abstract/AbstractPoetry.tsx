@@ -1,10 +1,79 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import { ThreeCanvas } from "@remotion/three";
+import { useMemo } from "react";
 
-const ACCENT = "#a78bfa";
+const AURORA_COUNT = 300;
 
 function pr(seed: number): number {
   const x = Math.sin(seed + 1) * 43758.5453;
   return x - Math.floor(x);
+}
+
+const BASE_AURORA = Array.from({ length: AURORA_COUNT }, (_, i) => ({
+  u: pr(i * 7) * 6 - 3,
+  v: pr(i * 7 + 1) * 3.6 - 1.8,
+  z: pr(i * 7 + 2) * 1.6 - 0.8,
+  speed: 0.25 + pr(i * 7 + 3) * 0.35,
+  phase: pr(i * 7 + 4) * Math.PI * 2,
+  waveFreq: 0.6 + pr(i * 7 + 5) * 0.8,
+  colorMix: pr(i * 7 + 6),
+}));
+
+// Static colors — computed once
+const STATIC_COLORS = (() => {
+  const arr = new Float32Array(AURORA_COUNT * 3);
+  BASE_AURORA.forEach((b, i) => {
+    arr[i * 3]     = 0.51 + b.colorMix * 0.15;
+    arr[i * 3 + 1] = 0.33 + b.colorMix * 0.22;
+    arr[i * 3 + 2] = 0.98;
+  });
+  return arr;
+})();
+
+interface AuroraParticlesProps {
+  frame: number;
+  fps: number;
+}
+
+function AuroraParticles({ frame, fps }: AuroraParticlesProps) {
+  const t = frame / fps;
+
+  const positions = useMemo(() => {
+    const arr = new Float32Array(AURORA_COUNT * 3);
+    BASE_AURORA.forEach((b, i) => {
+      const wave = 0.45 * Math.sin(b.u * b.waveFreq + t * b.speed + b.phase);
+      arr[i * 3]     = b.u;
+      arr[i * 3 + 1] = b.v + wave;
+      arr[i * 3 + 2] = b.z;
+    });
+    return arr;
+  }, [t]);
+
+  return (
+    <points>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={AURORA_COUNT}
+          array={positions}
+          itemSize={3}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          count={AURORA_COUNT}
+          array={STATIC_COLORS}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.048}
+        sizeAttenuation
+        transparent
+        opacity={0.82}
+        vertexColors
+      />
+    </points>
+  );
 }
 
 export interface AbstractPoetryProps extends Record<string, unknown> {
@@ -14,116 +83,15 @@ export interface AbstractPoetryProps extends Record<string, unknown> {
 export function AbstractPoetry(_props: AbstractPoetryProps) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const t = frame / fps;
-
-  // Aurora-style sweeping gradients — 3 layers, slow drift
-  const aurora = [
-    {
-      cx: 20 + 30 * Math.sin(t * 0.08),
-      cy: 40 + 20 * Math.cos(t * 0.05),
-      color: "#a78bfa",
-      opacity: 0.12 + 0.04 * Math.sin(t * 0.2),
-    },
-    {
-      cx: 60 + 25 * Math.cos(t * 0.07),
-      cy: 55 + 15 * Math.sin(t * 0.06),
-      color: "#c4b5fd",
-      opacity: 0.08 + 0.03 * Math.cos(t * 0.15),
-    },
-    {
-      cx: 80 + 15 * Math.sin(t * 0.09 + 1),
-      cy: 30 + 20 * Math.cos(t * 0.04),
-      color: "#818cf8",
-      opacity: 0.07 + 0.03 * Math.sin(t * 0.18),
-    },
-  ];
-
-  // Floating dust motes
-  const motes = Array.from({ length: 50 }, (_, i) => {
-    const baseX = pr(i * 9) * 100;
-    const baseY = pr(i * 9 + 1) * 100;
-    const driftY = -(t * (0.3 + pr(i * 9 + 2) * 0.5)) % 100;
-    const flicker = 0.3 + 0.4 * Math.sin(t * (1 + pr(i * 9 + 3) * 2) + i);
-    return {
-      cx: baseX + Math.sin(t * 0.25 + i * 0.7) * 1.5,
-      cy: ((baseY + driftY) % 100 + 100) % 100,
-      r: 0.3 + pr(i * 9 + 4) * 0.5,
-      opacity: flicker * 0.35,
-    };
-  });
-
-  // Ink diffusion blobs — organic shapes that grow slowly
-  const blobs = Array.from({ length: 5 }, (_, i) => {
-    const baseX = 15 + i * 18;
-    const baseY = 20 + pr(i * 3) * 60;
-    const scale = 0.6 + 0.4 * Math.sin(t * 0.12 + i * 1.2);
-    const rx = (6 + pr(i * 3 + 1) * 8) * scale;
-    const ry = (4 + pr(i * 3 + 2) * 6) * scale;
-    const rotation = t * (2 + i) * (pr(i * 3 + 1) > 0.5 ? 1 : -1);
-    return { cx: baseX, cy: baseY, rx, ry, rotation, opacity: 0.04 + pr(i * 3) * 0.04 };
-  });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#06040f", overflow: "hidden" }}>
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 100 56.25"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ position: "absolute", inset: 0 }}
-      >
-        <defs>
-          <filter id="blur-aurora">
-            <feGaussianBlur stdDeviation="4" />
-          </filter>
-          <filter id="blur-blob">
-            <feGaussianBlur stdDeviation="2.5" />
-          </filter>
-        </defs>
+    <AbsoluteFill style={{ backgroundColor: "#06040f" }}>
+      <ThreeCanvas>
+        <ambientLight intensity={0.08} color="#a78bfa" />
+        <pointLight position={[0, 1, 2]} intensity={1.5} color="#a78bfa" distance={6} />
+        <AuroraParticles frame={frame} fps={fps} />
+      </ThreeCanvas>
 
-        {/* Aurora sweeps */}
-        {aurora.map((a, i) => (
-          <ellipse
-            key={i}
-            cx={a.cx}
-            cy={a.cy * 0.5625}
-            rx={35}
-            ry={18}
-            fill={a.color}
-            opacity={a.opacity}
-            filter="url(#blur-aurora)"
-          />
-        ))}
-
-        {/* Ink blobs */}
-        {blobs.map((b, i) => (
-          <ellipse
-            key={i}
-            cx={b.cx}
-            cy={b.cy * 0.5625}
-            rx={b.rx}
-            ry={b.ry * 0.5625}
-            fill={ACCENT}
-            opacity={b.opacity}
-            filter="url(#blur-blob)"
-            transform={`rotate(${b.rotation}, ${b.cx}, ${b.cy * 0.5625})`}
-          />
-        ))}
-
-        {/* Dust motes */}
-        {motes.map((m, i) => (
-          <circle
-            key={i}
-            cx={m.cx}
-            cy={m.cy * 0.5625}
-            r={m.r}
-            fill={ACCENT}
-            opacity={m.opacity}
-          />
-        ))}
-      </svg>
-
-      {/* Deep center vignette */}
       <AbsoluteFill
         style={{
           background: "radial-gradient(ellipse 60% 60% at 50% 50%, transparent 35%, rgba(6,4,15,0.85) 100%)",

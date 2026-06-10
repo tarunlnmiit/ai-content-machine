@@ -1,121 +1,121 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import { ThreeCanvas } from "@remotion/three";
+import { Line } from "@react-three/drei";
+import * as THREE from "three";
 import { COLORS } from "../../styles/chronixel";
 
 const ACCENT = "#f97316";
-const ACCENT_DIM = "rgba(249,115,22,0.35)";
-const ACCENT_FAINT = "rgba(249,115,22,0.08)";
 
-// Deterministic pseudo-random seeded by index
 function pr(seed: number): number {
   const x = Math.sin(seed + 1) * 43758.5453;
   return x - Math.floor(x);
 }
 
-interface Node {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-}
-
-function nodeAt(i: number, frame: number): Node {
-  const baseX = pr(i * 3) * 100;
-  const baseY = pr(i * 3 + 1) * 100;
-  const speed = 0.008 + pr(i * 3 + 2) * 0.012;
-  const angle = pr(i * 7) * Math.PI * 2;
-  return {
-    x: baseX + Math.sin(frame * speed + angle) * 6,
-    y: baseY + Math.cos(frame * speed * 0.7 + angle) * 5,
-    vx: 0,
-    vy: 0,
-  };
-}
-
 const NODE_COUNT = 22;
-const CONNECT_DIST = 28; // percent units
+const CONNECT_DIST = 2.2;
+
+// Static base positions distributed on a sphere
+const BASE_POSITIONS: THREE.Vector3[] = Array.from({ length: NODE_COUNT }, (_, i) => {
+  const theta = pr(i * 3) * Math.PI * 2;
+  const phi = Math.acos(2 * pr(i * 3 + 1) - 1);
+  const r = 1.2 + pr(i * 3 + 2) * 1.4;
+  return new THREE.Vector3(
+    r * Math.sin(phi) * Math.cos(theta),
+    r * Math.sin(phi) * Math.sin(theta),
+    r * Math.cos(phi)
+  );
+});
 
 const DATA_FRAGMENTS = [
   "0x4f2a", "3.14", "import", "df.head()", "model.fit()", "[]", "{}",
   "lambda", "→", "0.98", "GPU", "API", "json", "pd", "np", "sklearn",
 ];
 
+interface NetworkSceneProps {
+  frame: number;
+  fps: number;
+}
+
+function NetworkScene({ frame, fps }: NetworkSceneProps) {
+  const t = frame / fps;
+  const rotation = t * 0.12;
+
+  const nodes = BASE_POSITIONS.map((base, i) => {
+    const w = 0.06;
+    return new THREE.Vector3(
+      base.x + Math.sin(t * (0.4 + pr(i * 3) * 0.3) + i) * w,
+      base.y + Math.cos(t * (0.35 + pr(i * 3 + 1) * 0.25) + i) * w,
+      base.z + Math.sin(t * 0.2 + i * 1.1) * w
+    );
+  });
+
+  const edges: Array<{ points: THREE.Vector3[]; opacity: number }> = [];
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dist = nodes[i].distanceTo(nodes[j]);
+      if (dist < CONNECT_DIST) {
+        edges.push({ points: [nodes[i], nodes[j]], opacity: (1 - dist / CONNECT_DIST) * 0.35 });
+      }
+    }
+  }
+
+  return (
+    <group rotation={[0.25, rotation, 0]}>
+      <ambientLight intensity={0.15} />
+      <pointLight position={[4, 4, 4]} intensity={2.5} color={ACCENT} />
+
+      {edges.map(({ points, opacity }, i) => (
+        <Line
+          key={`e-${i}`}
+          points={points}
+          color={ACCENT}
+          lineWidth={0.6}
+          transparent
+          opacity={opacity}
+        />
+      ))}
+
+      {nodes.map((pos, i) => {
+        const pulse = 0.5 + 0.5 * Math.sin(t * 2 + i * 0.8);
+        return (
+          <mesh key={`n-${i}`} position={pos}>
+            <sphereGeometry args={[0.042 + pulse * 0.018, 10, 10]} />
+            <meshStandardMaterial
+              color={ACCENT}
+              emissive={ACCENT}
+              emissiveIntensity={0.55 + pulse * 0.45}
+              roughness={0.3}
+              metalness={0.7}
+            />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
 export interface AbstractDSProps extends Record<string, unknown> {
-  /** unused — exists so Root.tsx can register with defaultProps */
   _placeholder?: boolean;
 }
 
 export function AbstractDS(_props: AbstractDSProps) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const t = frame / fps;
 
-  const nodes = Array.from({ length: NODE_COUNT }, (_, i) => nodeAt(i, frame));
-
-  // Scrolling data stream — 6 columns
   const columns = Array.from({ length: 6 }, (_, col) => ({
     x: 8 + col * 14.5,
     fragments: Array.from({ length: 10 }, (_, row) => {
       const idx = (col * 10 + row + Math.floor(frame / 8)) % DATA_FRAGMENTS.length;
       const opacity = 0.06 + pr(col * 100 + row + Math.floor(frame / 4)) * 0.12;
-      return { text: DATA_FRAGMENTS[idx], y: ((row * 10 + (frame * 0.3)) % 100), opacity };
+      return { text: DATA_FRAGMENTS[idx], y: ((row * 10 + frame * 0.3) % 100), opacity };
     }),
   }));
 
   return (
-    <AbsoluteFill style={{ backgroundColor: COLORS.bg, overflow: "hidden" }}>
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 100 56.25"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ position: "absolute", inset: 0 }}
-      >
-        {/* Ambient grid */}
-        <defs>
-          <pattern id="grid-ds" width="5" height="5" patternUnits="userSpaceOnUse">
-            <path d="M 5 0 L 0 0 0 5" fill="none" stroke={ACCENT_FAINT} strokeWidth="0.1" />
-          </pattern>
-        </defs>
-        <rect width="100" height="56.25" fill="url(#grid-ds)" />
-
-        {/* Connection lines between nearby nodes */}
-        {nodes.map((a, i) =>
-          nodes.slice(i + 1).map((b, j) => {
-            const dx = a.x - b.x;
-            const dy = a.y - b.y * (56.25 / 100);
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist > CONNECT_DIST) return null;
-            const opacity = (1 - dist / CONNECT_DIST) * 0.3;
-            return (
-              <line
-                key={`${i}-${j}`}
-                x1={a.x}
-                y1={a.y * 0.5625}
-                x2={b.x}
-                y2={b.y * 0.5625}
-                stroke={ACCENT_DIM}
-                strokeWidth="0.08"
-                opacity={opacity}
-              />
-            );
-          })
-        )}
-
-        {/* Nodes */}
-        {nodes.map((n, i) => {
-          const pulse = 0.5 + 0.5 * Math.sin(t * 2 + i * 0.8);
-          return (
-            <circle
-              key={i}
-              cx={n.x}
-              cy={n.y * 0.5625}
-              r={0.25 + pulse * 0.15}
-              fill={ACCENT}
-              opacity={0.6 + pulse * 0.4}
-            />
-          );
-        })}
-      </svg>
+    <AbsoluteFill style={{ backgroundColor: COLORS.bg }}>
+      <ThreeCanvas>
+        <NetworkScene frame={frame} fps={fps} />
+      </ThreeCanvas>
 
       {/* Scrolling data fragments */}
       <div
@@ -149,7 +149,6 @@ export function AbstractDS(_props: AbstractDSProps) {
         )}
       </div>
 
-      {/* Center vignette */}
       <AbsoluteFill
         style={{
           background: "radial-gradient(ellipse 50% 50% at 50% 50%, transparent 30%, rgba(10,10,15,0.7) 100%)",

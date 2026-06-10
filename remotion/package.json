@@ -6,18 +6,25 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@react-three/drei": "^9.109.3",
+    "@react-three/fiber": "^8.17.10",
     "@remotion/captions": "4.0.466",
     "@remotion/cli": "4.0.466",
     "@remotion/media": "4.0.466",
+    "@remotion/media-utils": "4.0.466",
     "@remotion/tailwind-v4": "4.0.466",
+    "@remotion/three": "4.0.466",
+    "prism-react-renderer": "^2.3.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "remotion": "4.0.466",
-    "tailwindcss": "4.0.0"
+    "tailwindcss": "4.0.0",
+    "three": "^0.167.1"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.466",
     "@types/react": "19.2.7",
+    "@types/three": "^0.167.0",
     "@types/web": "0.0.166",
     "eslint": "9.19.0",
     "prettier": "3.8.1",
