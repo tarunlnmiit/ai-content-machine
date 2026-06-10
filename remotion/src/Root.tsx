@@ -36,21 +36,26 @@ const FPS = 30;
 
 async function loadEditPlan(editPlanFile: string): Promise<EditPlan> {
   const res = await fetch(staticFile(editPlanFile));
+  if (!res.ok) throw new Error(`Edit plan not found: ${editPlanFile} (${res.status})`);
   return res.json();
 }
 
 const calcMetaTalkingHead: CalculateMetadataFunction<TalkingHeadEditProps> = async ({
   props,
 }) => {
-  const plan = await loadEditPlan(props.editPlanFile);
-  const segments =
-    plan.cutSegments && plan.cutSegments.length > 0
-      ? plan.cutSegments
-      : [{ startSec: plan.silenceTrimStartSec, endSec: plan.silenceTrimEndSec }];
-  const editSec = segments.reduce((sum, seg) => sum + (seg.endSec - seg.startSec), 0);
-  const titleCardSec = plan.titleCard ? plan.titleCard.durationFrames / FPS : 0;
-  const outroCardSec = plan.outroCard ? plan.outroCard.durationFrames / FPS : 0;
-  return { durationInFrames: Math.ceil((editSec + titleCardSec + outroCardSec) * FPS) };
+  try {
+    const plan = await loadEditPlan(props.editPlanFile);
+    const segments =
+      plan.cutSegments && plan.cutSegments.length > 0
+        ? plan.cutSegments
+        : [{ startSec: plan.silenceTrimStartSec, endSec: plan.silenceTrimEndSec }];
+    const editSec = segments.reduce((sum, seg) => sum + (seg.endSec - seg.startSec), 0);
+    const titleCardSec = plan.titleCard ? plan.titleCard.durationFrames / FPS : 0;
+    const outroCardSec = plan.outroCard ? plan.outroCard.durationFrames / FPS : 0;
+    return { durationInFrames: Math.ceil((editSec + titleCardSec + outroCardSec) * FPS) };
+  } catch {
+    return { durationInFrames: 900 };
+  }
 };
 
 const calcMetaShortClip: CalculateMetadataFunction<ShortClipProps> = async ({ props }) => {
@@ -80,26 +85,6 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         durationInFrames={900}
         defaultProps={{ editPlanFile: "edit-plans/poetry_love.json" }}
-        calculateMetadata={calcMetaTalkingHead}
-      />
-      <Composition
-        id="PoetryWhenDreamsSpeak"
-        component={TalkingHeadEdit}
-        fps={FPS}
-        width={1920}
-        height={1080}
-        durationInFrames={900}
-        defaultProps={{ editPlanFile: "edit-plans/2026-05-21-poetry-quotes-when-dreams-speak-of-love.json" }}
-        calculateMetadata={calcMetaTalkingHead}
-      />
-      <Composition
-        id="DsCompletePythonCourse"
-        component={TalkingHeadEdit}
-        fps={FPS}
-        width={1920}
-        height={1080}
-        durationInFrames={900}
-        defaultProps={{ editPlanFile: "edit-plans/2026-05-21-ds-complete-python-course.json" }}
         calculateMetadata={calcMetaTalkingHead}
       />
       {/* Generic workhorse — render any slug with --props override */}
