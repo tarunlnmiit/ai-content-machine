@@ -1,6 +1,5 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
-import { Line } from "@react-three/drei";
 import * as THREE from "three";
 import { COLORS } from "../../styles/chronixel";
 
@@ -49,7 +48,7 @@ function NetworkScene({ frame, fps }: NetworkSceneProps) {
     );
   });
 
-  const edges: Array<{ points: THREE.Vector3[]; opacity: number }> = [];
+  const edges: Array<{ points: [THREE.Vector3, THREE.Vector3]; opacity: number }> = [];
   for (let i = 0; i < nodes.length; i++) {
     for (let j = i + 1; j < nodes.length; j++) {
       const dist = nodes[i].distanceTo(nodes[j]);
@@ -64,16 +63,11 @@ function NetworkScene({ frame, fps }: NetworkSceneProps) {
       <ambientLight intensity={0.15} />
       <pointLight position={[4, 4, 4]} intensity={2.5} color={ACCENT} />
 
-      {edges.map(({ points, opacity }, i) => (
-        <Line
-          key={`e-${i}`}
-          points={points}
-          color={ACCENT}
-          lineWidth={0.6}
-          transparent
-          opacity={opacity}
-        />
-      ))}
+      {edges.map(({ points, opacity }, i) => {
+        const geo = new THREE.BufferGeometry().setFromPoints(points);
+        const mat = new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity });
+        return <primitive key={`e-${i}`} object={new THREE.Line(geo, mat)} />;
+      })}
 
       {nodes.map((pos, i) => {
         const pulse = 0.5 + 0.5 * Math.sin(t * 2 + i * 0.8);
