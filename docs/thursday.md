@@ -45,6 +45,26 @@ cd remotion && npm run dev
 
 ---
 
+## Step 1b — Start render server (first Thursday of the week)
+
+The render server handles batch stills and long-form renders via HTTP. Start it once and leave it running:
+
+```bash
+cd remotion/server
+npm install          # first time only
+ts-node index.ts &   # starts on http://localhost:3001
+```
+
+Health check:
+```bash
+curl http://localhost:3001/health
+# → {"status":"ok","bundleCached":false}
+```
+
+The first render request triggers a one-time Webpack bundle (~60s). Subsequent renders are fast.
+
+---
+
 ## Step 2 — Render long-form videos
 
 **Render all 3 at once:**

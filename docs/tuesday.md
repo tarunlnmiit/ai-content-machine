@@ -235,6 +235,27 @@ Save to: `content/derivatives/{week}/{slug}/shorts_manifest.json`
 
 ## Step 3 — Generate social images (~10 min)
 
+### Option A — Remotion animated PNGs (recommended, requires render server)
+
+Exports pixel-perfect PNGs from the Remotion `SocialCard1x1`, `SocialCard9x16`, and `Thumbnail` compositions:
+
+```bash
+# Ensure render server is running (see thursday.md Step 1b)
+# cd remotion/server && ts-node index.ts &
+
+python3 scripts/export_social_cards.py --week {week}
+
+# Or single niche:
+python3 scripts/export_social_cards.py --week {week} --niche ds
+
+# Dry run to verify before exporting:
+python3 scripts/export_social_cards.py --week {week} --dry-run
+```
+
+Outputs: `assets/social_posts/{week}/{slug}_social_1x1.png`, `{slug}_social_9x16.png`, `output/visuals/{week}/{slug}_thumb.png`
+
+### Option B — Claude-generated social images (fallback)
+
 ```bash
 # All 3 niches in one pass:
 python3 scripts/generate_social_images.py --week {week}
