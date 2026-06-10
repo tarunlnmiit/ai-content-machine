@@ -23,9 +23,7 @@ Slides:
   4. Your First Real Program
   5. Error Messages as Feedback
 
-#Python #DataScience #Programming #LearningToCode #Tutorial
-
-Full post 👉 https://medium.com/@tarun-gupta/f05524d76808",2026-06-17,08:00:00,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,POST,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Breath of Data Science
+#Python #DataScience #Programming #LearningToCode #Tutorial",2026-06-17,08:00:00,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,POST,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Breath of Data Science
 "Most Python tutorials teach syntax memorization. You collect rules, drown in details, miss the entire point.
 
 Data science Python is different. Environment setup matters. Thinking comes before code. Your first program touches real data, not Hello World.
@@ -33,63 +31,3 @@ Data science Python is different. Environment setup matters. Thinking comes befo
 Here's what tutorials skip: virtual environments, computational thinking, error messages as feedback. That foundation scales.
 
 [BLOG_LINK]",2026-06-17,20:00:00,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Breath of Data Science
-"Python will give you a wrong answer without telling you.
-
-Not an error. Not a crash. A number that looks right.
-
-It happens when a column of ages loads as strings. Python does not add them — it concatenates. No warning. No flag.
-
-This is why types matter before anything else in data science.
-
-Tutorial 2 covers the four building blocks you need before pandas:
-
-→ int, float, str, bool — and why they behave differently
-→ Lists vs dicts — and when to use which
-→ List comprehensions — one line instead of five
-→ Functions — the thing that makes your code trustworthy
-
-Slide through. Save for when the silent bug finally bites.
-
-[BLOG_LINK]
-
-Slides:
-  1. Python gave me a confident wrong answer
-  2. The silent type bug, explained
-  3. 4 types Python uses (and how they differ)
-  4. Lists vs Dicts: which one you actually need
-  5. List comprehensions in one line
-  6. Functions: write once, trust forever
-  7. What comes next: Tutorial 3
-
-#Python #DataScience #PythonProgramming #LearnPython #DataAnalysis",2026-06-17,08:00:00,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,POST,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Breath of Data Science
-Python won't warn you when a column of ages sums to '283542' instead of 105. No error. No crash. Just a confident wrong number in your report. Checking types before any calculation isn't advanced — it's the first habit worth building. [BLOG_LINK],2026-06-17,20:00:00,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Breath of Data Science
-"Your Python loop is 200x slower than it needs to be.
-
-NumPy isn't just a library. It's a different way of thinking about data.
-
-Instead of writing loops, you write operations — and NumPy applies them to every element at once.
-
-scores[scores > 90]
-
-That one line is filtering, boolean logic, and vectorization in 19 characters. No loop. No append. Just a description of what you want.
-
-Swipe through to see the mental model shift — from Python loops to array operations. This is Tutorial 3/10 in the Python for Data Science series. Full post linked in bio.
-
-Slides:
-  1. Your Python loop is 200x slower than it needs to be
-  2. What NumPy actually is (and why it's faster)
-  3. 3 ways to create arrays you'll actually use
-  4. Stop looping. Start describing.
-  5. Boolean indexing: filter without writing a loop
-  6. Mean, std, percentile — aggregations in one line
-  7. 2D arrays: rows, columns, and the axis problem
-  8. The mental shift that makes Pandas click
-
-#Python #DataScience #NumPy #LearnPython #DataScienceTips",2026-06-17,08:00:00,FALSE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,POST,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Breath of Data Science
-"Spent an hour writing nested loops to compute metrics across a dataset once. Felt good about finally getting it working.
-
-Then learned the same operation was two NumPy lines.
-
-The speed difference wasn't the sting. It was realizing I'd manually solved a problem that was solved in 2006.
-
-That's the NumPy tutorial. [BLOG_LINK]",2026-06-17,20:00:00,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Breath of Data Science
