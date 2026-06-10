@@ -1,0 +1,1 @@
+Waiting on permission. Please approve the write to `content/derivatives/2026-W24/2026-06-08_life_self_dev_.../youtube_script.txt` — that's where all derivative content for this slug lives.
