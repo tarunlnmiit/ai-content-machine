@@ -16,18 +16,17 @@ const IMAGE_EXT_RE = /\.(png|jpe?g|webp|gif|avif)$/i;
 import { createTikTokStyleCaptions } from "@remotion/captions";
 import type { Caption } from "@remotion/captions";
 import { CaptionPage } from "./CaptionPage";
+import { TitleCard } from "./TitleCard";
+import { LowerThird } from "./LowerThird";
+import { OutroCard } from "./OutroCard";
 import type { EditPlan, CutSegment } from "../types";
+import type { Niche } from "../styles/chronixel";
 
 const SWITCH_CAPTIONS_EVERY_MS = 1500;
 const MAIN_VIDEO_VOLUME = 1.6;
 
-// Subtle punch-in at each cut point. A human editor nudges the scale on a cut so
-// the jump reads as intentional rather than a jarring jump-cut. Kept gentle —
-// ~3.5% over ~0.23s, easing out. Applied only to segments after the first.
 const CUT_PUNCH_SCALE = 1.035;
 const CUT_PUNCH_FRAMES = 7;
-
-type Niche = "ds" | "life" | "poetry";
 
 interface Grading {
   filter: string;
@@ -93,11 +92,9 @@ interface CameraSegmentProps {
   trimBefore: number;
   trimAfter: number;
   filter: string;
-  /** True for cut points (every segment after the first) — applies the punch-in. */
   punchIn: boolean;
 }
 
-/** One keep-segment of camera footage, with a subtle scale punch-in on cuts. */
 function CameraSegment({ src, trimBefore, trimAfter, filter, punchIn }: CameraSegmentProps) {
   const frame = useCurrentFrame();
   const scale = punchIn
@@ -130,10 +127,6 @@ function getSegments(plan: EditPlan): CutSegment[] {
   return [{ startSec: plan.silenceTrimStartSec, endSec: plan.silenceTrimEndSec }];
 }
 
-/**
- * Maps a timestamp in original video time to a frame in the edit timeline.
- * Returns null if the timestamp falls inside a cut region.
- */
 function originalSecToEditFrame(
   originalSec: number,
   segments: CutSegment[],
@@ -182,9 +175,12 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
   const segments = getSegments(plan);
   const grading = gradingFor(plan.niche);
 
-  // Build segment layout: each segment's position in the edit timeline
+  const titleCardFrames = plan.titleCard?.durationFrames ?? 0;
+  const outroCardFrames = plan.outroCard?.durationFrames ?? 0;
+
+  // Build segment layout with optional titleCard offset
   const segmentLayouts = (() => {
-    let cumulative = 0;
+    let cumulative = titleCardFrames;
     return segments.map((seg) => {
       const startFrame = Math.floor(seg.startSec * fps);
       const endFrame = Math.ceil(seg.endSec * fps);
@@ -195,13 +191,33 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
     });
   })();
 
+  const editBodyEnd =
+    segmentLayouts.length > 0
+      ? segmentLayouts[segmentLayouts.length - 1].editOffset +
+        segmentLayouts[segmentLayouts.length - 1].durationFrames
+      : titleCardFrames;
+
   const { pages } = createTikTokStyleCaptions({
     captions,
     combineTokensWithinMilliseconds: SWITCH_CAPTIONS_EVERY_MS,
   });
 
+  const bgColor = plan.greenScreen ? "#00FF00" : "#000";
+
   return (
-    <AbsoluteFill style={{ backgroundColor: "#000" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
+      {/* Optional TitleCard at start */}
+      {plan.titleCard && (
+        <Sequence from={plan.titleCard.insertAtFrame} durationInFrames={titleCardFrames}>
+          <TitleCard
+            titleText={plan.titleCard.titleText}
+            showName={plan.titleCard.showName}
+            durationInFrames={titleCardFrames}
+            niche={plan.niche}
+          />
+        </Sequence>
+      )}
+
       {/* Stitched camera footage — one <Video> per keep-segment */}
       {segmentLayouts.map(({ seg, startFrame, endFrame, durationFrames, editOffset }, i) => (
         <Sequence key={`seg-${i}`} from={editOffset} durationInFrames={durationFrames}>
@@ -209,14 +225,14 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
             src={staticFile(plan.rawVideo)}
             trimBefore={startFrame}
             trimAfter={endFrame}
-            filter={grading.filter}
+            filter={plan.greenScreen ? "none" : grading.filter}
             punchIn={i > 0}
           />
         </Sequence>
       ))}
 
-      {/* Per-niche color tint overlay (above camera, below b-roll) */}
-      {grading.overlayColor && (
+      {/* Per-niche color tint (above camera, below b-roll) */}
+      {!plan.greenScreen && grading.overlayColor && (
         <AbsoluteFill
           style={{
             backgroundColor: grading.overlayColor,
@@ -226,8 +242,7 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
         />
       )}
 
-      {/* B-roll overlays — full opacity, hides talking head completely.
-          Images (.png/.jpg/etc.) for ds [SCREEN:] cues use <Img>; videos use <OffthreadVideo>. */}
+      {/* B-roll overlays */}
       {plan.brollCues.map((cue) => {
         const editFrame = originalSecToEditFrame(cue.startSec, segments, fps);
         if (editFrame === null || editFrame < 0) return null;
@@ -236,12 +251,12 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
         const mediaStyle = {
           width: "100%",
           height: "100%",
-          objectFit: "contain" as const,  // contain for code screenshots, avoid crop
+          objectFit: "contain" as const,
           opacity: 1,
         };
 
         return (
-          <Sequence key={cue.id} from={editFrame} durationInFrames={durationFrames}>
+          <Sequence key={cue.id} from={editFrame + titleCardFrames} durationInFrames={durationFrames}>
             <AbsoluteFill style={{ backgroundColor: "#000" }}>
               {isImage ? (
                 <Img src={staticFile(cue.clipFile)} style={mediaStyle} />
@@ -257,22 +272,37 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
         );
       })}
 
-      {/* Film grain + vignette (poetry strong, life subtle, ds none). Under captions. */}
-      <FilmGrainOverlay niche={plan.niche} />
+      {/* Film grain + vignette */}
+      {!plan.greenScreen && <FilmGrainOverlay niche={plan.niche} />}
 
-      {/* Animated captions — only rendered when showSubtitles: true in edit plan */}
+      {/* Optional LowerThird overlay */}
+      {plan.lowerThird && (
+        <Sequence
+          from={plan.lowerThird.insertAtFrame + titleCardFrames}
+          durationInFrames={plan.lowerThird.durationFrames}
+        >
+          <LowerThird
+            text={plan.lowerThird.text}
+            durationInFrames={plan.lowerThird.durationFrames}
+            niche={plan.niche}
+          />
+        </Sequence>
+      )}
+
+      {/* Animated captions */}
       {plan.showSubtitles && pages.map((page, index) => {
-        const editFrame = originalSecToEditFrame(page.startMs / 1000, segments, fps);
-        if (editFrame === null) return null;
+        const rawEditFrame = originalSecToEditFrame(page.startMs / 1000, segments, fps);
+        if (rawEditFrame === null) return null;
+        const editFrame = rawEditFrame + titleCardFrames;
 
         const nextPage = pages[index + 1] ?? null;
-        const nextEditFrame = nextPage
+        const nextRawFrame = nextPage
           ? originalSecToEditFrame(nextPage.startMs / 1000, segments, fps)
           : null;
 
         const endFrame =
-          nextEditFrame !== null
-            ? nextEditFrame
+          nextRawFrame !== null
+            ? nextRawFrame + titleCardFrames
             : editFrame + Math.ceil((SWITCH_CAPTIONS_EVERY_MS / 1000) * fps);
 
         const durationInFrames = endFrame - editFrame;
@@ -284,6 +314,18 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
           </Sequence>
         );
       })}
+
+      {/* Optional OutroCard appended after edit body */}
+      {plan.outroCard && (
+        <Sequence from={editBodyEnd} durationInFrames={outroCardFrames}>
+          <OutroCard
+            nextText={plan.outroCard.nextText}
+            episodeTitle={plan.outroCard.episodeTitle}
+            durationInFrames={outroCardFrames}
+            niche={plan.niche}
+          />
+        </Sequence>
+      )}
     </AbsoluteFill>
   );
 }

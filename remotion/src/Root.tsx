@@ -1,7 +1,34 @@
 import "./index.css";
 import { Composition, staticFile } from "remotion";
+
+// Compositions
 import { TalkingHeadEdit } from "./compositions/TalkingHeadEdit";
 import type { TalkingHeadEditProps } from "./compositions/TalkingHeadEdit";
+import { TitleCard } from "./compositions/TitleCard";
+import { LowerThird } from "./compositions/LowerThird";
+import { OutroCard } from "./compositions/OutroCard";
+import { ShortClip } from "./compositions/ShortClip";
+import type { ShortClipProps } from "./compositions/ShortClip";
+import { DSMotionShort, LifeMotionShort, PoetryMotionShort } from "./compositions/MotionShort";
+import { AudiogramFeed, AudiogramStory } from "./compositions/Audiogram";
+import { SocialCard1x1, SocialCard9x16 } from "./compositions/SocialCard";
+import { Thumbnail } from "./compositions/Thumbnail";
+import { AbstractDS } from "./compositions/abstract/AbstractDS";
+import { AbstractLife } from "./compositions/abstract/AbstractLife";
+import { AbstractPoetry } from "./compositions/abstract/AbstractPoetry";
+
+// Scene library
+import { WordReveal } from "./compositions/scenes/WordReveal";
+import { AtmosphericQuote } from "./compositions/scenes/AtmosphericQuote";
+import { NumberedTips } from "./compositions/scenes/NumberedTips";
+import { DataVizReveal } from "./compositions/scenes/DataVizReveal";
+import { CodeAnnotation } from "./compositions/scenes/CodeAnnotation";
+import { ConceptExplainer } from "./compositions/scenes/ConceptExplainer";
+import { ToolComparison } from "./compositions/scenes/ToolComparison";
+import { TransformationArc } from "./compositions/scenes/TransformationArc";
+import { HabitLoop } from "./compositions/scenes/HabitLoop";
+import { LineReveal } from "./compositions/scenes/LineReveal";
+
 import type { CalculateMetadataFunction } from "remotion";
 import type { EditPlan } from "./types";
 
@@ -12,7 +39,7 @@ async function loadEditPlan(editPlanFile: string): Promise<EditPlan> {
   return res.json();
 }
 
-const calcMeta: CalculateMetadataFunction<TalkingHeadEditProps> = async ({
+const calcMetaTalkingHead: CalculateMetadataFunction<TalkingHeadEditProps> = async ({
   props,
 }) => {
   const plan = await loadEditPlan(props.editPlanFile);
@@ -20,16 +47,21 @@ const calcMeta: CalculateMetadataFunction<TalkingHeadEditProps> = async ({
     plan.cutSegments && plan.cutSegments.length > 0
       ? plan.cutSegments
       : [{ startSec: plan.silenceTrimStartSec, endSec: plan.silenceTrimEndSec }];
-  const totalSec = segments.reduce(
-    (sum, seg) => sum + (seg.endSec - seg.startSec),
-    0
-  );
-  return { durationInFrames: Math.ceil(totalSec * FPS) };
+  const editSec = segments.reduce((sum, seg) => sum + (seg.endSec - seg.startSec), 0);
+  const titleCardSec = plan.titleCard ? plan.titleCard.durationFrames / FPS : 0;
+  const outroCardSec = plan.outroCard ? plan.outroCard.durationFrames / FPS : 0;
+  return { durationInFrames: Math.ceil((editSec + titleCardSec + outroCardSec) * FPS) };
+};
+
+const calcMetaShortClip: CalculateMetadataFunction<ShortClipProps> = async ({ props }) => {
+  const dur = props.clipEndSec - props.clipStartSec;
+  return { durationInFrames: Math.ceil(dur * FPS) };
 };
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* ── Long-form talking head ── */}
       <Composition
         id="LifeHabits"
         component={TalkingHeadEdit}
@@ -38,7 +70,7 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         durationInFrames={900}
         defaultProps={{ editPlanFile: "edit-plans/life_habits.json" }}
-        calculateMetadata={calcMeta}
+        calculateMetadata={calcMetaTalkingHead}
       />
       <Composition
         id="PoetryLove"
@@ -48,7 +80,7 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         durationInFrames={900}
         defaultProps={{ editPlanFile: "edit-plans/poetry_love.json" }}
-        calculateMetadata={calcMeta}
+        calculateMetadata={calcMetaTalkingHead}
       />
       <Composition
         id="PoetryWhenDreamsSpeak"
@@ -58,7 +90,7 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         durationInFrames={900}
         defaultProps={{ editPlanFile: "edit-plans/2026-05-21-poetry-quotes-when-dreams-speak-of-love.json" }}
-        calculateMetadata={calcMeta}
+        calculateMetadata={calcMetaTalkingHead}
       />
       <Composition
         id="DsCompletePythonCourse"
@@ -68,12 +100,9 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         durationInFrames={900}
         defaultProps={{ editPlanFile: "edit-plans/2026-05-21-ds-complete-python-course.json" }}
-        calculateMetadata={calcMeta}
+        calculateMetadata={calcMetaTalkingHead}
       />
-      {/* Generic comp for ANY new talking-head video (course lessons, weekly videos).
-          No need to register a new Composition per slug — render with --props override:
-            npx remotion render CourseLesson out.mp4 --props='{"editPlanFile":"edit-plans/<slug>.json"}'
-          Niche grading/grain come from the loaded plan, so any niche works through this one comp. */}
+      {/* Generic workhorse — render any slug with --props override */}
       <Composition
         id="CourseLesson"
         component={TalkingHeadEdit}
@@ -82,7 +111,347 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         durationInFrames={900}
         defaultProps={{ editPlanFile: "edit-plans/life_habits.json" }}
-        calculateMetadata={calcMeta}
+        calculateMetadata={calcMetaTalkingHead}
+      />
+
+      {/* ── Overlay components (preview in studio) ── */}
+      <Composition
+        id="TitleCard"
+        component={TitleCard}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={90}
+        defaultProps={{ titleText: "Preview Title", niche: "ds" as const, durationInFrames: 90 }}
+      />
+      <Composition
+        id="LowerThird"
+        component={LowerThird}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={90}
+        defaultProps={{ text: "Preview Lower Third", niche: "ds" as const, durationInFrames: 90 }}
+      />
+      <Composition
+        id="OutroCard"
+        component={OutroCard}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={150}
+        defaultProps={{ nextText: "Up Next: Preview", niche: "ds" as const, durationInFrames: 150 }}
+      />
+
+      {/* ── Short-form ── */}
+      <Composition
+        id="ShortClip"
+        component={ShortClip}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        durationInFrames={900}
+        defaultProps={{
+          editPlanFile: "edit-plans/life_habits.json",
+          clipStartSec: 0,
+          clipEndSec: 60,
+        }}
+        calculateMetadata={calcMetaShortClip}
+      />
+      <Composition
+        id="DSMotionShort"
+        component={DSMotionShort}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        durationInFrames={450}
+        defaultProps={{ scenePlanFile: "scene-plans/ds_sample.json" }}
+      />
+      <Composition
+        id="LifeMotionShort"
+        component={LifeMotionShort}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        durationInFrames={450}
+        defaultProps={{ scenePlanFile: "scene-plans/life_sample.json" }}
+      />
+      <Composition
+        id="PoetryMotionShort"
+        component={PoetryMotionShort}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        durationInFrames={450}
+        defaultProps={{ scenePlanFile: "scene-plans/poetry_sample.json" }}
+      />
+
+      {/* ── Audiogram ── */}
+      <Composition
+        id="AudiogramFeed"
+        component={AudiogramFeed}
+        fps={FPS}
+        width={1080}
+        height={1080}
+        durationInFrames={300}
+        defaultProps={{
+          audioFile: "audio/sample.mp3",
+          startSec: 0,
+          endSec: 10,
+          quote: "Sample quote for preview",
+          niche: "ds" as const,
+          podcastName: "Breath of Data Science",
+        }}
+      />
+      <Composition
+        id="AudiogramStory"
+        component={AudiogramStory}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        durationInFrames={300}
+        defaultProps={{
+          audioFile: "audio/sample.mp3",
+          startSec: 0,
+          endSec: 10,
+          quote: "Sample quote for preview",
+          niche: "ds" as const,
+          podcastName: "Breath of Data Science",
+        }}
+      />
+
+      {/* ── Social cards ── */}
+      <Composition
+        id="SocialCard1x1"
+        component={SocialCard1x1}
+        fps={FPS}
+        width={1080}
+        height={1080}
+        durationInFrames={150}
+        defaultProps={{ headline: "Preview Headline", niche: "ds" as const }}
+      />
+      <Composition
+        id="SocialCard9x16"
+        component={SocialCard9x16}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        durationInFrames={150}
+        defaultProps={{ headline: "Preview Headline", niche: "life" as const }}
+      />
+
+      {/* ── Thumbnail (still export) ── */}
+      <Composition
+        id="Thumbnail"
+        component={Thumbnail}
+        fps={FPS}
+        width={1280}
+        height={720}
+        durationInFrames={1}
+        defaultProps={{
+          titleText: "Preview Thumbnail",
+          niche: "ds" as const,
+          variant: "a" as const,
+          bgType: "dark" as const,
+        }}
+      />
+
+      {/* ── Abstract B-roll (30-second loops) ── */}
+      <Composition
+        id="AbstractDS"
+        component={AbstractDS}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={900}
+        defaultProps={{}}
+      />
+      <Composition
+        id="AbstractLife"
+        component={AbstractLife}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={900}
+        defaultProps={{}}
+      />
+      <Composition
+        id="AbstractPoetry"
+        component={AbstractPoetry}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={900}
+        defaultProps={{}}
+      />
+
+      {/* ── Scene library (preview individually) ── */}
+      <Composition
+        id="WordReveal"
+        component={WordReveal}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={150}
+        defaultProps={{
+          words: ["Every", "word", "matters", "in", "*data*"],
+          niche: "ds" as const,
+        }}
+      />
+      <Composition
+        id="AtmosphericQuote"
+        component={AtmosphericQuote}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{
+          quote: "The best insights hide in plain sight.",
+          niche: "ds" as const,
+        }}
+      />
+      <Composition
+        id="NumberedTips"
+        component={NumberedTips}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={210}
+        defaultProps={{
+          tips: [
+            { number: 1, headline: "Start with the data", body: "Clean before you explore" },
+            { number: 2, headline: "Ask the right question", body: "Framing matters most" },
+            { number: 3, headline: "Tell the story", body: "Visuals over tables" },
+          ],
+          niche: "ds" as const,
+        }}
+      />
+      <Composition
+        id="DataVizReveal"
+        component={DataVizReveal}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{
+          data: [
+            { label: "2020", value: 42 },
+            { label: "2021", value: 61 },
+            { label: "2022", value: 75 },
+            { label: "2023", value: 88 },
+            { label: "2024", value: 95 },
+          ],
+          niche: "ds" as const,
+          title: "Model Accuracy Over Years",
+        }}
+      />
+      <Composition
+        id="CodeAnnotation"
+        component={CodeAnnotation}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={150}
+        defaultProps={{
+          code: [
+            "import pandas as pd",
+            "",
+            "df = pd.read_csv('data.csv')",
+            "df['score'] = df['score'].fillna(0)",
+            "result = df.groupby('category').mean()",
+          ],
+          highlightLine: 3,
+          annotationText: "fillna prevents NaN errors downstream",
+          language: "python",
+          niche: "ds" as const,
+        }}
+      />
+      <Composition
+        id="ConceptExplainer"
+        component={ConceptExplainer}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{
+          headline: "Three Core Concepts",
+          cards: [
+            { term: "Precision", definition: "Of all predicted positives, how many are actually positive?" },
+            { term: "Recall", definition: "Of all actual positives, how many did we catch?" },
+            { term: "F1 Score", definition: "Harmonic mean of precision and recall." },
+          ],
+          niche: "ds" as const,
+        }}
+      />
+      <Composition
+        id="ToolComparison"
+        component={ToolComparison}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{
+          leftSide: {
+            label: "Pandas",
+            points: ["In-memory only", "Single threaded", "Great for < 1M rows"],
+          },
+          rightSide: {
+            label: "Polars",
+            badge: "Faster",
+            points: ["Lazy evaluation", "Multi-threaded", "Handles 100M+ rows"],
+          },
+          niche: "ds" as const,
+        }}
+      />
+      <Composition
+        id="TransformationArc"
+        component={TransformationArc}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={210}
+        defaultProps={{
+          beforeLabel: "Scattered",
+          afterLabel: "Intentional",
+          beforePoints: ["No morning routine", "Reactive all day", "Energy depletes by noon"],
+          afterPoints: ["Anchored 3 habits", "Proactive focus blocks", "Energy compounds"],
+          niche: "life" as const,
+        }}
+      />
+      <Composition
+        id="HabitLoop"
+        component={HabitLoop}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{
+          title: "The Habit Loop",
+          steps: [
+            { label: "Cue", sublabel: "Trigger" },
+            { label: "Craving", sublabel: "Motivation" },
+            { label: "Response", sublabel: "The habit" },
+            { label: "Reward", sublabel: "Reinforcement" },
+          ],
+          progress: 1,
+          niche: "life" as const,
+        }}
+      />
+      <Composition
+        id="LineReveal"
+        component={LineReveal}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{
+          lines: [
+            "We loved with a love",
+            "that was more than love",
+          ],
+          attribution: "Edgar Allan Poe",
+          niche: "poetry" as const,
+        }}
       />
     </>
   );

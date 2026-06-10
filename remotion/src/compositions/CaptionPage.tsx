@@ -1,18 +1,19 @@
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import type { TikTokPage } from "@remotion/captions";
+import { FONTS } from "../styles/chronixel";
 
 const HIGHLIGHT_COLOR = "#FFD700";
 const TEXT_COLOR = "#FFFFFF";
 
 interface CaptionPageProps {
   page: TikTokPage;
+  fontSize?: number;
 }
 
-export function CaptionPage({ page }: CaptionPageProps) {
+export function CaptionPage({ page, fontSize = 48 }: CaptionPageProps) {
   const frame = useCurrentFrame();
   const { fps, height } = useVideoConfig();
   const currentTimeMs = (frame / fps) * 1000;
-  // Keep text within the center 9:16 crop safe zone (height * 9/16 wide)
   const safeZoneWidth = height * (9 / 16);
   const captionMaxWidth = safeZoneWidth * 0.88;
   const absoluteTimeMs = page.startMs + currentTimeMs;
@@ -41,9 +42,9 @@ export function CaptionPage({ page }: CaptionPageProps) {
       >
         <span
           style={{
-            fontSize: 48,
+            fontSize,
             fontWeight: 700,
-            fontFamily: "Arial, sans-serif",
+            fontFamily: FONTS.heading,
             whiteSpace: "pre-wrap",
             lineHeight: 1.3,
           }}
@@ -54,7 +55,13 @@ export function CaptionPage({ page }: CaptionPageProps) {
             return (
               <span
                 key={token.fromMs}
-                style={{ color: isActive ? HIGHLIGHT_COLOR : TEXT_COLOR }}
+                style={{
+                  color: isActive ? HIGHLIGHT_COLOR : TEXT_COLOR,
+                  display: "inline-block",
+                  transform: isActive ? "scale(1.08)" : "scale(1)",
+                  filter: isActive ? "brightness(1.2)" : "brightness(1)",
+                  transition: "transform 80ms ease-out, filter 80ms ease-out",
+                }}
               >
                 {token.text}
               </span>
