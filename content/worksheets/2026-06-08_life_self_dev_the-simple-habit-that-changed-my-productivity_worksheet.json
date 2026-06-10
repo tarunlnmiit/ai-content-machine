@@ -1,0 +1,44 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "Your Productivity Reboot: Choosing and Implementing One Simple Habit",
+  "sections": [
+    {
+      "title": "Diagnosis: Which Productivity Gap Are You Actually Experiencing?",
+      "prompt": [
+        "Do you find yourself physically done with work but mentally still spinning on it? If yes, Shutdown Ritual might be your entry point.",
+        "Are you forgetting ideas mid-thought, or losing track of what needs to happen? Brain Dump could be the reset you need.",
+        "Do you start each day overwhelmed by everything, unsure which thing matters most? Eating the Frog (one only) might be your starting habit.",
+        "Which of these resonates most: lack of closure, decision fatigue, mental clutter, unfinished loops in your head, or no visibility of what you've actually accomplished?"
+      ]
+    },
+    {
+      "title": "Your Chosen Habit: Specific Implementation Plan",
+      "prompt": [
+        "Which ONE habit from the blog will you start with this week? Name it and write it down \u2014 this is your commitment.",
+        "What does this habit look like in your actual day? Be specific: the time, the place, and the tool (pen and paper only, per the blog's philosophy).",
+        "What's the smallest version of this habit you could do today? Example: for Shutdown Ritual, just 2 minutes. For Brain Dump, one page.",
+        "What will stop you from doing this? (Honesty required: friction, forgetfulness, or doubt?) How will you remove that one barrier?"
+      ]
+    },
+    {
+      "title": "Your First Week: Daily Contact Points",
+      "prompt": [
+        "Each day Monday through Sunday: Did you do your habit? What did you notice about your attention, your mood, or how you felt afterward?",
+        "The core insight from the blog: Each habit creates a moment of *contact* with how you're spending your attention. Where did you feel that contact this week? Be specific."
+      ]
+    },
+    {
+      "title": "Define Your One Metric for This Week",
+      "prompt": [
+        "Based on your chosen habit, what ONE number matters right now? Examples: shutdown rituals completed, brain-dump pages written, deepwork blocks finished, top-three lists written the night before, items on your done list, or weeks you actually tracked something.",
+        "Write down your metric and your realistic target for this week. (5 out of 7 days is a solid starting goal.)",
+        "End-of-week reflection: Did you hit your metric? What does that tell you about whether this habit is the right starting point for you?"
+      ]
+    }
+  ],
+  "cta": "One of these 7 habits probably named something you couldn't name before \u2014 a productivity gap you've been feeling but never quite articulated. Start with that one. After your first week, reply with which habit you chose and what shifted. Your answer helps others find their entry point too.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity.md",
+  "slug": "2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity"
+}

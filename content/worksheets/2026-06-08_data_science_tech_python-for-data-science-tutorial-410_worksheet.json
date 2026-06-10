@@ -1,0 +1,31 @@
+{
+  "type": "practice_guide",
+  "niche": "data_science_tech",
+  "title": "Build Your Data Story: The Visualization Checklist from Insight to Persuasion",
+  "sections": [
+    {
+      "title": "Define Your Data Story's Core Message",
+      "prompt": "Identify a dataset or analysis you completed recently. In one sentence, write the insight that matters most. Now map it: What's the problem your data solves? What's your key finding? What decision should follow? This is your story's spine\u2014your visualization must support it."
+    },
+    {
+      "title": "Choose Your Plot Type (Because Charts Aren't Neutral)",
+      "prompt": "Take your insight from above. Sketch how it would look as: (1) a bar chart, (2) a line chart, (3) a scatter plot. For each, note what truth it reveals and what it hides. Which shape tells your story best? Which could mislead? Explain why the right choice matters."
+    },
+    {
+      "title": "Spot and Fix Design Mistakes That Kill Credibility",
+      "prompt": "Review a visualization you made in the last month. Count the colors (max 5\u20136?). Check your axis labels (descriptive or vague?). Do you have a cluttered legend? Identify one mistake from the blog that applies to you. Rewrite it\u2014what changes?"
+    },
+    {
+      "title": "Code It with Intention: Matplotlib or Seaborn",
+      "prompt": "Build a simple visualization using either library. Include: descriptive axis labels, intentional color choices (max 5\u20136), meaningful title. For each design choice, write a comment explaining why you made it. The code should tell the story of your thinking."
+    },
+    {
+      "title": "Test Your Story: Does It Land Without Explanation?",
+      "prompt": "Share your visualization with someone unfamiliar with the data. Don't explain it. Ask: 'What's the main story?' and 'What question do you have?' If their answer doesn't match your intent, what is the plot hiding or over-emphasizing by accident? How would you fix it?"
+    }
+  ],
+  "cta": "Rebuild one of your analyses using these principles. Add labels, remove the junk. Share how the visualization changed what people understood about your findings.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-W24/2026-06-08_data_science_tech_python-for-data-science-tutorial-410.md",
+  "slug": "2026-06-08_data_science_tech_python-for-data-science-tutorial-410"
+}

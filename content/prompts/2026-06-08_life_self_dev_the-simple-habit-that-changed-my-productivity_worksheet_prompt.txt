@@ -1,0 +1,35 @@
+Create a reflective worksheet PDF (A4, portrait) for "Your Productivity Reboot: Choosing and Implementing One Simple Habit"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 5 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Diagnosis: Which Productivity Gap Are You Actually Experiencing?
+   - Do you find yourself physically done with work but mentally still spinning on it? If yes, Shutdown Ritual might be your entry point.
+   - Are you forgetting ideas mid-thought, or losing track of what needs to happen? Brain Dump could be the reset you need.
+   - Do you start each day overwhelmed by everything, unsure which thing matters most? Eating the Frog (one only) might be your starting habit.
+   - Which of these resonates most: lack of closure, decision fatigue, mental clutter, unfinished loops in your head, or no visibility of what you've actually accomplished?
+
+2. Your Chosen Habit: Specific Implementation Plan
+   - Which ONE habit from the blog will you start with this week? Name it and write it down — this is your commitment.
+   - What does this habit look like in your actual day? Be specific: the time, the place, and the tool (pen and paper only, per the blog's philosophy).
+   - What's the smallest version of this habit you could do today? Example: for Shutdown Ritual, just 2 minutes. For Brain Dump, one page.
+   - What will stop you from doing this? (Honesty required: friction, forgetfulness, or doubt?) How will you remove that one barrier?
+
+3. Your First Week: Daily Contact Points
+   - Each day Monday through Sunday: Did you do your habit? What did you notice about your attention, your mood, or how you felt afterward?
+   - The core insight from the blog: Each habit creates a moment of *contact* with how you're spending your attention. Where did you feel that contact this week? Be specific.
+
+4. Define Your One Metric for This Week
+   - Based on your chosen habit, what ONE number matters right now? Examples: shutdown rituals completed, brain-dump pages written, deepwork blocks finished, top-three lists written the night before, items on your done list, or weeks you actually tracked something.
+   - Write down your metric and your realistic target for this week. (5 out of 7 days is a solid starting goal.)
+   - End-of-week reflection: Did you hit your metric? What does that tell you about whether this habit is the right starting point for you?
+
+
