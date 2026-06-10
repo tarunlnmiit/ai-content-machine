@@ -205,31 +205,40 @@ Scene plan files saved to: `remotion/public/scene-plans/{week}/`
 
 ### Create shorts manifest
 
-Create `content/derivatives/{week}/{slug}/shorts_manifest.json` for each slug. This drives `render_shorts_batch.py` on Thursday.
+Auto-generate motion-only manifests from scene plans (runs in seconds):
 
-Minimum viable manifest (clip-based shorts only — fastest):
+```bash
+python3 scripts/generate_shorts_manifest.py --week {week}
+
+# Dry run first to verify:
+python3 scripts/generate_shorts_manifest.py --week {week} --dry-run
+
+# Single niche:
+python3 scripts/generate_shorts_manifest.py --week {week} --niche ds
+```
+
+Writes `content/derivatives/{week}/{slug}/shorts_manifest.json` for all 3 slugs.
+
+**On Wednesday** — after recording footage, swap slots to clip-based:
 ```json
 [
-  {"slot": 0, "type": "clip", "editPlanFile": "edit-plans/{week}/{slug}.json", "clipStartSec": 30, "clipEndSec": 90},
+  {"slot": 0, "type": "clip", "editPlanFile": "edit-plans/{week}/{slug}.json", "clipStartSec": 30,  "clipEndSec": 90},
   {"slot": 1, "type": "clip", "editPlanFile": "edit-plans/{week}/{slug}.json", "clipStartSec": 150, "clipEndSec": 210},
   {"slot": 2, "type": "clip", "editPlanFile": "edit-plans/{week}/{slug}.json", "clipStartSec": 300, "clipEndSec": 360}
 ]
 ```
 
-Full manifest with motion graphic slots:
+Or mix motion + clip:
 ```json
 [
-  {"slot": 0, "type": "clip",   "editPlanFile": "edit-plans/{week}/{slug}.json", "clipStartSec": 30,  "clipEndSec": 90},
-  {"slot": 1, "type": "motion", "scenePlanFile": "scene-plans/{week}/{slug}_motion.json"},
-  {"slot": 2, "type": "clip",   "editPlanFile": "edit-plans/{week}/{slug}.json", "clipStartSec": 200, "clipEndSec": 260},
-  {"slot": 3, "type": "motion", "scenePlanFile": "scene-plans/{week}/{slug}_motion.json", "audioFile": "audio/{week}/{slug}_clip.mp3"}
+  {"slot": 0, "type": "motion", "scenePlanFile": "scene-plans/{week}/{slug}.json"},
+  {"slot": 1, "type": "clip",   "editPlanFile": "edit-plans/{week}/{slug}.json", "clipStartSec": 200, "clipEndSec": 260},
+  {"slot": 2, "type": "motion", "scenePlanFile": "scene-plans/{week}/{slug}.json", "audioFile": "audio/{week}/{slug}_clip.mp3"}
 ]
 ```
 
-- `type: "clip"` — cuts from long-form footage. Requires `editPlanFile` from Wednesday's prepare step.
-- `type: "motion"` — pure Remotion animation. Requires `scenePlanFile`. Optional `audioFile` for voiceover.
-
-Save to: `content/derivatives/{week}/{slug}/shorts_manifest.json`
+- `type: "clip"` — cuts from long-form footage. Requires `editPlanFile` from Wednesday.
+- `type: "motion"` — pure Remotion animation. Requires `scenePlanFile`.
 
 ---
 
