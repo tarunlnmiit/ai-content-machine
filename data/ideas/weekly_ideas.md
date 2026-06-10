@@ -1,5 +1,5 @@
 # Weekly Ideas Report
-Generated: 2026-06-08 10:09:45
+Generated: 2026-06-10 06:44:38
 
 ## Data Science Tech
 
@@ -27,11 +27,11 @@ Generated: 2026-06-08 10:09:45
 - **Source:** suggest_2026-06-06_google
 - **URL:** 
 
-### 5. I'm Tired of Talking to AI
+### 5. Do companies need AI for text to sql if there is an enormous analytics and data science team? or is it for companies with fragmented data?
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** hn_algolia
-- **URL:** https://orchidfiles.com/im-tired-of-ai-generated-answers/
+- **Source:** reddit_2026-05-28
+- **URL:** https://www.reddit.com/r/analytics/comments/1to0ov1/do_companies_need_ai_for_text_to_sql_if_there_is/
 
 ## Life Self Dev
 
@@ -47,11 +47,11 @@ Generated: 2026-06-08 10:09:45
 - **Source:** suggest_2026-06-06_google
 - **URL:** 
 
-### 3. The Simple Habit That Changed My Productivity
+### 3. Jaboukie Young-White explains personal growth #ziwe #jaboukie #comedyshorts #comedy #selfimprovement
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** youtube_2026-05-29
-- **URL:** https://youtu.be/EQm0jsNKXrQ
+- **Source:** youtube_2026-06-09
+- **URL:** https://youtu.be/5lOJbCNaBAA
 
 ### 4. Unnecessary repeated success advice
 - **Score:** 1.000
@@ -91,8 +91,8 @@ Generated: 2026-06-08 10:09:45
 - **Source:** suggest_2026-06-06_google
 - **URL:** 
 
-### 5. truth motivational quotes #motivation #changeyourmindsetchangeyourlife
+### 5. People Don't Know the Difference Between Writing a Book and Being a Writer...
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** youtube_2026-06-02
-- **URL:** https://youtu.be/dfYqGwpy7jk
+- **Source:** youtube_2026-06-09
+- **URL:** https://youtu.be/5Wkl-W45yY8
