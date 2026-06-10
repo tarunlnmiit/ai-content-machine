@@ -1,235 +1,287 @@
-# Thursday — DS Video: Script + Record + Edit + Reel + Upload (~2 hrs)
+# Thursday — Edit, Render & Upload Videos (~2–3 hrs)
 
-DS is self-contained today. Life + Poetry video production moves to Friday.
+Raw footage exists from Wednesday. Today: render long-form + shorts via Remotion, upload to YouTube, schedule.
 
 ## Thursday at a glance
 
-| Time | Action | Output goes live |
-|------|--------|------------------|
-| 12:00 PM | DS LinkedIn — reference for next week | Reminder: **next Wed 12 PM** (manual post) |
-| 1:00 PM | DS Twitter — reference for next week | Reminder: **next Wed 1 PM** (manual post) |
-| 2:00 PM | Script / Record / Edit DS video | — |
-| 6:00 PM | DS Substack + Medium + schedule.json | **DS Substack + Medium go live** · YouTube/Shorts queued for **next Thu 6 PM** |
-| 9:00 PM | DS shorts post (slot 7) | DS shorts queue — start **next Mon–Sun** |
+| Time | Action | Output |
+|------|--------|--------|
+| 9:00 AM | Prepare captions JSON (all 3) | `remotion/public/captions/{week}/{slug}.json` |
+| 9:30 AM | Render long-form videos (all 3) | `output/animations/{week}/{slug}.mp4` |
+| 10:30 AM | Render thumbnails (still export) | `output/visuals/{week}/{slug}_thumb.png` |
+| 11:00 AM | Upload DS long-form → YouTube | **@breathofdatascience** |
+| 11:15 AM | Upload Life long-form → YouTube | **@breathoflife_** |
+| 11:30 AM | Upload Poetry long-form → YouTube | **@breathofpoetry** |
+| 12:00 PM | Render shorts batch (all 3 niches) | `output/animations/{week}/{slug}_s*.mp4` |
+| 1:00 PM  | Upload shorts to all channels | YouTube Shorts — 2/day Mon–Sun queue |
+| 6:00 PM  | Videos go live | YouTube channels |
 
 ---
 
----
+## Step 1 — Prepare edit plans + captions
 
-## Step 0 — Check buffer for DS script (1 min)
+Each video needs an edit plan JSON and a captions JSON in `remotion/public/`:
 
-```bash
-ls content/buffer/week-1/data_science_tech/*_youtube_script.md 2>/dev/null
+```
+remotion/public/
+  edit-plans/{week}/{slug}.json      # EditPlan schema (see src/types.ts)
+  captions/{week}/{slug}.json        # Caption[] from @remotion/captions
 ```
 
-**Buffer has script?** → Skip Step 1. Use it directly:
-- Script: `content/buffer/week-1/data_science_tech/*_youtube_script.md`
-
-Jump to Step 2 (validate code blocks). After consuming: log in Notion as `Script`.
-
-**No buffer?** → Proceed with Step 1 below.
-
----
-
-## Step 1 — Generate DS YouTube script (~5 min)
-
-Screen recording script with [SCREEN:] cues:
+Generate captions from raw audio:
 ```bash
-python3 scripts/ghostwrite.py \
-  --source content/blogs/[monday_ds_blog].md \
-  --niche ds --format yt
-# --video-style screen is default for DS
-```
-
-Output: `content/scripts/YYYY-MM-DD-data-science-tech-{slug}_yt.md`
-- [SCREEN: show X] cues for screen transitions
-- [CODE_INSERT: filename/function] for code blocks
-- [PAUSE] markers for breath points
-
-Optional — conceptual DS (no screen recording):
-```bash
-python3 scripts/ghostwrite.py \
-  --source content/blogs/[monday_ds_blog].md \
-  --niche ds --format yt --video-style stock
-# Then follow Life/Poetry B-roll workflow (Friday)
-```
-
----
-
-## Step 1b — Generate animation prompts from script (~1 min)
-
-Extracts every `[ANIMATION: ...]` tag and writes Remotion component prompts.
-
-```bash
-python3 scripts/generate_animation_prompts.py \
-  content/scripts/YYYY-MM-DD-data-science-tech-{slug}_yt.md
-```
-
-Output: `content/prompts/{slug}_animation_prompts.txt` — one prompt per animation tag.
-Feed each prompt to Claude to generate the corresponding `remotion/src/compositions/` component.
-
-**To render MP4s directly** (skips manual TSX step — uses built-in templates):
-
-```bash
-python3 scripts/generate_animation_prompts.py \
-  content/scripts/YYYY-MM-DD-data-science-tech-{slug}_yt.md \
-  --render
-```
-
-Output: `output/animations/{slug}_{n}_{type}.mp4` — one MP4 per animation tag.
-
----
-
-## Step 2 — Generate teleprompter for DS script (~1 min)
-
-```bash
-python3 scripts/generate_teleprompter.py \
-  --script content/scripts/YYYY-MM-DD-data-science-tech-{slug}_yt.md \
-  --open
-```
-
-Output: `assets/teleprompter/{slug}_teleprompter.html` — opens in browser.
-Controls: `Space` start/pause · `↑↓` speed · `R` restart · `F` fullscreen
-
----
-
-## Step 3 — Screen record DS code walkthrough (30–45 min)
-
-1. Open teleprompter full-screen on a second monitor (or phone via AirPlay)
-2. Open screen recorder (ScreenFlow · OBS · built-in Mac)
-3. Open IDE showing blog code at 200% zoom for visibility
-4. Follow script — show code, run demos, narrate [SCREEN:] cues
-5. Save: `assets/video/raw/{slug}_screen.mp4`
-
----
-
-## Step 4 — Record DS voiceover (15–20 min)
-
-1. Read script aloud naturally at ~130 wpm
-2. Clap at [PAUSE] points (visible in waveform for easy trim)
-3. Save: `assets/audio/{slug}_voiceover.wav`
-
-Tools: Voice Memos (quick) · Audacity (control) · Adobe Audition (pro)
-
----
-
-## Step 5 — Generate captions with Whisper (~2 min)
-
-```bash
+# Whisper → JSON caption file
 python3 scripts/generate_captions.py \
-  --audio assets/audio/{slug}_voiceover.wav \
-  --format srt \
-  --output content/scripts/{slug}_captions.srt
+  --audio assets/raw/{week}/{slug}.mov \
+  --output remotion/public/captions/{week}/{slug}.json
+```
+
+Build/update the edit plan (cut segments, b-roll cues):
+```bash
+# Open in Remotion Studio for visual timeline editing
+cd remotion && npm run dev
+# → http://localhost:3000 → CourseLesson → adjust props live
 ```
 
 ---
 
-## Step 5b — Generate DS thumbnail image (~2 min)
+## Step 2 — Render long-form videos
 
-Thumbnail brief already generated Tuesday. Render it to HTML + PNG now:
+**Render all 3 at once:**
+```bash
+python3 scripts/render_week.py --week 2026-W{nn}
+```
+
+**Or render a single slug:**
+```bash
+cd remotion
+npx remotion render CourseLesson output/animations/2026-W{nn}/{slug}.mp4 \
+  --props='{"editPlanFile":"edit-plans/2026-W{nn}/{slug}.json"}'
+```
+
+Long-form output: `output/animations/{week}/{slug}.mp4`
+
+---
+
+## Step 3 — Render thumbnails
 
 ```bash
-conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
-  --blog content/blogs/[monday_ds_blog].md
+cd remotion
 
-# Open in browser to verify, then export PNG
-open assets/thumbnails/[ds_slug]_thumbnail.html
+# Variant A (dark, left-aligned)
+npx remotion still Thumbnail output/visuals/2026-W{nn}/{slug}_thumb_a.png \
+  --props='{"titleText":"Your Title Here","niche":"ds","variant":"a","bgType":"dark"}'
 
-conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
-  --blog content/blogs/[monday_ds_blog].md --export
-# → assets/thumbnails/[ds_slug]_thumbnail.png (1280×720)
+# Variant B (centered glass card) — for A/B testing
+npx remotion still Thumbnail output/visuals/2026-W{nn}/{slug}_thumb_b.png \
+  --props='{"titleText":"Your Title Here","niche":"ds","variant":"b"}'
 ```
 
-Use `--force` to regenerate if design needs adjustment.
+Repeat for Life (`"niche":"life"`) and Poetry (`"niche":"poetry"`).
 
 ---
 
-## Step 6 — Auto-edit DS (~5 min)
+## Step 4 — Upload long-form to YouTube
 
-Reference: `docs/video-production-guide.md`
-
-DS workflow has 2 paths:
-
-**Path A — Talking-head only (recommended for explainer):**
-```bash
-python3 scripts/auto_edit.py \
-  --raw assets/raw/[ds_slug].mov \
-  --script content/scripts/YYYY-MM-DD-data-science-tech-[ds_slug]_yt.md \
-  --niche ds \
-  --slug [ds_slug]
-# → assets/video/edited/[ds_slug].mp4 (broll overlay on talking-head + captions)
-```
-
-**Path B — Screen-recording + talking-head (manual composite):**
-1. Run Path A on talking-head only → base mp4
-2. Open in DaVinci, layer screen-recording on top of broll segments where you want code visible
-3. Re-export
-
-`fetch_videos.py` runs inside `auto_edit.py` automatically (uses `[BROLL:]` cues from script).
-
----
-
-## Step 7 — HyperFrames visual augmentation (~5 min)
-
-Claude picks element types automatically for DS content (code snippets, bar charts, stat cards, flowcharts, comparison tables).
-
-```bash
-# Long-form
-python3 scripts/hyperframes_render.py \
-  assets/video/edited/[ds_slug].mp4 \
-  --slug ds-[slug]-aug
-
-# All shorts in one command (auto-discovers from slug)
-python3 scripts/hyperframes_render.py --shorts --slug [ds_slug]
-```
-
-Output: `assets/hyperframes/<date>_<slug>.mp4`
-
-Reference: `docs/video-production-guide.md` → HyperFrames section.
-
----
-
-## Step 8 — Auto-generate DS shorts (~3 min)
-
-```bash
-python3 scripts/clip_shorts.py --slug YYYY-MM-DD_data_science_tech_[ds_slug] --count 4
-# → assets/video/edited/shorts/YYYY-MM-DD_data_science_tech_[ds_slug]_short_NN.mp4
-```
-
-Claude CLI picks best hook segments. Legacy single-reel workflow (`find_best_reel_moment.py` + `create_vertical_reels.py`) still available.
-
----
-
-## Step 9 — Upload DS to YouTube (~10 min)
-
-Long-form:
 ```bash
 python3 scripts/upload_youtube.py \
-  --video assets/video/edited/[ds_slug].mp4 \
-  --slug [ds_slug]
+  --video output/animations/{week}/{ds_slug}.mp4 \
+  --metadata content/derivatives/{week}/{ds_slug}/youtube_metadata.json \
+  --thumbnail output/visuals/{week}/{ds_slug}_thumb_a.png \
+  --channel breathofdatascience \
+  --scheduled "2026-MM-DDTHH:MM:00+05:30"
 ```
 
-Shorts (loop manifest):
+Repeat for Life (`--channel breathoflife_`) and Poetry (`--channel breathofpoetry`).
+
+---
+
+## Step 5 — Render shorts batch
+
+Each slug needs `content/derivatives/{week}/{slug}/shorts_manifest.json` — see schema in `scripts/render_shorts_batch.py`.
+
 ```bash
-for f in assets/video/edited/shorts/[ds_slug]_short_*.mp4; do
-  python3 scripts/upload_youtube.py --shorts --slug [ds_slug] \
-    --channel "Breath of Data Science" --video "$f"
-done
+# Render all 3 niches
+python3 scripts/render_shorts_batch.py --week 2026-W{nn} --niche ds
+python3 scripts/render_shorts_batch.py --week 2026-W{nn} --niche life
+python3 scripts/render_shorts_batch.py --week 2026-W{nn} --niche poetry
 ```
 
-Verify export:
+Shorts output: `output/animations/{week}/{slug}_s{slot:02d}.mp4`
+
+**Clip-based short** (fast, reuse long-form footage):
 ```bash
-ls -la assets/video/edited/
-# Should show {slug}.mp4 + {slug}_reel.mp4
+cd remotion
+npx remotion render ShortClip output/animations/{week}/{slug}_s00.mp4 \
+  --props='{"editPlanFile":"edit-plans/{week}/{slug}.json","clipStartSec":10,"clipEndSec":70}'
+```
+
+**Motion graphic short** (pure animation, no camera):
+```bash
+# After populating remotion/public/scene-plans/{week}/{slug}_s01.json
+cd remotion
+npx remotion render DSMotionShort output/animations/{week}/{slug}_s01.mp4 \
+  --props='{"scenePlanFile":"scene-plans/{week}/{slug}_s01.json"}'
+```
+
+YouTube Shorts schedule: **2/day Mon–Sun** at 10:00 AM and 8:00 PM IST
+
+---
+
+## Optional — HyperFrames visual augmentation
+
+Run AFTER long-form Remotion render. Applies Claude-powered visual overlays (glass cards, code callouts, stat cards, flow arrows) on top of the rendered MP4. Not required — use it when the Remotion render alone lacks on-screen data visualizations.
+
+**When to use:**
+- DS tutorials → code callout cards, stat cards add significant value
+- Life videos with data/numbers → stat cards add credibility
+- Poetry → rarely needed (abstract B-roll is cleaner without overlays)
+
+**When to skip:** If scene plan already includes rich motion graphics, HyperFrames is redundant.
+
+### Long-form overlay pass
+
+```bash
+# Run overlay on rendered MP4
+python3 scripts/hyperframes_render.py \
+  output/animations/{week}/{slug}.mp4 \
+  --slug {slug}-aug
+# Output: assets/hyperframes/{date}_{slug}-aug.mp4
+```
+
+### Inspect overlays before rendering
+
+```bash
+# Dry-run: generates HTML overlay without rendering
+python3 scripts/hyperframes_render.py \
+  output/animations/{week}/{slug}.mp4 \
+  --no-render
+
+# Open in browser to review:
+open /tmp/hf_*/index.html
+# Edit overlay timing, text, positions in the HTML file
+
+# Then render the edited version:
+cd /tmp/hf_*/
+npm run render
+```
+
+### Shorts overlay
+
+```bash
+python3 scripts/hyperframes_render.py \
+  --shorts \
+  --slug {full_slug}
+# full_slug = YYYY-MM-DD_data_science_tech_{slug}
+```
+
+### Use augmented version
+
+If the HyperFrames output is better, use it for upload:
+```bash
+# Upload augmented instead of plain Remotion render:
+python3 scripts/upload_youtube.py \
+  --video "assets/hyperframes/{date}_{slug}-aug.mp4" \
+  --metadata content/derivatives/{week}/{slug}/youtube_metadata.json \
+  --channel {channel_name}
+```
+
+Full HyperFrames reference: `docs/video-production-guide.md` → HyperFrames section
+
+---
+
+## Step 6 — Upload shorts
+
+```bash
+bash output/scheduled/upload_shorts.sh
 ```
 
 ---
 
-## After production — buffer or keep live?
+## Step 7 — Update Notion status (~5 min)
+
+Mark all 3 content items as **Uploaded** in Notion Contents DB.
 
 ```bash
-python3 scripts/push_to_buffer.py --auto --dry-run   # preview
-python3 scripts/push_to_buffer.py --auto              # run
-```
-→ Decision logic + file naming: [_buffer_decision.md](_buffer_decision.md)
+# DS
+python3 scripts/update_notion_status.py \
+  --title "{ds_topic_title}" \
+  --status Uploaded \
+  --url "https://youtube.com/watch?v={ds_video_id}"
 
+# Life
+python3 scripts/update_notion_status.py \
+  --title "{life_topic_title}" \
+  --status Uploaded \
+  --url "https://youtube.com/watch?v={life_video_id}"
+
+# Poetry
+python3 scripts/update_notion_status.py \
+  --title "{poetry_topic_title}" \
+  --status Uploaded \
+  --url "https://youtube.com/watch?v={poetry_video_id}"
+```
+
+Or manually: open Notion → Contents DB → find each row → Status → Uploaded → paste YouTube URL.
+
+---
+
+## Step 8 — Verify + refresh tracker (~3 min)
+
+```bash
+# Confirm all 3 videos + blogs have URLs in derivatives
+python3 scripts/list_week_content.py 2026-W{nn}
+# All 3 slugs should show ✓ for video + blog
+
+# Refresh content tracker CSV
+python3 scripts/sync_tracker.py --week 2026-W{nn}
+# → data/content_tracker.csv updated
+```
+
+If any video is missing: check YouTube Studio — it may still be processing (up to 30 min after upload).
+
+---
+
+## Optional — Audiogram clips (for social posts)
+
+```bash
+cd remotion
+
+# 1080×1080 feed format
+npx remotion render AudiogramFeed output/animations/{week}/{slug}_audiogram_feed.mp4 \
+  --props='{"audioFile":"audio/{week}/{slug}_clip.mp3","startSec":0,"endSec":30,"quote":"Your quote here","niche":"ds","podcastName":"Breath of Data Science"}'
+
+# 1080×1920 story format
+npx remotion render AudiogramStory output/animations/{week}/{slug}_audiogram_story.mp4 \
+  --props='{"audioFile":"audio/{week}/{slug}_clip.mp3","startSec":0,"endSec":30,"quote":"Your quote here","niche":"ds","podcastName":"Breath of Data Science"}'
+```
+
+---
+
+## Verify
+
+```bash
+python3 scripts/list_week_content.py 2026-W{nn}
+```
+
+VIDEO & MEDIA → animations should show ✓ for all 3 slugs + their shorts.
+
+---
+
+## Render reference
+
+| Composition | Format | Use case |
+|------------|--------|----------|
+| `CourseLesson` | 1920×1080 | Long-form talking head (any niche) |
+| `ShortClip` | 1080×1920 | Portrait crop of long-form footage |
+| `DSMotionShort` | 1080×1920 | Pure DS motion graphic short |
+| `LifeMotionShort` | 1080×1920 | Pure Life motion graphic short |
+| `PoetryMotionShort` | 1080×1920 | Pure Poetry motion graphic short |
+| `Thumbnail` | 1280×720 | YouTube thumbnail (still export) |
+| `AudiogramFeed` | 1080×1080 | Podcast audiogram for feed |
+| `AudiogramStory` | 1080×1920 | Podcast audiogram for stories |
+| `SocialCard1x1` | 1080×1080 | Animated social card for feed |
+| `SocialCard9x16` | 1080×1920 | Animated social card for stories |
+| `AbstractDS` | 1920×1080 | DS b-roll loop (render once, reuse) |
+| `AbstractLife` | 1920×1080 | Life b-roll loop |
+| `AbstractPoetry` | 1920×1080 | Poetry b-roll loop |

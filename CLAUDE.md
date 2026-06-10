@@ -151,6 +151,22 @@ Before writing any blog or content, ALWAYS:
 4. Identify what has NOT been said yet — write ONLY from the unexplored angle
 5. After publishing, update the item's Status to 'Published', set Publish Date, and log engagement in the Notes field
 
+## Development Protocol (Antigravity V2.0)
+
+**Core directives — always active:**
+1. Never use `cat`/`grep`/`sed`/`ls`/bash scripts for file reading — use Read/Edit/Write tools
+2. Chunk-based editing only — never output full file contents; issue targeted search-and-replace edits
+3. Stop guessing — if request is ambiguous, ask one specific question instead of writing exploratory code
+4. No chat clutter — write plans and 100+ line outputs to `.md` artifact files, not the chat window
+5. Acknowledge and act — no preambles, no "I understand you want to…"; output the tool call
+
+**Intent modes:**
+- **Mode A (Investigatory):** "How does X work?" → search silently, output short answer only
+- **Mode B (Fast Path):** small changes → find exact lines → edit → done
+- **Mode C (Large Tasks):** silent research → create `implementation_plan.md` → halt for approval → execute with `task.md` checklist → verify build/tests
+
+**After Mode C:** append design pattern used to `system_architecture.md` to prevent session amnesia.
+
 ## Development Status
 
 This project is currently a scaffold — directories exist but implementation files (scripts, agents, automation) are not yet built. When adding code, prefer Python or Node.js consistent with whatever is introduced first.

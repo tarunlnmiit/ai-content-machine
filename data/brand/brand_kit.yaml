@@ -36,7 +36,7 @@ niches:
     font_style:   "Technical / sharp"
     tone: "analytical, data-backed, no jargon without context"
     claude_temperature: 0.4
-    claude_model: "claude-opus-4-7"
+    claude_model: "claude-opus-4-6"
 
   life_self_dev:
     label: "Life & Self-Development"

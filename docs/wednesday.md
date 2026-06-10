@@ -1,232 +1,420 @@
-# Wednesday — Poetry Blog + Repurpose All + Design (~40 min)
+# Wednesday — Publish Blogs + Shoot Videos + Prepare Edit Plans (~3 hrs)
+
+Scripts and assets exist from Tuesday. Today: publish all 3 blogs to Substack + Medium, shoot all 3 videos, generate captions, and build edit plans so Thursday's renders can start immediately.
 
 ## Wednesday at a glance
 
-| Time | Action | Output goes live |
-|------|--------|------------------|
-| 9:00 AM | Check buffer / produce Poetry blog | — |
-| 9:30 AM | Repurpose Life blog → derivatives (Mon already done) | — |
-| 10:00 AM | Repurpose Poetry blog → derivatives + schedule.json | **Fri 3 PM** (Substack + Medium this week) · **Next Fri 3 PM** (YouTube) |
-| 10:00 AM | Load posts to scheduler DB | LinkedIn posts scheduled for next week (manual) |
-| 12:00 PM | DS LinkedIn post + Twitter thread — reference | Reminder: **next Wed** (manual post) |
-| 12:00 PM | IG/FB carousel (DS) posts next Wed | (Week+1) |
-| 1:00 PM | Design assets created (Claude Design) | Asset files for next week |
+| Time | Action | Output |
+|------|--------|--------|
+| 9:00 AM | Publish DS blog → Substack (MCP) | Live on breathofdatascience.substack.com |
+| 9:10 AM | Publish Life blog → Substack (MCP) | Live on thisisbreathoflife.substack.com |
+| 9:20 AM | Publish Poetry blog → Substack (MCP) | Live on breathofpoetry.substack.com |
+| 9:30 AM | Publish all 3 → Medium | Live on medium.com/@tarun-gupta |
+| 10:00 AM | Shoot DS screen recording | `assets/raw/{week}/{ds_slug}_screen.mov` |
+| 11:00 AM | Shoot Life talking-head | `assets/raw/{week}/{life_slug}.mov` |
+| 12:00 PM | Record Poetry voiceover | `assets/raw/{week}/{poetry_slug}.wav` |
+| 1:00 PM | Generate captions (Whisper) all 3 | `remotion/public/captions/{week}/*.json` |
+| 1:30 PM | Build edit plans all 3 | `remotion/public/edit-plans/{week}/*.json` |
+| 2:30 PM | Verify edit plans in Remotion Studio | Confirm timeline looks right |
 
 ---
 
-## Step 0 — Check buffer first (1 min)
+## Step 1 — Publish to Substack (MCP tool calls)
 
-```bash
-ls content/buffer/week-1/poetry_quotes/*_meta.md 2>/dev/null
+Use Claude Code with Substack MCP tools. Three MCP servers map to three publications.
+
+### DS → breathofdatascience.substack.com
+
+**1a. Upload cover image:**
+```
+mcp__substack-breathofdatascience__upload_image
+  image_path: "content/blogs/{week}/{ds_slug}_images/cover.jpg"
+```
+Returns `image_id`. Use in Step 1b.
+
+**1b. Create formatted post:**
+```
+mcp__substack-breathofdatascience__create_formatted_post
+  title: "[title from blog frontmatter]"
+  subtitle: "[first sentence of blog]"
+  cover_image_id: "[image_id from 1a]"
+```
+Returns `post_id`.
+
+**1c. Preview (recommended before publishing):**
+```
+mcp__substack-breathofdatascience__preview_draft
+  post_id: "[post_id]"
+```
+Opens preview URL — verify formatting, images, code blocks look right.
+
+**1d. Publish:**
+```
+mcp__substack-breathofdatascience__publish_post
+  post_id: "[post_id]"
+  send_email: true
 ```
 
-**Buffer has content?** → Skip Steps 1–3. Use buffer files directly:
-- Blog: `content/buffer/week-1/poetry_quotes/*_substack_post.md`
-- Social: `content/buffer/week-1/poetry_quotes/*_social_copy.md`
+Copy the live URL. Save it:
+```bash
+python3 scripts/update_schedule.py \
+  --slug {ds_slug} --week {week} \
+  --substack-url 'https://breathofdatascience.substack.com/p/{ds_slug}'
+```
 
-Jump straight to Step 4 (Repurpose all). After consuming: log in Notion as `Script`.
+### Life → thisisbreathoflife.substack.com
 
-**No buffer?** → Proceed with Steps 1–3 below. Alert: buffer should never be empty — check Sunday Step 7.
+```
+mcp__substack-breathoflife__upload_image
+  image_path: "content/blogs/{week}/{life_slug}_images/cover.jpg"
+
+mcp__substack-breathoflife__create_formatted_post
+  title: "[title]"
+  subtitle: "[subtitle]"
+  cover_image_id: "[image_id]"
+
+mcp__substack-breathoflife__publish_post
+  post_id: "[post_id]"
+  send_email: true
+```
+
+### Poetry → breathofpoetry.substack.com
+
+```
+mcp__substack-breathofpoetry__upload_image
+  image_path: "content/blogs/{week}/{poetry_slug}_images/cover.jpg"
+
+mcp__substack-breathofpoetry__create_formatted_post
+  title: "[title]"
+  cover_image_id: "[image_id]"
+
+mcp__substack-breathofpoetry__publish_post
+  post_id: "[post_id]"
+  send_email: true
+```
+
+**Manual fallback if MCP fails:**
+Open Substack in browser, paste the blog markdown text into the editor, set cover image, publish. Save the URL manually.
 
 ---
 
-## Step 1 — Produce Poetry blog
+## Step 2 — Publish to Medium (~15 min)
 
-Option A — topic only:
+Medium accepts blogs with canonical URL pointing back to Substack (signals Substack as the original source — good for SEO).
+
 ```bash
-python3 scripts/produce_blog.py --topic 'YOUR POETRY TOPIC' --niche poetry --humanize
+# DS blog
+python3 scripts/publish_medium.py \
+  --input content/blogs/{week}/{ds_slug}.md \
+  --canonical-url 'https://breathofdatascience.substack.com/p/{ds_slug}'
+
+# Life blog
+python3 scripts/publish_medium.py \
+  --input content/blogs/{week}/{life_slug}.md \
+  --canonical-url 'https://thisisbreathoflife.substack.com/p/{life_slug}'
+
+# Poetry blog
+python3 scripts/publish_medium.py \
+  --input content/blogs/{week}/{poetry_slug}.md \
+  --canonical-url 'https://breathofpoetry.substack.com/p/{poetry_slug}'
 ```
 
-Optional listicle mode (Top-N poems/themes, e.g. "Top 5 poems on solitude"):
+**Publish to a publication instead of personal profile:**
 ```bash
-python3 scripts/produce_blog.py --topic 'YOUR POETRY TOPIC' --niche poetry --listicle 5 --humanize
-```
-- `--listicle N` (N ≥ 2) — each numbered item = distinct poem/quote/theme, lyrical bodies ≤100w each. Skip for default poem-first structure.
-
-Option B — have poem file:
-```bash
-# Store poem in data/poems/[slug].txt
-python3 scripts/ghostwrite.py --source data/poems/[slug].txt --niche poetry --format blog --poet "Poet Name"
-# Omit --poet if poem is Tarun's own
+python3 scripts/publish_medium.py \
+  --input content/blogs/{week}/{ds_slug}.md \
+  --canonical-url '...' \
+  --publication 'towards-data-science'
 ```
 
-Option C — have notes/draft:
+Available publications (if accepted): `towards-data-science` · `humans-are-stories` · `the-ascent`
+
+**Tags (auto-generated; override if wrong):**
 ```bash
-python3 scripts/ghostwrite.py --source draft.txt --niche poetry --voice conversational
+--tags 'python,data-science,machine-learning'
 ```
 
-## Step 2 — Fill personal sections
+After publish, save the Medium URL:
 ```bash
-grep -rn 'PERSONAL_INSERT' content/blogs/
+python3 scripts/update_schedule.py \
+  --slug {ds_slug} --week {week} \
+  --medium-url 'https://medium.com/@tarun-gupta/your-post-slug'
 ```
 
-## Step 3 — Add images to Poetry blog
+Medium URLs are injected into Instagram/Facebook captions by `load_posts.py` on Friday.
+
+### Verify all 3 blog URLs saved
+
 ```bash
-python3 scripts/fetch_images.py --input content/blogs/[wednesday_poetry_blog].md --dry-run
-python3 scripts/fetch_images.py --input content/blogs/[wednesday_poetry_blog].md
+python3 -c "
+import json, glob
+for f in glob.glob('content/derivatives/{week}/*/schedule.json'):
+    d = json.load(open(f))
+    slug = f.split('/')[-2][:45]
+    print(slug)
+    print('  Substack:', d.get('substack_url', 'MISSING'))
+    print('  Medium:  ', d.get('medium_url', 'MISSING'))
+"
 ```
 
-## Step 4 — Repurpose Life + Poetry blogs (with design prompts)
+All 6 URLs should be present. Missing Medium URL → add manually. Missing Substack URL → re-run the update_schedule.py line above.
+
+---
+
+## Step 3 — Shoot DS video (screen recording, ~45 min)
+
+### Equipment setup
+- Primary screen: IDE open, font zoomed to 20pt+
+- Second screen or iPad/iPhone: teleprompter showing script
+- OBS or QuickTime: screen recording at 1920×1080, 30fps
+- Face cam (optional for pip): use Continuity Camera or external USB webcam
+
+### Before recording
+1. Do Not Disturb: ON
+2. Quit Slack, Mail, notifications
+3. Terminal font: 20pt minimum (viewers need to read code)
+4. Teleprompter open on second screen with DS script from `content/scripts/{week}/{ds_slug}_yt.md`
+5. Test audio: speak into mic, verify OBS meter shows −12 dB peaks max
+
+### Shoot checklist
+- [ ] 3-second clean slate before first word (silence for Whisper calibration)
+- [ ] Clap once before each take / major section (audio spike = easy cut point)
+- [ ] Show code RUNNING end-to-end — not just typed, actually executed
+- [ ] Follow `[SCREEN:]` cues — zoom/highlight relevant code region
+- [ ] Follow `[CODE_INSERT:]` cues — paste the code block and talk through it live
+- [ ] Record 2 takes for the most important demo sections
+- [ ] End with 3 seconds of silence
+
 ```bash
-python3 scripts/repurpose_blog.py --input content/blogs/[tuesday_life_blog].md --design
-python3 scripts/repurpose_blog.py --input content/blogs/[wednesday_poetry_blog].md --design
-# → content/derivatives/{slug}/ (10 files each)
-# → output/scheduled/claude_design_prompts_{slug}.md (4 sections each)
+mkdir -p "assets/raw/{week}"
+# Move recording after:
+mv ~/Desktop/{recording}.mov "assets/raw/{week}/{ds_slug}_screen.mov"
 ```
 
-## Step 5 — Thumbnail briefs + thumbnail images for Life + Poetry
+---
+
+## Step 4 — Shoot Life video (talking-head, ~30 min)
+
+### Equipment setup
+- iPhone on tripod, 4K 30fps, front-facing
+- Ring light at 45° angle; natural light behind camera if available
+- Rode Wireless mic or lapel direct to iPhone
+- Teleprompter app on second iPhone/iPad: font 60pt+, scroll speed pre-tested
+
+### Before recording
+1. Lock white balance (tap background → AE/AF Lock on iPhone)
+2. Lock exposure (tap face)
+3. Script open in teleprompter app — test scroll speed end-to-end before first take
+4. Quiet room — turn off fan/AC if audible on mic
+
+### Shoot checklist
+- [ ] 3-second clean slate
+- [ ] Clap between takes
+- [ ] One full uninterrupted take (preferred) — restart from sentence start when stumbling
+- [ ] Hold 3-second silence at every `[PAUSE]` tag (intentional breathing room)
+- [ ] For `[BROLL:]` cues: keep speaking — B-roll replaces the picture, not the audio
+- [ ] Record spontaneous take AFTER the scripted one (often more authentic)
+- [ ] End with 3-second silence
 
 ```bash
-# Generate briefs (JSON)
-python3 scripts/thumbnail_brief.py --input content/blogs/[tuesday_life_blog].md
-python3 scripts/thumbnail_brief.py --input content/blogs/[wednesday_poetry_blog].md
-# DS brief already done Tuesday
-
-# Render thumbnails to HTML + PNG (all 3 niches — DS, Life, Poetry)
-conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
-  --blog content/blogs/[monday_ds_blog].md --export
-# → assets/thumbnails/[ds_slug]_thumbnail.png (1280×720)
-
-conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
-  --blog content/blogs/[tuesday_life_blog].md --export
-# → assets/thumbnails/[life_slug]_thumbnail.png
-
-conda run -n content_engine_env python3 scripts/generate_thumbnail.py \
-  --blog content/blogs/[wednesday_poetry_blog].md --export
-# → assets/thumbnails/[poetry_slug]_thumbnail.png
+# Transfer via AirDrop or Lightning cable, then:
+mv ~/Downloads/{iphone_recording}.mov "assets/raw/{week}/{life_slug}.mov"
 ```
 
-Open each `.html` in browser to preview before exporting. Use `--force` to regenerate.
+---
 
-## Step 6 — Generate worksheet prompts (IG lead magnets, 5–10 min)
+## Step 5 — Record Poetry voiceover (~20 min)
 
+Poetry videos are voiceover over abstract B-roll — no talking-head required unless the poem is deeply personal.
+
+### Equipment
+- Rode NT-USB or Shure MV7 into MacBook
+- Quiet room, blanket over window if echo is audible
+- Headphones on while recording (monitor real-time)
+
+### Record with ffmpeg directly
 ```bash
-# Data Science
-python3 scripts/generate_worksheet_outline.py -i content/blogs/[monday_ds_blog].md
-python3 scripts/generate_canva_worksheet_prompt.py -i content/worksheets/[monday_ds_blog_slug]_worksheet.json
+# Check your mic device first:
+ffmpeg -f avfoundation -list_devices true -i ""
+# Find the mic index (e.g. index 0)
 
-# Life & Self-Dev
-python3 scripts/generate_worksheet_outline.py -i content/blogs/[tuesday_life_blog].md
-python3 scripts/generate_canva_worksheet_prompt.py -i content/worksheets/[tuesday_life_blog_slug]_worksheet.json
-
-# Poetry — auto-skipped (reflection format, no worksheet expected)
-python3 scripts/generate_worksheet_outline.py -i content/blogs/[wednesday_poetry_blog].md
+# Record:
+ffmpeg -f avfoundation -i ":0" -ar 44100 -ac 1 -c:a pcm_s16le \
+  "assets/raw/{week}/{poetry_slug}_voice.wav"
+# Ctrl+C when done
 ```
 
-Prompts auto-save to `content/prompts/[slug]_worksheet_prompt.txt`
+Or use GarageBand/Audacity with your preferred setup.
 
-## Step 7 — Design worksheet + landing page in Claude Design (20 min)
-
-**For DS Worksheet:**
-1. Claude Design → Paste `content/prompts/[ds_slug]_worksheet_prompt.txt`
-2. Generate worksheet design → Export PDF → `output/worksheets/[ds_slug]_worksheet.pdf`
-3. Create new Claude Design → Design landing page layout
-4. Embed ConvertKit form via HTML embed block
-5. Export as shareable link → Save to `config/worksheet_config.json`
-
-**For Life Worksheet:**
-1. Claude Design → Paste `content/prompts/[life_slug]_worksheet_prompt.txt`
-2. Generate worksheet design → Export PDF → `output/worksheets/[life_slug]_worksheet.pdf`
-3. Create new Claude Design → Design landing page layout
-4. Embed ConvertKit form via HTML embed block
-5. Export as shareable link → Save to `config/worksheet_config.json`
-
-## Step 8 — Claude Design: slides + stories + reel covers + social (~15 min, 3 blogs)
-
-The design-prompt doc `output/scheduled/claude_design_prompts_{slug}.md` is the **spec**. Claude (in Claude Code) hand-builds one self-contained HTML per artifact in `assets/slides/`, then we render to PNG/PDF/MP4 with the exporters below. Precedent to mirror: any existing `assets/slides/{prior_slug}_{slides,story,social,reel_cover}.html`.
+### Pacing
+- ~80 words/min (poetry breathes — half of talking speed)
+- `[PAUSE]` cues: hold 3+ seconds of intentional silence
+- Record 3 complete takes; pick the best or comp them
 
 ```bash
-mkdir -p assets/{slides,stories,reels,social_posts}
+# Save to:
+mv ~/Desktop/poetry_recording.wav "assets/raw/{week}/{poetry_slug}.wav"
 ```
 
-**Build** (ask Claude): *"Build the slides/story/social/reel-cover HTML for `{slug}` from its design-prompt doc, mirroring the prior `_slides.html` etc."* Each HTML exposes the export contract used by `export_html_deck.py`:
-`window.__exportFrames = [{file, w, h}, ...]` + `window.__showFrame(i)`. Story HTML instead exposes `window._storyMeta` + `_setStoryTime`/`_storyRender` (read by `export_story_animation.py`). Photographic frames use `<image-slot placeholder="...">` slots to fill later.
+---
 
-**Render:**
+## Step 6 — Generate captions with Whisper (~5 min per video)
 
-```bash
-SLUG={slug}
-
-# 1. Slide deck → PNGs + PDF (1920×1080)
-conda run -n content_engine_env python3 scripts/export_html_deck.py \
-  --html assets/slides/${SLUG}_slides.html \
-  --out-dir assets/slides/${SLUG} \
-  --pdf ${SLUG}_slides.pdf
-
-# 3. Reel cover → 9:16 PNG
-conda run -n content_engine_env python3 scripts/export_html_deck.py \
-  --html assets/slides/${SLUG}_reel_cover.html --out-dir assets/reels
-
-# 4. Social post set → IG/LinkedIn/Twitter/Threads PNGs (per-variant native size)
-conda run -n content_engine_env python3 scripts/export_html_deck.py \
-  --html assets/slides/${SLUG}_social.html --out-dir assets/social_posts
-
-# 2. Instagram Story → MP4 + 7 slide PNGs (1080×1920). Positional args: html, out-dir, slug.
-conda run -n content_engine_env python3 scripts/export_story_animation.py \
-  assets/slides/${SLUG}_story.html assets/stories/${SLUG} ${SLUG}
-```
-
-| Section | Output | Save to |
-|---------|--------|---------|
-| 1. Slide deck | PDF + 9 PNGs | `assets/slides/{slug}/{slug}_slides.pdf` · `slide_N.png` |
-| 2. Instagram Story | MP4 + 7 PNGs | `assets/stories/{slug}/{slug}_story.mp4` · `_story_slide_NN.png` |
-| 3. Reel cover | 9:16 PNG | `assets/reels/{slug}_cover.png` |
-| 4. Social post set | 4 PNGs | `assets/social_posts/{slug}_{instagram,linkedin,twitter,threads}.png` |
-
-Carousels (below) remain the primary IG feed post; the social post set is a lighter single-image variant.
-
-## Step 9 — Generate carousels (replaces social post set, ~10 min, 3 blogs)
-
-Carousels are the primary Instagram post format. Brand kit auto-loaded — no manual prompt.
+Captions feed Remotion's TikTok-style caption system in `TalkingHeadEdit.tsx`.
 
 ```bash
-mkdir -p assets/carousels
-
 # DS
-conda run -n content_engine_env python3 scripts/generate_carousel.py \
-  --blog content/blogs/[monday_ds_blog].md
+python3 scripts/generate_captions.py \
+  --audio "assets/raw/{week}/{ds_slug}_screen.mov" \
+  --output "remotion/public/captions/{week}/{ds_slug}.json" \
+  --model medium
 
 # Life
-conda run -n content_engine_env python3 scripts/generate_carousel.py \
-  --blog content/blogs/[tuesday_life_blog].md
+python3 scripts/generate_captions.py \
+  --audio "assets/raw/{week}/{life_slug}.mov" \
+  --output "remotion/public/captions/{week}/{life_slug}.json" \
+  --model medium
 
-# Poetry
-conda run -n content_engine_env python3 scripts/generate_carousel.py \
-  --blog content/blogs/[wednesday_poetry_blog].md
+# Poetry (use large — slow speech, accuracy matters)
+python3 scripts/generate_captions.py \
+  --audio "assets/raw/{week}/{poetry_slug}.wav" \
+  --output "remotion/public/captions/{week}/{poetry_slug}.json" \
+  --model large
 ```
 
-Open each `.html` in browser to preview. Then export to PNGs (requires `playwright install chromium` once):
+**Model guide:**
+| Model | Speed | Use when |
+|-------|-------|---------|
+| `tiny` | 30× | Draft/preview only |
+| `base` | 15× | Short clips (<5 min) |
+| `medium` | 4× | Default |
+| `large` | 1× | Poetry, heavy accent, or when accuracy is critical |
 
+**Verify output:**
 ```bash
-conda run -n content_engine_env python3 scripts/generate_carousel.py \
-  --blog content/blogs/[monday_ds_blog].md --export
-# → assets/carousels/slides/{slug}/slide_1.png … slide_7.png
-# Repeat for life + poetry blogs
-```
-
-**Iterate a slide:**
-- Open `.html` in browser → note which slide needs change
-- Tell Claude: *"swap slide 4 headline to X"*
-- Regenerate: `generate_carousel.py --blog ... --force`
-
-**Manual via Claude Projects:**
-```bash
-conda run -n content_engine_env python3 -c "
-import sys; sys.path.insert(0,'scripts')
-from generate_carousel import load_brand, CAROUSEL_SYSTEM
-b = load_brand('data_science_tech')  # or life_self_dev / poetry_quotes
-print(CAROUSEL_SYSTEM.format(**b, slides=7, initial='B'))
-" | pbcopy
-# Paste into claude.ai → Projects → Set project instructions
+python3 -c "
+import json
+for slug in ['{ds_slug}', '{life_slug}', '{poetry_slug}']:
+    caps = json.load(open(f'remotion/public/captions/{week}/{slug}.json'))
+    ms_start = caps[0]['startMs'] if caps else 'empty'
+    ms_end = caps[-1]['endMs'] if caps else 'empty'
+    print(f'{slug}: {len(caps)} tokens, {ms_start}–{ms_end}ms')
+"
 ```
 
 ---
 
-## After production — buffer or keep live?
+## Step 7 — Build edit plans (~5 min each)
+
+Edit plans define the Remotion assembly: cut boundaries, B-roll inserts, title card, lower third, outro.
 
 ```bash
-python3 scripts/push_to_buffer.py --auto --dry-run   # preview
-python3 scripts/push_to_buffer.py --auto              # run
-```
-→ Decision logic + file naming: [_buffer_decision.md](_buffer_decision.md)
+python3 scripts/prepare_remotion_edit.py \
+  --raw "assets/raw/{week}/{ds_slug}_screen.mov" \
+  --script "content/scripts/{week}/{ds_slug}_yt.md" \
+  --niche ds --slug {ds_slug} --week {week}
 
+python3 scripts/prepare_remotion_edit.py \
+  --raw "assets/raw/{week}/{life_slug}.mov" \
+  --script "content/scripts/{week}/{life_slug}_yt.md" \
+  --niche life --slug {life_slug} --week {week}
+
+python3 scripts/prepare_remotion_edit.py \
+  --raw "assets/raw/{week}/{poetry_slug}.wav" \
+  --script "content/scripts/{week}/{poetry_slug}_yt.md" \
+  --niche poetry --slug {poetry_slug} --week {week}
+```
+
+Outputs: `remotion/public/edit-plans/{week}/{slug}.json`
+
+### Edit plan JSON structure
+```json
+{
+  "videoFile": "videos/{week}/{slug}_screen.mov",
+  "captionFile": "captions/{week}/{slug}.json",
+  "silenceTrimStartSec": 2.1,
+  "silenceTrimEndSec": 847.3,
+  "cutSegments": [
+    { "startSec": 2.1, "endSec": 245.0 },
+    { "startSec": 247.5, "endSec": 490.2 }
+  ],
+  "brollCues": [
+    { "atSec": 60.0, "durationSec": 5, "query": "Python code dark screen" }
+  ],
+  "titleCard": {
+    "titleText": "Your Video Title",
+    "durationFrames": 90,
+    "insertAtFrame": 0
+  },
+  "outroCard": {
+    "nextText": "Next: Upcoming Video Title",
+    "durationFrames": 150
+  },
+  "niche": "ds"
+}
+```
+
+### Manual tweaks after auto-generation
+- Bad cut point → adjust `cutSegments[n].startSec` / `endSec`
+- Wrong B-roll → change `brollCues[n].query` string
+- Title text → update `titleCard.titleText`
+- Remove title card → delete `titleCard` key
+
+### Preview in Remotion Studio
+```bash
+cd remotion && npm run dev
+# → http://localhost:3000
+# Select "CourseLesson" composition
+# In Props panel, set: editPlanFile: "edit-plans/{week}/{ds_slug}.json"
+# Scrub timeline to verify cuts, captions, B-roll alignment
+```
+
+---
+
+## Step 8 — Verify (5 min)
+
+```bash
+# All 3 edit plans exist
+ls -la remotion/public/edit-plans/{week}/
+# All 3 caption files exist
+ls -la remotion/public/captions/{week}/
+
+# Validate JSON + print segment summary
+python3 -c "
+import json, glob
+for f in sorted(glob.glob('remotion/public/edit-plans/{week}/*.json')):
+    d = json.load(open(f))
+    segs = d.get('cutSegments', [])
+    mins = sum(s['endSec']-s['startSec'] for s in segs)/60
+    print(f.split('/')[-1], f'→ {len(segs)} cuts, ~{mins:.1f} min')
+"
+```
+
+Expected: 3 edit plans parseable, 3 caption files present, total duration 8–15 min each.
+
+---
+
+## Troubleshooting
+
+**Whisper finds no audio:**
+```bash
+# Check audio track exists:
+ffprobe "assets/raw/{week}/{slug}.mov" 2>&1 | grep Audio
+# No audio → re-export from camera app
+```
+
+**prepare_remotion_edit.py finds no silence (no cut points):**
+```bash
+# Lower threshold:
+python3 scripts/prepare_remotion_edit.py ... --sensitivity 0.003
+# Or force single segment (no cuts):
+python3 scripts/prepare_remotion_edit.py ... --no-clap-detection
+```
+
+**Substack MCP returns 401 Unauthorized:**
+- Token expired — tokens last 30 days
+- Re-authenticate: check MCP server docs for re-auth flow, or re-paste cookie from browser DevTools
+
+**Medium publish fails "story too long":**
+- ~4,000 word soft cap for API publish
+- Trim blog OR publish manually via browser

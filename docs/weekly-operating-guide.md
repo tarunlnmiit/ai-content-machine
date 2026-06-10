@@ -1,16 +1,65 @@
 # Weekly Operating Guide
 
-Last updated: 2026-06-08
+Last updated: 2026-06-10
+
+## Production Workflow (task-batched)
+
+| Day | Task | Niches | Guide |
+|-----|------|--------|-------|
+| [Monday](monday.md) | Generate all blogs + repurpose → derivatives | DS + Life + Poetry | ~45 min |
+| [Tuesday](tuesday.md) | Video scripts + social visual assets + scene plans + worksheets | DS + Life + Poetry | ~45 min |
+| [Wednesday](wednesday.md) | Publish blogs (Substack + Medium) + shoot videos + generate captions + build edit plans | DS + Life + Poetry | ~3 hrs |
+| [Thursday](thursday.md) | Render (Remotion) + optional HyperFrames + upload + Notion sync + verify | DS + Life + Poetry | ~3 hrs |
+| [Friday](friday.md) | Schedule social (THIS week → posts NEXT week) + buffer check + refresh tracker | DS + Life + Poetry | ~45 min |
+| [Saturday](saturday.md) | **Free** — catchup only if something slipped | — | — |
+| [Sunday](sunday.md) | Read analytics + KB + sync ideas (~15 min) | — | ~15 min |
+
+**Audit tool:**
+```bash
+python3 scripts/list_week_content.py 2026-W{nn}         # content + asset status
+python3 scripts/list_week_content.py 2026-W{nn} --plan  # Mon-Fri production checklist
+```
+
+---
+
+## Render Pipeline Overview
+
+```
+Raw footage (assets/raw/{week}/)
+    │
+    ▼ [Wednesday] generate_captions.py → Whisper
+remotion/public/captions/{week}/{slug}.json
+    │
+    ▼ [Wednesday] prepare_remotion_edit.py
+remotion/public/edit-plans/{week}/{slug}.json
+    │
+    ▼ [Thursday] render_week.py → npx remotion render CourseLesson
+output/animations/{week}/{slug}.mp4          ← PRIMARY output
+    │
+    ├── [Thursday, optional] hyperframes_render.py
+    │   assets/hyperframes/{date}_{slug}-aug.mp4  ← HyperFrames augmented
+    │
+    ├── [Thursday] render_shorts_batch.py
+    │   output/animations/{week}/{slug}_s{slot:02d}.mp4  ← up to 14 shorts/niche
+    │
+    └── [Thursday] upload_youtube.py → YouTube
+        @breathofdatascience / @breathoflife_ / @breathofpoetry
+```
+
+---
 
 ## Posting Times at a Glance (IST)
 
-### Week N — Long-form + Blog (YouTube · Substack · Medium)
+### Week N — Long-form + Blog (Substack · Medium · YouTube)
 
 | Day | Time IST | Niche | Platform(s) | Content type |
 |-----|----------|-------|-------------|--------------|
-| Tue | 2:00 PM  | 🟢 Life   | YouTube · Substack · Medium | Long-form + Blog |
-| Thu | 6:00 PM  | 🔵 DS     | YouTube · Substack · Medium | Long-form + Blog |
-| Fri | 3:00 PM  | 🟣 Poetry | YouTube · Substack · Medium | Long-form + Blog |
+| Wed | 2:00 PM  | 🟢 Life   | Substack · Medium | Blog upload |
+| Wed | 2:00 PM  | 🔵 DS     | Substack · Medium | Blog upload |
+| Wed | 2:00 PM  | 🟣 Poetry | Substack · Medium | Blog upload |
+| Thu | 6:00 PM  | 🟢 Life   | YouTube | Long-form video upload |
+| Thu | 6:00 PM  | 🔵 DS     | YouTube | Long-form video upload |
+| Thu | 6:00 PM  | 🟣 Poetry | YouTube | Long-form video upload |
 
 ### Week N+1 — Social (one week after long-form)
 
@@ -54,18 +103,6 @@ Last updated: 2026-06-08
 > Dashboard: **🗓️ Posting Schedule** page shows this with actual dates for the current week.
 
 ---
-
-## Week at a Glance
-
-| Day | Focus | Time |
-|-----|-------|------|
-| [Monday](monday.md) | Life: LinkedIn + Twitter thread (social-first, no video yet) | ~15 min |
-| [Tuesday](tuesday.md) | Life: IG carousel → Long-form video → Blog → Newsletter → Short(s) same day | ~2.5 hrs |
-| [Wednesday](wednesday.md) | DS: LinkedIn + Twitter thread + IG carousel | ~20 min |
-| [Thursday](thursday.md) | DS: Long-form video → Blog → Newsletter → Short(s) same evening | ~2 hrs |
-| [Friday](friday.md) | Poetry: LinkedIn + Twitter → Long-form video → Blog → Newsletter → Short(s) same day | ~2.5 hrs |
-| [Saturday](saturday.md) | Buffer replenishment + week review + Notion sync | ~1 hr |
-| [Sunday](sunday.md) | Analytics review + generate week N+4 buffer slot | ~30 min |
 
 ### Same-Week Derivatives Rule
 
@@ -115,8 +152,6 @@ Niche windows:
 
 ---
 
----
-
 ## Content Buffer
 
 A rolling 4-week buffer of ready-to-publish content protects output during travel, illness, or low-energy weeks.
@@ -140,9 +175,9 @@ for niche in data_science_tech life_self_dev poetry_quotes; do
   echo "$niche: $count weeks buffered"
 done
 ```
-**MINIMUM: 4 weeks per niche at all times (12 total).** Replenish on Sunday before it ever drops to 3.
+**MINIMUM: 4 weeks per niche at all times (12 total).** Replenish on Friday (end of production week) before it ever drops to 3.
 
-**Replenish buffer (Sunday):**
+**Replenish buffer (Friday Step 6):**
 ```bash
 # 1. Open data/buffer/topics.yaml — fill empty week slots with topic + angle
 #    (check Notion Published items first to avoid repeat angles)
@@ -175,13 +210,9 @@ python3 scripts/push_to_buffer.py --niche poetry --week 2 --date 2026-05-21
 
 **Shift buffer after consuming:**
 ```bash
-# After using week-1 content across all 3 niches:
-rm -rf content/buffer/week-1
-mv content/buffer/week-2 content/buffer/week-1
-mv content/buffer/week-3 content/buffer/week-2
-mv content/buffer/week-4 content/buffer/week-3
-# Update week numbers in data/buffer/topics.yaml
-# Then fill week-4 and generate to restore 4-week depth
+bash scripts/shift_buffer.sh --dry-run   # verify week-4 has content
+bash scripts/shift_buffer.sh             # rotate: week-2→1, week-3→2, week-4→3
+# Then fill week-4 in data/buffer/topics.yaml and regenerate:
 conda run -n content_engine_env python3 scripts/generate_buffer.py --week 4
 ```
 
@@ -205,39 +236,137 @@ Free Sunday? Skip daily grind. Use **[Sunday Batch Playbook](sunday-batch.md)** 
 
 ## Setup (one-time)
 
-Install dependencies:
-```bash
-pip install openai-whisper nltk anthropic python-dotenv
-```
+### Core dependencies
 
-Install ffmpeg + Whisper:
 ```bash
+# Python packages
+pip install openai-whisper nltk anthropic python-dotenv
+
+# ffmpeg (required for Whisper + caption generation)
 brew install ffmpeg
+
+# Whisper
 pip install openai-whisper
 ```
 
-Remotion (video editing — already scaffolded in `remotion/`):
+### Remotion (video rendering)
+
 ```bash
+# Install
 cd remotion && npm install
+
+# Start Remotion Studio (visual preview):
+cd remotion && npm run dev
+# → http://localhost:3000
+
+# Compositions available:
+# CourseLesson    — long-form talking head (1920×1080)
+# ShortClip       — portrait crop of long-form (1080×1920)
+# DSMotionShort   — pure DS motion short (1080×1920)
+# LifeMotionShort — pure Life motion short (1080×1920)
+# PoetryMotionShort — pure Poetry motion short (1080×1920)
+# Thumbnail       — YouTube thumbnail still export (1280×720)
+# AudiogramFeed   — podcast audiogram 1080×1080
+# AudiogramStory  — podcast audiogram 1080×1920
+# SocialCard1x1   — animated social card 1080×1080
+# SocialCard9x16  — animated social card 1080×1920
+# AbstractDS/Life/Poetry — b-roll loops (render once, reuse)
+
+# Render a single composition:
+cd remotion
+npx remotion render CourseLesson output/animations/{week}/{slug}.mp4 \
+  --props='{"editPlanFile":"edit-plans/{week}/{slug}.json"}'
+
+# Render still (thumbnail):
+npx remotion still Thumbnail output/visuals/{week}/{slug}_thumb.png \
+  --props='{"titleText":"Title","niche":"ds","variant":"a","bgType":"dark"}'
 ```
 
-Primary editing pipeline: `scripts/prepare_remotion_edit.py` → Remotion Studio preview → `npx remotion render` — see `docs/video-production-guide.md`
+### HyperFrames (optional visual overlay system)
 
-Animation prompts: `scripts/generate_animation_prompts.py <script.md>` → `content/prompts/{slug}_animation_prompts.txt` — extracts `[ANIMATION:]` tags, writes Remotion component specs per tag. Add `--render` to render each animation directly to `output/animations/` MP4 using built-in brand templates.
-
-Courses (separate product line, original content, Sonnet-backed): `scripts/draft_lesson_script.py` drafts a lesson script from `--title` + repeated `--point` + `--story`; `scripts/generate_course_worksheet.py` makes an original worksheet from `--topic` + `--objective`. Both route to `claude-sonnet-4-6`. Config + pricing in `data/courses/graphy_config.yaml`; full workflow in `docs/course-production-guide.md`.
-
-DaVinci Resolve (optional, manual polish only):
-- Free version sufficient for music/text overlays on rendered MP4
-
-Start scheduler daemon:
 ```bash
-nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
+# Install HyperFrames dependencies (one-time):
+pip install -r scripts/hyperframes_requirements.txt
+
+# Verify:
+python3 scripts/hyperframes_render.py --help
+
+# Usage (run AFTER Remotion render, same day — Thursday):
+python3 scripts/hyperframes_render.py output/animations/{week}/{slug}.mp4 \
+  --slug {slug}-aug
+# → assets/hyperframes/{date}_{slug}-aug.mp4
 ```
 
-**Claude Design (primary visual tool)**
-Access: claude.ai → Design tab
-Used Wednesday for: slide decks · Instagram story sequences · reel covers · social post sets (IG · LinkedIn · Twitter/X · Threads)
+HyperFrames applies Claude-powered glass card, code callout, stat card, and flow arrow overlays on top of any MP4. Primarily useful for DS content. Run Thursday after render, before upload. See `docs/video-production-guide.md` → HyperFrames section.
+
+### Remotion source structure
+
+```
+remotion/
+  src/
+    styles/
+      chronixel.ts          # design tokens: colors (#0a0a0f bg), fonts (Poppins ExtraBold), niche palettes
+      niche.ts              # per-niche accent: DS #f97316, Life #f59e0b, Poetry #a78bfa
+    compositions/
+      TitleCard.tsx          # Chronixel title card (inject at frame 0)
+      LowerThird.tsx         # Lower-third nameplate
+      OutroCard.tsx          # Subscribe outro with niche CTA
+      CaptionPage.tsx        # TikTok-style captions with word pop
+      TalkingHeadEdit.tsx    # Main long-form assembly (wire-in all above)
+      ShortClip.tsx          # 9:16 portrait crop + big captions
+      DSMotionShort.tsx      # Pure DS motion short (loads scene-plan JSON)
+      LifeMotionShort.tsx    # Pure Life motion short
+      PoetryMotionShort.tsx  # Pure Poetry motion short
+      Audiogram.tsx          # Podcast waveform + quote
+      SocialCard.tsx         # Animated social card
+      Thumbnail.tsx          # Programmatic YouTube thumbnail
+      AbstractDS.tsx         # DS b-roll loop (particle network, data stream)
+      AbstractLife.tsx       # Life b-roll loop (bokeh, organic)
+      AbstractPoetry.tsx     # Poetry b-roll loop (ink-water, aurora)
+      scenes/
+        WordReveal.tsx
+        AtmosphericQuote.tsx
+        NumberedTips.tsx
+        DataVizReveal.tsx
+        CodeAnnotation.tsx
+        ConceptExplainer.tsx
+        ToolComparison.tsx
+        TransformationArc.tsx
+        HabitLoop.tsx
+        LineReveal.tsx
+    types.ts                 # EditPlan, ScenePlan, AudiogramPlan types
+    Root.tsx                 # All compositions registered here
+  public/
+    edit-plans/
+      {week}/                # *.json EditPlan files per slug
+    captions/
+      {week}/                # *.json Caption[] per slug (from Whisper)
+    scene-plans/
+      {week}/                # *.json ScenePlan[] for motion shorts
+    broll/
+      {week}/                # B-roll clips per week
+    videos/
+      {week}/                # Source videos (moved here from assets/raw)
+    audio/
+      {week}/                # Audio clips for audiograms
+```
+
+### Scheduler daemon
+
+```bash
+# Start (survives shell close):
+nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
+
+# Or via launchd (preferred — survives reboots):
+launchctl load ~/Library/LaunchAgents/com.contentmachine.scheduler.plist
+launchctl list | grep contentmachine
+
+# Check activity:
+tail -20 data/analytics/scheduler.log
+sqlite3 data/scheduling.db "SELECT COUNT(*) FROM posts WHERE status='pending'"
+```
+
+LinkedIn tokens expire every 60 days. Refresh: `python3 scripts/auth_linkedin.py --refresh`
 
 ---
 
@@ -253,10 +382,11 @@ Used Wednesday for: slide decks · Instagram story sequences · reel covers · s
 | Day 5 | Distribution automation | ⚠️ Scripts done — scheduler not running, DB empty |
 | Day 6 | First full production run | ⚠️ Blogs + derivatives exist, no posts loaded, no videos |
 | Day 7 | SOP + analytics | ⚠️ `collect_analytics.py` done — Streamlit dashboard not built |
+| Day 8 | Remotion video pipeline | ✅ Done — 25 compositions + 10 scene components + render scripts |
 
 **Remaining before fully automated:**
 - Load current blogs: `python3 scripts/load_posts.py`
-- Start APScheduler (now managed by launchd): `launchctl load ~/Library/LaunchAgents/com.contentmachine.scheduler.plist`
+- Start APScheduler: `launchctl load ~/Library/LaunchAgents/com.contentmachine.scheduler.plist`
 - Build Streamlit dashboard: `dashboard/app.py` (not yet created)
 - Get Twitter archive → build `data/kb/twitter_hook_patterns.json`
 
@@ -267,11 +397,11 @@ Used Wednesday for: slide decks · Instagram story sequences · reel covers · s
 | Time | What |
 |------|------|
 | Every day 6am | `scripts/daily_ideas.sh` chains Reddit + YouTube + external feeds + Google/YouTube suggest + idea scorer → `data/ideas/weekly_ideas.md`. Install: see [launchd-daily-ideas.md](launchd-daily-ideas.md) |
-| Sunday 8pm | `collect_analytics.py` → `data/analytics/weekly_insights.md` (plist not yet installed) |
+| Sunday 8pm | `collect_analytics.py` → `data/analytics/weekly_insights.md` |
 | Sunday 10pm | `build_knowledge_base.py` → `data/kb/master_brief.md` (`com.contentmachine.buildkb` installed) |
 | Continuous | `scripts/scheduler.py` → fires pending posts from `data/scheduling.db` every 60s. Managed by launchd (`com.contentmachine.scheduler`, KeepAlive + RunAtLoad). |
 
-> Check scheduler: `launchctl list \| grep contentmachine` and `tail -20 data/analytics/scheduler.log`
+> Check scheduler: `launchctl list | grep contentmachine` and `tail -20 data/analytics/scheduler.log`
 
 ---
 
@@ -311,18 +441,29 @@ chmod +x .git/hooks/pre-commit
 All scripts auto-name files. Know these patterns to find content manually.
 
 **Slug** = topic title lowercased, spaces → hyphens, truncated ~50 chars.
+**Week** = ISO week string: `YYYY-Wnn` (e.g., `2026-W24`). Get it:
+```bash
+python3 -c "from scripts.lib.schedule_calc import get_iso_week; print(get_iso_week('2026-06-10'))"
+```
 **Niche keys:** `data_science_tech` · `life_self_dev` · `poetry_quotes`
 
 | File type | Pattern | Example |
 |-----------|---------|---------|
-| Blog | `content/blogs/YYYY-MM-DD_{niche}_{slug}.md` | `2026-05-21_data_science_tech_python-for-ml.md` |
-| YT script | `content/scripts/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md` | `2026-05-22_data-science-tech-python-for-ml_yt.md` |
-| Derivatives dir | `content/derivatives/YYYY-MM-DD-{niche-dashes}-{slug-50}/` | `content/derivatives/2026-05-21-data-science-tech-python-for-ml/` |
+| Blog | `content/blogs/{week}/YYYY-MM-DD_{niche}_{slug}.md` | `content/blogs/2026-W24/2026-06-10_data_science_tech_python-for-ml.md` |
+| YT script | `content/scripts/{week}/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md` | `2026-W24/2026-06-10_data-science-tech-python-for-ml_yt.md` |
+| Derivatives dir | `content/derivatives/{week}/YYYY-MM-DD_{niche-dashes}_{slug-50}/` | `content/derivatives/2026-W24/2026-06-10_data_science_tech_python-for-ml/` |
+| Social images | `assets/social_posts/{week}/{slug}_instagram.png` | `assets/social_posts/2026-W24/{slug}_instagram.png` |
+| Edited video | `output/animations/{week}/{slug}.mp4` | `output/animations/2026-W24/{slug}.mp4` |
+| Short clip | `output/animations/{week}/{slug}_s{slot:02d}.mp4` | `output/animations/2026-W24/{slug}_s00.mp4` |
+| Thumbnail | `output/visuals/{week}/{slug}_thumb_a.png` | `output/visuals/2026-W24/{slug}_thumb_a.png` |
+| HyperFrames output | `assets/hyperframes/{date}_{slug}-aug.mp4` | `assets/hyperframes/2026-06-10_{slug}-aug.mp4` |
+| Edit plan | `remotion/public/edit-plans/{week}/{slug}.json` | `remotion/public/edit-plans/2026-W24/{slug}.json` |
+| Captions | `remotion/public/captions/{week}/{slug}.json` | `remotion/public/captions/2026-W24/{slug}.json` |
+| Scene plan | `remotion/public/scene-plans/{week}/{slug}_s{slot}.json` | `remotion/public/scene-plans/2026-W24/{slug}_s01.json` |
+| Shorts manifest | `content/derivatives/{week}/{slug}/shorts_manifest.json` | — |
 | Buffer blog | `content/buffer/week-N/{niche}/{slug}_substack_post.md` | `content/buffer/week-2/data_science_tech/python-for-ml_substack_post.md` |
 | Buffer script | `content/buffer/week-N/{niche}/{slug}_youtube_script.md` | same dir, `_youtube_script.md` |
-| Buffer social | `content/buffer/week-N/{niche}/{slug}_social_copy.md` | same dir, `_social_copy.md` |
-| Raw video | `assets/raw/{slug}.mov` | `assets/raw/python-for-ml.mov` |
-| Edited video | `assets/video/edited/{slug}.mp4` | `assets/video/edited/life_habits.mp4` |
+| Metricool CSV | `output/scheduled/metricool_{brand}.csv` | `output/scheduled/metricool_breathofds.csv` |
 
 **After producing content, run:**
 ```bash
@@ -337,108 +478,43 @@ If buffer < 4 weeks → copies into next empty slot. If buffer full → prints "
 ## Key Files
 
 ```
-data/brand/brand_kit.yaml                        ← brand colors, fonts, tones, AutoTune temps + models per niche (DS=Opus 4.7, rest=Sonnet 4.6)
-data/buffer/topics.yaml                          ← 4-week buffer topic slots (fill + generate Sunday)
-scripts/push_to_buffer.py                        ← auto-decide: buffer content or keep live (--auto flag)
-data/ideas/weekly_ideas.md                       ← Monday topic picking
-data/kb/master_brief.md                          ← read before every writing session
-data/poems/                                      ← POETRY: one poem per file ({slug}.txt)
+data/brand/brand_kit.yaml          ← brand colors, fonts, tones, AutoTune temps + models
+data/buffer/topics.yaml            ← 4-week buffer topic slots (fill + generate Sunday)
+data/ideas/weekly_ideas.md         ← Monday topic picking
+data/kb/master_brief.md            ← read before every writing session
+data/poems/                        ← POETRY: one poem per file ({slug}.txt)
+data/scheduling.db                 ← post queue (LinkedIn auto-post via scheduler.py)
+data/analytics/scheduler.log      ← APScheduler activity
+data/content_tracker.csv          ← content pipeline status (run scripts/sync_tracker.py to refresh)
 
-content/blogs/                                   ← finished blogs → YYYY-MM-DD_{niche}_{slug}.md
-content/blogs/{stem}_images/                     ← downloaded images + IMAGE_MAP.md
-content/scripts/
-  ├── YYYY-MM-DD-{niche-dashes}-{slug}_yt.md     ← YouTube talking-head script ([BROLL:] = editor cutaway hints)
-  ├── {slug}_PRODUCTION_GUIDE.md                 ← section → clip mapping + timing
-  ├── {slug}_captions.srt                        ← Whisper captions (auto-burned by auto_edit.py)
-  └── {slug}_poetry_overlay.srt                  ← POETRY ONLY: full poem SRT overlay
+content/blogs/{week}/              ← finished blogs (grouped by ISO week)
+content/scripts/{week}/            ← YT scripts + production guides
+content/derivatives/{week}/        ← 10 derivative files per slug + schedule.json
+content/buffer/                    ← 4-week rolling content buffer
 
-content/derivatives/{slug}/                      ← 10 files per blog
-  ├── twitter_thread.txt
-  ├── linkedin_post.txt
-  ├── instagram_caption.txt
-  ├── threads_post.txt
-  ├── newsletter.txt
-  ├── slide_outline.json
-  ├── youtube_metadata.json
-  ├── youtube_shorts_metadata.json
-  ├── polls.json
-  ├── thumbnail_brief.json
-  └── claude_design_brief.json                   ← emotional core, key quotes, story frames
+remotion/src/styles/chronixel.ts   ← Chronixel design system tokens
+remotion/src/Root.tsx              ← all Remotion compositions registered here
+remotion/public/edit-plans/{week}/ ← EditPlan JSONs driving CourseLesson renders
+remotion/public/captions/{week}/   ← Whisper caption JSONs
+remotion/public/scene-plans/{week}/← ScenePlan JSONs for motion shorts
 
-prompts/claude_design_agent.md                   ← Claude Design art direction system
-output/scheduled/claude_design_prompts_{slug}.md ← 4 design prompts per blog (spec for the HTML below)
-output/scheduled/validated_code_{slug}.json      ← DS tutorial: tested code blocks
+output/animations/{week}/          ← rendered MP4s (long-form + shorts)
+output/visuals/{week}/             ← thumbnails + cover images
+output/scheduled/
+  metricool_breathofds.csv         ← DS brand Metricool import (@breathofdatascience)
+  metricool_mistakenlyhuman.csv    ← Life+Poetry brand Metricool import (@mistakenlyhuman)
+  upload_shorts.sh                 ← pre-filled YouTube Shorts upload commands
 
-assets/
-  ├── slides/{slug}_slides.html                  ← Claude Design source: 9-slide deck (1920×1080)
-  ├── slides/{slug}_story.html                   ← Claude Design source: 7-frame IG story (1080×1920)
-  ├── slides/{slug}_social.html                  ← Claude Design source: 4 social variants
-  ├── slides/{slug}_reel_cover.html              ← Claude Design source: 9:16 reel cover
-  ├── slides/{slug}/slide_N.png                  ← deck PNGs 1920×1080 (export_html_deck.py)
-  ├── slides/{slug}/{slug}_slides.pdf            ← deck PDF (export_html_deck.py --pdf)
-  ├── slides/photos/{slug}_*.jpg                 ← stock photos filling story/reel image-slots
-  ├── carousels/{slug}_carousel.html             ← Instagram carousel (swipeable HTML, export-ready)
-  ├── carousels/slides/{slug}/slide_N.png        ← carousel PNGs 1080×1350 (generate_carousel.py --export)
-  ├── stories/{slug}/{slug}_story.mp4            ← IG story video (export_story_animation.py)
-  ├── stories/{slug}/{slug}_story_slide_NN.png   ← 7 story frames
-  ├── social_posts/{slug}_instagram.png          ← 1080×1080  (export_html_deck.py)
-  ├── social_posts/{slug}_linkedin.png           ← 1200×628
-  ├── social_posts/{slug}_twitter.png            ← 1200×675
-  ├── social_posts/{slug}_threads.png            ← 1080×1080
-  ├── reels/{slug}_cover.png                     ← 9:16 reel cover (export_html_deck.py)
-  ├── videos/{slug}/{slug}_raw.mp4               ← Life/Poetry: raw talking-head recording (iPhone)
-  ├── videos/{slug}/                             ← B-roll clips + VIDEO_MAP.json
-  ├── video/edited/{slug}.mp4                    ← long-form YouTube (FINAL)
-  └── video/edited/{slug}_reel.mp4              ← YouTube Short / reel (FINAL, 9:16)
-
-output/scheduled/publer_mistakenlyhuman_ig_fb.csv   ← Account 1 (mistakenlyhuman): Instagram + Facebook
-output/scheduled/publer_mistakenlyhuman_threads.csv ← Account 1 (mistakenlyhuman): Threads
-output/scheduled/publer_breathofds_ig_fb.csv        ← Account 2 (Breath of DS): Instagram + Facebook
-output/scheduled/upload_shorts.sh               ← pre-filled YouTube Shorts upload commands
-data/scheduling.db                              ← post queue
-data/analytics/scheduler.log                   ← APScheduler activity
+assets/raw/{week}/                 ← original camera recordings + screen recordings
+assets/hyperframes/                ← HyperFrames augmented MP4s
+assets/social_posts/{week}/        ← platform-specific social images
+assets/slides/{week}/              ← slide decks + PDFs + per-slide PNG exports
+assets/carousels/{week}/           ← Instagram carousel HTML + slide PNGs
 ```
 
 ---
 
-## Fallback Canva path (if Claude Design unavailable)
-
-```bash
-python3 scripts/generate_canva_prompts_legacy.py   # Canva AI 2.0 prompts
-python3 scripts/generate_slides.py                  # → output/scheduled/{slug}_slides.csv
-python3 scripts/generate_quote_cards.py             # → output/scheduled/quote_cards.csv
-python3 scripts/generate_canva_prompts.py           # → output/scheduled/canva_prompts.md (thumbnails)
-```
-
----
-
-## Schedule Embedded in Content
-
-**Each generated piece of content carries its own schedule.json.**
-
-When you run `produce_blog.py`, `repurpose_blog.py`, or generate shorts metadata, the scripts automatically compute and write `content/derivatives/{slug}/schedule.json` — no manual timestamp management needed.
-
-### Inspecting schedules
-
-```bash
-# See full schedule for a slug
-cat content/derivatives/{slug}/schedule.json | python3 -m json.tool
-
-# Extract just the publish times
-jq '.social, .long_form.publish_at' content/derivatives/{slug}/schedule.json
-```
-
-### Auto-generating the weekly checklist
-
-```bash
-# Generate checklist for a given week (must be a Monday)
-python3 scripts/generate_checklist.py --week 2026-06-09
-# → docs/week-2026-06-09-publishing-checklist.md
-```
-
-The checklist reads all `schedule.json` files whose `long_form.publish_at` falls in that week, fills in YouTube upload commands with correct `--publish-at` values, and produces the canonical action list. No manual date entry required.
-
-### Load posts: schedule.json + blog URLs + images
+## Load posts: schedule.json + blog URLs + images
 
 `load_posts.py` now:
 1. Checks for `schedule.json` in each slug dir — uses timestamps if present
@@ -456,11 +532,47 @@ The checklist reads all `schedule.json` files whose `long_form.publish_at` falls
 
 ---
 
+## Fallback: Canva path (if Claude Design unavailable)
+
+```bash
+python3 scripts/generate_canva_prompts_legacy.py   # Canva AI 2.0 prompts
+python3 scripts/generate_slides.py                  # → output/scheduled/{slug}_slides.csv
+python3 scripts/generate_quote_cards.py             # → output/scheduled/quote_cards.csv
+python3 scripts/generate_canva_prompts.py           # → output/scheduled/canva_prompts.md (thumbnails)
+```
+
+---
+
+## Schedule embedded in content
+
+**Each generated piece of content carries its own schedule.json.**
+
+When you run `produce_blog.py`, `repurpose_blog.py`, or generate shorts metadata, the scripts automatically compute and write `content/derivatives/{slug}/schedule.json` — no manual timestamp management needed.
+
+### Inspecting schedules
+
+```bash
+# See full schedule for a slug
+python3 -m json.tool content/derivatives/{week}/{slug}/schedule.json
+
+# Extract just publish times
+jq '.social, .long_form.publish_at' content/derivatives/{week}/{slug}/schedule.json
+```
+
+### Auto-generating the weekly checklist
+
+```bash
+python3 scripts/generate_checklist.py --week 2026-06-09
+# → docs/week-2026-06-09-publishing-checklist.md
+```
+
+---
+
 ## Still to build
 
 | Item | What's needed |
 |------|--------------|
 | Streamlit dashboard | `dashboard/app.py` — not yet created |
 | Twitter hook patterns | Request Twitter archive → extract → `data/kb/twitter_hook_patterns.json` |
-| LinkedIn OAuth refresh | Tokens expire 60 days — rerun `scripts/linkedin_auth.py` when needed |
+| LinkedIn OAuth refresh | Tokens expire 60 days — rerun `scripts/auth_linkedin.py --refresh` when needed |
 | Worksheet automation | `scripts/auto_worksheet_workflow.py` — worksheet gen + Claude Design prompt in one call |
