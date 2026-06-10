@@ -70,5 +70,83 @@
     ],
     "published_at": "2026-06-08T04:21:32.789483+00:00",
     "token_used": "personal"
+  },
+  {
+    "title": "Python for Data Science: Tutorial 2/10 — Variables, Data Types, and the Structures That Actually Matter",
+    "medium_url": "https://medium.com/@tarun-gupta/379bd4679ea0",
+    "medium_id": "379bd4679ea0",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.md",
+    "status": "draft",
+    "tags": [],
+    "published_at": "2026-06-10T04:50:24.228143+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "Python for Data Science: Tutorial 2/10 — Variables, Data Types, and the Structures That Actually Matter",
+    "medium_url": "https://medium.com/@tarun-gupta/f8817351c076",
+    "medium_id": "f8817351c076",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.md",
+    "status": "draft",
+    "tags": [],
+    "published_at": "2026-06-10T05:42:00.231325+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "Python for Data Science: Tutorial 2/10 — Variables, Data Types, and the Structures That Actually Matter",
+    "medium_url": "https://medium.com/@tarun-gupta/89aca0a6eb3f",
+    "medium_id": "89aca0a6eb3f",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.md",
+    "status": "draft",
+    "tags": [
+      "python",
+      "data-science",
+      "programming",
+      "education",
+      "software-development"
+    ],
+    "published_at": "2026-06-10T05:43:44.146752+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "The Lie We Inherited About Strength",
+    "medium_url": "https://medium.com/@tarun-gupta/2d637e8b9f69",
+    "medium_id": "2d637e8b9f69",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas.md",
+    "status": "draft",
+    "tags": [
+      "mental-health",
+      "psychology",
+      "self-improvement",
+      "life-lessons",
+      "relationships"
+    ],
+    "published_at": "2026-06-10T05:44:33.557827+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "\"The Hangover That Won't Lift\"",
+    "medium_url": "https://medium.com/@tarun-gupta/d018dc47f2d0",
+    "medium_id": "d018dc47f2d0",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses.md",
+    "status": "draft",
+    "tags": [
+      "poetry",
+      "love",
+      "relationships",
+      "psychology",
+      "self-awareness"
+    ],
+    "published_at": "2026-06-10T05:46:32.105991+00:00",
+    "token_used": "personal"
   }
 ]
