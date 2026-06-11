@@ -9,6 +9,7 @@ Single entry point. Pick path by question.
 | How does video editing work? | [video-production-guide.md](video-production-guide.md) |
 | How does Medium repurposing work? | [medium-repurposing-guide.md](medium-repurposing-guide.md) |
 | How do I set up automation (launchd)? | [launchd-daily-ideas.md](launchd-daily-ideas.md) · [launchd-build-kb.md](launchd-build-kb.md) |
+| Where did the weekend mini-courses go? | Separate repo: [`tarunlnmiit/course-machine`](https://github.com/tarunlnmiit/course-machine) (extracted 2026-06-11, see [repo-split-plan.md](repo-split-plan.md)) |
 
 Identity, banned words, niches → repo-root `CLAUDE.md`.
 

@@ -1,8 +1,8 @@
 # Repo Split Plan: content-machine → content-machine + course-machine
 
-**Status:** Planned — not yet executed  
+**Status:** ✅ Executed 2026-06-11 — course-machine repo live at `tarunlnmiit/course-machine`  
 **Decision date:** 2026-06-07  
-**Execute when:** Content pipeline stable, week 1 published
+**Note:** Execution also copied `scripts/lib/slug.py` (used by 3 course scripts, missed in original plan). `_console.py` and `lib/slug.py` retained in content-machine (used by ~16 content scripts).
 
 ---
 
