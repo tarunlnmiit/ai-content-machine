@@ -166,7 +166,7 @@ GitHub auto-redirects old URL.
 
 ```bash
 cd ~/Making\ It\ Big/Claude/content-machine && graphify update .
-cd ~/Making\ It\ Big/Claude/course-machine  && graphify init .
+cd ~/Making\ It\ Big/Claude/course-machine  && graphify update .   # `update` builds from scratch; there is no `init`
 ```
 
 ---
