@@ -1,0 +1,110 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ConceptExplainer",
+    "script": "David Allen calls these open loops.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "term": "Open Loops",
+      "definition": "Unfinished tasks your brain keeps tracking until it registers closure.",
+      "analogy": "Like browser tabs left open in your mind, quietly draining battery."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "NumberedTips",
+    "script": "I scan what's unfinished, write one line about where I'll pick it up",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "title": "The 4-Minute Shutdown Ritual",
+      "tips": [
+        {
+          "number": 1,
+          "text": "Scan what's unfinished"
+        },
+        {
+          "number": 2,
+          "text": "Write one line on where you'll pick up tomorrow"
+        },
+        {
+          "number": 3,
+          "text": "Note one thing you actually finished"
+        },
+        {
+          "number": 4,
+          "text": "Say out loud: \"Shutdown complete.\""
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "WordReveal",
+    "script": "do your most dreaded task first \u2014 but only one frog",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Eat",
+        "the",
+        "frog",
+        "\u2014",
+        "but",
+        "only",
+        "ONE"
+      ],
+      "emphasis": [
+        6
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "TransformationArc",
+    "script": "The done list corrects your perception of yourself.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "before": "To-do list: a permanent state of deficit, never hits zero",
+      "after": "Done list: an honest picture of what you actually moved forward",
+      "label": "Shift how you measure a day"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "NumberedTips",
+    "script": "The night before, write exactly three priorities for tomorrow.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "title": "Three Priorities \u2014 Written the Night Before",
+      "tips": [
+        {
+          "number": 1,
+          "text": "Not five \u2014 five means you don't have to choose"
+        },
+        {
+          "number": 2,
+          "text": "Not ten \u2014 that's a task list, not priorities"
+        },
+        {
+          "number": 3,
+          "text": "Three. If the day falls apart, you know which one matters"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "What gets measured gets noticed. And noticing is most of the work.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "What gets measured gets noticed. And noticing, it turns out, is most of the work.",
+      "attribution": "Breath of Life"
+    }
+  }
+]

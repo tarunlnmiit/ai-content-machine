@@ -1,0 +1,127 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "DataVizReveal",
+    "script": "we spend eighty percent of our time on cleaning and wrangling",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Where DS Time Goes",
+      "data": [
+        {
+          "label": "Cleaning & Wrangling",
+          "value": 80
+        },
+        {
+          "label": "Everything Else",
+          "value": 20
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "use `fig, ax = plt.subplots()` every single time",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "code": [
+        "import matplotlib.pyplot as plt",
+        "",
+        "fig, ax = plt.subplots()",
+        "ax.plot(x, y)",
+        "fig.savefig('plot.png', dpi=300, bbox_inches='tight')"
+      ],
+      "language": "python",
+      "highlightLine": 3,
+      "annotationText": "Work with the ax object directly \u2014 full control, scales to any layout"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ToolComparison",
+    "script": "Matplotlib as the canvas and Seaborn as the paintbrush",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "left": {
+        "label": "Matplotlib (Canvas)",
+        "points": [
+          "Verbose but honest",
+          "Control everything",
+          "Build anything from scratch"
+        ]
+      },
+      "right": {
+        "label": "Seaborn (Paintbrush)",
+        "points": [
+          "Handles statistical complexity",
+          "Less setup code",
+          "Layers information intelligently"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "NumberedTips",
+    "script": "four mistakes I see constantly that quietly tank people's credibility",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "title": "4 Plot Mistakes That Kill Credibility",
+      "tips": [
+        {
+          "number": 1,
+          "text": "Too many colors \u2014 legends over 5\u20136 items become unreadable"
+        },
+        {
+          "number": 2,
+          "text": "Dual y-axes \u2014 manipulate correlation visually, don't use them"
+        },
+        {
+          "number": 3,
+          "text": "3-D plots \u2014 a 2-D heatmap beats them every time"
+        },
+        {
+          "number": 4,
+          "text": "No context \u2014 title the finding, not the variable"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "TransformationArc",
+    "script": "\"Revenue Grew 23% After Q3 Pricing Change\" tells me everything",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "before": "Revenue Over Time",
+      "after": "Revenue Grew 23% After Q3 Pricing Change",
+      "label": "Title the finding, not the variable"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "WordReveal",
+    "script": "Visualization is communication, not decoration",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Visualization",
+        "is",
+        "communication,",
+        "not",
+        "decoration"
+      ],
+      "emphasis": [
+        2,
+        4
+      ]
+    }
+  }
+]

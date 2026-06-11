@@ -1,0 +1,590 @@
+[
+  {
+    "text": "For most of my adult life, I worked with things you can measure, data, models, dashboards,",
+    "startMs": 0,
+    "endMs": 14400,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "the clean grammar of proof.",
+    "startMs": 14400,
+    "endMs": 16540,
+    "timestampMs": 14400,
+    "confidence": null
+  },
+  {
+    "text": "I am not the kind of person who cries at lines on a page, except I do.",
+    "startMs": 16540,
+    "endMs": 26320,
+    "timestampMs": 16540,
+    "confidence": null
+  },
+  {
+    "text": "Not in public, but sometimes a poem finds the exact nerve, no dataset ever mapped, and",
+    "startMs": 26320,
+    "endMs": 33420,
+    "timestampMs": 26320,
+    "confidence": null
+  },
+  {
+    "text": "something releases.",
+    "startMs": 33420,
+    "endMs": 35320,
+    "timestampMs": 33420,
+    "confidence": null
+  },
+  {
+    "text": "I did not plan for that, I don't have a framework for it.",
+    "startMs": 35320,
+    "endMs": 38720,
+    "timestampMs": 35320,
+    "confidence": null
+  },
+  {
+    "text": "I've stopped pretending the last two lives are separate.",
+    "startMs": 38720,
+    "endMs": 44080,
+    "timestampMs": 38720,
+    "confidence": null
+  },
+  {
+    "text": "Poetry is supposed to stay in its lane.",
+    "startMs": 44080,
+    "endMs": 46660,
+    "timestampMs": 44080,
+    "confidence": null
+  },
+  {
+    "text": "Literature class, softcover journals, the corner of life designated for feelings, you",
+    "startMs": 46660,
+    "endMs": 52980,
+    "timestampMs": 46660,
+    "confidence": null
+  },
+  {
+    "text": "can't organize.",
+    "startMs": 52980,
+    "endMs": 55020,
+    "timestampMs": 52980,
+    "confidence": null
+  },
+  {
+    "text": "It doesn't stay there.",
+    "startMs": 55020,
+    "endMs": 56020,
+    "timestampMs": 55020,
+    "confidence": null
+  },
+  {
+    "text": "Poetry is supposed to stay in its lane.",
+    "startMs": 56020,
+    "endMs": 56060,
+    "timestampMs": 56020,
+    "confidence": null
+  },
+  {
+    "text": "It shows up in a line of code you wrote at 2am that reads like confession, in the way",
+    "startMs": 56320,
+    "endMs": 63260,
+    "timestampMs": 56320,
+    "confidence": null
+  },
+  {
+    "text": "your mother once described rain, in the grief that arrived when a number on a screen told",
+    "startMs": 63260,
+    "endMs": 69040,
+    "timestampMs": 63260,
+    "confidence": null
+  },
+  {
+    "text": "you something true that you weren't ready for.",
+    "startMs": 69040,
+    "endMs": 73400,
+    "timestampMs": 69040,
+    "confidence": null
+  },
+  {
+    "text": "The lyric form is the one that admits what human experience refuses to sort.",
+    "startMs": 73400,
+    "endMs": 81020,
+    "timestampMs": 73400,
+    "confidence": null
+  },
+  {
+    "text": "That's not a romantic claim, that's just accurate.",
+    "startMs": 81020,
+    "endMs": 84020,
+    "timestampMs": 81020,
+    "confidence": null
+  },
+  {
+    "text": "Here is the thing about poetry.",
+    "startMs": 84020,
+    "endMs": 86020,
+    "timestampMs": 84020,
+    "confidence": null
+  },
+  {
+    "text": "It's not elegant code.",
+    "startMs": 86020,
+    "endMs": 88620,
+    "timestampMs": 86020,
+    "confidence": null
+  },
+  {
+    "text": "Programmers call it beautiful.",
+    "startMs": 88620,
+    "endMs": 91140,
+    "timestampMs": 88620,
+    "confidence": null
+  },
+  {
+    "text": "They always have, there is a reason for that.",
+    "startMs": 91140,
+    "endMs": 95760,
+    "timestampMs": 91140,
+    "confidence": null
+  },
+  {
+    "text": "A specific moment, a commit message, a recursive function, a line of output that felt like",
+    "startMs": 95760,
+    "endMs": 101620,
+    "timestampMs": 95760,
+    "confidence": null
+  },
+  {
+    "text": "a volta, something real, and particular.",
+    "startMs": 101620,
+    "endMs": 106980,
+    "timestampMs": 101620,
+    "confidence": null
+  },
+  {
+    "text": "Some weeks I build dashboards, review model outputs, stare at analytics.",
+    "startMs": 106980,
+    "endMs": 112680,
+    "timestampMs": 106980,
+    "confidence": null
+  },
+  {
+    "text": "Other weeks I write poems nobody may ever read.",
+    "startMs": 112680,
+    "endMs": 114940,
+    "timestampMs": 112680,
+    "confidence": null
+  },
+  {
+    "text": "Some weeks I write poems nobody may ever read.",
+    "startMs": 114940,
+    "endMs": 115940,
+    "timestampMs": 114940,
+    "confidence": null
+  },
+  {
+    "text": "years, I kept those as separate identities. Then I noticed the same thing drove both.",
+    "startMs": 115940,
+    "endMs": 122220,
+    "timestampMs": 115940,
+    "confidence": null
+  },
+  {
+    "text": "The desire to understand what people actually feel beneath what they say.",
+    "startMs": 122220,
+    "endMs": 129740,
+    "timestampMs": 122220,
+    "confidence": null
+  },
+  {
+    "text": "One used numbers, the other used metaphor. Tools different. Curiosity identical.",
+    "startMs": 129740,
+    "endMs": 142120,
+    "timestampMs": 129740,
+    "confidence": null
+  },
+  {
+    "text": "The best scientific papers have rhythm. The best commit messages have grief in them sometimes.",
+    "startMs": 142120,
+    "endMs": 149160,
+    "timestampMs": 142120,
+    "confidence": null
+  },
+  {
+    "text": "Poetry was already in the server room. It was never waiting for an invitation.",
+    "startMs": 149160,
+    "endMs": 155380,
+    "timestampMs": 149160,
+    "confidence": null
+  },
+  {
+    "text": "The toast burns. You scrape it over the sink. That smell. Charred edges. Still warm bread",
+    "startMs": 155380,
+    "endMs": 162820,
+    "timestampMs": 155380,
+    "confidence": null
+  },
+  {
+    "text": "underneath. You have done this a hundred times. But one morning a poem lives inside it. Not",
+    "startMs": 162820,
+    "endMs": 170380,
+    "timestampMs": 162820,
+    "confidence": null
+  },
+  {
+    "text": "one you write.",
+    "startMs": 170380,
+    "endMs": 172100,
+    "timestampMs": 170380,
+    "confidence": null
+  },
+  {
+    "text": "One you inhabit. Briefly before the day takes over.",
+    "startMs": 172100,
+    "endMs": 179320,
+    "timestampMs": 172100,
+    "confidence": null
+  },
+  {
+    "text": "Poetry is not elevated experience. It's ordinary experience seen clearly for one second.",
+    "startMs": 179320,
+    "endMs": 188420,
+    "timestampMs": 179320,
+    "confidence": null
+  },
+  {
+    "text": "The grey of a commute counts. The brown of bad coffee counts. The particular blue of",
+    "startMs": 188420,
+    "endMs": 195600,
+    "timestampMs": 188420,
+    "confidence": null
+  },
+  {
+    "text": "a Tuesday afternoon. When nothing happens and you feel inexplicable.",
+    "startMs": 195600,
+    "endMs": 201020,
+    "timestampMs": 195600,
+    "confidence": null
+  },
+  {
+    "text": "thi",
+    "startMs": 201020,
+    "endMs": 201700,
+    "timestampMs": 201020,
+    "confidence": null
+  },
+  {
+    "text": "The particular blue of a Tuesday afternoon when nothing happens and you feel inexplicably okay.",
+    "startMs": 202100,
+    "endMs": 222100,
+    "timestampMs": 202100,
+    "confidence": null
+  },
+  {
+    "text": "You don't have to write any of this down.",
+    "startMs": 225460,
+    "endMs": 227720,
+    "timestampMs": 225460,
+    "confidence": null
+  },
+  {
+    "text": "Notice it did not come from somewhere special.",
+    "startMs": 228500,
+    "endMs": 230880,
+    "timestampMs": 228500,
+    "confidence": null
+  },
+  {
+    "text": "Notice it came from Tuesday.",
+    "startMs": 230880,
+    "endMs": 233080,
+    "timestampMs": 230880,
+    "confidence": null
+  },
+  {
+    "text": "No one sits down to feel grief poetically.",
+    "startMs": 233820,
+    "endMs": 235880,
+    "timestampMs": 233820,
+    "confidence": null
+  },
+  {
+    "text": "It arrives unannounced, in the wrong font.",
+    "startMs": 237160,
+    "endMs": 239860,
+    "timestampMs": 237160,
+    "confidence": null
+  },
+  {
+    "text": "But grief has always been poetry's country.",
+    "startMs": 240540,
+    "endMs": 243020,
+    "timestampMs": 240540,
+    "confidence": null
+  },
+  {
+    "text": "Not because poets romanticize loss.",
+    "startMs": 243740,
+    "endMs": 246280,
+    "timestampMs": 243740,
+    "confidence": null
+  },
+  {
+    "text": "The best ones don't.",
+    "startMs": 247060,
+    "endMs": 247880,
+    "timestampMs": 247060,
+    "confidence": null
+  },
+  {
+    "text": "Because grief insists on specificity.",
+    "startMs": 248960,
+    "endMs": 251700,
+    "timestampMs": 248960,
+    "confidence": null
+  },
+  {
+    "text": "You don't miss a person.",
+    "startMs": 255160,
+    "endMs": 256900,
+    "timestampMs": 255160,
+    "confidence": null
+  },
+  {
+    "text": "You miss how they said your name.",
+    "startMs": 257360,
+    "endMs": 259120,
+    "timestampMs": 257360,
+    "confidence": null
+  },
+  {
+    "text": "The exact pitch of their laugh at something stupid.",
+    "startMs": 259120,
+    "endMs": 262780,
+    "timestampMs": 259120,
+    "confidence": null
+  },
+  {
+    "text": "There are losses I can summarize in a sentence.",
+    "startMs": 263560,
+    "endMs": 266100,
+    "timestampMs": 263560,
+    "confidence": null
+  },
+  {
+    "text": "Others I can approach through poems.",
+    "startMs": 266700,
+    "endMs": 268620,
+    "timestampMs": 266700,
+    "confidence": null
+  },
+  {
+    "text": "Facts tell you what happened.",
+    "startMs": 270440,
+    "endMs": 276500,
+    "timestampMs": 270440,
+    "confidence": null
+  },
+  {
+    "text": "Poetry tells you what stayed behind after it happened.",
+    "startMs": 277360,
+    "endMs": 280920,
+    "timestampMs": 277360,
+    "confidence": null
+  },
+  {
+    "text": "That's not a small mercy.",
+    "startMs": 282500,
+    "endMs": 284200,
+    "timestampMs": 282500,
+    "confidence": null
+  },
+  {
+    "text": "It's the reason people reach for poems at funerals.",
+    "startMs": 284200,
+    "endMs": 287860,
+    "timestampMs": 284200,
+    "confidence": null
+  },
+  {
+    "text": "And not...",
+    "startMs": 288440,
+    "endMs": 289100,
+    "timestampMs": 288440,
+    "confidence": null
+  },
+  {
+    "text": "spreadsheets.",
+    "startMs": 289120,
+    "endMs": 290120,
+    "timestampMs": 289120,
+    "confidence": null
+  },
+  {
+    "text": "The times poetry has landed hardest on me, I wasn't looking for it.",
+    "startMs": 290120,
+    "endMs": 296680,
+    "timestampMs": 290120,
+    "confidence": null
+  },
+  {
+    "text": "I was tired, half-reading, distracted by something smaller.",
+    "startMs": 296680,
+    "endMs": 302360,
+    "timestampMs": 296680,
+    "confidence": null
+  },
+  {
+    "text": "That's the trap in waiting for elevated moments.",
+    "startMs": 302360,
+    "endMs": 306120,
+    "timestampMs": 302360,
+    "confidence": null
+  },
+  {
+    "text": "Poetry comes sideways.",
+    "startMs": 306120,
+    "endMs": 307740,
+    "timestampMs": 306120,
+    "confidence": null
+  },
+  {
+    "text": "In a lyric you have heard 40 times, that suddenly means something different.",
+    "startMs": 307740,
+    "endMs": 313140,
+    "timestampMs": 307740,
+    "confidence": null
+  },
+  {
+    "text": "In a sentence someone says to you that you'll carry for years without knowing why.",
+    "startMs": 313140,
+    "endMs": 318360,
+    "timestampMs": 313140,
+    "confidence": null
+  },
+  {
+    "text": "It dips its fingers in every color, because it's patient.",
+    "startMs": 319120,
+    "endMs": 324120,
+    "timestampMs": 319120,
+    "confidence": null
+  },
+  {
+    "text": "It waits in the ordinary, and the technical, and the unbearable, until you are open, just barely, and then it reaches you.",
+    "startMs": 324120,
+    "endMs": 334120,
+    "timestampMs": 324120,
+    "confidence": null
+  },
+  {
+    "text": "The door doesn't need to be wide.",
+    "startMs": 334120,
+    "endMs": 336120,
+    "timestampMs": 334120,
+    "confidence": null
+  },
+  {
+    "text": "A crack is enough.",
+    "startMs": 336120,
+    "endMs": 338120,
+    "timestampMs": 336120,
+    "confidence": null
+  },
+  {
+    "text": "There is no lesson here.",
+    "startMs": 338120,
+    "endMs": 342120,
+    "timestampMs": 338120,
+    "confidence": null
+  },
+  {
+    "text": "That's the point.",
+    "startMs": 342120,
+    "endMs": 344120,
+    "timestampMs": 342120,
+    "confidence": null
+  },
+  {
+    "text": "Poetry doesn't sharpen your frameworks.",
+    "startMs": 344120,
+    "endMs": 346120,
+    "timestampMs": 344120,
+    "confidence": null
+  },
+  {
+    "text": "It doesn't solve problems.",
+    "startMs": 346120,
+    "endMs": 348120,
+    "timestampMs": 346120,
+    "confidence": null
+  },
+  {
+    "text": "It makes you a person who has stood inside a color, briefly, and recognized it for what it was.",
+    "startMs": 348120,
+    "endMs": 356120,
+    "timestampMs": 348120,
+    "confidence": null
+  },
+  {
+    "text": "And that's not a small thing.",
+    "startMs": 356120,
+    "endMs": 358120,
+    "timestampMs": 356120,
+    "confidence": null
+  },
+  {
+    "text": "It's the whole thing.",
+    "startMs": 358120,
+    "endMs": 360120,
+    "timestampMs": 358120,
+    "confidence": null
+  },
+  {
+    "text": "The poem finds you.",
+    "startMs": 360120,
+    "endMs": 362120,
+    "timestampMs": 360120,
+    "confidence": null
+  },
+  {
+    "text": "Your only job is to not keep the door entirely shut.",
+    "startMs": 362120,
+    "endMs": 367120,
+    "timestampMs": 362120,
+    "confidence": null
+  },
+  {
+    "text": "If a line has stayed with you, something that you read years ago that still lives in your chest, I would love to hear it.",
+    "startMs": 367120,
+    "endMs": 375120,
+    "timestampMs": 367120,
+    "confidence": null
+  },
+  {
+    "text": "Find me on Instagram at mistakenlyhuman.",
+    "startMs": 375120,
+    "endMs": 377120,
+    "timestampMs": 375120,
+    "confidence": null
+  },
+  {
+    "text": "That's the whole ask.",
+    "startMs": 377120,
+    "endMs": 379120,
+    "timestampMs": 377120,
+    "confidence": null
+  },
+  {
+    "text": "One line that followed you home.",
+    "startMs": 379120,
+    "endMs": 381120,
+    "timestampMs": 379120,
+    "confidence": null
+  },
+  {
+    "text": "Bring it.",
+    "startMs": 381120,
+    "endMs": 383120,
+    "timestampMs": 381120,
+    "confidence": null
+  }
+]

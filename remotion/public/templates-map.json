@@ -1,0 +1,189 @@
+{
+  "version": "1.0",
+  "templates": [
+    {
+      "name": "Code Hike",
+      "remotion_template": "template-code-hike",
+      "package": "prism-react-renderer",
+      "status": "integrated",
+      "components": ["CodeAnnotation"],
+      "use_when": [
+        "showing a code snippet",
+        "explaining a function or method",
+        "walking through syntax",
+        "demonstrating a library call",
+        "comparing code before and after"
+      ],
+      "niche_affinity": ["ds"],
+      "props_hint": "code: string[], highlightLine: int, annotationText: str, language: str"
+    },
+    {
+      "name": "TikTok Captions",
+      "remotion_template": "template-tiktok",
+      "package": "@remotion/captions",
+      "status": "integrated",
+      "components": ["CaptionPage", "WordReveal"],
+      "use_when": [
+        "a short punchy phrase should land word by word",
+        "a key term needs emphasis",
+        "a memorable one-liner in the script",
+        "caption overlay on talking head"
+      ],
+      "niche_affinity": ["ds", "life", "poetry"],
+      "props_hint": "words: string[], emphasis: int[]"
+    },
+    {
+      "name": "Audiogram",
+      "remotion_template": "template-audiogram",
+      "package": "@remotion/media-utils",
+      "status": "integrated",
+      "components": ["AudiogramFeed", "AudiogramStory"],
+      "use_when": [
+        "podcast clip with audio waveform",
+        "quote from episode with speaker attribution"
+      ],
+      "niche_affinity": ["ds", "life", "poetry"],
+      "props_hint": "audioFile: str, quote: str, podcastName: str, niche: str"
+    },
+    {
+      "name": "Music Visualization",
+      "remotion_template": "template-music-visualization",
+      "package": "@remotion/media-utils",
+      "status": "integrated",
+      "components": ["AudiogramFeed", "AudiogramStory"],
+      "use_when": ["audio-reactive waveform bars"],
+      "niche_affinity": ["life", "poetry"],
+      "props_hint": "same as Audiogram — bars are audio-reactive via useAudioData"
+    },
+    {
+      "name": "3D",
+      "remotion_template": "template-three",
+      "package": "@remotion/three @react-three/fiber @react-three/drei three",
+      "status": "integrated",
+      "components": ["AbstractDS", "AbstractLife", "AbstractPoetry"],
+      "use_when": [
+        "abstract b-roll background for DS niche (3D network graph)",
+        "abstract b-roll background for Life niche (3D particle field)",
+        "abstract b-roll background for Poetry niche (3D aurora particles)"
+      ],
+      "niche_affinity": ["ds", "life", "poetry"],
+      "props_hint": "no scene-plan props — used as background only"
+    },
+    {
+      "name": "Render Server",
+      "remotion_template": "template-render-server",
+      "package": "@remotion/renderer @remotion/bundler express",
+      "status": "integrated",
+      "components": [],
+      "use_when": ["batch render trigger from Python scripts"],
+      "niche_affinity": [],
+      "props_hint": "infrastructure — POST /render and POST /still at localhost:3001"
+    },
+    {
+      "name": "Stills",
+      "remotion_template": "template-still",
+      "package": "@remotion/renderer",
+      "status": "integrated",
+      "components": ["Thumbnail", "SocialCard1x1", "SocialCard9x16"],
+      "use_when": ["export social card PNG", "export thumbnail PNG"],
+      "niche_affinity": ["ds", "life", "poetry"],
+      "props_hint": "infrastructure — triggered by export_social_cards.py via render server"
+    },
+    {
+      "name": "Overlay",
+      "remotion_template": "template-overlay",
+      "package": "remotion",
+      "status": "integrated",
+      "components": ["TitleCard", "LowerThird", "OutroCard"],
+      "use_when": [
+        "title card at video start",
+        "lower third for speaker name",
+        "outro card with up-next and subscribe"
+      ],
+      "niche_affinity": ["ds", "life", "poetry"],
+      "props_hint": "titleText: str, showName: str"
+    }
+  ],
+  "scene_components": [
+    {
+      "componentName": "DataVizReveal",
+      "template_source": "custom",
+      "use_when": "citing a number, stat, comparison, or data trend",
+      "props": "title: str, data: [{label: str, value: number}], chartType: 'bar'|'line'|'number'",
+      "niche_affinity": ["ds"],
+      "duration_hint": "6-8s"
+    },
+    {
+      "componentName": "CodeAnnotation",
+      "template_source": "Code Hike",
+      "use_when": "showing or explaining a code snippet, function, or syntax",
+      "props": "code: str[], language: str, highlightLine: int, annotationText: str",
+      "niche_affinity": ["ds"],
+      "duration_hint": "6-8s"
+    },
+    {
+      "componentName": "ConceptExplainer",
+      "template_source": "custom",
+      "use_when": "introducing a term, concept, or framework the viewer may not know",
+      "props": "term: str, definition: str, analogy: str (optional)",
+      "niche_affinity": ["ds", "life"],
+      "duration_hint": "5-7s"
+    },
+    {
+      "componentName": "ToolComparison",
+      "template_source": "custom",
+      "use_when": "comparing two approaches, tools, libraries, or strategies side by side",
+      "props": "left: {label: str, points: str[]}, right: {label: str, points: str[]}",
+      "niche_affinity": ["ds"],
+      "duration_hint": "6-8s"
+    },
+    {
+      "componentName": "NumberedTips",
+      "template_source": "custom",
+      "use_when": "listing 3-5 steps, rules, principles, or tips",
+      "props": "title: str, tips: [{number: int, text: str}]",
+      "niche_affinity": ["ds", "life"],
+      "duration_hint": "5-7s"
+    },
+    {
+      "componentName": "TransformationArc",
+      "template_source": "custom",
+      "use_when": "describing a before/after shift, problem/solution, or growth story",
+      "props": "before: str, after: str, label: str (optional)",
+      "niche_affinity": ["life", "ds"],
+      "duration_hint": "5-7s"
+    },
+    {
+      "componentName": "HabitLoop",
+      "template_source": "custom",
+      "use_when": "describing a cycle, feedback loop, or recurring system or process",
+      "props": "title: str, phases: [{label: str}]",
+      "niche_affinity": ["life"],
+      "duration_hint": "5-7s"
+    },
+    {
+      "componentName": "WordReveal",
+      "template_source": "TikTok Captions",
+      "use_when": "a short powerful phrase, key term, or memorable line should land hard",
+      "props": "words: str[], emphasis: int[] (optional, 0-based indices to bold)",
+      "niche_affinity": ["ds", "life", "poetry"],
+      "duration_hint": "4-6s"
+    },
+    {
+      "componentName": "AtmosphericQuote",
+      "template_source": "Overlay",
+      "use_when": "a full-screen quote, thesis statement, poem title, or poetic moment",
+      "props": "quote: str, attribution: str (optional)",
+      "niche_affinity": ["life", "poetry"],
+      "duration_hint": "4-6s"
+    },
+    {
+      "componentName": "LineReveal",
+      "template_source": "TikTok Captions",
+      "use_when": "a poem, verse, lyric, or multi-line revelation should appear line by line",
+      "props": "lines: str[]",
+      "niche_affinity": ["poetry"],
+      "duration_hint": "4-6s per 2-3 lines"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@andrewlwn77/google-trends-mcp": "^1.0.0",
-    "@modelcontextprotocol/server-filesystem": "^2026.1.14"
+    "@modelcontextprotocol/server-filesystem": "^2026.1.14",
+    "headroom-ai": "^0.22.4"
   }
 }

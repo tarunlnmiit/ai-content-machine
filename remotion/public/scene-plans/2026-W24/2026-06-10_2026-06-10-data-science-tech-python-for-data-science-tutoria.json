@@ -1,0 +1,223 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "TransformationArc",
+    "script": "I spent two weeks on that dataset before I ran a single analysis",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "before": "Two weeks chipping at a messy dataset with Python loops",
+      "after": "Make an unfamiliar dataset workable in under an hour",
+      "label": "Before vs after learning Pandas properly"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "a DataFrame is a structured, labeled, query-able object",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "term": "DataFrame",
+      "definition": "A structured, labeled, query-able object that makes data interrogation feel like conversation instead of combat.",
+      "analogy": "A DataFrame column is a NumPy array with a name."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "NumberedTips",
+    "script": "Today I'm covering four things: loading and exploring, selecting and filtering, cleaning messy data, and aggregating",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Four Essential Pandas Skills",
+      "tips": [
+        {
+          "number": 1,
+          "text": "Load and explore"
+        },
+        {
+          "number": 2,
+          "text": "Select and filter"
+        },
+        {
+          "number": 3,
+          "text": "Clean messy data"
+        },
+        {
+          "number": 4,
+          "text": "Aggregate"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CodeAnnotation",
+    "script": "Run df.describe() and in thirty seconds you know whether there are negative values",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "import pandas as pd",
+        "import numpy as np",
+        "df = pd.read_csv('sales_records.csv')",
+        "print(df.shape)       # e.g., (15420, 12)",
+        "print(df.dtypes)",
+        "print(df.head())",
+        "print(df.describe())",
+        "print(df.isnull().sum())"
+      ],
+      "language": "python",
+      "highlightLine": 8,
+      "annotationText": "isnull().sum() is the line beginners skip. Don't. Missing data silently breaks filtering."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CodeAnnotation",
+    "script": "use & and | for boolean filters, not Python's and and or",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
+        "filtered = df[(df['region'] == 'North') & (df['revenue'] > 5000)]",
+        "filtered_v2 = df.query(\"region == 'North' and revenue > 5000\")",
+        "df[df['status'].isin(['active', 'trial'])]"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Use & and | on arrays, not and/or. Wrap each condition in parentheses."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "WordReveal",
+    "script": "Cleaning is analysis. You can't separate them.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Cleaning",
+        "is",
+        "analysis"
+      ],
+      "emphasis": [
+        0,
+        2
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "CodeAnnotation",
+    "script": "The errors='coerce' argument is doing critical work here",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "df['order_date'] = pd.to_datetime(df['order_date'], errors='coerce')",
+        "df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')",
+        "df['region'] = df['region'].str.strip().str.title()",
+        "df['age'] = df['age'].fillna(df['age'].median())",
+        "df_deduped = df.drop_duplicates(subset=['order_id'], keep='first')"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "errors='coerce' turns bad values into NaN instead of crashing \u2014 handle them intentionally, not at 2am."
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "CodeAnnotation",
+    "script": "The .agg() pattern with named aggregations \u2014 commit that to memory",
+    "niche": "ds",
+    "durationSec": 8,
+    "props": {
+      "code": [
+        "region_summary = df.groupby('region').agg(",
+        "    total_revenue=('revenue', 'sum'),",
+        "    avg_order_value=('revenue', 'mean'),",
+        "    order_count=('order_id', 'count'),",
+        "    top_customer_revenue=('revenue', 'max')",
+        ").reset_index()"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Named aggregations: clean column names, multiple metrics in one pass, no postprocessing. Always .reset_index()."
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "ToolComparison",
+    "script": "grouped DataFrames are for computation, pivot tables are for communication",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "left": {
+        "label": "groupby",
+        "points": [
+          "For computation",
+          "Multiple metrics in one pass",
+          "Flat result after .reset_index()"
+        ]
+      },
+      "right": {
+        "label": "pivot_table",
+        "points": [
+          "For communication",
+          "Region-by-month grid",
+          "The exact layout people picture"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "WordReveal",
+    "script": "Pandas doesn't replace thinking. It removes the mechanical friction",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Pandas",
+        "removes",
+        "the",
+        "friction"
+      ],
+      "emphasis": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "NumberedTips",
+    "script": "Explore it, select what matters, clean what's broken, aggregate into a summary",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Open a dataset you've been avoiding",
+      "tips": [
+        {
+          "number": 1,
+          "text": "Explore it"
+        },
+        {
+          "number": 2,
+          "text": "Select what matters"
+        },
+        {
+          "number": 3,
+          "text": "Clean what's broken"
+        },
+        {
+          "number": 4,
+          "text": "Aggregate into a summary"
+        }
+      ]
+    }
+  }
+]

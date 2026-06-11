@@ -1,0 +1,176 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "I worked with things you can measure. Data. Models. Dashboards.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "For most of my adult life, I worked with things you can measure.",
+      "attribution": "Breath of Poetry"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "WordReveal",
+    "script": "a poem finds the exact nerve no dataset ever mapped",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "A",
+        "poem",
+        "finds",
+        "the",
+        "nerve",
+        "no",
+        "dataset",
+        "mapped"
+      ],
+      "emphasis": [
+        4,
+        6
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "LineReveal",
+    "script": "In a line of code you wrote at 2 AM that reads like confession",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "A line of code at 2 AM that reads like confession.",
+        "The way your mother once described rain.",
+        "Grief that arrived when a number told you something true."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "AtmosphericQuote",
+    "script": "Poetry was already in the server room. It was never waiting for an invitation.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Poetry was already in the server room. It was never waiting for an invitation."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "WordReveal",
+    "script": "Tools different. Curiosity identical.",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Tools",
+        "different.",
+        "Curiosity",
+        "identical."
+      ],
+      "emphasis": [
+        3
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "LineReveal",
+    "script": "The grey of a commute counts. The brown of bad coffee counts.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "The grey of a commute counts.",
+        "The brown of bad coffee counts.",
+        "The particular blue of a Tuesday afternoon."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "Poetry is not elevated experience. It's ordinary experience, seen clearly for one second.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Poetry is not elevated experience. It's ordinary experience, seen clearly for one second."
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "AtmosphericQuote",
+    "script": "Facts tell you what happened. Poetry tells you what stayed behind after it happened.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "quote": "Facts tell you what happened. Poetry tells you what stayed behind."
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "WordReveal",
+    "script": "It dips its fingers in every colour because it's patient.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "It",
+        "dips",
+        "its",
+        "fingers",
+        "in",
+        "every",
+        "colour"
+      ],
+      "emphasis": [
+        1,
+        6
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "AtmosphericQuote",
+    "script": "The door doesn't need to be wide. A crack is enough.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "The door doesn't need to be wide. A crack is enough."
+    }
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "WordReveal",
+    "script": "That is not a small thing. It is the whole thing.",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Not",
+        "a",
+        "small",
+        "thing.",
+        "The",
+        "whole",
+        "thing."
+      ],
+      "emphasis": [
+        5
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "AtmosphericQuote",
+    "script": "one line that followed you home. Bring it. This is Breath of Poetry.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "One line that followed you home. Bring it.",
+      "attribution": "Breath of Poetry \u00b7 @mistakenlyhuman"
+    }
+  }
+]

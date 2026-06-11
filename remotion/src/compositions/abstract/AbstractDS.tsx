@@ -3,7 +3,7 @@ import { ThreeCanvas } from "@remotion/three";
 import * as THREE from "three";
 import { COLORS } from "../../styles/chronixel";
 
-const ACCENT = "#f97316";
+const ACCENT = COLORS.ds.accent;
 
 function pr(seed: number): number {
   const x = Math.sin(seed + 1) * 43758.5453;

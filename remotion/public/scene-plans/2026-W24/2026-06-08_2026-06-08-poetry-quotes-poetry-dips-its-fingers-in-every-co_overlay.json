@@ -1,0 +1,76 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "It dips its fingers in every colour because it's patient",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Poetry dips its fingers in every colour.",
+      "attribution": "Breath of Poetry"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "LineReveal",
+    "script": "Facts tell you what happened. Poetry tells you what stayed behind",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "Facts tell you what happened.",
+        "Poetry tells you what stayed behind",
+        "after it happened."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "ordinary experience, seen clearly for one second",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Poetry is ordinary experience, seen clearly for one second."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "WordReveal",
+    "script": "The door doesn't need to be wide. A crack is enough",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "A",
+        "crack",
+        "is",
+        "enough"
+      ],
+      "emphasis": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "WordReveal",
+    "script": "That is not a small thing. It is the whole thing",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "It",
+        "is",
+        "the",
+        "whole",
+        "thing"
+      ],
+      "emphasis": [
+        3,
+        4
+      ]
+    }
+  }
+]

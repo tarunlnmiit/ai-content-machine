@@ -1,6 +1,7 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
 import { useMemo } from "react";
+import { COLORS } from "../../styles/chronixel";
 
 const AURORA_COUNT = 300;
 
@@ -85,16 +86,16 @@ export function AbstractPoetry(_props: AbstractPoetryProps) {
   const { fps } = useVideoConfig();
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#06040f" }}>
+    <AbsoluteFill style={{ backgroundColor: COLORS.bg }}>
       <ThreeCanvas>
-        <ambientLight intensity={0.08} color="#a78bfa" />
-        <pointLight position={[0, 1, 2]} intensity={1.5} color="#a78bfa" distance={6} />
+        <ambientLight intensity={0.08} color={COLORS.poetry.accent} />
+        <pointLight position={[0, 1, 2]} intensity={1.5} color={COLORS.poetry.accent} distance={6} />
         <AuroraParticles frame={frame} fps={fps} />
       </ThreeCanvas>
 
       <AbsoluteFill
         style={{
-          background: "radial-gradient(ellipse 60% 60% at 50% 50%, transparent 35%, rgba(6,4,15,0.85) 100%)",
+          background: `radial-gradient(ellipse 60% 60% at 50% 50%, transparent 35%, ${COLORS.bg}d9 100%)`,
           pointerEvents: "none",
         }}
       />

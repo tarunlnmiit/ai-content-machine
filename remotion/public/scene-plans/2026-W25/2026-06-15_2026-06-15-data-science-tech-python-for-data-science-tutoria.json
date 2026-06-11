@@ -1,0 +1,237 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "TransformationArc",
+    "script": "You send a screenshot to the stakeholders. Two days pass. Nothing.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "before": "Screenshot of raw numbers \u2014 silence for two days",
+      "after": "One well-chosen chart answers the question in five seconds",
+      "label": "Why analysis stalls"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "WordReveal",
+    "script": "raw numbers don't persuade. Stories do.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Raw",
+        "numbers",
+        "don't",
+        "persuade.",
+        "Stories",
+        "do."
+      ],
+      "emphasis": [
+        1,
+        4
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "DataVizReveal",
+    "script": "we spend eighty percent of our time on cleaning and wrangling",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "title": "Where data science time goes",
+      "data": [
+        {
+          "label": "Cleaning & wrangling",
+          "value": 80
+        },
+        {
+          "label": "Everything else",
+          "value": 20
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ToolComparison",
+    "script": "Matplotlib as the canvas and Seaborn as the paintbrush",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "left": {
+        "label": "Matplotlib (the canvas)",
+        "points": [
+          "Verbose but honest",
+          "You control everything",
+          "Build anything",
+          "Scales single chart to grids"
+        ]
+      },
+      "right": {
+        "label": "Seaborn (the paintbrush)",
+        "points": [
+          "Handles statistical complexity",
+          "No 50 lines of setup",
+          "Layers information intelligently",
+          "Built on Matplotlib"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CodeAnnotation",
+    "script": "use `fig, ax = plt.subplots()` every single time",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "fig, ax = plt.subplots()",
+        "ax.plot(x, y)",
+        "ax.set_title('Revenue Grew 23% After Q3')",
+        "fig.savefig('plot.png', dpi=300, bbox_inches='tight')"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Work with axis objects directly \u2014 precision over the plt.plot() shortcut"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CodeAnnotation",
+    "script": "dpi=300 and bbox_inches='tight' \u2014 the difference between sharp and 2009",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "code": [
+        "fig.savefig('plot.png',",
+        "            dpi=300,",
+        "            bbox_inches='tight')"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "dpi=300 + bbox_inches='tight' = sharp in a deck, not exported from 2009"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "NumberedTips",
+    "script": "Three things happening in that code that matter.",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "title": "What Seaborn does best",
+      "tips": [
+        {
+          "number": 1,
+          "text": "set_style('whitegrid') strips chart junk \u2014 more signal"
+        },
+        {
+          "number": 2,
+          "text": "kde=True adds a density curve \u2014 shows distribution shape"
+        },
+        {
+          "number": 3,
+          "text": "hue + size encode two dimensions on one scatter"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "ConceptExplainer",
+    "script": "Choosing a visualization isn't neutral.",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "term": "Chart choice = framing",
+      "definition": "Bar emphasizes categories and rankings. Line implies trend. Scatter reveals relationships and outliers.",
+      "analogy": "Same data, three stories \u2014 different shapes illuminate different truths."
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "NumberedTips",
+    "script": "four mistakes I see constantly that quietly tank people's credibility",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "title": "Four mistakes that tank credibility",
+      "tips": [
+        {
+          "number": 1,
+          "text": "Too many colors \u2014 over 5\u20136 legend items become unreadable"
+        },
+        {
+          "number": 2,
+          "text": "Dual y-axes \u2014 manipulate correlation visually, don't use them"
+        },
+        {
+          "number": 3,
+          "text": "3-D plots \u2014 look impressive, communicate poorly"
+        },
+        {
+          "number": 4,
+          "text": "No context \u2014 a variable-name title says nothing"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "TransformationArc",
+    "script": "'Revenue Over Time' tells me nothing. 'Revenue Grew 23% After Q3 Pricing Change' tells me everything.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "before": "Revenue Over Time",
+      "after": "Revenue Grew 23% After Q3 Pricing Change",
+      "label": "Title the finding, not the variable"
+    }
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "WordReveal",
+    "script": "Visualization is communication, not decoration.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Visualization",
+        "is",
+        "communication,",
+        "not",
+        "decoration."
+      ],
+      "emphasis": [
+        2,
+        4
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "WordReveal",
+    "script": "Your insight doesn't matter until someone sees it.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Your",
+        "insight",
+        "doesn't",
+        "matter",
+        "until",
+        "someone",
+        "sees",
+        "it."
+      ],
+      "emphasis": [
+        1,
+        6
+      ]
+    }
+  }
+]

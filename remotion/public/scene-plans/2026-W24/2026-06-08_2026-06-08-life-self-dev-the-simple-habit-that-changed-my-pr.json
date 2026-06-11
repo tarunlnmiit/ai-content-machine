@@ -1,0 +1,214 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "TransformationArc",
+    "script": "I spent three years building the perfect productivity system",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "before": "A perfect productivity system \u2014 second brain, time-blocks, color-coded calendars, 17-step morning routines",
+      "after": "Seven small habits simple enough to do on bad days",
+      "label": "The system had become the work"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "WordReveal",
+    "script": "the system had become the work",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "The",
+        "system",
+        "became",
+        "the",
+        "work"
+      ],
+      "emphasis": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "NumberedTips",
+    "script": "My shutdown ritual takes four minutes",
+    "niche": "life",
+    "durationSec": 7,
+    "props": {
+      "title": "The 4-Minute Shutdown Ritual",
+      "tips": [
+        {
+          "number": 1,
+          "text": "Scan what's unfinished"
+        },
+        {
+          "number": 2,
+          "text": "Write one line on where you'll pick up tomorrow"
+        },
+        {
+          "number": 3,
+          "text": "Note one thing you actually finished today"
+        },
+        {
+          "number": 4,
+          "text": "Say out loud: \"Shutdown complete\""
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "David Allen calls these open loops",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "term": "Open Loops",
+      "definition": "Unfinished tasks your brain keeps tracking until it registers closure (Zeigarnik effect).",
+      "analogy": "Like browser tabs left open \u2014 each one quietly drains memory in the background."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "WordReveal",
+    "script": "The value is in the emptying, not the filing",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "The",
+        "value",
+        "is",
+        "in",
+        "the",
+        "emptying"
+      ],
+      "emphasis": [
+        5
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "WordReveal",
+    "script": "One frog kills one program",
+    "niche": "life",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "One",
+        "frog",
+        "kills",
+        "one",
+        "program"
+      ],
+      "emphasis": [
+        1,
+        4
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "TransformationArc",
+    "script": "The done list corrects your perception of yourself",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "before": "To-do list \u2014 a permanent state of deficit that never hits zero",
+      "after": "Done list \u2014 five or six meaningful things you actually moved forward",
+      "label": "Correct your perception of yourself"
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "ConceptExplainer",
+    "script": "one 90-minute block of deep work per day",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "term": "The 90-Minute Block",
+      "definition": "One protected deep-work session per day \u2014 the first 15-20 minutes are just warming up, so short blocks end right as your brain hits its stride.",
+      "analogy": "Treat it like a meeting you can't cancel."
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "NumberedTips",
+    "script": "The night before, write exactly three priorities for tomorrow",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "title": "Why Exactly Three Priorities",
+      "tips": [
+        {
+          "number": 1,
+          "text": "Not five \u2014 five means you don't have to choose"
+        },
+        {
+          "number": 2,
+          "text": "Not ten \u2014 that's a task list, not a priority list"
+        },
+        {
+          "number": 3,
+          "text": "Three \u2014 write it the night before, while you still have context"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "WordReveal",
+    "script": "What gets measured gets noticed",
+    "niche": "life",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "What",
+        "gets",
+        "measured",
+        "gets",
+        "noticed"
+      ],
+      "emphasis": [
+        2,
+        4
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "AtmosphericQuote",
+    "script": "These habits don't ask for perfect. They ask for honest",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "quote": "They don't ask for perfect. They ask for honest. And honest, practiced every day, compounds in ways no color-coded calendar ever matched.",
+      "attribution": "Breath of Life"
+    }
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "WordReveal",
+    "script": "Start with one \u2014 the one that stings a little",
+    "niche": "life",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Start",
+        "with",
+        "the",
+        "one",
+        "that",
+        "stings"
+      ],
+      "emphasis": [
+        3,
+        5
+      ]
+    }
+  }
+]

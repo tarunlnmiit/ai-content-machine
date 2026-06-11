@@ -4,7 +4,7 @@ import * as THREE from "three";
 import { useMemo } from "react";
 import { COLORS } from "../../styles/chronixel";
 
-const ACCENT = "#f59e0b";
+const ACCENT = COLORS.life.accent;
 const PARTICLE_COUNT = 220;
 
 function pr(seed: number): number {
@@ -89,13 +89,13 @@ export function AbstractLife(_props: AbstractLifeProps) {
 
       <AbsoluteFill
         style={{
-          background: `radial-gradient(ellipse 60% 55% at 50% 50%, rgba(245,158,11,0.07) 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse 60% 55% at 50% 50%, ${COLORS.life.glow} 0%, transparent 70%)`,
           pointerEvents: "none",
         }}
       />
       <AbsoluteFill
         style={{
-          background: "radial-gradient(ellipse 65% 65% at 50% 50%, transparent 40%, rgba(10,10,15,0.75) 100%)",
+          background: `radial-gradient(ellipse 65% 65% at 50% 50%, transparent 40%, ${COLORS.bg}bf 100%)`,
           pointerEvents: "none",
         }}
       />

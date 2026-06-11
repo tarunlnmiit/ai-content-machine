@@ -1,0 +1,20 @@
+{
+  "name": "remotion-render-server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "ts-node index.ts",
+    "start:dev": "ts-node --watch index.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.466",
+    "@remotion/renderer": "4.0.466",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  }
+}
