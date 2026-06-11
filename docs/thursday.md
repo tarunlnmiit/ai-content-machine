@@ -30,10 +30,12 @@ remotion/public/
 
 Generate captions from raw audio:
 ```bash
-# Whisper → JSON caption file
+# Whisper → Caption[] JSON for @remotion/captions
 python3 scripts/generate_captions.py \
   --audio assets/raw/{week}/{slug}.mov \
-  --output remotion/public/captions/{week}/{slug}.json
+  --format remotion_json \
+  --output remotion/public/captions/{week}/{slug}.captions.json \
+  --model medium
 ```
 
 Build/update the edit plan (cut segments, b-roll cues):

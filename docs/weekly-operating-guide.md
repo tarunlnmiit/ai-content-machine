@@ -27,8 +27,8 @@ python3 scripts/list_week_content.py 2026-W{nn} --plan  # Mon-Fri production che
 ```
 Raw footage (assets/raw/{week}/)
     │
-    ▼ [Wednesday] generate_captions.py → Whisper
-remotion/public/captions/{week}/{slug}.json
+    ▼ [Wednesday] generate_captions.py → Whisper (--format remotion_json)
+remotion/public/captions/{week}/{slug}.captions.json
     │
     ▼ [Wednesday] prepare_remotion_edit.py
 remotion/public/edit-plans/{week}/{slug}.json

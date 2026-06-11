@@ -1,4 +1,4 @@
-# Recording Guide — Life & Poetry Videos
+# Recording Guide — Talking-Head Videos (Life, Poetry, DS)
 
 ## Physical Setup
 
@@ -55,5 +55,7 @@
 |-------|---------|
 | Life | `assets/raw/[life_slug].mov` |
 | Poetry | `assets/raw/[poetry_slug].mov` |
+| DS (talking-head) | `assets/raw/[ds_slug].mov` |
+| DS (screen) | `assets/raw/[ds_slug]_screen.mov` |
 
 Next step after recording: `docs/saturday.md` (auto-edit + captions)

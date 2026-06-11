@@ -10,9 +10,9 @@ Scripts and assets exist from Tuesday. Today: publish all 3 blogs to Substack + 
 | 9:10 AM | Publish Life blog → Substack (MCP) | Live on thisisbreathoflife.substack.com |
 | 9:20 AM | Publish Poetry blog → Substack (MCP) | Live on breathofpoetry.substack.com |
 | 9:30 AM | Publish all 3 → Medium | Live on medium.com/@tarun-gupta |
-| 10:00 AM | Shoot DS screen recording | `assets/raw/{week}/{ds_slug}_screen.mov` |
+| 10:00 AM | Shoot DS screen recording + talking-head | `assets/raw/{week}/{ds_slug}_screen.mov` + `{ds_slug}.mov` |
 | 11:00 AM | Shoot Life talking-head | `assets/raw/{week}/{life_slug}.mov` |
-| 12:00 PM | Record Poetry voiceover | `assets/raw/{week}/{poetry_slug}.wav` |
+| 12:00 PM | Shoot Poetry talking-head | `assets/raw/{week}/{poetry_slug}.mov` |
 | 1:00 PM | Generate captions (Whisper) all 3 | `remotion/public/captions/{week}/*.json` |
 | 1:30 PM | Build edit plans all 3 | `remotion/public/edit-plans/{week}/*.json` |
 | 2:30 PM | Verify edit plans in Remotion Studio | Confirm timeline looks right |
@@ -223,37 +223,32 @@ mv ~/Downloads/{iphone_recording}.mov "assets/raw/{week}/{life_slug}.mov"
 
 ---
 
-## Step 5 — Record Poetry voiceover (~20 min)
+## Step 5 — Shoot Poetry talking-head (~30 min)
 
-Poetry videos are voiceover over abstract B-roll — no talking-head required unless the poem is deeply personal.
+Poetry videos are talking-head + Remotion animations + optional B-roll. Same setup as Life.
 
-### Equipment
-- Rode NT-USB or Shure MV7 into MacBook
-- Quiet room, blanket over window if echo is audible
-- Headphones on while recording (monitor real-time)
+### Equipment setup
+- iPhone on tripod, 4K 30fps, front-facing
+- Ring light at 45° angle; natural light behind camera if available
+- Rode Wireless mic or lapel direct to iPhone
+- Teleprompter app on second iPhone/iPad: font 60pt+, scroll speed pre-tested
 
-### Record with ffmpeg directly
-```bash
-# Check your mic device first:
-ffmpeg -f avfoundation -list_devices true -i ""
-# Find the mic index (e.g. index 0)
+### Before recording
+1. Lock white balance + exposure
+2. Script open in teleprompter — test scroll speed before first take
+3. Quiet room — turn off fan/AC if audible
 
-# Record:
-ffmpeg -f avfoundation -i ":0" -ar 44100 -ac 1 -c:a pcm_s16le \
-  "assets/raw/{week}/{poetry_slug}_voice.wav"
-# Ctrl+C when done
-```
-
-Or use GarageBand/Audacity with your preferred setup.
-
-### Pacing
-- ~80 words/min (poetry breathes — half of talking speed)
-- `[PAUSE]` cues: hold 3+ seconds of intentional silence
-- Record 3 complete takes; pick the best or comp them
+### Shoot checklist
+- [ ] 3-second clean slate
+- [ ] Clap between takes
+- [ ] ~80 words/min pacing (poetry breathes — slower than Life)
+- [ ] Hold 3+ seconds at every `[PAUSE]` cue (intentional breathing room)
+- [ ] For `[BROLL:]` cues: keep speaking — B-roll overlays talking head
+- [ ] Record 2–3 takes; pick the most natural read
+- [ ] End with 3-second silence
 
 ```bash
-# Save to:
-mv ~/Desktop/poetry_recording.wav "assets/raw/{week}/{poetry_slug}.wav"
+mv ~/Downloads/{iphone_recording}.mov "assets/raw/{week}/{poetry_slug}.mov"
 ```
 
 ---
@@ -266,19 +261,22 @@ Captions feed Remotion's TikTok-style caption system in `TalkingHeadEdit.tsx`.
 # DS
 python3 scripts/generate_captions.py \
   --audio "assets/raw/{week}/{ds_slug}_screen.mov" \
-  --output "remotion/public/captions/{week}/{ds_slug}.json" \
+  --format remotion_json \
+  --output "remotion/public/captions/{week}/{ds_slug}.captions.json" \
   --model medium
 
 # Life
 python3 scripts/generate_captions.py \
   --audio "assets/raw/{week}/{life_slug}.mov" \
-  --output "remotion/public/captions/{week}/{life_slug}.json" \
+  --format remotion_json \
+  --output "remotion/public/captions/{week}/{life_slug}.captions.json" \
   --model medium
 
 # Poetry (use large — slow speech, accuracy matters)
 python3 scripts/generate_captions.py \
-  --audio "assets/raw/{week}/{poetry_slug}.wav" \
-  --output "remotion/public/captions/{week}/{poetry_slug}.json" \
+  --audio "assets/raw/{week}/{poetry_slug}.mov" \
+  --format remotion_json \
+  --output "remotion/public/captions/{week}/{poetry_slug}.captions.json" \
   --model large
 ```
 
@@ -320,7 +318,7 @@ python3 scripts/prepare_remotion_edit.py \
   --niche life --slug {life_slug} --week {week}
 
 python3 scripts/prepare_remotion_edit.py \
-  --raw "assets/raw/{week}/{poetry_slug}.wav" \
+  --raw "assets/raw/{week}/{poetry_slug}.mov" \
   --script "content/scripts/{week}/{poetry_slug}_yt.md" \
   --niche poetry --slug {poetry_slug} --week {week}
 ```
