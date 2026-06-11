@@ -68,6 +68,20 @@ assets/stories/
 content/blogs/*/
 
 # ============================================
+# Tool caches & ephemeral data
+# ============================================
+.cache/
+.serena/
+
+# ============================================
+# Large regeneratable media (not LFS)
+# ============================================
+remotion/public/videos/
+remotion/public/broll/
+"CLAUDE REMOTION BLUEPRINT/"
+w21.txt
+
+# ============================================
 # LFS-tracked critical artifacts (NOT ignored — see .gitattributes)
 #   assets/slides/         (PDFs, HTMLs, PNGs, JPGs, fonts)
 #   assets/social_posts/   (PNGs, HTMLs, fonts)
