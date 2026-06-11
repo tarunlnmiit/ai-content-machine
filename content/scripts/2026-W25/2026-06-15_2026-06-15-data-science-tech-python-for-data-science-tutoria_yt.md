@@ -25,7 +25,31 @@ In data science education, we spend eighty percent of our time on cleaning and w
 
 So let's start with Matplotlib, because this is the foundation everything else sits on. It's verbose, yes. More code than newer libraries. But that verbosity is honest — you control everything, which means you can build anything. The one habit worth forming immediately: use `fig, ax = plt.subplots()` every single time. Not the shortcut `plt.plot()`.
 
-[CODE_INSERT: matplotlib_basics.py — fig/ax pattern, lineplot with color, labels, grid, DPI=300]
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+# Sample data: monthly revenue
+months = pd.date_range("2024-01", periods=12, freq="ME")
+revenue = [42000, 45000, 41000, 47000, 52000, 55000,
+           53000, 58000, 61000, 59000, 67000, 71000]
+
+# Always use fig, ax — not plt.plot()
+fig, ax = plt.subplots(figsize=(10, 5))
+
+ax.plot(months, revenue, color="#2563EB", linewidth=2.5, marker="o", markersize=5)
+
+ax.set_title("Revenue Grew 23% After Q3 Pricing Change", fontsize=14, fontweight="bold", pad=15)
+ax.set_xlabel("Month", fontsize=11)
+ax.set_ylabel("Revenue (USD)", fontsize=11)
+ax.grid(axis="y", linestyle="--", alpha=0.5)
+ax.spines[["top", "right"]].set_visible(False)
+
+plt.tight_layout()
+plt.savefig("revenue_trend.png", dpi=300, bbox_inches="tight")
+plt.show()
+```
 
 Working with axis objects directly gives you precision — fonts, spacing, colors, alignment. It scales from a single chart to a four-by-four grid of subplots without changing your mental model. And those two small details at save time — `dpi=300` and `bbox_inches='tight'` — are the difference between a plot that looks sharp in a deck and one that looks like it was exported from 2009.
 
@@ -35,7 +59,44 @@ Working with axis objects directly gives you precision — fonts, spacing, color
 
 Seaborn builds on top of Matplotlib, and its job is to handle statistical complexity without making you write fifty lines of setup code. I think of Matplotlib as the canvas and Seaborn as the paintbrush.
 
-[CODE_INSERT: seaborn_customer_analysis.py — histplot with kde=True, scatterplot with hue and size, set_style whitegrid]
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+
+# Sample customer data
+np.random.seed(42)
+df = pd.DataFrame({
+    "age": np.random.normal(38, 10, 300).astype(int).clip(18, 70),
+    "monthly_spend": np.random.exponential(120, 300).clip(10, 600),
+    "lifetime_value": np.random.normal(1500, 500, 300).clip(200, 4000),
+    "segment": np.random.choice(["New", "Regular", "VIP"], 300, p=[0.4, 0.4, 0.2]),
+})
+
+sns.set_style("whitegrid")
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# Left: age distribution with smooth density curve
+sns.histplot(data=df, x="age", kde=True, color="#2563EB",
+             bins=20, ax=axes[0])
+axes[0].set_title("Customer Age Distribution", fontweight="bold")
+axes[0].set_xlabel("Age")
+axes[0].set_ylabel("Count")
+
+# Right: spend vs. lifetime value — two dimensions, one plot
+sns.scatterplot(data=df, x="monthly_spend", y="lifetime_value",
+                hue="segment", size="monthly_spend",
+                sizes=(30, 200), alpha=0.7, ax=axes[1],
+                palette={"New": "#94A3B8", "Regular": "#2563EB", "VIP": "#F59E0B"})
+axes[1].set_title("Spend vs. Lifetime Value by Segment", fontweight="bold")
+axes[1].set_xlabel("Monthly Spend (USD)")
+axes[1].set_ylabel("Lifetime Value (USD)")
+
+plt.tight_layout()
+plt.savefig("customer_analysis.png", dpi=300, bbox_inches="tight")
+plt.show()
+```
 
 Three things happening in that code that matter. First, `sns.set_style("whitegrid")` strips out chart junk — thick borders, heavy gridlines. Less visual noise, more signal. Second, `kde=True` on the histogram adds a smooth density curve over the bins. It tells you the shape of your distribution, not just the counts. Third, using `hue` and `size` together encodes two dimensions onto a single scatter plot without making it illegible. That's Seaborn doing what it does best — layering information intelligently.
 
@@ -55,7 +116,46 @@ Same underlying data. Three completely different stories. Your job is to choose 
 
 And while you're committing to the frame, there are four mistakes I see constantly that quietly tank people's credibility. Too many colors — if your legend has more than five or six items, humans stop being able to read it. Dual y-axes — they exist, they're tempting, they let you manipulate correlation visually without technically lying, don't use them. Three-D plots — they look impressive, they communicate poorly, a two-D heatmap will beat them every time. And plots with no context — a title that says "Revenue Over Time" tells me nothing. "Revenue Grew 23% After Q3 Pricing Change" tells me everything.
 
-[CODE_INSERT: bad_vs_good_plot.py — cluttered scatter vs. clean labeled scatter with regional ROI title]
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+np.random.seed(7)
+regions = ["North", "South", "East", "West", "Central"]
+ad_spend = np.random.uniform(5000, 50000, 50)
+roi = 0.8 + (ad_spend / 50000) * 1.4 + np.random.normal(0, 0.2, 50)
+region_labels = np.random.choice(regions, 50)
+colors_map = {"North": "#EF4444", "South": "#3B82F6", "East": "#10B981",
+              "West": "#F59E0B", "Central": "#8B5CF6"}
+point_colors = [colors_map[r] for r in region_labels]
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+# ❌ Bad: cluttered, no context
+axes[0].scatter(ad_spend, roi, c=point_colors, s=20)
+axes[0].set_title("Ad Spend vs ROI")          # variable names, not insight
+axes[0].set_xlabel("ad_spend")
+axes[0].set_ylabel("roi_value")
+# missing legend, thick borders, no grid guidance
+
+# ✅ Good: clean, labeled, claim-first title
+for region, color in colors_map.items():
+    mask = np.array(region_labels) == region
+    axes[1].scatter(ad_spend[mask], roi[mask], c=color, s=60,
+                    alpha=0.8, label=region, edgecolors="white", linewidth=0.5)
+
+axes[1].set_title("Higher Ad Spend Drives ROI — West Region Leads", 
+                  fontsize=12, fontweight="bold", pad=12)
+axes[1].set_xlabel("Ad Spend (USD)", fontsize=11)
+axes[1].set_ylabel("Return on Investment", fontsize=11)
+axes[1].legend(title="Region", frameon=False)
+axes[1].grid(axis="both", linestyle="--", alpha=0.4)
+axes[1].spines[["top", "right"]].set_visible(False)
+
+plt.tight_layout()
+plt.savefig("bad_vs_good_plot.png", dpi=300, bbox_inches="tight")
+plt.show()
+```
 
 The second version forces the eye to the right place. The title states the finding, not the variable name. Every element earns its spot.
 
