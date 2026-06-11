@@ -1,5 +1,5 @@
 # Weekly Ideas Report
-Generated: 2026-06-10 06:44:38
+Generated: 2026-06-11 07:45:26
 
 ## Data Science Tech
 
@@ -21,17 +21,17 @@ Generated: 2026-06-10 06:44:38
 - **Source:** github_trending_python
 - **URL:** https://github.com/chopratejas/headroom
 
-### 4. data science course
+### 4. Claude Fable 5
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** hn_algolia
+- **URL:** https://www.anthropic.com/news/claude-fable-5-mythos-5
+
+### 5. data science course
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** suggest_2026-06-06_google
 - **URL:** 
-
-### 5. Do companies need AI for text to sql if there is an enormous analytics and data science team? or is it for companies with fragmented data?
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** reddit_2026-05-28
-- **URL:** https://www.reddit.com/r/analytics/comments/1to0ov1/do_companies_need_ai_for_text_to_sql_if_there_is/
 
 ## Life Self Dev
 
@@ -67,32 +67,32 @@ Generated: 2026-06-10 06:44:38
 
 ## Poetry Quotes
 
-### 1. [POEM] Filling the Page. Kate Baer. Her first publication was an anthology of poetry entitled What Kind of Woman (2020). It topped the New York Times Best Seller list.
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** reddit_2026-06-03
-- **URL:** https://www.reddit.com/r/Poetry/comments/1tuq8lj/poem_filling_the_page_kate_baer_her_first/
-
-### 2. Poetry Dips Its Fingers In Every Colour —
+### 1. Poetry Dips Its Fingers In Every Colour —
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** medium_poetry
 - **URL:** https://medium.com/@isaacaju/poetry-dips-its-fingers-in-every-colour-015772359fa9?source=rss------poetry-5
 
-### 3. “You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.” ― William W. Purkey
+### 2. “You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.” ― William W. Purkey
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** goodreads_inspirational
 - **URL:** https://www.goodreads.com/quotes/tag/inspirational
 
-### 4. poem about nature
+### 3. poem about nature
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** suggest_2026-06-06_google
 - **URL:** 
 
-### 5. People Don't Know the Difference Between Writing a Book and Being a Writer...
+### 4. People Don't Know the Difference Between Writing a Book and Being a Writer...
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** youtube_2026-06-09
 - **URL:** https://youtu.be/5Wkl-W45yY8
+
+### 5. Science Fiction Poetry by Franny Choi [POEM]
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** reddit_2026-06-11
+- **URL:** https://www.reddit.com/r/Poetry/comments/1u2cbv3/science_fiction_poetry_by_franny_choi_poem/
