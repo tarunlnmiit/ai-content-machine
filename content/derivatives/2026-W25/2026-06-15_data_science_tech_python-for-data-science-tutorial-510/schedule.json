@@ -1,0 +1,78 @@
+{
+  "slug": "2026-06-15_data_science_tech_python-for-data-science-tutorial-510",
+  "niche": "ds",
+  "generated_at": "2026-06-15T14:20:44.867782+05:30",
+  "long_form": {
+    "platform": "youtube",
+    "publish_at": "2026-06-25T18:00:00+05:30",
+    "channel": "Breath of Data Science"
+  },
+  "blog": {
+    "substack_publish_at": "2026-06-18T18:00:00+05:30",
+    "medium_publish_at": "2026-06-18T18:05:00+05:30"
+  },
+  "social": {
+    "linkedin_publish_at": "2026-06-24T12:00:00+05:30",
+    "twitter_publish_at": "2026-06-24T13:00:00+05:30",
+    "ig_fb_publish_at": "2026-06-24T08:00:00+05:30",
+    "threads_publish_at": "2026-06-24T20:00:00+05:30"
+  },
+  "shorts": [
+    {
+      "slot": 0,
+      "publish_at": "2026-06-29T10:00:00+05:30"
+    },
+    {
+      "slot": 1,
+      "publish_at": "2026-06-29T20:00:00+05:30"
+    },
+    {
+      "slot": 2,
+      "publish_at": "2026-06-30T10:00:00+05:30"
+    },
+    {
+      "slot": 3,
+      "publish_at": "2026-06-30T20:00:00+05:30"
+    },
+    {
+      "slot": 4,
+      "publish_at": "2026-07-01T10:00:00+05:30"
+    },
+    {
+      "slot": 5,
+      "publish_at": "2026-07-01T20:00:00+05:30"
+    },
+    {
+      "slot": 6,
+      "publish_at": "2026-07-02T10:00:00+05:30"
+    },
+    {
+      "slot": 7,
+      "publish_at": "2026-07-02T20:00:00+05:30"
+    },
+    {
+      "slot": 8,
+      "publish_at": "2026-07-03T10:00:00+05:30"
+    },
+    {
+      "slot": 9,
+      "publish_at": "2026-07-03T20:00:00+05:30"
+    },
+    {
+      "slot": 10,
+      "publish_at": "2026-07-04T10:00:00+05:30"
+    },
+    {
+      "slot": 11,
+      "publish_at": "2026-07-04T20:00:00+05:30"
+    },
+    {
+      "slot": 12,
+      "publish_at": "2026-07-05T10:00:00+05:30"
+    },
+    {
+      "slot": 13,
+      "publish_at": "2026-07-05T20:00:00+05:30"
+    }
+  ]
+}

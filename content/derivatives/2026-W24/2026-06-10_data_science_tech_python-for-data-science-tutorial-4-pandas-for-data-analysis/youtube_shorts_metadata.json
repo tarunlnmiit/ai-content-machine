@@ -1,0 +1,13 @@
+{
+  "title": "The Pandas line most beginners skip (don't)",
+  "description": "df.isnull().sum() before anything else. Missing data in a filter column silently removes rows — your analysis looks right but isn't. Know your nulls first.\n\nFull Pandas tutorial in bio. #Shorts #Python #DataScience #Pandas",
+  "tags": [
+    "Shorts",
+    "Python",
+    "Pandas",
+    "DataScience",
+    "DataAnalysis"
+  ],
+  "hook_visual": "Terminal screen fills frame. Cursor types df.isnull().sum(). Output appears showing several columns with high null counts. Bold text overlay: 'Most beginners skip this line.'",
+  "end_screen_cta": "Hold up the question: 'Have your nulls ever broken an analysis silently?' with a subscribe prompt and arrow pointing up."
+}

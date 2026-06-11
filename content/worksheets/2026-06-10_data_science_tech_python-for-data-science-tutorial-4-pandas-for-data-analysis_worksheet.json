@@ -1,0 +1,61 @@
+{
+  "type": "framework",
+  "niche": "data_science_tech",
+  "title": "The 4-Step Pandas First-Look Framework: From Messy CSV to Real Insight",
+  "sections": [
+    {
+      "title": "Step 1 \u2014 Orient: Your First 60 Seconds with the Dataset",
+      "prompts": [
+        "What dataset will you work through? (file name or description):",
+        "Run df.shape, df.info(), df.head(). How many rows and columns?",
+        "Which columns have null values? List them:",
+        "What dtypes look wrong (dates stored as object, numbers as string)?",
+        "What's your first instinct about what this data is trying to tell you?"
+      ]
+    },
+    {
+      "title": "Step 2 \u2014 Select: Define the Question Before You Filter",
+      "prompts": [
+        "What is the ONE question you want to answer with this dataset?",
+        "Which columns are essential to answering that question? List them:",
+        "Write the .loc or boolean filter that isolates the rows you care about:",
+        "What rows should be excluded (test data, outliers, nulls)? Why?",
+        "After filtering: how many rows remain? Does that feel right?"
+      ]
+    },
+    {
+      "title": "Step 3 \u2014 Clean: Audit the Mess Before You Trust the Numbers",
+      "prompts": [
+        "List every column that needs type conversion and what it should become:",
+        "How are missing values encoded? (NaN, 'N/A', 'None', '-', blank?) List all variants found:",
+        "Are there duplicate rows? Run df.duplicated().sum() \u2014 what's the count?",
+        "Which string columns have inconsistent casing or whitespace? (e.g. 'New York ' vs 'new york')",
+        "Write the single cleaning step that would most improve analysis quality:"
+      ]
+    },
+    {
+      "title": "Step 4 \u2014 Aggregate: Find the Summary That Actually Tells You Something",
+      "prompts": [
+        "What column will you groupby? (region, category, date, customer segment?)",
+        "What aggregation makes sense \u2014 sum, mean, count, median? Why?",
+        "Run the groupby. Which group has the highest value? Which has the lowest?",
+        "Is any single group driving a disproportionate share (>30\u201340%) of the total?",
+        "What follow-up question does this aggregation raise that the raw data couldn't?"
+      ]
+    },
+    {
+      "title": "Reflection: What the Data Actually Said",
+      "prompts": [
+        "What was the most surprising thing you found during cleaning (not analysis)?",
+        "Did your original hypothesis hold after groupby \u2014 or did the summary contradict it?",
+        "What would have gone wrong if you skipped cleaning and went straight to aggregation?",
+        "What's the one insight you'd present to a non-technical stakeholder from this exercise?",
+        "What's the next Pandas operation you need to learn to go deeper on this dataset?"
+      ]
+    }
+  ],
+  "cta": "Open the dataset you've been avoiding \u2014 run these four steps in order and fill in every prompt. The goal isn't a perfect analysis. It's 30 minutes of honest contact with real, messy data. Then read Tutorial 5 to visualize what you just found.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis.md",
+  "slug": "2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis"
+}

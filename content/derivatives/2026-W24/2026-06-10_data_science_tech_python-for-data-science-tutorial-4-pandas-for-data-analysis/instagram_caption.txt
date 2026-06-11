@@ -1,0 +1,24 @@
+Format: carousel
+Why: Data Science/Tech tutorial content with step-by-step structure maps directly to carousel's highest save-weighted engagement format.
+
+6 Pandas operations every data scientist actually uses daily.
+
+Not the ones in beginner tutorials.
+
+The ones that show up in every messy real-world dataset — the ones that quietly save your analysis from producing the wrong answer.
+
+isnull().sum() before anything. pd.to_numeric(errors='coerce') instead of crashing. .query() when your filters get complex. .agg() with named aggregations for clean summaries. drop_duplicates on the key column. pivot_table when you need to communicate, not just compute.
+
+Swipe through for how each one works and when to reach for it.
+
+Tutorial 4 of 10 in my Python for Data Science series. Link in bio.
+
+Slides:
+  1. isnull().sum() — Know your nulls first
+  2. pd.to_numeric(errors='coerce') — Handle bad values without crashing
+  3. When to use .loc vs .iloc vs .query()
+  4. Clean messy data without losing rows
+  5. GroupBy + .agg() — Multiple metrics, one pass
+  6. Pivot tables: for communication, not computation
+
+#Python #DataScience #Pandas #DataAnalysis #LearnPython

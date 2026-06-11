@@ -1,0 +1,45 @@
+6 Pandas operations every data scientist actually uses daily (not the ones in tutorials):
+
+Thread 👇
+
+1/ isnull().sum()
+
+Run this before anything else. Missing data in a filter column silently removes rows — your analysis looks complete but isn't. Know your nulls before you start.
+
+2/ pd.to_numeric(errors='coerce')
+
+Instead of crashing on bad values, this turns them into NaN and keeps your row structure intact. Especially useful when revenue columns have strings like 'approx 50k' hiding in them.
+
+3/ .query()
+
+Instead of:
+df[(df['region'] == 'North') & (df['revenue'] > 5000)]
+
+Write:
+df.query("region == 'North' and revenue > 5000")
+
+Three or more conditions? Always switch to .query().
+
+4/ .agg() with named aggregations
+
+region_summary = df.groupby('region').agg(
+    total_revenue=('revenue', 'sum'),
+    avg_order=('revenue', 'mean'),
+    order_count=('order_id', 'count')
+).reset_index()
+
+Clean column names. Multiple metrics. One pass.
+
+5/ .drop_duplicates(subset=['order_id'])
+
+Duplicates in source data are more common than you think. Specifying subset= means you're deduplicating on the key that actually matters, not all columns.
+
+6/ .pivot_table()
+
+Grouped DataFrames are for computation. Pivot tables are for communication. When someone asks 'show me revenue by region and month' — this is the function that produces exactly what they're picturing.
+
+The raw data doesn't tell you anything. Summaries do.
+
+Full Pandas tutorial (load → filter → clean → aggregate) linked below. Part 4 of a 10-part Python for Data Science series.
+
+Retweet if this saves someone from a messy CSV.

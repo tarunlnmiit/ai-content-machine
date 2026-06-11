@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The friction between raw data and real insight is where most data work actually happens — Pandas is the tool that makes that friction manageable instead of defeating.",
+  "tone": [
+    "analytical",
+    "honest",
+    "pragmatic"
+  ],
+  "visual_metaphor": "An archaeologist at a dig site — layers of sediment representing messy data, each carefully chipped away to reveal structured information beneath. The tools are precise, the work is slow, but the artifact is worth finding.",
+  "key_quotes": [
+    "Data cleaning is not preparation for analysis. It is analysis. You can't separate the two.",
+    "The raw data doesn't tell you anything. Summaries do.",
+    "Pandas doesn't replace thinking. It removes the mechanical friction that gets between you and thinking."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Close-up of a chaotic spreadsheet on screen — mismatched date formats, 'N/A' and 'na' and 'None' visible in same column, highlighted in red",
+      "text": "Two weeks. One dataset. Zero analysis."
+    },
+    {
+      "frame": 2,
+      "visual": "Terminal window showing df.isnull().sum() output — several columns lit up with high null counts, cursor blinking",
+      "text": "Know your nulls before you start."
+    },
+    {
+      "frame": 3,
+      "visual": "Side-by-side comparison: left panel shows raw string 'approx 50k', right panel shows NaN after pd.to_numeric(errors='coerce')",
+      "text": "Bad values become NaN. Not errors."
+    },
+    {
+      "frame": 4,
+      "visual": "Clean Python terminal showing .query() syntax — readable, minimal, elegant compared to stacked boolean mess",
+      "text": "Three conditions? Switch to .query()."
+    },
+    {
+      "frame": 5,
+      "visual": "groupby().agg() output rendered as a clean DataFrame — regions as rows, named metrics as columns, all aligned",
+      "text": "Multiple metrics. One pass."
+    },
+    {
+      "frame": 6,
+      "visual": "Pivot table output — regions on rows, months on columns, revenue values filling the grid cleanly",
+      "text": "Computation is done. Now communicate."
+    },
+    {
+      "frame": 7,
+      "visual": "Person leaning back from laptop, looking at clean visualization on screen — relief and focus simultaneously",
+      "text": "Now you can actually think."
+    }
+  ]
+}

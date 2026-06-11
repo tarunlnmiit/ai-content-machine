@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "Biggest time drain when starting a new data project?",
+    "options": [
+      "Cleaning messy column types",
+      "Dealing with missing values",
+      "Figuring out data structure",
+      "Renaming inconsistent columns"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "How long do you typically spend cleaning before your first real analysis?",
+    "options": [
+      "Under 30 minutes",
+      "1–3 hours",
+      "Half a day or more",
+      "It varies wildly by dataset"
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+Subject: The Pandas mental model that changed how I work with data
+Preview: Two weeks cleaning one dataset. Here's what I learned the hard way.
+
+The first real dataset I ever worked with professionally took me two weeks before I ran a single analysis.
+
+Not because it was large. Because it was genuinely messy — column names with trailing spaces, dates formatted three ways in the same column, revenue figures mixed with strings. I was fighting the data instead of reading it.
+
+Then I understood Pandas properly. Not just read_csv and head() — the actual mental model: a DataFrame is a structured, labeled, query-able object. When that clicked, data interrogation stopped feeling like combat.
+
+Tutorial 4 of my Python for Data Science series is live. It covers the four skills I use on every project:
+
+— Exploring any dataset in 60 seconds
+— Selecting and filtering without common traps
+— Cleaning messy data without losing row structure
+— Aggregating with groupby and pivot tables
+
+If you're still spending more time on data logistics than actual analysis, this is the tutorial that shifts that ratio.
+
+[READ_LINK]
+
+Read it, run through it on a dataset you've been avoiding, and let me know what you find.

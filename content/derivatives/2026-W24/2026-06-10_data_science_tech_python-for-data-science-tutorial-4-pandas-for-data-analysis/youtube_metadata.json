@@ -1,0 +1,16 @@
+{
+  "title": "Pandas for Data Analysis: 4 Skills Every Data Scientist Needs",
+  "description": "The first real dataset I worked with professionally took me two weeks before I ran a single analysis — not because it was large, but because I didn't understand Pandas properly yet.\n\nThis tutorial covers the four skills I return to on every data project: exploring a new dataset in the first 60 seconds, selecting and filtering without the common traps, cleaning messy real-world data without losing row structure, and aggregating with groupby and pivot tables.\n\nPandas is the most-used library in data science for one reason: every project starts with data that isn't ready. This tutorial teaches you how to handle that.\n\n[TIMESTAMPS_PLACEHOLDER]\n\nThis is Tutorial 4 of 10 in the Python for Data Science series. Tutorial 3 covered NumPy — the foundation Pandas is built on. Tutorial 5 covers data visualization.\n\n[LINKS_PLACEHOLDER]\n\nIf you found this useful, subscribe for weekly tutorials grounded in real data work, not textbook examples.",
+  "tags": [
+    "pandas tutorial",
+    "python for data science",
+    "pandas dataframe",
+    "data cleaning python",
+    "groupby pandas",
+    "pandas for beginners",
+    "data analysis python",
+    "python data science tutorial"
+  ],
+  "thumbnail_concept": "Split screen: left side shows a chaotic spreadsheet with red highlights on bad values; right side shows clean Python output in a terminal. Text overlay: 'Clean It. Query It. Understand It.' Dark background, high contrast, Tarun in corner with calm expression.",
+  "end_screen_suggestion": "Python for Data Science Tutorial 5: Data Visualization — the natural next step after cleaning and aggregating data."
+}

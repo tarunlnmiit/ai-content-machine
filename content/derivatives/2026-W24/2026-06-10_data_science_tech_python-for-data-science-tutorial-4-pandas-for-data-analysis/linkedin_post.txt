@@ -1,0 +1,15 @@
+I spent two weeks on my first real dataset before I ran a single line of analysis.
+
+Not two weeks learning. Two weeks just trying to get the data into a usable state — column names with trailing spaces, dates formatted three different ways in the same column, revenue figures mixed with strings like 'approx 50k.'
+
+That experience taught me something most Pandas tutorials skip: data cleaning isn't preparation for analysis. It is analysis. You can't separate the two.
+
+The mental model that changed everything for me was simple: a DataFrame isn't a spreadsheet. It's a structured, labeled, query-able object. Once I understood that a column is just a NumPy array with a name, operations like boolean filtering and groupby stopped feeling like syntax to memorize and started feeling inevitable.
+
+I've just published Tutorial 4 in my Python for Data Science series — Pandas for Data Analysis. It covers the four skills I return to on every project: exploring a new dataset in the first 60 seconds, selecting and filtering with .loc and .query(), cleaning messy data without losing row structure, and aggregating with .groupby() and .pivot_table().
+
+If you're working with data and still spending more time on logistics than thinking — this is the tutorial that changes that ratio.
+
+Link in comments.
+
+#DataScience #Python #Pandas

@@ -1,0 +1,48 @@
+Create a professional worksheet PDF (A4, landscape) for "The 4-Step Pandas First-Look Framework: From Messy CSV to Real Insight"
+
+Layout:
+- Header (top 20%): Title + tagline about applying ML to production
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Step 1 — Orient: Your First 60 Seconds with the Dataset
+   - What dataset will you work through? (file name or description):
+   - Run df.shape, df.info(), df.head(). How many rows and columns?
+   - Which columns have null values? List them:
+   - What dtypes look wrong (dates stored as object, numbers as string)?
+   - What's your first instinct about what this data is trying to tell you?
+
+2. Step 2 — Select: Define the Question Before You Filter
+   - What is the ONE question you want to answer with this dataset?
+   - Which columns are essential to answering that question? List them:
+   - Write the .loc or boolean filter that isolates the rows you care about:
+   - What rows should be excluded (test data, outliers, nulls)? Why?
+   - After filtering: how many rows remain? Does that feel right?
+
+3. Step 3 — Clean: Audit the Mess Before You Trust the Numbers
+   - List every column that needs type conversion and what it should become:
+   - How are missing values encoded? (NaN, 'N/A', 'None', '-', blank?) List all variants found:
+   - Are there duplicate rows? Run df.duplicated().sum() — what's the count?
+   - Which string columns have inconsistent casing or whitespace? (e.g. 'New York ' vs 'new york')
+   - Write the single cleaning step that would most improve analysis quality:
+
+4. Step 4 — Aggregate: Find the Summary That Actually Tells You Something
+   - What column will you groupby? (region, category, date, customer segment?)
+   - What aggregation makes sense — sum, mean, count, median? Why?
+   - Run the groupby. Which group has the highest value? Which has the lowest?
+   - Is any single group driving a disproportionate share (>30–40%) of the total?
+   - What follow-up question does this aggregation raise that the raw data couldn't?
+
+5. Reflection: What the Data Actually Said
+   - What was the most surprising thing you found during cleaning (not analysis)?
+   - Did your original hypothesis hold after groupby — or did the summary contradict it?
+   - What would have gone wrong if you skipped cleaning and went straight to aggregation?
+   - What's the one insight you'd present to a non-technical stakeholder from this exercise?
+   - What's the next Pandas operation you need to learn to go deeper on this dataset?
+
+

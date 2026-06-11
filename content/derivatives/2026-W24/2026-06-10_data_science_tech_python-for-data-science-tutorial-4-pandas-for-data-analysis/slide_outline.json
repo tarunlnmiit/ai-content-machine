@@ -1,0 +1,87 @@
+{
+  "format": "Canva",
+  "title_slide": "Pandas for Data Analysis: 4 Skills for Every Project",
+  "slides": [
+    {
+      "slide_number": 1,
+      "heading": "The Problem With Most Pandas Tutorials",
+      "bullet_points": [
+        "They teach syntax, not mental models",
+        "Real datasets aren't clean CSVs",
+        "You need tools for mess, not textbook examples"
+      ],
+      "speaker_note": "Open with the uncomfortable truth about what real data work actually looks like."
+    },
+    {
+      "slide_number": 2,
+      "heading": "The Mental Model That Changes Everything",
+      "bullet_points": [
+        "A DataFrame is a structured, labeled, query-able object",
+        "Columns are NumPy arrays with names",
+        "Operations feel inevitable once you understand this"
+      ],
+      "speaker_note": "Explain the foundation before showing any code."
+    },
+    {
+      "slide_number": 3,
+      "heading": "Skill 1: Explore Any Dataset in 60 Seconds",
+      "bullet_points": [
+        "df.shape, df.dtypes, df.head()",
+        "df.describe() reveals outliers and skew instantly",
+        "df.isnull().sum() — never skip this step"
+      ],
+      "speaker_note": "Walk through the exact sequence to run when opening an unfamiliar dataset."
+    },
+    {
+      "slide_number": 4,
+      "heading": "Skill 2: Select and Filter Without the Common Traps",
+      "bullet_points": [
+        "Use & and | not 'and'/'or' — wrap each condition",
+        "Switch to .query() at 3+ conditions",
+        "Use .isin() instead of stacked OR conditions"
+      ],
+      "speaker_note": "These are the mistakes that trip everyone up exactly once."
+    },
+    {
+      "slide_number": 5,
+      "heading": "Skill 3: Clean Messy Data Without Losing Rows",
+      "bullet_points": [
+        "errors='coerce' turns bad values into NaN, not errors",
+        "Strip strings: .str.strip().str.title()",
+        "Re-run dtypes and isnull() after every cleaning step"
+      ],
+      "speaker_note": "Emphasize that cleaning is analysis, not preparation for analysis."
+    },
+    {
+      "slide_number": 6,
+      "heading": "Skill 4: GroupBy and Aggregation",
+      "bullet_points": [
+        "Split → Apply → Combine is the mental model",
+        "Use .agg() with named aggregations for clean output",
+        "Always reset_index() to return to a flat DataFrame"
+      ],
+      "speaker_note": "Show the named aggregation pattern — it's the most underused clean syntax in Pandas."
+    },
+    {
+      "slide_number": 7,
+      "heading": "GroupBy vs Pivot Table",
+      "bullet_points": [
+        "GroupBy: for computation and downstream processing",
+        "Pivot table: for communication with stakeholders",
+        "Same underlying data, different output shape"
+      ],
+      "speaker_note": "This distinction resolves a lot of confusion about when to use each."
+    },
+    {
+      "slide_number": 8,
+      "heading": "What to Do Next",
+      "bullet_points": [
+        "Open a dataset you've been avoiding",
+        "Run through all four skills in sequence",
+        "Tutorial 5: Visualization — making the data visible"
+      ],
+      "speaker_note": "End with a concrete action, not a summary."
+    }
+  ],
+  "total_slides": 8
+}
