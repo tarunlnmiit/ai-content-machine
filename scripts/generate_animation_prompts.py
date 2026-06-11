@@ -21,42 +21,48 @@ BRANDS: dict[str, dict] = {
     "Breath of Data Science": {
         "show": "Breath of Data Science",
         "palette": {
-            "bg": "#0d1117",
-            "surface": "#161b22",
-            "accent": "#58a6ff",
-            "accent2": "#3fb950",
-            "text": "#e6edf3",
-            "muted": "#8b949e",
+            "bg": "#1E1B2E",
+            "surface": "rgba(255,255,255,0.05)",
+            "accent": "#6B8FA8",
+            "accent2": "#3D5F75",
+            "text": "#f0f0f2",
+            "muted": "rgba(240,240,242,0.50)",
         },
-        "fonts": {"heading": "JetBrains Mono", "body": "Inter"},
+        "fonts": {"heading": "Space Grotesk", "body": "Space Grotesk"},
         "fps": 30,
     },
     "Breath of Life": {
         "show": "Breath of Life",
         "palette": {
-            "bg": "#0f0b08",
-            "surface": "#1c1510",
-            "accent": "#d4885a",
-            "accent2": "#7eb896",
-            "text": "#f2ece4",
-            "muted": "#9b8d82",
+            "bg": "#1E1B2E",
+            "surface": "rgba(255,255,255,0.05)",
+            "accent": "#E8705A",
+            "accent2": "#B34A38",
+            "text": "#f0f0f2",
+            "muted": "rgba(240,240,242,0.50)",
         },
-        "fonts": {"heading": "Georgia", "body": "Inter"},
+        "fonts": {"heading": "Lora", "body": "Nunito Sans"},
         "fps": 30,
     },
     "Breath of Poetry": {
         "show": "Breath of Poetry",
         "palette": {
-            "bg": "#0b0912",
-            "surface": "#130f1e",
-            "accent": "#a78bfa",
-            "accent2": "#e879a0",
-            "text": "#ede9f8",
-            "muted": "#7c7190",
+            "bg": "#1E1B2E",
+            "surface": "rgba(255,255,255,0.05)",
+            "accent": "#B89850",
+            "accent2": "#8A6E30",
+            "text": "#f0f0f2",
+            "muted": "rgba(240,240,242,0.50)",
         },
-        "fonts": {"heading": "Georgia", "body": "Inter"},
+        "fonts": {"heading": "Playfair Display", "body": "DM Sans"},
         "fps": 30,
     },
+}
+
+NICHE_TO_SHOW: dict[str, str] = {
+    "ds": "Breath of Data Science",
+    "life": "Breath of Life",
+    "poetry": "Breath of Poetry",
 }
 
 _DEFAULT_BRAND = BRANDS["Breath of Data Science"]
@@ -67,6 +73,10 @@ def get_brand(show: str) -> dict:
         if name.lower() in show.lower():
             return brand
     return _DEFAULT_BRAND
+
+
+def get_brand_by_niche(niche: str) -> dict:
+    return BRANDS[NICHE_TO_SHOW[niche]]
 
 
 # convenience alias used by prompt builders — resolved per-call via meta
@@ -818,13 +828,29 @@ def render_animations(script_path: Path, animations: list[dict], meta: dict) -> 
 # Main
 # ---------------------------------------------------------------------------
 
+def _infer_week(script_path: Path) -> str | None:
+    """Extract 2026-Wnn from script path, or return None."""
+    import re
+    m = re.search(r"(\d{4}-W\d{2})", str(script_path))
+    return m.group(1) if m else None
+
+
 def main() -> None:
     import argparse
+    import subprocess
 
     parser = argparse.ArgumentParser(
         description="Parse [ANIMATION:] tags and write Remotion prompts (or render MP4s)."
     )
     parser.add_argument("script", help="Path to YouTube script .md file")
+    parser.add_argument(
+        "--niche", choices=["ds", "life", "poetry"],
+        help="Niche shortcode — overrides SHOW: tag detection (ds, life, poetry)"
+    )
+    parser.add_argument(
+        "--scene-plans", action="store_true",
+        help="Also generate scene plan JSON via generate_scene_plans.py (infers --week from path)"
+    )
     parser.add_argument(
         "--render", action="store_true",
         help="Render each animation to MP4 via Remotion (requires remotion/ project)"
@@ -836,7 +862,30 @@ def main() -> None:
         print(f"Error: file not found — {script_path}")
         sys.exit(1)
 
+    # Run scene plan generation first if requested
+    if args.scene_plans:
+        niche = args.niche
+        if not niche:
+            print("Error: --scene-plans requires --niche (ds, life, poetry)", file=sys.stderr)
+            sys.exit(1)
+        week = _infer_week(script_path)
+        if not week:
+            print("Error: could not infer ISO week from script path — pass to generate_scene_plans.py directly", file=sys.stderr)
+            sys.exit(1)
+        gen_sp = Path(__file__).parent / "generate_scene_plans.py"
+        cmd = [sys.executable, str(gen_sp), "--script", str(script_path),
+               "--niche", niche, "--week", week, "--mode", "short"]
+        print(f"Running: {' '.join(cmd)}", file=sys.stderr)
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            sys.exit(result.returncode)
+
     meta, animations = parse_script(script_path)
+
+    # Override brand with explicit --niche if provided
+    if args.niche:
+        meta["brand"] = get_brand_by_niche(args.niche)
+        meta["show"] = NICHE_TO_SHOW[args.niche]
 
     if not animations:
         print(f"No [ANIMATION:] tags found in {script_path.name}")

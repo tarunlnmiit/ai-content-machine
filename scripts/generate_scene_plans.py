@@ -86,7 +86,18 @@ Rules:
 - durationSec: DataVizReveal/CodeAnnotation/ToolComparison = 6–8s; others = 4–6s.
 - niche: use "{niche}" exactly.
 
-Return ONLY a valid JSON array. No prose, no markdown fences, no explanation.
+Each object in the array MUST have exactly these fields:
+{{
+  "sceneId": "scene-01",
+  "componentName": "ExactComponentName",
+  "script": "verbatim excerpt 5–15 words",
+  "niche": "{niche}",
+  "durationSec": 6,
+  "props": {{ ... component-specific props ... }}
+}}
+
+sceneId values: "scene-01", "scene-02", etc. (zero-padded index).
+Return ONLY the JSON array. No prose, no markdown fences, no explanation.
 """
 
 OVERLAY_INSTRUCTIONS = """
@@ -106,7 +117,18 @@ Rules:
 - durationSec: 4–6 seconds maximum (these are overlays, not full replacements).
 - niche: use "{niche}" exactly.
 
-Return ONLY a valid JSON array. No prose, no markdown fences, no explanation.
+Each object in the array MUST have exactly these fields:
+{{
+  "sceneId": "scene-01",
+  "componentName": "ExactComponentName",
+  "script": "verbatim excerpt 5–15 words",
+  "niche": "{niche}",
+  "durationSec": 5,
+  "props": {{ ... component-specific props ... }}
+}}
+
+sceneId values: "scene-01", "scene-02", etc. (zero-padded index).
+Return ONLY the JSON array. No prose, no markdown fences, no explanation.
 """
 
 
@@ -126,13 +148,18 @@ def parse_script_sections(text: str) -> str:
 
 
 def extract_json(raw: str) -> list:
-    """Parse JSON from Claude output, stripping markdown fences if present."""
-    raw = raw.strip()
-    # Strip ```json ... ``` or ``` ... ```
-    raw = re.sub(r"^```(?:json)?\s*", "", raw)
-    raw = re.sub(r"\s*```$", "", raw)
-    raw = raw.strip()
-    return json.loads(raw)
+    """Parse JSON array from Claude output.
+
+    Handles: preamble prose, markdown fences, trailing text/explanation.
+    Uses raw_decode so trailing content after ] is silently ignored.
+    """
+    # Strip markdown code fences first so they don't land inside the search window
+    raw = re.sub(r"```(?:json)?", "", raw)
+    bracket = raw.find("[")
+    if bracket < 0:
+        raise json.JSONDecodeError("No JSON array found in output", raw, 0)
+    result, _ = json.JSONDecoder().raw_decode(raw, bracket)
+    return result
 
 
 def validate_scene(scene: dict, index: int) -> None:

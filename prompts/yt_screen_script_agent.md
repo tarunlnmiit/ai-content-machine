@@ -136,7 +136,7 @@ Then the script begins as continuous prose, no headers inside.
 Use `[SCREEN: description]` inline to mark screen state transitions.
 Use `[BROLL: description]` for optional intro/outro visuals only.
 Use `[PAUSE]` for deliberate breath points.
-Use `[CODE_INSERT: filename/function to show]` if you need Tarun to fill in a specific code block later.
+Include ALL code inline as fenced ```python blocks — **never** use `[CODE_INSERT:]` placeholders. Every code block must be complete and runnable (imports included, sample data provided with `numpy` or `pandas` where needed, output-producing). A script with a placeholder instead of real code is unacceptable.
 Use `[PERSONAL_INSERT: description]` for anecdotes or specific memory Tarun needs to add.
 
 ### Animation tags
@@ -165,6 +165,8 @@ Every script must include exactly **three** `[ANIMATION:]` markers — rendered 
 - [ ] Problem or question clear in opening
 - [ ] Why this matters explained (not assumed)
 - [ ] Code logic explained before or alongside code
+- [ ] All code is inline fenced ```python blocks — zero `[CODE_INSERT:]` placeholders
+- [ ] Every code block has imports, sample data, and produces visible output
 - [ ] Each step has a concrete output or result shown
 - [ ] Comparisons include a metric (faster by X%, accuracy of Y%, etc.)
 - [ ] No jargon without explanation (first use gets 1–2 sentence context)

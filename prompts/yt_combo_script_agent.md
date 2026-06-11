@@ -162,7 +162,7 @@ Then the script begins as continuous prose, no headers inside.
 Use `[BROLL: description]` for conceptual B-roll sections (openers, problem framing, conceptual landing).
 Use `[SCREEN: description]` for technical screen state transitions.
 Use `[PAUSE]` for deliberate breath points.
-Use `[CODE_INSERT: filename/function]` if you need Tarun to fill in a specific code block.
+Include ALL code inline as fenced ```python blocks — **never** use `[CODE_INSERT:]` placeholders. Every code block must be complete and runnable (imports included, sample data provided with `numpy` or `pandas` where needed, output-producing). A script with a placeholder instead of real code is unacceptable.
 Use `[PERSONAL_INSERT: description]` for anecdotes or specific memory.
 
 ---
@@ -173,6 +173,8 @@ Use `[PERSONAL_INSERT: description]` for anecdotes or specific memory.
 - [ ] Problem framing explains why it matters in real terms (cost, time, confidence, etc.)
 - [ ] Transition sentence(s) clearly signal shift from story → technical
 - [ ] Code logic explained before or alongside code
+- [ ] All code is inline fenced ```python blocks — zero `[CODE_INSERT:]` placeholders
+- [ ] Every code block has imports, sample data, and produces visible output
 - [ ] Each code step has a concrete output or result shown
 - [ ] Comparisons include a metric (faster by X%, accuracy Y%, etc.)
 - [ ] No jargon without explanation (first use gets 1–2 sentence context)
