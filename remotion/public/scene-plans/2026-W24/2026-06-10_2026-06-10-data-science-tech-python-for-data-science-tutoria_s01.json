@@ -1,0 +1,99 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "The first real dataset I ever worked with was a mess",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The first real dataset I worked with professionally was a mess. Not academic-mess \u2014 real mess.",
+      "attribution": "Breath of Data Science"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "NumberedTips",
+    "script": "N/A, na, None, and a literal dash as four separate attempts",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Four ways someone typed 'missing'",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "\"N/A\""
+        },
+        {
+          "number": 2,
+          "headline": "\"na\""
+        },
+        {
+          "number": 3,
+          "headline": "\"None\""
+        },
+        {
+          "number": 4,
+          "headline": "A literal dash \u2014"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "I spent two weeks on that dataset before I ran a single analysis",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 2,
+      "label": "weeks lost before a single analysis",
+      "suffix": " weeks"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "TransformationArc",
+    "script": "Python loops that felt like archaeology \u2014 chipping away",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "beforeLabel": "Before Pandas",
+      "afterLabel": "After Pandas",
+      "beforePoints": [
+        "Two weeks of raw Python loops",
+        "Never sure you found the data",
+        "Just another layer of sediment"
+      ],
+      "afterPoints": [
+        "Workable dataset in under an hour",
+        "Interrogation feels like conversation",
+        "Structure does the chipping for you"
+      ],
+      "transformLabel": "Learn the mental model"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CounterReveal",
+    "script": "make an unfamiliar dataset workable in under an hour",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 1,
+      "label": "hour to make any dataset workable",
+      "prefix": "<",
+      "suffix": " hr"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "data interrogation feel like conversation instead of combat",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "A DataFrame makes data interrogation feel like conversation instead of combat.",
+      "attribution": ""
+    }
+  }
+]

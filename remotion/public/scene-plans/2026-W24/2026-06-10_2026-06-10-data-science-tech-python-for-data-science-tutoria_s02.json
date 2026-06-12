@@ -1,0 +1,119 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Pandas builds directly on NumPy",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Pandas builds directly on NumPy. A DataFrame column is a NumPy array with a name.",
+      "attribution": "Tutorial 4"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "a DataFrame is a structured, labeled, query-able object",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "What a DataFrame actually is",
+      "cards": [
+        {
+          "term": "Structured",
+          "definition": "Rows and columns with fixed types"
+        },
+        {
+          "term": "Labeled",
+          "definition": "Every column and row carries a name"
+        },
+        {
+          "term": "Query-able",
+          "definition": "Ask questions instead of writing loops"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ToolComparison",
+    "script": "feels like conversation instead of combat",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Raw Python loops",
+        "points": [
+          "Manual iteration",
+          "Archaeology, not analysis",
+          "Combat with the data"
+        ]
+      },
+      "rightSide": {
+        "label": "Pandas DataFrame",
+        "points": [
+          "Vectorized operations",
+          "Query-able structure",
+          "Conversation with the data"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CodeAnnotation",
+    "script": "Not just pd.read_csv() and df.head()",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "import pandas as pd",
+        "import numpy as np",
+        "",
+        "df = pd.read_csv('sales_records.csv')"
+      ],
+      "language": "python",
+      "highlightLine": 4,
+      "annotationText": "read_csv loads the file \u2014 but that's where most beginners stop."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ConceptExplainer",
+    "script": "operations like .apply() and boolean indexing stop feeling magical",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Why it stops feeling magical",
+      "cards": [
+        {
+          "term": ".apply()",
+          "definition": "Run a function across a NumPy-backed column"
+        },
+        {
+          "term": "Boolean indexing",
+          "definition": "Filter the same array NumPy already gave you"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "WordReveal",
+    "script": "a higher-level interface for the same ideas",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Same",
+        "ideas.",
+        "Higher-level",
+        "interface."
+      ],
+      "emphasis": [
+        2,
+        3
+      ]
+    }
+  }
+]

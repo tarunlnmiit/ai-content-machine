@@ -1,0 +1,15 @@
+[
+  {
+    "sceneId": "scene-07",
+    "componentName": "CounterReveal",
+    "script": "You've done this a hundred times.",
+    "niche": "poetry",
+    "durationSec": 4,
+    "layout": "fullscreen",
+    "props": {
+      "start": 0,
+      "end": 100,
+      "label": "times you've scraped the toast over the sink"
+    }
+  }
+]

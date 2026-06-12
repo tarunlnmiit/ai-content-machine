@@ -1,0 +1,83 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "The first question isn't what's in this data, it's what shape",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The first question with any dataset isn't 'what's in this data?' It's 'what shape is this data?'",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "print(df.shape) e.g., (15420, 12)",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "print(df.shape)       # (15420, 12)",
+        "print(df.dtypes)",
+        "print(df.head())",
+        "print(df.describe())",
+        "print(df.isnull().sum())"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Orient before you analyze: how many rows, what types, where the nulls hide."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "print(df.shape) # e.g., (15420, 12)",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 15420,
+      "label": "rows in the dataset",
+      "suffix": " rows"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "(15420, 12)",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 12,
+      "label": "columns to account for",
+      "suffix": " cols"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CounterReveal",
+    "script": "Run df.describe() and in thirty seconds you know",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 30,
+      "label": "seconds to spot bad values with describe()",
+      "suffix": " sec"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CodeAnnotation",
+    "script": "The isnull().sum() line is the one most beginners skip. Don't skip it.",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "print(df.isnull().sum())"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Skip this and missing data silently breaks filters \u2014 rows just disappear."
+    }
+  }
+]

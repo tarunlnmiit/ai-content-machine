@@ -1,0 +1,14 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "they have a handful of small habits they actually do",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-top",
+    "props": {
+      "quote": "The most productive people don't have complicated systems. They have a handful of small habits they actually do.",
+      "attribution": ""
+    }
+  }
+]

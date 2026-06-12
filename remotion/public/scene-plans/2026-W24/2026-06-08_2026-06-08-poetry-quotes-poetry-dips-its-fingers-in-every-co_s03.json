@@ -1,0 +1,91 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "programmers call it beautiful. They always have",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Here's the thing about elegant code: programmers call it beautiful. They always have."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ImageTextReveal",
+    "script": "Poetry was already in the server room",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "Poetry was already in the server room",
+      "subtext": "NEVER WAITING FOR AN INVITATION"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "LineReveal",
+    "script": "Some weeks I build dashboards. Other weeks I write poems",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "Some weeks I build dashboards.",
+        "Other weeks I write poems nobody may read."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "DataVizReveal",
+    "script": "One used numbers. The other used metaphor. Tools different. Curiosity identical",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "title": "Same drive, different tools",
+      "data": [
+        {
+          "label": "Numbers",
+          "value": 50
+        },
+        {
+          "label": "Metaphor",
+          "value": 50
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "the desire to understand what people actually feel beneath what they say",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "The same thing drove both \u2014 the desire to understand what people actually feel beneath what they say."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "HandwrittenReveal",
+    "script": "Tools different. Curiosity identical",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "Tools different.",
+        "Curiosity identical."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "The best commit messages have grief in them sometimes",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "The best commit messages have grief in them sometimes."
+    }
+  }
+]

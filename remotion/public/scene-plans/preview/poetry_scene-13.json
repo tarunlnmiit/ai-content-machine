@@ -1,0 +1,15 @@
+[
+  {
+    "sceneId": "scene-13",
+    "componentName": "CounterReveal",
+    "script": "a lyric you've heard forty times that suddenly means something different",
+    "niche": "poetry",
+    "durationSec": 4,
+    "layout": "fullscreen",
+    "props": {
+      "start": 0,
+      "end": 40,
+      "label": "times you've heard the lyric before it landed"
+    }
+  }
+]

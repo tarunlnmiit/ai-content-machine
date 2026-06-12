@@ -11,8 +11,10 @@
     "@remotion/cli": "4.0.466",
     "@remotion/media": "4.0.466",
     "@remotion/media-utils": "4.0.466",
+    "@remotion/skia": "^4.0.466",
     "@remotion/tailwind-v4": "4.0.466",
     "@remotion/three": "4.0.466",
+    "@shopify/react-native-skia": "^2.6.4",
     "prism-react-renderer": "^2.3.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -30,7 +32,7 @@
     "typescript": "5.9.3"
   },
   "scripts": {
-    "dev": "remotion studio",
+    "dev": "remotion studio --chrome-flags=\"--disable-dev-shm-usage --disable-gpu-sandbox --no-first-run\"",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"

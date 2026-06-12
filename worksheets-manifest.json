@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-06-12T09:38:23.578Z",
+  "count": 9,
+  "worksheets": {
+    "complete-python-course-2026-beginner-to-advance-tutorial-110": {
+      "title": "Complete Python Course 2026 Beginner To Advance Tutorial 110",
+      "niche": "data_science_tech",
+      "date": "2026-05-21",
+      "pdfPath": "output/worksheets/2026-W21/2026-05-21_data_science_tech_complete-python-course-2026-beginner-to-advance-tutorial-110_worksheet.pdf"
+    },
+    "how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals": {
+      "title": "How I Turned My Habits Into An Engine To Get Me To My Goals",
+      "niche": "life_self_dev",
+      "date": "2026-05-21",
+      "pdfPath": "output/worksheets/2026-W21/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals_worksheet.pdf"
+    },
+    "python-for-data-science-tutorial-210": {
+      "title": "Python For Data Science Tutorial 210",
+      "niche": "data_science_tech",
+      "date": "2026-05-25",
+      "pdfPath": "output/worksheets/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.pdf"
+    },
+    "python-for-data-science-tutorial-310": {
+      "title": "Python For Data Science Tutorial 310",
+      "niche": "data_science_tech",
+      "date": "2026-06-01",
+      "pdfPath": "output/worksheets/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_worksheet.pdf"
+    },
+    "the-cost-of-carrying-things-nobody-sees": {
+      "title": "The Cost Of Carrying Things Nobody Sees",
+      "niche": "life_self_dev",
+      "date": "2026-06-01",
+      "pdfPath": "output/worksheets/2026-W23/2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet.pdf"
+    },
+    "the-invisible-load-audit": {
+      "title": "The Invisible Load Audit",
+      "niche": "life_self_dev",
+      "date": "2026-06-01",
+      "pdfPath": "output/worksheets/2026-W23/2026-06-01_life_self_dev_the-invisible-load-audit_worksheet.pdf"
+    },
+    "python-for-data-science-tutorial-410": {
+      "title": "Python For Data Science Tutorial 410",
+      "niche": "data_science_tech",
+      "date": "2026-06-08",
+      "pdfPath": "output/worksheets/2026-W24/2026-06-08_data_science_tech_python-for-data-science-tutorial-410_worksheet.pdf"
+    },
+    "the-simple-habit-that-changed-my-productivity": {
+      "title": "The Simple Habit That Changed My Productivity",
+      "niche": "life_self_dev",
+      "date": "2026-06-08",
+      "pdfPath": "output/worksheets/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity_worksheet.pdf"
+    },
+    "python-for-data-science-tutorial-4-pandas-for-data-analysis": {
+      "title": "Python For Data Science Tutorial 4 Pandas For Data Analysis",
+      "niche": "data_science_tech",
+      "date": "2026-06-10",
+      "pdfPath": "output/worksheets/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis.pdf"
+    }
+  }
+}

@@ -6,8 +6,9 @@
  */
 
 import { Config } from "@remotion/cli/config";
+import { enableSkia } from "@remotion/skia/enable";
 import { enableTailwind } from '@remotion/tailwind-v4';
 
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
-Config.overrideWebpackConfig(enableTailwind);
+Config.overrideWebpackConfig((config) => enableSkia(enableTailwind(config)));

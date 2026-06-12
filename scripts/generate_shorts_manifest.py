@@ -15,6 +15,7 @@ Usage:
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -42,41 +43,48 @@ def detect_niche(slug: str) -> str | None:
     return None
 
 
-def find_scene_plan(week: str, date_prefix: str, niche: str) -> str | None:
+SHORT_SUFFIX_RE = re.compile(r"_s\d{2}\.json$")
+
+
+def find_scene_plans(week: str, date_prefix: str, niche: str) -> list[str]:
     """
-    Find non-overlay scene plan file for (week, date, niche).
-    Returns path relative to remotion/public/ or None.
+    Find all non-overlay scene plan files for (week, date, niche).
+
+    Prefers multi-short files ({slug}_s01.json … _sNN.json), one entry per short.
+    Falls back to a single legacy plan ({slug}.json) if no _sNN files exist.
+    Returns paths relative to remotion/public/, sorted by name.
     """
     scene_dir = SCENE_PLANS_ROOT / week
     if not scene_dir.exists():
-        return None
+        return []
 
     keywords = NICHE_KEYWORDS.get(niche, [])
-    candidates = []
-    for f in scene_dir.iterdir():
-        if not f.name.endswith(".json"):
-            continue
-        if "_overlay" in f.name:
-            continue
+
+    def matches(f: Path) -> bool:
+        if not f.name.endswith(".json") or "_overlay" in f.name:
+            return False
         if not f.name.startswith(date_prefix):
-            continue
+            return False
         fname_lower = f.name.lower()
-        if any(kw in fname_lower for kw in keywords):
-            candidates.append(f)
+        return any(kw in fname_lower for kw in keywords)
 
+    candidates = [f for f in scene_dir.iterdir() if matches(f)]
     if not candidates:
-        return None
-    # Pick shortest name (most specific match over overlap variants)
+        return []
+
+    multi = sorted(f for f in candidates if SHORT_SUFFIX_RE.search(f.name))
+    if multi:
+        return [str(f.relative_to(REPO / "remotion" / "public")) for f in multi]
+
+    # Legacy: single plan — pick shortest name (most specific over overlap variants).
     best = min(candidates, key=lambda f: len(f.name))
-    # Return relative to remotion/public/
-    return str(best.relative_to(REPO / "remotion" / "public"))
+    return [str(best.relative_to(REPO / "remotion" / "public"))]
 
 
-def build_manifest(scene_plan_file: str) -> list[dict]:
+def build_manifest(scene_plan_files: list[str]) -> list[dict]:
     return [
-        {"slot": 0, "type": "motion", "scenePlanFile": scene_plan_file},
-        {"slot": 1, "type": "motion", "scenePlanFile": scene_plan_file},
-        {"slot": 2, "type": "motion", "scenePlanFile": scene_plan_file},
+        {"slot": i, "type": "motion", "scenePlanFile": f}
+        for i, f in enumerate(scene_plan_files)
     ]
 
 
@@ -103,20 +111,21 @@ def process_week(week: str, niche_filter: str | None, dry_run: bool) -> int:
             continue
 
         date_prefix = slug[:10]  # YYYY-MM-DD
-        scene_plan = find_scene_plan(week, date_prefix, niche)
+        scene_plans = find_scene_plans(week, date_prefix, niche)
 
-        if scene_plan is None:
+        if not scene_plans:
             print(f"  WARN {slug}: no scene plan found — skipping")
             errors += 1
             continue
 
-        manifest = build_manifest(scene_plan)
+        manifest = build_manifest(scene_plans)
         out_path = week_dir / slug / "shorts_manifest.json"
 
         if dry_run:
-            print(f"  DRY  {slug}")
+            print(f"  DRY  {slug}  ({len(scene_plans)} slot(s))")
             print(f"       → {out_path.relative_to(REPO)}")
-            print(f"       scene plan: {scene_plan}")
+            for sp in scene_plans:
+                print(f"       scene plan: {sp}")
         else:
             out_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
             print(f"  OK   {slug}")

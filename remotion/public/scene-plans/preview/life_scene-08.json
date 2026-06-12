@@ -1,0 +1,16 @@
+[
+  {
+    "sceneId": "scene-08",
+    "componentName": "CounterReveal",
+    "script": "I spend twenty minutes writing down everything that's in my head",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 20,
+      "label": "Minutes to empty your head",
+      "prefix": "",
+      "suffix": " min"
+    }
+  }
+]

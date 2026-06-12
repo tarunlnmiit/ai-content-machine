@@ -1,0 +1,19 @@
+[
+  {
+    "sceneId": "scene-19",
+    "componentName": "HandwrittenReveal",
+    "script": "Start with one. The one that stings a little when you read it",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "You don't need all seven.",
+        "Start with one.",
+        "The one that stings a little —",
+        "that's the right one."
+      ],
+      "niche": "life"
+    }
+  }
+]

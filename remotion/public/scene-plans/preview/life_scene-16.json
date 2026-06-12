@@ -1,0 +1,16 @@
+[
+  {
+    "sceneId": "scene-16",
+    "componentName": "CounterReveal",
+    "script": "every context switch costs fifteen to twenty minutes of recovery time",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 20,
+      "label": "Minutes lost per context switch",
+      "prefix": "",
+      "suffix": " min"
+    }
+  }
+]

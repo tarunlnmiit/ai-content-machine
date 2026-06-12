@@ -1,0 +1,14 @@
+{
+  "_comment": "Curated per-niche hashtag pools + per-platform caps. repurpose_blog.py merges a platform's Claude-generated topical tags with these brand pools (dedup, capped). Edit pools here — no code change needed. Tags stored without the leading '#'.",
+  "niche_pools": {
+    "ds": ["datascience", "python", "machinelearning", "dataanalytics", "datascientist", "coding", "programming", "ai", "tech", "analytics"],
+    "life": ["selfimprovement", "personaldevelopment", "habits", "productivity", "mindset", "growth", "motivation", "selfdevelopment", "discipline", "intentionalliving"],
+    "poetry": ["poetry", "poems", "writing", "quotes", "poetrycommunity", "words", "literature", "writingcommunity", "spilledink", "verse"]
+  },
+  "platform_caps": {
+    "twitter": 2,
+    "threads": 3,
+    "linkedin": 4,
+    "instagram": 12
+  }
+}

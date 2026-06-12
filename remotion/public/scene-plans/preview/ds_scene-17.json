@@ -1,0 +1,22 @@
+[
+  {
+    "sceneId": "scene-17",
+    "componentName": "CodeAnnotation",
+    "script": "The .agg() pattern with named aggregations — commit that to memory",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "region_summary = df.groupby('region').agg(",
+        "    total_revenue=('revenue', 'sum'),",
+        "    avg_order_value=('revenue', 'mean'),",
+        "    order_count=('order_id', 'count')",
+        ").reset_index()"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Named aggregations: clean column names, multiple metrics, one pass"
+    }
+  }
+]

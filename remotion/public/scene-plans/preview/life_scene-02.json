@@ -1,0 +1,25 @@
+[
+  {
+    "sceneId": "scene-02",
+    "componentName": "TransformationArc",
+    "script": "Busy, but not moving. Organized, but not output",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "beforeLabel": "Chasing the perfect setup",
+      "afterLabel": "Habits simple enough to do on bad days",
+      "beforePoints": [
+        "Second brain",
+        "Five-step weekly reviews",
+        "Busy, but not moving"
+      ],
+      "afterPoints": [
+        "No app required",
+        "Done even on bad days",
+        "Output, not just organized"
+      ],
+      "transformLabel": "Strip it back"
+    }
+  }
+]

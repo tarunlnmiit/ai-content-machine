@@ -42,7 +42,7 @@ print(df.isnull().sum())
 
 Run `df.describe()` and in thirty seconds you know whether there are negative values in a column that should be positive, whether the max is suspiciously high, whether the mean is far from the median. That's your first signal before you've written a single line of actual analysis.
 
-The `isnull().sum()` line is the one most beginners skip. Don't skip it. [PAUSE] Missing data in a column you use for filtering will silently break your analysis — rows just disappear without warning. [PERSONAL_INSERT: story about a time missing data created a silent bug in an analysis — wrong conclusion reached because nulls excluded a specific demographic or time period]
+The `isnull().sum()` line is the one most beginners skip. Don't skip it. [PAUSE] Missing data in a column you use for filtering will silently break your analysis — rows just disappear without warning. [PERSONAL_INSERT: I learned this lesson the hard way on a reporting dataset where I was comparing performance month-over-month. Everything looked fine until I noticed one region had apparently collapsed overnight. The problem wasn't the business—it was missing values. The date field for a subset of records had failed to parse correctly, turning into nulls. When I filtered for a date range, Pandas quietly excluded those rows. The analysis suggested a dramatic revenue drop that never actually happened. The numbers were technically correct for the filtered data; the filtered data was wrong. Since then, isnull().sum() is one of the first commands I run on any dataset.]
 
 [SCREEN: terminal output showing isnull().sum() with highlighted non-zero columns]
 
@@ -91,7 +91,7 @@ df = df.rename(columns={
 
 The `errors='coerce'` argument is doing critical work here. Instead of crashing when a value can't be converted, it turns it into `NaN` and keeps moving. This preserves your row structure while flagging the bad values — you handle them intentionally instead of getting a runtime error at 2am. [PAUSE]
 
-[PERSONAL_INSERT: example of a string column that looked numeric — pd.to_numeric revealed it had commas as thousands separators, causing the entire column to silently become nulls]
+[PERSONAL_INSERT: One CSV I received looked perfectly clean at first glance. The revenue column appeared numeric, but when I ran pd.to_numeric(), almost every value became null. The culprit was formatting: values were stored like "12,500" and "48,750" with commas as thousands separators. Pandas couldn't interpret them directly. Five minutes of cleaning fixed the issue, but it was a useful reminder that data that looks numeric and data that is numeric are two different things. Always check the dtype before trusting the column.]
 
 After cleaning: run `df.isnull().sum()` and `df.dtypes` again. A cleaning step that created new nulls instead of removing them is still a bug.
 
@@ -124,7 +124,7 @@ The `.agg()` pattern with named aggregations — `total_revenue=('revenue', 'sum
 
 And pivot tables: grouped DataFrames are for computation, pivot tables are for communication. When someone asks "show me revenue by region and by month," `.pivot_table()` produces the exact grid they're already picturing.
 
-[PERSONAL_INSERT: example of a groupby finding an unexpected pattern — a region or segment generating disproportionate revenue that was invisible in the raw data]
+[PERSONAL_INSERT: One of my favorite moments with Pandas came from a simple groupby(). Looking at raw transaction data, everything seemed evenly distributed across regions. But after aggregating revenue by region, one segment was generating nearly half the total revenue while representing only a small fraction of the customers. That completely changed where the team focused its attention. Nothing about that pattern was visible in the raw rows. It only appeared once the data was summarized. That's the power of aggregation—you stop looking at transactions and start seeing behavior.]
 
 [SCREEN: pivot table output with regions as rows, months as columns, revenue values]
 

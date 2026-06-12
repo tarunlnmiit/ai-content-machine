@@ -1,0 +1,28 @@
+[
+  {
+    "sceneId": "scene-14",
+    "componentName": "ToolComparison",
+    "script": "To-do lists measure what's left. Done lists measure what happened",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "To-do list",
+        "points": [
+          "Measures what's left",
+          "Always feels incomplete",
+          "Hides your real capacity"
+        ]
+      },
+      "rightSide": {
+        "label": "Done list",
+        "points": [
+          "Measures what happened",
+          "Evidence the week moved",
+          "Grounding in invisible work"
+        ]
+      }
+    }
+  }
+]

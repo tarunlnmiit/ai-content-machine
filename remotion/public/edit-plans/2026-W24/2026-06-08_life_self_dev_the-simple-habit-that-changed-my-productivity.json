@@ -1,0 +1,377 @@
+{
+  "slug": "2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity",
+  "niche": "life",
+  "rawVideo": "videos/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity.mp4",
+  "durationSec": 596.83,
+  "silenceTrimStartSec": 0.9625,
+  "silenceTrimEndSec": 597.793292,
+  "cutSegments": [
+    {
+      "startSec": 0.96,
+      "endSec": 597.79
+    }
+  ],
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "overhead shot of cluttered desk with open notebook, coffee, no laptop",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-0.mp4",
+      "startSec": 13.7,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-1",
+      "description": "person closing notebook and capping pen at end of day, soft window light",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-1.mp4",
+      "startSec": 23.42,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-2",
+      "description": "close shot of hand writing fast in messy handwriting, full page, no editing",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-2.mp4",
+      "startSec": 36.6,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-3",
+      "description": "person crossing off single item on small notepad, placing pen down",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-3.mp4",
+      "startSec": 48.58,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-4",
+      "description": "open notebook with handwritten list, several lines, late afternoon light",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-4.mp4",
+      "startSec": 62.81,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-5",
+      "description": "person at desk, phone face-down, single document open, no other tabs",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-5.mp4",
+      "startSec": 74.75,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-6",
+      "description": "hand writing three numbered lines in notebook, evening, lamp light",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-6.mp4",
+      "startSec": 87.79,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-7",
+      "description": "single number written on an otherwise blank notebook page",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-7.mp4",
+      "startSec": 96.75,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-8",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-8.mp4",
+      "startSec": 110.27,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-9",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-9.mp4",
+      "startSec": 120.88,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-10",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-10.mp4",
+      "startSec": 133.82,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-11",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-11.mp4",
+      "startSec": 147.15,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-12",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-12.mp4",
+      "startSec": 157.41,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-13",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-13.mp4",
+      "startSec": 170.28,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-14",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-14.mp4",
+      "startSec": 184.27,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-15",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-15.mp4",
+      "startSec": 196.03,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-16",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-16.mp4",
+      "startSec": 206.91,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-17",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-17.mp4",
+      "startSec": 220.56,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-18",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-18.mp4",
+      "startSec": 233.62,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-19",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-19.mp4",
+      "startSec": 242.59,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-20",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-20.mp4",
+      "startSec": 257.97,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-21",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-21.mp4",
+      "startSec": 269.72,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-22",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-22.mp4",
+      "startSec": 280.47,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-23",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-23.mp4",
+      "startSec": 291.91,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-24",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-24.mp4",
+      "startSec": 307.3,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-25",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-25.mp4",
+      "startSec": 316.99,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-26",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-26.mp4",
+      "startSec": 328.2,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-27",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-27.mp4",
+      "startSec": 340.4,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-28",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-28.mp4",
+      "startSec": 355.58,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-29",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-29.mp4",
+      "startSec": 366.78,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-30",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-30.mp4",
+      "startSec": 379.78,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-31",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-31.mp4",
+      "startSec": 391.65,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-32",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-32.mp4",
+      "startSec": 403.05,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-33",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-33.mp4",
+      "startSec": 416.98,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-34",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-34.mp4",
+      "startSec": 426.78,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-35",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-35.mp4",
+      "startSec": 439.66,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-36",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-36.mp4",
+      "startSec": 452.95,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-37",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-37.mp4",
+      "startSec": 464.28,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-38",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-38.mp4",
+      "startSec": 477.44,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-39",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-39.mp4",
+      "startSec": 488.48,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-40",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-40.mp4",
+      "startSec": 501.17,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-41",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-41.mp4",
+      "startSec": 510.72,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-42",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-42.mp4",
+      "startSec": 523.62,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-43",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-43.mp4",
+      "startSec": 536.05,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-44",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-44.mp4",
+      "startSec": 547.39,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-45",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-45.mp4",
+      "startSec": 560.18,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-46",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-46.mp4",
+      "startSec": 571.84,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-47",
+      "description": "ambient b-roll",
+      "clipFile": "broll/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity/cue-47.mp4",
+      "startSec": 584.72,
+      "durationSec": 5.0
+    }
+  ],
+  "captionsFile": "captions/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity.json",
+  "showSubtitles": false,
+  "titleCard": {
+    "titleText": "7 Simple Habits That Quietly Rewired My Productivity",
+    "showName": "Breath of Life",
+    "durationFrames": 90,
+    "insertAtFrame": 0
+  },
+  "lowerThird": {
+    "text": "Breath of Life",
+    "durationFrames": 90,
+    "insertAtFrame": 150
+  },
+  "outroCard": {
+    "nextText": "More on Breath of Life",
+    "durationFrames": 150
+  },
+  "colorGrading": {
+    "saturate": 1.0,
+    "hueRotate": 0,
+    "contrast": 1.07,
+    "brightness": 0.99,
+    "overlayColor": "rgba(255, 180, 120, 0.05)"
+  },
+  "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-08-life-self-dev-the-simple-habit-that-changed-my-pr_overlay.json"
+}

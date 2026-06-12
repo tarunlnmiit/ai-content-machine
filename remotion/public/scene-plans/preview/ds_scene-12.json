@@ -1,0 +1,15 @@
+[
+  {
+    "sceneId": "scene-12",
+    "componentName": "CounterReveal",
+    "script": "This is sixty percent of what you actually do in Pandas",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 60,
+      "label": "of real Pandas work is selecting",
+      "suffix": "%"
+    }
+  }
+]

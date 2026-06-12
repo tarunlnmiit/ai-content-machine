@@ -1,0 +1,24 @@
+[
+  {
+    "sceneId": "scene-12",
+    "componentName": "DataVizReveal",
+    "script": "Facts tell you what happened. Poetry tells you what stayed behind.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "What it tells you",
+      "data": [
+        {
+          "label": "Facts: what happened",
+          "value": 50
+        },
+        {
+          "label": "Poetry: what stayed behind",
+          "value": 50
+        }
+      ],
+      "chartType": "bar"
+    }
+  }
+]

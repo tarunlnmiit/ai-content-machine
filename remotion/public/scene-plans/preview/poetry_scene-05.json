@@ -1,0 +1,16 @@
+[
+  {
+    "sceneId": "scene-05",
+    "componentName": "LineReveal",
+    "script": "The best commit messages have grief in them sometimes.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "lines": [
+        "The best scientific papers have rhythm.",
+        "The best commit messages have grief in them."
+      ]
+    }
+  }
+]

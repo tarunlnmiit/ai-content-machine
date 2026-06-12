@@ -62,10 +62,16 @@ def load_brand(niche_key: str) -> dict:
     kit = yaml.safe_load(BRAND_KIT.read_text())
     niche = kit["niches"][niche_key]
     colors = kit["colors"]
+    _decorative = {
+        "data_science_tech": "faint grid lines and circuit traces",
+        "life_self_dev": "soft organic curves and warm bokeh glow",
+        "poetry_quotes": "ink-wash brushstrokes and golden halos",
+    }
     return {
         "creator": kit["creator"],
         "handle": kit["handle"],
         "brand_name": niche["brand_name"],
+        "niche_label": niche["label"],
         "primary": niche["primary_color"],
         "light": niche["light_color"],
         "dark_color": niche["dark_color"],
@@ -77,6 +83,7 @@ def load_brand(niche_key: str) -> dict:
         "tone": niche["tone"],
         "temperature": niche["claude_temperature"],
         "label": niche["label"],
+        "decorative_cue": _decorative[niche_key],
     }
 
 

@@ -1,0 +1,28 @@
+[
+  {
+    "sceneId": "scene-13",
+    "componentName": "ToolComparison",
+    "script": "Multiple frogs doesn't multiply the benefit — it multiplies the drag",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "One frog",
+        "points": [
+          "Kills one program",
+          "Removes the avoidance drag",
+          "Day feels lighter"
+        ]
+      },
+      "rightSide": {
+        "label": "A frog festival",
+        "points": [
+          "No multiplied benefit",
+          "Multiplies the drag",
+          "Fighting uphill all day"
+        ]
+      }
+    }
+  }
+]

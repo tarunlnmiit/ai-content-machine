@@ -4,6 +4,7 @@ import { COLORS, FONTS, type Niche, nicheAccent, nicheGrid } from "../../styles/
 export interface WordRevealProps extends Record<string, unknown> {
   words: string[];
   niche: Niche;
+  emphasis?: number[]; // 0-based indices to highlight with accent color
   staggerMs?: number; // ms between each word spring-in, default 120
   fontSize?: number;
 }
@@ -11,6 +12,7 @@ export interface WordRevealProps extends Record<string, unknown> {
 export function WordReveal({
   words,
   niche,
+  emphasis = [],
   staggerMs = 120,
   fontSize = 96,
 }: WordRevealProps) {
@@ -53,8 +55,8 @@ export function WordReveal({
           });
           const opacity = interpolate(s, [0, 1], [0, 1]);
           const y = interpolate(s, [0, 1], [36, 0]);
-          const isAccented = word.startsWith("*") && word.endsWith("*");
-          const displayWord = isAccented ? word.slice(1, -1) : word;
+          const isAccented = word.startsWith("*") && word.endsWith("*") || emphasis.includes(i);
+          const displayWord = word.startsWith("*") && word.endsWith("*") ? word.slice(1, -1) : word;
 
           return (
             <span

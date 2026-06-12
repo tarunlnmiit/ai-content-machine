@@ -1,0 +1,16 @@
+[
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "Seven of them, specifically. And none of them require an app",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 7,
+      "label": "Simple habits, zero apps",
+      "prefix": "",
+      "suffix": ""
+    }
+  }
+]

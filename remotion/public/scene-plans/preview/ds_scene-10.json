@@ -1,0 +1,15 @@
+[
+  {
+    "sceneId": "scene-10",
+    "componentName": "CounterReveal",
+    "script": "Run df.describe() and in thirty seconds you know",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 30,
+      "label": "seconds to spot bad columns",
+      "suffix": " s"
+    }
+  }
+]

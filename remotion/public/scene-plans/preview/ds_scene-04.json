@@ -1,0 +1,31 @@
+[
+  {
+    "sceneId": "scene-04",
+    "componentName": "NumberedTips",
+    "script": "loading and exploring, selecting and filtering, cleaning messy data, and aggregating",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "title": "Four Pandas Skills",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Load & Explore"
+        },
+        {
+          "number": 2,
+          "headline": "Select & Filter"
+        },
+        {
+          "number": 3,
+          "headline": "Clean"
+        },
+        {
+          "number": 4,
+          "headline": "Aggregate"
+        }
+      ]
+    }
+  }
+]

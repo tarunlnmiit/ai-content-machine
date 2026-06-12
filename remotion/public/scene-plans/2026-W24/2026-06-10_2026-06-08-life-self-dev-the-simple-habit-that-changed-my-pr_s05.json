@@ -1,0 +1,117 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "Most productivity advice treats focus as binary \u2014 you're either distracted or you're not.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Focus isn't a switch you flip.",
+      "subtext": "DEEP WORK NEEDS A WARM-UP"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "deep work requires a warm-up period before it becomes generative",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "The on-ramp nobody budgets for",
+      "cards": [
+        {
+          "term": "Warm-Up",
+          "definition": "The first stretch is transitional \u2014 you're not in flow yet",
+          "icon": "\ud83d\udd25"
+        },
+        {
+          "term": "Context Switch",
+          "definition": "Every switch costs recovery time before you're fully back",
+          "icon": "\ud83d\udd00"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "the first fifteen to twenty minutes of a focused session are transitional",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 20,
+      "label": "minutes just to reach flow",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ToolComparison",
+    "script": "Twenty-five minutes writing. Five minutes break. Repeat.",
+    "niche": "life",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "25-min Pomodoro",
+        "points": [
+          "Ends as flow begins",
+          "Half spent warming up",
+          "Fragments + half-sections"
+        ]
+      },
+      "rightSide": {
+        "label": "90-min Block",
+        "points": [
+          "Real on-ramp + traction",
+          "Single-task protected",
+          "Finished draft"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CounterReveal",
+    "script": "Ninety minutes is better.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 90,
+      "label": "minutes of true single-task focus per day",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "TransformationArc",
+    "script": "On days with four separate Pomodoros, I'd often end with fragments",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "4 Pomodoros",
+      "afterLabel": "1 Protected Block",
+      "beforePoints": [
+        "Outlines, notes",
+        "Half-written sections",
+        "Same quantity, lower quality"
+      ],
+      "afterPoints": [
+        "A finished draft",
+        "A completed script",
+        "A fully developed idea"
+      ],
+      "transformLabel": "Protect one block"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "Deep work needs enough time to become deeper than thinking about the work.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Deep work needs enough time to become deeper than thinking about the work.",
+      "attribution": "Treat it like a meeting you can't cancel"
+    }
+  }
+]

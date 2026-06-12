@@ -1,0 +1,109 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Once a week, empty your head onto paper.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Once a week, empty your head onto paper.",
+      "attribution": "Habit #2"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ImageTextReveal",
+    "script": "my brain had become a browser with fifty tabs open",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "My brain had become a browser with fifty tabs open.",
+      "subtext": "THE BREAKING POINT"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "a browser with fifty tabs open",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 50,
+      "label": "open mental tabs competing for attention",
+      "suffix": " tabs"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "I spend twenty minutes writing down everything that's in my head",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 20,
+      "label": "minutes, once a week, brain to paper",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ConceptExplainer",
+    "script": "It's called offloading.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "The mechanism behind it",
+      "cards": [
+        {
+          "term": "Offloading",
+          "definition": "Moving info out of working memory into an external store",
+          "icon": "\ud83e\udde0"
+        },
+        {
+          "term": "The Payoff",
+          "definition": "Frees cognitive resources for actual thinking",
+          "icon": "\u2728"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "NumberedTips",
+    "script": "Tasks, worries, half-formed ideas, things I promised people",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "title": "Dump it all \u2014 don't organize",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Tasks + worries"
+        },
+        {
+          "number": 2,
+          "headline": "Half-formed ideas"
+        },
+        {
+          "number": 3,
+          "headline": "Things you promised people"
+        },
+        {
+          "number": 4,
+          "headline": "Things that feel stuck"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "The value is in the emptying, not the filing.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "The value is in the emptying, not the filing.",
+      "attribution": "Don't make it a to-do list"
+    }
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "sceneId": "scene-15",
+    "componentName": "DataVizReveal",
+    "script": "Ninety minutes is better",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Focus block length vs. real output",
+      "data": [
+        {
+          "label": "25-min Pomodoro",
+          "value": 25
+        },
+        {
+          "label": "90-min deep block",
+          "value": 90
+        }
+      ],
+      "chartType": "bar"
+    }
+  }
+]

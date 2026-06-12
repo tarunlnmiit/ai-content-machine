@@ -1,0 +1,15 @@
+[
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "I spent two weeks on that dataset before I ran a single analysis",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 2,
+      "label": "weeks cleaning before any analysis",
+      "suffix": " wks"
+    }
+  }
+]

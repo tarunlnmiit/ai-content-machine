@@ -1,0 +1,14 @@
+[
+  {
+    "sceneId": "scene-06",
+    "componentName": "ImageTextReveal",
+    "script": "Poetry was already in the server room.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Poetry was already in the server room",
+      "subtext": "It was never waiting for an invitation"
+    }
+  }
+]

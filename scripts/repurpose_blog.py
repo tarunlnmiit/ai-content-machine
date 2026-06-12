@@ -38,6 +38,16 @@ DERIVATIVE_FILES = {
 
 
 from lib.slug import slugify
+from lib.hashtags import hashtag_line
+
+
+def niche_from_slug(slug: str) -> str:
+    """Map a derivative slug to a niche key (ds / life / poetry)."""
+    if "data_science_tech" in slug:
+        return "ds"
+    if "poetry_quotes" in slug:
+        return "poetry"
+    return "life"
 
 
 def load(path: Path, required: bool = True) -> str | None:
@@ -161,22 +171,27 @@ def generate(prompt: str) -> tuple[dict, dict]:
 
 # ── Save derivatives ──────────────────────────────────────────────────────
 
-def format_twitter_thread(data: dict) -> str:
+def format_twitter_thread(data: dict, niche: str = "life") -> str:
     parts = [data.get("hook_tweet", "")]
     parts.extend(data.get("tweets", []))
-    parts.append(data.get("closing_tweet", ""))
+    closing = data.get("closing_tweet", "")
+    # Sparse hashtags on the closing tweet only (Twitter convention).
+    tags = hashtag_line(niche, "twitter", data.get("hashtags"))
+    if tags:
+        closing = (closing + "\n\n" + tags).strip()
+    parts.append(closing)
     return "\n\n".join(t for t in parts if t)
 
 
-def format_linkedin(data: dict) -> str:
+def format_linkedin(data: dict, niche: str = "life") -> str:
     lines = [data.get("opening_line", ""), "", data.get("body", "")]
-    hashtags = data.get("hashtags", [])
-    if hashtags:
-        lines += ["", " ".join(f"#{h.lstrip('#')}" for h in hashtags)]
+    tags = hashtag_line(niche, "linkedin", data.get("hashtags"))
+    if tags:
+        lines += ["", tags]
     return "\n".join(lines)
 
 
-def format_instagram(data: dict) -> str:
+def format_instagram(data: dict, niche: str = "life") -> str:
     lines = [
         f"Format: {data.get('format_chosen', '')}",
         f"Why: {data.get('format_rationale', '')}",
@@ -189,13 +204,13 @@ def format_instagram(data: dict) -> str:
         lines += ["", "Slides:"]
         for i, t in enumerate(data["slide_titles"], 1):
             lines.append(f"  {i}. {t}")
-    hashtags = data.get("hashtags", [])
-    if hashtags:
-        lines += ["", " ".join(f"#{h.lstrip('#')}" for h in hashtags)]
+    tags = hashtag_line(niche, "instagram", data.get("hashtags"))
+    if tags:
+        lines += ["", tags]
     return "\n".join(lines)
 
 
-def format_newsletter(data: dict) -> str:
+def format_newsletter(data: dict, niche: str = "life") -> str:
     return (
         f"Subject: {data.get('subject_line', '')}\n"
         f"Preview: {data.get('preview_text', '')}\n\n"
@@ -203,11 +218,16 @@ def format_newsletter(data: dict) -> str:
     )
 
 
-def format_threads(data: dict) -> str:
-    return data.get("body", "")
+def format_threads(data: dict, niche: str = "life") -> str:
+    body = data.get("body", "")
+    tags = hashtag_line(niche, "threads", data.get("hashtags"))
+    if tags:
+        body = (body.rstrip() + "\n\n" + tags).strip()
+    return body
 
 
-def save_derivatives(out_dir: Path, data: dict, platforms: list[str] | None = None) -> list[str]:
+def save_derivatives(out_dir: Path, data: dict, platforms: list[str] | None = None,
+                     niche: str = "life") -> list[str]:
     saved = []
     formatters = {
         "twitter_thread": format_twitter_thread,
@@ -249,7 +269,7 @@ def save_derivatives(out_dir: Path, data: dict, platforms: list[str] | None = No
                 path.write_text(json.dumps(value, indent=2, ensure_ascii=False), encoding="utf-8")
             else:
                 formatter = formatters.get(key)
-                text = formatter(value) if formatter else str(value)
+                text = formatter(value, niche) if formatter else str(value)
                 path.write_text(text, encoding="utf-8")
             saved.append(str(path.relative_to(REPO)))
             progress.advance(task)
@@ -317,18 +337,14 @@ def main():
     out_dir = derivatives_dir(date_str, slug)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    saved = save_derivatives(out_dir, parsed, args.platforms)
+    # Niche drives the curated hashtag pool applied per platform.
+    niche = niche_from_slug(slug)
+
+    saved = save_derivatives(out_dir, parsed, args.platforms, niche)
 
     console.print(f"\n[success]✓ {len(saved)} derivatives → {out_dir.relative_to(REPO)}[/success]")
     for f in saved:
         console.print(f"  [dim]{f}[/dim]")
-
-    # Extract niche from slug (e.g., "2026-05-21_data_science_tech_..." → "ds")
-    niche = "life"  # default
-    if "_data_science_tech_" in slug:
-        niche = "ds"
-    elif "_poetry_quotes_" in slug:
-        niche = "poetry"
 
     # Write schedule.json if not already present
     schedule_file = out_dir / "schedule.json"

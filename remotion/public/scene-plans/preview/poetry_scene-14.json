@@ -1,0 +1,14 @@
+[
+  {
+    "sceneId": "scene-14",
+    "componentName": "ImageTextReveal",
+    "script": "It dips its fingers in every colour because it's patient.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "It dips its fingers in every colour",
+      "subtext": "Because it's patient"
+    }
+  }
+]

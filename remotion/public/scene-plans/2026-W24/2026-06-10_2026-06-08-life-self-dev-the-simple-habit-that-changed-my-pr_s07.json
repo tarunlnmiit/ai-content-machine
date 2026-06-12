@@ -1,0 +1,97 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "this is the only habit on this list that involves a number",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "One metric. One number. Each week.",
+      "attribution": "Habit #7"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "What gets measured gets noticed.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Not changed \u2014 noticed",
+      "cards": [
+        {
+          "term": "Measured",
+          "definition": "Pick whatever matters THIS week, not the same metric",
+          "icon": "\ud83d\udccf"
+        },
+        {
+          "term": "Noticed",
+          "definition": "Noticing turns out to be most of the work",
+          "icon": "\ud83d\udc41\ufe0f"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "One metric. One number. Each week.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 1,
+      "label": "real number you write down each evening",
+      "prefix": ""
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ImageTextReveal",
+    "script": "you face a moment of honest reckoning with how the day went",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "A moment of honest reckoning with how the day went.",
+      "subtext": "THE NUMBER DOESN'T HAVE TO IMPRESS \u2014 JUST BE REAL"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CounterReveal",
+    "script": "Seven habits. None of them require a subscription.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 7,
+      "label": "habits \u2014 most take under five minutes",
+      "prefix": ""
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "HandwrittenReveal",
+    "script": "These habits don't ask for perfect. They ask for honest.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "They don't ask",
+        "for perfect.",
+        "They ask",
+        "for honest."
+      ],
+      "niche": "life"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "Start with one. The one that stings a little when you read it",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Start with one. The one that stings a little \u2014 that's the right one.",
+      "attribution": "This is Breath of Life"
+    }
+  }
+]

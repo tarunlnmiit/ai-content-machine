@@ -1,0 +1,90 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "one morning a poem lives inside it",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "One morning a poem lives inside the burnt toast",
+      "subtext": "ORDINARY, SEEN CLEARLY"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "script": "Poetry is not elevated experience. It's ordinary experience, seen clearly",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Poetry is not elevated experience. It's ordinary experience, seen clearly for one second."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "You've done this a hundred times",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "value": 100,
+      "suffix": "x",
+      "label": "mornings you've scraped the toast over the sink"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "LineReveal",
+    "script": "The grey of a commute counts. The brown of bad coffee counts",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "The grey of a commute counts.",
+        "The brown of bad coffee counts."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "HandwrittenReveal",
+    "script": "the particular blue of a Tuesday afternoon when nothing happens",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "The particular blue of a Tuesday,",
+        "when nothing happens,",
+        "and you feel, inexplicably, okay."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "Notice it came from Tuesday",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Notice it came from Tuesday."
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "WordReveal",
+    "script": "Notice it came from Tuesday.",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Came",
+        "from",
+        "Tuesday."
+      ],
+      "emphasis": [
+        2
+      ]
+    }
+  }
+]

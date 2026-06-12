@@ -1,0 +1,89 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "The times poetry has landed hardest on me, I wasn't looking for it",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "The times poetry has landed hardest on me, I wasn't looking for it."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "LineReveal",
+    "script": "I was tired. Half-reading. Distracted by something smaller",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "I was tired.",
+        "Half-reading.",
+        "Distracted by something smaller."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "a lyric you've heard forty times that suddenly means something different",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "value": 40,
+      "suffix": "x",
+      "label": "times you heard the lyric before it meant something"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ImageTextReveal",
+    "script": "It dips its fingers in every colour because it's patient",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "It dips its fingers in every colour",
+      "subtext": "BECAUSE IT'S PATIENT"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "Poetry comes sideways",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Poetry comes sideways."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "HandwrittenReveal",
+    "script": "The door doesn't need to be wide. A crack is enough",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "The door doesn't need to be wide.",
+        "A crack is enough."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "WordReveal",
+    "script": "Poetry comes sideways",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Comes",
+        "sideways."
+      ],
+      "emphasis": [
+        1
+      ]
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "componentName": "VoiceMemoryDissolve",
+    "script": "You miss how they said your name. The exact pitch of their laugh.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Sound-wave memory: a soft audio waveform pulses with the shape of a voice saying a name, then fragments into particles. The particles reform briefly as handwriting, a color swatch, a silhouette \u2014 specific sensory memories. Dissolves. Slow, intimate, muted palette with poetry niche gold accent."
+    },
+    "sceneId": "scene-11"
+  }
+]

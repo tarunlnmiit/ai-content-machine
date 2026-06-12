@@ -7,7 +7,7 @@ Last updated: 2026-06-10
 | Day | Task | Niches | Guide |
 |-----|------|--------|-------|
 | [Monday](monday.md) | Generate all blogs + repurpose → derivatives | DS + Life + Poetry | ~45 min |
-| [Tuesday](tuesday.md) | Video scripts + social visual assets + scene plans + worksheets | DS + Life + Poetry | ~45 min |
+| [Tuesday](tuesday.md) | Worksheets (first) + video scripts + scene plans + social visual assets | DS + Life + Poetry | ~45 min |
 | [Wednesday](wednesday.md) | Publish blogs (Substack + Medium) + shoot videos + generate captions + build edit plans | DS + Life + Poetry | ~3 hrs |
 | [Thursday](thursday.md) | Render (Remotion) + optional HyperFrames + upload + Notion sync + verify | DS + Life + Poetry | ~3 hrs |
 | [Friday](friday.md) | Schedule social (THIS week → posts NEXT week) + buffer check + refresh tracker | DS + Life + Poetry | ~45 min |
@@ -382,7 +382,7 @@ LinkedIn tokens expire every 60 days. Refresh: `python3 scripts/auth_linkedin.py
 | Day 5 | Distribution automation | ⚠️ Scripts done — scheduler not running, DB empty |
 | Day 6 | First full production run | ⚠️ Blogs + derivatives exist, no posts loaded, no videos |
 | Day 7 | SOP + analytics | ⚠️ `collect_analytics.py` done — Streamlit dashboard not built |
-| Day 8 | Remotion video pipeline | ✅ Done — 25 compositions + 10 scene components + render scripts |
+| Day 8 | Remotion video pipeline | ✅ Done — 25 compositions + 13 scene components + render scripts + generate_custom_scene.py |
 
 **Remaining before fully automated:**
 - Load current blogs: `python3 scripts/load_posts.py`

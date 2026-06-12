@@ -1,0 +1,22 @@
+[
+  {
+    "sceneId": "scene-15",
+    "componentName": "WordReveal",
+    "script": "A crack is enough.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "layout": "panel-right",
+    "props": {
+      "words": [
+        "A",
+        "crack",
+        "is",
+        "enough"
+      ],
+      "emphasis": [
+        1,
+        3
+      ]
+    }
+  }
+]

@@ -135,15 +135,31 @@ def main():
     args = ap.parse_args()
 
     edited_dir = REPO / "assets" / "video" / "edited"
-    long_video = edited_dir / f"{args.slug}.mp4"
-    meta_file = edited_dir / f"{args.slug}_edit_meta.json"
+
+    def find_video(slug: str) -> tuple:
+        """Find video file (mp4 or mov) and return (video_path, meta_path)."""
+        for ext in [".mp4", ".mov"]:
+            # Try plain slug
+            v = edited_dir / f"{slug}{ext}"
+            if v.exists():
+                m = edited_dir / f"{slug}_edit_meta.json"
+                return v, m
+            # Try date_slug format
+            if len(slug) > 10 and slug[4] == "-" and slug[7] == "-":
+                date_prefix = slug[:10]
+                v = edited_dir / f"{date_prefix}_{slug}{ext}"
+                if v.exists():
+                    m = edited_dir / f"{date_prefix}_{slug}_edit_meta.json"
+                    return v, m
+        return None, None
+
+    long_video, meta_file = find_video(args.slug)
 
     # If slug ends with -aug (hyperframes), fall back to base (_yt) video
-    if not long_video.exists() and args.slug.endswith("-aug"):
+    if not long_video and args.slug.endswith("-aug"):
         base_slug = args.slug[:-4]  # strip "-aug"
-        long_video = edited_dir / f"{base_slug}.mp4"
-        meta_file = edited_dir / f"{base_slug}_edit_meta.json"
-        if long_video.exists():
+        long_video, meta_file = find_video(base_slug)
+        if long_video:
             print(f"  note: using base video (pre-hyperframes): {long_video.name}")
 
     if not long_video.exists():

@@ -1,0 +1,13 @@
+[
+  {
+    "sceneId": "scene-16",
+    "componentName": "AtmosphericQuote",
+    "script": "That is not a small thing. It is the whole thing.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "quote": "It is not a small thing. It is the whole thing."
+    }
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "sceneId": "scene-13",
+    "componentName": "CodeAnnotation",
+    "script": "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
+        "filtered = df[(df['region'] == 'North') & (df['revenue'] > 5000)]",
+        "filtered_v2 = df.query(\"region == 'North' and revenue > 5000\")",
+        "df[df['status'].isin(['active', 'trial'])]"
+      ],
+      "language": "python",
+      "highlightLine": 3,
+      "annotationText": ".query() is far more readable for multi-condition filters"
+    }
+  }
+]

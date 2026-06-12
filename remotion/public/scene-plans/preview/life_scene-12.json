@@ -1,0 +1,21 @@
+[
+  {
+    "sceneId": "scene-12",
+    "componentName": "WordReveal",
+    "script": "identify your most dreaded task the night before and do it first",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "panel-left",
+    "props": {
+      "words": [
+        "Eat",
+        "the",
+        "frog",
+        "first"
+      ],
+      "emphasis": [
+        2
+      ]
+    }
+  }
+]

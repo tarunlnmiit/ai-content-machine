@@ -1,0 +1,13 @@
+[
+  {
+    "sceneId": "scene-09",
+    "componentName": "AtmosphericQuote",
+    "script": "grief insists on specificity",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "quote": "Grief insists on specificity."
+    }
+  }
+]

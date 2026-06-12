@@ -1,0 +1,13 @@
+[
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "script": "a poem finds the exact nerve no dataset ever mapped",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "quote": "A poem finds the exact nerve no dataset ever mapped."
+    }
+  }
+]

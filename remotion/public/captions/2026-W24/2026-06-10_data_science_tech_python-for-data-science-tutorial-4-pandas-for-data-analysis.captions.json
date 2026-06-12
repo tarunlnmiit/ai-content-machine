@@ -1,0 +1,1458 @@
+[
+  {
+    "text": "The first real data set I have worked with professionally was a mess.",
+    "startMs": 0,
+    "endMs": 5520,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "Not academic mess, real mess.",
+    "startMs": 5520,
+    "endMs": 8560,
+    "timestampMs": 5520,
+    "confidence": null
+  },
+  {
+    "text": "Column names with trailing spaces, dates formatted three different ways in the same column,",
+    "startMs": 8560,
+    "endMs": 14320,
+    "timestampMs": 8560,
+    "confidence": null
+  },
+  {
+    "text": "rows where someone had typed N-A, N-A, N-N-N, so something like this, so three different",
+    "startMs": 14320,
+    "endMs": 25720,
+    "timestampMs": 14320,
+    "confidence": null
+  },
+  {
+    "text": "kind of null values and a literal dash as four separate attempts at missing data.",
+    "startMs": 25720,
+    "endMs": 33400,
+    "timestampMs": 25720,
+    "confidence": null
+  },
+  {
+    "text": "Revenue figures mixed with strings like approximate, so I spent two weeks on that data set",
+    "startMs": 33400,
+    "endMs": 39640,
+    "timestampMs": 33400,
+    "confidence": null
+  },
+  {
+    "text": "before a nano single analysis, two weeks of Python loops that felt like archaeology.",
+    "startMs": 39640,
+    "endMs": 46200,
+    "timestampMs": 39640,
+    "confidence": null
+  },
+  {
+    "text": "Chipping away, never sure if you had found the actual data or just another layer of sediment.",
+    "startMs": 46200,
+    "endMs": 53240,
+    "timestampMs": 46200,
+    "confidence": null
+  },
+  {
+    "text": "Then I learned pandas properly, not just pandas.redcsv and df.head.",
+    "startMs": 53240,
+    "endMs": 67720,
+    "timestampMs": 53240,
+    "confidence": null
+  },
+  {
+    "text": "Don't worry if you don't know about these two, I will explain them in a bit.",
+    "startMs": 71320,
+    "endMs": 74840,
+    "timestampMs": 71320,
+    "confidence": null
+  },
+  {
+    "text": "The actual mental model, that a data frame is a structured, labeled,",
+    "startMs": 74840,
+    "endMs": 79640,
+    "timestampMs": 74840,
+    "confidence": null
+  },
+  {
+    "text": "queryable object that makes data interrogation feel like conversation instead of combat.",
+    "startMs": 79640,
+    "endMs": 86200,
+    "timestampMs": 79640,
+    "confidence": null
+  },
+  {
+    "text": "So today I am going to cover four things, loading and exploring, selecting and filtering,",
+    "startMs": 87560,
+    "endMs": 92680,
+    "timestampMs": 87560,
+    "confidence": null
+  },
+  {
+    "text": "cleaning messy data and aggregating. By the end, you will be able to take an unfamiliar data set",
+    "startMs": 93320,
+    "endMs": 100040,
+    "timestampMs": 93320,
+    "confidence": null
+  },
+  {
+    "text": "and make it workable in under an hour. Before we start, if you caught tutorial three on numpy,",
+    "startMs": 100040,
+    "endMs": 106120,
+    "timestampMs": 100040,
+    "confidence": null
+  },
+  {
+    "text": "this is the natural next step. Pandas builds directly on numpy, a data frame column,",
+    "startMs": 106120,
+    "endMs": 111400,
+    "timestampMs": 106120,
+    "confidence": null
+  },
+  {
+    "text": "is a numpy array with a name. Once you see that operations like .apply and boolean indexing stop",
+    "startMs": 112040,
+    "endMs": 119720,
+    "timestampMs": 112040,
+    "confidence": null
+  },
+  {
+    "text": "feeling magical, you are not learning new concepts, you are using a higher level interface for",
+    "startMs": 119720,
+    "endMs": 126200,
+    "timestampMs": 119720,
+    "confidence": null
+  },
+  {
+    "text": "the same ideas. So the first question with any data set isn't what's in the data, it's what",
+    "startMs": 126200,
+    "endMs": 133720,
+    "timestampMs": 126200,
+    "confidence": null
+  },
+  {
+    "text": "shape is the data. So before you analyze anything, you orient yourself, what are the columns,",
+    "startMs": 133800,
+    "endMs": 139560,
+    "timestampMs": 133800,
+    "confidence": null
+  },
+  {
+    "text": "how many rows, what types are stored there. So to do this, let me close this first.",
+    "startMs": 139560,
+    "endMs": 145560,
+    "timestampMs": 139560,
+    "confidence": null
+  },
+  {
+    "text": "Let's create a new script.",
+    "startMs": 146920,
+    "endMs": 148680,
+    "timestampMs": 146920,
+    "confidence": null
+  },
+  {
+    "text": "And we should not forget to keep, as you can see, our virtual environment is also activated. So in",
+    "startMs": 149000,
+    "endMs": 166360,
+    "timestampMs": 149000,
+    "confidence": null
+  },
+  {
+    "text": "case, if you don't see it, you can activate it with the source command. So the code that I'm about",
+    "startMs": 166360,
+    "endMs": 171720,
+    "timestampMs": 166360,
+    "confidence": null
+  },
+  {
+    "text": "to show you here. So we first import pandas.",
+    "startMs": 171720,
+    "endMs": 177080,
+    "timestampMs": 171720,
+    "confidence": null
+  },
+  {
+    "text": "Okay, something went wrong there. So I have the sales records.csv inside this data folder.",
+    "startMs": 192520,
+    "endMs": 200040,
+    "timestampMs": 192520,
+    "confidence": null
+  },
+  {
+    "text": "So let me read it properly. And then I'm going to print out the shape,",
+    "startMs": 200040,
+    "endMs": 206600,
+    "timestampMs": 200040,
+    "confidence": null
+  },
+  {
+    "text": "the data types, the head, and describe the data frame. And if there are any null values.",
+    "startMs": 206600,
+    "endMs": 212760,
+    "timestampMs": 206600,
+    "confidence": null
+  },
+  {
+    "text": "So if I run this script,",
+    "startMs": 213800,
+    "endMs": 215400,
+    "timestampMs": 213800,
+    "confidence": null
+  },
+  {
+    "text": "okay, pandas is not installed, which would be the case with you as well. So let's install pandas first.",
+    "startMs": 222600,
+    "endMs": 228760,
+    "timestampMs": 222600,
+    "confidence": null
+  },
+  {
+    "text": "So it's very simple. You write pip install pandas, and it will take a few seconds.",
+    "startMs": 228760,
+    "endMs": 233720,
+    "timestampMs": 228760,
+    "confidence": null
+  },
+  {
+    "text": "Okay, it is installed. So let's run our script again.",
+    "startMs": 239800,
+    "endMs": 243400,
+    "timestampMs": 239800,
+    "confidence": null
+  },
+  {
+    "text": "Okay, let me open that csv as well for you.",
+    "startMs": 243480,
+    "endMs": 257720,
+    "timestampMs": 243480,
+    "confidence": null
+  },
+  {
+    "text": "Okay, it's a big csv, that's why it's taking a bit of time.",
+    "startMs": 268600,
+    "endMs": 271240,
+    "timestampMs": 268600,
+    "confidence": null
+  },
+  {
+    "text": "So let's take a look at our data that we printed.",
+    "startMs": 274280,
+    "endMs": 278040,
+    "timestampMs": 274280,
+    "confidence": null
+  },
+  {
+    "text": "So you can see the first thing we printed was df.shaped. So which is how many rows? How many columns?",
+    "startMs": 282040,
+    "endMs": 289800,
+    "timestampMs": 282040,
+    "confidence": null
+  },
+  {
+    "text": "So 500 rows, 12 columns. And what are the columns and their data types? So these 12 columns and",
+    "startMs": 289800,
+    "endMs": 296520,
+    "timestampMs": 289800,
+    "confidence": null
+  },
+  {
+    "text": "their data types. Then df.had prints the first five rows of the data frame by default.",
+    "startMs": 296520,
+    "endMs": 303880,
+    "timestampMs": 296520,
+    "confidence": null
+  },
+  {
+    "text": "And then describe what it does is when you run df.describe and in 30 seconds,",
+    "startMs": 304920,
+    "endMs": 312120,
+    "timestampMs": 304920,
+    "confidence": null
+  },
+  {
+    "text": "you get to know whether there are negative values in a column that should be positive,",
+    "startMs": 312840,
+    "endMs": 316760,
+    "timestampMs": 312840,
+    "confidence": null
+  },
+  {
+    "text": "whether the max is suspiciously high, whether the mean is far from the median.",
+    "startMs": 317400,
+    "endMs": 323080,
+    "timestampMs": 317400,
+    "confidence": null
+  },
+  {
+    "text": "That's the first signal before you have written a single line of actual analysis.",
+    "startMs": 323080,
+    "endMs": 327560,
+    "timestampMs": 323080,
+    "confidence": null
+  },
+  {
+    "text": "So you can see in describe here, you get a few things. So count the mean of the data like age,",
+    "startMs": 328200,
+    "endMs": 337240,
+    "timestampMs": 328200,
+    "confidence": null
+  },
+  {
+    "text": "which is the float value. How many different ages are there? What is the standard deviation?",
+    "startMs": 337240,
+    "endMs": 344440,
+    "timestampMs": 337240,
+    "confidence": null
+  },
+  {
+    "text": "What is the minimum age? What is the 25th percentile? What is the 50th percentile? What is the 75th",
+    "startMs": 344440,
+    "endMs": 351480,
+    "timestampMs": 344440,
+    "confidence": null
+  },
+  {
+    "text": "percentile? And what is the maximum value of the age? And then the last thing, the is null.sum,",
+    "startMs": 351480,
+    "endMs": 359800,
+    "timestampMs": 351480,
+    "confidence": null
+  },
+  {
+    "text": "line is the one that most beginners skip. So I would say do not skip it. Missing data in a column,",
+    "startMs": 360520,
+    "endMs": 367400,
+    "timestampMs": 360520,
+    "confidence": null
+  },
+  {
+    "text": "you use for filtering will silently break your analysis. Rows just disappear without warning.",
+    "startMs": 368120,
+    "endMs": 373800,
+    "timestampMs": 368120,
+    "confidence": null
+  },
+  {
+    "text": "I learned this lesson the hard way on a reporting data set where I was comparing performance",
+    "startMs": 374600,
+    "endMs": 379560,
+    "timestampMs": 374600,
+    "confidence": null
+  },
+  {
+    "text": "month over month. Everything looked fine until I noticed one region has apparently collapsed overnight.",
+    "startMs": 379560,
+    "endMs": 386200,
+    "timestampMs": 379560,
+    "confidence": null
+  },
+  {
+    "text": "The problem wasn't the business. It was missing values. The date field for a subset of records",
+    "startMs": 386200,
+    "endMs": 392280,
+    "timestampMs": 386200,
+    "confidence": null
+  },
+  {
+    "text": "had failed to parse correctly, turning into nulls. When I filtered for a date range,",
+    "startMs": 392280,
+    "endMs": 398040,
+    "timestampMs": 392280,
+    "confidence": null
+  },
+  {
+    "text": "pandas quietly excluded these rows. And the analysis suggested a dramatic revenue drop that never",
+    "startMs": 398040,
+    "endMs": 405400,
+    "timestampMs": 398040,
+    "confidence": null
+  },
+  {
+    "text": "actually happened. The numbers were technically correct for the filter data, but the filter data",
+    "startMs": 405400,
+    "endMs": 411320,
+    "timestampMs": 405400,
+    "confidence": null
+  },
+  {
+    "text": "itself was wrong. Since then, is null.sum is one of the first commands I run on any data set.",
+    "startMs": 411320,
+    "endMs": 417560,
+    "timestampMs": 411320,
+    "confidence": null
+  },
+  {
+    "text": "What we need to do here is, so now we are going to focus on selecting the right rows and columns.",
+    "startMs": 418200,
+    "endMs": 424120,
+    "timestampMs": 418200,
+    "confidence": null
+  },
+  {
+    "text": "And this is 60% of what you actually do in pandas. So two things here which I would like to explain",
+    "startMs": 424120,
+    "endMs": 430360,
+    "timestampMs": 424120,
+    "confidence": null
+  },
+  {
+    "text": "first. So let's take a look at this row first, this line. So first use of AND and R. So this is",
+    "startMs": 430920,
+    "endMs": 440600,
+    "timestampMs": 430920,
+    "confidence": null
+  },
+  {
+    "text": "AND Boolean operator, this one. And there could be a similar, the pipe symbol R in Boolean.",
+    "startMs": 440600,
+    "endMs": 448200,
+    "timestampMs": 440600,
+    "confidence": null
+  },
+  {
+    "text": "Not Python's AND or R, but those don't work on arrays. Condition in parenthesis. So we can see",
+    "startMs": 448680,
+    "endMs": 454520,
+    "timestampMs": 448680,
+    "confidence": null
+  },
+  {
+    "text": "here we have put our conditions in parenthesis. Don't worry, I'll explain the rest of the code",
+    "startMs": 454600,
+    "endMs": 459480,
+    "timestampMs": 454600,
+    "confidence": null
+  },
+  {
+    "text": "down the line. So you can see we have one condition and two conditions in parenthesis.",
+    "startMs": 460520,
+    "endMs": 464600,
+    "timestampMs": 460520,
+    "confidence": null
+  },
+  {
+    "text": "And this trips up everyone once. Now it won't trip you up. Second is this dot query on the next line.",
+    "startMs": 465640,
+    "endMs": 475720,
+    "timestampMs": 465640,
+    "confidence": null
+  },
+  {
+    "text": "Is underused for multi-condition filters, like where we are checking region is equal to north",
+    "startMs": 477080,
+    "endMs": 483480,
+    "timestampMs": 477080,
+    "confidence": null
+  },
+  {
+    "text": "and revenue greater than 5,000. It is dramatically more readable than stacked Boolean expressions.",
+    "startMs": 483560,
+    "endMs": 489960,
+    "timestampMs": 483560,
+    "confidence": null
+  },
+  {
+    "text": "And the last one dot is in instead of three equal to checks here where status equal to",
+    "startMs": 491000,
+    "endMs": 501080,
+    "timestampMs": 491000,
+    "confidence": null
+  },
+  {
+    "text": "active and status equal to trial. Instead you can just have one or symbol and just pass a list",
+    "startMs": 501080,
+    "endMs": 508680,
+    "timestampMs": 501080,
+    "confidence": null
+  },
+  {
+    "text": "there. Cleaner and scales to any list length. Data cleaning is where most tutorials lose the thread.",
+    "startMs": 509320,
+    "endMs": 516600,
+    "timestampMs": 509320,
+    "confidence": null
+  },
+  {
+    "text": "Because it feels like janitor work, it's not. Cleaning is analysis. You can't separate them.",
+    "startMs": 518040,
+    "endMs": 524520,
+    "timestampMs": 518040,
+    "confidence": null
+  },
+  {
+    "text": "So if we try and run this code, which let me do, you will see we are getting some errors like",
+    "startMs": 525400,
+    "endMs": 533960,
+    "timestampMs": 525400,
+    "confidence": null
+  },
+  {
+    "text": "revenue key does not exist. So let's print our data types again as we can see here. So we can check",
+    "startMs": 533960,
+    "endMs": 543320,
+    "timestampMs": 533960,
+    "confidence": null
+  },
+  {
+    "text": "a new column is USD. So this is the actual name of the column. So let's replace this.",
+    "startMs": 543320,
+    "endMs": 552040,
+    "timestampMs": 543320,
+    "confidence": null
+  },
+  {
+    "text": "Okay. And then let's try and run it again. Okay, we again get a revenue key error. Okay,",
+    "startMs": 552680,
+    "endMs": 570120,
+    "timestampMs": 552680,
+    "confidence": null
+  },
+  {
+    "text": "we did not change it here. Let's try one more time. Now we are getting customer ID not in index.",
+    "startMs": 570120,
+    "endMs": 578280,
+    "timestampMs": 570120,
+    "confidence": null
+  },
+  {
+    "text": "So what is the column name? Customer ID. So if I replace it,",
+    "startMs": 578280,
+    "endMs": 585160,
+    "timestampMs": 578280,
+    "confidence": null
+  },
+  {
+    "text": "now I am getting an error once I replace it with the correct customer ID. That string and integer",
+    "startMs": 596280,
+    "endMs": 602200,
+    "timestampMs": 596280,
+    "confidence": null
+  },
+  {
+    "text": "is not supported where I am fetching this high value. So I am just checking or locating those",
+    "startMs": 602200,
+    "endMs": 609080,
+    "timestampMs": 602200,
+    "confidence": null
+  },
+  {
+    "text": "rows where revenue USD is greater than 10,000 and I want to fetch customer ID and revenue USD.",
+    "startMs": 609720,
+    "endMs": 615320,
+    "timestampMs": 609720,
+    "confidence": null
+  },
+  {
+    "text": "So in order to do this, we need to convert some things back into their correct data format.",
+    "startMs": 616200,
+    "endMs": 626040,
+    "timestampMs": 616200,
+    "confidence": null
+  },
+  {
+    "text": "So if you take a look here, an order date which should be an object in Python or Pandas terms",
+    "startMs": 626120,
+    "endMs": 632200,
+    "timestampMs": 626120,
+    "confidence": null
+  },
+  {
+    "text": "is a string. A revenue USD is a string which should be a number and so on and so forth.",
+    "startMs": 632200,
+    "endMs": 638280,
+    "timestampMs": 632200,
+    "confidence": null
+  },
+  {
+    "text": "So let's try and fix that. So first thing we do here is we",
+    "startMs": 639000,
+    "endMs": 645800,
+    "timestampMs": 639000,
+    "confidence": null
+  },
+  {
+    "text": "make our changes here itself first. So we convert our order date to Pandas date time",
+    "startMs": 646680,
+    "endMs": 655320,
+    "timestampMs": 646680,
+    "confidence": null
+  },
+  {
+    "text": "and we coerce the errors which means that we skip those and we also convert revenue.",
+    "startMs": 656200,
+    "endMs": 665480,
+    "timestampMs": 656200,
+    "confidence": null
+  },
+  {
+    "text": "Let's correct the column name again and we also coerce it. So let's try and run this if",
+    "startMs": 666280,
+    "endMs": 675480,
+    "timestampMs": 666280,
+    "confidence": null
+  },
+  {
+    "text": "and see if it works or not. We are getting an error.",
+    "startMs": 675560,
+    "endMs": 691160,
+    "timestampMs": 675560,
+    "confidence": null
+  },
+  {
+    "text": "Let's see where we are getting this error from.",
+    "startMs": 691640,
+    "endMs": 703400,
+    "timestampMs": 691640,
+    "confidence": null
+  },
+  {
+    "text": "Okay, let's make things a little simpler. What we will do is we will convert all our",
+    "startMs": 710040,
+    "endMs": 717880,
+    "timestampMs": 710040,
+    "confidence": null
+  },
+  {
+    "text": "columns into lowercase and clean them up a little bit. So let me just print on the columns first",
+    "startMs": 718120,
+    "endMs": 727080,
+    "timestampMs": 718120,
+    "confidence": null
+  },
+  {
+    "text": "and that exists. So this is our columns list.",
+    "startMs": 727080,
+    "endMs": 737240,
+    "timestampMs": 727080,
+    "confidence": null
+  },
+  {
+    "text": "Okay, so what I want to do is most of the columns are fine already. Customer ID is one where",
+    "startMs": 737240,
+    "endMs": 757480,
+    "timestampMs": 737240,
+    "confidence": null
+  },
+  {
+    "text": "there is a space and there is space in between as well and then this revenue USD.",
+    "startMs": 757480,
+    "endMs": 763000,
+    "timestampMs": 757480,
+    "confidence": null
+  },
+  {
+    "text": "So let's do one thing. Let's convert these columns into the consistent format.",
+    "startMs": 763160,
+    "endMs": 769480,
+    "timestampMs": 763160,
+    "confidence": null
+  },
+  {
+    "text": "So column.strip. So this will strip all the white spaces around it and then I want to split it",
+    "startMs": 769480,
+    "endMs": 781640,
+    "timestampMs": 769480,
+    "confidence": null
+  },
+  {
+    "text": "based on a space. If that is present and then join",
+    "startMs": 782600,
+    "endMs": 792440,
+    "timestampMs": 782600,
+    "confidence": null
+  },
+  {
+    "text": "within underscore and I also want to replace parenthesis space",
+    "startMs": 792520,
+    "endMs": 811080,
+    "timestampMs": 792520,
+    "confidence": null
+  },
+  {
+    "text": "and then k for column in",
+    "startMs": 811160,
+    "endMs": 823560,
+    "timestampMs": 811160,
+    "confidence": null
+  },
+  {
+    "text": "and let's print our df.columns again",
+    "startMs": 823720,
+    "endMs": 833880,
+    "timestampMs": 823720,
+    "confidence": null
+  },
+  {
+    "text": "and let's comment the rest of it for now.",
+    "startMs": 839720,
+    "endMs": 842040,
+    "timestampMs": 839720,
+    "confidence": null
+  },
+  {
+    "text": "Okay, so I had forgot to close.",
+    "startMs": 842040,
+    "endMs": 853640,
+    "timestampMs": 842040,
+    "confidence": null
+  },
+  {
+    "text": "Okay, and I also want to convert it to lowercase.",
+    "startMs": 854040,
+    "endMs": 864920,
+    "timestampMs": 854040,
+    "confidence": null
+  },
+  {
+    "text": "So you can see customer ID, order ID, order date, rev USD, region, all this got corrected.",
+    "startMs": 873960,
+    "endMs": 882280,
+    "timestampMs": 873960,
+    "confidence": null
+  },
+  {
+    "text": "So let's use that from now and see what happens.",
+    "startMs": 883080,
+    "endMs": 889240,
+    "timestampMs": 883080,
+    "confidence": null
+  },
+  {
+    "text": "So we replace rev USD through outer script with rev USD.",
+    "startMs": 890200,
+    "endMs": 906200,
+    "timestampMs": 890200,
+    "confidence": null
+  },
+  {
+    "text": "Okay, we have also replaced our customer ID. So let's try and run this entire code now",
+    "startMs": 912680,
+    "endMs": 917480,
+    "timestampMs": 912680,
+    "confidence": null
+  },
+  {
+    "text": "and see if it works. It works as you can see. So now we are also, so let me just explain to you",
+    "startMs": 918200,
+    "endMs": 926680,
+    "timestampMs": 918200,
+    "confidence": null
+  },
+  {
+    "text": "what I did here. It can be a little intimidating. So in tutorial 2 I explained you list comprehension.",
+    "startMs": 926680,
+    "endMs": 934760,
+    "timestampMs": 926680,
+    "confidence": null
+  },
+  {
+    "text": "So what I've done here is let's take a look from here. For every column I'm stripping all the",
+    "startMs": 934760,
+    "endMs": 940920,
+    "timestampMs": 934760,
+    "confidence": null
+  },
+  {
+    "text": "white spaces around it then converting it into lowercase and then splitting it in white space",
+    "startMs": 940920,
+    "endMs": 947400,
+    "timestampMs": 940920,
+    "confidence": null
+  },
+  {
+    "text": "converting to a list and then I'm joining that list with an underscore and before.",
+    "startMs": 948360,
+    "endMs": 955720,
+    "timestampMs": 948360,
+    "confidence": null
+  },
+  {
+    "text": "So this is a list and in that list what I'm doing is I'm replacing opening and closing",
+    "startMs": 958680,
+    "endMs": 963640,
+    "timestampMs": 958680,
+    "confidence": null
+  },
+  {
+    "text": "parenthesis with the empty character. So that's why the columns are a bit consistent now.",
+    "startMs": 963640,
+    "endMs": 971160,
+    "timestampMs": 963640,
+    "confidence": null
+  },
+  {
+    "text": "So you can do some more operations here if I show you. Let's do one thing. Let's create a",
+    "startMs": 971240,
+    "endMs": 978440,
+    "timestampMs": 971240,
+    "confidence": null
+  },
+  {
+    "text": "Jupyter notebook and then move all of our code there. That'll make things a little easier.",
+    "startMs": 978440,
+    "endMs": 990600,
+    "timestampMs": 978440,
+    "confidence": null
+  },
+  {
+    "text": "So I will just copy all the code for now.",
+    "startMs": 991240,
+    "endMs": 1001880,
+    "timestampMs": 991240,
+    "confidence": null
+  },
+  {
+    "text": "Okay, let me just pull everything and then I'll start separating out.",
+    "startMs": 1001880,
+    "endMs": 1017560,
+    "timestampMs": 1001880,
+    "confidence": null
+  },
+  {
+    "text": "So just die imports first.",
+    "startMs": 1018040,
+    "endMs": 1022440,
+    "timestampMs": 1018040,
+    "confidence": null
+  },
+  {
+    "text": "Okay, the kernel is getting started so it'll take a few seconds.",
+    "startMs": 1028360,
+    "endMs": 1033560,
+    "timestampMs": 1028360,
+    "confidence": null
+  },
+  {
+    "text": "Then let's just uncomment all of this to see what is happening.",
+    "startMs": 1036200,
+    "endMs": 1042680,
+    "timestampMs": 1036200,
+    "confidence": null
+  },
+  {
+    "text": "So you can see that all of these things got printed and then",
+    "startMs": 1048040,
+    "endMs": 1054680,
+    "timestampMs": 1048040,
+    "confidence": null
+  },
+  {
+    "text": "let's separate out our column operation. So you can see our column operation.",
+    "startMs": 1058120,
+    "endMs": 1062680,
+    "timestampMs": 1058120,
+    "confidence": null
+  },
+  {
+    "text": "Now let's see our df.head here.",
+    "startMs": 1064440,
+    "endMs": 1067400,
+    "timestampMs": 1064440,
+    "confidence": null
+  },
+  {
+    "text": "So you can see it is now when number format which we did and the order date is also in date format.",
+    "startMs": 1067640,
+    "endMs": 1078440,
+    "timestampMs": 1067640,
+    "confidence": null
+  },
+  {
+    "text": "Now let's take a look at the rest of the things.",
+    "startMs": 1079560,
+    "endMs": 1092760,
+    "timestampMs": 1079560,
+    "confidence": null
+  },
+  {
+    "text": "So you can see as I explained that revenue since it's just one column it's a Pandas series",
+    "startMs": 1098360,
+    "endMs": 1107320,
+    "timestampMs": 1098360,
+    "confidence": null
+  },
+  {
+    "text": "and then we have a subset that we can fetch like this passing in a list of columns we want.",
+    "startMs": 1108040,
+    "endMs": 1113720,
+    "timestampMs": 1108040,
+    "confidence": null
+  },
+  {
+    "text": "And let's move this sample. So here the operation is get customer ID and revenue USD.",
+    "startMs": 1114600,
+    "endMs": 1127800,
+    "timestampMs": 1114600,
+    "confidence": null
+  },
+  {
+    "text": "We are revenue USD is greater than 10,000 so it fetches 421 rows.",
+    "startMs": 1127800,
+    "endMs": 1132360,
+    "timestampMs": 1127800,
+    "confidence": null
+  },
+  {
+    "text": "Now let's take a look at filtered things.",
+    "startMs": 1134680,
+    "endMs": 1137160,
+    "timestampMs": 1134680,
+    "confidence": null
+  },
+  {
+    "text": "So in this filter we are filtering on region north and data frame with the revenue",
+    "startMs": 1138040,
+    "endMs": 1146360,
+    "timestampMs": 1138040,
+    "confidence": null
+  },
+  {
+    "text": "USD greater than 5,000 so 58 rows get fetched.",
+    "startMs": 1146360,
+    "endMs": 1150840,
+    "timestampMs": 1146360,
+    "confidence": null
+  },
+  {
+    "text": "We can do the same thing with that query operation as I explained.",
+    "startMs": 1154360,
+    "endMs": 1160040,
+    "timestampMs": 1154360,
+    "confidence": null
+  },
+  {
+    "text": "So you will see 58 rows again print this where we want to check status is active and or trial",
+    "startMs": 1160680,
+    "endMs": 1169880,
+    "timestampMs": 1160680,
+    "confidence": null
+  },
+  {
+    "text": "then it gives us 369 rows. Now let me show you some more operations.",
+    "startMs": 1171160,
+    "endMs": 1175560,
+    "timestampMs": 1171160,
+    "confidence": null
+  },
+  {
+    "text": "So before I move forward I want to explain one more time this error is equal to course.",
+    "startMs": 1176280,
+    "endMs": 1183480,
+    "timestampMs": 1176280,
+    "confidence": null
+  },
+  {
+    "text": "So this is doing the critical work here. Instead of crashing when a value cannot be converted",
+    "startMs": 1183480,
+    "endMs": 1188200,
+    "timestampMs": 1183480,
+    "confidence": null
+  },
+  {
+    "text": "it turns it into not a number NAN and keeps moving. This preserves your row structure while flagging",
+    "startMs": 1188200,
+    "endMs": 1194440,
+    "timestampMs": 1188200,
+    "confidence": null
+  },
+  {
+    "text": "the bad values. You handle them intentionally instead of getting a runtime error.",
+    "startMs": 1194440,
+    "endMs": 1199880,
+    "timestampMs": 1194440,
+    "confidence": null
+  },
+  {
+    "text": "So let's take a look at few more examples. So now what I'm doing here in this one is",
+    "startMs": 1200600,
+    "endMs": 1207240,
+    "timestampMs": 1200600,
+    "confidence": null
+  },
+  {
+    "text": "see if we take a look at region we have this casing arbitrary. Sometimes it's all over K",
+    "startMs": 1209320,
+    "endMs": 1217080,
+    "timestampMs": 1209320,
+    "confidence": null
+  },
+  {
+    "text": "sometimes it's title sometimes it's all capital. So let's do an operation here.",
+    "startMs": 1217160,
+    "endMs": 1222840,
+    "timestampMs": 1217160,
+    "confidence": null
+  },
+  {
+    "text": "So what we have done is we have taken it into a string format then stripped for five spaces",
+    "startMs": 1224120,
+    "endMs": 1229800,
+    "timestampMs": 1224120,
+    "confidence": null
+  },
+  {
+    "text": "and then converted into a title case. So you can see everything is in our title case.",
+    "startMs": 1229800,
+    "endMs": 1233640,
+    "timestampMs": 1229800,
+    "confidence": null
+  },
+  {
+    "text": "This also helps in having consistency across your data.",
+    "startMs": 1235880,
+    "endMs": 1238920,
+    "timestampMs": 1235880,
+    "confidence": null
+  },
+  {
+    "text": "So if I now print this, it drops all the values which are null in this customer ID,",
+    "startMs": 1239000,
+    "endMs": 1251480,
+    "timestampMs": 1239000,
+    "confidence": null
+  },
+  {
+    "text": "drop any any. And if you remember let me just show you this thing first.",
+    "startMs": 1252520,
+    "endMs": 1259960,
+    "timestampMs": 1252520,
+    "confidence": null
+  },
+  {
+    "text": "See there was zero so it did not do anything actually but let's take a look at this one.",
+    "startMs": 1268920,
+    "endMs": 1289960,
+    "timestampMs": 1268920,
+    "confidence": null
+  },
+  {
+    "text": "Let's correct our revenue column name and then see the field. See you can see now",
+    "startMs": 1299400,
+    "endMs": 1319560,
+    "timestampMs": 1299400,
+    "confidence": null
+  },
+  {
+    "text": "there are 29 elements which have null in revenue USD. And now if I check for the same thing",
+    "startMs": 1319640,
+    "endMs": 1331000,
+    "timestampMs": 1319640,
+    "confidence": null
+  },
+  {
+    "text": "for DF field, you can see it is zero. Then there are a few more examples I want to go through.",
+    "startMs": 1334360,
+    "endMs": 1345560,
+    "timestampMs": 1334360,
+    "confidence": null
+  },
+  {
+    "text": "So if you want to fill see in this case we wanted to fill the null values with zero and mark notes",
+    "startMs": 1346120,
+    "endMs": 1354920,
+    "timestampMs": 1346120,
+    "confidence": null
+  },
+  {
+    "text": "as none but if we want to fill null values with a median of that particular column we can do it",
+    "startMs": 1354920,
+    "endMs": 1360680,
+    "timestampMs": 1354920,
+    "confidence": null
+  },
+  {
+    "text": "like this. If you want to drop duplicates we can use drop duplicates and we will keep the first.",
+    "startMs": 1360680,
+    "endMs": 1368920,
+    "timestampMs": 1360680,
+    "confidence": null
+  },
+  {
+    "text": "So we order by order ID and then we keep the first value and we can rename the columns like this",
+    "startMs": 1368920,
+    "endMs": 1375000,
+    "timestampMs": 1368920,
+    "confidence": null
+  },
+  {
+    "text": "as well rather than what I showed you. So that was an automatic dynamic operation.",
+    "startMs": 1375000,
+    "endMs": 1381000,
+    "timestampMs": 1375000,
+    "confidence": null
+  },
+  {
+    "text": "This is a manual where you are changing everything one column at a time.",
+    "startMs": 1381720,
+    "endMs": 1388040,
+    "timestampMs": 1381720,
+    "confidence": null
+  },
+  {
+    "text": "There was this once CSV I received which looked perfectly clean at first glance. The revenue column",
+    "startMs": 1390200,
+    "endMs": 1396200,
+    "timestampMs": 1390200,
+    "confidence": null
+  },
+  {
+    "text": "appeared numeric but when I ran pandas.2 numeric which we ran earlier almost every value became null.",
+    "startMs": 1396200,
+    "endMs": 1403560,
+    "timestampMs": 1396200,
+    "confidence": null
+  },
+  {
+    "text": "The culprit was formatting. Values were stored like 12,500 was stored like 12,500 and 48,750",
+    "startMs": 1403640,
+    "endMs": 1417160,
+    "timestampMs": 1403640,
+    "confidence": null
+  },
+  {
+    "text": "with commas as thousand separators. Pandas could not interpret them directly.",
+    "startMs": 1417160,
+    "endMs": 1421480,
+    "timestampMs": 1417160,
+    "confidence": null
+  },
+  {
+    "text": "Five minutes of cleaning fixed the issue but it was a useful reminder that data that looks numeric",
+    "startMs": 1422120,
+    "endMs": 1427800,
+    "timestampMs": 1422120,
+    "confidence": null
+  },
+  {
+    "text": "and that is numeric are two different things. Always check the data type before trusting the column.",
+    "startMs": 1427800,
+    "endMs": 1432920,
+    "timestampMs": 1427800,
+    "confidence": null
+  },
+  {
+    "text": "After cleaning run df.us null.sum and df.d types again a cleaning step that created new nulls",
+    "startMs": 1432920,
+    "endMs": 1440760,
+    "timestampMs": 1432920,
+    "confidence": null
+  },
+  {
+    "text": "instead of removing them is still a bug. Now the part where the actual insights live group by",
+    "startMs": 1440760,
+    "endMs": 1445960,
+    "timestampMs": 1440760,
+    "confidence": null
+  },
+  {
+    "text": "an aggregation. So let's take a look at their examples.",
+    "startMs": 1445960,
+    "endMs": 1449560,
+    "timestampMs": 1445960,
+    "confidence": null
+  },
+  {
+    "text": "So here let's take a look at this. So what I'm doing here is I'm taking the data frame",
+    "startMs": 1455560,
+    "endMs": 1460840,
+    "timestampMs": 1455560,
+    "confidence": null
+  },
+  {
+    "text": "grouping it by region and getting the revenue sum for all of them.",
+    "startMs": 1460840,
+    "endMs": 1469160,
+    "timestampMs": 1460840,
+    "confidence": null
+  },
+  {
+    "text": "So you can see quite nicely for all different regions we have how much revenue was there.",
+    "startMs": 1472120,
+    "endMs": 1479080,
+    "timestampMs": 1472120,
+    "confidence": null
+  },
+  {
+    "text": "Now let's take a bit detailed example. So in this one what I'm doing is again grouping by",
+    "startMs": 1481160,
+    "endMs": 1490600,
+    "timestampMs": 1481160,
+    "confidence": null
+  },
+  {
+    "text": "region but I'm aggregating a few different things. So total revenue is sum average order value is",
+    "startMs": 1490680,
+    "endMs": 1495880,
+    "timestampMs": 1490680,
+    "confidence": null
+  },
+  {
+    "text": "mean, order count is count and top customer revenue. How much revenue which is maximum.",
+    "startMs": 1495880,
+    "endMs": 1502440,
+    "timestampMs": 1495880,
+    "confidence": null
+  },
+  {
+    "text": "So let's first change the actual column name and then let's print it out.",
+    "startMs": 1503080,
+    "endMs": 1515880,
+    "timestampMs": 1503080,
+    "confidence": null
+  },
+  {
+    "text": "You can see for each region total revenue average order value how many orders and what was",
+    "startMs": 1516600,
+    "endMs": 1522920,
+    "timestampMs": 1516600,
+    "confidence": null
+  },
+  {
+    "text": "the top customer revenue. Let's take a look at this example as well where I'm grouping by region",
+    "startMs": 1522920,
+    "endMs": 1531320,
+    "timestampMs": 1522920,
+    "confidence": null
+  },
+  {
+    "text": "and month and then I'm summing the revenue. I forgot to change the column name.",
+    "startMs": 1531320,
+    "endMs": 1538840,
+    "timestampMs": 1531320,
+    "confidence": null
+  },
+  {
+    "text": "You can see that for each region each month. So four regions 12 months 48 rows.",
+    "startMs": 1538920,
+    "endMs": 1551640,
+    "timestampMs": 1538920,
+    "confidence": null
+  },
+  {
+    "text": "We have how much revenue and then for last example pivot table let's see what it prints and",
+    "startMs": 1552840,
+    "endMs": 1560680,
+    "timestampMs": 1552840,
+    "confidence": null
+  },
+  {
+    "text": "then I'll explain it. Okay so pivot table what it does is it converts rows into columns.",
+    "startMs": 1560760,
+    "endMs": 1578680,
+    "timestampMs": 1560760,
+    "confidence": null
+  },
+  {
+    "text": "So for every region there was a month and there was this revenue. So what we do now is we take",
+    "startMs": 1579240,
+    "endMs": 1588600,
+    "timestampMs": 1579240,
+    "confidence": null
+  },
+  {
+    "text": "revenue for index as a region and columns as month and then we sum. So we see this as a pivot table",
+    "startMs": 1588600,
+    "endMs": 1598600,
+    "timestampMs": 1588600,
+    "confidence": null
+  },
+  {
+    "text": "like in excel and we fill any empty value as zero. So in this one example here this one the dot",
+    "startMs": 1598600,
+    "endMs": 1611080,
+    "timestampMs": 1598600,
+    "confidence": null
+  },
+  {
+    "text": "AGG here pattern with the named aggregation like total revenue and then average order value with mean",
+    "startMs": 1611080,
+    "endMs": 1619880,
+    "timestampMs": 1611080,
+    "confidence": null
+  },
+  {
+    "text": "and commit them to memory because clean output column names multiple matrices multiple metrics in",
+    "startMs": 1620520,
+    "endMs": 1629320,
+    "timestampMs": 1620520,
+    "confidence": null
+  },
+  {
+    "text": "one pass no post processing always call dot reset index after a group by a multi index group result",
+    "startMs": 1629320,
+    "endMs": 1638360,
+    "timestampMs": 1629320,
+    "confidence": null
+  },
+  {
+    "text": "is harder to work with than a flat data frame. So what I mean by that is if I let's say just",
+    "startMs": 1638360,
+    "endMs": 1644360,
+    "timestampMs": 1638360,
+    "confidence": null
+  },
+  {
+    "text": "commit this and run this cell it does not do anything much because I'm using a data",
+    "startMs": 1645400,
+    "endMs": 1653720,
+    "timestampMs": 1645400,
+    "confidence": null
+  },
+  {
+    "text": "Wrangler Python extension but if I was not using that it would show me something that would not",
+    "startMs": 1653720,
+    "endMs": 1662440,
+    "timestampMs": 1653720,
+    "confidence": null
+  },
+  {
+    "text": "have been directly consumable and pivot tables which I showed you as the last example here",
+    "startMs": 1662440,
+    "endMs": 1669080,
+    "timestampMs": 1662440,
+    "confidence": null
+  },
+  {
+    "text": "these are grouped data frames for computation pivot tables are for communication.",
+    "startMs": 1669720,
+    "endMs": 1674040,
+    "timestampMs": 1669720,
+    "confidence": null
+  },
+  {
+    "text": "So the group data frames that we saw earlier are for computation but pivot tables are for",
+    "startMs": 1675480,
+    "endMs": 1679480,
+    "timestampMs": 1675480,
+    "confidence": null
+  },
+  {
+    "text": "communication when someone asks show me the revenue by region and by month you use pivot table",
+    "startMs": 1679480,
+    "endMs": 1685320,
+    "timestampMs": 1679480,
+    "confidence": null
+  },
+  {
+    "text": "because it produces the exact grid they are already picturing. One of my favorite moments with",
+    "startMs": 1685320,
+    "endMs": 1691080,
+    "timestampMs": 1685320,
+    "confidence": null
+  },
+  {
+    "text": "pandas came from a simple group by looking at raw transaction data everything seemed evenly distributed",
+    "startMs": 1691080,
+    "endMs": 1697320,
+    "timestampMs": 1691080,
+    "confidence": null
+  },
+  {
+    "text": "across regions but after aggregating revenue by region one segment was generating nearly half",
+    "startMs": 1697320,
+    "endMs": 1703480,
+    "timestampMs": 1697320,
+    "confidence": null
+  },
+  {
+    "text": "the total revenue while representing only a small fraction of the customers that completely changed",
+    "startMs": 1703480,
+    "endMs": 1710120,
+    "timestampMs": 1703480,
+    "confidence": null
+  },
+  {
+    "text": "where the team focused it at its attention nothing about that pattern was visible in the raw rows",
+    "startMs": 1710120,
+    "endMs": 1716120,
+    "timestampMs": 1710120,
+    "confidence": null
+  },
+  {
+    "text": "it only appeared once the data was summarized that's the power of aggregation you stop looking at",
+    "startMs": 1716600,
+    "endMs": 1722520,
+    "timestampMs": 1716600,
+    "confidence": null
+  },
+  {
+    "text": "transactions and start seeing behavior so remember that pandas is not replacing your thinking it removes",
+    "startMs": 1722520,
+    "endMs": 1729400,
+    "timestampMs": 1722520,
+    "confidence": null
+  },
+  {
+    "text": "the mechanical friction that gets between you and thinking before I understood it properly I",
+    "startMs": 1729400,
+    "endMs": 1734760,
+    "timestampMs": 1729400,
+    "confidence": null
+  },
+  {
+    "text": "spent enormous energy on logistics how to get to row 400 how to rename a column without losing",
+    "startMs": 1734760,
+    "endMs": 1741400,
+    "timestampMs": 1734760,
+    "confidence": null
+  },
+  {
+    "text": "those aren't data science problems they are plumbing problems and plumbing problems eat the",
+    "startMs": 1742360,
+    "endMs": 1747160,
+    "timestampMs": 1742360,
+    "confidence": null
+  },
+  {
+    "text": "time that should go towards the actual question in the next tutorial tutorial five I'll pick it up",
+    "startMs": 1747160,
+    "endMs": 1754760,
+    "timestampMs": 1747160,
+    "confidence": null
+  },
+  {
+    "text": "from here once your data is clean and aggregated the next stop is making it visible so matplotlib",
+    "startMs": 1754760,
+    "endMs": 1761080,
+    "timestampMs": 1754760,
+    "confidence": null
+  },
+  {
+    "text": "and seaborn they come into picture but the plots are only as honest as the data feeding them",
+    "startMs": 1761080,
+    "endMs": 1767400,
+    "timestampMs": 1761080,
+    "confidence": null
+  },
+  {
+    "text": "so get pandas right first and visualization becomes translation so what I would ask you to do is",
+    "startMs": 1768120,
+    "endMs": 1775560,
+    "timestampMs": 1768120,
+    "confidence": null
+  },
+  {
+    "text": "clean this next step open a data set that you have been avoiding or get a one from Kaggle run",
+    "startMs": 1775560,
+    "endMs": 1781640,
+    "timestampMs": 1775560,
+    "confidence": null
+  },
+  {
+    "text": "through these four sections in order explore it select what matters clean what's broken aggregate",
+    "startMs": 1781640,
+    "endMs": 1789080,
+    "timestampMs": 1781640,
+    "confidence": null
+  },
+  {
+    "text": "into summary that tells you something and I will see you in the next one",
+    "startMs": 1789080,
+    "endMs": 1801480,
+    "timestampMs": 1789080,
+    "confidence": null
+  }
+]

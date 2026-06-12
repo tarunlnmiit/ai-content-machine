@@ -1,0 +1,24 @@
+[
+  {
+    "sceneId": "scene-04",
+    "componentName": "DataVizReveal",
+    "script": "One used numbers. The other used metaphor. Tools different. Curiosity identical.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Tools different. Curiosity identical.",
+      "data": [
+        {
+          "label": "Numbers",
+          "value": 50
+        },
+        {
+          "label": "Metaphor",
+          "value": 50
+        }
+      ],
+      "chartType": "bar"
+    }
+  }
+]

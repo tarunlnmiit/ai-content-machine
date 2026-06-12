@@ -1,45 +1,210 @@
 [
   {
     "sceneId": "scene-01",
-    "componentName": "AtmosphericQuote",
-    "script": "It dips its fingers in every colour because it's patient",
+    "componentName": "LineReveal",
+    "script": "I worked with things you can measure. Data. Models. Dashboards.",
     "niche": "poetry",
-    "durationSec": 5,
+    "durationSec": 7,
+    "layout": "panel-left",
     "props": {
-      "quote": "Poetry dips its fingers in every colour.",
-      "attribution": "Breath of Poetry"
+      "lines": [
+        "Data.",
+        "Models.",
+        "Dashboards.",
+        "The clean grammar of proof."
+      ]
     }
   },
   {
     "sceneId": "scene-02",
-    "componentName": "LineReveal",
-    "script": "Facts tell you what happened. Poetry tells you what stayed behind",
+    "componentName": "AtmosphericQuote",
+    "script": "a poem finds the exact nerve no dataset ever mapped",
     "niche": "poetry",
     "durationSec": 6,
+    "layout": "panel-right",
     "props": {
-      "lines": [
-        "Facts tell you what happened.",
-        "Poetry tells you what stayed behind",
-        "after it happened."
-      ]
+      "quote": "A poem finds the exact nerve no dataset ever mapped."
     }
   },
   {
     "sceneId": "scene-03",
     "componentName": "AtmosphericQuote",
-    "script": "ordinary experience, seen clearly for one second",
+    "script": "The lyric form is the one that admits what human experience refuses to sort",
     "niche": "poetry",
-    "durationSec": 5,
+    "durationSec": 7,
+    "layout": "panel-top",
     "props": {
-      "quote": "Poetry is ordinary experience, seen clearly for one second."
+      "quote": "The lyric form admits what human experience refuses to sort."
     }
   },
   {
     "sceneId": "scene-04",
-    "componentName": "WordReveal",
-    "script": "The door doesn't need to be wide. A crack is enough",
+    "componentName": "DataVizReveal",
+    "script": "One used numbers. The other used metaphor. Tools different. Curiosity identical.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Tools different. Curiosity identical.",
+      "data": [
+        {
+          "label": "Numbers",
+          "value": 50
+        },
+        {
+          "label": "Metaphor",
+          "value": 50
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "LineReveal",
+    "script": "The best commit messages have grief in them sometimes.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "lines": [
+        "The best scientific papers have rhythm.",
+        "The best commit messages have grief in them."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "ImageTextReveal",
+    "script": "Poetry was already in the server room.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Poetry was already in the server room",
+      "subtext": "It was never waiting for an invitation"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "CounterReveal",
+    "script": "You've done this a hundred times.",
     "niche": "poetry",
     "durationSec": 4,
+    "layout": "fullscreen",
+    "props": {
+      "start": 0,
+      "end": 100,
+      "label": "times you've scraped the toast over the sink"
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "HandwrittenReveal",
+    "script": "The grey of a commute counts. The brown of bad coffee counts.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "The grey of a commute counts.",
+        "The brown of bad coffee counts.",
+        "The particular blue of a Tuesday afternoon."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "AtmosphericQuote",
+    "script": "grief insists on specificity",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "quote": "Grief insists on specificity."
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "LineReveal",
+    "script": "You miss how they said your name. The exact pitch of their laugh.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "lines": [
+        "You don't miss a person.",
+        "You miss how they said your name.",
+        "The exact pitch of their laugh."
+      ]
+    }
+  },
+  {
+    "componentName": "VoiceMemoryDissolve",
+    "script": "You miss how they said your name. The exact pitch of their laugh.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Sound-wave memory: a soft audio waveform pulses with the shape of a voice saying a name, then fragments into particles. The particles reform briefly as handwriting, a color swatch, a silhouette \u2014 specific sensory memories. Dissolves. Slow, intimate, muted palette with poetry niche gold accent."
+    },
+    "sceneId": "scene-11"
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "DataVizReveal",
+    "script": "Facts tell you what happened. Poetry tells you what stayed behind.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "What it tells you",
+      "data": [
+        {
+          "label": "Facts: what happened",
+          "value": 50
+        },
+        {
+          "label": "Poetry: what stayed behind",
+          "value": 50
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-13",
+    "componentName": "CounterReveal",
+    "script": "a lyric you've heard forty times that suddenly means something different",
+    "niche": "poetry",
+    "durationSec": 4,
+    "layout": "fullscreen",
+    "props": {
+      "start": 0,
+      "end": 40,
+      "label": "times you've heard the lyric before it landed"
+    }
+  },
+  {
+    "sceneId": "scene-14",
+    "componentName": "ImageTextReveal",
+    "script": "It dips its fingers in every colour because it's patient.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "It dips its fingers in every colour",
+      "subtext": "Because it's patient"
+    }
+  },
+  {
+    "sceneId": "scene-15",
+    "componentName": "WordReveal",
+    "script": "A crack is enough.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "layout": "panel-right",
     "props": {
       "words": [
         "A",
@@ -54,23 +219,14 @@
     }
   },
   {
-    "sceneId": "scene-05",
-    "componentName": "WordReveal",
-    "script": "That is not a small thing. It is the whole thing",
+    "sceneId": "scene-16",
+    "componentName": "AtmosphericQuote",
+    "script": "That is not a small thing. It is the whole thing.",
     "niche": "poetry",
-    "durationSec": 4,
+    "durationSec": 6,
+    "layout": "panel-left",
     "props": {
-      "words": [
-        "It",
-        "is",
-        "the",
-        "whole",
-        "thing"
-      ],
-      "emphasis": [
-        3,
-        4
-      ]
+      "quote": "It is not a small thing. It is the whole thing."
     }
   }
 ]

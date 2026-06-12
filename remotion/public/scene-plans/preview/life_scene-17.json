@@ -1,0 +1,30 @@
+[
+  {
+    "sceneId": "scene-17",
+    "componentName": "NumberedTips",
+    "script": "exactly three priorities, written tonight",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "title": "Plan tomorrow tonight",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Exactly three",
+          "body": "Three forces real prioritization"
+        },
+        {
+          "number": 2,
+          "headline": "Written tonight",
+          "body": "You still have today's context"
+        },
+        {
+          "number": 3,
+          "headline": "Decision pre-made",
+          "body": "Morning-you never has to choose"
+        }
+      ]
+    }
+  }
+]

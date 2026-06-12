@@ -1,0 +1,89 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "For most of my adult life, I worked with things you can measure",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "For most of my adult life, I worked with things you can measure.",
+      "attribution": "Breath of Poetry"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "LineReveal",
+    "script": "Data. Models. Dashboards. The clean grammar of proof",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "Data. Models. Dashboards.",
+        "The clean grammar of proof."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "WordReveal",
+    "script": "Except I do.",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Except",
+        "I",
+        "do."
+      ],
+      "emphasis": [
+        2
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ImageTextReveal",
+    "script": "a poem finds the exact nerve no dataset ever mapped",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "A poem finds the nerve no dataset ever mapped",
+      "subtext": "BENEATH THE NUMBERS"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "HandwrittenReveal",
+    "script": "something releases. I didn't plan for that",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "Something releases.",
+        "I didn't plan for that.",
+        "I don't have a framework for it."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "I've stopped pretending the two lives are separate",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "I've stopped pretending the two lives are separate."
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "I'm not the kind of person who cries at lines on a page",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "I'm not the kind of person who cries at lines on a page. Except I am."
+    }
+  }
+]

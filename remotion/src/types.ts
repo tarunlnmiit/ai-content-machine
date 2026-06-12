@@ -48,9 +48,19 @@ export interface EditPlan {
   titleCard?: TitleCardConfig;
   lowerThird?: LowerThirdConfig;
   outroCard?: OutroCardConfig;
+  scenePlanFile?: string;
+  colorGrading?: ColorGrading;
   greenScreen?: boolean; // replace bg with #00FF00 for DaVinci keying
   webcamSplit?: "left" | "right" | null;
   outputSize?: "16x9" | "9x16" | "1x1";
+}
+
+export interface ColorGrading {
+  saturate: number;
+  hueRotate: number;
+  contrast: number;
+  brightness: number;
+  overlayColor: string | null;
 }
 
 export interface ScenePlan {
@@ -60,6 +70,8 @@ export interface ScenePlan {
   niche: Niche;
   durationSec: number;
   props: Record<string, unknown>;
+  atSec?: number;
+  layout?: "fullscreen" | "panel-left" | "panel-right" | "panel-top";
 }
 
 export interface AudiogramPlan {

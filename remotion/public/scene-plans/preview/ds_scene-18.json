@@ -1,0 +1,28 @@
+[
+  {
+    "sceneId": "scene-18",
+    "componentName": "ToolComparison",
+    "script": "grouped DataFrames are for computation, pivot tables are for communication",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "groupby().agg()",
+        "points": [
+          "For computation",
+          "Flat metrics",
+          "Feeds further analysis"
+        ]
+      },
+      "rightSide": {
+        "label": "pivot_table()",
+        "points": [
+          "For communication",
+          "Region x month grid",
+          "The picture they imagine"
+        ]
+      }
+    }
+  }
+]

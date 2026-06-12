@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node scripts/build-worksheets-manifest.mjs",
+  "outputDirectory": "public",
+  "functions": {
+    "api/worksheet.mjs": {
+      "includeFiles": "output/worksheets/**"
+    }
+  },
+  "rewrites": [
+    { "source": "/get-worksheet", "destination": "/api/get-worksheet" }
+  ],
+  "headers": [
+    {
+      "source": "/api/worksheet",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}

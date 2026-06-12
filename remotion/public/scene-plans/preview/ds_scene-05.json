@@ -1,0 +1,13 @@
+[
+  {
+    "componentName": "DataPipelineFlow",
+    "script": "loading and exploring, selecting and filtering, cleaning messy data, and aggregating",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Animated data pipeline: four operations (Load → Select → Clean → Aggregate) shown as flowing data rows transforming sequentially. Raw table rows enter left, each stage highlights one operation with niche accent color, clean rows exit right. Motion-graphic style, no code — pure data flow."
+    },
+    "sceneId": "scene-05"
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "sceneId": "scene-08",
+    "componentName": "CodeAnnotation",
+    "script": "Before you analyze anything, you orient yourself",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "import pandas as pd",
+        "df = pd.read_csv('sales_records.csv')",
+        "print(df.shape)",
+        "print(df.dtypes)",
+        "print(df.describe())",
+        "print(df.isnull().sum())"
+      ],
+      "language": "python",
+      "highlightLine": 6,
+      "annotationText": "Orient first: shape, types, summary, nulls"
+    }
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "sceneId": "scene-09",
+    "componentName": "CounterReveal",
+    "script": "my brain had become a browser with fifty tabs open",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 50,
+      "label": "Tabs open in your head",
+      "prefix": "",
+      "suffix": " tabs"
+    }
+  }
+]

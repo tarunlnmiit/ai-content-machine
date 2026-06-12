@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, type ReactNode, type CSSProperties } from "react";
 import {
   AbsoluteFill,
   Easing,
@@ -19,8 +19,9 @@ import { CaptionPage } from "./CaptionPage";
 import { TitleCard } from "./TitleCard";
 import { LowerThird } from "./LowerThird";
 import { OutroCard } from "./OutroCard";
-import type { EditPlan, CutSegment } from "../types";
+import type { EditPlan, CutSegment, ScenePlan } from "../types";
 import type { Niche } from "../styles/chronixel";
+import { SceneRenderer } from "./SceneRenderer";
 
 const SWITCH_CAPTIONS_EVERY_MS = 1500;
 const MAIN_VIDEO_VOLUME = 1.6;
@@ -44,6 +45,17 @@ function gradingFor(niche: Niche): Grading {
     filter: "contrast(1.06) saturate(1.18) brightness(1.02) hue-rotate(-3deg)",
     overlayColor: "rgba(255, 180, 120, 0.05)",
   };
+}
+
+function resolveGrading(plan: EditPlan): Grading {
+  if (plan.colorGrading) {
+    const { saturate, hueRotate, contrast, brightness, overlayColor } = plan.colorGrading;
+    return {
+      filter: `contrast(${contrast}) saturate(${saturate}) brightness(${brightness}) hue-rotate(${hueRotate}deg)`,
+      overlayColor,
+    };
+  }
+  return gradingFor(plan.niche);
 }
 
 const NOISE_SVG_URL =
@@ -81,6 +93,45 @@ function FilmGrainOverlay({ niche }: FilmGrainOverlayProps) {
       />
     </>
   );
+}
+
+const PANEL_TRANSITION_FRAMES = 12;
+const PANEL_FRACTION = 1 / 3;
+const PANEL_TOP_FRACTION = 0.30;
+
+interface PanelRange {
+  from: number;
+  duration: number;
+  side: "left" | "right" | "top";
+}
+
+function PanelShiftWrapper({ children, ranges }: { children: ReactNode; ranges: PanelRange[] }) {
+  const frame = useCurrentFrame();
+  const active = ranges.find((r) => frame >= r.from && frame < r.from + r.duration) ?? null;
+
+  let frac = 0;
+  if (active) {
+    const t =
+      Math.min(frame - active.from, active.from + active.duration - frame, PANEL_TRANSITION_FRAMES) /
+      PANEL_TRANSITION_FRAMES;
+    const targetFrac = active.side === "top" ? PANEL_TOP_FRACTION : PANEL_FRACTION;
+    frac = interpolate(t, [0, 1], [0, targetFrac], {
+      easing: Easing.out(Easing.cubic),
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+  }
+
+  const style: CSSProperties =
+    frac > 0 && active
+      ? active.side === "left"
+        ? { position: "absolute", left: `${frac * 100}%`, top: 0, bottom: 0, right: 0 }
+        : active.side === "right"
+        ? { position: "absolute", left: 0, top: 0, bottom: 0, right: `${frac * 100}%` }
+        : { position: "absolute", left: 0, right: 0, top: `${frac * 100}%`, bottom: 0 }
+      : { position: "absolute", inset: 0 };
+
+  return <div style={style}>{children}</div>;
 }
 
 export interface TalkingHeadEditProps extends Record<string, unknown> {
@@ -147,6 +198,7 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
   const { fps } = useVideoConfig();
   const [plan, setPlan] = useState<EditPlan | null>(null);
   const [captions, setCaptions] = useState<Caption[] | null>(null);
+  const [overlayScenes, setOverlayScenes] = useState<ScenePlan[] | null>(null);
   const { delayRender, continueRender, cancelRender } = useDelayRender();
   const [handle] = useState(() => delayRender());
 
@@ -157,8 +209,18 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
       setPlan(planData);
 
       const captionRes = await fetch(staticFile(planData.captionsFile));
-      const captionData: Caption[] = await captionRes.json();
+      const captionData: Caption[] = captionRes.ok ? await captionRes.json() : [];
       setCaptions(captionData);
+
+      if (planData.scenePlanFile) {
+        try {
+          const sceneRes = await fetch(staticFile(planData.scenePlanFile));
+          const sceneData: ScenePlan[] = await sceneRes.json();
+          setOverlayScenes(sceneData.filter((s) => s.atSec !== undefined));
+        } catch {
+          // overlay scene plan is optional — skip silently if missing or malformed
+        }
+      }
 
       continueRender(handle);
     } catch (e) {
@@ -173,9 +235,27 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
   if (!plan || !captions) return null;
 
   const segments = getSegments(plan);
-  const grading = gradingFor(plan.niche);
+  const grading = resolveGrading(plan);
 
   const titleCardFrames = plan.titleCard?.durationFrames ?? 0;
+
+  // Split overlay scenes into panel (side/top) and fullscreen
+  const panelRanges: PanelRange[] = [];
+  const fullscreenOverlays: ScenePlan[] = [];
+  if (overlayScenes) {
+    for (const scene of overlayScenes) {
+      const ef = originalSecToEditFrame(scene.atSec!, segments, fps);
+      if (ef === null || ef < 0) continue;
+      const from = ef + titleCardFrames;
+      const duration = Math.ceil(scene.durationSec * fps);
+      if (scene.layout === "panel-left" || scene.layout === "panel-right" || scene.layout === "panel-top") {
+        const side = scene.layout === "panel-left" ? "left" : scene.layout === "panel-right" ? "right" : "top";
+        panelRanges.push({ from, duration, side });
+      } else {
+        fullscreenOverlays.push(scene);
+      }
+    }
+  }
   const outroCardFrames = plan.outroCard?.durationFrames ?? 0;
 
   // Build segment layout with optional titleCard offset
@@ -218,18 +298,20 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
         </Sequence>
       )}
 
-      {/* Stitched camera footage — one <Video> per keep-segment */}
-      {segmentLayouts.map(({ seg, startFrame, endFrame, durationFrames, editOffset }, i) => (
-        <Sequence key={`seg-${i}`} from={editOffset} durationInFrames={durationFrames}>
-          <CameraSegment
-            src={staticFile(plan.rawVideo)}
-            trimBefore={startFrame}
-            trimAfter={endFrame}
-            filter={plan.greenScreen ? "none" : grading.filter}
-            punchIn={i > 0}
-          />
-        </Sequence>
-      ))}
+      {/* Stitched camera footage — shifts to make room for panel overlays */}
+      <PanelShiftWrapper ranges={panelRanges}>
+        {segmentLayouts.map(({ seg, startFrame, endFrame, durationFrames, editOffset }, i) => (
+          <Sequence key={`seg-${i}`} from={editOffset} durationInFrames={durationFrames}>
+            <CameraSegment
+              src={staticFile(plan.rawVideo)}
+              trimBefore={startFrame}
+              trimAfter={endFrame}
+              filter={plan.greenScreen ? "none" : grading.filter}
+              punchIn={i > 0}
+            />
+          </Sequence>
+        ))}
+      </PanelShiftWrapper>
 
       {/* Per-niche color tint (above camera, below b-roll) */}
       {!plan.greenScreen && grading.overlayColor && (
@@ -267,6 +349,46 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
                   style={{ ...mediaStyle, objectFit: "cover" }}
                 />
               )}
+            </AbsoluteFill>
+          </Sequence>
+        );
+      })}
+
+      {/* Panel overlays — scene in constrained 1/3 div; camera shifts via PanelShiftWrapper */}
+      {overlayScenes && overlayScenes
+        .filter((s) => s.layout === "panel-left" || s.layout === "panel-right" || s.layout === "panel-top")
+        .map((scene) => {
+          const ef = originalSecToEditFrame(scene.atSec!, segments, fps);
+          if (ef === null || ef < 0) return null;
+          const panelStyle: CSSProperties =
+            scene.layout === "panel-top"
+              ? { position: "absolute", top: 0, left: 0, right: 0, height: `${PANEL_TOP_FRACTION * 100}%`, overflow: "hidden" }
+              : {
+                  position: "absolute",
+                  ...(scene.layout === "panel-left" ? { left: 0 } : { right: 0 }),
+                  top: 0,
+                  bottom: 0,
+                  width: `${PANEL_FRACTION * 100}%`,
+                  overflow: "hidden",
+                };
+          return (
+            <Sequence key={`panel-${scene.sceneId}`} from={ef + titleCardFrames} durationInFrames={Math.ceil(scene.durationSec * fps)}>
+              <div style={panelStyle}>
+                <SceneRenderer plan={scene} niche={plan.niche} />
+              </div>
+            </Sequence>
+          );
+        })
+      }
+
+      {/* Fullscreen overlays — replace talking head entirely */}
+      {fullscreenOverlays.map((scene) => {
+        const ef = originalSecToEditFrame(scene.atSec!, segments, fps);
+        if (ef === null || ef < 0) return null;
+        return (
+          <Sequence key={`fs-${scene.sceneId}`} from={ef + titleCardFrames} durationInFrames={Math.ceil(scene.durationSec * fps)}>
+            <AbsoluteFill>
+              <SceneRenderer plan={scene} niche={plan.niche} />
             </AbsoluteFill>
           </Sequence>
         );

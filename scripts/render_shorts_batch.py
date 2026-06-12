@@ -35,6 +35,12 @@ NICHE_MOTION_COMP = {
     "poetry": "PoetryMotionShort",
 }
 
+NICHE_SLUG_KEYWORDS = {
+    "ds": ["data_science", "data-science"],
+    "life": ["life_self_dev", "life-self-dev"],
+    "poetry": ["poetry_quotes", "poetry-quotes"],
+}
+
 
 def output_dir(week: str) -> Path:
     d = REPO_ROOT / "output" / "animations" / week
@@ -99,17 +105,18 @@ def main() -> None:
     if not week_dir.exists():
         sys.exit(f"No derivatives found at {week_dir}")
 
-    # Collect all slug dirs for this niche that have a shorts_manifest.json
+    # Collect slug dirs matching this niche that have a shorts_manifest.json
+    niche_keywords = NICHE_SLUG_KEYWORDS.get(args.niche, [args.niche])
     manifests: list[tuple[str, list[dict]]] = []
     for slug_dir in sorted(week_dir.iterdir()):
         if not slug_dir.is_dir():
+            continue
+        if not any(kw in slug_dir.name for kw in niche_keywords):
             continue
         manifest_file = slug_dir / "shorts_manifest.json"
         if not manifest_file.exists():
             continue
         slots: list[dict] = json.loads(manifest_file.read_text())
-        # Filter to slots matching the niche (if manifest has niche field per slot)
-        # Or just use all slots in the directory since we're already filtering by niche via args
         manifests.append((slug_dir.name, slots))
 
     if not manifests:

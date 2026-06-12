@@ -1,0 +1,14 @@
+[
+  {
+    "sceneId": "scene-06",
+    "componentName": "ImageTextReveal",
+    "script": "I realized I hadn't heard a word she'd said",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Physically at the table. Mentally still inside my laptop.",
+      "subtext": "WHY THE RITUAL STARTED"
+    }
+  }
+]

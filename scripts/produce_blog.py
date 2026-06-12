@@ -15,6 +15,10 @@ NICHES = {"ds": "data_science_tech", "life": "life_self_dev", "poetry": "poetry_
 
 from lib.slug import slugify
 from lib.schedule_calc import write_schedule_json, get_iso_week
+from lib.worksheet_cta import worksheet_cta_markdown, has_cta
+
+# Niches that ship a companion worksheet (poetry does not).
+WORKSHEET_NICHES = {"ds", "life"}
 
 
 def load(path: Path) -> str:
@@ -218,6 +222,11 @@ def main():
     out_dir  = REPO / "content" / "blogs" / week
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / filename
+
+    # Append worksheet CTA for niches that ship a worksheet (idempotent).
+    if args.niche in WORKSHEET_NICHES and not has_cta(blog_text):
+        blog_text = blog_text.rstrip() + "\n\n" + worksheet_cta_markdown(slug)
+
     out_path.write_text(blog_text, encoding="utf-8")
 
     # Write schedule.json to derivatives dir

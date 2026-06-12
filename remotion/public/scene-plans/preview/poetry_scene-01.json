@@ -1,0 +1,18 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "LineReveal",
+    "script": "I worked with things you can measure. Data. Models. Dashboards.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "lines": [
+        "Data.",
+        "Models.",
+        "Dashboards.",
+        "The clean grammar of proof."
+      ]
+    }
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "slug": "2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis",
+  "niche": "ds",
+  "rawVideo": "videos/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis.mp4",
+  "durationSec": 1794.11,
+  "silenceTrimStartSec": 1.094542,
+  "silenceTrimEndSec": 1795.200271,
+  "cutSegments": [
+    {
+      "startSec": 1.09,
+      "endSec": 1795.2
+    }
+  ],
+  "brollCues": [],
+  "captionsFile": "captions/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis.captions.json",
+  "showSubtitles": false,
+  "titleCard": {
+    "titleText": "Pandas in 4 Essential Skills: Load, Filter, Clean, Aggregate",
+    "showName": "Breath of Data Science",
+    "durationFrames": 90,
+    "insertAtFrame": 0
+  },
+  "lowerThird": {
+    "text": "Breath of Data Science",
+    "durationFrames": 90,
+    "insertAtFrame": 150
+  },
+  "outroCard": {
+    "nextText": "More on Breath of Data Science",
+    "durationFrames": 150
+  },
+  "colorGrading": {
+    "saturate": 1.22,
+    "hueRotate": 0,
+    "contrast": 1.07,
+    "brightness": 1.05,
+    "overlayColor": "rgba(120, 180, 255, 0.05)"
+  },
+  "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_overlay.json"
+}

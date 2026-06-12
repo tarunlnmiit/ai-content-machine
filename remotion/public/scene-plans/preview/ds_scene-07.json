@@ -1,0 +1,25 @@
+[
+  {
+    "sceneId": "scene-07",
+    "componentName": "ConceptExplainer",
+    "script": "A DataFrame column is a NumPy array with a name",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Pandas Builds on NumPy",
+      "cards": [
+        {
+          "term": "DataFrame column",
+          "definition": "A NumPy array with a name attached",
+          "icon": "🏷️"
+        },
+        {
+          "term": ".apply() & boolean indexing",
+          "definition": "Higher-level interface for the same NumPy ideas",
+          "icon": "⚙️"
+        }
+      ]
+    }
+  }
+]

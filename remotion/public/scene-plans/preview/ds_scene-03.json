@@ -1,0 +1,13 @@
+[
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "makes data interrogation feel like conversation instead of combat",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "quote": "Data interrogation should feel like conversation, not combat."
+    }
+  }
+]

@@ -1,0 +1,25 @@
+[
+  {
+    "sceneId": "scene-11",
+    "componentName": "ConceptExplainer",
+    "script": "It's called offloading",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Offloading",
+      "cards": [
+        {
+          "term": "Out of working memory",
+          "definition": "Move it from your head to an external store",
+          "icon": "🧠"
+        },
+        {
+          "term": "Free up resources",
+          "definition": "Capacity returns for actual thinking",
+          "icon": "💡"
+        }
+      ]
+    }
+  }
+]

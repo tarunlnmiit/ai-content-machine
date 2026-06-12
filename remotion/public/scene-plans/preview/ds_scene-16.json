@@ -1,0 +1,21 @@
+[
+  {
+    "sceneId": "scene-16",
+    "componentName": "CodeAnnotation",
+    "script": "The errors='coerce' argument is doing critical work here",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "df['order_date'] = pd.to_datetime(df['order_date'], errors='coerce')",
+        "df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')",
+        "df['region'] = df['region'].str.strip().str.title()",
+        "df['age'] = df['age'].fillna(df['age'].median())"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "errors='coerce' turns bad values into NaN instead of crashing"
+    }
+  }
+]

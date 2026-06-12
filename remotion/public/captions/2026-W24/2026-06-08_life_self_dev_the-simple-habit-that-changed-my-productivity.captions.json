@@ -1,0 +1,1108 @@
+[
+  {
+    "text": "I spent three years building the perfect productivity system, second brain, time block manifesto,",
+    "startMs": 0,
+    "endMs": 7880,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "weekly reviews with five-step sub reviews, color-coded calendars, nested databases, morning",
+    "startMs": 7880,
+    "endMs": 14400,
+    "timestampMs": 7880,
+    "confidence": null
+  },
+  {
+    "text": "routines with 17 steps.",
+    "startMs": 14400,
+    "endMs": 17240,
+    "timestampMs": 14400,
+    "confidence": null
+  },
+  {
+    "text": "And I was exhausted, busy, sure, organized technically, but not moving, not producing",
+    "startMs": 17240,
+    "endMs": 23640,
+    "timestampMs": 17240,
+    "confidence": null
+  },
+  {
+    "text": "the things that actually mattered.",
+    "startMs": 23640,
+    "endMs": 25960,
+    "timestampMs": 23640,
+    "confidence": null
+  },
+  {
+    "text": "Somewhere around year three, I had this uncomfortable realization.",
+    "startMs": 25960,
+    "endMs": 30920,
+    "timestampMs": 25960,
+    "confidence": null
+  },
+  {
+    "text": "The system had become the work.",
+    "startMs": 30920,
+    "endMs": 32960,
+    "timestampMs": 30920,
+    "confidence": null
+  },
+  {
+    "text": "I was managing my productivity framework instead of doing anything.",
+    "startMs": 32960,
+    "endMs": 37200,
+    "timestampMs": 32960,
+    "confidence": null
+  },
+  {
+    "text": "What changed things wasn't a better system.",
+    "startMs": 37200,
+    "endMs": 40440,
+    "timestampMs": 37200,
+    "confidence": null
+  },
+  {
+    "text": "It was stripping back to seven small habits, habits simple enough to do on bad days, especially",
+    "startMs": 40440,
+    "endMs": 47080,
+    "timestampMs": 40440,
+    "confidence": null
+  },
+  {
+    "text": "on bad days, not hacks, not optimization tricks, practices.",
+    "startMs": 47080,
+    "endMs": 52920,
+    "timestampMs": 47080,
+    "confidence": null
+  },
+  {
+    "text": "And I want to walk you through them, starting with the one that had the deepest impact,",
+    "startMs": 52920,
+    "endMs": 58280,
+    "timestampMs": 52920,
+    "confidence": null
+  },
+  {
+    "text": "because it's probably the last one you would expect.",
+    "startMs": 58280,
+    "endMs": 62560,
+    "timestampMs": 58280,
+    "confidence": null
+  },
+  {
+    "text": "The habit that changed everything didn't happen in the morning.",
+    "startMs": 62560,
+    "endMs": 66240,
+    "timestampMs": 62560,
+    "confidence": null
+  },
+  {
+    "text": "It happened at the end of the day.",
+    "startMs": 66240,
+    "endMs": 68800,
+    "timestampMs": 66240,
+    "confidence": null
+  },
+  {
+    "text": "Most people just stop working.",
+    "startMs": 68800,
+    "endMs": 71480,
+    "timestampMs": 68800,
+    "confidence": null
+  },
+  {
+    "text": "They close the laptop and carry all the unfinished work or the threads into dinner, into time",
+    "startMs": 71480,
+    "endMs": 77480,
+    "timestampMs": 71480,
+    "confidence": null
+  },
+  {
+    "text": "with family, into sleep.",
+    "startMs": 77480,
+    "endMs": 79280,
+    "timestampMs": 77480,
+    "confidence": null
+  },
+  {
+    "text": "The brain keeps spinning, not because something is wrong with you, but because your nervous",
+    "startMs": 79280,
+    "endMs": 84080,
+    "timestampMs": 79280,
+    "confidence": null
+  },
+  {
+    "text": "system doesn't know you're done.",
+    "startMs": 84080,
+    "endMs": 86600,
+    "timestampMs": 84080,
+    "confidence": null
+  },
+  {
+    "text": "It's still tracking open loops.",
+    "startMs": 86600,
+    "endMs": 89600,
+    "timestampMs": 86600,
+    "confidence": null
+  },
+  {
+    "text": "My shutdown ritual takes four minutes.",
+    "startMs": 89600,
+    "endMs": 92520,
+    "timestampMs": 89600,
+    "confidence": null
+  },
+  {
+    "text": "I scan what is unfinished, write one line about where I'll pick it up tomorrow.",
+    "startMs": 92520,
+    "endMs": 97920,
+    "timestampMs": 92520,
+    "confidence": null
+  },
+  {
+    "text": "Note one thing, I actually finished today.",
+    "startMs": 97920,
+    "endMs": 101360,
+    "timestampMs": 97920,
+    "confidence": null
+  },
+  {
+    "text": "And then this is the part that sounds strange.",
+    "startMs": 101360,
+    "endMs": 104520,
+    "timestampMs": 101360,
+    "confidence": null
+  },
+  {
+    "text": "I say out loud, shutdown complete.",
+    "startMs": 104520,
+    "endMs": 108280,
+    "timestampMs": 104520,
+    "confidence": null
+  },
+  {
+    "text": "That's it.",
+    "startMs": 108280,
+    "endMs": 109280,
+    "timestampMs": 108280,
+    "confidence": null
+  },
+  {
+    "text": "I remember sitting across from my wife at dinner, nodding along to a story she was telling",
+    "startMs": 109280,
+    "endMs": 114800,
+    "timestampMs": 109280,
+    "confidence": null
+  },
+  {
+    "text": "and suddenly realizing that I hadn't actually heard the last few minutes.",
+    "startMs": 114800,
+    "endMs": 119960,
+    "timestampMs": 114800,
+    "confidence": null
+  },
+  {
+    "text": "My body had left the desk, but my mind was still inside a YouTube script, a freelance",
+    "startMs": 119960,
+    "endMs": 125240,
+    "timestampMs": 119960,
+    "confidence": null
+  },
+  {
+    "text": "application and three unfinished blog drafts.",
+    "startMs": 125240,
+    "endMs": 128680,
+    "timestampMs": 125240,
+    "confidence": null
+  },
+  {
+    "text": "I wasn't working anymore, but I wasn't present either.",
+    "startMs": 128680,
+    "endMs": 133160,
+    "timestampMs": 128680,
+    "confidence": null
+  },
+  {
+    "text": "That was the moment I realized closing the laptop and stopping work weren't the same",
+    "startMs": 133160,
+    "endMs": 137920,
+    "timestampMs": 133160,
+    "confidence": null
+  },
+  {
+    "text": "thing.",
+    "startMs": 137920,
+    "endMs": 139480,
+    "timestampMs": 137920,
+    "confidence": null
+  },
+  {
+    "text": "David Allen calls these open loops.",
+    "startMs": 139480,
+    "endMs": 142160,
+    "timestampMs": 139480,
+    "confidence": null
+  },
+  {
+    "text": "Zygarnik's research shows our brains fixate on unfinished work until we register closure.",
+    "startMs": 142160,
+    "endMs": 148760,
+    "timestampMs": 142160,
+    "confidence": null
+  },
+  {
+    "text": "The shutdown ritual creates that closure artificially.",
+    "startMs": 148760,
+    "endMs": 152080,
+    "timestampMs": 148760,
+    "confidence": null
+  },
+  {
+    "text": "You're not telling yourself that work is done.",
+    "startMs": 152080,
+    "endMs": 154440,
+    "timestampMs": 152080,
+    "confidence": null
+  },
+  {
+    "text": "You're telling your nervous system that it can stop tracking now.",
+    "startMs": 154440,
+    "endMs": 158980,
+    "timestampMs": 154440,
+    "confidence": null
+  },
+  {
+    "text": "The next morning, I don't spend 30 minutes reconstructing where I left off.",
+    "startMs": 158980,
+    "endMs": 164720,
+    "timestampMs": 158980,
+    "confidence": null
+  },
+  {
+    "text": "I know exactly where to begin.",
+    "startMs": 164720,
+    "endMs": 168680,
+    "timestampMs": 164720,
+    "confidence": null
+  },
+  {
+    "text": "The second habit sounds almost embarrassingly simple.",
+    "startMs": 168680,
+    "endMs": 172520,
+    "timestampMs": 168680,
+    "confidence": null
+  },
+  {
+    "text": "Once a week, Sunday evenings for me, I spend 20 minutes writing down everything that is",
+    "startMs": 172520,
+    "endMs": 179160,
+    "timestampMs": 172520,
+    "confidence": null
+  },
+  {
+    "text": "in my head.",
+    "startMs": 179160,
+    "endMs": 180640,
+    "timestampMs": 179160,
+    "confidence": null
+  },
+  {
+    "text": "Not organized, not prioritized, just out.",
+    "startMs": 180640,
+    "endMs": 183880,
+    "timestampMs": 180640,
+    "confidence": null
+  },
+  {
+    "text": "Tasks, worries, half-formed ideas, things I promised people, stuff that feels stuck,",
+    "startMs": 183880,
+    "endMs": 190400,
+    "timestampMs": 183880,
+    "confidence": null
+  },
+  {
+    "text": "thoughts I haven't finished thinking.",
+    "startMs": 190400,
+    "endMs": 193600,
+    "timestampMs": 190400,
+    "confidence": null
+  },
+  {
+    "text": "Your working memory is small.",
+    "startMs": 193600,
+    "endMs": 195960,
+    "timestampMs": 193600,
+    "confidence": null
+  },
+  {
+    "text": "When you ask it to be both a doing machine and a remembering machine simultaneously,",
+    "startMs": 195960,
+    "endMs": 202240,
+    "timestampMs": 195960,
+    "confidence": null
+  },
+  {
+    "text": "there is a silent cognitive cost that drains you all week without you noticing.",
+    "startMs": 202240,
+    "endMs": 208240,
+    "timestampMs": 202240,
+    "confidence": null
+  },
+  {
+    "text": "Getting information out of your head and onto paper frees up capacity for actual thinking.",
+    "startMs": 208240,
+    "endMs": 215320,
+    "timestampMs": 208240,
+    "confidence": null
+  },
+  {
+    "text": "There was a stretch where the overload started showing up in strange ways.",
+    "startMs": 215320,
+    "endMs": 220860,
+    "timestampMs": 215320,
+    "confidence": null
+  },
+  {
+    "text": "I would open Notion and forget what I came there to do.",
+    "startMs": 220940,
+    "endMs": 224700,
+    "timestampMs": 220940,
+    "confidence": null
+  },
+  {
+    "text": "I would start explaining an idea for a blog and lose the thread halfway through.",
+    "startMs": 224700,
+    "endMs": 230220,
+    "timestampMs": 224700,
+    "confidence": null
+  },
+  {
+    "text": "The sentence itself.",
+    "startMs": 230220,
+    "endMs": 232120,
+    "timestampMs": 230220,
+    "confidence": null
+  },
+  {
+    "text": "One evening after bouncing between a medium article and an AI workflow idea and a YouTube",
+    "startMs": 232120,
+    "endMs": 237740,
+    "timestampMs": 232120,
+    "confidence": null
+  },
+  {
+    "text": "outline without finishing any of them, I grabbed a notebook, started dumping everything onto",
+    "startMs": 237740,
+    "endMs": 243820,
+    "timestampMs": 237740,
+    "confidence": null
+  },
+  {
+    "text": "paper, not organized, just emptied.",
+    "startMs": 243820,
+    "endMs": 247620,
+    "timestampMs": 243820,
+    "confidence": null
+  },
+  {
+    "text": "By the end of 20 minutes, I felt lighter than I had all week.",
+    "startMs": 247620,
+    "endMs": 253380,
+    "timestampMs": 247620,
+    "confidence": null
+  },
+  {
+    "text": "Don't organize the brain dump.",
+    "startMs": 253380,
+    "endMs": 255980,
+    "timestampMs": 253380,
+    "confidence": null
+  },
+  {
+    "text": "Don't categorize it.",
+    "startMs": 255980,
+    "endMs": 257260,
+    "timestampMs": 255980,
+    "confidence": null
+  },
+  {
+    "text": "The value is in the emptying, not the filling.",
+    "startMs": 257260,
+    "endMs": 261100,
+    "timestampMs": 257260,
+    "confidence": null
+  },
+  {
+    "text": "The third habit is old advice, but most people miss the constraint that makes it work.",
+    "startMs": 261100,
+    "endMs": 267220,
+    "timestampMs": 261100,
+    "confidence": null
+  },
+  {
+    "text": "Eat the frog.",
+    "startMs": 267220,
+    "endMs": 269020,
+    "timestampMs": 267220,
+    "confidence": null
+  },
+  {
+    "text": "Do your most dreaded tasks first, but only one frog.",
+    "startMs": 269020,
+    "endMs": 273100,
+    "timestampMs": 269020,
+    "confidence": null
+  },
+  {
+    "text": "When I started, I would list three, sometimes five, then I would have a frog festival and",
+    "startMs": 273100,
+    "endMs": 278860,
+    "timestampMs": 273100,
+    "confidence": null
+  },
+  {
+    "text": "wonder why I felt like I was always fighting uphill.",
+    "startMs": 278860,
+    "endMs": 283100,
+    "timestampMs": 278860,
+    "confidence": null
+  },
+  {
+    "text": "Avoidance is exhausting.",
+    "startMs": 283100,
+    "endMs": 285380,
+    "timestampMs": 283100,
+    "confidence": null
+  },
+  {
+    "text": "When you know there is something you should be doing and you are not, your brain runs",
+    "startMs": 285380,
+    "endMs": 290100,
+    "timestampMs": 285380,
+    "confidence": null
+  },
+  {
+    "text": "it in the background all day.",
+    "startMs": 290100,
+    "endMs": 292620,
+    "timestampMs": 290100,
+    "confidence": null
+  },
+  {
+    "text": "Every hour you don't do it, you are paying interest.",
+    "startMs": 292620,
+    "endMs": 296160,
+    "timestampMs": 292620,
+    "confidence": null
+  },
+  {
+    "text": "One frog kills one program.",
+    "startMs": 296160,
+    "endMs": 298380,
+    "timestampMs": 296160,
+    "confidence": null
+  },
+  {
+    "text": "Pick the most uncomfortable, most avoided thing.",
+    "startMs": 298380,
+    "endMs": 301900,
+    "timestampMs": 298380,
+    "confidence": null
+  },
+  {
+    "text": "Do it first.",
+    "startMs": 301900,
+    "endMs": 302900,
+    "timestampMs": 301900,
+    "confidence": null
+  },
+  {
+    "text": "The rest of the day feels lighter.",
+    "startMs": 302900,
+    "endMs": 305200,
+    "timestampMs": 302900,
+    "confidence": null
+  },
+  {
+    "text": "Not because you did more, but because you stopped carrying the thing that weighed the",
+    "startMs": 305200,
+    "endMs": 309860,
+    "timestampMs": 305200,
+    "confidence": null
+  },
+  {
+    "text": "most.",
+    "startMs": 309860,
+    "endMs": 310860,
+    "timestampMs": 309860,
+    "confidence": null
+  },
+  {
+    "text": "Here is something that's changed how I measure a day.",
+    "startMs": 310860,
+    "endMs": 314300,
+    "timestampMs": 310860,
+    "confidence": null
+  },
+  {
+    "text": "Instead of only tracking what is left on the to-do list, I write by hand the five or six",
+    "startMs": 314300,
+    "endMs": 319540,
+    "timestampMs": 314300,
+    "confidence": null
+  },
+  {
+    "text": "most meaningful things I actually did.",
+    "startMs": 319540,
+    "endMs": 322300,
+    "timestampMs": 319540,
+    "confidence": null
+  },
+  {
+    "text": "Not everything.",
+    "startMs": 322300,
+    "endMs": 323300,
+    "timestampMs": 322300,
+    "confidence": null
+  },
+  {
+    "text": "The things that moved something forward.",
+    "startMs": 323300,
+    "endMs": 326380,
+    "timestampMs": 323300,
+    "confidence": null
+  },
+  {
+    "text": "To-do lists create a permanent state of deficit.",
+    "startMs": 326380,
+    "endMs": 330260,
+    "timestampMs": 326380,
+    "confidence": null
+  },
+  {
+    "text": "The list never goes to zero.",
+    "startMs": 330260,
+    "endMs": 332380,
+    "timestampMs": 330260,
+    "confidence": null
+  },
+  {
+    "text": "You end the day and all you see is what you did not finish.",
+    "startMs": 332380,
+    "endMs": 336100,
+    "timestampMs": 332380,
+    "confidence": null
+  },
+  {
+    "text": "The done list corrects your perception of yourself.",
+    "startMs": 336100,
+    "endMs": 339740,
+    "timestampMs": 336100,
+    "confidence": null
+  },
+  {
+    "text": "We consistently underestimate how much we accomplish in a day.",
+    "startMs": 339740,
+    "endMs": 344500,
+    "timestampMs": 339740,
+    "confidence": null
+  },
+  {
+    "text": "Over time, it builds an accurate picture of your real capacity, which makes planning more",
+    "startMs": 344500,
+    "endMs": 350300,
+    "timestampMs": 344500,
+    "confidence": null
+  },
+  {
+    "text": "realistic and breaks the cycle of punishing overcommitment.",
+    "startMs": 350300,
+    "endMs": 356020,
+    "timestampMs": 350300,
+    "confidence": null
+  },
+  {
+    "text": "The fifth habit is one 90-minute block of deep work per day.",
+    "startMs": 356020,
+    "endMs": 361660,
+    "timestampMs": 356020,
+    "confidence": null
+  },
+  {
+    "text": "Not pomodoros.",
+    "startMs": 361660,
+    "endMs": 362660,
+    "timestampMs": 361660,
+    "confidence": null
+  },
+  {
+    "text": "90 minutes.",
+    "startMs": 362660,
+    "endMs": 363660,
+    "timestampMs": 362660,
+    "confidence": null
+  },
+  {
+    "text": "Here is why the length matters.",
+    "startMs": 363660,
+    "endMs": 366740,
+    "timestampMs": 363660,
+    "confidence": null
+  },
+  {
+    "text": "The first 15 to 20 minutes of any focus session are transitional.",
+    "startMs": 366740,
+    "endMs": 371860,
+    "timestampMs": 366740,
+    "confidence": null
+  },
+  {
+    "text": "You are warming up, not yet in flow.",
+    "startMs": 371860,
+    "endMs": 374460,
+    "timestampMs": 371860,
+    "confidence": null
+  },
+  {
+    "text": "A 25-minute block often ends right as your brain hits its stride.",
+    "startMs": 374460,
+    "endMs": 380660,
+    "timestampMs": 374460,
+    "confidence": null
+  },
+  {
+    "text": "The difference became obvious when I compared two writing days.",
+    "startMs": 380660,
+    "endMs": 384860,
+    "timestampMs": 380660,
+    "confidence": null
+  },
+  {
+    "text": "On the first, I did four or five pomodoro sessions interrupted by messages, emails,",
+    "startMs": 384860,
+    "endMs": 390860,
+    "timestampMs": 384860,
+    "confidence": null
+  },
+  {
+    "text": "and random research rabbit holes.",
+    "startMs": 390860,
+    "endMs": 393100,
+    "timestampMs": 390860,
+    "confidence": null
+  },
+  {
+    "text": "At the end, I had fragments of a script, fragments of a blog, fragments of ideas.",
+    "startMs": 393100,
+    "endMs": 398940,
+    "timestampMs": 393100,
+    "confidence": null
+  },
+  {
+    "text": "On another day, I protected a single 90-minute block and used it only for one article.",
+    "startMs": 398940,
+    "endMs": 404660,
+    "timestampMs": 398940,
+    "confidence": null
+  },
+  {
+    "text": "When the timer ended, I wasn't holding pieces of draft.",
+    "startMs": 404660,
+    "endMs": 408620,
+    "timestampMs": 404660,
+    "confidence": null
+  },
+  {
+    "text": "I had a finished draft.",
+    "startMs": 408620,
+    "endMs": 410400,
+    "timestampMs": 408620,
+    "confidence": null
+  },
+  {
+    "text": "The quality wasn't slightly better.",
+    "startMs": 410400,
+    "endMs": 412560,
+    "timestampMs": 410400,
+    "confidence": null
+  },
+  {
+    "text": "It was dramatically better.",
+    "startMs": 412560,
+    "endMs": 415040,
+    "timestampMs": 412560,
+    "confidence": null
+  },
+  {
+    "text": "One block protected.",
+    "startMs": 415040,
+    "endMs": 417040,
+    "timestampMs": 415040,
+    "confidence": null
+  },
+  {
+    "text": "Treat it like a meeting that you cannot cancel.",
+    "startMs": 417040,
+    "endMs": 420320,
+    "timestampMs": 417040,
+    "confidence": null
+  },
+  {
+    "text": "The last two habits are about clarity before the work even begins.",
+    "startMs": 420320,
+    "endMs": 424500,
+    "timestampMs": 420320,
+    "confidence": null
+  },
+  {
+    "text": "The night before, write exactly three priorities for tomorrow.",
+    "startMs": 424500,
+    "endMs": 428280,
+    "timestampMs": 424500,
+    "confidence": null
+  },
+  {
+    "text": "Not five.",
+    "startMs": 428280,
+    "endMs": 429280,
+    "timestampMs": 428280,
+    "confidence": null
+  },
+  {
+    "text": "Five means you don't have to choose.",
+    "startMs": 429280,
+    "endMs": 431560,
+    "timestampMs": 429280,
+    "confidence": null
+  },
+  {
+    "text": "Not ten.",
+    "startMs": 431560,
+    "endMs": 432560,
+    "timestampMs": 431560,
+    "confidence": null
+  },
+  {
+    "text": "That's a task list, not a priority list.",
+    "startMs": 432560,
+    "endMs": 435560,
+    "timestampMs": 432560,
+    "confidence": null
+  },
+  {
+    "text": "Three, if the day falls apart and you only finish one thing, you already know which one",
+    "startMs": 435560,
+    "endMs": 440720,
+    "timestampMs": 435560,
+    "confidence": null
+  },
+  {
+    "text": "it should be.",
+    "startMs": 440720,
+    "endMs": 442480,
+    "timestampMs": 440720,
+    "confidence": null
+  },
+  {
+    "text": "Doing it the night before matters because you have context then.",
+    "startMs": 442480,
+    "endMs": 447800,
+    "timestampMs": 442480,
+    "confidence": null
+  },
+  {
+    "text": "You know what happened today, what is still open, what tomorrow looks like.",
+    "startMs": 447800,
+    "endMs": 453420,
+    "timestampMs": 447800,
+    "confidence": null
+  },
+  {
+    "text": "Morning you should not have to negotiate with a dozen competing priorities.",
+    "startMs": 453420,
+    "endMs": 458640,
+    "timestampMs": 453420,
+    "confidence": null
+  },
+  {
+    "text": "That decision should already be made.",
+    "startMs": 458640,
+    "endMs": 461740,
+    "timestampMs": 458640,
+    "confidence": null
+  },
+  {
+    "text": "The first morning I tried this felt almost suspiciously easy.",
+    "startMs": 461740,
+    "endMs": 466940,
+    "timestampMs": 461740,
+    "confidence": null
+  },
+  {
+    "text": "Instead of opening email, checking analytics, scrolling through notifications and spending",
+    "startMs": 466940,
+    "endMs": 473140,
+    "timestampMs": 466940,
+    "confidence": null
+  },
+  {
+    "text": "20 minutes deciding what deserved attention that afternoon, I sat down with coffee and",
+    "startMs": 473140,
+    "endMs": 478500,
+    "timestampMs": 473140,
+    "confidence": null
+  },
+  {
+    "text": "immediately started writing.",
+    "startMs": 478500,
+    "endMs": 480700,
+    "timestampMs": 478500,
+    "confidence": null
+  },
+  {
+    "text": "The decision had already been made the night before.",
+    "startMs": 480700,
+    "endMs": 483620,
+    "timestampMs": 480700,
+    "confidence": null
+  },
+  {
+    "text": "There was no negotiation, no internal debate, no pretending to be productive while figuring",
+    "startMs": 483620,
+    "endMs": 488900,
+    "timestampMs": 483620,
+    "confidence": null
+  },
+  {
+    "text": "out what to do.",
+    "startMs": 488900,
+    "endMs": 490280,
+    "timestampMs": 488900,
+    "confidence": null
+  },
+  {
+    "text": "And the seventh each week, track one number.",
+    "startMs": 490280,
+    "endMs": 494540,
+    "timestampMs": 490280,
+    "confidence": null
+  },
+  {
+    "text": "Not everything, not steps and screen time and inbox count.",
+    "startMs": 494540,
+    "endMs": 499260,
+    "timestampMs": 494540,
+    "confidence": null
+  },
+  {
+    "text": "One metric that matters right now.",
+    "startMs": 499260,
+    "endMs": 501900,
+    "timestampMs": 499260,
+    "confidence": null
+  },
+  {
+    "text": "If you are trying to write more, count words per day.",
+    "startMs": 501900,
+    "endMs": 504940,
+    "timestampMs": 501900,
+    "confidence": null
+  },
+  {
+    "text": "If you have been avoiding hard conversations, count the ones you actually had.",
+    "startMs": 504940,
+    "endMs": 510260,
+    "timestampMs": 504940,
+    "confidence": null
+  },
+  {
+    "text": "What gets measured gets noticed.",
+    "startMs": 510260,
+    "endMs": 513020,
+    "timestampMs": 510260,
+    "confidence": null
+  },
+  {
+    "text": "And noticing it turns out is most of the work.",
+    "startMs": 513020,
+    "endMs": 516380,
+    "timestampMs": 513020,
+    "confidence": null
+  },
+  {
+    "text": "The number doesn't have to be impressive.",
+    "startMs": 516380,
+    "endMs": 518780,
+    "timestampMs": 516380,
+    "confidence": null
+  },
+  {
+    "text": "It just has to be real.",
+    "startMs": 518780,
+    "endMs": 521540,
+    "timestampMs": 518780,
+    "confidence": null
+  },
+  {
+    "text": "And none of these seven habits require a subscription.",
+    "startMs": 521540,
+    "endMs": 525380,
+    "timestampMs": 521540,
+    "confidence": null
+  },
+  {
+    "text": "Most take under five minutes.",
+    "startMs": 525380,
+    "endMs": 527340,
+    "timestampMs": 525380,
+    "confidence": null
+  },
+  {
+    "text": "The pattern connecting all of them isn't productivity in the industrial sense.",
+    "startMs": 527340,
+    "endMs": 532940,
+    "timestampMs": 527340,
+    "confidence": null
+  },
+  {
+    "text": "Output maximized, time optimized.",
+    "startMs": 532940,
+    "endMs": 535420,
+    "timestampMs": 532940,
+    "confidence": null
+  },
+  {
+    "text": "It's something quieter.",
+    "startMs": 535420,
+    "endMs": 537260,
+    "timestampMs": 535420,
+    "confidence": null
+  },
+  {
+    "text": "Each habit creates a moment of honest contact with how you are actually spending your attention.",
+    "startMs": 537260,
+    "endMs": 544460,
+    "timestampMs": 537260,
+    "confidence": null
+  },
+  {
+    "text": "The shutdown ritual asks, did I finish or did I just stop?",
+    "startMs": 544460,
+    "endMs": 549020,
+    "timestampMs": 544460,
+    "confidence": null
+  },
+  {
+    "text": "The done list asks, did actually anything happen today?",
+    "startMs": 549020,
+    "endMs": 553820,
+    "timestampMs": 549020,
+    "confidence": null
+  },
+  {
+    "text": "The single metric asks, what am I tracking?",
+    "startMs": 553820,
+    "endMs": 556960,
+    "timestampMs": 553820,
+    "confidence": null
+  },
+  {
+    "text": "Because it matters this week.",
+    "startMs": 556960,
+    "endMs": 559020,
+    "timestampMs": 556960,
+    "confidence": null
+  },
+  {
+    "text": "Productivity systems fail when they ask for a perfect structure across an imperfect life.",
+    "startMs": 559020,
+    "endMs": 565120,
+    "timestampMs": 559020,
+    "confidence": null
+  },
+  {
+    "text": "These habits don't ask for perfect.",
+    "startMs": 565120,
+    "endMs": 567380,
+    "timestampMs": 565120,
+    "confidence": null
+  },
+  {
+    "text": "They ask for honest.",
+    "startMs": 567380,
+    "endMs": 568980,
+    "timestampMs": 567380,
+    "confidence": null
+  },
+  {
+    "text": "And honest practiced every day compounds in ways no color-coded calendar ever matched.",
+    "startMs": 568980,
+    "endMs": 575380,
+    "timestampMs": 568980,
+    "confidence": null
+  },
+  {
+    "text": "You don't need all seven.",
+    "startMs": 575380,
+    "endMs": 577340,
+    "timestampMs": 575380,
+    "confidence": null
+  },
+  {
+    "text": "Start with one.",
+    "startMs": 577340,
+    "endMs": 578340,
+    "timestampMs": 577340,
+    "confidence": null
+  },
+  {
+    "text": "The one that stings a little when you read it.",
+    "startMs": 578340,
+    "endMs": 582180,
+    "timestampMs": 578340,
+    "confidence": null
+  },
+  {
+    "text": "That's the right one.",
+    "startMs": 582180,
+    "endMs": 583180,
+    "timestampMs": 582180,
+    "confidence": null
+  },
+  {
+    "text": "If something here named something you have been avoiding, I would genuinely like to know",
+    "startMs": 583180,
+    "endMs": 589180,
+    "timestampMs": 583180,
+    "confidence": null
+  },
+  {
+    "text": "which habit it was.",
+    "startMs": 589180,
+    "endMs": 591020,
+    "timestampMs": 589180,
+    "confidence": null
+  },
+  {
+    "text": "Drop it in the comments.",
+    "startMs": 591020,
+    "endMs": 592580,
+    "timestampMs": 591020,
+    "confidence": null
+  },
+  {
+    "text": "And if you are trying to build a simpler relationship with how you work, this is Breath of Life,",
+    "startMs": 592580,
+    "endMs": 598420,
+    "timestampMs": 592580,
+    "confidence": null
+  },
+  {
+    "text": "and I'll see you next week.",
+    "startMs": 598420,
+    "endMs": 599260,
+    "timestampMs": 598420,
+    "confidence": null
+  }
+]

@@ -1,0 +1,99 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ToolComparison",
+    "script": "To-do lists measure what's left. Done lists measure what happened.",
+    "niche": "life",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "To-Do List",
+        "points": [
+          "Measures what's LEFT",
+          "Always feels incomplete",
+          "Guilt by default"
+        ]
+      },
+      "rightSide": {
+        "label": "Done List",
+        "points": [
+          "Measures what HAPPENED",
+          "Evidence of capacity",
+          "Grounding by default"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "the five or six most meaningful things I did",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 6,
+      "label": "meaningful things that actually moved something",
+      "prefix": ""
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ImageTextReveal",
+    "script": "I write \u2014 by hand, not typed \u2014 the five or six most meaningful things I did",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "By hand. Not typed.",
+      "subtext": "THE END-OF-DAY DONE LIST"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "this builds an accurate picture of your actual capacity",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Why it works over time",
+      "cards": [
+        {
+          "term": "Accurate Capacity",
+          "definition": "Corrects how badly we underestimate what we do in a day",
+          "icon": "\ud83d\udcc8"
+        },
+        {
+          "term": "Invisible Progress",
+          "definition": "In knowledge work, output hides for long stretches",
+          "icon": "\ud83c\udf2b\ufe0f"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "find evidence that it didn't. That evidence is grounding",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Five days of done lists are evidence the week didn't go nowhere.",
+      "attribution": "Habit #4"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "HandwrittenReveal",
+    "script": "especially in knowledge work, where progress is invisible for long stretches",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "Progress is invisible",
+        "for long stretches.",
+        "A done list",
+        "makes it visible again."
+      ],
+      "niche": "life"
+    }
+  }
+]

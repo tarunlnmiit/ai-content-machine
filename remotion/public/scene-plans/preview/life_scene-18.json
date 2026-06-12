@@ -1,0 +1,14 @@
+[
+  {
+    "sceneId": "scene-18",
+    "componentName": "AtmosphericQuote",
+    "script": "What gets measured gets noticed",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "panel-right",
+    "props": {
+      "quote": "What gets measured gets noticed. And noticing, it turns out, is most of the work.",
+      "attribution": ""
+    }
+  }
+]

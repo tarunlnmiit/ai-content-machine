@@ -530,8 +530,8 @@ def main():
         longform_url = ""
         if args.slug:
             date_str = args.slug[:10]
-        week = get_iso_week(date_str)
-        meta_path = BASE_DIR / "content" / "derivatives" / week / args.slug / "youtube_shorts_metadata.json"
+            week = get_iso_week(date_str)
+            meta_path = BASE_DIR / "content" / "derivatives" / week / args.slug / "youtube_shorts_metadata.json"
             if meta_path.exists():
                 try:
                     meta = json.loads(meta_path.read_text())

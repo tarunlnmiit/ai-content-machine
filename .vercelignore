@@ -1,0 +1,32 @@
+# Keep Vercel deploys small. The serverless functions only need:
+#   api/, scripts/build-worksheets-manifest.mjs, config/worksheet_config.json,
+#   worksheets-manifest.json, and output/worksheets/** (the PDFs).
+# Everything heavy or secret below is excluded.
+
+# Secrets — .env is gitignored, but list it here too so a root deploy
+# can NEVER upload real Notion/Substack/X/LinkedIn credentials.
+.env
+.env.*
+
+# Heavy media / generated assets
+assets/
+remotion/
+recorder/
+content/
+data/
+graphify-out/
+output/animations/
+output/visuals/
+*.mov
+*.mp4
+*.mp3
+*.wav
+
+# Tooling noise
+agents/
+prompts/
+documentation/
+docs/
+__pycache__/
+*.pyc
+.claude/

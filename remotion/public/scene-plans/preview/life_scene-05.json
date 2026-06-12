@@ -1,0 +1,16 @@
+[
+  {
+    "sceneId": "scene-05",
+    "componentName": "CounterReveal",
+    "script": "Mine takes four minutes",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 4,
+      "label": "Minutes to close the day",
+      "prefix": "",
+      "suffix": " min"
+    }
+  }
+]

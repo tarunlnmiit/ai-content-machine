@@ -1,0 +1,16 @@
+[
+  {
+    "sceneId": "scene-06",
+    "componentName": "CounterReveal",
+    "script": "make it workable in under an hour",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 1,
+      "label": "unfamiliar dataset to workable",
+      "prefix": "< ",
+      "suffix": " hr"
+    }
+  }
+]

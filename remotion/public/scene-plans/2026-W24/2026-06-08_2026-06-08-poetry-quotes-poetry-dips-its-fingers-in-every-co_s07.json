@@ -1,0 +1,80 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "There's no lesson here. That's the point",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "There's no lesson here. That's the point."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ImageTextReveal",
+    "script": "a person who has stood inside a colour, briefly, and recognized it",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "You've stood inside a colour, briefly",
+      "subtext": "AND RECOGNIZED IT FOR WHAT IT WAS"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "It doesn't solve problems",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Poetry doesn't sharpen your frameworks. It doesn't solve problems."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "HandwrittenReveal",
+    "script": "That is not a small thing. It is the whole thing",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "That is not a small thing.",
+        "It is the whole thing."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "The poem finds you. Your only job is to not keep the door entirely shut",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "The poem finds you. Your only job is to not keep the door entirely shut."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CounterReveal",
+    "script": "That's the whole ask: one line that followed you home",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "value": 1,
+      "suffix": " line",
+      "label": "that followed you home \u2014 bring it"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "Find me on Instagram at mistakenlyhuman. This is Breath of Poetry",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Find me on Instagram at mistakenlyhuman.",
+      "attribution": "Breath of Poetry"
+    }
+  }
+]

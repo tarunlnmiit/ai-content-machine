@@ -1,0 +1,109 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Most people just... stop working.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Most people just... stop working.",
+      "attribution": "Breath of Life"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ImageTextReveal",
+    "script": "Physically, I was at the table. Mentally, I was still inside my laptop",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Present at the table. Still inside the laptop.",
+      "subtext": "THE UNFINISHED LOOP"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ConceptExplainer",
+    "script": "The shutdown ritual is a deliberate signal.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Why your brain won't stop spinning",
+      "cards": [
+        {
+          "term": "Open Loops",
+          "definition": "The brain keeps spinning because it doesn't know you're done",
+          "icon": "\ud83d\udd01"
+        },
+        {
+          "term": "Shutdown Ritual",
+          "definition": "A deliberate signal that work has actually closed",
+          "icon": "\ud83d\uded1"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "Mine takes four minutes.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 4,
+      "label": "minutes to fully shut down",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "NumberedTips",
+    "script": "I scan my task list, note what's unfinished and where I'll pick it up tomorrow",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "title": "The 4-minute shutdown",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Scan the task list"
+        },
+        {
+          "number": 2,
+          "headline": "Note what's unfinished + where to resume"
+        },
+        {
+          "number": 3,
+          "headline": "Write one sentence on what you got done"
+        },
+        {
+          "number": 4,
+          "headline": "Say out loud: 'Shutdown complete'"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CounterReveal",
+    "script": "not spending the first thirty minutes reconstructing where you left off",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 30,
+      "label": "morning minutes you stop wasting",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "say out loud \u2014 literally out loud \u2014 \"Shutdown complete.\"",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "It sounds strange. It works.",
+      "attribution": "Shutdown complete."
+    }
+  }
+]

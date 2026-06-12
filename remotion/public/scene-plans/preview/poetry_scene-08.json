@@ -1,0 +1,18 @@
+[
+  {
+    "sceneId": "scene-08",
+    "componentName": "HandwrittenReveal",
+    "script": "The grey of a commute counts. The brown of bad coffee counts.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "The grey of a commute counts.",
+        "The brown of bad coffee counts.",
+        "The particular blue of a Tuesday afternoon."
+      ],
+      "niche": "poetry"
+    }
+  }
+]

@@ -10,10 +10,13 @@ import argparse
 import json
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Optional
+
+_print_lock = threading.Lock()
 
 REPO_ROOT = Path(__file__).parent.parent
 REMOTION_DIR = REPO_ROOT / "remotion"
@@ -55,20 +58,30 @@ def render_plan(plan_file: Path, week: str, dry_run: bool) -> tuple[str, bool, f
         "--log", "verbose",
     ]
 
-    print(f"  {'[DRY-RUN] ' if dry_run else ''}render {composition} → {out_file.name}")
+    with _print_lock:
+        print(f"  {'[DRY-RUN] ' if dry_run else ''}render {composition} → {out_file.name}")
     if dry_run:
         return slug, True, 0.0
 
     t0 = time.time()
-    result = subprocess.run(cmd, cwd=str(REMOTION_DIR), capture_output=True, text=True)
+    proc = subprocess.Popen(
+        cmd, cwd=str(REMOTION_DIR),
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+    )
+    for line in proc.stdout:
+        with _print_lock:
+            print(f"  [{slug}] {line}", end="")
+    proc.wait()
     elapsed = time.time() - t0
 
-    if result.returncode != 0:
-        print(f"  [FAIL] {slug}: {result.stderr[-500:]}")
+    if proc.returncode != 0:
+        with _print_lock:
+            print(f"  [FAIL] {slug} ({elapsed:.1f}s)")
         return slug, False, elapsed
 
     size_mb = out_file.stat().st_size / 1_048_576 if out_file.exists() else 0
-    print(f"  [OK] {slug} — {elapsed:.1f}s — {size_mb:.1f} MB")
+    with _print_lock:
+        print(f"  [OK] {slug} — {elapsed:.1f}s — {size_mb:.1f} MB")
     return slug, True, elapsed
 
 
@@ -77,6 +90,7 @@ def main() -> None:
     parser.add_argument("--week", required=True, help="ISO week, e.g. 2026-W24")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--concurrency", type=int, default=1)
+    parser.add_argument("--niche", default=None, help="Filter by niche, e.g. life, data_science, poetry")
     args = parser.parse_args()
 
     week_dir = EDIT_PLANS_DIR / args.week
@@ -87,8 +101,14 @@ def main() -> None:
     if not plans:
         sys.exit(f"No *.json files in {week_dir}")
 
+    if args.niche:
+        plans = [p for p in plans if load_plan(p).get("niche") == args.niche]
+        if not plans:
+            sys.exit(f"No plans with niche='{args.niche}' in {week_dir}")
+
+    niche_label = f"  niche={args.niche}" if args.niche else ""
     print(f"\n── Remotion render_week {args.week} ──────────────────────────")
-    print(f"   {len(plans)} plan(s) found  concurrency={args.concurrency}")
+    print(f"   {len(plans)} plan(s) found  concurrency={args.concurrency}{niche_label}")
 
     results: list[tuple[str, bool, float]] = []
 

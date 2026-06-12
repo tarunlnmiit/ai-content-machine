@@ -1,0 +1,13 @@
+[
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "The lyric form is the one that admits what human experience refuses to sort",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "panel-top",
+    "props": {
+      "quote": "The lyric form admits what human experience refuses to sort."
+    }
+  }
+]

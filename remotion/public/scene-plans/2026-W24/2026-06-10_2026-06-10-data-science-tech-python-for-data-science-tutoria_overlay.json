@@ -1,0 +1,392 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "NumberedTips",
+    "script": "Column names with trailing spaces. Dates formatted three different ways",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "title": "A Real Mess",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Trailing spaces",
+          "body": "Hidden in column names"
+        },
+        {
+          "number": 2,
+          "headline": "Three date formats",
+          "body": "Same column, inconsistent"
+        },
+        {
+          "number": 3,
+          "headline": "Four kinds of null",
+          "body": "N/A, na, None, dash"
+        },
+        {
+          "number": 4,
+          "headline": "Strings in numbers",
+          "body": "\"approx 50k\" as revenue"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "I spent two weeks on that dataset before I ran a single analysis",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 2,
+      "label": "weeks cleaning before any analysis",
+      "suffix": " wks"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "makes data interrogation feel like conversation instead of combat",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "quote": "Data interrogation should feel like conversation, not combat."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "NumberedTips",
+    "script": "loading and exploring, selecting and filtering, cleaning messy data, and aggregating",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "title": "Four Pandas Skills",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Load & Explore"
+        },
+        {
+          "number": 2,
+          "headline": "Select & Filter"
+        },
+        {
+          "number": 3,
+          "headline": "Clean"
+        },
+        {
+          "number": 4,
+          "headline": "Aggregate"
+        }
+      ]
+    }
+  },
+  {
+    "componentName": "DataPipelineFlow",
+    "script": "loading and exploring, selecting and filtering, cleaning messy data, and aggregating",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Animated data pipeline: four operations (Load \u2192 Select \u2192 Clean \u2192 Aggregate) shown as flowing data rows transforming sequentially. Raw table rows enter left, each stage highlights one operation with niche accent color, clean rows exit right. Motion-graphic style, no code \u2014 pure data flow."
+    },
+    "sceneId": "scene-05"
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CounterReveal",
+    "script": "make it workable in under an hour",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 1,
+      "label": "unfamiliar dataset to workable",
+      "prefix": "< ",
+      "suffix": " hr"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "ConceptExplainer",
+    "script": "A DataFrame column is a NumPy array with a name",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Pandas Builds on NumPy",
+      "cards": [
+        {
+          "term": "DataFrame column",
+          "definition": "A NumPy array with a name attached",
+          "icon": "\ud83c\udff7\ufe0f"
+        },
+        {
+          "term": ".apply() & boolean indexing",
+          "definition": "Higher-level interface for the same NumPy ideas",
+          "icon": "\u2699\ufe0f"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "CodeAnnotation",
+    "script": "Before you analyze anything, you orient yourself",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "import pandas as pd",
+        "df = pd.read_csv('sales_records.csv')",
+        "print(df.shape)",
+        "print(df.dtypes)",
+        "print(df.describe())",
+        "print(df.isnull().sum())"
+      ],
+      "language": "python",
+      "highlightLine": 6,
+      "annotationText": "Orient first: shape, types, summary, nulls"
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "DataVizReveal",
+    "script": "print(df.shape)       # e.g., (15420, 12)",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "df.shape",
+      "chartType": "number",
+      "data": [
+        {
+          "label": "rows",
+          "value": 15420
+        },
+        {
+          "label": "columns",
+          "value": 12
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "CounterReveal",
+    "script": "Run df.describe() and in thirty seconds you know",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 30,
+      "label": "seconds to spot bad columns",
+      "suffix": " s"
+    }
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "WordReveal",
+    "script": "The isnull().sum() line is the one most beginners skip. Don't skip it",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "panel-right",
+    "props": {
+      "words": [
+        "Don't",
+        "skip",
+        "isnull().sum()"
+      ],
+      "emphasis": [
+        2
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "CounterReveal",
+    "script": "This is sixty percent of what you actually do in Pandas",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 60,
+      "label": "of real Pandas work is selecting",
+      "suffix": "%"
+    }
+  },
+  {
+    "sceneId": "scene-13",
+    "componentName": "CodeAnnotation",
+    "script": "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
+        "filtered = df[(df['region'] == 'North') & (df['revenue'] > 5000)]",
+        "filtered_v2 = df.query(\"region == 'North' and revenue > 5000\")",
+        "df[df['status'].isin(['active', 'trial'])]"
+      ],
+      "language": "python",
+      "highlightLine": 3,
+      "annotationText": ".query() is far more readable for multi-condition filters"
+    }
+  },
+  {
+    "sceneId": "scene-14",
+    "componentName": "ToolComparison",
+    "script": "use & and | for boolean filters, not Python's and and or",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "and / or",
+        "points": [
+          "Python keywords",
+          "Don't work on arrays",
+          "Silently break filters"
+        ]
+      },
+      "rightSide": {
+        "label": "& / |",
+        "points": [
+          "Vectorized operators",
+          "Work on Series",
+          "Wrap each condition in ()"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-15",
+    "componentName": "AtmosphericQuote",
+    "script": "Cleaning is analysis. You can't separate them",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "panel-left",
+    "props": {
+      "quote": "Cleaning is analysis. You can't separate them."
+    }
+  },
+  {
+    "sceneId": "scene-16",
+    "componentName": "CodeAnnotation",
+    "script": "The errors='coerce' argument is doing critical work here",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "df['order_date'] = pd.to_datetime(df['order_date'], errors='coerce')",
+        "df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')",
+        "df['region'] = df['region'].str.strip().str.title()",
+        "df['age'] = df['age'].fillna(df['age'].median())"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "errors='coerce' turns bad values into NaN instead of crashing"
+    }
+  },
+  {
+    "sceneId": "scene-17",
+    "componentName": "CodeAnnotation",
+    "script": "The .agg() pattern with named aggregations \u2014 commit that to memory",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "region_summary = df.groupby('region').agg(",
+        "    total_revenue=('revenue', 'sum'),",
+        "    avg_order_value=('revenue', 'mean'),",
+        "    order_count=('order_id', 'count')",
+        ").reset_index()"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Named aggregations: clean column names, multiple metrics, one pass"
+    }
+  },
+  {
+    "sceneId": "scene-18",
+    "componentName": "ToolComparison",
+    "script": "grouped DataFrames are for computation, pivot tables are for communication",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "groupby().agg()",
+        "points": [
+          "For computation",
+          "Flat metrics",
+          "Feeds further analysis"
+        ]
+      },
+      "rightSide": {
+        "label": "pivot_table()",
+        "points": [
+          "For communication",
+          "Region x month grid",
+          "The picture they imagine"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-19",
+    "componentName": "TransformationArc",
+    "script": "It removes the mechanical friction that gets between you and thinking",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "beforeLabel": "Plumbing problems",
+      "afterLabel": "Data science problems",
+      "beforePoints": [
+        "How to reach row 400",
+        "Renaming without losing data",
+        "Energy spent on logistics"
+      ],
+      "afterPoints": [
+        "Energy on the real question",
+        "Conversation with the data",
+        "Friction removed"
+      ],
+      "transformLabel": "Learn Pandas properly"
+    }
+  },
+  {
+    "sceneId": "scene-20",
+    "componentName": "HabitLoop",
+    "script": "Run through these four sections in order",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "title": "The Four-Step Pass",
+      "steps": [
+        {
+          "label": "Explore"
+        },
+        {
+          "label": "Select"
+        },
+        {
+          "label": "Clean"
+        },
+        {
+          "label": "Aggregate"
+        }
+      ]
+    }
+  }
+]

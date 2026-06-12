@@ -1,0 +1,103 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "CounterReveal",
+    "script": "This is sixty percent of what you actually do in Pandas",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 60,
+      "label": "of real Pandas work is selecting and filtering",
+      "suffix": "%"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "high_value = df.loc[",
+        "    df['revenue'] > 10000,",
+        "    ['customer_id', 'revenue']",
+        "]"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": ".loc takes a row condition and the exact columns you want \u2014 in one call."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "df.loc[df['revenue'] > 10000",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 10000,
+      "label": "revenue cutoff for high-value rows",
+      "prefix": "$",
+      "suffix": "+"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CodeAnnotation",
+    "script": "use & and | for boolean filters, not Python's and and or",
+    "niche": "ds",
+    "durationSec": 8,
+    "props": {
+      "code": [
+        "# Wrap each condition in parentheses",
+        "filtered = df[(df['region'] == 'North') &",
+        "             (df['revenue'] > 5000)]"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Use & and |, not 'and'/'or' \u2014 those don't work on arrays. Parenthesize each condition."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ToolComparison",
+    "script": ".query() is underused. For multi-condition filters it's dramatically more readable",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Stacked booleans",
+        "points": [
+          "df[(df['region']=='North') &",
+          "(df['revenue']>5000)]",
+          "Parentheses everywhere"
+        ]
+      },
+      "rightSide": {
+        "label": ".query()",
+        "points": [
+          "df.query(\"region=='North'",
+          "and revenue > 5000\")",
+          "Reads like a sentence"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "ConceptExplainer",
+    "script": "instead of three == conditions joined with |, just pass a list",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": ".isin() scales to any list",
+      "cards": [
+        {
+          "term": "df[df['status'].isin(['active', 'trial'])]",
+          "definition": "One call replaces three == conditions joined by |"
+        }
+      ]
+    }
+  }
+]

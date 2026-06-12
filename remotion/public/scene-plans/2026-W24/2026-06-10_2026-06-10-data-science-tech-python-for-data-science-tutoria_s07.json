@@ -1,0 +1,121 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Pandas doesn't replace thinking. It removes the mechanical friction",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "quote": "Pandas doesn't replace thinking. It removes the mechanical friction between you and thinking.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ToolComparison",
+    "script": "Those aren't data science problems. They're plumbing problems.",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Plumbing problems",
+        "points": [
+          "How to get to row 400",
+          "How to rename a column",
+          "Logistics, not insight"
+        ]
+      },
+      "rightSide": {
+        "label": "Data science problems",
+        "points": [
+          "What is the data telling me?",
+          "Which question matters?",
+          "Where the real work is"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ConceptExplainer",
+    "script": "plumbing problems eat the time that should go toward the actual question",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Where your energy used to go",
+      "cards": [
+        {
+          "term": "Before",
+          "definition": "Enormous energy on logistics \u2014 getting to a row, renaming a column"
+        },
+        {
+          "term": "After",
+          "definition": "Friction removed, attention freed for the actual question"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "NumberedTips",
+    "script": "Run through these four sections in order",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "title": "The four-section workflow",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Explore",
+          "body": "Orient: shape, dtypes, nulls"
+        },
+        {
+          "number": 2,
+          "headline": "Select",
+          "body": "Pull the rows and columns that matter"
+        },
+        {
+          "number": 3,
+          "headline": "Clean",
+          "body": "Fix what's broken, coerce types"
+        },
+        {
+          "number": 4,
+          "headline": "Aggregate",
+          "body": "Summarize into something that tells you something"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ConceptExplainer",
+    "script": "Tutorial 5 picks up from here \u2014 matplotlib and seaborn",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "What comes next",
+      "cards": [
+        {
+          "term": "Tutorial 5",
+          "definition": "matplotlib and seaborn \u2014 making clean data visible"
+        },
+        {
+          "term": "The catch",
+          "definition": "Plots are only as honest as the data feeding them"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "Get Pandas right first, and visualization becomes translation",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Get Pandas right first, and visualization becomes translation.",
+      "attribution": "Breath of Data Science"
+    }
+  }
+]

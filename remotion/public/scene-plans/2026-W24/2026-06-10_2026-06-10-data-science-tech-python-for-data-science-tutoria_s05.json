@@ -1,0 +1,123 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Cleaning is analysis. You can't separate them.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Cleaning is analysis. You can't separate them.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "pd.to_datetime(df['order_date'], errors='coerce')",
+    "niche": "ds",
+    "durationSec": 8,
+    "props": {
+      "code": [
+        "df['order_date'] = pd.to_datetime(",
+        "    df['order_date'], errors='coerce')",
+        "df['revenue'] = pd.to_numeric(",
+        "    df['revenue'], errors='coerce')"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "errors='coerce' turns bad values into NaN instead of crashing \u2014 your rows survive."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ConceptExplainer",
+    "script": "Instead of crashing, it turns it into NaN and keeps moving",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "What errors='coerce' buys you",
+      "cards": [
+        {
+          "term": "No crash",
+          "definition": "Bad value becomes NaN, the script keeps running"
+        },
+        {
+          "term": "Row structure preserved",
+          "definition": "You handle flagged values intentionally, not at 2am"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CodeAnnotation",
+    "script": "df['region'] = df['region'].str.strip().str.title()",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "df['region'] = df['region'].str.strip().str.title()",
+        "df_filled = df.fillna({'revenue': 0, 'notes': 'none'})",
+        "df['age'] = df['age'].fillna(df['age'].median())",
+        "df = df.drop_duplicates(subset=['order_id'])"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Strip trailing spaces, title-case categories, fill or drop \u2014 one tidy pass."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "NumberedTips",
+    "script": "open a dataset, clean what's broken",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "The cleaning checklist",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Coerce types",
+          "body": "to_datetime / to_numeric with errors='coerce'"
+        },
+        {
+          "number": 2,
+          "headline": "Normalize strings",
+          "body": ".str.strip().str.title()"
+        },
+        {
+          "number": 3,
+          "headline": "Handle nulls",
+          "body": "dropna or fillna deliberately"
+        },
+        {
+          "number": 4,
+          "headline": "Re-check",
+          "body": "Run isnull().sum() and dtypes again"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "WordReveal",
+    "script": "a cleaning step that created new nulls is still a bug",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "New",
+        "nulls",
+        "after",
+        "cleaning?",
+        "Still",
+        "a",
+        "bug."
+      ],
+      "emphasis": [
+        1,
+        6
+      ]
+    }
+  }
+]

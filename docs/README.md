@@ -98,7 +98,7 @@ No DB ID hardcoded in scripts — `.env` is the single source.
 | `sync_ideas_to_notion.py` | weekly_ideas.md | Notion DB | Sunday + daily |
 | `produce_blog.py` | KB + topic (opt `--listicle N` for Top-N) | `content/blogs/<slug>.md` | Mon/Tue/Wed |
 | `auto_edit.py` | raw video + script | `assets/video/edited/<slug>.mp4` | Thu/Fri/Sat |
-| `clip_shorts.py` | edited video | `assets/shorts/<slug>_*.mp4` | post-edit |
+| `clip_shorts.py` | edited video | `assets/video/edited/shorts/{slug}_short_NN.mp4` | post-edit |
 | `repurpose_blog.py` | blog markdown | Medium/Substack/LinkedIn drafts | post-blog |
 | `publish_medium.py` | blog markdown | Medium API | Sat |
 | `upload_youtube.py` | edited video | YouTube API | Thu/Fri |

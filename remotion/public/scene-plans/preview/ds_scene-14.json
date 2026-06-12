@@ -1,0 +1,28 @@
+[
+  {
+    "sceneId": "scene-14",
+    "componentName": "ToolComparison",
+    "script": "use & and | for boolean filters, not Python's and and or",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "and / or",
+        "points": [
+          "Python keywords",
+          "Don't work on arrays",
+          "Silently break filters"
+        ]
+      },
+      "rightSide": {
+        "label": "& / |",
+        "points": [
+          "Vectorized operators",
+          "Work on Series",
+          "Wrap each condition in ()"
+        ]
+      }
+    }
+  }
+]

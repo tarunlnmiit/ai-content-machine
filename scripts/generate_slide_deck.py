@@ -48,8 +48,10 @@ DECK_SYSTEM = """You are a presentation design system for {brand_name} ({handle}
 
 - Handle: {handle}
 - Brand name: {brand_name}
+- Niche: {niche_label}
 - Font heading: {font_heading}
 - Font body: {font_body}
+- Font style: {font_style}
 - Tone: {tone}
 
 ## Color Palette
@@ -153,8 +155,7 @@ html, body {{ width:100%; height:100%; overflow:hidden; background: DARK_BG; }}
   "Tutorial/series" eyebrow in PRIMARY if relevant.
 - Content slides: an eyebrow/section label in PRIMARY, an {font_heading} heading 56-64px, then
   bullets ({font_body}, ~30px) — one <li> per provided bullet, with a small PRIMARY tick marker.
-- Niche decorative cues, pure CSS only (no <img>, no external URLs):
-  DS = faint grid / circuit lines · Life = soft organic curves / bokeh glow · Poetry = ink-wash / halos.
+- Niche decorative style ({niche_label}): {decorative_cue} — pure CSS only, no <img>, no external URLs.
 - Brand bar: handle ({handle}) discreetly in a corner of each slide, muted.
 - Use only px values (canvas is fixed 1920×1080). No vw/vh inside slides.
 - Google Fonts: load only {font_heading} and {font_body}.

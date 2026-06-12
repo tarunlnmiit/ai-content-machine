@@ -1,0 +1,105 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "The morning version of you should never have to decide what to work on.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "The morning version of you should never have to decide what to work on.",
+      "attribution": "Habit #6"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "exactly three priorities, written tonight \u2014 is what makes it work",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "The constraint is the whole habit",
+      "cards": [
+        {
+          "term": "Three",
+          "definition": "Forces real prioritization \u2014 you have to choose",
+          "icon": "3\ufe0f\u20e3"
+        },
+        {
+          "term": "Tonight",
+          "definition": "You still have context; morning-you decides cold",
+          "icon": "\ud83c\udf19"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "Three forces prioritization.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 3,
+      "label": "priorities \u2014 no more, no less",
+      "prefix": ""
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "NumberedTips",
+    "script": "Five is too many; you don't have to choose. Ten is a task list, not a priority list.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "title": "Why three, not five or ten",
+      "tips": [
+        {
+          "number": 3,
+          "headline": "Forces you to actually choose"
+        },
+        {
+          "number": 5,
+          "headline": "Too many \u2014 no choice required"
+        },
+        {
+          "number": 10,
+          "headline": "That's a task list, not priorities"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ImageTextReveal",
+    "script": "I sat down at my desk, opened my notebook, and started working within minutes",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Sat down. Started working within minutes.",
+      "subtext": "THE FIRST MORNING IT CLICKED"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CounterReveal",
+    "script": "spending twenty minutes deciding what deserved attention first",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 20,
+      "label": "morning minutes you stop negotiating",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "The work began before doubt had a chance to join the conversation.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "The work began before doubt had a chance to join the conversation.",
+      "attribution": "Past-me already decided"
+    }
+  }
+]

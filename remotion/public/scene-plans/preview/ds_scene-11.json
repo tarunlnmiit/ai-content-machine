@@ -1,0 +1,20 @@
+[
+  {
+    "sceneId": "scene-11",
+    "componentName": "WordReveal",
+    "script": "The isnull().sum() line is the one most beginners skip. Don't skip it",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "panel-right",
+    "props": {
+      "words": [
+        "Don't",
+        "skip",
+        "isnull().sum()"
+      ],
+      "emphasis": [
+        2
+      ]
+    }
+  }
+]

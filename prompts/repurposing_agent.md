@@ -58,13 +58,14 @@ Return exactly this JSON structure. All keys required. No extra keys. No markdow
       "string — tweet 6 (optional — include if content warrants)",
       "string — tweet 7 (optional)"
     ],
-    "closing_tweet": "string — wrap-up + soft CTA (follow / retweet if useful), max 280 chars"
+    "closing_tweet": "string — wrap-up + soft CTA (follow / retweet if useful), max 280 chars",
+    "hashtags": ["string — 1–2 TOPICAL keywords specific to this post, lowercase, no '#' prefix; curated niche tags are added automatically"]
   },
 
   "linkedin_post": {
     "opening_line": "string — first line only, no hook formula, just the strongest sentence from the piece",
     "body": "string — 150–250 words, paragraph breaks with \\n\\n, no bullet points, professional but personal tone",
-    "hashtags": ["string", "string", "string"]
+    "hashtags": ["string — 2–3 TOPICAL keywords specific to this post's subject (not generic), lowercase, no '#' prefix; curated niche tags are merged + capped automatically"]
   },
 
   "instagram_caption": {
@@ -73,7 +74,7 @@ Return exactly this JSON structure. All keys required. No extra keys. No markdow
     "hook_line": "string — first line of caption, must work as a standalone sentence in feed preview",
     "caption_body": "string — 80–150 words, short paragraphs, no em-dash overuse",
     "slide_titles": ["string — slide 1 title", "string — slide 2 title"],
-    "hashtags": ["string", "string", "string", "string", "string"]
+    "hashtags": ["string — 4–6 TOPICAL keywords specific to this post, lowercase, no '#' prefix; curated niche tags are merged + capped automatically"]
   },
 
   "newsletter_summary": {
@@ -113,7 +114,8 @@ Return exactly this JSON structure. All keys required. No extra keys. No markdow
   },
 
   "threads_post": {
-    "body": "string — 200–400 chars, conversational and direct, reads like a personal thought not a caption, no hashtags, no emojis unless natural, link placeholder [BLOG_LINK] at end",
+    "body": "string — 200–400 chars, conversational and direct, reads like a personal thought not a caption, keep hashtags OUT of the body, no emojis unless natural, link placeholder [BLOG_LINK] at end",
+    "hashtags": ["string — 1–2 TOPICAL keywords specific to this post, lowercase, no '#' prefix; curated niche tags are added automatically and appended after the body"],
     "tone_note": "string — one sentence on what angle this takes vs the Instagram caption"
   },
 

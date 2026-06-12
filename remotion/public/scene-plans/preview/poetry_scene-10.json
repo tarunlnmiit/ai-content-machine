@@ -1,0 +1,17 @@
+[
+  {
+    "sceneId": "scene-10",
+    "componentName": "LineReveal",
+    "script": "You miss how they said your name. The exact pitch of their laugh.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "lines": [
+        "You don't miss a person.",
+        "You miss how they said your name.",
+        "The exact pitch of their laugh."
+      ]
+    }
+  }
+]

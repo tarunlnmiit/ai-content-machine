@@ -1,0 +1,90 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Poetry is supposed to stay in its lane",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Poetry is supposed to stay in its lane."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "LineReveal",
+    "script": "Literature class. Soft-cover journals",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "Literature class.",
+        "Soft-cover journals.",
+        "The corner for feelings you can't organize."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ImageTextReveal",
+    "script": "a line of code you wrote at 2 AM that reads like confession",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "A line of code that reads like confession",
+      "subtext": "2 AM"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "a line of code you wrote at 2 AM",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "value": 2,
+      "suffix": "AM",
+      "label": "the hour code becomes confession"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "HandwrittenReveal",
+    "script": "the way your mother once described rain",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "The way your mother",
+        "once described rain."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "The lyric form admits what human experience refuses to sort",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "The lyric form admits what human experience refuses to sort."
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "WordReveal",
+    "script": "That's just accurate.",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "That's",
+        "just",
+        "accurate."
+      ],
+      "emphasis": [
+        2
+      ]
+    }
+  }
+]

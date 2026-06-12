@@ -1,0 +1,111 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "if you eat a live frog first thing in the morning",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Eat a live frog first thing \u2014 and the worst is behind you.",
+      "attribution": "Mark Twain (supposedly)"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "the part most people miss is the \"only one\" constraint",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "The part everyone misses",
+      "cards": [
+        {
+          "term": "The Frog",
+          "definition": "Your most dreaded task, identified the night before",
+          "icon": "\ud83d\udc38"
+        },
+        {
+          "term": "Only One",
+          "definition": "The constraint is the whole point \u2014 not the difficulty",
+          "icon": "\u261d\ufe0f"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "TransformationArc",
+    "script": "Then I'd have a frog festival and wonder why I always felt like I was fighting uphill",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "Frog Festival",
+      "afterLabel": "One Frog",
+      "beforePoints": [
+        "Three frogs, then five",
+        "Fighting uphill all day",
+        "Drag multiplied"
+      ],
+      "afterPoints": [
+        "One dreaded task, done first",
+        "Avoidance program killed",
+        "Rest of day runs light"
+      ],
+      "transformLabel": "The 'only one' rule"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "Multiple frogs doesn't multiply the benefit \u2014 it multiplies the drag.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 5,
+      "label": "frogs = 5x the background drag, not 5x done",
+      "suffix": "x"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ImageTextReveal",
+    "script": "One of the hardest frogs I've had to eat wasn't a task. It was a decision.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "The hardest frog wasn't a task. It was a decision.",
+      "subtext": "THE CONVERSATION I KEPT POSTPONING"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "WordReveal",
+    "script": "One frog kills one program.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "One",
+        "frog",
+        "kills",
+        "one",
+        "program"
+      ],
+      "emphasis": [
+        0,
+        4
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "the relief afterward was immediate. The rest of the day felt unusually light.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Not because the problem disappeared, but because I stopped carrying it.",
+      "attribution": "After the frog"
+    }
+  }
+]

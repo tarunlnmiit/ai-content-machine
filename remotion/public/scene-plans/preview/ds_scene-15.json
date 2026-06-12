@@ -1,0 +1,13 @@
+[
+  {
+    "sceneId": "scene-15",
+    "componentName": "AtmosphericQuote",
+    "script": "Cleaning is analysis. You can't separate them",
+    "niche": "ds",
+    "durationSec": 5,
+    "layout": "panel-left",
+    "props": {
+      "quote": "Cleaning is analysis. You can't separate them."
+    }
+  }
+]

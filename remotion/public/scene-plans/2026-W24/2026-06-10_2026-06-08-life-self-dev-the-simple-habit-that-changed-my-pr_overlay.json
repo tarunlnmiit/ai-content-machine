@@ -1,0 +1,359 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "they have a handful of small habits they actually do",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-top",
+    "props": {
+      "quote": "The most productive people don't have complicated systems. They have a handful of small habits they actually do.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "TransformationArc",
+    "script": "Busy, but not moving. Organized, but not output",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "beforeLabel": "Chasing the perfect setup",
+      "afterLabel": "Habits simple enough to do on bad days",
+      "beforePoints": [
+        "Second brain",
+        "Five-step weekly reviews",
+        "Busy, but not moving"
+      ],
+      "afterPoints": [
+        "No app required",
+        "Done even on bad days",
+        "Output, not just organized"
+      ],
+      "transformLabel": "Strip it back"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "Seven of them, specifically. And none of them require an app",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 7,
+      "label": "Simple habits, zero apps",
+      "prefix": "",
+      "suffix": ""
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "NumberedTips",
+    "script": "I scan my task list, note what's unfinished",
+    "niche": "life",
+    "durationSec": 8,
+    "layout": "panel-right",
+    "props": {
+      "title": "The Shutdown Ritual",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Scan the task list",
+          "body": "Note what's unfinished"
+        },
+        {
+          "number": 2,
+          "headline": "Mark the pickup point",
+          "body": "Where you'll resume tomorrow"
+        },
+        {
+          "number": 3,
+          "headline": "Write one sentence",
+          "body": "What you got done today"
+        },
+        {
+          "number": 4,
+          "headline": "Say it out loud",
+          "body": "\"Shutdown complete\""
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CounterReveal",
+    "script": "Mine takes four minutes",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 4,
+      "label": "Minutes to close the day",
+      "prefix": "",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "ImageTextReveal",
+    "script": "I realized I hadn't heard a word she'd said",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Physically at the table. Mentally still inside my laptop.",
+      "subtext": "WHY THE RITUAL STARTED"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "ConceptExplainer",
+    "script": "our brains fixate on incomplete work until we register a closure",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "The Zeigarnik Effect",
+      "cards": [
+        {
+          "term": "Open loops",
+          "definition": "The brain keeps spinning on unfinished tasks",
+          "icon": "\ud83d\udd01"
+        },
+        {
+          "term": "Artificial closure",
+          "definition": "The ritual signals 'done' so the loop releases",
+          "icon": "\u2705"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "CounterReveal",
+    "script": "I spend twenty minutes writing down everything that's in my head",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 20,
+      "label": "Minutes to empty your head",
+      "prefix": "",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "CounterReveal",
+    "script": "my brain had become a browser with fifty tabs open",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 50,
+      "label": "Tabs open in your head",
+      "prefix": "",
+      "suffix": " tabs"
+    }
+  },
+  {
+    "componentName": "BrowserTabOverload",
+    "script": "my brain had become a browser with fifty tabs open",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Chaotic browser-tab overload animation: 50 tabs spawn and stack rapidly across the screen, each labeled with a real thought (groceries, deadline, call mom, fix email). Screen fills with noise and fragmented text, then in one beat everything collapses to silence and a single empty tab. Represents cognitive overwhelm \u2192 clarity."
+    },
+    "sceneId": "scene-10"
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "ConceptExplainer",
+    "script": "It's called offloading",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Offloading",
+      "cards": [
+        {
+          "term": "Out of working memory",
+          "definition": "Move it from your head to an external store",
+          "icon": "\ud83e\udde0"
+        },
+        {
+          "term": "Free up resources",
+          "definition": "Capacity returns for actual thinking",
+          "icon": "\ud83d\udca1"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "WordReveal",
+    "script": "identify your most dreaded task the night before and do it first",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "panel-left",
+    "props": {
+      "words": [
+        "Eat",
+        "the",
+        "frog",
+        "first"
+      ],
+      "emphasis": [
+        2
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-13",
+    "componentName": "ToolComparison",
+    "script": "Multiple frogs doesn't multiply the benefit \u2014 it multiplies the drag",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "One frog",
+        "points": [
+          "Kills one program",
+          "Removes the avoidance drag",
+          "Day feels lighter"
+        ]
+      },
+      "rightSide": {
+        "label": "A frog festival",
+        "points": [
+          "No multiplied benefit",
+          "Multiplies the drag",
+          "Fighting uphill all day"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-14",
+    "componentName": "ToolComparison",
+    "script": "To-do lists measure what's left. Done lists measure what happened",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "To-do list",
+        "points": [
+          "Measures what's left",
+          "Always feels incomplete",
+          "Hides your real capacity"
+        ]
+      },
+      "rightSide": {
+        "label": "Done list",
+        "points": [
+          "Measures what happened",
+          "Evidence the week moved",
+          "Grounding in invisible work"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-15",
+    "componentName": "DataVizReveal",
+    "script": "Ninety minutes is better",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Focus block length vs. real output",
+      "data": [
+        {
+          "label": "25-min Pomodoro",
+          "value": 25
+        },
+        {
+          "label": "90-min deep block",
+          "value": 90
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-16",
+    "componentName": "CounterReveal",
+    "script": "every context switch costs fifteen to twenty minutes of recovery time",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 20,
+      "label": "Minutes lost per context switch",
+      "prefix": "",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-17",
+    "componentName": "NumberedTips",
+    "script": "exactly three priorities, written tonight",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "title": "Plan tomorrow tonight",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Exactly three",
+          "body": "Three forces real prioritization"
+        },
+        {
+          "number": 2,
+          "headline": "Written tonight",
+          "body": "You still have today's context"
+        },
+        {
+          "number": 3,
+          "headline": "Decision pre-made",
+          "body": "Morning-you never has to choose"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-18",
+    "componentName": "AtmosphericQuote",
+    "script": "What gets measured gets noticed",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "panel-right",
+    "props": {
+      "quote": "What gets measured gets noticed. And noticing, it turns out, is most of the work.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-19",
+    "componentName": "HandwrittenReveal",
+    "script": "Start with one. The one that stings a little when you read it",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "You don't need all seven.",
+        "Start with one.",
+        "The one that stings a little \u2014",
+        "that's the right one."
+      ],
+      "niche": "life"
+    }
+  }
+]

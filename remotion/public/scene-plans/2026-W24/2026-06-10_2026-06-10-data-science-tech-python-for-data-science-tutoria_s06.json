@@ -1,0 +1,118 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Now the part where actual insights live: groupby and aggregation",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The part where actual insights live: groupby and aggregation.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "revenue_by_region = df.groupby('region')['revenue'].sum()",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "revenue_by_region = df.groupby('region')['revenue'].sum()"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Split by region, pick revenue, sum it \u2014 the simplest aggregation you'll reach for."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CodeAnnotation",
+    "script": "The .agg() pattern with named aggregations \u2014 commit that to memory",
+    "niche": "ds",
+    "durationSec": 8,
+    "props": {
+      "code": [
+        "region_summary = df.groupby('region').agg(",
+        "    total_revenue=('revenue', 'sum'),",
+        "    avg_order_value=('revenue', 'mean'),",
+        "    order_count=('order_id', 'count')",
+        ").reset_index()"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Named aggregations: clean output columns, multiple metrics, one pass, no postprocessing."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "NumberedTips",
+    "script": "Clean output column names, multiple metrics in one pass",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Why named .agg() wins",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Clean column names",
+          "body": "No messy MultiIndex output"
+        },
+        {
+          "number": 2,
+          "headline": "Many metrics, one pass"
+        },
+        {
+          "number": 3,
+          "headline": "Always .reset_index()",
+          "body": "Flat DataFrame beats a MultiIndex"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ToolComparison",
+    "script": "grouped DataFrames are for computation, pivot tables are for communication",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "groupby().agg()",
+        "points": [
+          "For computation",
+          "Multiple metrics at once",
+          "Feeds the next step"
+        ]
+      },
+      "rightSide": {
+        "label": "pivot_table()",
+        "points": [
+          "For communication",
+          "The exact grid they pictured",
+          "Revenue by region and month"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CodeAnnotation",
+    "script": "pivot_table produces the exact grid they're already picturing",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "pivot = df.pivot_table(",
+        "    values='revenue',",
+        "    index='region',",
+        "    columns='month',",
+        "    aggfunc='sum',",
+        "    fill_value=0)"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "'Show me revenue by region and by month' \u2192 pivot_table builds that exact grid."
+    }
+  }
+]

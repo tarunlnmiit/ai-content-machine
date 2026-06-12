@@ -1,0 +1,56 @@
+niche,scene_id,component_name,duration_sec,output_file,script
+ds,scene-01,NumberedTips,7,ds_scene-01_NumberedTips.mp4,Column names with trailing spaces. Dates formatted three different ways
+ds,scene-02,CounterReveal,6,ds_scene-02_CounterReveal.mp4,I spent two weeks on that dataset before I ran a single analysis
+ds,scene-03,AtmosphericQuote,6,ds_scene-03_AtmosphericQuote.mp4,makes data interrogation feel like conversation instead of combat
+ds,scene-04,NumberedTips,7,ds_scene-04_NumberedTips.mp4,"loading and exploring, selecting and filtering, cleaning messy data, and aggregating"
+ds,scene-05,DataPipelineFlow,7,ds_scene-05_DataPipelineFlow.mp4,"loading and exploring, selecting and filtering, cleaning messy data, and aggregating"
+ds,scene-06,CounterReveal,5,ds_scene-06_CounterReveal.mp4,make it workable in under an hour
+ds,scene-07,ConceptExplainer,6,ds_scene-07_ConceptExplainer.mp4,A DataFrame column is a NumPy array with a name
+ds,scene-08,CodeAnnotation,7,ds_scene-08_CodeAnnotation.mp4,"Before you analyze anything, you orient yourself"
+ds,scene-09,DataVizReveal,6,ds_scene-09_DataVizReveal.mp4,"print(df.shape)       # e.g., (15420, 12)"
+ds,scene-10,CounterReveal,5,ds_scene-10_CounterReveal.mp4,Run df.describe() and in thirty seconds you know
+ds,scene-11,WordReveal,5,ds_scene-11_WordReveal.mp4,The isnull().sum() line is the one most beginners skip. Don't skip it
+ds,scene-12,CounterReveal,5,ds_scene-12_CounterReveal.mp4,This is sixty percent of what you actually do in Pandas
+ds,scene-13,CodeAnnotation,7,ds_scene-13_CodeAnnotation.mp4,"high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]"
+ds,scene-14,ToolComparison,7,ds_scene-14_ToolComparison.mp4,"use & and | for boolean filters, not Python's and and or"
+ds,scene-15,AtmosphericQuote,5,ds_scene-15_AtmosphericQuote.mp4,Cleaning is analysis. You can't separate them
+ds,scene-16,CodeAnnotation,7,ds_scene-16_CodeAnnotation.mp4,The errors='coerce' argument is doing critical work here
+ds,scene-17,CodeAnnotation,7,ds_scene-17_CodeAnnotation.mp4,The .agg() pattern with named aggregations — commit that to memory
+ds,scene-18,ToolComparison,7,ds_scene-18_ToolComparison.mp4,"grouped DataFrames are for computation, pivot tables are for communication"
+ds,scene-19,TransformationArc,6,ds_scene-19_TransformationArc.mp4,It removes the mechanical friction that gets between you and thinking
+ds,scene-20,HabitLoop,6,ds_scene-20_HabitLoop.mp4,Run through these four sections in order
+life,scene-01,AtmosphericQuote,6,life_scene-01_AtmosphericQuote.mp4,they have a handful of small habits they actually do
+life,scene-02,TransformationArc,6,life_scene-02_TransformationArc.mp4,"Busy, but not moving. Organized, but not output"
+life,scene-03,CounterReveal,6,life_scene-03_CounterReveal.mp4,"Seven of them, specifically. And none of them require an app"
+life,scene-04,NumberedTips,8,life_scene-04_NumberedTips.mp4,"I scan my task list, note what's unfinished"
+life,scene-05,CounterReveal,5,life_scene-05_CounterReveal.mp4,Mine takes four minutes
+life,scene-06,ImageTextReveal,6,life_scene-06_ImageTextReveal.mp4,I realized I hadn't heard a word she'd said
+life,scene-07,ConceptExplainer,6,life_scene-07_ConceptExplainer.mp4,our brains fixate on incomplete work until we register a closure
+life,scene-08,CounterReveal,5,life_scene-08_CounterReveal.mp4,I spend twenty minutes writing down everything that's in my head
+life,scene-09,CounterReveal,5,life_scene-09_CounterReveal.mp4,my brain had become a browser with fifty tabs open
+life,scene-10,BrowserTabOverload,6,life_scene-10_BrowserTabOverload.mp4,my brain had become a browser with fifty tabs open
+life,scene-11,ConceptExplainer,6,life_scene-11_ConceptExplainer.mp4,It's called offloading
+life,scene-12,WordReveal,5,life_scene-12_WordReveal.mp4,identify your most dreaded task the night before and do it first
+life,scene-13,ToolComparison,7,life_scene-13_ToolComparison.mp4,Multiple frogs doesn't multiply the benefit — it multiplies the drag
+life,scene-14,ToolComparison,6,life_scene-14_ToolComparison.mp4,To-do lists measure what's left. Done lists measure what happened
+life,scene-15,DataVizReveal,7,life_scene-15_DataVizReveal.mp4,Ninety minutes is better
+life,scene-16,CounterReveal,5,life_scene-16_CounterReveal.mp4,every context switch costs fifteen to twenty minutes of recovery time
+life,scene-17,NumberedTips,7,life_scene-17_NumberedTips.mp4,"exactly three priorities, written tonight"
+life,scene-18,AtmosphericQuote,5,life_scene-18_AtmosphericQuote.mp4,What gets measured gets noticed
+life,scene-19,HandwrittenReveal,7,life_scene-19_HandwrittenReveal.mp4,Start with one. The one that stings a little when you read it
+poetry,scene-01,LineReveal,7,poetry_scene-01_LineReveal.mp4,I worked with things you can measure. Data. Models. Dashboards.
+poetry,scene-02,AtmosphericQuote,6,poetry_scene-02_AtmosphericQuote.mp4,a poem finds the exact nerve no dataset ever mapped
+poetry,scene-03,AtmosphericQuote,7,poetry_scene-03_AtmosphericQuote.mp4,The lyric form is the one that admits what human experience refuses to sort
+poetry,scene-04,DataVizReveal,6,poetry_scene-04_DataVizReveal.mp4,One used numbers. The other used metaphor. Tools different. Curiosity identical.
+poetry,scene-05,LineReveal,7,poetry_scene-05_LineReveal.mp4,The best commit messages have grief in them sometimes.
+poetry,scene-06,ImageTextReveal,6,poetry_scene-06_ImageTextReveal.mp4,Poetry was already in the server room.
+poetry,scene-07,CounterReveal,4,poetry_scene-07_CounterReveal.mp4,You've done this a hundred times.
+poetry,scene-08,HandwrittenReveal,7,poetry_scene-08_HandwrittenReveal.mp4,The grey of a commute counts. The brown of bad coffee counts.
+poetry,scene-09,AtmosphericQuote,6,poetry_scene-09_AtmosphericQuote.mp4,grief insists on specificity
+poetry,scene-10,LineReveal,7,poetry_scene-10_LineReveal.mp4,You miss how they said your name. The exact pitch of their laugh.
+poetry,scene-11,VoiceMemoryDissolve,7,poetry_scene-11_VoiceMemoryDissolve.mp4,You miss how they said your name. The exact pitch of their laugh.
+poetry,scene-12,DataVizReveal,6,poetry_scene-12_DataVizReveal.mp4,Facts tell you what happened. Poetry tells you what stayed behind.
+poetry,scene-13,CounterReveal,4,poetry_scene-13_CounterReveal.mp4,a lyric you've heard forty times that suddenly means something different
+poetry,scene-14,ImageTextReveal,6,poetry_scene-14_ImageTextReveal.mp4,It dips its fingers in every colour because it's patient.
+poetry,scene-15,WordReveal,5,poetry_scene-15_WordReveal.mp4,A crack is enough.
+poetry,scene-16,AtmosphericQuote,6,poetry_scene-16_AtmosphericQuote.mp4,That is not a small thing. It is the whole thing.

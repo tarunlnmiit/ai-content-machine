@@ -1,0 +1,35 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "NumberedTips",
+    "script": "Column names with trailing spaces. Dates formatted three different ways",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "title": "A Real Mess",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Trailing spaces",
+          "body": "Hidden in column names"
+        },
+        {
+          "number": 2,
+          "headline": "Three date formats",
+          "body": "Same column, inconsistent"
+        },
+        {
+          "number": 3,
+          "headline": "Four kinds of null",
+          "body": "N/A, na, None, dash"
+        },
+        {
+          "number": 4,
+          "headline": "Strings in numbers",
+          "body": "\"approx 50k\" as revenue"
+        }
+      ]
+    }
+  }
+]

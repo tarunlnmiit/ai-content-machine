@@ -1,0 +1,25 @@
+[
+  {
+    "sceneId": "scene-07",
+    "componentName": "ConceptExplainer",
+    "script": "our brains fixate on incomplete work until we register a closure",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "The Zeigarnik Effect",
+      "cards": [
+        {
+          "term": "Open loops",
+          "definition": "The brain keeps spinning on unfinished tasks",
+          "icon": "🔁"
+        },
+        {
+          "term": "Artificial closure",
+          "definition": "The ritual signals 'done' so the loop releases",
+          "icon": "✅"
+        }
+      ]
+    }
+  }
+]

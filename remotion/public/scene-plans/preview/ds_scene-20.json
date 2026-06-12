@@ -1,0 +1,27 @@
+[
+  {
+    "sceneId": "scene-20",
+    "componentName": "HabitLoop",
+    "script": "Run through these four sections in order",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "title": "The Four-Step Pass",
+      "steps": [
+        {
+          "label": "Explore"
+        },
+        {
+          "label": "Select"
+        },
+        {
+          "label": "Clean"
+        },
+        {
+          "label": "Aggregate"
+        }
+      ]
+    }
+  }
+]

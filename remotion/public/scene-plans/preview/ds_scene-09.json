@@ -1,0 +1,24 @@
+[
+  {
+    "sceneId": "scene-09",
+    "componentName": "DataVizReveal",
+    "script": "print(df.shape)       # e.g., (15420, 12)",
+    "niche": "ds",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "df.shape",
+      "chartType": "number",
+      "data": [
+        {
+          "label": "rows",
+          "value": 15420
+        },
+        {
+          "label": "columns",
+          "value": 12
+        }
+      ]
+    }
+  }
+]

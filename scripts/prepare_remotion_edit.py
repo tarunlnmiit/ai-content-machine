@@ -263,7 +263,7 @@ def parse_screen_cues(script_path: Path) -> list:
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"}
 
 
-def collect_screen_images(script_path: Path, slug: str) -> list:
+def collect_screen_images(script_path: Path, slug: str, week: str) -> list:
     """For ds niche: copy PNGs from assets/script_images/<stem>/ as b-roll cues."""
     stem_dir = REPO / "assets" / "script_images" / script_path.stem
     if not stem_dir.exists():
@@ -276,7 +276,7 @@ def collect_screen_images(script_path: Path, slug: str) -> list:
         return []
 
     cue_descriptions = parse_screen_cues(script_path)
-    broll_dst = REMOTION_PUBLIC / "broll" / slug
+    broll_dst = REMOTION_PUBLIC / "broll" / week / slug
     broll_dst.mkdir(parents=True, exist_ok=True)
 
     print(f"[screen] {len(images)} images available ({len(cue_descriptions)} [SCREEN:] markers)")
@@ -288,16 +288,172 @@ def collect_screen_images(script_path: Path, slug: str) -> list:
         clips.append({
             "id": f"cue-{i}",
             "description": desc,
-            "clipFile": f"broll/{slug}/cue-{i}{src.suffix}",
+            "clipFile": f"broll/{week}/{slug}/cue-{i}{src.suffix}",
         })
     return clips
 
 
 BROLL_DURATION_SEC = 5.0
 BROLL_JITTER_SEC = 2.0  # ±jitter around evenly-spaced timestamps
+FPS = 30
 
 
-def fetch_and_copy_broll(script_path: Path, niche: str, slug: str, cue_descriptions: list) -> list:
+def parse_script_header(script_path: Path) -> dict:
+    text = script_path.read_text()
+    m = re.search(r"^```\n(.*?)\n```", text, re.DOTALL | re.MULTILINE)
+    block = m.group(1) if m else ""
+    show_m = re.search(r"^SHOW:\s*(.+)$", block, re.MULTILINE)
+    title_m = re.search(r"^EPISODE TITLE.*?:\s*(.+)$", block, re.MULTILINE)
+    return {
+        "show": show_m.group(1).strip() if show_m else "",
+        "title": title_m.group(1).strip() if title_m else "Untitled",
+    }
+
+
+def build_overlay_configs(header: dict, niche: str) -> dict:
+    title, show = header["title"], header["show"]
+    return {
+        "titleCard":  {"titleText": title, "showName": show,
+                       "durationFrames": 90, "insertAtFrame": 0},
+        "lowerThird": {"text": show, "durationFrames": 90, "insertAtFrame": FPS * 5},
+        "outroCard":  {"nextText": f"More on {show}", "durationFrames": 150},
+    }
+
+
+def _assign_even_timestamps(scenes: list, total_sec: float = 600) -> list:
+    n = len(scenes)
+    return [{**s, "atSec": round(total_sec * (i + 1) / (n + 1), 2)} for i, s in enumerate(scenes)]
+
+
+def align_overlay_scenes(scenes: list, captions: list) -> list:
+    """Match each scene's script excerpt to Whisper caption timestamps via text search.
+    Falls back to even spacing when captions missing or match fails."""
+    if not captions:
+        return _assign_even_timestamps(scenes)
+
+    words = [(c["text"].strip().lower(), c["startMs"] / 1000) for c in captions]
+    full_text = " ".join(w for w, _ in words)
+    word_offsets: list[tuple[int, float]] = []
+    pos = 0
+    for w, ts in words:
+        word_offsets.append((pos, ts))
+        pos += len(w) + 1
+
+    result = []
+    for scene in scenes:
+        query = scene["script"].lower()
+        idx = full_text.find(query[:40])
+        if idx >= 0:
+            closest_ts = min(word_offsets, key=lambda x: abs(x[0] - idx))[1]
+            result.append({**scene, "atSec": round(closest_ts, 2)})
+        else:
+            result.append(dict(scene))  # no atSec — will be skipped in TalkingHeadEdit
+
+    unmatched = [s for s in result if "atSec" not in s]
+    if unmatched:
+        total = captions[-1]["endMs"] / 1000 if captions else 600
+        n = len(unmatched)
+        for i, scene in enumerate(unmatched):
+            scene["atSec"] = round(total * (i + 1) / (n + 1), 2)
+
+    return result
+
+
+def attach_overlay_scenes(week: str, slug: str, captions: list) -> "str | None":
+    """If an overlay scene plan exists for this slug/week, align timestamps and return relative path."""
+    scene_plan_path = REMOTION_PUBLIC / "scene-plans" / week / f"{slug}_overlay.json"
+    if not scene_plan_path.exists():
+        print(f"[scenes] no overlay scene plan at scene-plans/{week}/{slug}_overlay.json, skipping")
+        return None
+
+    scenes = json.loads(scene_plan_path.read_text())
+    aligned = align_overlay_scenes(scenes, captions)
+    scene_plan_path.write_text(json.dumps(aligned, indent=2))
+    matched = sum(1 for s in aligned if "atSec" in s)
+    print(f"[scenes] {matched}/{len(aligned)} overlay scenes aligned to captions → {scene_plan_path.name}")
+    return f"scene-plans/{week}/{slug}_overlay.json"
+
+
+def _default_grading(niche: str) -> dict:
+    if niche == "ds":
+        return {"saturate": 1.10, "hueRotate": 3, "contrast": 1.08,
+                "brightness": 1.0, "overlayColor": "rgba(120, 180, 255, 0.05)"}
+    return {"saturate": 1.18, "hueRotate": -3, "contrast": 1.06,
+            "brightness": 1.02, "overlayColor": "rgba(255, 180, 120, 0.05)"}
+
+
+def analyze_color_grading(mp4: Path, niche: str) -> dict:
+    """Sample 5 frames across the video and derive colour grading adjustments."""
+    try:
+        import numpy as np
+        from PIL import Image
+    except ImportError:
+        print("[color] PIL/numpy not available, using niche defaults")
+        return _default_grading(niche)
+
+    import tempfile
+    dur_out = run([FFPROBE_BIN, "-v", "quiet", "-print_format", "json", "-show_format", str(mp4)])
+    try:
+        duration = float(json.loads(dur_out)["format"]["duration"])
+    except Exception:
+        return _default_grading(niche)
+
+    n = 5
+    hue_vals: list[float] = []
+    sat_vals: list[float] = []
+    bright_vals: list[float] = []
+    with tempfile.TemporaryDirectory() as tmpdir:
+        for i in range(n):
+            ts = duration * (i + 1) / (n + 1)
+            out_png = Path(tmpdir) / f"f{i}.png"
+            run([FFMPEG_BIN, "-ss", str(ts), "-i", str(mp4),
+                 "-frames:v", "1", "-vf", "scale=320:-1", str(out_png), "-y"])
+            if not out_png.exists():
+                continue
+            arr = np.array(Image.open(out_png).convert("RGB"), dtype=np.float32) / 255.0
+            r, g, b = arr[:, :, 0], arr[:, :, 1], arr[:, :, 2]
+            cmax = np.maximum(np.maximum(r, g), b)
+            delta = cmax - np.minimum(np.minimum(r, g), b)
+            sat = np.where(cmax > 0, delta / cmax, 0.0)
+            hue = np.zeros_like(r)
+            mr = (cmax == r) & (delta > 0)
+            mg = (cmax == g) & (delta > 0)
+            mb = (cmax == b) & (delta > 0)
+            hue[mr] = (60 * ((g[mr] - b[mr]) / delta[mr])) % 360
+            hue[mg] = 60 * ((b[mg] - r[mg]) / delta[mg]) + 120
+            hue[mb] = 60 * ((r[mb] - g[mb]) / delta[mb]) + 240
+            cy, cx = arr.shape[0], arr.shape[1]
+            hue_vals.append(float(hue[cy // 3:2 * cy // 3, cx // 4:3 * cx // 4].mean()))
+            sat_vals.append(float(sat[cy // 3:2 * cy // 3, cx // 4:3 * cx // 4].mean()))
+            bright_vals.append(float(cmax.mean()))
+
+    if not hue_vals:
+        return _default_grading(niche)
+
+    avg_hue = float(sum(hue_vals) / len(hue_vals))
+    avg_sat = float(sum(sat_vals) / len(sat_vals))
+    avg_bright = float(sum(bright_vals) / len(bright_vals))
+
+    target_warm = niche in ("life", "poetry")
+    cool = 180 < avg_hue < 260
+    warm = avg_hue < 60 or avg_hue > 300
+    hue_rotate = (6 if target_warm and cool
+                  else -2 if target_warm and warm
+                  else -6 if not target_warm and warm
+                  else 2 if not target_warm and cool
+                  else 0)
+    sat_gap = max(0.0, 0.35 - avg_sat)
+    saturate = round(min(1.30, max(1.0, 1.0 + (sat_gap / 0.05) * 0.04)), 2)
+    brightness = round(min(1.10, max(0.92, 1.0 + (0.45 - avg_bright) * 0.15)), 2)
+    overlay_color = ("rgba(120, 180, 255, 0.05)" if niche == "ds"
+                     else "rgba(255, 180, 120, 0.05)")
+    print(f"[color] sat={saturate} hue={hue_rotate:+d}° bright={brightness} "
+          f"(measured avg_hue={avg_hue:.0f}° sat={avg_sat:.2f} bright={avg_bright:.2f})")
+    return {"saturate": saturate, "hueRotate": hue_rotate, "contrast": 1.07,
+            "brightness": brightness, "overlayColor": overlay_color}
+
+
+def fetch_and_copy_broll(script_path: Path, niche: str, slug: str, week: str, cue_descriptions: list) -> list:
     """Invoke fetch_videos.py, copy ALL downloaded clips, return list of BrollCue dicts."""
     print(f"[broll] fetching stock clips (script has {len(cue_descriptions)} [BROLL:] markers)…")
     cmd = [
@@ -308,7 +464,7 @@ def fetch_and_copy_broll(script_path: Path, niche: str, slug: str, cue_descripti
     run(cmd, capture=False)
 
     broll_src = REPO / "assets" / "videos" / script_path.stem
-    broll_dst = REMOTION_PUBLIC / "broll" / slug
+    broll_dst = REMOTION_PUBLIC / "broll" / week / slug
     broll_dst.mkdir(parents=True, exist_ok=True)
 
     clips: list = []
@@ -333,7 +489,7 @@ def fetch_and_copy_broll(script_path: Path, niche: str, slug: str, cue_descripti
         clips.append({
             "id": f"cue-{i}",
             "description": desc,
-            "clipFile": f"broll/{slug}/cue-{i}{src.suffix}",
+            "clipFile": f"broll/{week}/{slug}/cue-{i}{src.suffix}",
         })
     return clips
 
@@ -371,6 +527,8 @@ def main():
     parser.add_argument("--script", required=True)
     parser.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     parser.add_argument("--slug", required=True)
+    parser.add_argument("--week", required=True,
+                        help="ISO week (e.g. 2026-W24) for organizing broll/captions/videos/edit-plans subfolders")
     parser.add_argument("--subtitles", action="store_true", default=False,
                         help="Burn animated captions into the render (default: off)")
     args = parser.parse_args()
@@ -381,9 +539,14 @@ def main():
 
     print(f"\n=== Preparing Remotion edit: {slug} ===\n")
 
+    # Parse script header for title card / lower third / outro
+    header = parse_script_header(script)
+    overlay_configs = build_overlay_configs(header, args.niche)
+    print(f"[title] '{overlay_configs['titleCard']['titleText']}' / {overlay_configs['titleCard']['showName']}")
+
     # 1. Transcribe (skip if cached)
-    captions_file = f"captions/{slug}.json"
-    captions_path = REMOTION_PUBLIC / "captions" / f"{slug}.json"
+    captions_file = f"captions/{args.week}/{slug}.json"
+    captions_path = REMOTION_PUBLIC / "captions" / args.week / f"{slug}.json"
     captions_path.parent.mkdir(parents=True, exist_ok=True)
     if captions_path.exists() and captions_path.stat().st_size > 100:
         captions = json.loads(captions_path.read_text())
@@ -399,22 +562,22 @@ def main():
 
     # 3. B-roll — ds uses [SCREEN:] + script_images/; life/poetry use [BROLL:] + stock video
     if args.niche == "ds":
-        clips = collect_screen_images(script, slug)
+        clips = collect_screen_images(script, slug, args.week)
     else:
         cue_descriptions = parse_broll_cues(script)
         print(f"[broll] found {len(cue_descriptions)} [BROLL:] cues in script")
-        clips = fetch_and_copy_broll(script, args.niche, slug, cue_descriptions)
+        clips = fetch_and_copy_broll(script, args.niche, slug, args.week, cue_descriptions)
     clips = assign_broll_timestamps(clips, trim_start, trim_end)
 
     # 4. Convert raw to MP4 with loudnorm baked in (Chrome needs MP4 + louder audio)
-    mp4_dest = REMOTION_PUBLIC / "videos" / f"{slug}.mp4"
+    mp4_dest = REMOTION_PUBLIC / "videos" / args.week / f"{slug}.mp4"
     mp4_dest.parent.mkdir(parents=True, exist_ok=True)
     if not mp4_dest.exists():
         print(f"[ffmpeg] converting {raw.name} → {slug}.mp4 with loudnorm -16 LUFS…")
         r = subprocess.run([
             FFMPEG_BIN, "-i", str(raw),
-            "-c:v", "libx264", "-profile:v", "main", "-level", "4.0",
-            "-pix_fmt", "yuv420p", "-preset", "fast", "-crf", "22",
+            "-c:v", "h264_videotoolbox", "-b:v", "8M",
+            "-vf", "scale=1920:1080", "-pix_fmt", "yuv420p",
             "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
             "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart",
             str(mp4_dest), "-y",
@@ -431,10 +594,19 @@ def main():
     print(f"[cuts] {len(cut_segments)} keep-segment(s) after removing {len(clap_cuts)} clap region(s)")
     total_duration = sum(s["endSec"] - s["startSec"] for s in cut_segments)
 
+    # Overlay scene plan alignment (only if --week provided and file exists)
+    scene_plan_file = None
+    if args.week:
+        scene_plan_file = attach_overlay_scenes(args.week, slug, captions)
+
+    # Per-video colour grading from footage
+    print("[color] analyzing footage color…")
+    color_grading = analyze_color_grading(mp4_dest, args.niche)
+
     plan = {
         "slug": slug,
         "niche": args.niche,
-        "rawVideo": f"videos/{slug}.mp4",
+        "rawVideo": f"videos/{args.week}/{slug}.mp4",
         "durationSec": round(total_duration, 2),
         "silenceTrimStartSec": trim_start,
         "silenceTrimEndSec": trim_end,
@@ -442,9 +614,12 @@ def main():
         "brollCues": clips,
         "captionsFile": captions_file,
         "showSubtitles": args.subtitles,
+        **overlay_configs,
+        **({"scenePlanFile": scene_plan_file} if scene_plan_file else {}),
+        "colorGrading": color_grading,
     }
 
-    plan_path = REMOTION_PUBLIC / "edit-plans" / f"{slug}.json"
+    plan_path = REMOTION_PUBLIC / "edit-plans" / args.week / f"{slug}.json"
     plan_path.parent.mkdir(parents=True, exist_ok=True)
     plan_path.write_text(json.dumps(plan, indent=2))
     print(f"\n[done] edit plan → {plan_path}")

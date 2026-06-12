@@ -102,6 +102,147 @@
       ],
       "niche_affinity": ["ds", "life", "poetry"],
       "props_hint": "titleText: str, showName: str"
+    },
+    {
+      "name": "Blank",
+      "remotion_template": "template-blank",
+      "package": "remotion",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["scaffolding — empty Remotion project starter"],
+      "niche_affinity": [],
+      "props_hint": "scaffolding only"
+    },
+    {
+      "name": "Hello World",
+      "remotion_template": "template-hello-world",
+      "package": "remotion",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["scaffolding — minimal example project"],
+      "niche_affinity": [],
+      "props_hint": "scaffolding only"
+    },
+    {
+      "name": "JavaScript Starter",
+      "remotion_template": "template-javascript",
+      "package": "remotion",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["scaffolding — JS (non-TypeScript) project starter"],
+      "niche_affinity": [],
+      "props_hint": "scaffolding only"
+    },
+    {
+      "name": "Next.js",
+      "remotion_template": "template-nextjs",
+      "package": "remotion next",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["scaffolding — Next.js + Remotion project starter"],
+      "niche_affinity": [],
+      "props_hint": "scaffolding only"
+    },
+    {
+      "name": "Next.js + Tailwind",
+      "remotion_template": "template-nextjs-tailwind",
+      "package": "remotion next tailwindcss",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["scaffolding — Next.js + Tailwind + Remotion starter"],
+      "niche_affinity": [],
+      "props_hint": "scaffolding only"
+    },
+    {
+      "name": "Next.js + Shadcn",
+      "remotion_template": "template-nextjs-shadcn",
+      "package": "remotion next shadcn",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["scaffolding — Next.js + Shadcn UI + Remotion starter"],
+      "niche_affinity": [],
+      "props_hint": "scaffolding only"
+    },
+    {
+      "name": "React Router 7",
+      "remotion_template": "template-react-router",
+      "package": "remotion react-router",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["scaffolding — React Router 7 + Remotion project starter"],
+      "niche_affinity": [],
+      "props_hint": "scaffolding only"
+    },
+    {
+      "name": "Electron",
+      "remotion_template": "template-electron",
+      "package": "remotion electron",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["scaffolding — Electron desktop app with Remotion renderer"],
+      "niche_affinity": [],
+      "props_hint": "desktop only — not used in web render pipeline"
+    },
+    {
+      "name": "Skia",
+      "remotion_template": "template-skia",
+      "package": "@remotion/skia @shopify/react-native-skia",
+      "status": "integrated",
+      "components": ["HandwrittenReveal"],
+      "use_when": [
+        "handwriting / drawing animation using canvas",
+        "sketch-style path reveal",
+        "hand-drawn feel for poetry or life niche"
+      ],
+      "niche_affinity": ["life", "poetry"],
+      "props_hint": "lines: str[], niche: str — requires @remotion/skia native dependency"
+    },
+    {
+      "name": "Stargazer",
+      "remotion_template": "template-stargazer",
+      "package": "remotion",
+      "status": "not_applicable",
+      "components": [],
+      "use_when": ["GitHub stars timeline visualization — not relevant to content niches"],
+      "niche_affinity": [],
+      "props_hint": "GitHub-specific — not applicable"
+    },
+    {
+      "name": "Prompt to Video",
+      "remotion_template": "template-prompt-to-video",
+      "package": "@remotion/skia @shopify/react-native-skia",
+      "status": "planned",
+      "components": [],
+      "use_when": ["AI prompt → Remotion animation — future CustomScene pipeline input"],
+      "niche_affinity": ["ds", "life", "poetry"],
+      "props_hint": "infrastructure — requires CustomScene pipeline (generate_custom_scene.py)"
+    },
+    {
+      "name": "Prompt to Motion Graphics",
+      "remotion_template": "template-prompt-to-motion-graphics",
+      "package": "remotion next openai",
+      "status": "documented",
+      "components": [],
+      "use_when": [
+        "complex generative visuals (particle systems, data flows, procedural animation) that are hard to describe as component props",
+        "alternative to generate_custom_scene.py when visual preview during generation is needed",
+        "filling CUSTOM_SCENE_SLOT entries in scene plans with richer visuals"
+      ],
+      "niche_affinity": ["ds", "life", "poetry"],
+      "props_hint": "standalone app — setup: cd prompt-to-motion-graphics && npx create-video@latest . (choose Prompt to Motion Graphics) — see prompt-to-motion-graphics/SETUP.md"
+    },
+    {
+      "name": "Recorder",
+      "remotion_template": "template-recorder",
+      "package": "@remotion/recorder",
+      "status": "documented",
+      "components": [],
+      "use_when": [
+        "talking-head recording for Life and Poetry niche videos",
+        "webcam capture with Whisper auto-transcription and caption export"
+      ],
+      "niche_affinity": ["life", "poetry"],
+      "props_hint": "standalone app — setup: cd recorder && npx create-video@latest . (choose Recorder) — see recorder/SETUP.md"
     }
   ],
   "scene_components": [
@@ -110,7 +251,7 @@
       "template_source": "custom",
       "use_when": "citing a number, stat, comparison, or data trend",
       "props": "title: str, data: [{label: str, value: number}], chartType: 'bar'|'line'|'number'",
-      "niche_affinity": ["ds"],
+      "niche_affinity": ["ds", "life", "poetry"],
       "duration_hint": "6-8s"
     },
     {
@@ -125,7 +266,7 @@
       "componentName": "ConceptExplainer",
       "template_source": "custom",
       "use_when": "introducing a term, concept, or framework the viewer may not know",
-      "props": "term: str, definition: str, analogy: str (optional)",
+      "props": "headline: str, cards: [{term: str, definition: str, icon?: str}]",
       "niche_affinity": ["ds", "life"],
       "duration_hint": "5-7s"
     },
@@ -133,15 +274,15 @@
       "componentName": "ToolComparison",
       "template_source": "custom",
       "use_when": "comparing two approaches, tools, libraries, or strategies side by side",
-      "props": "left: {label: str, points: str[]}, right: {label: str, points: str[]}",
-      "niche_affinity": ["ds"],
+      "props": "leftSide: {label: str, points: str[]}, rightSide: {label: str, points: str[]}",
+      "niche_affinity": ["ds", "life"],
       "duration_hint": "6-8s"
     },
     {
       "componentName": "NumberedTips",
       "template_source": "custom",
       "use_when": "listing 3-5 steps, rules, principles, or tips",
-      "props": "title: str, tips: [{number: int, text: str}]",
+      "props": "title: str, tips: [{number: int, headline: str, body?: str}]",
       "niche_affinity": ["ds", "life"],
       "duration_hint": "5-7s"
     },
@@ -149,7 +290,7 @@
       "componentName": "TransformationArc",
       "template_source": "custom",
       "use_when": "describing a before/after shift, problem/solution, or growth story",
-      "props": "before: str, after: str, label: str (optional)",
+      "props": "beforeLabel: str, afterLabel: str, beforePoints: str[], afterPoints: str[], transformLabel?: str",
       "niche_affinity": ["life", "ds"],
       "duration_hint": "5-7s"
     },
@@ -158,7 +299,7 @@
       "template_source": "custom",
       "use_when": "describing a cycle, feedback loop, or recurring system or process",
       "props": "title: str, phases: [{label: str}]",
-      "niche_affinity": ["life"],
+      "niche_affinity": ["life", "ds"],
       "duration_hint": "5-7s"
     },
     {
@@ -174,7 +315,7 @@
       "template_source": "Overlay",
       "use_when": "a full-screen quote, thesis statement, poem title, or poetic moment",
       "props": "quote: str, attribution: str (optional)",
-      "niche_affinity": ["life", "poetry"],
+      "niche_affinity": ["ds", "life", "poetry"],
       "duration_hint": "4-6s"
     },
     {
@@ -182,8 +323,64 @@
       "template_source": "TikTok Captions",
       "use_when": "a poem, verse, lyric, or multi-line revelation should appear line by line",
       "props": "lines: str[]",
-      "niche_affinity": ["poetry"],
+      "niche_affinity": ["life", "poetry"],
       "duration_hint": "4-6s per 2-3 lines"
+    },
+    {
+      "componentName": "CounterReveal",
+      "template_source": "custom",
+      "use_when": "the speaker cites a specific number, stat, percentage, count, or metric — animate it counting up to land the number visually",
+      "props": "value: number, label: str, prefix?: str (e.g. '$', '#'), suffix?: str (e.g. '%', 'x', 'k')",
+      "niche_affinity": ["ds", "life"],
+      "duration_hint": "5-7s"
+    },
+    {
+      "componentName": "ImageTextReveal",
+      "template_source": "custom",
+      "use_when": "a narrative peak, emotional beat, or cinematic moment — full-screen atmospheric image with a bold headline anchored at bottom; use imageUrl when a relevant visual exists, omit for gradient-only mode",
+      "props": "headline: str, imageUrl?: str (local path or URL), subtext?: str (eyebrow label above headline)",
+      "niche_affinity": ["life", "poetry"],
+      "duration_hint": "5-7s"
+    },
+    {
+      "componentName": "HandwrittenReveal",
+      "template_source": "Skia",
+      "use_when": "a poem verse, emotional quote, or lyrical line should feel handcrafted — text reveals line by line with an animated underline stroke drawn via Skia canvas",
+      "props": "lines: str[] (max 4), niche: str — life or poetry; stroke draws under each line in staggered sequence",
+      "niche_affinity": ["life", "poetry"],
+      "duration_hint": "5-8s"
+    },
+    {
+      "componentName": "VoiceMemoryDissolve",
+      "template_source": "custom",
+      "use_when": "a voice, person, or memory should dissolve — waveform pulses then bursts into particles that reform as name, color swatch, and silhouette before fading; use at emotional peaks in poetry or life niche",
+      "props": "niche: str, voiceName?: str (default 'Echo'), particleCount?: int (default 56)",
+      "niche_affinity": ["poetry", "life"],
+      "duration_hint": "12-14s"
+    },
+    {
+      "componentName": "DataPipelineFlow",
+      "template_source": "custom",
+      "use_when": "explaining a data transformation pipeline — rows animate through Load → Select → Clean → Aggregate stages with glow on entry and compression visual across stages",
+      "props": "niche: str",
+      "niche_affinity": ["ds"],
+      "duration_hint": "5-7s"
+    },
+    {
+      "componentName": "BrowserTabOverload",
+      "template_source": "custom",
+      "use_when": "depicting mental overload, context switching, or tab chaos — 50 browser tabs spawn with random thoughts then collapse to one center tab with 'One thing at a time'; strong hook for focus/productivity content",
+      "props": "niche: str",
+      "niche_affinity": ["life", "ds"],
+      "duration_hint": "9-11s"
+    },
+    {
+      "componentName": "CUSTOM_SCENE_SLOT",
+      "template_source": "generate_custom_scene.py",
+      "use_when": "no existing component fits — generate a one-off scene with: python3 scripts/generate_custom_scene.py --name MyComponent --prompt '<description>' --niche ds|life|poetry",
+      "props": "determined by generated component — review output file for interface",
+      "niche_affinity": ["ds", "life", "poetry"],
+      "duration_hint": "varies"
     }
   ]
 }

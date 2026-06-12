@@ -51,6 +51,27 @@ DESIRES = {
 
 
 from lib.slug import slugify
+from lib.worksheet_cta import (
+    worksheet_exists,
+    worksheet_title,
+    worksheet_yt_spoken_cta,
+    worksheet_yt_description_snippet,
+    has_yt_cta,
+)
+
+# Niches that ship a companion worksheet (poetry does not).
+WORKSHEET_NICHES = {"ds", "life"}
+
+
+def _worksheet_slug_from_source(source_path: Path, fallback: str) -> str:
+    """Worksheet slug = the blog's slug. When the YT source is a blog file
+    (`{date}_{niche}_{slug}.md`), strip the date+niche prefix; else fall back."""
+    stem = source_path.stem
+    for seg in ("data_science_tech", "life_self_dev", "poetry_quotes"):
+        marker = f"_{seg}_"
+        if marker in stem:
+            return stem.split(marker, 1)[1]
+    return fallback
 
 
 def load(path: Path) -> str:
@@ -318,9 +339,24 @@ def main():
         filename = f"{today}_{slug}_podcast.md"
         out_dir = REPO / "content" / "scripts"
 
+    # For YT scripts in worksheet niches: append a spoken "worksheet in the
+    # description" CTA, but only if a worksheet actually exists for the slug.
+    yt_ws_slug = None
+    if args.format == "yt" and args.niche in WORKSHEET_NICHES:
+        candidate = _worksheet_slug_from_source(source_path, slug)
+        if worksheet_exists(candidate):
+            yt_ws_slug = candidate
+            if not has_yt_cta(blog_text):
+                blog_text = blog_text.rstrip() + "\n\n" + worksheet_yt_spoken_cta()
+
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / filename
     out_path.write_text(blog_text, encoding="utf-8")
+
+    if yt_ws_slug:
+        console.print("\n[success]✓ Worksheet CTA added to script.[/success]")
+        console.print("[bold]Paste into the YouTube description:[/bold]")
+        console.print(worksheet_yt_description_snippet(yt_ws_slug, worksheet_title(yt_ws_slug)))
 
     word_count = len(blog_text.split())
     personal_inserts = blog_text.count("[PERSONAL_INSERT")

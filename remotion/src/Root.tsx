@@ -10,6 +10,7 @@ import { OutroCard } from "./compositions/OutroCard";
 import { ShortClip } from "./compositions/ShortClip";
 import type { ShortClipProps } from "./compositions/ShortClip";
 import { DSMotionShort, LifeMotionShort, PoetryMotionShort } from "./compositions/MotionShort";
+import type { DSMotionShortProps } from "./compositions/MotionShort";
 import { AudiogramFeed, AudiogramStory } from "./compositions/Audiogram";
 import { SocialCard1x1, SocialCard9x16 } from "./compositions/SocialCard";
 import { Thumbnail } from "./compositions/Thumbnail";
@@ -28,9 +29,17 @@ import { ToolComparison } from "./compositions/scenes/ToolComparison";
 import { TransformationArc } from "./compositions/scenes/TransformationArc";
 import { HabitLoop } from "./compositions/scenes/HabitLoop";
 import { LineReveal } from "./compositions/scenes/LineReveal";
+import { CounterReveal } from "./compositions/scenes/CounterReveal";
+import { ImageTextReveal } from "./compositions/scenes/ImageTextReveal";
+import { HandwrittenReveal } from "./compositions/scenes/HandwrittenReveal";
+import { BrowserTabOverload } from "./compositions/scenes/BrowserTabOverload";
+import { DataPipelineFlow } from "./compositions/scenes/DataPipelineFlow";
+import { VoiceMemoryDissolve } from "./compositions/scenes/VoiceMemoryDissolve";
+import { ScenePreview } from "./compositions/ScenePreview";
+import type { ScenePreviewProps } from "./compositions/ScenePreview";
 
 import type { CalculateMetadataFunction } from "remotion";
-import type { EditPlan } from "./types";
+import type { EditPlan, ScenePlan } from "./types";
 
 const FPS = 30;
 
@@ -58,6 +67,29 @@ const calcMetaTalkingHead: CalculateMetadataFunction<TalkingHeadEditProps> = asy
   }
 };
 
+const calcMetaScenePreview: CalculateMetadataFunction<ScenePreviewProps> = async ({ props }) => {
+  try {
+    const res = await fetch(staticFile(props.scenePlanFile));
+    if (!res.ok) return { durationInFrames: 180 };
+    const data: ScenePlan[] = await res.json();
+    return { durationInFrames: Math.ceil((data[0]?.durationSec ?? 6) * FPS) };
+  } catch {
+    return { durationInFrames: 180 };
+  }
+};
+
+const calcMetaMotionShort: CalculateMetadataFunction<DSMotionShortProps> = async ({ props }) => {
+  try {
+    const res = await fetch(staticFile(props.scenePlanFile));
+    if (!res.ok) return { durationInFrames: 450 };
+    const scenes: ScenePlan[] = await res.json();
+    const total = scenes.reduce((sum, s) => sum + Math.round(s.durationSec * FPS), 0);
+    return { durationInFrames: total };
+  } catch {
+    return { durationInFrames: 450 };
+  }
+};
+
 const calcMetaShortClip: CalculateMetadataFunction<ShortClipProps> = async ({ props }) => {
   const dur = props.clipEndSec - props.clipStartSec;
   return { durationInFrames: Math.ceil(dur * FPS) };
@@ -74,7 +106,7 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         durationInFrames={900}
-        defaultProps={{ editPlanFile: "edit-plans/life_habits.json" }}
+        defaultProps={{ editPlanFile: "edit-plans/2026-W24/2026-06-10_2026-06-08-life-self-dev-the-simple-habit-that-changed-my-pr.json" }}
         calculateMetadata={calcMetaTalkingHead}
       />
       <Composition
@@ -84,7 +116,7 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         durationInFrames={900}
-        defaultProps={{ editPlanFile: "edit-plans/poetry_love.json" }}
+        defaultProps={{ editPlanFile: "edit-plans/2026-W24/2026-06-08_2026-06-08-poetry-quotes-poetry-dips-its-fingers-in-every-co.json" }}
         calculateMetadata={calcMetaTalkingHead}
       />
       {/* Generic workhorse — render any slug with --props override */}
@@ -95,7 +127,7 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         durationInFrames={900}
-        defaultProps={{ editPlanFile: "edit-plans/life_habits.json" }}
+        defaultProps={{ editPlanFile: "edit-plans/2026-W24/2026-06-10_2026-06-08-life-self-dev-the-simple-habit-that-changed-my-pr.json" }}
         calculateMetadata={calcMetaTalkingHead}
       />
 
@@ -137,7 +169,7 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         durationInFrames={900}
         defaultProps={{
-          editPlanFile: "edit-plans/life_habits.json",
+          editPlanFile: "edit-plans/2026-W24/2026-06-10_2026-06-08-life-self-dev-the-simple-habit-that-changed-my-pr.json",
           clipStartSec: 0,
           clipEndSec: 60,
         }}
@@ -150,7 +182,8 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         durationInFrames={450}
-        defaultProps={{ scenePlanFile: "scene-plans/ds_sample.json" }}
+        defaultProps={{ scenePlanFile: "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s01.json" }}
+        calculateMetadata={calcMetaMotionShort}
       />
       <Composition
         id="LifeMotionShort"
@@ -159,7 +192,8 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         durationInFrames={450}
-        defaultProps={{ scenePlanFile: "scene-plans/life_sample.json" }}
+        defaultProps={{ scenePlanFile: "scene-plans/2026-W24/2026-06-10_2026-06-08-life-self-dev-the-simple-habit-that-changed-my-pr_s01.json" }}
+        calculateMetadata={calcMetaMotionShort}
       />
       <Composition
         id="PoetryMotionShort"
@@ -168,7 +202,8 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         durationInFrames={450}
-        defaultProps={{ scenePlanFile: "scene-plans/poetry_sample.json" }}
+        defaultProps={{ scenePlanFile: "scene-plans/2026-W24/2026-06-08_2026-06-08-poetry-quotes-poetry-dips-its-fingers-in-every-co_s01.json" }}
+        calculateMetadata={calcMetaMotionShort}
       />
 
       {/* ── Audiogram ── */}
@@ -437,6 +472,72 @@ export const RemotionRoot: React.FC = () => {
           attribution: "Edgar Allan Poe",
           niche: "poetry" as const,
         }}
+      />
+      <Composition
+        id="CounterReveal"
+        component={CounterReveal}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={150}
+        defaultProps={{ value: 42, label: "preview", niche: "ds" as const }}
+      />
+      <Composition
+        id="ImageTextReveal"
+        component={ImageTextReveal}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{ headline: "Preview Headline", subtext: "subtext", niche: "ds" as const }}
+      />
+      <Composition
+        id="HandwrittenReveal"
+        component={HandwrittenReveal}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={210}
+        defaultProps={{ lines: ["Preview line"], niche: "ds" as const }}
+      />
+      <Composition
+        id="BrowserTabOverload"
+        component={BrowserTabOverload}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{ niche: "life" as const }}
+      />
+      <Composition
+        id="DataPipelineFlow"
+        component={DataPipelineFlow}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={210}
+        defaultProps={{ niche: "ds" as const }}
+      />
+      <Composition
+        id="VoiceMemoryDissolve"
+        component={VoiceMemoryDissolve}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={210}
+        defaultProps={{ niche: "poetry" as const }}
+      />
+
+      {/* ── ScenePreview — render any overlay scene by scenePlanFile ── */}
+      <Composition
+        id="ScenePreview"
+        component={ScenePreview}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={180}
+        defaultProps={{ scenePlanFile: "scene-plans/preview/preview.json" } as ScenePreviewProps}
+        calculateMetadata={calcMetaScenePreview}
       />
     </>
   );
