@@ -447,6 +447,35 @@ for f in sorted(glob.glob('remotion/public/edit-plans/{week}/*.json')):
 "
 ```
 
+---
+
+## Step 8.5 — Generate overlay manifest with timestamps (if using overlays)
+
+**Only if Step 6.5 was run.** Align overlay scenes to caption timestamps and generate manifest for DaVinci placement.
+
+```bash
+# Step 1: For each niche, patch overlay scenes with timestamps from captions
+python3 scripts/patch_edit_plan_overlays.py \
+  --edit-plan "remotion/public/edit-plans/{week}/{ds_slug}.json" \
+  --overlay   "remotion/public/scene-plans/{week}/{ds_slug}_overlay.json"
+
+python3 scripts/patch_edit_plan_overlays.py \
+  --edit-plan "remotion/public/edit-plans/{week}/{life_slug}.json" \
+  --overlay   "remotion/public/scene-plans/{week}/{life_slug}_overlay.json"
+
+python3 scripts/patch_edit_plan_overlays.py \
+  --edit-plan "remotion/public/edit-plans/{week}/{poetry_slug}.json" \
+  --overlay   "remotion/public/scene-plans/{week}/{poetry_slug}_overlay.json"
+
+# Step 2: Render overlay scenes to MP4 + generate manifest.csv with startSec timestamps
+python3 scripts/render_overlay_scenes.py --week {week}
+```
+
+Output: `output/animations/{week}/overlay-scenes/manifest.csv` with columns:
+- `niche`, `scene_id`, `component_name`, `duration_sec`, `output_file`, `script`, **`startSec`**
+
+Use `startSec` to position each overlay on a separate track in DaVinci during manual editing.
+
 Expected: 3 edit plans parseable, 3 caption files present, total duration 8–15 min each.
 
 ---

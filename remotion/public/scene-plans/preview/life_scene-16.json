@@ -11,6 +11,7 @@
       "label": "Minutes lost per context switch",
       "prefix": "",
       "suffix": " min"
-    }
+    },
+    "atSec": 479.5
   }
 ]

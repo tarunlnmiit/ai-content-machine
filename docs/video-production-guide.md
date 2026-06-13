@@ -435,6 +435,38 @@ Falls back to even spacing when captions are missing (e.g. screen-recording-only
 
 ---
 
+## Generating the Overlay Manifest with Timestamps
+
+Before rendering overlay scenes to MP4, align them to caption timestamps so `manifest.csv` includes exact placement times for DaVinci.
+
+```bash
+# Step 1: Align overlay scenes to captions (adds atSec to overlay JSON)
+# Run once per niche:
+python3 scripts/patch_edit_plan_overlays.py \
+  --edit-plan "remotion/public/edit-plans/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity.json" \
+  --overlay   "remotion/public/scene-plans/2026-W24/2026-06-10_2026-06-08-life-self-dev-the-simple-habit-that-changed-my-pr_overlay.json"
+
+# repeat for each niche's edit plan + overlay JSON pair
+
+# Step 2: Render overlay scenes → manifest.csv with startSec
+python3 scripts/render_overlay_scenes.py --week 2026-W24
+```
+
+Output: `output/animations/2026-W24/overlay-scenes/manifest.csv`
+
+Columns:
+- `niche` — content type (ds, life, poetry)
+- `scene_id` — scene-01, scene-02, etc.
+- `component_name` — Remotion component (AtmosphericQuote, CounterReveal, etc.)
+- `duration_sec` — animation length in seconds
+- `output_file` — rendered MP4 filename
+- `script` — transcript excerpt (for reference)
+- `startSec` — timestamp in source video to place overlay in DaVinci (populated if `patch_edit_plan_overlays.py` was run)
+
+**Before DaVinci edit:** Open the manifest to see where each overlay lands in your talking-head timeline. Use `startSec` to position scenes on separate overlay tracks.
+
+---
+
 ## What This Does NOT Do (Yet)
 
 `prepare_remotion_edit.py` handles transcription, silence trimming, b-roll prep, and auto-wiring of title card / lower third / outro / color grading / overlay scene plans. Manual editing in DaVinci still handles:

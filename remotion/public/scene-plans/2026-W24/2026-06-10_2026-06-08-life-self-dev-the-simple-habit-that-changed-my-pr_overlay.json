@@ -9,7 +9,8 @@
     "props": {
       "quote": "The most productive people don't have complicated systems. They have a handful of small habits they actually do.",
       "attribution": ""
-    }
+    },
+    "atSec": 29.97
   },
   {
     "sceneId": "scene-02",
@@ -32,7 +33,8 @@
         "Output, not just organized"
       ],
       "transformLabel": "Strip it back"
-    }
+    },
+    "atSec": 59.94
   },
   {
     "sceneId": "scene-03",
@@ -46,7 +48,8 @@
       "label": "Simple habits, zero apps",
       "prefix": "",
       "suffix": ""
-    }
+    },
+    "atSec": 89.91
   },
   {
     "sceneId": "scene-04",
@@ -79,7 +82,8 @@
           "body": "\"Shutdown complete\""
         }
       ]
-    }
+    },
+    "atSec": 119.88
   },
   {
     "sceneId": "scene-05",
@@ -93,7 +97,8 @@
       "label": "Minutes to close the day",
       "prefix": "",
       "suffix": " min"
-    }
+    },
+    "atSec": 149.84
   },
   {
     "sceneId": "scene-06",
@@ -105,7 +110,8 @@
     "props": {
       "headline": "Physically at the table. Mentally still inside my laptop.",
       "subtext": "WHY THE RITUAL STARTED"
-    }
+    },
+    "atSec": 179.81
   },
   {
     "sceneId": "scene-07",
@@ -128,7 +134,8 @@
           "icon": "\u2705"
         }
       ]
-    }
+    },
+    "atSec": 209.78
   },
   {
     "sceneId": "scene-08",
@@ -142,7 +149,8 @@
       "label": "Minutes to empty your head",
       "prefix": "",
       "suffix": " min"
-    }
+    },
+    "atSec": 239.75
   },
   {
     "sceneId": "scene-09",
@@ -156,7 +164,8 @@
       "label": "Tabs open in your head",
       "prefix": "",
       "suffix": " tabs"
-    }
+    },
+    "atSec": 269.72
   },
   {
     "componentName": "BrowserTabOverload",
@@ -167,7 +176,8 @@
     "props": {
       "description": "Chaotic browser-tab overload animation: 50 tabs spawn and stack rapidly across the screen, each labeled with a real thought (groceries, deadline, call mom, fix email). Screen fills with noise and fragmented text, then in one beat everything collapses to silence and a single empty tab. Represents cognitive overwhelm \u2192 clarity."
     },
-    "sceneId": "scene-10"
+    "sceneId": "scene-10",
+    "atSec": 299.69
   },
   {
     "sceneId": "scene-11",
@@ -190,7 +200,8 @@
           "icon": "\ud83d\udca1"
         }
       ]
-    }
+    },
+    "atSec": 329.66
   },
   {
     "sceneId": "scene-12",
@@ -209,7 +220,8 @@
       "emphasis": [
         2
       ]
-    }
+    },
+    "atSec": 359.63
   },
   {
     "sceneId": "scene-13",
@@ -235,7 +247,8 @@
           "Fighting uphill all day"
         ]
       }
-    }
+    },
+    "atSec": 389.6
   },
   {
     "sceneId": "scene-14",
@@ -261,7 +274,8 @@
           "Grounding in invisible work"
         ]
       }
-    }
+    },
+    "atSec": 419.57
   },
   {
     "sceneId": "scene-15",
@@ -283,7 +297,8 @@
         }
       ],
       "chartType": "bar"
-    }
+    },
+    "atSec": 449.54
   },
   {
     "sceneId": "scene-16",
@@ -297,7 +312,8 @@
       "label": "Minutes lost per context switch",
       "prefix": "",
       "suffix": " min"
-    }
+    },
+    "atSec": 479.5
   },
   {
     "sceneId": "scene-17",
@@ -325,7 +341,8 @@
           "body": "Morning-you never has to choose"
         }
       ]
-    }
+    },
+    "atSec": 509.47
   },
   {
     "sceneId": "scene-18",
@@ -337,7 +354,8 @@
     "props": {
       "quote": "What gets measured gets noticed. And noticing, it turns out, is most of the work.",
       "attribution": ""
-    }
+    },
+    "atSec": 539.44
   },
   {
     "sceneId": "scene-19",
@@ -354,6 +372,7 @@
         "that's the right one."
       ],
       "niche": "life"
-    }
+    },
+    "atSec": 569.41
   }
 ]

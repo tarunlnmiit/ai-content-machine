@@ -8,6 +8,7 @@
     "layout": "panel-right",
     "props": {
       "quote": "A poem finds the exact nerve no dataset ever mapped."
-    }
+    },
+    "atSec": 95.78
   }
 ]

@@ -30,7 +30,8 @@
           "body": "\"approx 50k\" as revenue"
         }
       ]
-    }
+    },
+    "atSec": 138.58
   },
   {
     "sceneId": "scene-02",
@@ -43,7 +44,8 @@
       "value": 2,
       "label": "weeks cleaning before any analysis",
       "suffix": " wks"
-    }
+    },
+    "atSec": 277.15
   },
   {
     "sceneId": "scene-03",
@@ -54,7 +56,8 @@
     "layout": "panel-right",
     "props": {
       "quote": "Data interrogation should feel like conversation, not combat."
-    }
+    },
+    "atSec": 79.64
   },
   {
     "sceneId": "scene-04",
@@ -83,7 +86,8 @@
           "headline": "Aggregate"
         }
       ]
-    }
+    },
+    "atSec": 87.56
   },
   {
     "componentName": "DataPipelineFlow",
@@ -94,7 +98,8 @@
     "props": {
       "description": "Animated data pipeline: four operations (Load \u2192 Select \u2192 Clean \u2192 Aggregate) shown as flowing data rows transforming sequentially. Raw table rows enter left, each stage highlights one operation with niche accent color, clean rows exit right. Motion-graphic style, no code \u2014 pure data flow."
     },
-    "sceneId": "scene-05"
+    "sceneId": "scene-05",
+    "atSec": 87.56
   },
   {
     "sceneId": "scene-06",
@@ -108,7 +113,8 @@
       "label": "unfamiliar dataset to workable",
       "prefix": "< ",
       "suffix": " hr"
-    }
+    },
+    "atSec": 100.04
   },
   {
     "sceneId": "scene-07",
@@ -131,7 +137,8 @@
           "icon": "\u2699\ufe0f"
         }
       ]
-    }
+    },
+    "atSec": 415.73
   },
   {
     "sceneId": "scene-08",
@@ -152,7 +159,8 @@
       "language": "python",
       "highlightLine": 6,
       "annotationText": "Orient first: shape, types, summary, nulls"
-    }
+    },
+    "atSec": 133.8
   },
   {
     "sceneId": "scene-09",
@@ -174,7 +182,8 @@
           "value": 12
         }
       ]
-    }
+    },
+    "atSec": 554.3
   },
   {
     "sceneId": "scene-10",
@@ -187,7 +196,8 @@
       "value": 30,
       "label": "seconds to spot bad columns",
       "suffix": " s"
-    }
+    },
+    "atSec": 692.88
   },
   {
     "sceneId": "scene-11",
@@ -205,7 +215,8 @@
       "emphasis": [
         2
       ]
-    }
+    },
+    "atSec": 831.45
   },
   {
     "sceneId": "scene-12",
@@ -218,7 +229,8 @@
       "value": 60,
       "label": "of real Pandas work is selecting",
       "suffix": "%"
-    }
+    },
+    "atSec": 970.03
   },
   {
     "sceneId": "scene-13",
@@ -237,7 +249,8 @@
       "language": "python",
       "highlightLine": 3,
       "annotationText": ".query() is far more readable for multi-condition filters"
-    }
+    },
+    "atSec": 1108.6
   },
   {
     "sceneId": "scene-14",
@@ -263,7 +276,8 @@
           "Wrap each condition in ()"
         ]
       }
-    }
+    },
+    "atSec": 1247.18
   },
   {
     "sceneId": "scene-15",
@@ -274,7 +288,8 @@
     "layout": "panel-left",
     "props": {
       "quote": "Cleaning is analysis. You can't separate them."
-    }
+    },
+    "atSec": 518.04
   },
   {
     "sceneId": "scene-16",
@@ -293,7 +308,8 @@
       "language": "python",
       "highlightLine": 2,
       "annotationText": "errors='coerce' turns bad values into NaN instead of crashing"
-    }
+    },
+    "atSec": 1385.75
   },
   {
     "sceneId": "scene-17",
@@ -313,7 +329,8 @@
       "language": "python",
       "highlightLine": 2,
       "annotationText": "Named aggregations: clean column names, multiple metrics, one pass"
-    }
+    },
+    "atSec": 1524.33
   },
   {
     "sceneId": "scene-18",
@@ -339,7 +356,8 @@
           "The picture they imagine"
         ]
       }
-    }
+    },
+    "atSec": 1662.9
   },
   {
     "sceneId": "scene-19",
@@ -362,7 +380,8 @@
         "Friction removed"
       ],
       "transformLabel": "Learn Pandas properly"
-    }
+    },
+    "atSec": 1729.4
   },
   {
     "sceneId": "scene-20",
@@ -387,6 +406,7 @@
           "label": "Aggregate"
         }
       ]
-    }
+    },
+    "atSec": 1781.64
   }
 ]

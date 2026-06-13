@@ -11,6 +11,7 @@
       "label": "Minutes to close the day",
       "prefix": "",
       "suffix": " min"
-    }
+    },
+    "atSec": 149.84
   }
 ]
