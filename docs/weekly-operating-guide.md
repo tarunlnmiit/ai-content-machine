@@ -133,24 +133,31 @@ FB/IG posts auto-cross-post to Meta Threads. Additional native text posts:
 | Wed | 8:00 PM | 🔵 DS |
 | Thu | 7:00 PM | 🟣 Poetry |
 
-### YouTube Shorts — 2/day all niches (Mon–Sun)
+### YouTube Shorts (daily reels — separate channels per niche)
 
-| Slot | Day | Time IST | Phase |
-|------|-----|----------|-------|
-| short_00 | Mon | 10 AM | Tease |
-| short_01 | Mon | 8 PM | Tease |
-| short_02 | Tue | 10 AM | Tease |
-| short_03 | Tue | 8 PM | **Life ★** post-long-form · DS/Poetry tease |
-| short_04 | Wed | 10 AM | Life post-long-form · DS/Poetry tease |
-| short_05 | Wed | 8 PM | Life post-long-form · DS/Poetry tease |
-| short_06 | Thu | 10 AM | Life post-long-form · DS/Poetry tease |
-| short_07 | Thu | **9 PM** | Life post-long-form · **DS ★** post-long-form · Poetry tease |
-| short_08 | Fri | 10 AM | DS post-long-form · Poetry tease |
-| short_09 | Fri | 8 PM | DS post-long-form · **Poetry ★** post-long-form |
-| short_10 | Sat | 10 AM | All post-long-form |
-| short_11 | Sat | 8 PM | All post-long-form |
-| short_12 | Sun | 10 AM | All post-long-form |
-| short_13 | Sun | 8 PM | All post-long-form |
+DS: 2 Clip Short + 2 Remotion per day (14 each/week). Life + Poetry: 1 of each per day (7 each/week).
+
+| Daily | Time IST | Niche | Format |
+|-------|----------|-------|--------|
+| Daily | 8:00 AM | 🔵 DS | Remotion Reel |
+| Daily | 10:00 AM | 🟢 Life | Clip Short Reel |
+| Daily | 10:00 AM | 🟣 Poetry | Remotion Reel |
+| Daily | 11:00 AM | 🔵 DS | Clip Short Reel |
+| Daily | 2:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 7:00 PM | 🟢 Life | Remotion Reel |
+| Daily | 8:00 PM | 🔵 DS | Clip Short Reel |
+| Daily | 9:00 PM | 🟣 Poetry | Clip Short Reel |
+
+#### Phase reference (tease → post-long-form per niche)
+
+| Slot | Day | Notes |
+|------|-----|-------|
+| short_00–01 | Mon | All tease |
+| short_02–03 | Tue | All tease · **Life ★** Thu 8PM |
+| short_04–06 | Wed–Thu AM | Life post-long-form · DS/Poetry tease |
+| short_07 | Thu 9 PM | **DS ★** post-long-form |
+| short_08–09 | Fri | DS post-long-form · **Poetry ★** Fri 8PM |
+| short_10–13 | Sat–Sun | All post-long-form |
 
 ★ = first slot after that niche's long-form goes live. Add live video URL to descriptions from ★ onward.
 

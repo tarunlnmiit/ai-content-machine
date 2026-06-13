@@ -119,6 +119,15 @@ DAILY = [
     ("Twitter",      "07:00 PM", "DS",     "Remotion Reel"),
     ("Twitter",      "08:00 PM", "Life",   "Remotion Reel"),
     ("Twitter",      "09:00 PM", "Poetry", "Remotion Reel"),
+    # YouTube Shorts — DS 2×/day, Life 1×/day, Poetry 1×/day
+    ("YouTube Shorts", "08:00 AM", "DS",     "Remotion Reel"),
+    ("YouTube Shorts", "10:00 AM", "Life",   "Clip Short Reel"),
+    ("YouTube Shorts", "10:00 AM", "Poetry", "Remotion Reel"),
+    ("YouTube Shorts", "11:00 AM", "DS",     "Clip Short Reel"),
+    ("YouTube Shorts", "02:00 PM", "DS",     "Remotion Reel"),
+    ("YouTube Shorts", "07:00 PM", "Life",   "Remotion Reel"),
+    ("YouTube Shorts", "08:00 PM", "DS",     "Clip Short Reel"),
+    ("YouTube Shorts", "09:00 PM", "Poetry", "Clip Short Reel"),
 ]
 
 
