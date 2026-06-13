@@ -50,34 +50,82 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
 
 ## Posting Times at a Glance (IST)
 
-### Week N — Long-form + Blog (Substack · Medium · YouTube)
+> Full year tracker: `output/trackers/annual-tracker-2026.xlsx` (May–Dec, 12 monthly sheets).
+> Regenerate after adding new content weeks: `python3 scripts/generate_posting_tracker.py --year 2026`
 
-| Day | Time IST | Niche | Platform(s) | Content type |
-|-----|----------|-------|-------------|--------------|
-| Wed | 2:00 PM  | 🟢 Life   | Substack · Medium | Blog upload |
-| Wed | 2:00 PM  | 🔵 DS     | Substack · Medium | Blog upload |
-| Wed | 2:00 PM  | 🟣 Poetry | Substack · Medium | Blog upload |
-| Thu | 6:00 PM  | 🟢 Life   | YouTube | Long-form video upload |
-| Thu | 6:00 PM  | 🔵 DS     | YouTube | Long-form video upload |
-| Thu | 6:00 PM  | 🟣 Poetry | YouTube | Long-form video upload |
+### Long-form (Medium + YouTube)
 
-### Week N+1 — Social (one week after long-form)
+| Day | Time | Niche | Platform |
+|-----|------|-------|----------|
+| Mon | — | All | Medium — publish article |
+| Mon | — | All | YouTube — publish video |
 
-> **Pivot rule:** IG, Facebook, Threads, Twitter threads all publish the week AFTER the long-form goes live. LinkedIn is the only exception — it goes same week (auto via scheduler.py).
+### FB/IG (daily reels + weekly posts)
 
-| Day | Time IST | Niche | Platform(s) | Content type |
-|-----|----------|-------|-------------|--------------|
-| Tue | 8:00 AM  | 🟢 Life   | LinkedIn *(auto — scheduler.py)* | LinkedIn post |
-| Tue | 8:00 AM  | 🔵 DS     | LinkedIn *(auto — scheduler.py)* | LinkedIn post |
-| Tue | 8:00 AM  | 🟣 Poetry | LinkedIn *(auto — scheduler.py)* | LinkedIn post |
-| Mon | 1:00 PM  | 🟢 Life   | Twitter/X *(manual — reminder set)* | Twitter thread |
-| Tue | 8:00 AM  | 🟢 Life   | Instagram · Facebook *(Metricool CSV)* | IG carousel |
-| Tue | 8:00 PM  | 🟢 Life   | Threads *(Metricool CSV)* | Threads post |
-| Wed | 8:00 AM  | 🔵 DS     | Instagram · Facebook *(Metricool CSV)* | IG carousel |
-| Wed | 8:00 PM  | 🔵 DS     | Threads *(Metricool CSV)* | Threads post |
-| Fri | 10:00 AM | 🟣 Poetry | Instagram · Facebook *(Metricool CSV)* | IG carousel |
-| Fri | 12:00 PM | 🟣 Poetry | Twitter/X *(manual — reminder set)* | Twitter thread |
-| Fri | 12:00 PM | 🟣 Poetry | Threads *(Metricool CSV)* | Threads post |
+| Day/Freq | Time IST | Niche | Format |
+|----------|----------|-------|--------|
+| Mon | 4:00 PM | 🔵 DS | Carousel |
+| Tue | 8:30 PM | 🟣 Poetry | Post |
+| Wed | 6:00 AM | 🟣 Poetry | Carousel |
+| Thu | 10:00 AM | 🟢 Life | Carousel |
+| Fri | 10:00 AM | 🟢 Life | Post |
+| Sat | 2:00 PM | 🔵 DS | Post |
+| Daily | 7:00 AM | 🟢 Life | Clip Short Reel |
+| Daily | 9:00 AM | 🔵 DS | Remotion Reel |
+| Daily | 9:00 PM | 🔵 DS | Clip Short Reel |
+| Daily | 9:00 PM | 🟢 Life | Remotion Reel |
+| Daily | 10:00 AM | 🟣 Poetry | Remotion Reel |
+| Daily | 10:00 PM | 🟣 Poetry | Clip Short Reel |
+
+### LinkedIn (daily reels + weekly posts/polls/slides)
+
+| Day/Freq | Time IST | Niche | Format |
+|----------|----------|-------|--------|
+| Mon | 8:00 AM | 🔵 DS | Post |
+| Mon | 6:00 PM | 🔵 DS | Poll |
+| Tue | 8:00 AM | 🟢 Life | Post |
+| Tue | 6:00 PM | 🟢 Life | Poll |
+| Wed | 6:00 AM | 🔵 DS | Slide Deck |
+| Wed | 8:00 AM | 🟣 Poetry | Post |
+| Wed | 6:00 PM | 🟣 Poetry | Poll |
+| Thu | 8:00 AM | 🟢 Life | Slide Deck |
+| Fri | 8:00 AM | 🟣 Poetry | Slide Deck |
+| Daily | 7:00 AM | 🟢 Life | Clip Short Reel |
+| Daily | 9:00 AM | 🟣 Poetry | Clip Short Reel |
+| Daily | 10:00 AM | 🔵 DS | Clip Short Reel |
+| Daily | 6:00 PM | 🟢 Life | Remotion Reel |
+| Daily | 7:00 PM | 🟣 Poetry | Remotion Reel |
+| Daily | 8:00 PM | 🔵 DS | Remotion Reel |
+
+### Twitter/X (daily reels + weekly posts/polls/threads)
+
+| Day/Freq | Time IST | Niche | Format |
+|----------|----------|-------|--------|
+| Mon | 12:00 PM | 🔵 DS | Post |
+| Tue | 12:00 PM | 🔵 DS | Poll *(manual)* |
+| Tue | 9:00 PM | 🔵 DS | Twitter Thread |
+| Wed | 12:00 PM | 🟢 Life | Post |
+| Thu | 12:00 PM | 🟢 Life | Poll *(manual)* |
+| Thu | 9:00 PM | 🟢 Life | Twitter Thread |
+| Fri | 12:00 PM | 🟣 Poetry | Post |
+| Sat | 12:00 PM | 🟣 Poetry | Poll *(manual)* |
+| Sat | 9:00 PM | 🟣 Poetry | Twitter Thread |
+| Daily | 11:00 AM | 🔵 DS | Clip Short Reel |
+| Daily | 1:00 PM | 🟢 Life | Clip Short Reel |
+| Daily | 2:00 PM | 🟣 Poetry | Clip Short Reel |
+| Daily | 7:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 8:00 PM | 🟢 Life | Remotion Reel |
+| Daily | 9:00 PM | 🟣 Poetry | Remotion Reel |
+
+### Meta Threads (auto + native)
+
+FB/IG posts auto-cross-post to Meta Threads. Additional native text posts:
+
+| Day | Time IST | Niche |
+|-----|----------|-------|
+| Mon | 7:00 PM | 🟢 Life |
+| Wed | 8:00 PM | 🔵 DS |
+| Thu | 7:00 PM | 🟣 Poetry |
 
 ### YouTube Shorts — 2/day all niches (Mon–Sun)
 
@@ -99,8 +147,6 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
 | short_13 | Sun | 8 PM | All post-long-form |
 
 ★ = first slot after that niche's long-form goes live. Add live video URL to descriptions from ★ onward.
-
-> Dashboard: **🗓️ Posting Schedule** page shows this with actual dates for the current week.
 
 ---
 
@@ -486,6 +532,9 @@ data/poems/                        ← POETRY: one poem per file ({slug}.txt)
 data/scheduling.db                 ← post queue (LinkedIn auto-post via scheduler.py)
 data/analytics/scheduler.log      ← APScheduler activity
 data/content_tracker.csv          ← content pipeline status (run scripts/sync_tracker.py to refresh)
+
+output/trackers/annual-tracker-{YEAR}.xlsx  ← annual posting calendar (May–Dec, monthly sheets, filterable)
+                                               regenerate: python3 scripts/generate_posting_tracker.py --year 2026
 
 content/blogs/{week}/              ← finished blogs (grouped by ISO week)
 content/scripts/{week}/            ← YT scripts + production guides

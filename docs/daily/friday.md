@@ -311,4 +311,7 @@ Also refresh the content tracker:
 ```bash
 python3 scripts/sync_tracker.py
 # → data/content_tracker.csv updated with this week's final state
+
+python3 scripts/generate_posting_tracker.py --year 2026
+# → output/trackers/annual-tracker-2026.xlsx updated with new content titles
 ```
