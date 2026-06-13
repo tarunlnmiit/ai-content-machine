@@ -1,6 +1,6 @@
 # Weekly Operating Guide
 
-Last updated: 2026-06-10
+Last updated: 2026-06-13
 
 ## Production Workflow (task-batched)
 
@@ -42,8 +42,12 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
     ├── [Thursday] render_shorts_batch.py
     │   output/animations/{week}/{slug}_s{slot:02d}.mp4  ← up to 14 shorts/niche
     │
-    └── [Thursday] upload_youtube.py → YouTube
-        @breathofdatascience / @breathoflife_ / @breathofpoetry
+    ├── [Thursday] upload_youtube.py → YouTube (long-form)
+    │   @breathofdatascience / @breathoflife_ / @breathofpoetry
+    │
+    └── [Friday] upload_youtube_shorts_batch.py → YouTube Shorts (scheduled)
+        python3 scripts/upload_youtube_shorts_batch.py \
+            --slug SLUG --publish-week YYYY-Wnn [--dry-run] [--pin-comment]
 ```
 
 ---
@@ -147,6 +151,24 @@ DS: 2 Clip Short + 2 Remotion per day (14 each/week). Life + Poetry: 1 of each p
 | Daily | 7:00 PM | 🟢 Life | Remotion Reel |
 | Daily | 8:00 PM | 🔵 DS | Clip Short Reel |
 | Daily | 9:00 PM | 🟣 Poetry | Clip Short Reel |
+
+**Batch upload command (schedule all shorts for a slug in one run):**
+```bash
+# Dry run first — verify files, titles, publish times
+python3 scripts/upload_youtube_shorts_batch.py \
+    --slug SLUG --publish-week YYYY-Wnn --dry-run
+
+# Upload all slots (prompts for confirmation)
+python3 scripts/upload_youtube_shorts_batch.py \
+    --slug SLUG --publish-week YYYY-Wnn [--pin-comment]
+
+# Upload specific slots only
+python3 scripts/upload_youtube_shorts_batch.py \
+    --slug SLUG --publish-week YYYY-Wnn --slots 0,1,2
+```
+- `--publish-week` overrides stale `schedule.json` timestamps (use when shorts go out a different week than content week)
+- `--pin-comment` posts long-form URL as comment — pin manually in YouTube Studio
+- Long-form URL auto-injected into description from `youtube_shorts_metadata.json`
 
 #### Phase reference (tease → post-long-form per niche)
 
