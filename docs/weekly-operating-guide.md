@@ -72,9 +72,11 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
 | Sat | 2:00 PM | 🔵 DS | Post |
 | Daily | 7:00 AM | 🟢 Life | Clip Short Reel |
 | Daily | 9:00 AM | 🔵 DS | Remotion Reel |
+| Daily | 10:00 AM | 🟣 Poetry | Remotion Reel |
+| Daily | 1:00 PM | 🔵 DS | Clip Short Reel |
+| Daily | 3:00 PM | 🔵 DS | Remotion Reel |
 | Daily | 9:00 PM | 🔵 DS | Clip Short Reel |
 | Daily | 9:00 PM | 🟢 Life | Remotion Reel |
-| Daily | 10:00 AM | 🟣 Poetry | Remotion Reel |
 | Daily | 10:00 PM | 🟣 Poetry | Clip Short Reel |
 
 ### LinkedIn (daily reels + weekly posts/polls/slides)
@@ -93,6 +95,8 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
 | Daily | 7:00 AM | 🟢 Life | Clip Short Reel |
 | Daily | 9:00 AM | 🟣 Poetry | Clip Short Reel |
 | Daily | 10:00 AM | 🔵 DS | Clip Short Reel |
+| Daily | 2:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 4:00 PM | 🔵 DS | Clip Short Reel |
 | Daily | 6:00 PM | 🟢 Life | Remotion Reel |
 | Daily | 7:00 PM | 🟣 Poetry | Remotion Reel |
 | Daily | 8:00 PM | 🔵 DS | Remotion Reel |
@@ -113,6 +117,8 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
 | Daily | 11:00 AM | 🔵 DS | Clip Short Reel |
 | Daily | 1:00 PM | 🟢 Life | Clip Short Reel |
 | Daily | 2:00 PM | 🟣 Poetry | Clip Short Reel |
+| Daily | 3:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 5:00 PM | 🔵 DS | Clip Short Reel |
 | Daily | 7:00 PM | 🔵 DS | Remotion Reel |
 | Daily | 8:00 PM | 🟢 Life | Remotion Reel |
 | Daily | 9:00 PM | 🟣 Poetry | Remotion Reel |
