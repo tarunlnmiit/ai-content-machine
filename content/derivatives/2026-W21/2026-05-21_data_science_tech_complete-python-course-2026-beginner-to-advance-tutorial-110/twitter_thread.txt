@@ -13,3 +13,7 @@ Your first program should touch real data, not just print Hello World. Read a li
 Error messages are your teacher. KeyError, ValueError, IndexError—read the type, identify the problem, fix it. That cycle is 80% of programming. Most people quit on the first error. Success is just reading and fixing them repeatedly.
 
 Run your script. Watch results.json get created. That's not trivial—that's you thinking computationally. Reply with what you broke first. Ready for Tutorial 2? We go deeper.
+
+#datascience #python
+
+📋 https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=complete-python-course-2026-beginner-to-advance-tutorial-110

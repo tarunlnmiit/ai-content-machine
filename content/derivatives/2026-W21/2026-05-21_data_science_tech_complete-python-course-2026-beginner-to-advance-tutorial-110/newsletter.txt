@@ -10,3 +10,5 @@ This tutorial covers what tutorials skip: virtual environments for reproducibili
 One virtual environment. One mental model. One real program that saves results. That foundation scales to everything after.
 
 [READ_LINK] and run your first script. Share what broke—that's how you know you're learning correctly.
+
+📋 Free worksheet: https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=complete-python-course-2026-beginner-to-advance-tutorial-110

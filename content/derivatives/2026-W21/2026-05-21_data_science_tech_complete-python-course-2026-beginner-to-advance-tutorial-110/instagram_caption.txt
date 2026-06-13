@@ -25,4 +25,5 @@ Slides:
   4. Your First Real Program
   5. Error Messages as Feedback
 
+📋 Free worksheet → https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=complete-python-course-2026-beginner-to-advance-tutorial-110
 #Python #DataScience #Programming #LearningToCode #Tutorial
