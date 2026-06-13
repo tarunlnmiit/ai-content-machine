@@ -14,3 +14,5 @@ In this piece: the 4 primitive types and the exact moment each one betrays you, 
 If you have ever gotten a number that looked right but felt off, this is where to start.
 
 Read Tutorial 2 here: [READ_LINK]
+
+📋 Free worksheet: https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210

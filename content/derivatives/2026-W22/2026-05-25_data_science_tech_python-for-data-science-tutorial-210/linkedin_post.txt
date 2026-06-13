@@ -13,3 +13,5 @@ Four things that seem simple until they bite you on a deadline: the string conca
 If you are building with Python, these are worth understanding before you import pandas. [BLOG_LINK]
 
 #Python #DataScience #MachineLearning
+
+📋 **Free worksheet:** [Download Python For Data Science Tutorial 210 →](https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210)

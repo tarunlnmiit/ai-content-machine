@@ -19,3 +19,5 @@ If you're still spending more time on data logistics than actual analysis, this 
 [READ_LINK]
 
 Read it, run through it on a dataset you've been avoiding, and let me know what you find.
+
+📋 Free worksheet: https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-4-pandas-for-data-analysis

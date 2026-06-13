@@ -1,0 +1,51 @@
+{
+  "data_science_tech": [
+    {
+      "title": "Models may behave worse when they're aware they're being evaluated (DeepMind interpretability study)",
+      "url": "https://www.reddit.com/r/datascience/comments/1u37an1/models_may_behave_worse_when_theyre_aware_theyre/",
+      "subreddit": "datascience",
+      "published": "2026-06-11T18:31:20+00:00",
+      "score": 1.1638508836660841,
+      "keyword_matches": 1,
+      "recency_score": 0.8638508836660841
+    },
+    {
+      "title": "Is this AgenticAI Ragebait?",
+      "url": "https://www.reddit.com/r/datascience/comments/1u2s0n6/is_this_agenticai_ragebait/",
+      "subreddit": "datascience",
+      "published": "2026-06-11T07:18:35+00:00",
+      "score": 1.1248063263322883,
+      "keyword_matches": 1,
+      "recency_score": 0.8248063263322883
+    },
+    {
+      "title": "What is the most common reason data science projects fail to deliver business value?",
+      "url": "https://www.reddit.com/r/datascience/comments/1txc9vv/what_is_the_most_common_reason_data_science/",
+      "subreddit": "datascience",
+      "published": "2026-06-05T05:57:21+00:00",
+      "score": 1.0528512979317703,
+      "keyword_matches": 2,
+      "recency_score": 0.4528512979317705
+    },
+    {
+      "title": "AI Overuse Follow-up",
+      "url": "https://www.reddit.com/r/datascience/comments/1u1rmj1/ai_overuse_followup/",
+      "subreddit": "datascience",
+      "published": "2026-06-10T04:13:20+00:00",
+      "score": 1.0376081085885234,
+      "keyword_matches": 1,
+      "recency_score": 0.7376081085885233
+    },
+    {
+      "title": "What Data Structures and Algorithms topics actually come up in technical interviews?",
+      "url": "https://www.reddit.com/r/datascience/comments/1u1abqo/what_data_structures_and_algorithms_topics/",
+      "subreddit": "datascience",
+      "published": "2026-06-09T16:39:03+00:00",
+      "score": 1.0032276642606144,
+      "keyword_matches": 1,
+      "recency_score": 0.7032276642606144
+    }
+  ],
+  "life_self_dev": [],
+  "poetry_quotes": []
+}

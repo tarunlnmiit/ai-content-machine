@@ -43,3 +43,7 @@ The raw data doesn't tell you anything. Summaries do.
 Full Pandas tutorial (load → filter → clean → aggregate) linked below. Part 4 of a 10-part Python for Data Science series.
 
 Retweet if this saves someone from a messy CSV.
+
+#datascience #python
+
+📋 https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-4-pandas-for-data-analysis

@@ -1679,3 +1679,46 @@ Ollama HTTP 404
     3. poem about nature (1.000)
     4. People Don't Know the Difference Between Writing a Book and Being (1.000)
     5. Science Fiction Poetry by Franny Choi [POEM] (1.000)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+Ollama HTTP 404
+  Loaded 11452 ideas            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 11452 → 11327 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2789 ideas       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:20:46
+  Rank-normalized               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 10 titles         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:02
+  Classified uncategorized      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15/15 0:00:00
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. What data analytics certs do I need? supply chain 5 yr exp (1.000)
+    2. How Far Did They Go? The Persuasive Tactics of Covert LLM Agents  (1.000)
+    3. ANOVA, Geometrically · Part 2 Why Linear Algebra Is the Language  (1.000)
+    4. Join the June Solstice Game Jam: $1,000 in prizes! (1.000)
+    5. chopratejas/headroom (1.000)
+  life_self_dev:
+    1. I Stopped Fighting My Writing Procrastination. I Automated It. (1.000)
+    2. how to become a pilot (1.000)
+    3. Jaboukie Young-White explains personal growth #ziwe #jaboukie #co (1.000)
+    4. Unnecessary repeated success advice (1.000)
+    5. Do Narcissists Know They’re Lying? A Former Detective Explains th (0.998)
+  poetry_quotes:
+    1. Poetry Dips Its Fingers In Every Colour — (1.000)
+    2. “You've gotta dance like there's nobody watching, Love like you'l (1.000)
+    3. poem about nature (1.000)
+    4. the most creative essay EVER! 🤔 (1.000)
+    5. Science Fiction Poetry by Franny Choi [POEM] (1.000)

@@ -67,3 +67,7 @@ NumPy teaches you to describe what you want, not instruct the machine step by st
 Lists → sequence. Dicts → map. NumPy → operate on the whole thing at once.
 
 Full tutorial with code in the thread above. Follow for the rest of the series — Pandas is Tutorial 5.
+
+#datascience #python
+
+📋 https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-310

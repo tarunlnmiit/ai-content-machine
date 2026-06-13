@@ -11,3 +11,7 @@ Python gave me a confident wrong number once. Not an error. Not a crash. I summe
 5/ If you have copied the same cleaning block across 3 notebooks, you have 3 versions of truth. One bug, three places to fix. A function costs 2 extra lines once and saves hours later. `def calculate_average(values):` — that is it.
 
 Types, lists, dicts, functions — the four foundations before NumPy changes everything. Tutorial 3 is where the math scales. These are what make it not break. Full breakdown: [BLOG_LINK]
+
+#datascience #python
+
+📋 https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210

@@ -1,1 +1,5 @@
 Python won't warn you when a column of ages sums to '283542' instead of 105. No error. No crash. Just a confident wrong number in your report. Checking types before any calculation isn't advanced — it's the first habit worth building. [BLOG_LINK]
+
+📋 Free worksheet → https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210
+
+#datascience #python #machinelearning

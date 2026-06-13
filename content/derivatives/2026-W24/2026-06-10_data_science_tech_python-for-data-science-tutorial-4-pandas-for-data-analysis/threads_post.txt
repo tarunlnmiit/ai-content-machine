@@ -3,3 +3,7 @@ Two weeks cleaning one dataset before I ran a single analysis. The data had four
 That experience is what made me take Pandas seriously — not as syntax to memorize but as a mental model for talking to messy data.
 
 Tutorial 4 is live. Exploring, selecting, cleaning, aggregating. The four things you do on every project, every time. [BLOG_LINK]
+
+📋 Free worksheet → https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-4-pandas-for-data-analysis
+
+#datascience #python #machinelearning

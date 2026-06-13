@@ -346,6 +346,19 @@ def main():
     for f in saved:
         console.print(f"  [dim]{f}[/dim]")
 
+    # Inject worksheet CTA if DS or Life niche
+    if niche in ("ds", "life"):
+        from lib.worksheet_cta import (
+            inject_worksheet_ctas_to_dir,
+            extract_worksheet_slug_from_dir,
+            worksheet_exists,
+        )
+        ws_slug = extract_worksheet_slug_from_dir(slug)
+        if ws_slug and worksheet_exists(ws_slug):
+            modified = inject_worksheet_ctas_to_dir(out_dir, ws_slug, niche)
+            if modified:
+                console.print(f"\n[success]✓ Worksheet CTA injected into {len(modified)} files[/success]")
+
     # Write schedule.json if not already present
     schedule_file = out_dir / "schedule.json"
     if not schedule_file.exists():

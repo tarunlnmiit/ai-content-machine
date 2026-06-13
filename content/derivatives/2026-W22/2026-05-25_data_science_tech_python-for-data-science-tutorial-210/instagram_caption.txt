@@ -29,4 +29,5 @@ Slides:
   6. Functions: write once, trust forever
   7. What comes next: Tutorial 3
 
+📋 Free worksheet → https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210
 #Python #DataScience #PythonProgramming #LearnPython #DataAnalysis

@@ -167,6 +167,13 @@ Before writing any blog or content, ALWAYS:
 
 **After Mode C:** append design pattern used to `system_architecture.md` to prevent session amnesia.
 
+## Platform Constraints
+
+- **LinkedIn poll options:** max 30 characters each
+- **Twitter poll options:** max 25 characters each
+- **Twitter threads & polls:** CANNOT be scheduled (must post manually)
+- **Worksheet delivery:** DS & Life niches only; URLs auto-injected into captions via `scripts/inject_worksheet_ctas.py` (W22 onwards; retroactive support available)
+
 ## Development Status
 
 This project is currently a scaffold — directories exist but implementation files (scripts, agents, automation) are not yet built. When adding code, prefer Python or Node.js consistent with whatever is introduced first.

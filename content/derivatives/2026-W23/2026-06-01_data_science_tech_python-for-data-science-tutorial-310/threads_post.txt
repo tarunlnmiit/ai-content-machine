@@ -5,3 +5,7 @@ Then learned the same operation was two NumPy lines.
 The speed difference wasn't the sting. It was realizing I'd manually solved a problem that was solved in 2006.
 
 That's the NumPy tutorial. [BLOG_LINK]
+
+📋 Free worksheet → https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-310
+
+#datascience #python #machinelearning

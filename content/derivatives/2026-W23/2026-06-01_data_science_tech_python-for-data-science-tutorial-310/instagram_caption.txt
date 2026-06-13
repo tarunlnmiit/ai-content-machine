@@ -23,4 +23,5 @@ Slides:
   7. 2D arrays: rows, columns, and the axis problem
   8. The mental shift that makes Pandas click
 
+📋 Free worksheet → https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-310
 #Python #DataScience #NumPy #LearnPython #DataScienceTips

@@ -12,3 +12,5 @@ The part I find most useful: six lines of IQR-based outlier detection you can dr
 This is Tutorial 3 of 10. Pandas is two weeks out, and every pattern here carries forward directly. You won't be starting over. You'll be adding a layer.
 
 Read the full tutorial with code: [READ_LINK]
+
+📋 Free worksheet: https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-310

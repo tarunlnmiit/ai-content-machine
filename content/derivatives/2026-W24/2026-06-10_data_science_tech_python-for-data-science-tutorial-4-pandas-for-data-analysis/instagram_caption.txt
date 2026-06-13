@@ -21,4 +21,5 @@ Slides:
   5. GroupBy + .agg() — Multiple metrics, one pass
   6. Pivot tables: for communication, not computation
 
+📋 Free worksheet → https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-4-pandas-for-data-analysis
 #Python #DataScience #Pandas #DataAnalysis #LearnPython

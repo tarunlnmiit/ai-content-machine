@@ -13,3 +13,5 @@ That exact syntax is how Pandas works. Learn it in NumPy and DataFrames will fee
 Every major library in the data ecosystem — Pandas, scikit-learn, TensorFlow — stores data in NumPy arrays underneath. This isn't a detour. It's the foundation everything else is built on.
 
 #DataScience #Python #NumPy
+
+📋 **Free worksheet:** [Download Python For Data Science Tutorial 310 →](https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-310)

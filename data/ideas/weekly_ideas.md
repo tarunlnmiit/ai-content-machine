@@ -1,37 +1,37 @@
 # Weekly Ideas Report
-Generated: 2026-06-12 06:42:38
+Generated: 2026-06-13 06:24:40
 
 ## Data Science Tech
 
-### 1. How Far Did They Go? The Persuasive Tactics of Covert LLM Agents in a Discontinued Field Experiment
+### 1. What data analytics certs do I need? supply chain 5 yr exp
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** reddit_2026-06-03
+- **URL:** https://www.reddit.com/r/analytics/comments/1tv671s/what_data_analytics_certs_do_i_need_supply_chain/
+
+### 2. How Far Did They Go? The Persuasive Tactics of Covert LLM Agents in a Discontinued Field Experiment
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** arxiv_cs_ai
 - **URL:** https://arxiv.org/abs/2606.05256
 
-### 2. ANOVA, Geometrically · Part 2 Why Linear Algebra Is the Language of ANOVA
+### 3. ANOVA, Geometrically · Part 2 Why Linear Algebra Is the Language of ANOVA
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** medium_data_science
 - **URL:** https://medium.com/@interestingzhao/anova-geometrically-part-2-why-linear-algebra-is-the-language-of-anova-0175e8ace3b9?source=rss------data_science-5
 
-### 3. chopratejas/headroom
+### 4. Join the June Solstice Game Jam: $1,000 in prizes!
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** devto_top
+- **URL:** https://dev.to/devteam/join-the-june-solstice-game-jam-1000-in-prizes-3jla
+
+### 5. chopratejas/headroom
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** github_trending_python
 - **URL:** https://github.com/chopratejas/headroom
-
-### 4. Claude Fable 5
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** hn_algolia
-- **URL:** https://www.anthropic.com/news/claude-fable-5-mythos-5
-
-### 5. data science course
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** suggest_2026-06-06_google
-- **URL:** 
 
 ## Life Self Dev
 
@@ -85,11 +85,11 @@ Generated: 2026-06-12 06:42:38
 - **Source:** suggest_2026-06-06_google
 - **URL:** 
 
-### 4. People Don't Know the Difference Between Writing a Book and Being a Writer...
+### 4. the most creative essay EVER! 🤔
 - **Score:** 1.000
 - **Category:** uncategorized
-- **Source:** youtube_2026-06-09
-- **URL:** https://youtu.be/5Wkl-W45yY8
+- **Source:** youtube_2026-06-13
+- **URL:** https://youtu.be/bBjrxxFwocE
 
 ### 5. Science Fiction Poetry by Franny Choi [POEM]
 - **Score:** 1.000

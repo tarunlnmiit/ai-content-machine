@@ -97,3 +97,146 @@ def worksheet_cta_markdown(slug: str, title: str | None = None) -> str:
 def has_cta(markdown: str) -> bool:
     """True if a worksheet CTA is already present."""
     return CTA_MARKER in markdown
+
+
+def extract_worksheet_slug_from_dir(dir_name: str) -> str | None:
+    """Extract worksheet slug from derivative directory name.
+
+    Pattern: YYYY-MM-DD_{niche}_{slug}
+    Returns the {slug} part, or None if format doesn't match.
+    """
+    import re
+    match = re.match(r'^\d{4}-\d{2}-\d{2}_(?:data_science_tech|life_self_dev|poetry_quotes)_(.+)$', dir_name)
+    return match.group(1) if match else None
+
+
+def inject_worksheet_ctas_to_dir(out_dir: Path, worksheet_slug: str, niche: str) -> list[str]:
+    """Inject worksheet CTAs into all derivative files in a directory.
+
+    Args:
+        out_dir: Path to derivative directory (e.g., content/derivatives/2026-W24/...)
+        worksheet_slug: The worksheet slug (e.g., "python-for-data-science-tutorial-4-pandas-for-data-analysis")
+        niche: Niche key ('ds' or 'life')
+
+    Returns:
+        List of modified file paths (relative to repo).
+
+    Idempotent: skips files that already contain the worksheet URL.
+    """
+    from pathlib import Path
+    from .hashtags import hashtag_line
+
+    url = worksheet_url(worksheet_slug)
+    title = worksheet_title(worksheet_slug)
+    modified = []
+
+    # Skip if worksheet URL already present (idempotent)
+    if not url:
+        return []
+
+    # Instagram: append before hashtags
+    ig_file = out_dir / "instagram_caption.txt"
+    if ig_file.exists():
+        text = ig_file.read_text(encoding="utf-8")
+        if url not in text:
+            # Find last line (hashtags); insert before it
+            lines = text.rstrip("\n").split("\n")
+            ws_line = f"📋 Free worksheet → {url}"
+
+            # Check if last line is hashtags
+            if lines and lines[-1].startswith("#"):
+                lines.insert(-1, ws_line)
+            else:
+                lines.append(ws_line)
+
+            # Add hashtags if missing
+            if not any(line.startswith("#") for line in lines):
+                tags = hashtag_line(niche, "instagram")
+                if tags:
+                    lines.append(tags)
+
+            ig_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            modified.append(str(ig_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
+
+    # LinkedIn: append at end with hashtags fallback
+    li_file = out_dir / "linkedin_post.txt"
+    if li_file.exists():
+        text = li_file.read_text(encoding="utf-8")
+        if url not in text:
+            ws_line = f"📋 **Free worksheet:** [Download {title or 'the companion worksheet'} →]({url})"
+            lines = text.rstrip("\n").split("\n")
+            lines.append("")
+            lines.append(ws_line)
+
+            # Add hashtags if missing
+            if not any(line.startswith("#") for line in lines):
+                tags = hashtag_line(niche, "linkedin")
+                if tags:
+                    lines.append("")
+                    lines.append(tags)
+
+            li_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            modified.append(str(li_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
+
+    # Threads: append at end with hashtags fallback
+    threads_file = out_dir / "threads_post.txt"
+    if threads_file.exists():
+        text = threads_file.read_text(encoding="utf-8")
+        if url not in text:
+            ws_line = f"📋 Free worksheet → {url}"
+            lines = text.rstrip("\n").split("\n")
+            lines.append("")
+            lines.append(ws_line)
+
+            # Add hashtags if missing
+            if not any(line.startswith("#") for line in lines):
+                tags = hashtag_line(niche, "threads")
+                if tags:
+                    lines.append("")
+                    lines.append(tags)
+
+            threads_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            modified.append(str(threads_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
+
+    # Twitter: append to closing tweet + hashtags fallback
+    twitter_file = out_dir / "twitter_thread.txt"
+    if twitter_file.exists():
+        text = twitter_file.read_text(encoding="utf-8")
+        if url not in text:
+            lines = text.rstrip("\n").split("\n\n")  # tweets separated by blank lines
+            if lines:
+                last_tweet = lines[-1]
+                # Add hashtags to closing tweet if missing
+                if not last_tweet.lstrip().startswith("#"):
+                    tags = hashtag_line(niche, "twitter")
+                    if tags:
+                        last_tweet = last_tweet.rstrip() + "\n\n" + tags
+                # Append worksheet URL to closing tweet
+                lines[-1] = last_tweet.rstrip() + "\n\n" + f"📋 {url}"
+
+            twitter_file.write_text("\n\n".join(lines) + "\n", encoding="utf-8")
+            modified.append(str(twitter_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
+
+    # Newsletter: append worksheet URL line
+    newsletter_file = out_dir / "newsletter.txt"
+    if newsletter_file.exists():
+        text = newsletter_file.read_text(encoding="utf-8")
+        if url not in text:
+            newsletter_file.write_text(text.rstrip("\n") + f"\n\n📋 Free worksheet: {url}\n", encoding="utf-8")
+            modified.append(str(newsletter_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
+
+    # YouTube metadata: replace [LINKS_PLACEHOLDER]
+    yt_file = out_dir / "youtube_metadata.json"
+    if yt_file.exists():
+        import json
+        try:
+            data = json.loads(yt_file.read_text(encoding="utf-8"))
+            if "[LINKS_PLACEHOLDER]" in data.get("description", ""):
+                ws_block = f"📋 Free worksheet — {title or 'Companion worksheet'}:\n{url}"
+                data["description"] = data["description"].replace("[LINKS_PLACEHOLDER]", ws_block)
+                yt_file.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                modified.append(str(yt_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
+        except (json.JSONDecodeError, KeyError):
+            pass
+
+    return modified

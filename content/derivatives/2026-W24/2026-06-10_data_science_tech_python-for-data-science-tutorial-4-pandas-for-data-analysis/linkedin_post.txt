@@ -13,3 +13,5 @@ If you're working with data and still spending more time on logistics than think
 Link in comments.
 
 #DataScience #Python #Pandas
+
+📋 **Free worksheet:** [Download Python For Data Science Tutorial 4 Pandas For Data Analysis →](https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-4-pandas-for-data-analysis)
