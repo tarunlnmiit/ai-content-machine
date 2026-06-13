@@ -466,6 +466,31 @@ Columns:
 
 **Before DaVinci edit:** Open the manifest to see where each overlay lands in your talking-head timeline. Use `startSec` to position scenes on separate overlay tracks.
 
+### Ad-libbed take? Re-anchor triggers to the transcript first
+
+Overlay `script` triggers come from the **written** script. If you delivered the take off-script (paraphrased, reordered), those triggers won't match the spoken audio and timestamps fall back to interpolation (`matched=False`). Re-anchor them to what you actually said — captions already exist:
+
+```bash
+python3 scripts/retrofit_scene_triggers.py \
+  --overlay "remotion/public/scene-plans/{week}/{slug}_overlay.json"
+# Claude maps each scene to the verbatim spoken phrase; truly-unspoken scenes (code) stay interpolated.
+# Then re-run patch_edit_plan_overlays.py + render_overlay_scenes.py.
+```
+
+### Manual placement sheet (run during the edit)
+
+Generate a per-niche Markdown sheet that tells you which clip to drop where:
+
+```bash
+python3 scripts/overlay_placement_sheet.py --week 2026-W24
+# → output/animations/2026-W24/overlay-scenes/{NICHE}_PLACEMENT.md  (one per niche)
+# Add --niche poetry to do just one.
+```
+
+Each sheet lists every overlay's **Time** (measured from your first spoken word), **Dur**, **clip filename**, an **Exact?** flag (✓ = anchored to a verbatim spoken phrase, ~est = interpolated), and the on-screen text.
+
+**Manual DaVinci flow:** talking-head on V1; drop each clip on V2 at its listed Time (clips are full-frame opaque → full cutaway for their duration). Want the speaker still visible? Scale the V2 clip to ~35% and park it left/right as a side panel. If your timeline has lead silence/intro before the first word, add that offset to every Time.
+
 ---
 
 ## What This Does NOT Do (Yet)
