@@ -472,9 +472,9 @@ python3 scripts/render_overlay_scenes.py --week {week}
 ```
 
 Output: `output/animations/{week}/overlay-scenes/manifest.csv` with columns:
-- `niche`, `scene_id`, `component_name`, `duration_sec`, `output_file`, `script`, **`startSec`**
+- `niche`, `scene_id`, `component_name`, `duration_sec`, `output_file`, `script`, **`startSec`**, **`matched`**
 
-Use `startSec` to position each overlay on a separate track in DaVinci during manual editing.
+Use `startSec` to position each overlay on a separate track in DaVinci during manual editing. `matched=True` means the timestamp was anchored to a real spoken phrase in the transcript; `matched=False` means it was interpolated between neighbors (e.g. code snippets never spoken aloud) — eyeball those and nudge as needed.
 
 Expected: 3 edit plans parseable, 3 caption files present, total duration 8–15 min each.
 

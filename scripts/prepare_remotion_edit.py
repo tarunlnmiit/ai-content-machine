@@ -320,41 +320,95 @@ def build_overlay_configs(header: dict, niche: str) -> dict:
     }
 
 
+# Common words ignored when scoring a script→transcript anchor so that filler
+# like "the/of/you/them" cannot inflate a false match on a distant window.
+_ALIGN_STOPWORDS = frozenset(
+    "the a an and or of to in on is are was for that this it you your we i my they "
+    "them with not but as at be have has had do does so what who how".split()
+)
+
+
+def _normalize_words(text: str) -> list[str]:
+    """Lowercase, strip punctuation, collapse whitespace → list of word tokens."""
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", text.lower())).strip().split()
+
+
 def _assign_even_timestamps(scenes: list, total_sec: float = 600) -> list:
     n = len(scenes)
-    return [{**s, "atSec": round(total_sec * (i + 1) / (n + 1), 2)} for i, s in enumerate(scenes)]
+    return [
+        {**s, "atSec": round(total_sec * (i + 1) / (n + 1), 2), "atSecSource": "interp"}
+        for i, s in enumerate(scenes)
+    ]
 
 
 def align_overlay_scenes(scenes: list, captions: list) -> list:
-    """Match each scene's script excerpt to Whisper caption timestamps via text search.
-    Falls back to even spacing when captions missing or match fails."""
+    """Align each overlay scene to a transcript timestamp, preserving chronological order.
+
+    Scenes follow the spoken transcript in order, so we anchor each scene to the
+    longest contiguous run of its script words found in the transcript token stream,
+    searching forward from a monotonic cursor. Scenes that cannot be confidently
+    anchored (e.g. code snippets never spoken aloud, heavy paraphrase) are filled by
+    linear interpolation between their bracketing anchors — guaranteeing every atSec
+    is non-decreasing. Each scene is tagged atSecSource="anchor"|"interp" so callers
+    can distinguish a real match from an interpolated guess.
+    """
     if not captions:
         return _assign_even_timestamps(scenes)
 
-    words = [(c["text"].strip().lower(), c["startMs"] / 1000) for c in captions]
-    full_text = " ".join(w for w, _ in words)
-    word_offsets: list[tuple[int, float]] = []
-    pos = 0
-    for w, ts in words:
-        word_offsets.append((pos, ts))
-        pos += len(w) + 1
+    # Flat token stream: each spoken word paired with its caption start time.
+    tokens: list[str] = []
+    token_times: list[float] = []
+    for cap in captions:
+        start_sec = cap["startMs"] / 1000
+        for word in _normalize_words(cap["text"]):
+            tokens.append(word)
+            token_times.append(start_sec)
 
-    result = []
-    for scene in scenes:
-        query = scene["script"].lower()
-        idx = full_text.find(query[:40])
-        if idx >= 0:
-            closest_ts = min(word_offsets, key=lambda x: abs(x[0] - idx))[1]
-            result.append({**scene, "atSec": round(closest_ts, 2)})
-        else:
-            result.append(dict(scene))  # no atSec — will be skipped in TalkingHeadEdit
+    total_sec = captions[-1]["endMs"] / 1000
 
-    unmatched = [s for s in result if "atSec" not in s]
-    if unmatched:
-        total = captions[-1]["endMs"] / 1000 if captions else 600
-        n = len(unmatched)
-        for i, scene in enumerate(unmatched):
-            scene["atSec"] = round(total * (i + 1) / (n + 1), 2)
+    MIN_RUN = 3            # shortest contiguous word run accepted as an anchor
+    MAX_RUN = 8            # longest run we bother searching for
+    MIN_CONTENT_WORDS = 2  # run must carry at least this many non-stopwords
+
+    def find_anchor(query_words: list[str], cursor: int) -> int:
+        """Return token index of the best forward anchor for query_words, or -1."""
+        for run_len in range(min(MAX_RUN, len(query_words)), MIN_RUN - 1, -1):
+            for q_start in range(0, len(query_words) - run_len + 1):
+                needle = query_words[q_start:q_start + run_len]
+                if sum(1 for w in needle if w not in _ALIGN_STOPWORDS) < MIN_CONTENT_WORDS:
+                    continue
+                for i in range(cursor, len(tokens) - run_len + 1):
+                    if tokens[i:i + run_len] == needle:
+                        return i
+        return -1
+
+    result: list[dict] = []
+    at_sec: list[float | None] = [None] * len(scenes)
+    cursor = 0
+    for idx, scene in enumerate(scenes):
+        query_words = _normalize_words(scene.get("script", ""))
+        anchor = find_anchor(query_words, cursor) if query_words else -1
+        if anchor >= 0:
+            at_sec[idx] = round(token_times[anchor], 2)
+            cursor = anchor + 1
+        result.append(dict(scene))
+
+    # Interpolate unanchored scenes between their nearest bracketing anchors.
+    anchored_idxs = [i for i, t in enumerate(at_sec) if t is not None]
+    for i, scene in enumerate(result):
+        if at_sec[i] is not None:
+            scene["atSec"] = at_sec[i]
+            scene["atSecSource"] = "anchor"
+            continue
+        prev = [j for j in anchored_idxs if j < i]
+        nxt = [j for j in anchored_idxs if j > i]
+        lo_val = at_sec[prev[-1]] if prev else 0.0
+        hi_val = at_sec[nxt[0]] if nxt else total_sec
+        lo_pos = prev[-1] if prev else -1
+        hi_pos = nxt[0] if nxt else len(scenes)
+        frac = (i - lo_pos) / (hi_pos - lo_pos)
+        scene["atSec"] = round(lo_val + (hi_val - lo_val) * frac, 2)
+        scene["atSecSource"] = "interp"
 
     return result
 
