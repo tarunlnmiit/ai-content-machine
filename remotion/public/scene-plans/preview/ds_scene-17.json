@@ -17,6 +17,7 @@
       "language": "python",
       "highlightLine": 2,
       "annotationText": "Named aggregations: clean column names, multiple metrics, one pass"
-    }
+    },
+    "atSec": 1524.33
   }
 ]

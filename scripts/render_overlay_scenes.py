@@ -106,7 +106,7 @@ def render_scene(scene: dict, niche: str, week: str, dry_run: bool) -> tuple[str
 
 def write_manifest(rows: list[dict], week: str) -> Path:
     out = output_dir(week) / "manifest.csv"
-    fieldnames = ["niche", "scene_id", "component_name", "duration_sec", "output_file", "script"]
+    fieldnames = ["niche", "scene_id", "component_name", "duration_sec", "output_file", "script", "startSec"]
     with out.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -153,6 +153,7 @@ def main() -> None:
                 "duration_sec": scene.get("durationSec", 6),
                 "output_file": out_filename,
                 "script": scene.get("script", ""),
+                "startSec": scene.get("atSec", ""),
             })
         else:
             fail += 1

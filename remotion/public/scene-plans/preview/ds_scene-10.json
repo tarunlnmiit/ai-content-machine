@@ -10,6 +10,7 @@
       "value": 30,
       "label": "seconds to spot bad columns",
       "suffix": " s"
-    }
+    },
+    "atSec": 692.88
   }
 ]

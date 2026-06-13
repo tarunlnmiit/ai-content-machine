@@ -8,7 +8,7 @@ Last updated: 2026-06-13
 |-----|------|--------|-------|
 | [Monday](monday.md) | Generate all blogs + repurpose → derivatives | DS + Life + Poetry | ~45 min |
 | [Tuesday](tuesday.md) | Worksheets (first) + video scripts + scene plans + social visual assets | DS + Life + Poetry | ~45 min |
-| [Wednesday](wednesday.md) | Publish blogs (Substack + Medium) + shoot videos + generate captions + build edit plans | DS + Life + Poetry | ~3 hrs |
+| [Wednesday](wednesday.md) | Publish blogs (Substack + Medium) + shoot videos + generate captions + build edit plans + **generate overlay manifest** | DS + Life + Poetry | ~3 hrs |
 | [Thursday](thursday.md) | Render (Remotion) + optional HyperFrames + upload + Notion sync + verify | DS + Life + Poetry | ~3 hrs |
 | [Friday](friday.md) | Schedule social (THIS week → posts NEXT week) + buffer check + refresh tracker | DS + Life + Poetry | ~45 min |
 | [Saturday](saturday.md) | **Free** — catchup only if something slipped | — | — |
