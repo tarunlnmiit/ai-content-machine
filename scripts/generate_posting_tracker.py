@@ -15,7 +15,7 @@ import sys
 from collections import defaultdict
 
 try:
-    from openpyxl import Workbook
+    from openpyxl import Workbook, load_workbook
     from openpyxl.styles import PatternFill, Font, Alignment
     from openpyxl.utils import get_column_letter
     from openpyxl.worksheet.datavalidation import DataValidation
@@ -90,11 +90,14 @@ WEEKLY = [
 ]
 
 # (platform, time, niche, format) — repeated every day Mon–Sun
+# DS Clip Short and Remotion Reels: 2× per day = 14 per week
 DAILY = [
     # FB/IG
     ("FB/IG",        "07:00 AM", "Life",   "Clip Short Reel"),
     ("FB/IG",        "09:00 AM", "DS",     "Remotion Reel"),
     ("FB/IG",        "10:00 AM", "Poetry", "Remotion Reel"),
+    ("FB/IG",        "01:00 PM", "DS",     "Clip Short Reel"),
+    ("FB/IG",        "03:00 PM", "DS",     "Remotion Reel"),
     ("FB/IG",        "09:00 PM", "DS",     "Clip Short Reel"),
     ("FB/IG",        "09:00 PM", "Life",   "Remotion Reel"),
     ("FB/IG",        "10:00 PM", "Poetry", "Clip Short Reel"),
@@ -102,6 +105,8 @@ DAILY = [
     ("LinkedIn",     "07:00 AM", "Life",   "Clip Short Reel"),
     ("LinkedIn",     "09:00 AM", "Poetry", "Clip Short Reel"),
     ("LinkedIn",     "10:00 AM", "DS",     "Clip Short Reel"),
+    ("LinkedIn",     "02:00 PM", "DS",     "Remotion Reel"),
+    ("LinkedIn",     "04:00 PM", "DS",     "Clip Short Reel"),
     ("LinkedIn",     "06:00 PM", "Life",   "Remotion Reel"),
     ("LinkedIn",     "07:00 PM", "Poetry", "Remotion Reel"),
     ("LinkedIn",     "08:00 PM", "DS",     "Remotion Reel"),
@@ -109,33 +114,40 @@ DAILY = [
     ("Twitter",      "11:00 AM", "DS",     "Clip Short Reel"),
     ("Twitter",      "01:00 PM", "Life",   "Clip Short Reel"),
     ("Twitter",      "02:00 PM", "Poetry", "Clip Short Reel"),
+    ("Twitter",      "03:00 PM", "DS",     "Remotion Reel"),
+    ("Twitter",      "05:00 PM", "DS",     "Clip Short Reel"),
     ("Twitter",      "07:00 PM", "DS",     "Remotion Reel"),
     ("Twitter",      "08:00 PM", "Life",   "Remotion Reel"),
     ("Twitter",      "09:00 PM", "Poetry", "Remotion Reel"),
 ]
 
 
-# ── Title loading ─────────────────────────────────────────────────────────────
+# ── Content data loading ──────────────────────────────────────────────────────
 
-def detect_niche(slug):
+def detect_niche(slug: str) -> str | None:
     for marker, niche in NICHE_MARKERS.items():
         if marker in slug:
             return niche
     return None
 
-def slug_to_title(slug):
+def slug_to_title(slug: str) -> str:
     for marker in NICHE_MARKERS:
         if marker in slug:
             idx = slug.index(marker) + len(marker)
             return slug[idx:].replace("-", " ").title()
     return slug.replace("-", " ").title()
 
-def load_titles(year, repo_root):
-    """Return {(iso_week, niche): title} from youtube_metadata.json files."""
-    titles = {}
+def _parse_date(ts: str | None) -> datetime.date | None:
+    if not ts:
+        return None
+    return datetime.datetime.fromisoformat(ts).date()
+
+def load_content_data(year: int, repo_root: str) -> dict:
+    """Return {(wk, niche): {"title", "slug", "publish_dates": {platform: date}}}."""
+    data = {}
     deriv_dir = os.path.join(repo_root, "content", "derivatives")
     if not os.path.isdir(deriv_dir):
-        return titles
+        return data
     for week_dir in os.listdir(deriv_dir):
         if not week_dir.startswith(f"{year}-W"):
             continue
@@ -145,35 +157,97 @@ def load_titles(year, repo_root):
             niche = detect_niche(slug)
             if not niche:
                 continue
+
+            # Title from youtube_metadata.json, fallback to slug
+            title = ""
             meta_path = os.path.join(week_path, slug, "youtube_metadata.json")
             if os.path.exists(meta_path):
                 with open(meta_path, encoding="utf-8") as f:
-                    data = json.load(f)
-                title = data.get("title", "").strip()
-            else:
+                    title = json.load(f).get("title", "").strip()
+            if not title:
                 title = slug_to_title(slug)
-            if title:
-                titles[(wk, niche)] = title
-    return titles
+
+            # Platform publish dates from schedule.json
+            publish_dates: dict[str, datetime.date] = {}
+            sched_path = os.path.join(week_path, slug, "schedule.json")
+            if os.path.exists(sched_path):
+                with open(sched_path, encoding="utf-8") as f:
+                    sched = json.load(f)
+
+                lf = sched.get("long_form", {})
+                if lf.get("publish_at"):
+                    publish_dates["YouTube"] = _parse_date(lf["publish_at"])
+
+                blog = sched.get("blog", {})
+                if blog.get("medium_publish_at"):
+                    publish_dates["Medium"] = _parse_date(blog["medium_publish_at"])
+
+                social = sched.get("social", {})
+                _social_map = {
+                    "linkedin_publish_at":  "LinkedIn",
+                    "twitter_publish_at":   "Twitter",
+                    "ig_fb_publish_at":     "FB/IG",
+                    "threads_publish_at":   "Meta Threads",
+                }
+                for key, plat in _social_map.items():
+                    if social.get(key):
+                        publish_dates[plat] = _parse_date(social[key])
+
+            data[(wk, niche)] = {
+                "title":         title,
+                "slug":          slug,
+                "publish_dates": publish_dates,
+            }
+    return data
+
+
+# ── Status preservation ───────────────────────────────────────────────────────
+
+def load_existing_statuses(out_path: str) -> dict:
+    """Read existing xlsx and return {(iso_week, day, date_str, time_str, niche, platform, fmt): status}."""
+    statuses = {}
+    if not os.path.exists(out_path):
+        return statuses
+    try:
+        wb = load_workbook(out_path, read_only=True, data_only=True)
+        for ws in wb.worksheets:
+            header_row = next(ws.iter_rows(min_row=1, max_row=1, values_only=True), None)
+            if not header_row:
+                continue
+            col_map = {h: i for i, h in enumerate(header_row) if h}
+            for row in ws.iter_rows(min_row=2, values_only=True):
+                def get(name: str):
+                    idx = col_map.get(name)
+                    return row[idx] if idx is not None and idx < len(row) else None
+
+                status = get("Status")
+                if not status:
+                    continue
+                key = (
+                    get("ISO Week"), get("Day"), get("Date"),
+                    get("Time"), get("Niche"), get("Platform"), get("Format"),
+                )
+                statuses[key] = status
+        wb.close()
+    except Exception:
+        pass  # Never crash on corrupt/locked file
+    return statuses
 
 
 # ── Row generation ────────────────────────────────────────────────────────────
 
-def time_minutes(t):
+def time_minutes(t: str) -> int:
     dt = datetime.datetime.strptime(t, "%I:%M %p")
     return dt.hour * 60 + dt.minute
 
-def max_iso_week(year):
+def max_iso_week(year: int) -> int:
     return datetime.date(year, 12, 28).isocalendar().week
 
-def week_label(week):
+def week_label(week: int) -> str:
     return f"W{week:02d}"
 
-def make_rows(year, titles):
-    """
-    Return list of row dicts, one per posting slot, for the entire year.
-    Each dict: date, iso_week, day, time, niche, platform, format, title, status
-    """
+def make_rows(year: int, content_data: dict) -> list:
+    """Return list of row dicts for the full year starting W21."""
     rows = []
     max_wk = max_iso_week(year)
 
@@ -181,91 +255,100 @@ def make_rows(year, titles):
         wl = week_label(wk)
         mon_date = datetime.date.fromisocalendar(year, wk, 1)
 
-        # Titles for this week — direct mapping (user fills future weeks as content is produced)
-        week_titles = {n: titles.get((wk, n), "") for n in ("DS", "Life", "Poetry")}
+        empty_info = {"title": "", "slug": "", "publish_dates": {}}
+        week_info = {n: content_data.get((wk, n), empty_info) for n in ("DS", "Life", "Poetry")}
 
-        # Long-form rows (date = Monday of this week, time = "—")
+        # Long-form (same week as content)
         for niche, platform, fmt in LONGFORM_PLATFORMS:
             date = mon_date
             if date.year != year:
                 continue
+            pub = week_info[niche]["publish_dates"]
+            posting_date = pub.get(platform) or date
             rows.append({
-                "date":     date,
-                "iso_week": wl,
-                "day":      "Mon",
-                "time":     "—",
-                "niche":    niche,
-                "platform": platform,
-                "format":   fmt,
-                "title":    week_titles[niche],
-                "status":   "Idea",
+                "date":         date,
+                "posting_date": posting_date,
+                "iso_week":     wl,
+                "slug":         week_info[niche]["slug"],
+                "day":          "Mon",
+                "time":         "—",
+                "niche":        niche,
+                "platform":     platform,
+                "format":       fmt,
+                "title":        week_info[niche]["title"],
+                "status":       "Idea",
             })
 
-        # Weekly-specific rows
+        # Weekly social posts (next week)
         for day, time_str, niche, platform, fmt in WEEKLY:
             date = datetime.date.fromisocalendar(year, wk, DAY_NUM[day])
             if date.year != year:
                 continue
+            pub = week_info[niche]["publish_dates"]
+            posting_date = pub.get(platform) or (date + datetime.timedelta(days=7))
             rows.append({
-                "date":     date,
-                "iso_week": wl,
-                "day":      day,
-                "time":     time_str,
-                "niche":    niche,
-                "platform": platform,
-                "format":   fmt,
-                "title":    week_titles[niche],
-                "status":   "Idea",
+                "date":         date,
+                "posting_date": posting_date,
+                "iso_week":     wl,
+                "slug":         week_info[niche]["slug"],
+                "day":          day,
+                "time":         time_str,
+                "niche":        niche,
+                "platform":     platform,
+                "format":       fmt,
+                "title":        week_info[niche]["title"],
+                "status":       "Idea",
             })
 
-        # Daily rows (Mon–Sun)
+        # Daily reels (next week)
         for day in DAYS:
             date = datetime.date.fromisocalendar(year, wk, DAY_NUM[day])
             if date.year != year:
                 continue
             for platform, time_str, niche, fmt in DAILY:
+                posting_date = date + datetime.timedelta(days=7)
                 rows.append({
-                    "date":     date,
-                    "iso_week": wl,
-                    "day":      day,
-                    "time":     time_str,
-                    "niche":    niche,
-                    "platform": platform,
-                    "format":   fmt,
-                    "title":    week_titles[niche],
-                    "status":   "Idea",
+                    "date":         date,
+                    "posting_date": posting_date,
+                    "iso_week":     wl,
+                    "slug":         week_info[niche]["slug"],
+                    "day":          day,
+                    "time":         time_str,
+                    "niche":        niche,
+                    "platform":     platform,
+                    "format":       fmt,
+                    "title":        week_info[niche]["title"],
+                    "status":       "Idea",
                 })
 
-    # Sort by date then time (— sorts before timed rows)
-    rows.sort(key=lambda r: (r["date"], r["time"] == "—", r["time"]))
+    rows.sort(key=lambda r: (r["posting_date"], r["date"], r["time"] == "—", r["time"]))
     return rows
 
 
 # ── Spreadsheet writer ────────────────────────────────────────────────────────
 
-def niche_fill(niche):
+def niche_fill(niche: str) -> PatternFill:
     return PatternFill("solid", fgColor=NICHE_COLORS.get(niche, "FFFFFF"))
 
-def solid_fill(hex_color):
+def solid_fill(hex_color: str) -> PatternFill:
     return PatternFill("solid", fgColor=hex_color)
 
-def bold_white(size=10):
+def bold_white(size: int = 10) -> Font:
     return Font(bold=True, color="FFFFFF", size=size)
 
-def bold_dark(size=10):
+def bold_dark(size: int = 10) -> Font:
     return Font(bold=True, color="1A202C", size=size)
 
-HEADERS = ["ISO Week", "Day", "Date", "Time", "Niche", "Platform", "Format",
-           "Content Title", "Status", "✓"]
-COL_WIDTHS = [9, 6, 13, 11, 8, 15, 22, 48, 14, 4]
+HEADERS = ["ISO Week", "Slug", "Day", "Date", "Posting Date", "Time",
+           "Niche", "Platform", "Format", "Content Title", "Status", "✓"]
+COL_WIDTHS = [9, 30, 6, 13, 13, 11, 8, 15, 22, 48, 14, 4]
 
 STATUS_OPTIONS = "Idea,In Progress,Editing,Published"
 
 
-def write_sheet(ws, month_rows, year, month_idx):
+def write_sheet(ws, month_rows: list, year: int, month_idx: int) -> None:
     ws.freeze_panes = "A2"
 
-    # Header
     for col, (h, w) in enumerate(zip(HEADERS, COL_WIDTHS), 1):
         c = ws.cell(row=1, column=col, value=h)
         c.font  = bold_white()
@@ -274,13 +357,14 @@ def write_sheet(ws, month_rows, year, month_idx):
         ws.column_dimensions[get_column_letter(col)].width = w
     ws.row_dimensions[1].height = 18
 
-    # Data rows
     for r_idx, row in enumerate(month_rows, start=2):
         fill = niche_fill(row["niche"])
         vals = [
             row["iso_week"],
+            row.get("slug", ""),
             row["day"],
             row["date"].strftime("%-d %b %Y"),
+            row["posting_date"].strftime("%-d %b %Y"),
             row["time"],
             row["niche"],
             row["platform"],
@@ -295,31 +379,48 @@ def write_sheet(ws, month_rows, year, month_idx):
 
     last_row = len(month_rows) + 1
 
-    # AutoFilter
-    ws.auto_filter.ref = f"A1:J{last_row}"
+    ws.auto_filter.ref = f"A1:L{last_row}"
 
-    # Status dropdown (col I = 9)
+    # Status dropdown — column K (11)
     dv = DataValidation(
         type="list",
         formula1=f'"{STATUS_OPTIONS}"',
         allow_blank=True,
-        showDropDown=False,  # False = show the dropdown arrow
+        showDropDown=False,
     )
     ws.add_data_validation(dv)
-    dv.sqref = f"I2:I{last_row}"
+    dv.sqref = f"K2:K{last_row}"
 
 
-def write_annual_tracker(year, repo_root):
-    titles = load_titles(year, repo_root)
-    all_rows = make_rows(year, titles)
+def write_annual_tracker(year: int, repo_root: str) -> str:
+    content_data = load_content_data(year, repo_root)
+    all_rows = make_rows(year, content_data)
 
-    # Group by month
-    by_month = defaultdict(list)
+    out_dir  = os.path.join(repo_root, "output", "trackers")
+    os.makedirs(out_dir, exist_ok=True)
+    out_path = os.path.join(out_dir, f"annual-tracker-{year}.xlsx")
+
+    # Preserve manually-entered Status values from existing file
+    statuses = load_existing_statuses(out_path)
+    preserved = 0
     for row in all_rows:
-        by_month[row["date"].month].append(row)
+        key = (
+            row["iso_week"], row["day"],
+            row["date"].strftime("%-d %b %Y"),
+            row["time"], row["niche"], row["platform"], row["format"],
+        )
+        if key in statuses:
+            row["status"] = statuses[key]
+            preserved += 1
+
+    # Group by posting_date month (only current year)
+    by_month: dict[int, list] = defaultdict(list)
+    for row in all_rows:
+        if row["posting_date"].year == year:
+            by_month[row["posting_date"].month].append(row)
 
     wb = Workbook()
-    wb.remove(wb.active)  # remove default sheet
+    wb.remove(wb.active)
 
     for m in range(1, 13):
         month_rows = by_month.get(m, [])
@@ -328,17 +429,15 @@ def write_annual_tracker(year, repo_root):
         ws = wb.create_sheet(title=MONTHS[m - 1])
         write_sheet(ws, month_rows, year, m)
 
-    out_dir  = os.path.join(repo_root, "output", "trackers")
-    os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, f"annual-tracker-{year}.xlsx")
     wb.save(out_path)
     print(f"Saved → {out_path}")
-    print(f"  Rows: {len(all_rows)} across 12 monthly sheets")
-    print(f"  Content titles loaded: {len(titles)}")
+    print(f"  Rows: {len(all_rows)} across {len(by_month)} monthly sheets")
+    print(f"  Content items loaded: {len(content_data)}")
+    print(f"  Statuses preserved: {preserved}")
     return out_path
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Generate annual posting tracker")
     parser.add_argument("--year", type=int, default=datetime.date.today().year)
     args = parser.parse_args()
