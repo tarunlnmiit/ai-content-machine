@@ -211,6 +211,8 @@ def main() -> None:
                         help="Post long-form URL as comment after each upload")
     parser.add_argument("--slots", default=None,
                         help="Comma-separated slot numbers (default: all found)")
+    parser.add_argument("--yes", "-y", action="store_true",
+                        help="Skip confirmation prompt")
     args = parser.parse_args()
 
     load_dotenv(BASE_DIR / ".env")
@@ -308,10 +310,11 @@ def main() -> None:
         print("Dry run complete. Re-run without --dry-run to upload.")
         return
 
-    confirm = input(f"Upload {len(plan)} shorts to '{channel_name}'? [y/N] ").strip().lower()
-    if confirm != "y":
-        print("Aborted.")
-        return
+    if not args.yes:
+        confirm = input(f"Upload {len(plan)} shorts to '{channel_name}'? [y/N] ").strip().lower()
+        if confirm != "y":
+            print("Aborted.")
+            return
 
     channel = resolve_channel(channel_name)
     creds = get_credentials(channel["id"])
