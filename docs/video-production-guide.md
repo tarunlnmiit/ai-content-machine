@@ -462,6 +462,7 @@ Columns:
 - `output_file` — rendered MP4 filename
 - `script` — transcript excerpt (for reference)
 - `startSec` — timestamp in source video to place overlay in DaVinci (populated if `patch_edit_plan_overlays.py` was run)
+- `matched` — `True` if `startSec` was anchored to a real spoken phrase; `False` if interpolated between neighbors (verify those manually)
 
 **Before DaVinci edit:** Open the manifest to see where each overlay lands in your talking-head timeline. Use `startSec` to position scenes on separate overlay tracks.
 
