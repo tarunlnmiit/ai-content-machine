@@ -107,85 +107,106 @@
       "end_screen_cta": ""
     },
     {
-      "title": "short_07 title — fill in",
-      "description": "short_07 description — fill in. #Shorts #Python #DataScience",
+      "title": "The First Skill Python Tutorials Skip",
+      "description": "Before you write a single line, break the problem into pieces. Decomposition — not syntax — is what separates someone who 'learned Python' from someone who can actually use it. This is where data science thinking starts. #Shorts #Python #DataScience",
       "tags": [
-        "Shorts",
-        "Python",
-        "DataScience",
-        "Programming"
+        "python tutorial",
+        "data science",
+        "programming",
+        "computational thinking",
+        "python for beginners",
+        "learn python",
+        "data science tutorial"
       ],
       "hook_visual": "",
       "end_screen_cta": ""
     },
     {
-      "title": "short_08 title — fill in",
-      "description": "short_08 description — fill in. #Shorts #Python #DataScience",
+      "title": "You'll Write This Pattern 1,000 Times in Data Science",
+      "description": "Load data. Loop through it. Accumulate a result. Store the output. That's it. You'll see this structure in simple scripts and in production pipelines with millions of rows. Learn it small. It scales. #Shorts #Python #DataScience",
       "tags": [
-        "Shorts",
-        "Python",
-        "DataScience",
-        "Programming"
+        "python patterns",
+        "data science",
+        "python for beginners",
+        "programming",
+        "learn python",
+        "data engineering",
+        "python tutorial"
       ],
       "hook_visual": "",
       "end_screen_cta": ""
     },
     {
-      "title": "short_09 title — fill in",
-      "description": "short_09 description — fill in. #Shorts #Python #DataScience",
+      "title": "Skip Hello World. Write This Instead.",
+      "description": "Your first Python program should touch structured data, not strings. A list of dicts, a loop, a saved result. That's real data science thinking — and it already reflects the structure behind production systems. #Shorts #Python #DataScience",
       "tags": [
-        "Shorts",
-        "Python",
-        "DataScience",
-        "Programming"
+        "python tutorial",
+        "data science",
+        "first python program",
+        "learn python",
+        "programming",
+        "python for beginners",
+        "data analysis"
       ],
       "hook_visual": "",
       "end_screen_cta": ""
     },
     {
-      "title": "short_10 title — fill in",
-      "description": "short_10 description — fill in. #Shorts #Python #DataScience",
+      "title": "One Line That Will Save Your Data Science Projects",
+      "description": "`source env/bin/activate` — run it every single time you sit down to code. Clean environment. No version conflicts. The most important line in your Python journey isn't in your script. It's the one you run before you open it. #Shorts #Python #DataScience",
       "tags": [
-        "Shorts",
-        "Python",
-        "DataScience",
-        "Programming"
+        "python virtual environment",
+        "python setup",
+        "data science",
+        "python tutorial",
+        "programming",
+        "learn python",
+        "conda"
       ],
       "hook_visual": "",
       "end_screen_cta": ""
     },
     {
-      "title": "short_11 title — fill in",
-      "description": "short_11 description — fill in. #Shorts #Python #DataScience",
+      "title": "Your Code Ran. But Can You Recreate It?",
+      "description": "The code worked. You got the answer. Six months later, nothing runs. Bad environment setup is why most first data science projects fail silently — not because Python is hard, but because reproducibility was never built in. #Shorts #Python #DataScience",
       "tags": [
-        "Shorts",
-        "Python",
-        "DataScience",
-        "Programming"
+        "python reproducibility",
+        "data science",
+        "python environment",
+        "programming",
+        "learn python",
+        "python tutorial",
+        "data engineering"
       ],
       "hook_visual": "",
       "end_screen_cta": ""
     },
     {
-      "title": "short_12 title — fill in",
-      "description": "short_12 description — fill in. #Shorts #Python #DataScience",
+      "title": "Python Errors Are Feedback. Read Them Like This.",
+      "description": "KeyError, TypeError, IndexError — Python tells you exactly what went wrong and where. The people who quit think 'I'm not smart enough.' The people who make it treat every error as a debugging instruction. Run, read, fix, run again. #Shorts #Python #DataScience",
       "tags": [
-        "Shorts",
-        "Python",
-        "DataScience",
-        "Programming"
+        "python debugging",
+        "python errors",
+        "data science",
+        "learn python",
+        "python tutorial",
+        "programming",
+        "python for beginners"
       ],
       "hook_visual": "",
       "end_screen_cta": ""
     },
     {
-      "title": "short_13 title — fill in",
-      "description": "short_13 description — fill in. #Shorts #Python #DataScience",
+      "title": "Why Simple Python Scripts Scale Further Than You Think",
+      "description": "Input data. Transform it. Save the output. That structure works for a 10-row CSV and for a pipeline processing millions of records in a warehouse. The foundations don't change — the scale does. Learn them right the first time. #Shorts #Python #DataScience",
       "tags": [
-        "Shorts",
-        "Python",
-        "DataScience",
-        "Programming"
+        "python fundamentals",
+        "data science",
+        "python tutorial",
+        "programming",
+        "learn python",
+        "data engineering",
+        "python for beginners"
       ],
       "hook_visual": "",
       "end_screen_cta": ""
