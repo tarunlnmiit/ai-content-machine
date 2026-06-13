@@ -4,8 +4,6 @@ Data science Python is different. Environment setup matters. Thinking comes befo
 
 Here's what tutorials skip: virtual environments, computational thinking, error messages as feedback. That foundation scales.
 
-[BLOG_LINK]
-
-📋 Free worksheet → https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=complete-python-course-2026-beginner-to-advance-tutorial-110
+https://youtu.be/XBw0vuzACuA
 
 #datascience #python #machinelearning
