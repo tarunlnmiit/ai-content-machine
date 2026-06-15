@@ -1,9 +1,0 @@
-Most Python tutorials teach syntax memorization. You collect rules, drown in details, miss the entire point.
-
-Data science Python is different. Environment setup matters. Thinking comes before code. Your first program touches real data, not Hello World.
-
-Here's what tutorials skip: virtual environments, computational thinking, error messages as feedback. That foundation scales.
-
-https://youtu.be/XBw0vuzACuA
-
-#datascience #python #machinelearning
