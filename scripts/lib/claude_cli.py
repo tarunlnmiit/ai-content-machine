@@ -112,13 +112,13 @@ def call_claude(
         hb = threading.Thread(target=_heartbeat, args=(stop, progress_label), daemon=True)
         hb.start()
         try:
-            res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            out, err = proc.communicate()
+            if proc.returncode != 0:
+                raise RuntimeError(f"claude CLI failed (exit {proc.returncode}): {err[-300:]}")
         finally:
             stop.set()
             hb.join(timeout=1)
-        if res.returncode != 0:
-            raise RuntimeError(f"claude CLI failed (exit {res.returncode}): {res.stderr[-300:]}")
-        out = res.stdout
         sys.stderr.write(f"  ✓ {progress_label} — {len(out):,} chars received\n")
         sys.stderr.flush()
     if normalize:

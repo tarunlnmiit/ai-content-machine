@@ -312,13 +312,17 @@ def main() -> None:
     parser.add_argument("--week", required=True, help="ISO week e.g. 2026-W24")
     parser.add_argument("--mode", choices=["short", "overlay"], default="short",
                         help="short = sequential scenes for motion short; overlay = inject into long-form")
-    parser.add_argument("--shorts", type=int, default=7,
-                        help="Number of unique shorts to generate (short mode only)")
+    parser.add_argument("--shorts", type=int, default=None,
+                        help="Number of unique shorts to generate (short mode only; default: 14 for ds, 7 for life/poetry)")
     parser.add_argument("--slug", default=None,
                         help="Override output slug (must match prepare_remotion_edit.py --slug to auto-wire)")
     parser.add_argument("--dry-run", action="store_true", help="Print plan, don't write file")
     parser.add_argument("--no-cache", action="store_true", help="Bypass cache, call Claude fresh")
     args = parser.parse_args()
+
+    NICHE_DEFAULT_SHORTS = {"ds": 14, "life": 7, "poetry": 7}
+    if args.shorts is None:
+        args.shorts = NICHE_DEFAULT_SHORTS[args.niche]
 
     script_path = Path(args.script)
     if not script_path.is_absolute():

@@ -1216,17 +1216,30 @@ def _whisper_cli():
             return str(candidate)
     return shutil.which("whisper") or "whisper"
 
+def _audio_duration(audio) -> float:
+    try:
+        r = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+             "-of", "default=noprint_wrappers=1:nokey=1", str(audio)],
+            capture_output=True, text=True, timeout=30,
+        )
+        return float(r.stdout.strip())
+    except Exception:
+        return 600.0
+
 def transcribe(audio, model_name):
     out_dir = audio.parent/"whisper_out"
     out_dir.mkdir(exist_ok=True)
     cli = _whisper_cli()
+    dur = _audio_duration(audio)
+    whisper_timeout = max(900, int(dur * 6))
     stop = threading.Event()
     t = threading.Thread(target=_spin, args=("whisper transcribing", stop), daemon=True)
     t.start()
     r = subprocess.run(
         [cli, str(audio), "--model", model_name, "--word_timestamps", "True",
          "--output_format", "json", "--language", "en", "--output_dir", str(out_dir)],
-        capture_output=True, text=True, timeout=600,
+        capture_output=True, text=True, timeout=whisper_timeout,
         env={**os.environ, "KMP_DUPLICATE_LIB_OK": "TRUE"},
     )
     stop.set(); t.join()
