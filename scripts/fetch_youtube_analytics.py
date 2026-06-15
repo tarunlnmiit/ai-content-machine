@@ -27,6 +27,7 @@ OUTPUTS:
 import argparse
 import json
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -45,6 +46,14 @@ CLIENT_SECRET = TOKEN_DIR / "client_secret.json"
 REGISTRY_FILE = TOKEN_DIR / "channels.json"
 ANALYTICS_DIR = BASE_DIR / "data" / "analytics"
 KB_DIR = BASE_DIR / "data" / "kb"
+ANALYTICS_CACHE = BASE_DIR / ".cache" / "analytics"  # gitignored
+DEFAULT_CACHE_TTL_HOURS = 6
+
+
+def _cache_fresh(path: Path, ttl_hours: float) -> bool:
+    if not path.exists():
+        return False
+    return (time.time() - path.stat().st_mtime) / 3600 <= ttl_hours
 
 # Full scope set — same across both scripts so one registered token works for both
 ALL_SCOPES = [
@@ -522,6 +531,17 @@ def main():
     parser.add_argument("--days", type=int, default=90)
     parser.add_argument("--top-n", type=int, default=25)
     parser.add_argument("--output", type=Path, default=None)
+    parser.add_argument(
+        "--refresh",
+        action="store_true",
+        help="Bypass the API-response cache and fetch fresh data.",
+    )
+    parser.add_argument(
+        "--cache-ttl-hours",
+        type=float,
+        default=DEFAULT_CACHE_TTL_HOURS,
+        help=f"Cached API data is reused if younger than this (default {DEFAULT_CACHE_TTL_HOURS}h).",
+    )
     args = parser.parse_args()
 
     load_dotenv(ENV_FILE)
@@ -548,34 +568,61 @@ def main():
     channel_id = channel["id"]
     channel_name = channel["name"]
 
-    creds = get_credentials(channel_id)
-    youtube = build("youtube", "v3", credentials=creds)
-    yt_analytics = build("youtubeAnalytics", "v2", credentials=creds)
-
     safe_name = "".join(c if c.isalnum() or c in "-_ " else "" for c in channel_name).strip().replace(" ", "_")
     output_path = args.output or (ANALYTICS_DIR / f"youtube_analytics_{safe_name}.md")
 
-    print(f"Fetching videos uploaded in last {args.days} days...")
-    videos = get_video_ids_in_window(youtube, channel_id, args.days)
-    print(f"Found {len(videos)} videos.")
+    cache_file = ANALYTICS_CACHE / f"youtube_{channel_id}_{args.days}.json"
+    data = None
+    if not args.refresh and _cache_fresh(cache_file, args.cache_ttl_hours):
+        data = json.loads(cache_file.read_text())
+        print(f"[cache hit] reusing API data from {cache_file.name} (--refresh to bypass)")
+
+    if data is None:
+        creds = get_credentials(channel_id)
+        youtube = build("youtube", "v3", credentials=creds)
+        yt_analytics = build("youtubeAnalytics", "v2", credentials=creds)
+
+        print(f"Fetching videos uploaded in last {args.days} days...")
+        videos = get_video_ids_in_window(youtube, channel_id, args.days)
+        print(f"Found {len(videos)} videos.")
+
+        if not videos:
+            print("No videos found in this window. Exiting.")
+            return
+
+        video_ids = [v["id"] for v in videos]
+
+        print("Fetching per-video analytics metrics...")
+        metrics = get_video_metrics(yt_analytics, channel_id, video_ids, args.days)
+
+        print("Fetching day-of-week performance...")
+        dayofweek = get_dayofweek_performance(yt_analytics, channel_id, args.days)
+
+        print("Fetching top subscriber drivers...")
+        sub_drivers = get_subscriber_drivers(yt_analytics, channel_id, video_ids, args.days)
+
+        print("Fetching average drop-off (last 20 videos)...")
+        avg_dropoff = get_avg_dropoff(yt_analytics, channel_id, video_ids)
+
+        data = {
+            "videos": videos,
+            "metrics": metrics,
+            "dayofweek": dayofweek,
+            "sub_drivers": sub_drivers,
+            "avg_dropoff": avg_dropoff,
+        }
+        cache_file.parent.mkdir(parents=True, exist_ok=True)
+        cache_file.write_text(json.dumps(data))
+
+    videos = data["videos"]
+    metrics = data["metrics"]
+    dayofweek = data["dayofweek"]
+    sub_drivers = data["sub_drivers"]
+    avg_dropoff = data["avg_dropoff"]
 
     if not videos:
         print("No videos found in this window. Exiting.")
         return
-
-    video_ids = [v["id"] for v in videos]
-
-    print("Fetching per-video analytics metrics...")
-    metrics = get_video_metrics(yt_analytics, channel_id, video_ids, args.days)
-
-    print("Fetching day-of-week performance...")
-    dayofweek = get_dayofweek_performance(yt_analytics, channel_id, args.days)
-
-    print("Fetching top subscriber drivers...")
-    sub_drivers = get_subscriber_drivers(yt_analytics, channel_id, video_ids, args.days)
-
-    print("Fetching average drop-off (last 20 videos)...")
-    avg_dropoff = get_avg_dropoff(yt_analytics, channel_id, video_ids)
 
     print("Building report...")
     report = build_report(channel_name, videos, metrics, dayofweek, sub_drivers, avg_dropoff, args.top_n, args.days)
