@@ -1,0 +1,81 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Three weeks cleaning data. Solid analysis.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Three weeks cleaning data. Solid analysis. Then silence.",
+      "attribution": "Breath of Data Science"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "You send the dashboard screenshot to stakeholders.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "description": "A dashboard screenshot is flung into a vast dark void and shrinks until it disappears into silence; after a long pause a single notification bubble appears. Conveys sending polished work to stakeholders and hearing nothing back."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "Two days pass. Nothing.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 2,
+      "suffix": " days",
+      "label": "of silence before a clarifying question"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "someone sends back a clarifying question",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "headline": "The reply that stings",
+      "cards": [
+        {
+          "term": "Clarifying question",
+          "definition": "The kind one well-chosen plot would have answered in five seconds"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "TransformationArc",
+    "script": "Raw numbers don't persuade \u2014 stories do.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "Raw numbers",
+      "afterLabel": "A story",
+      "beforePoints": [
+        "Don't persuade",
+        "Have no shape"
+      ],
+      "afterPoints": [
+        "Change minds",
+        "Have a beginning, middle, end"
+      ],
+      "transformLabel": "Give it shape"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "The numbers are your evidence. The visualization is the language",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The numbers are your evidence. The visualization is the language."
+    }
+  }
+]

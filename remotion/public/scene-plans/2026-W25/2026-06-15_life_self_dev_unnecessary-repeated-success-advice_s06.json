@@ -1,0 +1,108 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "Advice sticks when it arrives close to a moment of genuine cost.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Advice sticks at the moment of cost.",
+      "subtext": "not manufactured urgency"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "script": "The mechanism isn't suffering. It's proximity.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "The mechanism isn't suffering. It's proximity."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "watched your attention scatter for the fourth time in an hour",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 4,
+      "label": "times your attention scattered in one hour",
+      "suffix": "x"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "Real cost \u2014 the kind that comes from trying something, failing at it",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Real cost vs. manufactured urgency",
+      "cards": [
+        {
+          "term": "Manufactured urgency",
+          "definition": "A creator telling you it's important now."
+        },
+        {
+          "term": "Genuine cost",
+          "definition": "Trying, failing, and living with the consequence long enough to care."
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "TransformationArc",
+    "script": "This is why journals outlast books.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "Books",
+      "afterLabel": "Journals",
+      "beforePoints": [
+        "Observed from a distance",
+        "Someone else's moment",
+        "Arrives whenever"
+      ],
+      "afterPoints": [
+        "Observed from inside it",
+        "Your own experience",
+        "Arrives exactly when it's yours"
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "advice about cognitive load isn't abstract anymore",
+    "niche": "life",
+    "durationSec": 9,
+    "props": {
+      "description": "A piece of advice floats as a faint, distant star \u2014 unreadable. As a lived failure pulls the viewer closer (the gap between them shrinking), the star resolves into sharp, legible text and ignites. Visualizes proximity, not pain: the closer the advice sits to a real moment of cost, the brighter and clearer it becomes."
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "WordReveal",
+    "script": "the moment is now, and it's yours",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "The",
+        "moment",
+        "is",
+        "now,",
+        "and",
+        "it's",
+        "yours"
+      ],
+      "emphasis": [
+        3,
+        6
+      ]
+    }
+  }
+]

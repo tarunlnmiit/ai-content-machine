@@ -1,0 +1,113 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "consuming advice feels like doing something.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Consuming advice feels like doing something."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "It activates the same mild dopamine loop as real progress.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "The dopamine swap",
+      "cards": [
+        {
+          "term": "The feeling",
+          "definition": "You watch a video about focus and you feel focused. It's real."
+        },
+        {
+          "term": "The progress",
+          "definition": "There isn't any. The feeling and the work came apart."
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "TransformationArc",
+    "script": "the version that actually changes things is boring and happens in private",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "Feels like work",
+      "afterLabel": "Actually works",
+      "beforePoints": [
+        "Public",
+        "Comfortable",
+        "Instant dopamine"
+      ],
+      "afterPoints": [
+        "Private",
+        "Boring & uncomfortable",
+        "No one saying good job"
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "you sit with a blank document for forty minutes and write something bad",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 40,
+      "label": "minutes with a blank document, writing something bad",
+      "suffix": " min"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ImageTextReveal",
+    "script": "The irony is precise. The cure causes the disease.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "The cure causes the disease.",
+      "subtext": "feeling like you're working on yourself"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "NumberedTips",
+    "script": "you do it on the tenth day when you don't feel like it",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "title": "What the real work actually looks like",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Write something bad",
+          "body": "Sit with the blank document for forty minutes."
+        },
+        {
+          "number": 2,
+          "headline": "Show up on day ten",
+          "body": "Do it when nothing's telling you good job."
+        },
+        {
+          "number": 3,
+          "headline": "Sit with the emotion",
+          "body": "Let it move through you without reaching for your phone."
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "a way to feel like you're working on yourself while avoiding the work",
+    "niche": "life",
+    "durationSec": 9,
+    "props": {
+      "description": "A progress bar fills smoothly and satisfyingly with every book finished and video watched, glowing with reward \u2014 but a second hidden bar underneath, labeled ACTUAL CHANGE, stays flat at zero. As the top bar hits 100%, it dissolves to reveal the flat line beneath. The dopamine and the progress were never connected."
+    }
+  }
+]

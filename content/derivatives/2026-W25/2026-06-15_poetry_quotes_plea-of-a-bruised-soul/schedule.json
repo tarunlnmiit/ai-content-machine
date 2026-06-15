@@ -1,0 +1,78 @@
+{
+  "slug": "2026-06-15_poetry_quotes_plea-of-a-bruised-soul",
+  "niche": "poetry",
+  "generated_at": "2026-06-15T09:26:47.990147+05:30",
+  "long_form": {
+    "platform": "youtube",
+    "publish_at": "2026-06-26T15:00:00+05:30",
+    "channel": "Breath of Poetry"
+  },
+  "blog": {
+    "substack_publish_at": "2026-06-19T15:00:00+05:30",
+    "medium_publish_at": "2026-06-19T15:05:00+05:30"
+  },
+  "social": {
+    "linkedin_publish_at": "2026-06-26T11:00:00+05:30",
+    "twitter_publish_at": "2026-06-26T12:00:00+05:30",
+    "ig_fb_publish_at": "2026-06-26T10:00:00+05:30",
+    "threads_publish_at": "2026-06-26T12:00:00+05:30"
+  },
+  "shorts": [
+    {
+      "slot": 0,
+      "publish_at": "2026-06-22T10:00:00+05:30"
+    },
+    {
+      "slot": 1,
+      "publish_at": "2026-06-22T20:00:00+05:30"
+    },
+    {
+      "slot": 2,
+      "publish_at": "2026-06-23T10:00:00+05:30"
+    },
+    {
+      "slot": 3,
+      "publish_at": "2026-06-23T20:00:00+05:30"
+    },
+    {
+      "slot": 4,
+      "publish_at": "2026-06-24T10:00:00+05:30"
+    },
+    {
+      "slot": 5,
+      "publish_at": "2026-06-24T20:00:00+05:30"
+    },
+    {
+      "slot": 6,
+      "publish_at": "2026-06-25T10:00:00+05:30"
+    },
+    {
+      "slot": 7,
+      "publish_at": "2026-06-25T20:00:00+05:30"
+    },
+    {
+      "slot": 8,
+      "publish_at": "2026-06-26T10:00:00+05:30"
+    },
+    {
+      "slot": 9,
+      "publish_at": "2026-06-26T20:00:00+05:30"
+    },
+    {
+      "slot": 10,
+      "publish_at": "2026-06-27T10:00:00+05:30"
+    },
+    {
+      "slot": 11,
+      "publish_at": "2026-06-27T20:00:00+05:30"
+    },
+    {
+      "slot": 12,
+      "publish_at": "2026-06-28T10:00:00+05:30"
+    },
+    {
+      "slot": 13,
+      "publish_at": "2026-06-28T20:00:00+05:30"
+    }
+  ]
+}

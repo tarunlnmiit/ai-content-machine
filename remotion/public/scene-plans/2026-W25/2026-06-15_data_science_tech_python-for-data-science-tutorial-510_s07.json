@@ -1,0 +1,98 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "distinguish professional from 'I made this at 11pm.'",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Small choices separate professional from 'I made this at 11pm.'"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "notice dpi=300 with bbox_inches='tight'",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "value": 300,
+      "suffix": " dpi",
+      "label": "the export detail that reads as professional"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CodeAnnotation",
+    "script": "plt.savefig('revenue_trend.png', dpi=300, bbox_inches='tight')",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "plt.tight_layout()",
+        "plt.savefig('revenue_trend.png', dpi=300, bbox_inches='tight')",
+        "plt.show()"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Export quality, not an afterthought"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "when your plot ends up in a deck or on Medium",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Why these small choices matter",
+      "cards": [
+        {
+          "term": "dpi=300",
+          "definition": "Crisp in a deck or on Medium"
+        },
+        {
+          "term": "bbox_inches='tight'",
+          "definition": "No awkward whitespace"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "those are the details that distinguish professional",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "description": "A blurry, low-resolution chart sharpens to crisp 300-dpi clarity as it slides into a slide-deck mockup and then a Medium article layout, its edges cropping tight with no dead margin. Shows export details elevating perceived quality."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "NumberedTips",
+    "script": "small choices, but ... those are the details",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Export like a pro",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "dpi=300",
+          "body": "Print-sharp resolution"
+        },
+        {
+          "number": 2,
+          "headline": "bbox_inches='tight'",
+          "body": "Trim the dead space"
+        },
+        {
+          "number": 3,
+          "headline": "tight_layout()",
+          "body": "No overlapping labels"
+        }
+      ]
+    }
+  }
+]

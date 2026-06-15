@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "Your First Data Story: A Python Visualization Practice Guide"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Build the Foundation with fig, ax
+   Take any CSV you have handy (sales data, personal budget, Kaggle dataset). Recreate the revenue trend plot from Section 1 using fig, ax = plt.subplots() — not plt.plot(). Set DPI=300, add a y-axis grid with alpha=0.3, and save it as a PNG. Then try the same plot using the quick plt.plot() shortcut and compare how much control you lose. Write down two specific things you couldn't customize easily with the shortcut approach.
+
+2. Layer Information with Seaborn's hue and size
+   Using any dataset with at least 3 columns (one numeric, one categorical, one numeric for size), recreate the scatter plot from Section 2 using sns.scatterplot() with both hue and size parameters. Then remove hue, save the plot, add hue back, save again. Write one sentence describing what information became invisible when you dropped hue — this is exactly the encoding decision Seaborn automates.
+
+3. Same Data, Three Frames
+   Pick one numeric column from your dataset that changes over time or across categories. Create three subplots in a single fig using plt.subplots(1, 3): a line chart (trend), a bar chart (comparison), and a scatter against a second variable (relationship). For each subplot, write a one-sentence headline that describes the story that chart tells. Notice how the 'finding' changes depending on the frame — which one matches what you actually discovered in the data?
+
+4. Remove Chart Junk
+   Take the messiest plot you've ever made or find a default Matplotlib output you're not proud of. Apply sns.set_style('whitegrid'), remove the top and right spines using ax.spines[['top','right']].set_visible(False), set fontsize=12 on axis labels, and add fontweight='bold' to the title. Save before and after at DPI=300. Count the number of visual elements you removed or reduced — the goal is to have fewer elements competing for attention than the original.
+
+5. Match Your Plot to Your Finding
+   Take the three plots you created in Section 3 and pick the one that most honestly represents what the data actually shows — not the most visually impressive one. Write 2-3 sentences explaining why that chart type fits the finding (trend, comparison, or relationship). Then export it at DPI=300 with bbox_inches='tight' as if it were going into a stakeholder deck. This export step is the test: if you wouldn't send it to a manager, it's not done yet.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"

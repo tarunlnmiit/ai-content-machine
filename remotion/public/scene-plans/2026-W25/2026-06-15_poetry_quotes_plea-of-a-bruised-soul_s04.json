@@ -1,0 +1,77 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Witnessing is harder than fixing.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Witnessing is harder than fixing."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ImageTextReveal",
+    "script": "hold someone's discomfort without resolving it.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "Hold their discomfort without resolving it"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "LineReveal",
+    "script": "When you fix, you get closure. When you witness, you absorb someone's reality.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "When you fix, you get closure.",
+        "When you witness, you absorb their reality."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "WordReveal",
+    "script": "Advice creates motion. Motion feels like progress.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "Advice",
+        "creates",
+        "motion."
+      ],
+      "emphasis": [
+        2
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "the bruised soul doesn't need your exhale. They need your presence.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "quote": "The bruised soul doesn't need your exhale. They need your presence."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "HandwrittenReveal",
+    "script": "look at me. Keep looking. That's the whole ask.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "lines": [
+        "Look at me.",
+        "Keep looking.",
+        "That's the whole ask."
+      ],
+      "niche": "poetry"
+    }
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "emotional_core": "A bruised soul doesn't need rescue — it needs someone to stay in the room without flinching, without reframing, without quietly implying that healing should have started by now.",
+  "tone": [
+    "tender",
+    "unflinching",
+    "quiet"
+  ],
+  "visual_metaphor": "A room where the ceiling has caved — light getting in wrong, corners that remember everything — and someone choosing to sit inside it with you anyway, without trying to repair the ceiling",
+  "key_quotes": [
+    "Don't turn my wound into a lesson before it has finished bleeding.",
+    "Stay like the dark before dawn that doesn't promise anything — just holds you until morning decides to come.",
+    "I am not asking for rescue. I am asking to be witnessed."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Person alone at a rain-streaked window at night, amber indoor light warm against grey outside, back to camera, utterly still",
+      "text": "There's a comfort that does more harm than silence."
+    },
+    {
+      "frame": 2,
+      "visual": "Two figures in conversation — one gesturing forward with open hands offering something, the other leaning slightly away, eyes lowered",
+      "text": "Don't ask me to be stronger."
+    },
+    {
+      "frame": 3,
+      "visual": "Close-up of two hands resting loosely together — not grasping, just present — warm shallow-focus light, muted tones",
+      "text": "I need you to sit with me."
+    },
+    {
+      "frame": 4,
+      "visual": "A cracked ceiling shot from directly below — thin grey light filtering through the fracture, slightly disorienting angle",
+      "text": "This room where the ceiling has caved."
+    },
+    {
+      "frame": 5,
+      "visual": "Single figure seated on a bare floor against a wall, knees drawn up, head resting on arms — still, not dramatic, just exhausted and real",
+      "text": "Don't fix me. Don't frame me."
+    },
+    {
+      "frame": 6,
+      "visual": "Pre-dawn sky — deep navy with the faintest warm thread at the horizon, no drama, just the moment before light decides to arrive",
+      "text": "Stay like the dark before dawn."
+    },
+    {
+      "frame": 7,
+      "visual": "Two people seated side by side on a step or floor, not touching, not talking — just present together in an ordinary, unglamorous space",
+      "text": "See me here. Don't look away."
+    }
+  ]
+}
