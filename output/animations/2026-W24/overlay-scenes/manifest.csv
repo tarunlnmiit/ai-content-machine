@@ -1,56 +1,20 @@
-niche,scene_id,component_name,duration_sec,output_file,script,startSec
-ds,scene-01,NumberedTips,7,ds_scene-01_NumberedTips.mp4,Column names with trailing spaces. Dates formatted three different ways,138.58
-ds,scene-02,CounterReveal,6,ds_scene-02_CounterReveal.mp4,I spent two weeks on that dataset before I ran a single analysis,277.15
-ds,scene-03,AtmosphericQuote,6,ds_scene-03_AtmosphericQuote.mp4,makes data interrogation feel like conversation instead of combat,79.64
-ds,scene-04,NumberedTips,7,ds_scene-04_NumberedTips.mp4,"loading and exploring, selecting and filtering, cleaning messy data, and aggregating",87.56
-ds,scene-05,DataPipelineFlow,7,ds_scene-05_DataPipelineFlow.mp4,"loading and exploring, selecting and filtering, cleaning messy data, and aggregating",87.56
-ds,scene-06,CounterReveal,5,ds_scene-06_CounterReveal.mp4,make it workable in under an hour,100.04
-ds,scene-07,ConceptExplainer,6,ds_scene-07_ConceptExplainer.mp4,A DataFrame column is a NumPy array with a name,415.73
-ds,scene-08,CodeAnnotation,7,ds_scene-08_CodeAnnotation.mp4,"Before you analyze anything, you orient yourself",133.8
-ds,scene-09,DataVizReveal,6,ds_scene-09_DataVizReveal.mp4,"print(df.shape)       # e.g., (15420, 12)",554.3
-ds,scene-10,CounterReveal,5,ds_scene-10_CounterReveal.mp4,Run df.describe() and in thirty seconds you know,692.88
-ds,scene-11,WordReveal,5,ds_scene-11_WordReveal.mp4,The isnull().sum() line is the one most beginners skip. Don't skip it,831.45
-ds,scene-12,CounterReveal,5,ds_scene-12_CounterReveal.mp4,This is sixty percent of what you actually do in Pandas,970.03
-ds,scene-13,CodeAnnotation,7,ds_scene-13_CodeAnnotation.mp4,"high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",1108.6
-ds,scene-14,ToolComparison,7,ds_scene-14_ToolComparison.mp4,"use & and | for boolean filters, not Python's and and or",1247.18
-ds,scene-15,AtmosphericQuote,5,ds_scene-15_AtmosphericQuote.mp4,Cleaning is analysis. You can't separate them,518.04
-ds,scene-16,CodeAnnotation,7,ds_scene-16_CodeAnnotation.mp4,The errors='coerce' argument is doing critical work here,1385.75
-ds,scene-17,CodeAnnotation,7,ds_scene-17_CodeAnnotation.mp4,The .agg() pattern with named aggregations — commit that to memory,1524.33
-ds,scene-18,ToolComparison,7,ds_scene-18_ToolComparison.mp4,"grouped DataFrames are for computation, pivot tables are for communication",1662.9
-ds,scene-19,TransformationArc,6,ds_scene-19_TransformationArc.mp4,It removes the mechanical friction that gets between you and thinking,1729.4
-ds,scene-20,HabitLoop,6,ds_scene-20_HabitLoop.mp4,Run through these four sections in order,1781.64
-life,scene-01,AtmosphericQuote,6,life_scene-01_AtmosphericQuote.mp4,they have a handful of small habits they actually do,29.97
-life,scene-02,TransformationArc,6,life_scene-02_TransformationArc.mp4,"Busy, but not moving. Organized, but not output",59.94
-life,scene-03,CounterReveal,6,life_scene-03_CounterReveal.mp4,"Seven of them, specifically. And none of them require an app",89.91
-life,scene-04,NumberedTips,8,life_scene-04_NumberedTips.mp4,"I scan my task list, note what's unfinished",119.88
-life,scene-05,CounterReveal,5,life_scene-05_CounterReveal.mp4,Mine takes four minutes,149.84
-life,scene-06,ImageTextReveal,6,life_scene-06_ImageTextReveal.mp4,I realized I hadn't heard a word she'd said,179.81
-life,scene-07,ConceptExplainer,6,life_scene-07_ConceptExplainer.mp4,our brains fixate on incomplete work until we register a closure,209.78
-life,scene-08,CounterReveal,5,life_scene-08_CounterReveal.mp4,I spend twenty minutes writing down everything that's in my head,239.75
-life,scene-09,CounterReveal,5,life_scene-09_CounterReveal.mp4,my brain had become a browser with fifty tabs open,269.72
-life,scene-10,BrowserTabOverload,6,life_scene-10_BrowserTabOverload.mp4,my brain had become a browser with fifty tabs open,299.69
-life,scene-11,ConceptExplainer,6,life_scene-11_ConceptExplainer.mp4,It's called offloading,329.66
-life,scene-12,WordReveal,5,life_scene-12_WordReveal.mp4,identify your most dreaded task the night before and do it first,359.63
-life,scene-13,ToolComparison,7,life_scene-13_ToolComparison.mp4,Multiple frogs doesn't multiply the benefit — it multiplies the drag,389.6
-life,scene-14,ToolComparison,6,life_scene-14_ToolComparison.mp4,To-do lists measure what's left. Done lists measure what happened,419.57
-life,scene-15,DataVizReveal,7,life_scene-15_DataVizReveal.mp4,Ninety minutes is better,449.54
-life,scene-16,CounterReveal,5,life_scene-16_CounterReveal.mp4,every context switch costs fifteen to twenty minutes of recovery time,479.5
-life,scene-17,NumberedTips,7,life_scene-17_NumberedTips.mp4,"exactly three priorities, written tonight",509.47
-life,scene-18,AtmosphericQuote,5,life_scene-18_AtmosphericQuote.mp4,What gets measured gets noticed,539.44
-life,scene-19,HandwrittenReveal,7,life_scene-19_HandwrittenReveal.mp4,Start with one. The one that stings a little when you read it,569.41
-poetry,scene-01,LineReveal,7,poetry_scene-01_LineReveal.mp4,I worked with things you can measure. Data. Models. Dashboards.,47.89
-poetry,scene-02,AtmosphericQuote,6,poetry_scene-02_AtmosphericQuote.mp4,a poem finds the exact nerve no dataset ever mapped,95.78
-poetry,scene-03,AtmosphericQuote,7,poetry_scene-03_AtmosphericQuote.mp4,The lyric form is the one that admits what human experience refuses to sort,73.4
-poetry,scene-04,DataVizReveal,6,poetry_scene-04_DataVizReveal.mp4,One used numbers. The other used metaphor. Tools different. Curiosity identical.,143.67
-poetry,scene-05,LineReveal,7,poetry_scene-05_LineReveal.mp4,The best commit messages have grief in them sometimes.,142.12
-poetry,scene-06,ImageTextReveal,6,poetry_scene-06_ImageTextReveal.mp4,Poetry was already in the server room.,149.16
-poetry,scene-07,CounterReveal,4,poetry_scene-07_CounterReveal.mp4,You've done this a hundred times.,191.56
-poetry,scene-08,HandwrittenReveal,7,poetry_scene-08_HandwrittenReveal.mp4,The grey of a commute counts. The brown of bad coffee counts.,188.42
-poetry,scene-09,AtmosphericQuote,6,poetry_scene-09_AtmosphericQuote.mp4,grief insists on specificity,248.96
-poetry,scene-10,LineReveal,7,poetry_scene-10_LineReveal.mp4,You miss how they said your name. The exact pitch of their laugh.,257.36
-poetry,scene-11,VoiceMemoryDissolve,7,poetry_scene-11_VoiceMemoryDissolve.mp4,You miss how they said your name. The exact pitch of their laugh.,257.36
-poetry,scene-12,DataVizReveal,6,poetry_scene-12_DataVizReveal.mp4,Facts tell you what happened. Poetry tells you what stayed behind.,270.44
-poetry,scene-13,CounterReveal,4,poetry_scene-13_CounterReveal.mp4,a lyric you've heard forty times that suddenly means something different,239.45
-poetry,scene-14,ImageTextReveal,6,poetry_scene-14_ImageTextReveal.mp4,It dips its fingers in every colour because it's patient.,287.34
-poetry,scene-15,WordReveal,5,poetry_scene-15_WordReveal.mp4,A crack is enough.,336.12
-poetry,scene-16,AtmosphericQuote,6,poetry_scene-16_AtmosphericQuote.mp4,That is not a small thing. It is the whole thing.,335.23
+niche,scene_id,component_name,duration_sec,output_file,script,startSec,matched
+life,scene-01,AtmosphericQuote,6,life_scene-01_AtmosphericQuote.mp4,I spent three years building the perfect productivity system,0.0,True
+life,scene-02,TransformationArc,6,life_scene-02_TransformationArc.mp4,"busy, sure, organized technically, but not moving",19.34,True
+life,scene-03,CounterReveal,6,life_scene-03_CounterReveal.mp4,It was stripping back to seven small habits,40.36,True
+life,scene-04,NumberedTips,8,life_scene-04_NumberedTips.mp4,It happened at the end of the day,66.12,True
+life,scene-05,CounterReveal,5,life_scene-05_CounterReveal.mp4,My shutdown ritual takes four minutes,89.42,True
+life,scene-06,ImageTextReveal,6,life_scene-06_ImageTextReveal.mp4,suddenly realizing that I hadn't actually heard the last few minutes,115.04,True
+life,scene-07,ConceptExplainer,6,life_scene-07_ConceptExplainer.mp4,our brains fixate on unfinished work until we register closure,143.88,True
+life,scene-08,CounterReveal,5,life_scene-08_CounterReveal.mp4,I spend 20 minutes writing down everything that is in my head,175.06,True
+life,scene-09,CounterReveal,5,life_scene-09_CounterReveal.mp4,my brain had become a browser with fifty tabs open,186.04,False
+life,scene-10,BrowserTabOverload,6,life_scene-10_BrowserTabOverload.mp4,my brain had become a browser with fifty tabs open,197.02,False
+life,scene-11,ConceptExplainer,6,life_scene-11_ConceptExplainer.mp4,Getting information out of your head and onto paper frees up capacity,208.0,True
+life,scene-12,WordReveal,5,life_scene-12_WordReveal.mp4,"Do your most dreaded tasks first, but only one frog",268.78,True
+life,scene-13,ToolComparison,7,life_scene-13_ToolComparison.mp4,then I would have a frog festival and wonder why,276.18,True
+life,scene-14,ToolComparison,6,life_scene-14_ToolComparison.mp4,To-do lists create a permanent state of deficit,326.44,True
+life,scene-15,DataVizReveal,7,life_scene-15_DataVizReveal.mp4,one 90-minute block of deep work per day,357.86,True
+life,scene-16,CounterReveal,5,life_scene-16_CounterReveal.mp4,The first 15 to 20 minutes of any focus session are transitional,366.66,True
+life,scene-17,NumberedTips,7,life_scene-17_NumberedTips.mp4,write exactly three priorities for tomorrow,425.18,True
+life,scene-18,AtmosphericQuote,5,life_scene-18_AtmosphericQuote.mp4,What gets measured gets noticed,509.78,True
+life,scene-19,HandwrittenReveal,7,life_scene-19_HandwrittenReveal.mp4,Start with one. The one that stings a little when you read it,577.04,True

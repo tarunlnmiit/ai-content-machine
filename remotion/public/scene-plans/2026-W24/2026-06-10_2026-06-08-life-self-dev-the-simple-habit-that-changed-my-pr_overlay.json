@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-01",
     "componentName": "AtmosphericQuote",
-    "script": "they have a handful of small habits they actually do",
+    "script": "I spent three years building the perfect productivity system",
     "niche": "life",
     "durationSec": 6,
     "layout": "panel-top",
@@ -10,12 +10,13 @@
       "quote": "The most productive people don't have complicated systems. They have a handful of small habits they actually do.",
       "attribution": ""
     },
-    "atSec": 29.97
+    "atSec": 0.0,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-02",
     "componentName": "TransformationArc",
-    "script": "Busy, but not moving. Organized, but not output",
+    "script": "busy, sure, organized technically, but not moving",
     "niche": "life",
     "durationSec": 6,
     "layout": "panel-left",
@@ -34,12 +35,13 @@
       ],
       "transformLabel": "Strip it back"
     },
-    "atSec": 59.94
+    "atSec": 19.34,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-03",
     "componentName": "CounterReveal",
-    "script": "Seven of them, specifically. And none of them require an app",
+    "script": "It was stripping back to seven small habits",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
@@ -49,12 +51,13 @@
       "prefix": "",
       "suffix": ""
     },
-    "atSec": 89.91
+    "atSec": 40.36,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-04",
     "componentName": "NumberedTips",
-    "script": "I scan my task list, note what's unfinished",
+    "script": "It happened at the end of the day",
     "niche": "life",
     "durationSec": 8,
     "layout": "panel-right",
@@ -83,12 +86,13 @@
         }
       ]
     },
-    "atSec": 119.88
+    "atSec": 66.12,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-05",
     "componentName": "CounterReveal",
-    "script": "Mine takes four minutes",
+    "script": "My shutdown ritual takes four minutes",
     "niche": "life",
     "durationSec": 5,
     "layout": "fullscreen",
@@ -98,12 +102,13 @@
       "prefix": "",
       "suffix": " min"
     },
-    "atSec": 149.84
+    "atSec": 89.42,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-06",
     "componentName": "ImageTextReveal",
-    "script": "I realized I hadn't heard a word she'd said",
+    "script": "suddenly realizing that I hadn't actually heard the last few minutes",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
@@ -111,12 +116,13 @@
       "headline": "Physically at the table. Mentally still inside my laptop.",
       "subtext": "WHY THE RITUAL STARTED"
     },
-    "atSec": 179.81
+    "atSec": 115.04,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-07",
     "componentName": "ConceptExplainer",
-    "script": "our brains fixate on incomplete work until we register a closure",
+    "script": "our brains fixate on unfinished work until we register closure",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
@@ -135,12 +141,13 @@
         }
       ]
     },
-    "atSec": 209.78
+    "atSec": 143.88,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-08",
     "componentName": "CounterReveal",
-    "script": "I spend twenty minutes writing down everything that's in my head",
+    "script": "I spend 20 minutes writing down everything that is in my head",
     "niche": "life",
     "durationSec": 5,
     "layout": "fullscreen",
@@ -150,7 +157,8 @@
       "prefix": "",
       "suffix": " min"
     },
-    "atSec": 239.75
+    "atSec": 175.06,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-09",
@@ -165,7 +173,8 @@
       "prefix": "",
       "suffix": " tabs"
     },
-    "atSec": 269.72
+    "atSec": 186.04,
+    "atSecSource": "interp"
   },
   {
     "componentName": "BrowserTabOverload",
@@ -177,12 +186,13 @@
       "description": "Chaotic browser-tab overload animation: 50 tabs spawn and stack rapidly across the screen, each labeled with a real thought (groceries, deadline, call mom, fix email). Screen fills with noise and fragmented text, then in one beat everything collapses to silence and a single empty tab. Represents cognitive overwhelm \u2192 clarity."
     },
     "sceneId": "scene-10",
-    "atSec": 299.69
+    "atSec": 197.02,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-11",
     "componentName": "ConceptExplainer",
-    "script": "It's called offloading",
+    "script": "Getting information out of your head and onto paper frees up capacity",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
@@ -201,12 +211,13 @@
         }
       ]
     },
-    "atSec": 329.66
+    "atSec": 208.0,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-12",
     "componentName": "WordReveal",
-    "script": "identify your most dreaded task the night before and do it first",
+    "script": "Do your most dreaded tasks first, but only one frog",
     "niche": "life",
     "durationSec": 5,
     "layout": "panel-left",
@@ -221,12 +232,13 @@
         2
       ]
     },
-    "atSec": 359.63
+    "atSec": 268.78,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-13",
     "componentName": "ToolComparison",
-    "script": "Multiple frogs doesn't multiply the benefit \u2014 it multiplies the drag",
+    "script": "then I would have a frog festival and wonder why",
     "niche": "life",
     "durationSec": 7,
     "layout": "fullscreen",
@@ -248,12 +260,13 @@
         ]
       }
     },
-    "atSec": 389.6
+    "atSec": 276.18,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-14",
     "componentName": "ToolComparison",
-    "script": "To-do lists measure what's left. Done lists measure what happened",
+    "script": "To-do lists create a permanent state of deficit",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
@@ -275,12 +288,13 @@
         ]
       }
     },
-    "atSec": 419.57
+    "atSec": 326.44,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-15",
     "componentName": "DataVizReveal",
-    "script": "Ninety minutes is better",
+    "script": "one 90-minute block of deep work per day",
     "niche": "life",
     "durationSec": 7,
     "layout": "fullscreen",
@@ -298,12 +312,13 @@
       ],
       "chartType": "bar"
     },
-    "atSec": 449.54
+    "atSec": 357.86,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-16",
     "componentName": "CounterReveal",
-    "script": "every context switch costs fifteen to twenty minutes of recovery time",
+    "script": "The first 15 to 20 minutes of any focus session are transitional",
     "niche": "life",
     "durationSec": 5,
     "layout": "fullscreen",
@@ -313,12 +328,13 @@
       "prefix": "",
       "suffix": " min"
     },
-    "atSec": 479.5
+    "atSec": 366.66,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-17",
     "componentName": "NumberedTips",
-    "script": "exactly three priorities, written tonight",
+    "script": "write exactly three priorities for tomorrow",
     "niche": "life",
     "durationSec": 7,
     "layout": "panel-left",
@@ -342,7 +358,8 @@
         }
       ]
     },
-    "atSec": 509.47
+    "atSec": 425.18,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-18",
@@ -355,7 +372,8 @@
       "quote": "What gets measured gets noticed. And noticing, it turns out, is most of the work.",
       "attribution": ""
     },
-    "atSec": 539.44
+    "atSec": 509.78,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-19",
@@ -373,6 +391,7 @@
       ],
       "niche": "life"
     },
-    "atSec": 569.41
+    "atSec": 577.04,
+    "atSecSource": "anchor"
   }
 ]

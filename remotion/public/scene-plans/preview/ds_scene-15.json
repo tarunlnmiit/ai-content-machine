@@ -9,6 +9,7 @@
     "props": {
       "quote": "Cleaning is analysis. You can't separate them."
     },
-    "atSec": 518.04
+    "atSec": 518.04,
+    "atSecSource": "anchor"
   }
 ]

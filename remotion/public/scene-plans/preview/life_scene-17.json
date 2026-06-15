@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-17",
     "componentName": "NumberedTips",
-    "script": "exactly three priorities, written tonight",
+    "script": "write exactly three priorities for tomorrow",
     "niche": "life",
     "durationSec": 7,
     "layout": "panel-left",
@@ -26,6 +26,7 @@
         }
       ]
     },
-    "atSec": 509.47
+    "atSec": 425.18,
+    "atSecSource": "anchor"
   }
 ]

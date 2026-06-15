@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-15",
     "componentName": "DataVizReveal",
-    "script": "Ninety minutes is better",
+    "script": "one 90-minute block of deep work per day",
     "niche": "life",
     "durationSec": 7,
     "layout": "fullscreen",
@@ -20,6 +20,7 @@
       ],
       "chartType": "bar"
     },
-    "atSec": 449.54
+    "atSec": 357.86,
+    "atSecSource": "anchor"
   }
 ]

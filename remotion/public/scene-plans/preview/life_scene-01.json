@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-01",
     "componentName": "AtmosphericQuote",
-    "script": "they have a handful of small habits they actually do",
+    "script": "I spent three years building the perfect productivity system",
     "niche": "life",
     "durationSec": 6,
     "layout": "panel-top",
@@ -10,6 +10,7 @@
       "quote": "The most productive people don't have complicated systems. They have a handful of small habits they actually do.",
       "attribution": ""
     },
-    "atSec": 29.97
+    "atSec": 0.0,
+    "atSecSource": "anchor"
   }
 ]

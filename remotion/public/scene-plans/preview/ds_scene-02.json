@@ -11,6 +11,7 @@
       "label": "weeks cleaning before any analysis",
       "suffix": " wks"
     },
-    "atSec": 277.15
+    "atSec": 33.4,
+    "atSecSource": "anchor"
   }
 ]

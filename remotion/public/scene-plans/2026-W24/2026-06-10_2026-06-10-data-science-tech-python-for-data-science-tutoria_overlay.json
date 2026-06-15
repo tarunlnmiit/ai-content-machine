@@ -31,7 +31,8 @@
         }
       ]
     },
-    "atSec": 138.58
+    "atSec": 8.56,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-02",
@@ -45,7 +46,8 @@
       "label": "weeks cleaning before any analysis",
       "suffix": " wks"
     },
-    "atSec": 277.15
+    "atSec": 33.4,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-03",
@@ -57,7 +59,8 @@
     "props": {
       "quote": "Data interrogation should feel like conversation, not combat."
     },
-    "atSec": 79.64
+    "atSec": 79.64,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-04",
@@ -87,7 +90,8 @@
         }
       ]
     },
-    "atSec": 87.56
+    "atSec": 87.56,
+    "atSecSource": "anchor"
   },
   {
     "componentName": "DataPipelineFlow",
@@ -99,7 +103,8 @@
       "description": "Animated data pipeline: four operations (Load \u2192 Select \u2192 Clean \u2192 Aggregate) shown as flowing data rows transforming sequentially. Raw table rows enter left, each stage highlights one operation with niche accent color, clean rows exit right. Motion-graphic style, no code \u2014 pure data flow."
     },
     "sceneId": "scene-05",
-    "atSec": 87.56
+    "atSec": 87.56,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-06",
@@ -114,7 +119,8 @@
       "prefix": "< ",
       "suffix": " hr"
     },
-    "atSec": 100.04
+    "atSec": 100.04,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-07",
@@ -138,7 +144,8 @@
         }
       ]
     },
-    "atSec": 415.73
+    "atSec": 106.12,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-08",
@@ -160,7 +167,8 @@
       "highlightLine": 6,
       "annotationText": "Orient first: shape, types, summary, nulls"
     },
-    "atSec": 133.8
+    "atSec": 133.8,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-09",
@@ -183,7 +191,8 @@
         }
       ]
     },
-    "atSec": 554.3
+    "atSec": 219.36,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-10",
@@ -197,7 +206,8 @@
       "label": "seconds to spot bad columns",
       "suffix": " s"
     },
-    "atSec": 692.88
+    "atSec": 304.92,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-11",
@@ -216,7 +226,8 @@
         2
       ]
     },
-    "atSec": 831.45
+    "atSec": 351.48,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-12",
@@ -230,7 +241,8 @@
       "label": "of real Pandas work is selecting",
       "suffix": "%"
     },
-    "atSec": 970.03
+    "atSec": 424.12,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-13",
@@ -250,7 +262,8 @@
       "highlightLine": 3,
       "annotationText": ".query() is far more readable for multi-condition filters"
     },
-    "atSec": 1108.6
+    "atSec": 436.4,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-14",
@@ -277,7 +290,8 @@
         ]
       }
     },
-    "atSec": 1247.18
+    "atSec": 448.68,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-15",
@@ -289,7 +303,8 @@
     "props": {
       "quote": "Cleaning is analysis. You can't separate them."
     },
-    "atSec": 518.04
+    "atSec": 518.04,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-16",
@@ -309,7 +324,8 @@
       "highlightLine": 2,
       "annotationText": "errors='coerce' turns bad values into NaN instead of crashing"
     },
-    "atSec": 1385.75
+    "atSec": 1183.48,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-17",
@@ -330,7 +346,8 @@
       "highlightLine": 2,
       "annotationText": "Named aggregations: clean column names, multiple metrics, one pass"
     },
-    "atSec": 1524.33
+    "atSec": 1426.6,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-18",
@@ -357,7 +374,8 @@
         ]
       }
     },
-    "atSec": 1662.9
+    "atSec": 1669.72,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-19",
@@ -381,7 +399,8 @@
       ],
       "transformLabel": "Learn Pandas properly"
     },
-    "atSec": 1729.4
+    "atSec": 1722.52,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-20",
@@ -407,6 +426,7 @@
         }
       ]
     },
-    "atSec": 1781.64
+    "atSec": 1775.56,
+    "atSecSource": "anchor"
   }
 ]

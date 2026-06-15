@@ -9,6 +9,7 @@
     "props": {
       "quote": "A poem finds the exact nerve no dataset ever mapped."
     },
-    "atSec": 95.78
+    "atSec": 26.32,
+    "atSecSource": "anchor"
   }
 ]
