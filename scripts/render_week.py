@@ -89,7 +89,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--week", required=True, help="ISO week, e.g. 2026-W24")
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--concurrency", type=int, default=1)
+    parser.add_argument(
+        "--concurrency",
+        type=int,
+        default=2,
+        help="Parallel renders (default 2). Remotion+ffmpeg is CPU-bound; raise "
+        "to 3 only if CPU/RAM headroom, drop to 1 if it thrashes.",
+    )
     parser.add_argument("--niche", default=None, help="Filter by niche, e.g. life, data_science, poetry")
     args = parser.parse_args()
 
