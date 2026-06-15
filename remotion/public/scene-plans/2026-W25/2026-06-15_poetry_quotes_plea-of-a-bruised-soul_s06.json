@@ -1,0 +1,71 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "I am asking to be witnessed.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "I am asking to be witnessed"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "HandwrittenReveal",
+    "script": "see me here, exactly as I am, and don't look away.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "lines": [
+        "see me here,",
+        "exactly as I am,",
+        "and don't look away."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "That's all a bruised soul ever asks.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "That's all a bruised soul ever asks."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "LineReveal",
+    "script": "where the light gets in wrong and the corners remember everything.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "where the light gets in wrong",
+        "and the corners remember everything."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "I see you here. I'm not going anywhere.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "I see you here. I'm not going anywhere."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "ImageTextReveal",
+    "script": "you know it's rarer than it should be.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "Rarer than it should be",
+      "subtext": "Full presence, without flinching"
+    }
+  }
+]

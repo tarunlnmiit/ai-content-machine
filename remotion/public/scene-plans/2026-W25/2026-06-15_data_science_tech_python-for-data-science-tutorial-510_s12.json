@@ -1,0 +1,83 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "the code discovers the insight. The visualization transfers it from your mind to someone else's.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The code discovers the insight. The visualization transfers it."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "TransformationArc",
+    "script": "transfers it from your mind to someone else's.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "Discovery",
+      "afterLabel": "Transfer",
+      "beforePoints": [
+        "Code finds the truth",
+        "Lives in your head"
+      ],
+      "afterPoints": [
+        "Viz moves it across",
+        "Lives in theirs"
+      ],
+      "transformLabel": "Cross the gap"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ConceptExplainer",
+    "script": "the code discovers the insight.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Two jobs, two tools",
+      "cards": [
+        {
+          "term": "Code",
+          "definition": "Discovers the insight"
+        },
+        {
+          "term": "Visualization",
+          "definition": "Transfers it to others"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "from your mind to someone else's.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 2,
+      "label": "minds the insight must cross"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "Without that transfer, even a correct, rigorous analysis stays invisible.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "description": "Inside one glowing brain an insight crystallizes out of streaming code; it then travels along a bridge of light into a second brain, which lights up. When the bridge is removed, the second brain stays dark. Visualizes transfer of understanding."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "DataPipelineFlow",
+    "script": "A messy insight buried in a DataFrame changes nothing.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "niche": "ds"
+    }
+  }
+]

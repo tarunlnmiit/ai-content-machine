@@ -36,6 +36,7 @@ SETTLE_MS = 450
 def _frames_to_pdf(png_paths: list[Path], pdf_path: Path) -> None:
     """Assemble rendered PNG frames into a single multi-page PDF (one slide/page)."""
     from PIL import Image
+    import PIL.JpegImagePlugin  # noqa: F401 — registers JPEG encoder needed by PDF plugin
 
     pages = [Image.open(p).convert("RGB") for p in png_paths]
     if not pages:

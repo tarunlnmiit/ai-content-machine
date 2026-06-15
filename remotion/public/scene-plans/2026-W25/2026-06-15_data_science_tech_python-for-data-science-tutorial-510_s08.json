@@ -1,0 +1,95 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "If Matplotlib is the canvas, Seaborn is the paintbrush",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "If Matplotlib is the canvas, Seaborn is the paintbrush."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ToolComparison",
+    "script": "it handles statistical defaults and ships with aesthetics",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Matplotlib",
+        "points": [
+          "The canvas",
+          "Total control",
+          "Verbose"
+        ]
+      },
+      "rightSide": {
+        "label": "Seaborn",
+        "points": [
+          "The paintbrush",
+          "Statistical defaults",
+          "Aesthetics built in"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ConceptExplainer",
+    "script": "so the two work together, not against each other.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "They work together",
+      "cards": [
+        {
+          "term": "Built on top",
+          "definition": "Seaborn sits on Matplotlib"
+        },
+        {
+          "term": "Not against",
+          "definition": "The two cooperate, not compete"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "n = 200",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 200,
+      "label": "rows of sample customer data"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CodeAnnotation",
+    "script": "aesthetics that don't embarrass you in a client meeting.",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "sns.set_style('whitegrid')",
+        "sns.set_palette('husl')",
+        "sns.histplot(data=df, x='customer_age', kde=True, ax=axes[0])"
+      ],
+      "language": "python",
+      "highlightLine": 0,
+      "annotationText": "Defaults that don't embarrass you in a client meeting"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "It sits on top of Matplotlib",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "description": "A bare gray Matplotlib gridframe (the canvas) is brushed over by an animated paintbrush that lays down smooth color palettes and polished gridlines, transforming a plain plot into a styled one. Visualizes Seaborn layering aesthetics atop Matplotlib."
+    }
+  }
+]

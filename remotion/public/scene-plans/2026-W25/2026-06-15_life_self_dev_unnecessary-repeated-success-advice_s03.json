@@ -1,0 +1,109 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "isn't because the advice changed. It's because you changed.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "The advice didn't change. You did."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "TransformationArc",
+    "script": "I read about stoic detachment from outcomes in 2019. Noted it. Didn't feel it.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "2019",
+      "afterLabel": "2022",
+      "beforePoints": [
+        "Read stoic detachment",
+        "Noted it",
+        "Didn't feel it"
+      ],
+      "afterPoints": [
+        "Same concept, new book",
+        "Cracked something open",
+        "Finally had somewhere to land"
+      ],
+      "transformLabel": "Three years of lived failures"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "Read the same concept in 2022 \u2014 different book \u2014 and it cracked something open",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 3,
+      "label": "years between reading it and feeling it",
+      "suffix": " yrs"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "Advice requires context to absorb. Not intellectual context \u2014 lived context.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "Two kinds of context",
+      "cards": [
+        {
+          "term": "Intellectual context",
+          "definition": "You understand the words."
+        },
+        {
+          "term": "Lived context",
+          "definition": "The right wound, the right moment of openness."
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ImageTextReveal",
+    "script": "the concept finally had somewhere to land",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "It finally had somewhere to land.",
+      "subtext": "not a smarter author"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "Not because the second author was smarter.",
+    "niche": "life",
+    "durationSec": 9,
+    "props": {
+      "description": "The exact same sentence falls like a seed onto two soils: 2019 is dry cracked ground where it bounces off and dies; 2022 is dark tilled soil where the identical seed sinks in and sprouts. Same seed, different readiness. Camera pulls between the two patches to show the only variable that changed is the ground."
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "WordReveal",
+    "script": "Nobody wills themselves into readiness by reading faster.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "words": [
+        "You",
+        "can't",
+        "read",
+        "your",
+        "way",
+        "into",
+        "readiness"
+      ],
+      "emphasis": [
+        1,
+        6
+      ]
+    }
+  }
+]

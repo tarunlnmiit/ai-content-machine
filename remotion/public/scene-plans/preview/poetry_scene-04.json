@@ -19,6 +19,8 @@
         }
       ],
       "chartType": "bar"
-    }
+    },
+    "atSec": 129.74,
+    "atSecSource": "anchor"
   }
 ]

@@ -8,6 +8,8 @@
     "props": {
       "description": "Chaotic browser-tab overload animation: 50 tabs spawn and stack rapidly across the screen, each labeled with a real thought (groceries, deadline, call mom, fix email). Screen fills with noise and fragmented text, then in one beat everything collapses to silence and a single empty tab. Represents cognitive overwhelm → clarity."
     },
-    "sceneId": "scene-10"
+    "sceneId": "scene-10",
+    "atSec": 197.02,
+    "atSecSource": "interp"
   }
 ]

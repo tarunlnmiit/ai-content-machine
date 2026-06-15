@@ -1,0 +1,95 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ToolComparison",
+    "script": "BAD: no labels, no story ... GOOD: labeled, story-driven",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "BAD: no labels",
+        "points": [
+          "No axis labels",
+          "Title just says 'Data'",
+          "No story"
+        ]
+      },
+      "rightSide": {
+        "label": "GOOD: story-driven",
+        "points": [
+          "Labeled axes",
+          "Finding in the title",
+          "Legend with region"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "Regional ROI: Every Dollar Spent, Revenue Returned",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "axes[1].set_xlabel('Marketing Spend ($)', fontsize=11)",
+        "axes[1].set_ylabel('Revenue Generated ($)', fontsize=11)",
+        "axes[1].set_title('Regional ROI: Every Dollar Spent, Revenue Returned')"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "A title that states the finding, not just the axis"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "Same data. One tells you something. The other makes you work.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 2,
+      "label": "versions of the exact same data"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "You owe the reader the second version every time.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "The difference is respect",
+      "cards": [
+        {
+          "term": "Lazy plot",
+          "definition": "Makes the reader work for it"
+        },
+        {
+          "term": "Clear plot",
+          "definition": "You owe them this version"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "Same data. One tells you something. The other makes you work.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "description": "Two identical scatter clouds sit side by side; the left stays gray, unlabeled, titled only 'Data', while the right gains colored regions, axis labels, a legend, and a sharp finding-led title. The same points become instantly legible. Shows labeling turning data into a story."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "You owe the reader the second version every time.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "You owe the reader the clear version \u2014 every time."
+    }
+  }
+]

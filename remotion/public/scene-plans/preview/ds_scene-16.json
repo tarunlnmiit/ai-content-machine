@@ -16,6 +16,8 @@
       "language": "python",
       "highlightLine": 2,
       "annotationText": "errors='coerce' turns bad values into NaN instead of crashing"
-    }
+    },
+    "atSec": 1183.48,
+    "atSecSource": "anchor"
   }
 ]

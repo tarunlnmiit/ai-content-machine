@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-02",
     "componentName": "TransformationArc",
-    "script": "Busy, but not moving. Organized, but not output",
+    "script": "busy, sure, organized technically, but not moving",
     "niche": "life",
     "durationSec": 6,
     "layout": "panel-left",
@@ -20,6 +20,8 @@
         "Output, not just organized"
       ],
       "transformLabel": "Strip it back"
-    }
+    },
+    "atSec": 19.34,
+    "atSecSource": "anchor"
   }
 ]

@@ -435,6 +435,64 @@ Falls back to even spacing when captions are missing (e.g. screen-recording-only
 
 ---
 
+## Generating the Overlay Manifest with Timestamps
+
+Before rendering overlay scenes to MP4, align them to caption timestamps so `manifest.csv` includes exact placement times for DaVinci.
+
+```bash
+# Step 1: Align overlay scenes to captions (adds atSec to overlay JSON)
+# Run once per niche:
+python3 scripts/patch_edit_plan_overlays.py \
+  --edit-plan "remotion/public/edit-plans/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity.json" \
+  --overlay   "remotion/public/scene-plans/2026-W24/2026-06-10_2026-06-08-life-self-dev-the-simple-habit-that-changed-my-pr_overlay.json"
+
+# repeat for each niche's edit plan + overlay JSON pair
+
+# Step 2: Render overlay scenes → manifest.csv with startSec
+python3 scripts/render_overlay_scenes.py --week 2026-W24
+```
+
+Output: `output/animations/2026-W24/overlay-scenes/manifest.csv`
+
+Columns:
+- `niche` — content type (ds, life, poetry)
+- `scene_id` — scene-01, scene-02, etc.
+- `component_name` — Remotion component (AtmosphericQuote, CounterReveal, etc.)
+- `duration_sec` — animation length in seconds
+- `output_file` — rendered MP4 filename
+- `script` — transcript excerpt (for reference)
+- `startSec` — timestamp in source video to place overlay in DaVinci (populated if `patch_edit_plan_overlays.py` was run)
+- `matched` — `True` if `startSec` was anchored to a real spoken phrase; `False` if interpolated between neighbors (verify those manually)
+
+**Before DaVinci edit:** Open the manifest to see where each overlay lands in your talking-head timeline. Use `startSec` to position scenes on separate overlay tracks.
+
+### Ad-libbed take? Re-anchor triggers to the transcript first
+
+Overlay `script` triggers come from the **written** script. If you delivered the take off-script (paraphrased, reordered), those triggers won't match the spoken audio and timestamps fall back to interpolation (`matched=False`). Re-anchor them to what you actually said — captions already exist:
+
+```bash
+python3 scripts/retrofit_scene_triggers.py \
+  --overlay "remotion/public/scene-plans/{week}/{slug}_overlay.json"
+# Claude maps each scene to the verbatim spoken phrase; truly-unspoken scenes (code) stay interpolated.
+# Then re-run patch_edit_plan_overlays.py + render_overlay_scenes.py.
+```
+
+### Manual placement sheet (run during the edit)
+
+Generate a per-niche Markdown sheet that tells you which clip to drop where:
+
+```bash
+python3 scripts/overlay_placement_sheet.py --week 2026-W24
+# → output/animations/2026-W24/overlay-scenes/{NICHE}_PLACEMENT.md  (one per niche)
+# Add --niche poetry to do just one.
+```
+
+Each sheet lists every overlay's **Time** (measured from your first spoken word), **Dur**, **clip filename**, an **Exact?** flag (✓ = anchored to a verbatim spoken phrase, ~est = interpolated), and the on-screen text.
+
+**Manual DaVinci flow:** talking-head on V1; drop each clip on V2 at its listed Time (clips are full-frame opaque → full cutaway for their duration). Want the speaker still visible? Scale the V2 clip to ~35% and park it left/right as a side panel. If your timeline has lead silence/intro before the first word, add that offset to every Time.
+
+---
+
 ## What This Does NOT Do (Yet)
 
 `prepare_remotion_edit.py` handles transcription, silence trimming, b-roll prep, and auto-wiring of title card / lower third / outro / color grading / overlay scene plans. Manual editing in DaVinci still handles:

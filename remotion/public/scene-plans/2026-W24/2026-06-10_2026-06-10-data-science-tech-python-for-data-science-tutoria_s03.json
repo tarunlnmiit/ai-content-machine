@@ -2,82 +2,104 @@
   {
     "sceneId": "scene-01",
     "componentName": "AtmosphericQuote",
-    "script": "The first question isn't what's in this data, it's what shape",
+    "script": "Pandas builds directly on NumPy.",
     "niche": "ds",
     "durationSec": 5,
     "props": {
-      "quote": "The first question with any dataset isn't 'what's in this data?' It's 'what shape is this data?'",
-      "attribution": ""
+      "quote": "Pandas builds directly on NumPy."
     }
   },
   {
     "sceneId": "scene-02",
-    "componentName": "CodeAnnotation",
-    "script": "print(df.shape) e.g., (15420, 12)",
+    "componentName": "ConceptExplainer",
+    "script": "A DataFrame column is a NumPy array with a name.",
     "niche": "ds",
-    "durationSec": 7,
+    "durationSec": 6,
     "props": {
-      "code": [
-        "print(df.shape)       # (15420, 12)",
-        "print(df.dtypes)",
-        "print(df.head())",
-        "print(df.describe())",
-        "print(df.isnull().sum())"
-      ],
-      "language": "python",
-      "highlightLine": 1,
-      "annotationText": "Orient before you analyze: how many rows, what types, where the nulls hide."
+      "headline": "The one sentence that unlocks Pandas",
+      "cards": [
+        {
+          "term": "DataFrame column",
+          "definition": "= a NumPy array, plus a name",
+          "icon": "column"
+        },
+        {
+          "term": "The name",
+          "definition": "Labels turn arrays into a query-able table",
+          "icon": "tag"
+        }
+      ]
     }
   },
   {
     "sceneId": "scene-03",
-    "componentName": "CounterReveal",
-    "script": "print(df.shape) # e.g., (15420, 12)",
-    "niche": "ds",
-    "durationSec": 6,
-    "props": {
-      "value": 15420,
-      "label": "rows in the dataset",
-      "suffix": " rows"
-    }
-  },
-  {
-    "sceneId": "scene-04",
-    "componentName": "CounterReveal",
-    "script": "(15420, 12)",
-    "niche": "ds",
-    "durationSec": 6,
-    "props": {
-      "value": 12,
-      "label": "columns to account for",
-      "suffix": " cols"
-    }
-  },
-  {
-    "sceneId": "scene-05",
-    "componentName": "CounterReveal",
-    "script": "Run df.describe() and in thirty seconds you know",
-    "niche": "ds",
-    "durationSec": 6,
-    "props": {
-      "value": 30,
-      "label": "seconds to spot bad values with describe()",
-      "suffix": " sec"
-    }
-  },
-  {
-    "sceneId": "scene-06",
     "componentName": "CodeAnnotation",
-    "script": "The isnull().sum() line is the one most beginners skip. Don't skip it.",
+    "script": "import pandas as pd / import numpy as np",
     "niche": "ds",
     "durationSec": 7,
     "props": {
       "code": [
-        "print(df.isnull().sum())"
+        "import pandas as pd",
+        "import numpy as np",
+        "df = pd.read_csv('sales_records.csv')"
       ],
       "language": "python",
-      "highlightLine": 1,
-      "annotationText": "Skip this and missing data silently breaks filters \u2014 rows just disappear."
+      "highlightLine": 2,
+      "annotationText": "NumPy isn't a side import \u2014 it's the engine under every column."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "operations like .apply() and boolean indexing stop feeling magical.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Same ideas, higher level",
+      "cards": [
+        {
+          "term": "Boolean indexing",
+          "definition": "NumPy masks, now with column names",
+          "icon": "filter"
+        },
+        {
+          "term": ".apply()",
+          "definition": "Vectorized array ops, wearing a label",
+          "icon": "function"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "TransformationArc",
+    "script": "You're not learning new concepts, you're using a higher-level interface.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "NumPy arrays",
+      "afterLabel": "Pandas DataFrame",
+      "beforePoints": [
+        "Positional arrays",
+        "No labels",
+        "Raw vectorized math"
+      ],
+      "afterPoints": [
+        "Named columns",
+        "Labeled index",
+        "Same math, query-able"
+      ],
+      "transformLabel": "Add names"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "a higher-level interface for the same ideas.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "You're not learning new concepts \u2014 you're using a higher-level interface for the same ideas."
     }
   }
 ]

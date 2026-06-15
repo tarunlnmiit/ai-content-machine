@@ -1,0 +1,114 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "The errors='coerce' argument is doing critical work here.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The errors='coerce' argument is doing critical work here."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "df['revenue'] = pd.to_numeric(",
+        "    df['revenue'], errors='coerce')"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "'approx 50k' can't become a number \u2014 coerce turns it into NaN and keeps going."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ToolComparison",
+    "script": "Instead of crashing when a value can't be converted, it turns it into NaN.",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Default (raise)",
+        "points": [
+          "Crashes on the first bad value",
+          "Whole conversion fails",
+          "Runtime error at 2am",
+          "No partial progress"
+        ]
+      },
+      "rightSide": {
+        "label": "errors='coerce'",
+        "points": [
+          "Bad value \u2192 NaN",
+          "Keeps moving",
+          "Row structure preserved",
+          "Flagged for intentional handling"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "This preserves your row structure while flagging the bad values.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "What coerce buys you",
+      "cards": [
+        {
+          "term": "Preserves structure",
+          "definition": "No rows lost to a single bad cell",
+          "icon": "grid"
+        },
+        {
+          "term": "Flags the bad",
+          "definition": "NaN marks what to handle intentionally",
+          "icon": "flag"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "NumberedTips",
+    "script": "you handle them intentionally instead of getting a runtime error.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Coerce, then handle",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Convert with coerce",
+          "body": "Bad values become NaN"
+        },
+        {
+          "number": 2,
+          "headline": "Inspect the NaNs",
+          "body": "isnull().sum() shows the damage"
+        },
+        {
+          "number": 3,
+          "headline": "Decide deliberately",
+          "body": "Fill, drop, or investigate"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "instead of getting a runtime error at 2am.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Handle them intentionally \u2014 instead of getting a runtime error at 2am."
+    }
+  }
+]
