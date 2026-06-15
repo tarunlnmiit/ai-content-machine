@@ -127,7 +127,7 @@ Creates `content/derivatives/{week}/{slug}/` with:
 ```bash
 python3 -c "
 import json, glob
-for f in glob.glob('content/derivatives/{week}/*data_science_tech*/schedule.json'):
+for f in glob.glob('content/derivatives/*/*data_science_tech*/schedule.json'):
     d = json.load(open(f))
     print(f.split('/')[-2], '→', d.get('long_form', {}).get('publish_at', 'MISSING'))
 "

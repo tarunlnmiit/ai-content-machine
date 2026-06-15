@@ -274,6 +274,7 @@ wc -l output/scheduled/metricool_mistakenlyhuman.csv
 - [ ] YouTube videos uploaded and scheduled (done Thursday)
 - [ ] Shorts queue active — 2/day Mon–Sun (done Thursday)
 - [ ] Notion status updated: Status → Uploaded for all 3 content items
+- [ ] Week archived to `/Volumes/Archive` (Step 7)
 
 ---
 
@@ -315,3 +316,38 @@ python3 scripts/sync_tracker.py
 python3 scripts/generate_posting_tracker.py --year 2026
 # → output/trackers/annual-tracker-2026.xlsx updated with new content titles
 ```
+
+---
+
+## Step 7 — Archive week to external drive (~2 min)
+
+Move all week content off the internal SSD to `/Volumes/Archive`. Run **after** uploads and scheduling are confirmed complete.
+
+```bash
+# 1. Connect the Archive drive — verify it's mounted
+ls /Volumes/Archive
+
+# 2. Dry run first — see what will move
+python3 scripts/archive_week.py \
+  --repo "/Users/tarungupta/Making It Big/Claude/content-machine" \
+  --week 2026-W24 \
+  --dry-run
+
+# 3. Move for real
+python3 scripts/archive_week.py \
+  --repo "/Users/tarungupta/Making It Big/Claude/content-machine" \
+  --week 2026-W24
+```
+
+Replace `2026-W24` with the current ISO week. Script auto-discovers every `2026-Wnn/` subfolder across the repo (assets, content, output, remotion/public, etc.) and moves them all.
+
+**What gets archived:**
+- `assets/hyperframes/`, `assets/raw/`, `assets/social_posts/`, `assets/slides/`, `assets/carousels/`, `assets/video/`, `assets/stories/`, `assets/thumbnails/`, `assets/teleprompter/`
+- `content/blogs/`, `content/scripts/`, `content/derivatives/`, `content/worksheets/`, `content/prompts/`
+- `output/animations/`, `output/worksheets/`, `output/scheduled/`
+- `remotion/public/broll/`, `remotion/public/captions/`, `remotion/public/edit-plans/`, `remotion/public/scene-plans/`, `remotion/public/videos/`
+
+**Destination:** `/Volumes/Archive/content-archive/{year}/W{nn}/`
+**Manifest + log** written to same destination folder.
+
+If drive not available, skip and run next time the drive is connected. Use `--copy` to keep source files (backup mode instead of archive).
