@@ -27,6 +27,10 @@ CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 CACHE_TTL_DAYS = 30
 
+# Retry policy for transient claude CLI failures (non-zero exit / timeout).
+MAX_RETRIES = 3
+RETRY_BACKOFF_SEC = (2, 4, 8)
+
 TEMP_DIRECTIVES = {
     "low":  "Respond with analytical precision. Prefer concrete, factual phrasing. Use specific numbers and examples. Avoid metaphor.",
     "mid":  "Respond warmly and conversationally with personal voice. Mix concrete examples with reflective insight. Vary sentence length.",
@@ -70,6 +74,38 @@ def _heartbeat(stop: threading.Event, label: str) -> None:
     sys.stderr.flush()
 
 
+def _run_cmd(cmd: list[str], timeout: int, stream: bool, progress_label: str) -> str:
+    """Run the claude subprocess once. Returns stdout.
+
+    Raises RuntimeError on non-zero exit, subprocess.TimeoutExpired on timeout.
+    """
+    if not stream:
+        res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        if res.returncode != 0:
+            raise RuntimeError(f"claude CLI failed (exit {res.returncode}): {res.stderr[-300:]}")
+        return res.stdout
+
+    stop = threading.Event()
+    hb = threading.Thread(target=_heartbeat, args=(stop, progress_label), daemon=True)
+    hb.start()
+    try:
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            out, err = proc.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.communicate()
+            raise
+        if proc.returncode != 0:
+            raise RuntimeError(f"claude CLI failed (exit {proc.returncode}): {err[-300:]}")
+    finally:
+        stop.set()
+        hb.join(timeout=1)
+    sys.stderr.write(f"  ✓ {progress_label} — {len(out):,} chars received\n")
+    sys.stderr.flush()
+    return out
+
+
 def call_claude(
     prompt: str,
     cache: bool = True,
@@ -80,6 +116,7 @@ def call_claude(
     normalize: bool = False,
     stream: bool = False,
     progress_label: str = "Claude thinking",
+    retries: int = MAX_RETRIES,
 ) -> str:
     """Invoke claude CLI, optionally cached. Returns stdout text.
 
@@ -102,25 +139,25 @@ def call_claude(
     if temperature is not None:
         cmd += ["--append-system-prompt", _temp_directive(temperature)]
 
-    if not stream:
-        res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
-        if res.returncode != 0:
-            raise RuntimeError(f"claude CLI failed (exit {res.returncode}): {res.stderr[-300:]}")
-        out = res.stdout
-    else:
-        stop = threading.Event()
-        hb = threading.Thread(target=_heartbeat, args=(stop, progress_label), daemon=True)
-        hb.start()
+    last_err: Optional[Exception] = None
+    out = ""
+    for attempt in range(retries):
         try:
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            out, err = proc.communicate()
-            if proc.returncode != 0:
-                raise RuntimeError(f"claude CLI failed (exit {proc.returncode}): {err[-300:]}")
-        finally:
-            stop.set()
-            hb.join(timeout=1)
-        sys.stderr.write(f"  ✓ {progress_label} — {len(out):,} chars received\n")
-        sys.stderr.flush()
+            out = _run_cmd(cmd, timeout, stream, progress_label)
+            break
+        except (RuntimeError, subprocess.TimeoutExpired) as e:
+            last_err = e
+            if attempt < retries - 1:
+                wait = RETRY_BACKOFF_SEC[min(attempt, len(RETRY_BACKOFF_SEC) - 1)]
+                sys.stderr.write(
+                    f"  ⚠ claude attempt {attempt + 1}/{retries} failed: "
+                    f"{str(e)[-120:]} — retrying in {wait}s\n"
+                )
+                sys.stderr.flush()
+                time.sleep(wait)
+    else:
+        raise RuntimeError(f"claude CLI failed after {retries} attempts: {last_err}")
+
     if normalize:
         from lib.text_normalizer import normalize as _normalize
         out = _normalize(out)
