@@ -1,0 +1,84 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Pain doesn't always want to be solved.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Pain doesn't always want to be solved."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "LineReveal",
+    "script": "Sometimes it wants to be true \u2014 fully, out loud, in company.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "Sometimes it wants to be true \u2014",
+        "fully, out loud, in company."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ImageTextReveal",
+    "script": "the hardest thing you can offer someone is your full, undivided presence",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "The hardest thing you can offer is your full presence"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "AtmosphericQuote",
+    "script": "you deserved it then. You deserve it now.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "quote": "If you've never had it: you deserved it then. You deserve it now."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "DataVizReveal",
+    "script": "send it to one person who needs to feel less alone in their fracture.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "title": "Send it to one person",
+      "data": [
+        {
+          "label": "who needs to feel less alone",
+          "value": 1
+        }
+      ],
+      "chartType": "number"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "ImageTextReveal",
+    "script": "they're meant to be returned to, again and again",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "Some poems are meant to be returned to",
+      "subtext": "again and again"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "This is Breath of Poetry. I show up here every week.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "This is Breath of Poetry. I show up here every week.",
+      "attribution": "Breath of Poetry"
+    }
+  }
+]

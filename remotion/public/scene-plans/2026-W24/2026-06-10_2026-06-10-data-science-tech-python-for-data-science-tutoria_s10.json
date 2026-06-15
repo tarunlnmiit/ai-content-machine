@@ -1,0 +1,114 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": ".query() is underused.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": ".query() is underused. For multi-condition filters it's dramatically more readable."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "filtered_v2 = df.query(\"region == 'North' and revenue > 5000\")",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "filtered_v2 = df.query(",
+        "    \"region == 'North' and revenue > 5000\")"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Inside query(), plain 'and' reads like English \u2014 no parentheses gymnastics."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ToolComparison",
+    "script": "more readable than stacked boolean expressions.",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Stacked booleans",
+        "points": [
+          "df[(c1) & (c2)]",
+          "Repeat df['col'] each time",
+          "Parentheses everywhere",
+          "Hard to scan"
+        ]
+      },
+      "rightSide": {
+        "label": ".query()",
+        "points": [
+          "One readable string",
+          "Reads like English",
+          "No df['col'] repetition",
+          "Easy to scan"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CodeAnnotation",
+    "script": "df[df['status'].isin(['active', 'trial'])]",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "df[df['status'].isin(['active', 'trial'])]"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Instead of three == joined with |, pass a list. Cleaner, and scales to any length."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ConceptExplainer",
+    "script": "instead of three == conditions joined with |, just pass a list.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Why .isin() wins",
+      "cards": [
+        {
+          "term": "One call",
+          "definition": "Replaces a chain of == joined by |",
+          "icon": "list"
+        },
+        {
+          "term": "Scales",
+          "definition": "Works for any list length",
+          "icon": "expand"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "NumberedTips",
+    "script": "Cleaner and scales to any list length.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Two underused tools",
+      "tips": [
+        {
+          "number": 1,
+          "headline": ".query()",
+          "body": "Readable multi-condition filters"
+        },
+        {
+          "number": 2,
+          "headline": ".isin([...])",
+          "body": "Membership check that scales"
+        }
+      ]
+    }
+  }
+]

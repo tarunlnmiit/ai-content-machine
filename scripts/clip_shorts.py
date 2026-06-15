@@ -230,6 +230,16 @@ def main():
     print(f"\n[3/3] manifest → {manifest}")
     print(f"\n✓ done → {len(outputs)} shorts in {shorts_dir}")
 
+    # Social captions per shot
+    from lib.shorts_captions import generate_and_write_captions, detect_niche
+    from lib.content_paths import derivatives_dir
+    niche = detect_niche(args.slug)
+    date_str = args.slug[:10]
+    shots = [{"index": i, "hook_text": o.get("hook_line", "")} for i, o in enumerate(outputs)]
+    captions_out = derivatives_dir(date_str, args.slug) / "shorts_captions.md"
+    captions_out.parent.mkdir(parents=True, exist_ok=True)
+    generate_and_write_captions(shots, args.slug, niche, captions_out)
+
 
 if __name__ == "__main__":
     main()

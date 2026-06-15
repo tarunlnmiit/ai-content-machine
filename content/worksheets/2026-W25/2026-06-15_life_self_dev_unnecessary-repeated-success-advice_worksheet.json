@@ -1,0 +1,47 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "From Knowing to Living: Your Advice Absorption Audit",
+  "sections": [
+    {
+      "title": "The Advice That's Still Waiting for You",
+      "prompt": [
+        "Think of one piece of advice you've encountered multiple times across different books, videos, or conversations. Write it down exactly as it sounds in your head.",
+        "When did you first hear this advice? What was happening in your life at that time — and why do you think it didn't fully land?",
+        "Has this advice ever 'cracked something open' the way Tarun describes? If yes, what specific life experience had created the soil for it to land? If not, what lived experience do you think is still missing?",
+        "What would need to be true about your life for this advice to feel urgent rather than abstract?"
+      ]
+    },
+    {
+      "title": "Your Personal Consumption Audit",
+      "prompt": [
+        "In the last 30 days, list 3 pieces of content you consumed about self-improvement (books, videos, podcasts, newsletters). For each one, write one concrete action it inspired — then honestly note whether you took that action.",
+        "Tarun describes watching YouTube videos, closing the tab, and opening another. Identify your own version of this loop — the platform, the ritual, the feeling of productivity it creates.",
+        "Think of a project, habit, or piece of work that has been 'half-finished in your drafts folder.' How much time this week did you spend consuming content versus working on that thing?",
+        "Finish this sentence honestly: 'I consume content about _______ because it feels safer than _______.' What does that blank reveal?"
+      ]
+    },
+    {
+      "title": "Mapping Your Real Readiness",
+      "prompt": [
+        "The blog argues you can't manufacture readiness through consumption volume. Looking at your life right now — what's one area where you feel genuinely ready to act but haven't yet? What's the actual obstacle?",
+        "Think of a time advice finally stuck for you. What had you lived through that made the concept have 'somewhere to land'? Write the experience first, then the advice — notice which came first.",
+        "Where are you currently consuming *instead of* doing, versus consuming *alongside* doing? Be specific about the topic and the real action it's substituting.",
+        "What's one uncomfortable, boring, private action — with no audience and no dopamine reward — that you've been putting off by staying in learning mode?"
+      ]
+    },
+    {
+      "title": "One Honest Commitment",
+      "prompt": [
+        "Pick one piece of advice from your answer in Section 1 — the one still waiting. Write a single sentence describing the smallest possible action that would move it from your head into your life this week.",
+        "Set a specific time and context for that action: not 'soon' or 'when I feel ready,' but a day, a place, and a duration.",
+        "What will you stop consuming this week to protect time for that action? Name it specifically.",
+        "After you take the action, what's one thing you'll notice or feel that will tell you it actually happened — not that it went well, just that it happened?"
+      ]
+    }
+  ],
+  "cta": "Which piece of advice has been finding you on repeat — and what experience do you think you needed before it could land? Share the advice and the moment it finally cracked something open.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-W25/2026-06-15_life_self_dev_unnecessary-repeated-success-advice.md",
+  "slug": "2026-06-15_life_self_dev_unnecessary-repeated-success-advice"
+}

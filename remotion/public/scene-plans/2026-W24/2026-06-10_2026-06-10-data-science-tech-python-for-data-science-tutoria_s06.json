@@ -2,117 +2,98 @@
   {
     "sceneId": "scene-01",
     "componentName": "AtmosphericQuote",
-    "script": "Now the part where actual insights live: groupby and aggregation",
+    "script": "Run df.describe() and in thirty seconds you know.",
     "niche": "ds",
     "durationSec": 5,
     "props": {
-      "quote": "The part where actual insights live: groupby and aggregation.",
-      "attribution": ""
+      "quote": "Run df.describe() and in thirty seconds you know whether the data is broken."
     }
   },
   {
     "sceneId": "scene-02",
-    "componentName": "CodeAnnotation",
-    "script": "revenue_by_region = df.groupby('region')['revenue'].sum()",
+    "componentName": "CounterReveal",
+    "script": "in thirty seconds you know.",
     "niche": "ds",
-    "durationSec": 7,
+    "durationSec": 6,
     "props": {
-      "code": [
-        "revenue_by_region = df.groupby('region')['revenue'].sum()"
-      ],
-      "language": "python",
-      "highlightLine": 1,
-      "annotationText": "Split by region, pick revenue, sum it \u2014 the simplest aggregation you'll reach for."
+      "value": 30,
+      "label": "seconds to spot a broken column",
+      "suffix": " sec"
     }
   },
   {
     "sceneId": "scene-03",
     "componentName": "CodeAnnotation",
-    "script": "The .agg() pattern with named aggregations \u2014 commit that to memory",
+    "script": "print(df.describe())",
     "niche": "ds",
-    "durationSec": 8,
+    "durationSec": 7,
     "props": {
       "code": [
-        "region_summary = df.groupby('region').agg(",
-        "    total_revenue=('revenue', 'sum'),",
-        "    avg_order_value=('revenue', 'mean'),",
-        "    order_count=('order_id', 'count')",
-        ").reset_index()"
+        "print(df.describe())",
+        "print(df.isnull().sum())"
       ],
       "language": "python",
-      "highlightLine": 2,
-      "annotationText": "Named aggregations: clean output columns, multiple metrics, one pass, no postprocessing."
+      "highlightLine": 1,
+      "annotationText": "Count, mean, std, min, max, quartiles \u2014 a whole sanity check in one call."
     }
   },
   {
     "sceneId": "scene-04",
     "componentName": "NumberedTips",
-    "script": "Clean output column names, multiple metrics in one pass",
+    "script": "negative values, max suspiciously high, mean far from the median.",
     "niche": "ds",
-    "durationSec": 6,
+    "durationSec": 7,
     "props": {
-      "title": "Why named .agg() wins",
+      "title": "What describe() flags instantly",
       "tips": [
         {
           "number": 1,
-          "headline": "Clean column names",
-          "body": "No messy MultiIndex output"
+          "headline": "Negative values",
+          "body": "In a column that should be positive"
         },
         {
           "number": 2,
-          "headline": "Many metrics, one pass"
+          "headline": "Suspicious max",
+          "body": "A maximum that's too high to be real"
         },
         {
           "number": 3,
-          "headline": "Always .reset_index()",
-          "body": "Flat DataFrame beats a MultiIndex"
+          "headline": "Mean \u2260 median",
+          "body": "Skew or outliers hiding in the column"
         }
       ]
     }
   },
   {
     "sceneId": "scene-05",
-    "componentName": "ToolComparison",
-    "script": "grouped DataFrames are for computation, pivot tables are for communication",
+    "componentName": "ConceptExplainer",
+    "script": "your first signal before you've written a single line of actual analysis.",
     "niche": "ds",
-    "durationSec": 7,
+    "durationSec": 6,
     "props": {
-      "leftSide": {
-        "label": "groupby().agg()",
-        "points": [
-          "For computation",
-          "Multiple metrics at once",
-          "Feeds the next step"
-        ]
-      },
-      "rightSide": {
-        "label": "pivot_table()",
-        "points": [
-          "For communication",
-          "The exact grid they pictured",
-          "Revenue by region and month"
-        ]
-      }
+      "headline": "Why it matters",
+      "cards": [
+        {
+          "term": "First signal",
+          "definition": "Before any real analysis is written",
+          "icon": "alert"
+        },
+        {
+          "term": "Free",
+          "definition": "One line, thirty seconds",
+          "icon": "clock"
+        }
+      ]
     }
   },
   {
     "sceneId": "scene-06",
-    "componentName": "CodeAnnotation",
-    "script": "pivot_table produces the exact grid they're already picturing",
+    "componentName": "AtmosphericQuote",
+    "script": "That's your first signal before you've written a single line of actual analysis.",
     "niche": "ds",
-    "durationSec": 7,
+    "durationSec": 5,
     "props": {
-      "code": [
-        "pivot = df.pivot_table(",
-        "    values='revenue',",
-        "    index='region',",
-        "    columns='month',",
-        "    aggfunc='sum',",
-        "    fill_value=0)"
-      ],
-      "language": "python",
-      "highlightLine": 1,
-      "annotationText": "'Show me revenue by region and by month' \u2192 pivot_table builds that exact grid."
+      "quote": "That's your first signal \u2014 before you've written a single line of actual analysis."
     }
   }
 ]

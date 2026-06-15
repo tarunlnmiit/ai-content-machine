@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-12",
     "componentName": "WordReveal",
-    "script": "identify your most dreaded task the night before and do it first",
+    "script": "Do your most dreaded tasks first, but only one frog",
     "niche": "life",
     "durationSec": 5,
     "layout": "panel-left",
@@ -16,6 +16,8 @@
       "emphasis": [
         2
       ]
-    }
+    },
+    "atSec": 268.78,
+    "atSecSource": "anchor"
   }
 ]

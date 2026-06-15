@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-07",
     "componentName": "ConceptExplainer",
-    "script": "our brains fixate on incomplete work until we register a closure",
+    "script": "our brains fixate on unfinished work until we register closure",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
@@ -20,6 +20,8 @@
           "icon": "✅"
         }
       ]
-    }
+    },
+    "atSec": 143.88,
+    "atSecSource": "anchor"
   }
 ]

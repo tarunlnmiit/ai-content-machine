@@ -26,6 +26,7 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 REPO_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
 REMOTION_DIR = REPO_ROOT / "remotion"
 DERIVATIVES_DIR = REPO_ROOT / "content" / "derivatives"
 
@@ -149,6 +150,31 @@ def main() -> None:
         print(f"   FAIL: {', '.join(r[0] for r in fail)}")
     if not args.dry_run:
         print(f"   Time: {total_time:.1f}s total (wall clock faster with concurrency)")
+
+    # Social captions per slug (after all renders complete)
+    if not args.dry_run:
+        from lib.shorts_captions import generate_and_write_captions
+        from lib.content_paths import derivatives_dir
+
+        for slug, slots in manifests:
+            shots = []
+            for slot in slots:
+                if slot["type"] == "motion" and "scenePlanFile" in slot:
+                    scene_file = REPO_ROOT / "remotion" / "public" / slot["scenePlanFile"]
+                    try:
+                        scenes = json.loads(scene_file.read_text())
+                        hook_text = " ".join(s.get("script", "") for s in scenes[:2]).strip()
+                    except (OSError, json.JSONDecodeError):
+                        hook_text = f"Motion short slot {slot['slot']}"
+                else:
+                    start = slot.get("clipStartSec", 0)
+                    end = slot.get("clipEndSec", 0)
+                    hook_text = f"Clip segment {float(start):.0f}s–{float(end):.0f}s"
+                shots.append({"index": slot["slot"], "hook_text": hook_text})
+
+            date_str = slug[:10]
+            captions_out = derivatives_dir(date_str, slug) / "shorts_captions.md"
+            generate_and_write_captions(shots, slug, args.niche, captions_out)
 
 
 if __name__ == "__main__":

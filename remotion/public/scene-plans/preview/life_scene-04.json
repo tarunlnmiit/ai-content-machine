@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-04",
     "componentName": "NumberedTips",
-    "script": "I scan my task list, note what's unfinished",
+    "script": "It happened at the end of the day",
     "niche": "life",
     "durationSec": 8,
     "layout": "panel-right",
@@ -30,6 +30,8 @@
           "body": "\"Shutdown complete\""
         }
       ]
-    }
+    },
+    "atSec": 66.12,
+    "atSecSource": "anchor"
   }
 ]

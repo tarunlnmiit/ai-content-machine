@@ -1,0 +1,51 @@
+{
+  "data_science_tech": [
+    {
+      "title": "What is the biggest challenge you face in data science projects?",
+      "url": "https://www.reddit.com/r/datascience/comments/1u4ew5n/what_is_the_biggest_challenge_you_face_in_data/",
+      "subreddit": "datascience",
+      "published": "2026-06-13T02:29:57+00:00",
+      "score": 1.1927503007775468,
+      "keyword_matches": 1,
+      "recency_score": 0.8927503007775469
+    },
+    {
+      "title": "Models may behave worse when they're aware they're being evaluated (DeepMind interpretability study)",
+      "url": "https://www.reddit.com/r/datascience/comments/1u37an1/models_may_behave_worse_when_theyre_aware_theyre/",
+      "subreddit": "datascience",
+      "published": "2026-06-11T18:31:20+00:00",
+      "score": 1.0824280955395051,
+      "keyword_matches": 1,
+      "recency_score": 0.7824280955395051
+    },
+    {
+      "title": "Is this AgenticAI Ragebait?",
+      "url": "https://www.reddit.com/r/datascience/comments/1u2s0n6/is_this_agenticai_ragebait/",
+      "subreddit": "datascience",
+      "published": "2026-06-11T07:18:35+00:00",
+      "score": 1.0470637067051014,
+      "keyword_matches": 1,
+      "recency_score": 0.7470637067051015
+    },
+    {
+      "title": "What is the most common reason data science projects fail to deliver business value?",
+      "url": "https://www.reddit.com/r/datascience/comments/1txc9vv/what_is_the_most_common_reason_data_science/",
+      "subreddit": "datascience",
+      "published": "2026-06-05T05:57:21+00:00",
+      "score": 1.0101675247002433,
+      "keyword_matches": 2,
+      "recency_score": 0.4101675247002433
+    },
+    {
+      "title": "AI Overuse Follow-up",
+      "url": "https://www.reddit.com/r/datascience/comments/1u1rmj1/ai_overuse_followup/",
+      "subreddit": "datascience",
+      "published": "2026-06-10T04:13:20+00:00",
+      "score": 0.9680844097570251,
+      "keyword_matches": 1,
+      "recency_score": 0.6680844097570252
+    }
+  ],
+  "life_self_dev": [],
+  "poetry_quotes": []
+}

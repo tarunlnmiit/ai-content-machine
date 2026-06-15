@@ -8,6 +8,8 @@
     "layout": "panel-left",
     "props": {
       "quote": "It is not a small thing. It is the whole thing."
-    }
+    },
+    "atSec": 356.12,
+    "atSecSource": "anchor"
   }
 ]

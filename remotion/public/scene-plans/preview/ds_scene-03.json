@@ -8,6 +8,8 @@
     "layout": "panel-right",
     "props": {
       "quote": "Data interrogation should feel like conversation, not combat."
-    }
+    },
+    "atSec": 79.64,
+    "atSecSource": "anchor"
   }
 ]

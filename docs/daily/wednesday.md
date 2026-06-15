@@ -447,6 +447,51 @@ for f in sorted(glob.glob('remotion/public/edit-plans/{week}/*.json')):
 "
 ```
 
+---
+
+## Step 8.5 — Generate overlay manifest with timestamps (if using overlays)
+
+**Only if Step 6.5 was run.** Align overlay scenes to caption timestamps and generate manifest for DaVinci placement.
+
+```bash
+# Step 1: For each niche, patch overlay scenes with timestamps from captions
+python3 scripts/patch_edit_plan_overlays.py \
+  --edit-plan "remotion/public/edit-plans/{week}/{ds_slug}.json" \
+  --overlay   "remotion/public/scene-plans/{week}/{ds_slug}_overlay.json"
+
+python3 scripts/patch_edit_plan_overlays.py \
+  --edit-plan "remotion/public/edit-plans/{week}/{life_slug}.json" \
+  --overlay   "remotion/public/scene-plans/{week}/{life_slug}_overlay.json"
+
+python3 scripts/patch_edit_plan_overlays.py \
+  --edit-plan "remotion/public/edit-plans/{week}/{poetry_slug}.json" \
+  --overlay   "remotion/public/scene-plans/{week}/{poetry_slug}_overlay.json"
+
+# Step 2: Render overlay scenes to MP4 + generate manifest.csv with startSec timestamps
+python3 scripts/render_overlay_scenes.py --week {week}
+```
+
+Output: `output/animations/{week}/overlay-scenes/manifest.csv` with columns:
+- `niche`, `scene_id`, `component_name`, `duration_sec`, `output_file`, `script`, **`startSec`**, **`matched`**
+
+Use `startSec` to position each overlay on a separate track in DaVinci during manual editing. `matched=True` means the timestamp was anchored to a real spoken phrase in the transcript; `matched=False` means it was interpolated between neighbors (e.g. code snippets never spoken aloud) — eyeball those and nudge as needed.
+
+**If the take was ad-libbed off-script** (triggers won't match the written script), re-anchor to the spoken transcript before patching:
+```bash
+python3 scripts/retrofit_scene_triggers.py \
+  --overlay "remotion/public/scene-plans/{week}/{slug}_overlay.json"
+# then re-run patch_edit_plan_overlays.py + render_overlay_scenes.py above
+```
+
+### Step 8.6 — Generate the manual placement sheet
+
+One Markdown sheet per niche telling you which clip to drop where during the DaVinci edit:
+```bash
+python3 scripts/overlay_placement_sheet.py --week {week}
+# → output/animations/{week}/overlay-scenes/{NICHE}_PLACEMENT.md  (one per niche)
+```
+Each sheet lists every overlay's timestamp (from your first spoken word), duration, clip filename, an Exact?/estimated flag, and the on-screen text. Open it beside DaVinci: talking-head on V1, drop each clip on V2 at its listed time (full-frame cutaway), or scale to ~35% for a side panel.
+
 Expected: 3 edit plans parseable, 3 caption files present, total duration 8–15 min each.
 
 ---
