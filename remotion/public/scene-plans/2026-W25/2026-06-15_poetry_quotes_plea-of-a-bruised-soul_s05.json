@@ -1,0 +1,75 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Just stay. Stay like weather.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Just stay. Stay like weather."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "HandwrittenReveal",
+    "script": "Stay like the dark before dawn that doesn't promise anything",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "lines": [
+        "Stay like the dark before dawn",
+        "that doesn't promise anything"
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "LineReveal",
+    "script": "just holds you until morning decides to come.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "just holds you until morning",
+        "decides to come."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ImageTextReveal",
+    "script": "Stay like weather.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "headline": "Stay like weather",
+      "subtext": "No promise. Just presence."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "HandwrittenReveal",
+    "script": "sit with me in this room where the ceiling has caved",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "lines": [
+        "sit with me",
+        "in this room",
+        "where the ceiling has caved"
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "I am not asking for rescue. I am asking to be witnessed.",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "quote": "I am not asking for rescue. I am asking to be witnessed."
+    }
+  }
+]

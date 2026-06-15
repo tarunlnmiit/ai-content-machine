@@ -1,0 +1,112 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Knowledge is not immunity. Understanding is not experience.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Knowledge is not immunity. Understanding is not experience."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "there is a sequence to growth, and you cannot skip steps by learning about them",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "The sequence you can't skip",
+      "cards": [
+        {
+          "term": "You can read about grief",
+          "definition": "It won't prepare you for grief."
+        },
+        {
+          "term": "You can study resilience",
+          "definition": "It won't shorten recovery from a real loss."
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ImageTextReveal",
+    "script": "you cannot skip steps by learning about them",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "You cannot skip steps by learning about them.",
+      "subtext": "the most liberating thing I've sat with"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "NumberedTips",
+    "script": "Once you understand that advice is a pointer, not a shortcut",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "title": "Use advice as a pointer, not a shortcut",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Read less, absorb more",
+          "body": "Stop chasing the most comprehensive understanding."
+        },
+        {
+          "number": 2,
+          "headline": "Ask the real question",
+          "body": "What am I actually ready to apply right now?"
+        },
+        {
+          "number": 3,
+          "headline": "Stop feeling behind",
+          "body": "Time in the discomfort completes the sequence that matters."
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "TransformationArc",
+    "script": "Stop optimizing for learning more. Start optimizing for staying close to the experience",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "Optimizing for learning",
+      "afterLabel": "Optimizing for proximity",
+      "beforePoints": [
+        "Learn more",
+        "Feel ahead",
+        "Avoid the discomfort"
+      ],
+      "afterPoints": [
+        "Stay close to the experience",
+        "Apply what you're ready for",
+        "Let the advice follow"
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "you can stop trying to learn your way out of things that can only be lived through",
+    "niche": "life",
+    "durationSec": 9,
+    "props": {
+      "description": "A staircase of growth where someone tries to teleport from the bottom step to the top by reading a book \u2014 and phases right through, falling back to the start. Then they climb each step physically, each tread lighting up only when stepped on, never when merely pointed at. Knowledge illuminates the next step but cannot stand on it for you."
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "The advice will follow. It always does.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "The advice will follow. It always does.",
+      "attribution": "Breath of Life"
+    }
+  }
+]

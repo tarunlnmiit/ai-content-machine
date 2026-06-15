@@ -1,0 +1,90 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "choosing a visualization is an act of framing.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Choosing a visualization is an act of framing."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "NumberedTips",
+    "script": "A bar chart emphasizes categories... A line chart implies trend...",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "title": "What each shape says",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Bar chart",
+          "body": "Categories and rankings"
+        },
+        {
+          "number": 2,
+          "headline": "Line chart",
+          "body": "Trend or sequence"
+        },
+        {
+          "number": 3,
+          "headline": "Scatter plot",
+          "body": "Relationships and outliers"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ConceptExplainer",
+    "script": "different shapes illuminate different truths.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Same data, different truth",
+      "cards": [
+        {
+          "term": "Same numbers",
+          "definition": "One dataset underneath"
+        },
+        {
+          "term": "Different shape",
+          "definition": "Illuminates a different truth"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "The same underlying data looks completely different",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 3,
+      "label": "shapes, three different truths from one dataset"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "The same underlying data looks completely different depending on the shape",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "description": "One identical dataset morphs fluidly between a bar chart, a line chart, and a scatter plot, each form highlighting a different feature \u2014 ranking, then trend, then outliers \u2014 of the exact same numbers. Visualizes framing through chart choice."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "not because you're being dishonest, but because different shapes illuminate different truths.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Not dishonest \u2014 different shapes just illuminate different truths."
+    }
+  }
+]

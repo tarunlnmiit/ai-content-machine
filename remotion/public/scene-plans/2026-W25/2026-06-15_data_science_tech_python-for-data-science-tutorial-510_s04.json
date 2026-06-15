@@ -1,0 +1,99 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "CounterReveal",
+    "script": "spends about eighty percent of time on cleaning and wrangling",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "value": 80,
+      "suffix": "%",
+      "label": "of DS education spent on cleaning"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "we treat visualization like it's decoration.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "The inversion",
+      "cards": [
+        {
+          "term": "What we teach",
+          "definition": "Viz is Friday-afternoon decoration"
+        },
+        {
+          "term": "What's real",
+          "definition": "Viz is how the work gets seen"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ToolComparison",
+    "script": "That inverts what actually happens in real work.",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Treated as decoration",
+        "points": [
+          "Thrown together Friday",
+          "Right before the meeting",
+          "An afterthought"
+        ]
+      },
+      "rightSide": {
+        "label": "What actually happens",
+        "points": [
+          "Decides if work lands",
+          "Changes minds",
+          "Core to the toolkit"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "That inverts what actually happens in real work.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "description": "A pie chart shows 80% labeled 'cleaning' and a thin glowing 'visualization' sliver; the sliver then expands and the proportions flip so visualization dominates. Visualizes re-weighting how much viz actually matters in real work."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "A clear, honest plot changes minds.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "A clear, honest plot changes minds."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "TransformationArc",
+    "script": "as core to your toolkit as .groupby() and .merge().",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "beforeLabel": "Decoration",
+      "afterLabel": "Core tool",
+      "beforePoints": [
+        "Optional polish",
+        "Thrown on last"
+      ],
+      "afterPoints": [
+        "As core as .groupby()",
+        "As core as .merge()"
+      ],
+      "transformLabel": "Reframe it"
+    }
+  }
+]

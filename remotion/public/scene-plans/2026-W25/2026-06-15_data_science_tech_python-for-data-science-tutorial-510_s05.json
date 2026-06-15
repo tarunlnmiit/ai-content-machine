@@ -1,0 +1,80 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "It's verbose \u2014 and it's honest about that.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "It's verbose \u2014 and it's honest about that."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "You control everything, which means you can build anything.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Why verbose wins",
+      "cards": [
+        {
+          "term": "Verbosity",
+          "definition": "You control everything"
+        },
+        {
+          "term": "Control",
+          "definition": "Which means you can build anything"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CodeAnnotation",
+    "script": "ax.plot(df['date'], df['revenue'], linewidth=2, color='#2E86AB')",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "fig, ax = plt.subplots(figsize=(10, 6))",
+        "ax.plot(df['date'], df['revenue'], linewidth=2, color='#2E86AB')",
+        "ax.set_title('Monthly Revenue Trend', fontsize=14, fontweight='bold')"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "You control every detail \u2014 that's the foundation"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "scales cleanly from a single chart to a four-by-four grid of subplots.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 16,
+      "label": "subplots from one pattern (4x4)"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "You control everything, which means you can build anything.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "description": "A single blank axis frame multiplies and tiles into a clean 4x4 grid of identical chart frames, each filling with a small plot in sequence. Shows how one Matplotlib pattern scales from a single chart to a full grid of subplots."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "that verbosity is exactly why it's the foundation everything else builds on.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The foundation everything else builds on."
+    }
+  }
+]
