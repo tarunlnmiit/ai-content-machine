@@ -26,15 +26,10 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.claude_cli import call_claude  # noqa: E402
+from lib.niche_config import NICHE_MAP  # noqa: E402
 
 BRAND_KIT = REPO / "data" / "brand" / "brand_kit.yaml"
 OUT_DIR = REPO / "assets" / "script_images"
-
-NICHE_MAP = {
-    "ds": "data_science_tech",
-    "life": "life_self_dev",
-    "poetry": "poetry_quotes",
-}
 
 # Keywords that indicate a [SCREEN:] is IDE/terminal — skip generation
 IDE_KEYWORDS = re.compile(

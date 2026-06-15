@@ -34,18 +34,13 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from _console import console  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
+from lib.niche_config import NICHE_MAP, load_brand_base  # noqa: E402
 from lib.schedule_calc import get_iso_week  # noqa: E402
 
 BRAND_KIT = REPO / "data" / "brand" / "brand_kit.yaml"
 DERIVATIVES_DIR = REPO / "content" / "derivatives"
 SOCIAL_DIR = REPO / "assets" / "social_posts"
 SLIDES_DIR = REPO / "assets" / "slides"
-
-NICHE_MAP = {
-    "data_science_tech": "data_science_tech",
-    "life_self_dev": "life_self_dev",
-    "poetry_quotes": "poetry_quotes",
-}
 
 PLATFORMS = ["instagram", "linkedin", "threads", "twitter"]
 
@@ -59,30 +54,15 @@ PLATFORM_FRAME = {
 
 
 def load_brand(niche_key: str) -> dict:
-    kit = yaml.safe_load(BRAND_KIT.read_text())
-    niche = kit["niches"][niche_key]
-    colors = kit["colors"]
     _decorative = {
         "data_science_tech": "faint grid lines and circuit traces",
         "life_self_dev": "soft organic curves and warm bokeh glow",
         "poetry_quotes": "ink-wash brushstrokes and golden halos",
     }
+    base = load_brand_base(niche_key)
     return {
-        "creator": kit["creator"],
-        "handle": kit["handle"],
-        "brand_name": niche["brand_name"],
-        "niche_label": niche["label"],
-        "primary": niche["primary_color"],
-        "light": niche["light_color"],
-        "dark_color": niche["dark_color"],
-        "light_bg": colors["cream"],
-        "dark_bg": colors["background"],
-        "font_heading": niche["font_heading"],
-        "font_body": niche["font_body"],
-        "font_style": niche["font_style"],
-        "tone": niche["tone"],
-        "temperature": niche["claude_temperature"],
-        "label": niche["label"],
+        **base,
+        "niche_label": base["label"],
         "decorative_cue": _decorative[niche_key],
     }
 
