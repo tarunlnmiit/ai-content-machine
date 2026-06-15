@@ -24,6 +24,8 @@ Env (for Notion sync):
 import argparse
 import os
 import sys
+import traceback
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Optional
 
@@ -35,21 +37,10 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from _console import console, spinner  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
+from lib.niche_config import CREATOR_VOICE, NICHE_MAP, load_niche_config  # noqa: E402
 from lib.text_normalizer import normalize as stm_normalize  # noqa: E402
 
-BRAND_KIT_FILE = REPO / "data" / "brand" / "brand_kit.yaml"
-
-def _load_niche_config() -> tuple[dict, dict]:
-    """Load per-niche AutoTune temperatures and models from brand_kit.yaml."""
-    if not BRAND_KIT_FILE.exists():
-        return {}, {}
-    kit = yaml.safe_load(BRAND_KIT_FILE.read_text())
-    niches = kit.get("niches", {})
-    temps = {k: v.get("claude_temperature") for k, v in niches.items()}
-    models = {k: v.get("claude_model") for k, v in niches.items()}
-    return temps, models
-
-NICHE_TEMPS, NICHE_MODELS = _load_niche_config()
+NICHE_TEMPS, NICHE_MODELS = load_niche_config()
 
 TOPICS_FILE = REPO / "data" / "buffer" / "topics.yaml"
 KB_FILE = REPO / "data" / "kb" / "master_brief.md"
@@ -71,17 +62,7 @@ NICHE_TO_TOPIC = {
     "poetry_quotes": "Poetry",
 }
 
-NICHE_KEYS = {
-    "ds": "data_science_tech",
-    "life": "life_self_dev",
-    "poetry": "poetry_quotes",
-}
-
-CREATOR_VOICE = """
-You are writing for Tarun Gupta — 10-year data scientist and content creator.
-Voice: analytical but warm, personal examples, no jargon without context.
-BANNED WORDS: "In conclusion", "Dive into", "Leverage", "Game-changer", "Synergy".
-"""
+NICHE_KEYS = NICHE_MAP
 
 
 # ── Prompt builders ──────────────────────────────────────────────────────────
@@ -369,38 +350,31 @@ def generate_topic(
     temp = NICHE_TEMPS.get(niche)
     model = NICHE_MODELS.get(niche)
 
-    with spinner(f"YouTube script..."):
-        yt_script = call_claude(
-            youtube_script_prompt(niche, topic, angle, kb),
-            cache=True,
-            timeout=300,
-            temperature=temp,
-            model=model,
-        )
-        yt_script = stm_normalize(yt_script)
-    save_content(week, niche, topic, "youtube_script", yt_script, force)
+    # The three artifacts are independent and share temp+model, so generate them
+    # concurrently. On Max 5x, 3 parallel `claude -p` sessions stay within limits;
+    # retry/backoff lives in call_claude. Kept separate (not one merged prompt)
+    # because the combined output (~4000+ words) risks truncation.
+    jobs = (
+        ("youtube_script", youtube_script_prompt(niche, topic, angle, kb), 300),
+        ("substack_post", substack_prompt(niche, topic, angle, kb), 300),
+        ("social_copy", social_copy_prompt(niche, topic, angle, kb), 180),
+    )
 
-    with spinner(f"Substack post..."):
-        sub_post = call_claude(
-            substack_prompt(niche, topic, angle, kb),
-            cache=True,
-            timeout=300,
-            temperature=temp,
-            model=model,
+    def _generate(prompt: str, timeout: int) -> str:
+        return stm_normalize(
+            call_claude(prompt, cache=True, timeout=timeout, temperature=temp, model=model)
         )
-        sub_post = stm_normalize(sub_post)
-    save_content(week, niche, topic, "substack_post", sub_post, force)
 
-    with spinner(f"Social copy..."):
-        social = call_claude(
-            social_copy_prompt(niche, topic, angle, kb),
-            cache=True,
-            timeout=180,
-            temperature=temp,
-            model=model,
-        )
-        social = stm_normalize(social)
-    save_content(week, niche, topic, "social_copy", social, force)
+    with spinner("Generating YouTube + Substack + social (parallel)..."):
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            futures = {
+                key: pool.submit(_generate, prompt, timeout)
+                for key, prompt, timeout in jobs
+            }
+            results = {key: fut.result() for key, fut in futures.items()}
+
+    for key, text in results.items():
+        save_content(week, niche, topic, key, text, force)
 
     if no_notion or notion_state is None:
         return
@@ -467,6 +441,7 @@ def main() -> None:
     niche_filter = NICHE_KEYS.get(args.niche) if args.niche else None
 
     total = generated = skipped = 0
+    failed: list[str] = []
 
     for week_data in weeks:
         week_num = week_data.get("week")
@@ -502,12 +477,22 @@ def main() -> None:
                 )
                 generated += 1
             except Exception as e:
-                console.print(f"  [error]Failed: {e}[/error]")
-                skipped += 1
+                console.print(
+                    f"  [error]Failed: {NICHE_LABELS[niche_key]} · week {week_num} · "
+                    f"{topic!r}: {e}[/error]"
+                )
+                traceback.print_exc(file=sys.stderr)
+                failed.append(f"w{week_num}/{niche_key}: {topic}")
 
-    console.print(f"\n[bold]Done.[/bold] {generated}/{total} generated, {skipped} skipped.")
+    console.print(
+        f"\n[bold]Done.[/bold] {generated}/{total} generated, "
+        f"{skipped} skipped, {len(failed)} failed."
+    )
     if not args.dry_run and generated:
         console.print(f"Files at: {BUFFER_DIR.relative_to(REPO)}/")
+    if failed:
+        console.print("[error]Failures:[/error] " + "; ".join(failed))
+        sys.exit(1)
 
 
 if __name__ == "__main__":
