@@ -1,5 +1,5 @@
 # Weekly Ideas Report
-Generated: 2026-06-13 06:24:40
+Generated: 2026-06-15 06:13:12
 
 ## Data Science Tech
 
@@ -35,23 +35,23 @@ Generated: 2026-06-13 06:24:40
 
 ## Life Self Dev
 
-### 1. I Stopped Fighting My Writing Procrastination. I Automated It.
+### 1. Recursive Self Improvement
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** youtube_2026-06-15
+- **URL:** https://youtu.be/t7_ZXgfJVG8
+
+### 2. I Stopped Fighting My Writing Procrastination. I Automated It.
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** medium_self_improvement
 - **URL:** https://medium.com/@hellodylanmercer/i-stopped-fighting-my-writing-procrastination-i-automated-it-270a5e08594d?source=rss------self_improvement-5
 
-### 2. how to become a pilot
+### 3. how to become a pilot
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** suggest_2026-06-06_google
 - **URL:** 
-
-### 3. Jaboukie Young-White explains personal growth #ziwe #jaboukie #comedyshorts #comedy #selfimprovement
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** youtube_2026-06-09
-- **URL:** https://youtu.be/5lOJbCNaBAA
 
 ### 4. Unnecessary repeated success advice
 - **Score:** 1.000
@@ -67,29 +67,29 @@ Generated: 2026-06-13 06:24:40
 
 ## Poetry Quotes
 
-### 1. Poetry Dips Its Fingers In Every Colour —
+### 1. the most creative essay EVER! 🤔
+- **Score:** 1.000
+- **Category:** uncategorized
+- **Source:** youtube_2026-06-15
+- **URL:** https://youtu.be/bBjrxxFwocE
+
+### 2. Poetry Dips Its Fingers In Every Colour —
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** medium_poetry
 - **URL:** https://medium.com/@isaacaju/poetry-dips-its-fingers-in-every-colour-015772359fa9?source=rss------poetry-5
 
-### 2. “You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.” ― William W. Purkey
+### 3. “You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.” ― William W. Purkey
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** goodreads_inspirational
 - **URL:** https://www.goodreads.com/quotes/tag/inspirational
 
-### 3. poem about nature
+### 4. poem about nature
 - **Score:** 1.000
 - **Category:** uncategorized
 - **Source:** suggest_2026-06-06_google
 - **URL:** 
-
-### 4. the most creative essay EVER! 🤔
-- **Score:** 1.000
-- **Category:** uncategorized
-- **Source:** youtube_2026-06-13
-- **URL:** https://youtu.be/bBjrxxFwocE
 
 ### 5. Science Fiction Poetry by Franny Choi [POEM]
 - **Score:** 1.000
