@@ -52,6 +52,26 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
 
 ---
 
+## Performance & caching
+
+- **Claude CLI cache + retry** — `scripts/lib/claude_cli.py` caches every `claude -p`
+  result (30-day TTL) and retries transient failures 3× with backoff. Re-running a
+  generator after a crash/timeout is instant. Force fresh output:
+  `python3 scripts/lib/claude_cli.py --bust` (or `--stats`).
+- **Buffer generation is parallel** — `generate_buffer.py` produces the YT script,
+  Substack post, and social copy concurrently (3 workers). It now **exits non-zero**
+  and lists failures instead of silently skipping them.
+- **Render concurrency** — `render_week.py` defaults to `--concurrency 2`. Raise to 3
+  only with CPU/RAM headroom; drop to 1 if it thrashes.
+- **Analytics cache** — `fetch_youtube_analytics.py` caches raw API data for 6h
+  (`--cache-ttl-hours N`), so a same-day re-run skips the API. Force fresh: `--refresh`.
+- **Model routing** — per-task model defaults live in `scripts/lib/niche_config.py`
+  (`MODEL_BY_TASK` / `model_for`): Opus 4.8 for hero blogs, Sonnet 4.6 for assets/
+  repurposing/scene plans, Haiku 4.5 for metadata. Per-niche model is in
+  `data/brand/brand_kit.yaml`.
+
+---
+
 ## Posting Times at a Glance (IST)
 
 > Full year tracker: `output/trackers/annual-tracker-2026.xlsx` (May–Dec, 12 monthly sheets).
@@ -230,6 +250,42 @@ Niche windows:
 - **Life** → Mon social · Tue IG + long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
 - **DS** → Wed social · Wed IG + Thu long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
 - **Poetry** → Fri social + long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
+
+---
+
+## Cross-Post Scheduling (Metricool bridge)
+
+Turn a derivatives folder into a Metricool-importable CSV (one row per platform). Metricool is
+the posting bridge, so no per-platform API is needed.
+
+```bash
+# Known niche → uses that niche's IST slots
+python3 scripts/derivatives_to_metricool.py \
+    --dir content/derivatives/2026-Wnn/<slug> --niche ds \
+    --video-url https://cdn.example.com/reel.mp4
+
+# Project content (e.g. autopilot) → uses default spread slots from a start date
+python3 scripts/derivatives_to_metricool.py \
+    --dir content/derivatives/2026-Wnn/<slug> --niche autopilot --start-date 2026-06-16
+```
+
+- Output: `output/scheduled/<ISO-week>/<slug>_metricool.csv` → import in Metricool.
+- **Excluded channels:** Hacker News, Reddit (blocked).
+- **LinkedIn** rows write as **DRAFT** by default (employer clearance pending). Add
+  `--linkedin-live` once cleared.
+
+## Build-in-Public Projects (weekly cadence)
+
+Projects like **autopilot-jobhunt** are produced + distributed on a recurring cadence. Source of
+truth: `data/kb/projects.json`. Formula: `data/kb/viral_reel_formula.md`.
+
+Weekly per active project:
+1. Pick the next angle from `cadence.angle_rotation` (don't repeat last week's).
+2. Produce one reel via the 5-beat formula + existing Remotion scenes.
+3. Generate derivatives (`prompts/repurposing_agent.md`) → Metricool CSV (above).
+4. UTM-tag the repo link (`scripts/lib/utm.py`); arm the comment→DM keyword.
+5. Star attribution lands automatically in the Sunday `collect_analytics.py` run
+   (GitHub stars + 7-day delta in `weekly_insights.md`).
 
 ---
 

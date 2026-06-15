@@ -73,6 +73,9 @@ The first render request triggers a one-time Webpack bundle (~60s). Subsequent r
 ```bash
 python3 scripts/render_week.py --week 2026-W{nn}
 ```
+Renders run 2-at-a-time by default (`--concurrency 2`). Remotion+ffmpeg is
+CPU-bound — raise to `--concurrency 3` only with CPU/RAM headroom, drop to
+`--concurrency 1` if the machine thrashes.
 
 **Or render a single slug:**
 ```bash
