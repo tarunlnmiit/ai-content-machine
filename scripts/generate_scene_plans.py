@@ -33,6 +33,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.claude_cli import call_claude
+from lib.niche_config import model_for
 
 # Output: remotion/public/scene-plans/{week}/{slug}.json
 SCENE_PLANS_ROOT = REPO / "remotion" / "public" / "scene-plans"
@@ -346,7 +347,7 @@ def main() -> None:
     raw = call_claude(
         prompt,
         cache=not args.no_cache,
-        model="claude-opus-4-8",
+        model=model_for("scene_plan"),
         temperature=temp,
         timeout=timeout,
         stream=True,

@@ -52,6 +52,7 @@ if env_file.exists():
                 os.environ.setdefault(k, v.strip('"\''))
 
 from lib.claude_cli import call_claude  # noqa: E402
+from lib.niche_config import model_for  # noqa: E402
 
 NICHE_STYLE = {
     "ds":      "cinematic tech visualization, clean code aesthetics, data flowing, blue tones, professional",
@@ -96,7 +97,7 @@ Rules per prompt:
 Return exactly {count} prompts, one per line, no numbering, no quotes."""
 
     try:
-        raw = call_claude(prompt, cache=True, timeout=30).strip()
+        raw = call_claude(prompt, cache=True, model=model_for("metadata"), timeout=30).strip()
         variants = [line.strip() for line in raw.splitlines() if line.strip()]
         # Pad or trim to exact count
         while len(variants) < count:

@@ -72,7 +72,8 @@ Blog content:
         import sys as _sys
         _sys.path.insert(0, str(Path(__file__).parent))
         from lib.claude_cli import call_claude
-        response_text = call_claude(prompt, cache=True, timeout=30).strip()
+        from lib.niche_config import model_for
+        response_text = call_claude(prompt, cache=True, model=model_for("metadata"), timeout=30).strip()
 
         json_match = re.search(r'\[.*\]', response_text, re.DOTALL)
         if json_match:

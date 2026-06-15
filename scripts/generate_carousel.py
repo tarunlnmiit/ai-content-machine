@@ -25,7 +25,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from _console import console  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
-from lib.niche_config import NICHE_MAP, load_brand_base  # noqa: E402
+from lib.niche_config import NICHE_MAP, load_brand_base, model_for  # noqa: E402
 
 BRAND_KIT = REPO / "data" / "brand" / "brand_kit.yaml"
 CAROUSEL_DIR = REPO / "assets" / "carousels"
@@ -196,6 +196,7 @@ def main() -> None:
     html = call_claude(
         prompt,
         cache=True,
+        model=model_for("html_asset"),
         timeout=600,
         temperature=brand["temperature"],
         normalize=False,  # HTML — don't normalize

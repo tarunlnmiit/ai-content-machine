@@ -37,7 +37,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from _console import console, spinner  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
-from lib.niche_config import CREATOR_VOICE, NICHE_MAP, load_niche_config  # noqa: E402
+from lib.niche_config import CREATOR_VOICE, NICHE_MAP, load_niche_config, model_for  # noqa: E402
 from lib.text_normalizer import normalize as stm_normalize  # noqa: E402
 
 NICHE_TEMPS, NICHE_MODELS = load_niche_config()
@@ -348,7 +348,7 @@ def generate_topic(
     write_meta(week, niche, topic, angle, force)
 
     temp = NICHE_TEMPS.get(niche)
-    model = NICHE_MODELS.get(niche)
+    model = model_for("buffer")
 
     # The three artifacts are independent and share temp+model, so generate them
     # concurrently. On Max 5x, 3 parallel `claude -p` sessions stay within limits;

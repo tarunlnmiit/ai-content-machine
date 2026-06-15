@@ -34,7 +34,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from _console import console  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
-from lib.niche_config import NICHE_MAP, load_brand_base  # noqa: E402
+from lib.niche_config import NICHE_MAP, load_brand_base, model_for  # noqa: E402
 from lib.schedule_calc import get_iso_week  # noqa: E402
 
 BRAND_KIT = REPO / "data" / "brand" / "brand_kit.yaml"
@@ -234,6 +234,7 @@ def generate_html(brand: dict, slug: str, brief: dict | None, hook: str) -> str:
     html = call_claude(
         prompt,
         cache=True,
+        model=model_for("html_asset"),
         timeout=600,
         temperature=brand["temperature"],
         normalize=False,
