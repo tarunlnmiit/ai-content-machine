@@ -51,6 +51,7 @@ DESIRES = {
 
 
 from lib.slug import slugify
+from lib.schedule_calc import get_iso_week
 from lib.worksheet_cta import (
     worksheet_exists,
     worksheet_title,
@@ -326,18 +327,20 @@ def main():
         inserts_from_blog = True
 
     today = date.today().isoformat()
-    base = args.topic or source_path.stem
+    week = get_iso_week(today)
+    # Strip date+niche prefix when source is a blog file to avoid garbled filenames
+    base = args.topic or _worksheet_slug_from_source(source_path, source_path.stem)
     slug = slugify(base)
 
     if args.format == "blog":
         filename = f"{today}_{NICHES[args.niche]}_{slug}.md"
-        out_dir = REPO / "content" / "blogs"
+        out_dir = REPO / "content" / "blogs" / week
     elif args.format == "yt":
-        filename = f"{today}_{slug}_yt.md"
-        out_dir = REPO / "content" / "scripts"
+        filename = f"{today}_{NICHES[args.niche]}_{slug}_yt.md"
+        out_dir = REPO / "content" / "scripts" / week
     elif args.format == "podcast":
-        filename = f"{today}_{slug}_podcast.md"
-        out_dir = REPO / "content" / "scripts"
+        filename = f"{today}_{NICHES[args.niche]}_{slug}_podcast.md"
+        out_dir = REPO / "content" / "scripts" / week
 
     # For YT scripts in worksheet niches: append a spoken "worksheet in the
     # description" CTA, but only if a worksheet actually exists for the slug.

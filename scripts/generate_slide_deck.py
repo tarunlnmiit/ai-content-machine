@@ -207,7 +207,7 @@ def generate_html(brand: dict, outline: dict, brief: dict | None) -> str:
     html = call_claude(
         prompt,
         cache=True,
-        timeout=300,
+        timeout=600,
         temperature=brand["temperature"],
         normalize=False,
         stream=True,

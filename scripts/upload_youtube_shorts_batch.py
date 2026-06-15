@@ -63,7 +63,11 @@ NICHE_CATEGORY = {
     "Poetry": "22",
 }
 
-SHORTS_DIR = BASE_DIR / "assets" / "video" / "edited" / "shorts"
+NICHE_HYPERFRAMES_SUBDIR = {
+    "DS": "data-science-tech",
+    "Life": "life-self-dev",
+    "Poetry": "poetry-quotes",
+}
 
 
 # ── Niche detection ───────────────────────────────────────────────────────────
@@ -107,17 +111,16 @@ def discover_shorts(slug: str, week: str, niche: str) -> dict[int, dict]:
     markers = NICHE_MARKERS[niche]
     found: dict[int, dict] = {}
 
-    # Clip shorts: assets/video/edited/shorts/
-    if SHORTS_DIR.exists():
-        for f in sorted(SHORTS_DIR.iterdir()):
+    # Clip shorts: assets/hyperframes/{week}/{niche-subdir}/
+    hyperframes_dir = BASE_DIR / "assets" / "hyperframes" / week / NICHE_HYPERFRAMES_SUBDIR[niche]
+    if hyperframes_dir.exists():
+        for f in sorted(hyperframes_dir.iterdir()):
             if f.suffix != ".mp4":
                 continue
             name = f.name
             if content_date not in name:
                 continue
-            if not any(m in name for m in markers):
-                continue
-            m = re.search(r"_(?:yt_)?short_(\d+)\.mp4$", name)
+            m = re.search(r"-short-(\d+)\.mp4$", name)
             if not m:
                 continue
             slot = int(m.group(1))
