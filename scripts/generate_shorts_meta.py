@@ -27,6 +27,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.video_utils import parse_srt  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
+from lib.niche_config import model_for  # noqa: E402
 
 NICHE_CONTEXTS = {
     "ds": {
@@ -125,7 +126,8 @@ Return ONLY valid JSON, no prose, no markdown fences:
 {{"title": "...", "description": "...", "tags": [...]}}"""
 
     try:
-        out = call_claude(prompt, cache=True, temperature=ctx["temperature"], timeout=90,
+        out = call_claude(prompt, cache=True, model=model_for("metadata"),
+                          temperature=ctx["temperature"], timeout=90,
                           progress_label=f"generating metadata").strip()
     except RuntimeError as e:
         print(f"  [claude] error: {e}", file=sys.stderr)

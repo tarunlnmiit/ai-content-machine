@@ -30,6 +30,7 @@ from lib.video_utils import (  # noqa: E402
     cut_segment, crop_vertical, slice_srt, parse_srt, detect_code_x_center,
 )
 from lib.claude_cli import call_claude  # noqa: E402
+from lib.niche_config import model_for  # noqa: E402
 
 
 def transcript_text(srt_path: Path) -> str:
@@ -59,7 +60,7 @@ Transcript (timestamps in seconds at start of each line):
 """
     timeout = max(180, count * 25)
     try:
-        out = call_claude(prompt, cache=True, timeout=timeout).strip()
+        out = call_claude(prompt, cache=True, model=model_for("metadata"), timeout=timeout).strip()
     except RuntimeError as e:
         print(f"  {e}")
         return []

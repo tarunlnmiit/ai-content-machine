@@ -29,6 +29,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from _console import console  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
+from lib.niche_config import model_for  # noqa: E402
 from lib.schedule_calc import get_iso_week  # noqa: E402
 
 # Reuse helpers from the social-image pipeline (same brand/niche/slug logic).
@@ -207,6 +208,7 @@ def generate_html(brand: dict, outline: dict, brief: dict | None) -> str:
     html = call_claude(
         prompt,
         cache=True,
+        model=model_for("html_asset"),
         timeout=600,
         temperature=brand["temperature"],
         normalize=False,
