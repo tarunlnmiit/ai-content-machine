@@ -1,103 +1,122 @@
 [
   {
     "sceneId": "scene-01",
-    "componentName": "CounterReveal",
-    "script": "This is sixty percent of what you actually do in Pandas",
+    "componentName": "WordReveal",
+    "script": "loading and exploring, selecting and filtering, cleaning messy data, and aggregating.",
     "niche": "ds",
-    "durationSec": 6,
+    "durationSec": 5,
     "props": {
-      "value": 60,
-      "label": "of real Pandas work is selecting and filtering",
-      "suffix": "%"
+      "words": [
+        "Load",
+        "Filter",
+        "Clean",
+        "Aggregate"
+      ],
+      "emphasis": [
+        0,
+        1,
+        2,
+        3
+      ]
     }
   },
   {
     "sceneId": "scene-02",
-    "componentName": "CodeAnnotation",
-    "script": "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
+    "componentName": "NumberedTips",
+    "script": "Today I'm covering four things.",
     "niche": "ds",
     "durationSec": 7,
     "props": {
-      "code": [
-        "high_value = df.loc[",
-        "    df['revenue'] > 10000,",
-        "    ['customer_id', 'revenue']",
-        "]"
-      ],
-      "language": "python",
-      "highlightLine": 2,
-      "annotationText": ".loc takes a row condition and the exact columns you want \u2014 in one call."
+      "title": "The four essential skills",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Load & explore",
+          "body": "Orient yourself in the data"
+        },
+        {
+          "number": 2,
+          "headline": "Select & filter",
+          "body": "60% of what you do"
+        },
+        {
+          "number": 3,
+          "headline": "Clean messy data",
+          "body": "Cleaning is analysis"
+        },
+        {
+          "number": 4,
+          "headline": "Aggregate",
+          "body": "Where the insights live"
+        }
+      ]
     }
   },
   {
     "sceneId": "scene-03",
     "componentName": "CounterReveal",
-    "script": "df.loc[df['revenue'] > 10000",
+    "script": "make it workable in under an hour.",
     "niche": "ds",
     "durationSec": 6,
     "props": {
-      "value": 10000,
-      "label": "revenue cutoff for high-value rows",
-      "prefix": "$",
-      "suffix": "+"
+      "value": 1,
+      "label": "hour to make an unfamiliar dataset workable",
+      "prefix": "< ",
+      "suffix": " hr"
     }
   },
   {
     "sceneId": "scene-04",
-    "componentName": "CodeAnnotation",
-    "script": "use & and | for boolean filters, not Python's and and or",
+    "componentName": "TransformationArc",
+    "script": "take an unfamiliar dataset and make it workable.",
     "niche": "ds",
-    "durationSec": 8,
+    "durationSec": 6,
     "props": {
-      "code": [
-        "# Wrap each condition in parentheses",
-        "filtered = df[(df['region'] == 'North') &",
-        "             (df['revenue'] > 5000)]"
+      "beforeLabel": "Unfamiliar dataset",
+      "afterLabel": "Workable dataset",
+      "beforePoints": [
+        "Unknown shape",
+        "Messy columns",
+        "No summary"
       ],
-      "language": "python",
-      "highlightLine": 2,
-      "annotationText": "Use & and |, not 'and'/'or' \u2014 those don't work on arrays. Parenthesize each condition."
+      "afterPoints": [
+        "Explored & oriented",
+        "Filtered & cleaned",
+        "Aggregated to a summary"
+      ],
+      "transformLabel": "Four sections, in order"
     }
   },
   {
     "sceneId": "scene-05",
-    "componentName": "ToolComparison",
-    "script": ".query() is underused. For multi-condition filters it's dramatically more readable",
+    "componentName": "ConceptExplainer",
+    "script": "By the end, you'll be able to take an unfamiliar dataset.",
     "niche": "ds",
-    "durationSec": 7,
+    "durationSec": 6,
     "props": {
-      "leftSide": {
-        "label": "Stacked booleans",
-        "points": [
-          "df[(df['region']=='North') &",
-          "(df['revenue']>5000)]",
-          "Parentheses everywhere"
-        ]
-      },
-      "rightSide": {
-        "label": ".query()",
-        "points": [
-          "df.query(\"region=='North'",
-          "and revenue > 5000\")",
-          "Reads like a sentence"
-        ]
-      }
+      "headline": "The promise",
+      "cards": [
+        {
+          "term": "Any dataset",
+          "definition": "Even one you've been avoiding",
+          "icon": "file"
+        },
+        {
+          "term": "In order",
+          "definition": "Explore, select, clean, aggregate",
+          "icon": "list"
+        }
+      ]
     }
   },
   {
     "sceneId": "scene-06",
-    "componentName": "ConceptExplainer",
-    "script": "instead of three == conditions joined with |, just pass a list",
+    "componentName": "AtmosphericQuote",
+    "script": "take an unfamiliar dataset and make it workable in under an hour.",
     "niche": "ds",
-    "durationSec": 6,
+    "durationSec": 5,
     "props": {
-      "headline": ".isin() scales to any list",
-      "cards": [
-        {
-          "term": "df[df['status'].isin(['active', 'trial'])]",
-          "definition": "One call replaces three == conditions joined by |"
-        }
-      ]
+      "quote": "Open a dataset you've been avoiding. Run through these four sections in order."
     }
   }
 ]

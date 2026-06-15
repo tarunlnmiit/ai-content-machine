@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-05",
     "componentName": "CounterReveal",
-    "script": "Mine takes four minutes",
+    "script": "My shutdown ritual takes four minutes",
     "niche": "life",
     "durationSec": 5,
     "layout": "fullscreen",
@@ -12,6 +12,7 @@
       "prefix": "",
       "suffix": " min"
     },
-    "atSec": 149.84
+    "atSec": 89.42,
+    "atSecSource": "anchor"
   }
 ]

@@ -14,7 +14,8 @@
         "The clean grammar of proof."
       ]
     },
-    "atSec": 47.89
+    "atSec": 0.0,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-02",
@@ -26,7 +27,8 @@
     "props": {
       "quote": "A poem finds the exact nerve no dataset ever mapped."
     },
-    "atSec": 95.78
+    "atSec": 26.32,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-03",
@@ -38,7 +40,8 @@
     "props": {
       "quote": "The lyric form admits what human experience refuses to sort."
     },
-    "atSec": 73.4
+    "atSec": 73.4,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-04",
@@ -61,7 +64,8 @@
       ],
       "chartType": "bar"
     },
-    "atSec": 143.67
+    "atSec": 129.74,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-05",
@@ -76,7 +80,8 @@
         "The best commit messages have grief in them."
       ]
     },
-    "atSec": 142.12
+    "atSec": 142.12,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-06",
@@ -89,7 +94,8 @@
       "headline": "Poetry was already in the server room",
       "subtext": "It was never waiting for an invitation"
     },
-    "atSec": 149.16
+    "atSec": 149.16,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-07",
@@ -103,7 +109,8 @@
       "end": 100,
       "label": "times you've scraped the toast over the sink"
     },
-    "atSec": 191.56
+    "atSec": 162.82,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-08",
@@ -120,7 +127,8 @@
       ],
       "niche": "poetry"
     },
-    "atSec": 188.42
+    "atSec": 188.42,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-09",
@@ -132,7 +140,8 @@
     "props": {
       "quote": "Grief insists on specificity."
     },
-    "atSec": 248.96
+    "atSec": 248.96,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-10",
@@ -148,7 +157,8 @@
         "The exact pitch of their laugh."
       ]
     },
-    "atSec": 257.36
+    "atSec": 257.36,
+    "atSecSource": "anchor"
   },
   {
     "componentName": "VoiceMemoryDissolve",
@@ -160,7 +170,8 @@
       "description": "Sound-wave memory: a soft audio waveform pulses with the shape of a voice saying a name, then fragments into particles. The particles reform briefly as handwriting, a color swatch, a silhouette \u2014 specific sensory memories. Dissolves. Slow, intimate, muted palette with poetry niche gold accent."
     },
     "sceneId": "scene-11",
-    "atSec": 257.36
+    "atSec": 257.36,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-12",
@@ -183,7 +194,8 @@
       ],
       "chartType": "bar"
     },
-    "atSec": 270.44
+    "atSec": 270.44,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-13",
@@ -197,7 +209,8 @@
       "end": 40,
       "label": "times you've heard the lyric before it landed"
     },
-    "atSec": 239.45
+    "atSec": 307.74,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-14",
@@ -210,7 +223,8 @@
       "headline": "It dips its fingers in every colour",
       "subtext": "Because it's patient"
     },
-    "atSec": 287.34
+    "atSec": 319.12,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-15",
@@ -231,7 +245,8 @@
         3
       ]
     },
-    "atSec": 336.12
+    "atSec": 336.12,
+    "atSecSource": "anchor"
   },
   {
     "sceneId": "scene-16",
@@ -243,6 +258,7 @@
     "props": {
       "quote": "It is not a small thing. It is the whole thing."
     },
-    "atSec": 335.23
+    "atSec": 356.12,
+    "atSecSource": "anchor"
   }
 ]

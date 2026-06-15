@@ -17,6 +17,7 @@
       "highlightLine": 3,
       "annotationText": ".query() is far more readable for multi-condition filters"
     },
-    "atSec": 1108.6
+    "atSec": 436.4,
+    "atSecSource": "interp"
   }
 ]

@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-11",
     "componentName": "ConceptExplainer",
-    "script": "It's called offloading",
+    "script": "Getting information out of your head and onto paper frees up capacity",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
@@ -21,6 +21,7 @@
         }
       ]
     },
-    "atSec": 329.66
+    "atSec": 208.0,
+    "atSecSource": "anchor"
   }
 ]

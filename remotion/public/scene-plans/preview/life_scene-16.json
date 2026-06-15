@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-16",
     "componentName": "CounterReveal",
-    "script": "every context switch costs fifteen to twenty minutes of recovery time",
+    "script": "The first 15 to 20 minutes of any focus session are transitional",
     "niche": "life",
     "durationSec": 5,
     "layout": "fullscreen",
@@ -12,6 +12,7 @@
       "prefix": "",
       "suffix": " min"
     },
-    "atSec": 479.5
+    "atSec": 366.66,
+    "atSecSource": "anchor"
   }
 ]

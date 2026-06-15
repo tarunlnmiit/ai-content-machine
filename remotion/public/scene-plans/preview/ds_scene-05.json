@@ -9,6 +9,7 @@
       "description": "Animated data pipeline: four operations (Load → Select → Clean → Aggregate) shown as flowing data rows transforming sequentially. Raw table rows enter left, each stage highlights one operation with niche accent color, clean rows exit right. Motion-graphic style, no code — pure data flow."
     },
     "sceneId": "scene-05",
-    "atSec": 87.56
+    "atSec": 87.56,
+    "atSecSource": "anchor"
   }
 ]

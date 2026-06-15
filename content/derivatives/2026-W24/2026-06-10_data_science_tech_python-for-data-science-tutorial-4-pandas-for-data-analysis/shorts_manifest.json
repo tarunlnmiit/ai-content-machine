@@ -33,5 +33,40 @@
     "slot": 6,
     "type": "motion",
     "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s07.json"
+  },
+  {
+    "slot": 7,
+    "type": "motion",
+    "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s08.json"
+  },
+  {
+    "slot": 8,
+    "type": "motion",
+    "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s09.json"
+  },
+  {
+    "slot": 9,
+    "type": "motion",
+    "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s10.json"
+  },
+  {
+    "slot": 10,
+    "type": "motion",
+    "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s11.json"
+  },
+  {
+    "slot": 11,
+    "type": "motion",
+    "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s12.json"
+  },
+  {
+    "slot": 12,
+    "type": "motion",
+    "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s13.json"
+  },
+  {
+    "slot": 13,
+    "type": "motion",
+    "scenePlanFile": "scene-plans/2026-W24/2026-06-10_2026-06-10-data-science-tech-python-for-data-science-tutoria_s14.json"
   }
 ]

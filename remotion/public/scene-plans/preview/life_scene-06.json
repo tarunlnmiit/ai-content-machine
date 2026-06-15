@@ -2,7 +2,7 @@
   {
     "sceneId": "scene-06",
     "componentName": "ImageTextReveal",
-    "script": "I realized I hadn't heard a word she'd said",
+    "script": "suddenly realizing that I hadn't actually heard the last few minutes",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
@@ -10,6 +10,7 @@
       "headline": "Physically at the table. Mentally still inside my laptop.",
       "subtext": "WHY THE RITUAL STARTED"
     },
-    "atSec": 179.81
+    "atSec": 115.04,
+    "atSecSource": "anchor"
   }
 ]

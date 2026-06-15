@@ -1,0 +1,108 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Cleaning is analysis. You can't separate them.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Cleaning is analysis. You can't separate them."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "script": "Data cleaning is where most tutorials lose the thread.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Data cleaning is where most tutorials lose the thread \u2014 because it feels like janitor work."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CodeAnnotation",
+    "script": "df['order_date'] = pd.to_datetime(df['order_date'], errors='coerce')",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "df['order_date'] = pd.to_datetime(",
+        "    df['order_date'], errors='coerce')"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Three date formats collapse into one real datetime column."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CodeAnnotation",
+    "script": "df['region'] = df['region'].str.strip().str.title()",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')",
+        "df['region'] = df['region'].str.strip().str.title()"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Trailing spaces stripped, casing normalized \u2014 'north ' and 'North' finally match."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "NumberedTips",
+    "script": "df_dropped = df.dropna / df_filled = df.fillna / df_deduped = df.drop_duplicates",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "title": "The core cleaning moves",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "dropna(subset=...)",
+          "body": "Drop rows missing a key field"
+        },
+        {
+          "number": 2,
+          "headline": "fillna({...})",
+          "body": "Fill gaps with sensible defaults"
+        },
+        {
+          "number": 3,
+          "headline": "drop_duplicates",
+          "body": "Keep one row per order_id"
+        },
+        {
+          "number": 4,
+          "headline": "rename(columns=...)",
+          "body": "Fix 'Customer ID ' \u2192 customer_id"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "ConceptExplainer",
+    "script": "It's not. Cleaning is analysis.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "Reframe the work",
+      "cards": [
+        {
+          "term": "Not janitor work",
+          "definition": "Every decision shapes the result",
+          "icon": "broom"
+        },
+        {
+          "term": "It's analysis",
+          "definition": "How you treat gaps is a finding",
+          "icon": "chart"
+        }
+      ]
+    }
+  }
+]

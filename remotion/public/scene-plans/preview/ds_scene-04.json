@@ -27,6 +27,7 @@
         }
       ]
     },
-    "atSec": 87.56
+    "atSec": 87.56,
+    "atSecSource": "anchor"
   }
 ]
