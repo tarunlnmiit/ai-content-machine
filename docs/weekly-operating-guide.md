@@ -589,6 +589,9 @@ output/scheduled/
   metricool_mistakenlyhuman.csv    ← Life+Poetry brand Metricool import (@mistakenlyhuman)
   upload_shorts.sh                 ← pre-filled YouTube Shorts upload commands
 
+scripts/archive_week.py            ← move completed week off SSD to /Volumes/Archive (run Friday Step 7)
+/Volumes/Archive/content-archive/{year}/W{nn}/  ← archive destination (manifest.txt + archive.log per week)
+
 assets/raw/{week}/                 ← original camera recordings + screen recordings
 assets/hyperframes/                ← HyperFrames augmented MP4s
 assets/social_posts/{week}/        ← platform-specific social images
