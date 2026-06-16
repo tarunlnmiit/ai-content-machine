@@ -12,10 +12,15 @@ import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from difflib import SequenceMatcher
+import sys
 from pathlib import Path
 
 import requests
 from _console import console, progress_bar
+
+REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "scripts"))
+from lib.virality import topic_virality_multiplier  # noqa: E402
 
 
 # Per-niche off-topic filters — drop items matching these patterns.
@@ -213,6 +218,33 @@ def apply_novelty_penalty(ideas, archive_titles, penalty=0.5):
     return ideas
 
 
+def load_past_keywords():
+    """Tokens from past top-performers (weekly_insights.md) — data-grounded virality signal.
+
+    Cross-niche: any topic resembling a proven winner gets a lift. Returns a lowercase set.
+    """
+    path = REPO / "data" / "analytics" / "weekly_insights.md"
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return set()
+    stop = {"the", "a", "an", "to", "of", "and", "for", "in", "on", "with", "how", "why",
+            "your", "you", "my", "is", "are", "i", "me", "this", "that", "it"}
+    words = re.findall(r"[a-zA-Z]{4,}", text.lower())
+    return {w for w in words if w not in stop}
+
+
+def apply_virality_weight(ideas, past_keywords):
+    """Multiply novelty-adjusted score by a niche-aware virality multiplier."""
+    for idea in ideas:
+        mult = topic_virality_multiplier(
+            idea.get("title", ""), idea.get("niche", ""), past_keywords
+        )
+        base = idea.get("novelty_adjusted_score", idea.get("rank_score", 0) or 0)
+        idea["virality_adjusted_score"] = base * mult
+    return ideas
+
+
 def classify_idea(title: str, niche: str) -> str:
     prompt = f"Classify this content idea into a brief category (1-3 words):\nNiche: {niche}\nIdea: {title}\nCategory:"
 
@@ -260,6 +292,10 @@ def score_ideas(output_dir="data/ideas", top_n=5):
         ideas = apply_novelty_penalty(ideas, archive_titles)
         progress.update(novelty_task, completed=1, total=1)
 
+        virality_task = progress.add_task("Applying virality weight", total=None)
+        ideas = apply_virality_weight(ideas, load_past_keywords())
+        progress.update(virality_task, completed=1, total=1)
+
         # Group by niche
         by_niche = {}
         for idea in ideas:
@@ -272,7 +308,7 @@ def score_ideas(output_dir="data/ideas", top_n=5):
 
         # Build top-N per niche, then classify all in parallel
         top_by_niche = {
-            niche: sorted(ideas, key=lambda x: x.get("novelty_adjusted_score", 0), reverse=True)[:top_n]
+            niche: sorted(ideas, key=lambda x: x.get("virality_adjusted_score", x.get("novelty_adjusted_score", 0)), reverse=True)[:top_n]
             for niche, ideas in by_niche.items()
         }
 
@@ -297,7 +333,8 @@ def score_ideas(output_dir="data/ideas", top_n=5):
         for i, idea in enumerate(ideas_list, 1):
             lines += [
                 f"### {i}. {idea.get('title', 'Untitled')}",
-                f"- **Score:** {idea.get('novelty_adjusted_score', 0):.3f}",
+                f"- **Score:** {idea.get('virality_adjusted_score', idea.get('novelty_adjusted_score', 0)):.3f}",
+                f"- **Novelty score:** {idea.get('novelty_adjusted_score', 0):.3f}",
                 f"- **Category:** {idea.get('category', 'uncategorized')}",
                 f"- **Source:** {idea.get('source', 'unknown')}",
             ]
