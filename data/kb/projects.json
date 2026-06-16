@@ -1,0 +1,40 @@
+{
+  "_comment": "Build-in-public projects the content-machine produces + distributes on a cadence. Each project reuses the viral reel formula (data/kb/viral_reel_formula.md), the repurposing agent, the derivatives->Metricool bridge, and UTM star-attribution.",
+  "projects": [
+    {
+      "key": "autopilot",
+      "name": "autopilot-jobhunt",
+      "repo": "tarunlnmiit/autopilot-jobhunt",
+      "repo_url": "https://github.com/tarunlnmiit/autopilot-jobhunt",
+      "pitch": "Free AI job agent: scans 130+ careers pages nightly, scores roles vs your resume with an LLM, Telegram-pings top matches, drafts tailored applications.",
+      "honesty_guardrail": "Scans, scores, notifies, drafts. Does NOT auto-apply. Never say 'auto-applies'.",
+      "hashtag_niche": "autopilot",
+      "utm_campaign": "autopilot-jobhunt",
+      "dm_keyword": "jobs",
+      "primary_goal": "github_stars",
+      "cadence": {
+        "frequency": "weekly",
+        "format": "build-in-public reel",
+        "angle_rotation": [
+          "new companies added to the scan",
+          "a real job a user landed via the shortlist",
+          "a live LLM score example (0-100 vs resume)",
+          "a new feature shipped (draft, export, MCP)",
+          "behind-the-scenes: how the scoring prompt works"
+        ]
+      },
+      "channels": {
+        "instagram": "reel + comment->DM (keyword 'jobs') via SuperProfile or CreatorFlow (ManyChat replacements)",
+        "youtube_shorts": "same cut; repo link line 1 of description + pinned comment",
+        "tiktok": "same cut; link in bio",
+        "twitter": "thread, repo link in final tweet",
+        "threads": "post",
+        "linkedin": "DRAFT only until employer clearance",
+        "medium": "narrative build story (publish via scripts/publish_medium.py)",
+        "excluded": ["hacker_news (account blocked)", "reddit (blocked)"]
+      },
+      "dm_link_template": "https://github.com/tarunlnmiit/autopilot-jobhunt?utm_source=instagram&utm_medium=dm&utm_campaign=autopilot-jobhunt",
+      "source_assets": "../../autopilot-jobs/demo (reels, launch copy, articles)"
+    }
+  ]
+}

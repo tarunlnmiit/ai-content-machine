@@ -52,6 +52,23 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
 
 ---
 
+## Virality (automatic, all niches)
+
+- `scripts/lib/virality.py` injects a compact virality block (hook + ONE CTA + specificity +
+  guardrail) into every generator and both shorts pipelines. Routed by niche: **poetry/life** use
+  the emotional Voice KB (`data/kb/voice/`); **DS / `--project`** use the build/teach reel KB
+  (`data/kb/reels/`). Edit those KB files to change behavior — read at runtime.
+- **Topic selection is virality-weighted:** `idea_scorer.py` adds `virality_adjusted_score`
+  (niche-aware hook signal + past-performer overlap from `weekly_insights.md`).
+- **Build-in-public:** add `--project <key>` (keys in `data/kb/projects.json`) to any generator to
+  layer a project's pitch/angle/DM keyword. With no project, the pipeline still runs fully; only the
+  build sub-tier sleeps. Comment→DM tool: **SuperProfile** or **CreatorFlow** (ManyChat replacements).
+- **Feedback loop:** `collect_analytics.py` appends recent YouTube performance to the matching swipe
+  file (`voice/03` or `reels/03`) so the libraries re-rank by your own numbers.
+- Prompt changes shift cache keys — run `python3 scripts/lib/claude_cli.py --bust` after editing KB.
+
+---
+
 ## Performance & caching
 
 - **Claude CLI cache + retry** — `scripts/lib/claude_cli.py` caches every `claude -p`
