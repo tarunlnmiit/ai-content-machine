@@ -39,6 +39,15 @@ def test_project_adds_pitch_and_keyword():
 
 
 @pytest.mark.unit
+def test_voice_niche_with_project_stays_voice():
+    # Invariant: poetry/life never routed through the tech KB, even with --project.
+    block = v.virality_block("blog", "poetry", project_key="autopilot")
+    assert "AUTHENTICITY" in block          # voice layer
+    assert "BUILD/TEACH" not in block       # not tech
+    assert "PROJECT" in block               # project block still appends
+
+
+@pytest.mark.unit
 def test_load_project_unknown_is_none():
     assert v.load_project("does-not-exist") is None
     assert v.load_project(None) is None

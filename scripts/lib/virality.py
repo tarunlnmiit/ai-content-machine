@@ -186,8 +186,9 @@ def virality_block(content_type: str, niche: Optional[str], project_key: Optiona
     """
     parts: list[str] = [_SPINE]
 
-    if is_voice_niche(niche) and not project_key:
-        # Emotional layer. Prefer the editable archetype names from voice/01; fall back to hook JSON.
+    if is_voice_niche(niche):
+        # Emotional layer (always for poetry/life — never the tech KB, even with a project;
+        # the project block still appends below). Prefer voice/01 archetype names.
         archetypes = _h3_headings(_read(VOICE_DIR / "01_hook_library.md"))
         if not archetypes:
             archetypes = [c["name"] for c in load_voice_hooks(niche)]
