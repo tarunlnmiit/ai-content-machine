@@ -37,6 +37,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **KB FIRST:** Always read `data/kb/master_brief.md` before any content decisions
 - **NO REPEAT ANGLES:** Check Notion Status='Published' + Publish Date for recency before choosing angle
 
+## Virality & Build-in-Public Projects
+
+- **VIRALITY ENGINE (automatic):** `scripts/lib/virality.py` injects a compact virality block
+  (hook + ONE CTA + specificity + guardrail) into EVERY generator + both shorts pipelines, routed
+  by niche: **poetry/life → `data/kb/voice/`** (emotional, feel-seen), **DS / `--project` →
+  `data/kb/reels/`** (build/teach). Topic selection is virality-weighted in `scripts/idea_scorer.py`.
+  Pass `--project <key>` to any generator to layer in a build-in-public project's pitch/angle/DM.
+  Edit the KB markdown to change behavior — the engine reads it at runtime.
+- **REEL FORMULA:** For any short-form reel/Short, follow `data/kb/viral_reel_formula.md`
+  (5-beat structure reverse-engineered from a reel that hit 38,501 views / 1.1k saves). Use its hook
+  taxonomy (`data/kb/twitter_hook_patterns.json`) and the beat→Remotion-scene map. Never skip the
+  hook re-record/regenerate step — first 3 seconds decide everything.
+- **PROJECTS REGISTRY:** Build-in-public projects (e.g. autopilot-jobhunt) live in
+  `data/kb/projects.json` — repo, UTM campaign, DM keyword, weekly cadence, honesty guardrail,
+  per-channel plan. Read it before producing project content; rotate `cadence.angle_rotation`.
+- **HONESTY GUARDRAIL:** State what a tool actually does. Never overclaim (e.g. don't say a job
+  tool "auto-applies" if it only drafts). Overclaiming kills trust and invites roasting.
+- **DISTRIBUTION:** One piece → all viable channels via `prompts/repurposing_agent.md` →
+  `scripts/derivatives_to_metricool.py` (writes a Metricool CSV to `output/scheduled/<week>/`).
+  Excluded: Hacker News + Reddit (blocked). LinkedIn rows write as DRAFT until employer
+  clearance (`--linkedin-live` to flip).
+- **STAR ATTRIBUTION:** Tag every repo link with UTM params via `scripts/lib/utm.py`.
+  `scripts/collect_analytics.py` tracks GitHub stars + 7-day delta so you can see which piece
+  drove stars (set `GITHUB_REPOS` env, optional `GITHUB_TOKEN`).
+
 ## Folder Map
 
 ```
