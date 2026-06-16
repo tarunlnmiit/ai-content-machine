@@ -52,6 +52,7 @@ DESIRES = {
 
 from lib.slug import slugify
 from lib.schedule_calc import get_iso_week
+from lib.virality import virality_block, project_keys
 from lib.worksheet_cta import (
     worksheet_exists,
     worksheet_title,
@@ -146,7 +147,9 @@ def build_prompt(
     desire: str | None,
     topic: str | None,
     format: str = "blog",
+    project_key: str | None = None,
 ) -> str:
+    virality = virality_block("yt_script" if format == "yt" else "blog", niche, project_key)
     niche_label = {
         "ds": "Data Science/Tech",
         "life": "Life & Self-Development",
@@ -179,6 +182,12 @@ def build_prompt(
     )
 
     return f"""{ghostwriter_agent}
+
+---
+
+## Virality Directives (apply throughout)
+
+{virality}
 
 ---
 
@@ -261,7 +270,15 @@ def main():
         default=None,
         help="Poetry niche only: name of poet for attribution (e.g., 'Ada Limón'). Omit if poem is Tarun's own.",
     )
+    parser.add_argument(
+        "--project",
+        default=None,
+        help="Build-in-public project key (see data/kb/projects.json) — injects project virality context.",
+    )
     args = parser.parse_args()
+
+    if args.project and args.project not in project_keys():
+        parser.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
 
     voice = args.voice or NICHE_DEFAULT_VOICE[args.niche]
 
@@ -306,7 +323,7 @@ def main():
     combined_prompt = build_prompt(
         agent_prompt, master_brief, source_text,
         args.niche, voice, args.desire, args.topic,
-        format=args.format,
+        format=args.format, project_key=args.project,
     )
 
     blog_text = run_claude(combined_prompt, timeout=600, description="Ghostwriting blog (2–5 min)...")

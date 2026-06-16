@@ -35,6 +35,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from _console import console  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
 from lib.niche_config import NICHE_MAP, load_brand_base, model_for  # noqa: E402
+from lib.virality import virality_block, project_keys  # noqa: E402
 from lib.schedule_calc import get_iso_week  # noqa: E402
 
 BRAND_KIT = REPO / "data" / "brand" / "brand_kit.yaml"
@@ -205,7 +206,12 @@ Generate the complete HTML immediately. No preamble. Output HTML only.
 """
 
 
-def build_prompt(brand: dict, slug: str, brief: dict | None, hook: str) -> str:
+# Set in main() from --project; threaded into generate_html via deep run flows.
+_PROJECT_KEY: str | None = None
+
+
+def build_prompt(brand: dict, slug: str, brief: dict | None, hook: str,
+                 project_key: str | None = None) -> str:
     if brief:
         emotional_core = brief.get("emotional_core", "")
         quotes = brief.get("key_quotes", [])
@@ -226,11 +232,13 @@ hook_text: {hook}
 Derive a punchy 2–5 word visual headline from the hook. Use hook as sub_text."""
 
     system = SOCIAL_SYSTEM.format(**brand, content_section=content_section)
-    return system
+    virality = virality_block("social_image", detect_niche(slug), project_key)
+    return f"{system}\n\n---\n\n## Virality Directives\n\n{virality}\n"
 
 
-def generate_html(brand: dict, slug: str, brief: dict | None, hook: str) -> str:
-    prompt = build_prompt(brand, slug, brief, hook)
+def generate_html(brand: dict, slug: str, brief: dict | None, hook: str,
+                  project_key: str | None = None) -> str:
+    prompt = build_prompt(brand, slug, brief, hook, project_key)
     html = call_claude(
         prompt,
         cache=True,
@@ -422,7 +430,7 @@ def process_slug(slug: str, export: bool, force: bool) -> bool:
         hook = slug.replace("_", " ").replace("-", " ")
 
     # Generate HTML
-    html_content = generate_html(brand, slug, brief, hook)
+    html_content = generate_html(brand, slug, brief, hook, project_key=_PROJECT_KEY)
     html_out.write_text(html_content, encoding="utf-8")
     console.print(f"  [green]✓[/green] HTML → {html_out.relative_to(REPO)}")
 
@@ -445,7 +453,13 @@ def main() -> None:
     ap.add_argument("--no-export", dest="export", action="store_false", default=True,
                     help="Skip Playwright PNG export (HTML only)")
     ap.add_argument("--force", action="store_true", help="Overwrite existing outputs")
+    ap.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     args = ap.parse_args()
+
+    if args.project and args.project not in project_keys():
+        ap.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
+    global _PROJECT_KEY
+    _PROJECT_KEY = args.project
 
     slugs = [args.slug] if args.slug else find_week_slugs(args.week)
 

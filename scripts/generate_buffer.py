@@ -38,6 +38,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from _console import console, spinner  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
 from lib.niche_config import CREATOR_VOICE, NICHE_MAP, load_niche_config, model_for  # noqa: E402
+from lib.virality import virality_block, project_keys  # noqa: E402
 from lib.text_normalizer import normalize as stm_normalize  # noqa: E402
 
 NICHE_TEMPS, NICHE_MODELS = load_niche_config()
@@ -67,8 +68,9 @@ NICHE_KEYS = NICHE_MAP
 
 # ── Prompt builders ──────────────────────────────────────────────────────────
 
-def youtube_script_prompt(niche: str, topic: str, angle: str, kb: str) -> str:
+def youtube_script_prompt(niche: str, topic: str, angle: str, kb: str, project_key: str | None = None) -> str:
     label = NICHE_LABELS[niche]
+    virality = virality_block("yt_script", niche, project_key)
     is_poetry = niche == "poetry_quotes"
 
     if is_poetry:
@@ -89,6 +91,9 @@ def youtube_script_prompt(niche: str, topic: str, angle: str, kb: str) -> str:
 
     return f"""{CREATOR_VOICE}
 
+## Virality Directives
+{virality}
+
 ## Knowledge Base
 {kb}
 
@@ -104,8 +109,9 @@ Write the complete script now. No preamble.
 """
 
 
-def substack_prompt(niche: str, topic: str, angle: str, kb: str) -> str:
+def substack_prompt(niche: str, topic: str, angle: str, kb: str, project_key: str | None = None) -> str:
     label = NICHE_LABELS[niche]
+    virality = virality_block("blog", niche, project_key)
     is_poetry = niche == "poetry_quotes"
 
     if is_poetry:
@@ -114,6 +120,9 @@ def substack_prompt(niche: str, topic: str, angle: str, kb: str) -> str:
         word_note = "1200-1800 words. Data-backed, personal examples, actionable."
 
     return f"""{CREATOR_VOICE}
+
+## Virality Directives
+{virality}
 
 ## Knowledge Base
 {kb}
@@ -132,10 +141,14 @@ Write the complete post now. No preamble.
 """
 
 
-def social_copy_prompt(niche: str, topic: str, angle: str, kb: str) -> str:
+def social_copy_prompt(niche: str, topic: str, angle: str, kb: str, project_key: str | None = None) -> str:
     label = NICHE_LABELS[niche]
+    virality = virality_block("thread", niche, project_key)
 
     return f"""{CREATOR_VOICE}
+
+## Virality Directives
+{virality}
 
 ## Knowledge Base
 {kb}
@@ -335,6 +348,7 @@ def generate_topic(
     force: bool,
     no_notion: bool,
     notion_state: Optional[dict],
+    project_key: Optional[str] = None,
 ) -> None:
     label = NICHE_LABELS[niche]
     console.print(f"\n[bold cyan]Week {week} · {label}[/bold cyan]")
@@ -355,9 +369,9 @@ def generate_topic(
     # retry/backoff lives in call_claude. Kept separate (not one merged prompt)
     # because the combined output (~4000+ words) risks truncation.
     jobs = (
-        ("youtube_script", youtube_script_prompt(niche, topic, angle, kb), 300),
-        ("substack_post", substack_prompt(niche, topic, angle, kb), 300),
-        ("social_copy", social_copy_prompt(niche, topic, angle, kb), 180),
+        ("youtube_script", youtube_script_prompt(niche, topic, angle, kb, project_key), 300),
+        ("substack_post", substack_prompt(niche, topic, angle, kb, project_key), 300),
+        ("social_copy", social_copy_prompt(niche, topic, angle, kb, project_key), 180),
     )
 
     def _generate(prompt: str, timeout: int) -> str:
@@ -407,7 +421,11 @@ def main() -> None:
     ap.add_argument("--niche", choices=["ds", "life", "poetry"], help="Process single niche")
     ap.add_argument("--no-notion", action="store_true", help="Skip Notion sync")
     ap.add_argument("--force", action="store_true", help="Overwrite existing files")
+    ap.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     args = ap.parse_args()
+
+    if args.project and args.project not in project_keys():
+        sys.exit(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
 
     if not TOPICS_FILE.exists():
         sys.exit(f"Missing topics file: {TOPICS_FILE}")
@@ -474,6 +492,7 @@ def main() -> None:
                     force=args.force,
                     no_notion=args.no_notion,
                     notion_state=notion_state,
+                    project_key=args.project,
                 )
                 generated += 1
             except Exception as e:

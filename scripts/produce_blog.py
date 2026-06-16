@@ -15,6 +15,7 @@ NICHES = {"ds": "data_science_tech", "life": "life_self_dev", "poetry": "poetry_
 
 from lib.slug import slugify
 from lib.schedule_calc import write_schedule_json, get_iso_week
+from lib.virality import virality_block, project_keys
 from lib.worksheet_cta import worksheet_cta_markdown, has_cta
 
 # Niches that ship a companion worksheet (poetry does not).
@@ -72,7 +73,9 @@ def build_prompt(
     topic: str,
     niche: str,
     listicle: int | None = None,
+    project_key: str | None = None,
 ) -> str:
+    virality = virality_block("blog", niche, project_key)
     niche_label = {
         "ds": "Data Science/Tech",
         "life": "Life & Self-Development",
@@ -87,6 +90,12 @@ def build_prompt(
     listicle_block = build_listicle_directive(listicle, topic, niche) if listicle else ""
 
     return f"""{writing_agent}
+
+---
+
+## Virality Directives (apply throughout)
+
+{virality}
 
 ---
 
@@ -178,10 +187,17 @@ def main():
         metavar="N",
         help="Produce a Top-N listicle blog (e.g. --listicle 5 for 'Top 5...'). N must be >= 2.",
     )
+    parser.add_argument(
+        "--project",
+        default=None,
+        help="Build-in-public project key (see data/kb/projects.json) — injects project virality context.",
+    )
     args = parser.parse_args()
 
     if args.listicle is not None and args.listicle < 2:
         parser.error("--listicle N must be >= 2")
+    if args.project and args.project not in project_keys():
+        parser.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
 
     console.rule(f"[info]Blog Producer[/info]")
     console.print(f"Topic: [bold]{args.topic}[/bold]  Niche: [niche]{args.niche}[/niche]")
@@ -189,7 +205,8 @@ def main():
     writing_agent = load(REPO / "prompts" / "writing_agent.md")
     master_brief  = load(REPO / "data" / "kb" / "master_brief.md")
     combined_prompt = build_prompt(
-        writing_agent, master_brief, args.topic, args.niche, listicle=args.listicle
+        writing_agent, master_brief, args.topic, args.niche,
+        listicle=args.listicle, project_key=args.project,
     )
     if args.listicle:
         console.print(f"[info]Listicle mode:[/info] Top {args.listicle}")

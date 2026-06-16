@@ -39,6 +39,7 @@ DERIVATIVE_FILES = {
 
 from lib.slug import slugify
 from lib.hashtags import hashtag_line
+from lib.virality import virality_block, project_keys
 
 
 def niche_from_slug(slug: str) -> str:
@@ -59,8 +60,13 @@ def load(path: Path, required: bool = True) -> str | None:
 
 
 def build_prompt(repurposing_agent: str, hook_patterns: str | None,
-                 ig_insights: str | None, blog_text: str) -> str:
+                 ig_insights: str | None, blog_text: str,
+                 niche: str = "life", project_key: str | None = None) -> str:
     sections = [repurposing_agent]
+
+    virality = virality_block("thread", niche, project_key)
+    if virality:
+        sections.append("## Virality Directives (apply to every platform)\n\n" + virality)
 
     if hook_patterns:
         sections.append(
@@ -294,7 +300,15 @@ def main():
         action="store_true",
         help="After repurposing, generate Claude Design prompts via generate_design_prompts.py",
     )
+    parser.add_argument(
+        "--project",
+        default=None,
+        help="Build-in-public project key (see data/kb/projects.json) — injects project virality context.",
+    )
     args = parser.parse_args()
+
+    if args.project and args.project not in project_keys():
+        parser.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
 
     if not args.input and not args.source:
         sys.exit("Require --input (blog file) or --source (article file)")
@@ -329,16 +343,19 @@ def main():
     if not ig_insights:
         console.print("[warn]ig_insights.json not found — embedded fallback active[/warn]")
 
-    combined_prompt = build_prompt(repurposing_agent, hook_patterns, ig_insights, blog_text)
+    # Niche drives the curated hashtag pool applied per platform + virality routing.
+    niche = niche_from_slug(slug)
+
+    combined_prompt = build_prompt(
+        repurposing_agent, hook_patterns, ig_insights, blog_text,
+        niche=niche, project_key=args.project,
+    )
 
     parsed, usage = generate(combined_prompt)
 
     date_str = slug[:10]  # Extract YYYY-MM-DD from slug prefix
     out_dir = derivatives_dir(date_str, slug)
     out_dir.mkdir(parents=True, exist_ok=True)
-
-    # Niche drives the curated hashtag pool applied per platform.
-    niche = niche_from_slug(slug)
 
     saved = save_derivatives(out_dir, parsed, args.platforms, niche)
 

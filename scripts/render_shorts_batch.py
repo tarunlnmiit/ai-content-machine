@@ -100,6 +100,7 @@ def main() -> None:
     parser.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--concurrency", type=int, default=3)
+    parser.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     args = parser.parse_args()
 
     week_dir = DERIVATIVES_DIR / args.week
@@ -174,7 +175,7 @@ def main() -> None:
 
             date_str = slug[:10]
             captions_out = derivatives_dir(date_str, slug) / "shorts_captions.md"
-            generate_and_write_captions(shots, slug, args.niche, captions_out)
+            generate_and_write_captions(shots, slug, args.niche, captions_out, project_key=args.project)
 
 
 if __name__ == "__main__":
