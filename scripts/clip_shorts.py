@@ -31,6 +31,8 @@ from lib.video_utils import (  # noqa: E402
 )
 from lib.claude_cli import call_claude  # noqa: E402
 from lib.niche_config import model_for  # noqa: E402
+from lib.virality import virality_block, project_keys  # noqa: E402
+from lib.shorts_captions import detect_niche  # noqa: E402
 
 
 def transcript_text(srt_path: Path) -> str:
@@ -38,21 +40,25 @@ def transcript_text(srt_path: Path) -> str:
     return "\n".join(f"[{c['start']:.1f}s] {c['text']}" for c in cues)
 
 
-def pick_clips_with_claude(transcript: str, count: int) -> list:
+def pick_clips_with_claude(transcript: str, count: int, niche: str | None = None,
+                           project_key: str | None = None) -> list:
     """Call claude CLI to extract best clip segments. Return list of dicts."""
+    virality = virality_block("clip_select", niche, project_key)
     prompt = f"""You're picking vertical Short clips from a long-form video transcript.
+
+{virality}
 
 Goal: find {count} segments, each 30-60 seconds, that work as self-contained Shorts/Reels.
 
-Criteria for each segment:
-- Opens with a HOOK (question, bold claim, surprising fact, or pattern interrupt)
-- Self-contained (no "as I mentioned earlier", no missing setup)
-- Ends with an insight, payoff, or cliffhanger
-- High emotional or informational density
+Rank candidates by HOOK STRENGTH (not mere presence) and pick the strongest. Each segment must:
+- Open with a strong hook in the first 3s (one of the hook archetypes above)
+- Be self-contained (no "as I mentioned earlier", no missing setup)
+- Contain a clear problem -> payoff/proof arc; end on insight, payoff, or cliffhanger
+- Carry one concrete proof/specific detail
 
 Return ONLY a JSON array, no prose. Schema:
 [
-  {{"start": <float seconds>, "end": <float seconds>, "hook_line": "<the opening line>", "why": "<1-sentence reason>"}}
+  {{"start": <float seconds>, "end": <float seconds>, "hook_line": "<the opening line>", "hook_strength": "weak|medium|strong", "why": "<1-sentence reason>"}}
 ]
 
 Transcript (timestamps in seconds at start of each line):
@@ -60,7 +66,7 @@ Transcript (timestamps in seconds at start of each line):
 """
     timeout = max(180, count * 25)
     try:
-        out = call_claude(prompt, cache=True, model=model_for("metadata"), timeout=timeout).strip()
+        out = call_claude(prompt, cache=True, model=model_for("scene_plan"), timeout=timeout).strip()
     except RuntimeError as e:
         print(f"  {e}")
         return []
@@ -129,11 +135,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--slug", required=True)
     ap.add_argument("--count", type=int, default=4)
+    ap.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     ap.add_argument("--no-claude", action="store_true",
                     help="Skip claude clip selection, use fallback")
     ap.add_argument("--smart-crop", action="store_true",
                     help="Detect code region per segment and crop around it (DS videos)")
     args = ap.parse_args()
+
+    if args.project and args.project not in project_keys():
+        ap.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
 
     edited_dir = REPO / "assets" / "video" / "edited"
 
@@ -185,7 +195,7 @@ def main():
         picks = fallback_pick(srt, args.count, duration)
     else:
         tr = transcript_text(srt)
-        picks = pick_clips_with_claude(tr, args.count)
+        picks = pick_clips_with_claude(tr, args.count, niche=detect_niche(args.slug), project_key=args.project)
         if not picks:
             print("  claude returned 0 → fallback")
             picks = fallback_pick(srt, args.count, duration)
@@ -239,7 +249,7 @@ def main():
     shots = [{"index": i, "hook_text": o.get("hook_line", "")} for i, o in enumerate(outputs)]
     captions_out = derivatives_dir(date_str, args.slug) / "shorts_captions.md"
     captions_out.parent.mkdir(parents=True, exist_ok=True)
-    generate_and_write_captions(shots, args.slug, niche, captions_out)
+    generate_and_write_captions(shots, args.slug, niche, captions_out, project_key=args.project)
 
 
 if __name__ == "__main__":

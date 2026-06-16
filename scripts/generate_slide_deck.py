@@ -30,6 +30,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from _console import console  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
 from lib.niche_config import model_for  # noqa: E402
+from lib.virality import virality_block, project_keys  # noqa: E402
 from lib.schedule_calc import get_iso_week  # noqa: E402
 
 # Reuse helpers from the social-image pipeline (same brand/niche/slug logic).
@@ -188,12 +189,13 @@ def _slides_block(slides: list[dict]) -> str:
     return "\n".join(lines).strip()
 
 
-def build_prompt(brand: dict, outline: dict, brief: dict | None) -> str:
+def build_prompt(brand: dict, outline: dict, brief: dict | None,
+                 niche_key: str = "life_self_dev", project_key: str | None = None) -> str:
     slides = outline.get("slides", []) or []
     tone_hint = ""
     if brief:
         tone_hint = brief.get("emotional_core", "") or ""
-    return DECK_SYSTEM.format(
+    system = DECK_SYSTEM.format(
         **brand,
         title_slide=outline.get("title_slide", ""),
         slides_block=_slides_block(slides),
@@ -201,10 +203,13 @@ def build_prompt(brand: dict, outline: dict, brief: dict | None) -> str:
         n_slides=len(slides),
         total_sections=len(slides) + 1,
     )
+    virality = virality_block("slide_deck", niche_key, project_key)
+    return f"{system}\n\n---\n\n## Virality Directives\n\n{virality}\n"
 
 
-def generate_html(brand: dict, outline: dict, brief: dict | None) -> str:
-    prompt = build_prompt(brand, outline, brief)
+def generate_html(brand: dict, outline: dict, brief: dict | None,
+                  niche_key: str = "life_self_dev", project_key: str | None = None) -> str:
+    prompt = build_prompt(brand, outline, brief, niche_key, project_key)
     html = call_claude(
         prompt,
         cache=True,
@@ -264,7 +269,7 @@ def process_slug(slug: str, export: bool, force: bool) -> bool:
         except json.JSONDecodeError:
             pass
 
-    html_content = generate_html(brand, outline, brief)
+    html_content = generate_html(brand, outline, brief, niche_key, args.project)
     html_out.write_text(html_content, encoding="utf-8")
     console.print(f"  [green]✓[/green] HTML → {html_out.relative_to(REPO)}")
 
@@ -287,7 +292,11 @@ def main() -> None:
     ap.add_argument("--no-export", dest="export", action="store_false", default=True,
                     help="Skip Playwright PNG/PDF export (HTML only)")
     ap.add_argument("--force", action="store_true", help="Overwrite existing outputs")
+    ap.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     args = ap.parse_args()
+
+    if args.project and args.project not in project_keys():
+        ap.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
 
     slugs = [args.slug] if args.slug else find_week_slugs(args.week)
     if not slugs:

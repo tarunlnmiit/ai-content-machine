@@ -28,6 +28,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from lib.video_utils import parse_srt  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
 from lib.niche_config import model_for  # noqa: E402
+from lib.virality import virality_block  # noqa: E402
 
 NICHE_CONTEXTS = {
     "ds": {
@@ -101,10 +102,14 @@ def get_transcript(idx: int, slug: str, clip: Path, whisper_model: str) -> str:
     return whisper_transcribe(clip, whisper_model)
 
 
-def claude_metadata(transcript: str, hook_line: str, niche: str) -> dict | None:
+def claude_metadata(transcript: str, hook_line: str, niche: str,
+                    project_key: str | None = None) -> dict | None:
     ctx = NICHE_CONTEXTS[niche]
     hook_section = f"\nOpening hook line: {hook_line}" if hook_line else ""
+    virality = virality_block("shorts_meta", niche, project_key)
     prompt = f"""You write YouTube Shorts metadata for a content creator.
+
+{virality}
 
 Niche: {ctx['label']}
 Audience: {ctx['audience']}

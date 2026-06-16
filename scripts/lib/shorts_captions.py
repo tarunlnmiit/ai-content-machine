@@ -13,6 +13,7 @@ from pathlib import Path
 
 from lib.claude_cli import call_claude
 from lib.hashtags import build_hashtags
+from lib.virality import virality_block
 
 NICHE_TEMPERATURES = {"ds": 0.4, "life": 0.85, "poetry": 1.15}
 
@@ -43,9 +44,13 @@ def detect_niche(slug: str) -> str:
     return "life"
 
 
-def _build_prompt(hook_text: str, niche: str, shot_index: int) -> str:
+def _build_prompt(hook_text: str, niche: str, shot_index: int,
+                  project_key: str | None = None) -> str:
     voice = NICHE_VOICES.get(niche, NICHE_VOICES["life"])
+    virality = virality_block("shorts_caption", niche, project_key)
     return f"""You are writing social media captions for a Shorts/Reels video clip.
+
+{virality}
 
 Creator context: {voice}
 Banned words: {BANNED_WORDS}
@@ -61,7 +66,7 @@ Write captions for 3 platforms. Return ONLY valid JSON, no markdown, no explanat
   }},
   "youtube_shorts": {{
     "title": "Under 60 characters. Hook in first 3 words.",
-    "description": "2-3 punchy sentences. Include a subtle CTA.",
+    "description": "2-3 punchy sentences ending with ONE concrete CTA (e.g. 'Read the full piece', 'Comment a keyword') — not vague.",
     "hashtags": ["Shorts", "tag1", "tag2"]
   }},
   "threads": {{
@@ -78,10 +83,11 @@ def _extract_json(text: str) -> dict:
     return json.loads(text)
 
 
-def generate_shot_captions(hook_text: str, niche: str, shot_index: int) -> dict | None:
+def generate_shot_captions(hook_text: str, niche: str, shot_index: int,
+                           project_key: str | None = None) -> dict | None:
     """Call Claude and return {instagram, youtube_shorts, threads} dict. None on failure."""
     temperature = NICHE_TEMPERATURES.get(niche, 0.85)
-    prompt = _build_prompt(hook_text, niche, shot_index)
+    prompt = _build_prompt(hook_text, niche, shot_index, project_key)
 
     for attempt in range(2):
         if attempt == 1:
@@ -165,6 +171,7 @@ def generate_and_write_captions(
     slug: str,
     niche: str,
     out_path: Path,
+    project_key: str | None = None,
 ) -> Path:
     """Generate captions for all shots and write .md file.
 
@@ -175,7 +182,7 @@ def generate_and_write_captions(
     enriched = []
     for shot in shots:
         print(f"  shot {shot['index'] + 1}/{len(shots)}: {shot.get('hook_text', '')[:60]}")
-        captions = generate_shot_captions(shot["hook_text"], niche, shot["index"])
+        captions = generate_shot_captions(shot["hook_text"], niche, shot["index"], project_key)
         enriched.append({**shot, "captions": captions})
 
     out_path.parent.mkdir(parents=True, exist_ok=True)

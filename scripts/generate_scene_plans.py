@@ -34,6 +34,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.claude_cli import call_claude
 from lib.niche_config import model_for
+from lib.virality import virality_block, project_keys
 
 # Output: remotion/public/scene-plans/{week}/{slug}.json
 SCENE_PLANS_ROOT = REPO / "remotion" / "public" / "scene-plans"
@@ -266,7 +267,8 @@ def validate_scene(scene: dict, index: int) -> None:
         scene["layout"] = "fullscreen"
 
 
-def build_prompt(script_text: str, niche: str, mode: str, shorts: int = 7) -> str:
+def build_prompt(script_text: str, niche: str, mode: str, shorts: int = 7,
+                 project_key: str | None = None) -> str:
     niche_label = NICHE_LABELS.get(niche, niche)
     if mode == "short":
         instructions = SHORT_INSTRUCTIONS.format(
@@ -275,7 +277,12 @@ def build_prompt(script_text: str, niche: str, mode: str, shorts: int = 7) -> st
     else:
         instructions = OVERLAY_INSTRUCTIONS.format(niche_label=niche_label, niche=niche)
     catalog = load_component_catalog(niche)
+    content_type = "scene_plan_short" if mode == "short" else "scene_plan_overlay"
+    virality = virality_block(content_type, niche, project_key)
     return f"""{instructions}
+
+VIRALITY DIRECTIVES:
+{virality}
 
 COMPONENT CATALOG:
 {catalog}
@@ -318,6 +325,7 @@ def main() -> None:
     parser.add_argument("--slug", default=None,
                         help="Override output slug (must match prepare_remotion_edit.py --slug to auto-wire)")
     parser.add_argument("--dry-run", action="store_true", help="Print plan, don't write file")
+    parser.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     parser.add_argument("--no-cache", action="store_true", help="Bypass cache, call Claude fresh")
     args = parser.parse_args()
 
@@ -335,7 +343,9 @@ def main() -> None:
     raw_script = script_path.read_text()
     script_text = parse_script_sections(raw_script)
 
-    prompt = build_prompt(script_text, args.niche, args.mode, args.shorts)
+    if args.project and args.project not in project_keys():
+        parser.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
+    prompt = build_prompt(script_text, args.niche, args.mode, args.shorts, project_key=args.project)
 
     temp = NICHE_TEMPS[args.niche]
     # Short mode emits {shorts}× the output of a single plan — give Claude more time.

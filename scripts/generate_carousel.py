@@ -26,6 +26,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from _console import console  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
 from lib.niche_config import NICHE_MAP, load_brand_base, model_for  # noqa: E402
+from lib.virality import virality_block, project_keys  # noqa: E402
 
 BRAND_KIT = REPO / "data" / "brand" / "brand_kit.yaml"
 CAROUSEL_DIR = REPO / "assets" / "carousels"
@@ -128,13 +129,21 @@ Generate the complete, copy-pasteable HTML immediately. No preamble, no asking q
 """
 
 
-def build_prompt(brand: dict, content: str, slides: int) -> str:
+def build_prompt(brand: dict, content: str, slides: int,
+                 niche_key: str = "life_self_dev", project_key: str | None = None) -> str:
     system = CAROUSEL_SYSTEM.format(
         **brand,
         slides=slides,
         initial=brand["brand_name"][0].upper(),
     )
+    virality = virality_block("carousel", niche_key, project_key)
     return f"""{system}
+
+---
+
+## Virality Directives
+
+{virality}
 
 ---
 
@@ -160,7 +169,11 @@ def main() -> None:
     ap.add_argument("--slides", type=int, default=7, help="Number of slides (default 7)")
     ap.add_argument("--export", action=argparse.BooleanOptionalAction, default=True, help="Run Playwright export after generation (default: on, use --no-export to skip)")
     ap.add_argument("--force", action="store_true", help="Overwrite existing output")
+    ap.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     args = ap.parse_args()
+
+    if args.project and args.project not in project_keys():
+        ap.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
 
     # Resolve niche
     if args.niche:
@@ -190,7 +203,7 @@ def main() -> None:
     console.print(f"[bold]Generating carousel[/bold] — {brand['label']}")
     console.print(f"  Niche: {niche_key} | Slides: {args.slides} | Temp: {brand['temperature']}")
 
-    prompt = build_prompt(brand, content, args.slides)
+    prompt = build_prompt(brand, content, args.slides, niche_key=niche_key, project_key=args.project)
 
     console.print(f"  Prompt: {len(prompt):,} chars")
     html = call_claude(
