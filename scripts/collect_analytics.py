@@ -219,6 +219,87 @@ def collect_instagram() -> dict:
     }
 
 
+# ── GitHub stars (project repos) ────────────────────────────────────────────────
+
+# Comma-separated "owner/repo" list; defaults to the autopilot-jobhunt project repo.
+GITHUB_REPOS = [
+    r.strip() for r in os.getenv("GITHUB_REPOS", "tarunlnmiit/autopilot-jobhunt").split(",")
+    if r.strip()
+]
+
+
+def fetch_github_repo_stats(full_name: str, token: str | None) -> dict | None:
+    headers = {"Accept": "application/vnd.github+json"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    try:
+        resp = requests.get(
+            f"https://api.github.com/repos/{full_name}", headers=headers, timeout=10
+        )
+        resp.raise_for_status()
+        d = resp.json()
+        return {
+            "repo":   full_name,
+            "stars":  int(d.get("stargazers_count", 0)),
+            "forks":  int(d.get("forks_count", 0)),
+            "issues": int(d.get("open_issues_count", 0)),
+        }
+    except Exception as e:
+        console.print(f"  [warn]GitHub API error ({full_name}): {e}[/warn]")
+        return None
+
+
+def _stars_history_path() -> Path:
+    return REPO / "data" / "analytics" / "github_stars.json"
+
+
+def _load_stars_history() -> list[dict]:
+    path = _stars_history_path()
+    if not path.exists():
+        return []
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return []
+
+
+def _append_stars_snapshot(snapshots: list[dict]) -> None:
+    """Persist today's snapshot per repo (one row per repo per date) for delta tracking."""
+    today = datetime.now().strftime("%Y-%m-%d")
+    history = _load_stars_history()
+    keyed = {(h["date"], h["repo"]): h for h in history}
+    for snap in snapshots:
+        keyed[(today, snap["repo"])] = {"date": today, **snap}
+    merged = sorted(keyed.values(), key=lambda h: (h["date"], h["repo"]))
+    path = _stars_history_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(merged, indent=2), encoding="utf-8")
+
+
+def _stars_delta(repo: str, current: int) -> int | None:
+    """Stars gained vs the closest snapshot ~7 days ago. None if no history."""
+    cutoff = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
+    prior = [h for h in _load_stars_history() if h["repo"] == repo and h["date"] <= cutoff]
+    if not prior:
+        return None
+    return current - max(prior, key=lambda h: h["date"])["stars"]
+
+
+def collect_github() -> dict:
+    token = os.getenv("GITHUB_TOKEN")
+    repos = {}
+    snapshots = []
+    for full_name in GITHUB_REPOS:
+        stats = fetch_github_repo_stats(full_name, token)
+        if not stats:
+            continue
+        snapshots.append(stats)
+        repos[full_name] = {**stats, "stars_7d_delta": _stars_delta(full_name, stats["stars"])}
+    if snapshots:
+        _append_stars_snapshot(snapshots)
+    return repos
+
+
 # ── Summary backends ──────────────────────────────────────────────────────────
 
 def _make_summary_prompt(data: dict) -> str:
@@ -254,7 +335,50 @@ def summarise(data: dict) -> str:
 
 # ── Save ──────────────────────────────────────────────────────────────────────
 
-def save_report(youtube: dict, twitter: dict, instagram: dict, summary: str) -> Path:
+def _channel_niche(name: str) -> str | None:
+    n = name.lower()
+    if "data science" in n:
+        return "ds"
+    if "poetry" in n:
+        return "poetry"
+    if "life" in n:
+        return "life"
+    return None  # relaxing / other channels have no swipe file
+
+
+def append_swipe_results(youtube: dict) -> None:
+    """Feedback loop: log recent YouTube performance into the matching swipe file
+    (data/kb/voice/03 for poetry/life, data/kb/reels/03 for ds) so the libraries
+    re-rank by the creator's own numbers. Dedupes by title."""
+    swipe = {
+        "ds": REPO / "data" / "kb" / "reels" / "03_swipe_file.md",
+        "life": REPO / "data" / "kb" / "voice" / "03_swipe_file.md",
+        "poetry": REPO / "data" / "kb" / "voice" / "03_swipe_file.md",
+    }
+    section = "## Auto-logged results (collect_analytics)"
+    for name, data in youtube.items():
+        niche = _channel_niche(name)
+        path = swipe.get(niche or "")
+        if not path or not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8")
+        rows = []
+        for v in data.get("recent_videos", []):
+            title = v.get("title", "")
+            if title and title[:48] in text:
+                continue  # already logged
+            rows.append(
+                f"- [{v.get('published','')}] YT · {title} — "
+                f"{v.get('views',0)} views, {v.get('likes',0)} likes, {v.get('comments',0)} comments"
+            )
+        if not rows:
+            continue
+        if section not in text:
+            text += f"\n\n{section}\n"
+        path.write_text(text.rstrip() + "\n" + "\n".join(rows) + "\n", encoding="utf-8")
+
+
+def save_report(youtube: dict, twitter: dict, instagram: dict, github: dict, summary: str) -> Path:
     now  = datetime.now()
     week = now.strftime("%Y-W%W")
 
@@ -313,6 +437,15 @@ def save_report(youtube: dict, twitter: dict, instagram: dict, summary: str) -> 
         for p in instagram["top_posts"]:
             lines.append(f"  - {p['likes']} likes, {p['comments']} comments | {p['caption'][:80]}")
 
+    if github:
+        lines += ["", "---", "", "## GitHub (project repos)"]
+        for repo, d in github.items():
+            delta = d.get("stars_7d_delta")
+            delta_str = f" (+{delta} this week)" if isinstance(delta, int) and delta >= 0 else (
+                f" ({delta} this week)" if isinstance(delta, int) else " (no 7d baseline yet)")
+            lines.append(f"- **{repo}**: {d['stars']:,} ⭐{delta_str}, "
+                         f"{d['forks']:,} forks, {d['issues']:,} open issues")
+
     out = REPO / "data" / "analytics" / "weekly_insights.md"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(lines), encoding="utf-8")
@@ -328,6 +461,7 @@ def main():
         yt_task = progress.add_task("YouTube", total=len(YOUTUBE_CHANNELS))
         tw_task = progress.add_task("Twitter", total=1)
         ig_task = progress.add_task("Instagram", total=1)
+        gh_task = progress.add_task("GitHub", total=1)
         ai_task = progress.add_task("Ollama summary", total=1)
 
         api_key = os.getenv("GOOGLE_CONSOLE_API_KEY")
@@ -344,11 +478,16 @@ def main():
         instagram = collect_instagram()
         progress.update(ig_task, completed=1)
 
-        combined = {"youtube": youtube, "twitter": twitter, "instagram": instagram}
+        github = collect_github()
+        progress.update(gh_task, completed=1)
+
+        combined = {"youtube": youtube, "twitter": twitter,
+                    "instagram": instagram, "github": github}
         summary  = summarise(combined)
         progress.update(ai_task, completed=1)
 
-    out = save_report(youtube, twitter, instagram, summary)
+    out = save_report(youtube, twitter, instagram, github, summary)
+    append_swipe_results(youtube)
 
     console.print(f"\n[success]✓ Saved: {out.relative_to(REPO)}[/success]")
     console.print("\n[bold]Summary:[/bold]")
