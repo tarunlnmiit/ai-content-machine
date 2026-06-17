@@ -3,15 +3,21 @@
 
 For each slug, reads claude_design_brief.json + instagram_caption.txt,
 generates a multi-frame HTML (4 platform frames) via Claude, and exports 4 PNGs.
+Also generates a tweet-mockup IG image (realistic X light-theme card).
 
 Outputs:
   assets/social_posts/{week}/{slug}_instagram.png
   assets/social_posts/{week}/{slug}_linkedin.png
   assets/social_posts/{week}/{slug}_threads.png
   assets/social_posts/{week}/{slug}_twitter.png
+  assets/social_posts/{week}/{slug}_tweet_ig.png
   assets/slides/{week}/{slug}_social.html  (HTML source)
+  assets/slides/{week}/{slug}_tweet.html   (tweet mockup HTML source)
 
 Also invokes generate_carousel.py per slug.
+
+Skip logic: each output is checked independently — only missing outputs are regenerated.
+Use --force to regenerate everything.
 
 Usage:
   python3 scripts/generate_social_images.py --week 2026-W24
@@ -206,6 +212,54 @@ Generate the complete HTML immediately. No preamble. Output HTML only.
 """
 
 
+TWEET_SYSTEM = """You are generating a tweet-mockup Instagram post for {brand_name} ({handle}).
+
+## Task
+
+From the content provided, extract the single sharpest, most shareable insight — rewrite it as a natural tweet (≤ 280 chars). No hashtags. First person. Conversational. The kind of sentence people screenshot and save.
+
+Then generate a standalone 1080×1080 HTML that renders as an Instagram post with a centered, realistic X (Twitter) light-theme tweet card.
+
+## Canvas
+
+```css
+body {{
+  margin: 0; padding: 0;
+  width: 1080px; height: 1080px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #F0F0F0 0%, #E8EDF2 100%);
+  font-family: 'Inter', sans-serif;
+}}
+```
+
+Load Inter from Google Fonts CDN. No other external URLs.
+
+## Tweet card (centered, white, 880px wide, border-radius: 20px, box-shadow: 0 8px 32px rgba(0,0,0,0.12))
+
+Build top-to-bottom:
+
+1. **Top bar** (padding 20px 24px 0): X logo SVG top-right (22px, #0F1419). Avatar circle left (52px diameter, background `{primary}`, white bold initials from brand name, 20px font). Right of avatar: display name "{brand_name}" (17px, #0F1419, font-weight 700) on top, handle "{handle}" (14px, #536471) below.
+
+2. **Tweet text** (padding 16px 24px): font-size 22px, color #0F1419, line-height 1.55. This is the extracted insight.
+
+3. **Timestamp** (padding 0 24px 16px): "Jun 17, 2026 · X for iPhone", 14px, color #536471.
+
+4. Horizontal rule: 1px solid #EFF3F4.
+
+5. **Metrics** (padding 14px 24px): "847 Likes · 312 Reposts · 94.2K Views", 14px, color #536471, numbers in #0F1419 font-weight 600.
+
+6. Horizontal rule: 1px solid #EFF3F4.
+
+7. **Actions row** (padding 8px 24px): five SVG icons (Reply, Repost, Like, Bookmark, Share) in #536471, 20px, evenly distributed across the row. Use minimal path SVGs, no fill, stroke only.
+
+## Content
+
+{content_section}
+
+Generate the complete HTML immediately. No preamble. Output HTML only.
+"""
+
+
 # Set in main() from --project; threaded into generate_html via deep run flows.
 _PROJECT_KEY: str | None = None
 
@@ -259,7 +313,42 @@ def generate_html(brand: dict, slug: str, brief: dict | None, hook: str,
     return html.strip()
 
 
-def export_pngs(html_path: Path, slug: str, week: str) -> list[Path]:
+def generate_tweet_html(brand: dict, slug: str, brief: dict | None, hook: str) -> str:
+    if brief:
+        quotes = brief.get("key_quotes", [])
+        emotional_core = brief.get("emotional_core", "")
+        content_section = f"""emotional_core: {emotional_core}
+key_quotes: {quotes}
+hook: {hook}
+
+Extract the sharpest single insight from key_quotes or emotional_core."""
+    else:
+        content_section = f"""hook: {hook}
+slug: {slug}
+
+Rewrite the hook as the tweet insight."""
+
+    prompt = TWEET_SYSTEM.format(**brand, content_section=content_section)
+    html = call_claude(
+        prompt,
+        cache=True,
+        model=model_for("html_asset"),
+        timeout=600,
+        temperature=brand["temperature"],
+        normalize=False,
+        stream=True,
+        progress_label=f"Generating tweet mockup ({brand['label']})",
+    )
+    if "```html" in html:
+        start = html.index("```html") + 7
+        end = html.index("```", start)
+        return html[start:end].strip()
+    if "<!DOCTYPE" in html or "<html" in html:
+        return html.strip()
+    return html.strip()
+
+
+def export_pngs(html_path: Path, slug: str, week: str, force: bool = False) -> list[Path]:
     try:
         import asyncio
         from playwright.async_api import async_playwright
@@ -270,13 +359,21 @@ def export_pngs(html_path: Path, slug: str, week: str) -> list[Path]:
     out_dir = SOCIAL_DIR / week
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    platforms_to_export = [
+        p for p in PLATFORMS
+        if force or not (out_dir / f"{slug}_{p}.png").exists()
+    ]
+    if not platforms_to_export:
+        console.print(f"  [dim]skip all platform PNGs (exist)[/dim]")
+        return []
+
     html_content = html_path.read_text(encoding="utf-8")
     exported = []
 
     async def _export() -> None:
         async with async_playwright() as p:
             browser = await p.chromium.launch()
-            for platform in PLATFORMS:
+            for platform in platforms_to_export:
                 cls, w, h = PLATFORM_FRAME[platform]
                 page = await browser.new_page(
                     viewport={"width": w, "height": h},
@@ -304,6 +401,41 @@ def export_pngs(html_path: Path, slug: str, week: str) -> list[Path]:
     import asyncio
     asyncio.run(_export())
     return exported
+
+
+def export_tweet_png(html_path: Path, slug: str, week: str) -> Path | None:
+    try:
+        import asyncio
+        from playwright.async_api import async_playwright
+    except ImportError:
+        console.print("[warn]playwright not installed — skipping tweet PNG export[/warn]")
+        return None
+
+    out_dir = SOCIAL_DIR / week
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_file = out_dir / f"{slug}_tweet_ig.png"
+
+    html_content = html_path.read_text(encoding="utf-8")
+
+    async def _export() -> None:
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            page = await browser.new_page(
+                viewport={"width": 1080, "height": 1080},
+                device_scale_factor=1.0,
+            )
+            await page.set_content(html_content, wait_until="networkidle")
+            await page.wait_for_timeout(1500)
+            await page.screenshot(
+                path=str(out_file),
+                clip={"x": 0, "y": 0, "width": 1080, "height": 1080},
+            )
+            await browser.close()
+
+    import asyncio
+    asyncio.run(_export())
+    console.print(f"  [green]✓[/green] {out_file.relative_to(REPO)}")
+    return out_file
 
 
 def run_carousel(slug: str, slug_dir: Path, niche_key: str, force: bool) -> None:
@@ -393,20 +525,25 @@ def process_slug(slug: str, export: bool, force: bool) -> bool:
     niche_key = detect_niche(slug)
     brand = load_brand(niche_key)
 
-    # Output paths
     slides_week_dir = SLIDES_DIR / week
     slides_week_dir.mkdir(parents=True, exist_ok=True)
-    html_out = slides_week_dir / f"{slug}_social.html"
+    social_week_dir = SOCIAL_DIR / week
+    social_week_dir.mkdir(parents=True, exist_ok=True)
 
-    if html_out.exists() and not force:
-        # Check if PNGs also exist
-        social_week_dir = SOCIAL_DIR / week
-        all_pngs_exist = all(
-            (social_week_dir / f"{slug}_{p}.png").exists() for p in PLATFORMS
-        )
-        if all_pngs_exist:
-            console.print(f"[dim]Skip (use --force): {slug}[/dim]")
-            return True
+    html_out = slides_week_dir / f"{slug}_social.html"
+    tweet_html_out = slides_week_dir / f"{slug}_tweet.html"
+    tweet_png_out = social_week_dir / f"{slug}_tweet_ig.png"
+    platform_pngs = [social_week_dir / f"{slug}_{p}.png" for p in PLATFORMS]
+
+    # Check if all outputs already exist
+    html_needed = not html_out.exists() or force
+    tweet_html_needed = not tweet_html_out.exists() or force
+    pngs_needed = export and (force or any(not p.exists() for p in platform_pngs))
+    tweet_png_needed = export and (not tweet_png_out.exists() or force)
+
+    if not any([html_needed, tweet_html_needed, pngs_needed, tweet_png_needed]):
+        console.print(f"[dim]Skip (use --force): {slug}[/dim]")
+        return True
 
     console.print(f"\n[bold]{slug}[/bold]")
     console.print(f"  Niche: {niche_key} | Week: {week}")
@@ -429,14 +566,31 @@ def process_slug(slug: str, export: bool, force: bool) -> bool:
         console.print(f"  [warn]No design brief or caption found — using slug title[/warn]")
         hook = slug.replace("_", " ").replace("-", " ")
 
-    # Generate HTML
-    html_content = generate_html(brand, slug, brief, hook, project_key=_PROJECT_KEY)
-    html_out.write_text(html_content, encoding="utf-8")
-    console.print(f"  [green]✓[/green] HTML → {html_out.relative_to(REPO)}")
+    # Social HTML (4-frame branded)
+    if html_needed:
+        html_content = generate_html(brand, slug, brief, hook, project_key=_PROJECT_KEY)
+        html_out.write_text(html_content, encoding="utf-8")
+        console.print(f"  [green]✓[/green] HTML → {html_out.relative_to(REPO)}")
+    else:
+        console.print(f"  [dim]skip social HTML (exists)[/dim]")
 
-    # Export PNGs
+    # Platform PNGs
     if export:
-        export_pngs(html_out, slug, week)
+        export_pngs(html_out, slug, week, force=force)
+
+    # Tweet mockup HTML
+    if tweet_html_needed:
+        tweet_html = generate_tweet_html(brand, slug, brief, hook)
+        tweet_html_out.write_text(tweet_html, encoding="utf-8")
+        console.print(f"  [green]✓[/green] tweet HTML → {tweet_html_out.relative_to(REPO)}")
+    else:
+        console.print(f"  [dim]skip tweet HTML (exists)[/dim]")
+
+    # Tweet PNG
+    if tweet_png_needed:
+        export_tweet_png(tweet_html_out, slug, week)
+    elif export:
+        console.print(f"  [dim]skip tweet PNG (exists)[/dim]")
 
     # Carousel
     run_carousel(slug, slug_dir, niche_key, force)
