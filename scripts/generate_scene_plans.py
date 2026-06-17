@@ -1,20 +1,32 @@
 #!/usr/bin/env python3
 """
 generate_scene_plans.py — Use Claude CLI (Opus 4.8) to identify WHERE Remotion motion
-graphics make the most sense in a YT script, then write a scene plan JSON.
+graphics make the most sense, then write a scene plan JSON.
 
-No [ANIMATION:] tags required. Claude reads the full script semantically.
+Preferred input: caption JSON (actual speech + timestamps from real recording).
+Fallback input: script markdown file (pre-production plan, no timing).
+
+No [ANIMATION:] tags required. Claude reads the content semantically.
 
 Usage:
-  # Motion short (scenes ARE the video, sequential):
+  # From captions (auto-detect — finds captions/{week}/{slug}.captions.json):
   python3 scripts/generate_scene_plans.py \\
-    --script content/scripts/2026-W24/2026-06-08_data_science_tech_python-for-ml_yt.md \\
-    --niche ds --week 2026-W24 --mode short
+    --niche ds --week 2026-W25 --slug 2026-06-16_..._ai-prompt-anatomy-travel
 
-  # Long-form overlay (scenes inject at specific narration moments):
+  # From captions + auto-transcribe reel if missing:
   python3 scripts/generate_scene_plans.py \\
-    --script content/scripts/2026-W24/2026-06-08_data_science_tech_python-for-ml_yt.md \\
-    --niche ds --week 2026-W24 --mode overlay
+    --niche ds --week 2026-W25 --slug 2026-06-16_..._slug \\
+    --reel assets/reels_video/2026-W25/slug.mp4
+
+  # Explicit captions file:
+  python3 scripts/generate_scene_plans.py \\
+    --captions remotion/public/captions/2026-W25/slug.captions.json \\
+    --niche ds --week 2026-W25
+
+  # Legacy — script markdown (backwards compatible):
+  python3 scripts/generate_scene_plans.py \\
+    --script content/scripts/2026-W24/slug_yt.md \\
+    --niche ds --week 2026-W24 --mode short
 
   # Dry-run (print plan, don't write file):
   python3 scripts/generate_scene_plans.py ... --dry-run
@@ -39,6 +51,7 @@ from lib.virality import virality_block, project_keys
 # Output: remotion/public/scene-plans/{week}/{slug}.json
 SCENE_PLANS_ROOT = REPO / "remotion" / "public" / "scene-plans"
 TEMPLATES_MAP_PATH = REPO / "remotion" / "public" / "templates-map.json"
+CAPTIONS_ROOT = REPO / "remotion" / "public" / "captions"
 
 NICHE_TEMPS = {"ds": 0.4, "life": 0.85, "poetry": 1.15}
 
@@ -223,6 +236,94 @@ def parse_script_sections(text: str) -> str:
     return "\n".join(cleaned)
 
 
+def load_captions(path: Path) -> list[dict]:
+    """Read captions JSON file and return list of caption objects."""
+    return json.loads(path.read_text())
+
+
+def format_captions_for_prompt(captions: list[dict]) -> str:
+    """Format captions with timestamps for Claude prompt.
+
+    Each line: [0.0s–14.4s] caption text
+    """
+    lines = []
+    for cap in captions:
+        start = cap["startMs"] / 1000
+        end = cap["endMs"] / 1000
+        lines.append(f"[{start:.1f}s–{end:.1f}s] {cap['text']}")
+    return "\n".join(lines)
+
+
+def captions_full_text(captions: list[dict]) -> str:
+    """Concatenated plain text from all captions."""
+    return " ".join(cap["text"] for cap in captions).strip()
+
+
+def resolve_input(args) -> tuple[str, str]:
+    """Return (content_text, input_type) where input_type is 'captions' or 'script'.
+
+    Priority:
+      1. --captions explicit path (if provided and exists)
+      2. Default captions path for --week + --slug (if file exists)
+      3. --reel path → run Whisper → save captions → use them
+      4. --script fallback (original behaviour)
+    """
+    # 1. Explicit captions file
+    if args.captions:
+        cap_path = Path(args.captions)
+        if not cap_path.is_absolute():
+            cap_path = REPO / cap_path
+        if not cap_path.exists():
+            print(f"ERROR: captions file not found: {cap_path}", file=sys.stderr)
+            sys.exit(1)
+        captions = load_captions(cap_path)
+        return format_captions_for_prompt(captions), "captions"
+
+    # 2. Auto-detect from --week + --slug
+    if args.week and args.slug:
+        auto_path = CAPTIONS_ROOT / args.week / f"{args.slug}.captions.json"
+        if auto_path.exists():
+            print(f"Auto-detected captions: {auto_path.relative_to(REPO)}", file=sys.stderr)
+            captions = load_captions(auto_path)
+            return format_captions_for_prompt(captions), "captions"
+
+    # 3. Transcribe --reel if provided
+    if args.reel:
+        reel_path = Path(args.reel)
+        if not reel_path.is_absolute():
+            reel_path = REPO / reel_path
+        if not reel_path.exists():
+            print(f"ERROR: reel not found: {reel_path}", file=sys.stderr)
+            sys.exit(1)
+
+        if not (args.week and args.slug):
+            print("ERROR: --reel requires --week and --slug to determine caption output path", file=sys.stderr)
+            sys.exit(1)
+
+        from scripts.transcribe_reel import transcribe, default_out_path
+        cap_path = default_out_path(args.week, args.slug)
+        print(f"Transcribing reel → {cap_path.relative_to(REPO)}", file=sys.stderr)
+        captions = transcribe(reel_path, model_name=getattr(args, "whisper_model", "base"))
+        cap_path.parent.mkdir(parents=True, exist_ok=True)
+        cap_path.write_text(json.dumps(captions, indent=2, ensure_ascii=False))
+        print(f"✓ Captions saved: {cap_path.relative_to(REPO)}", file=sys.stderr)
+        return format_captions_for_prompt(captions), "captions"
+
+    # 4. Legacy --script fallback
+    if args.script:
+        script_path = Path(args.script)
+        if not script_path.is_absolute():
+            script_path = REPO / script_path
+        if not script_path.exists():
+            print(f"ERROR: script not found: {script_path}", file=sys.stderr)
+            sys.exit(1)
+        raw = script_path.read_text()
+        return parse_script_sections(raw), "script"
+
+    print("ERROR: provide --captions, --reel, or --script", file=sys.stderr)
+    sys.exit(1)
+
+
 def extract_json(raw: str) -> list:
     """Parse JSON array from Claude output.
 
@@ -267,8 +368,8 @@ def validate_scene(scene: dict, index: int) -> None:
         scene["layout"] = "fullscreen"
 
 
-def build_prompt(script_text: str, niche: str, mode: str, shorts: int = 7,
-                 project_key: str | None = None) -> str:
+def build_prompt(content_text: str, niche: str, mode: str, shorts: int = 7,
+                 project_key: str | None = None, input_type: str = "script") -> str:
     niche_label = NICHE_LABELS.get(niche, niche)
     if mode == "short":
         instructions = SHORT_INSTRUCTIONS.format(
@@ -279,16 +380,39 @@ def build_prompt(script_text: str, niche: str, mode: str, shorts: int = 7,
     catalog = load_component_catalog(niche)
     content_type = "scene_plan_short" if mode == "short" else "scene_plan_overlay"
     virality = virality_block(content_type, niche, project_key)
+
+    if input_type == "captions":
+        if mode == "overlay":
+            timing_note = (
+                "TIMING (captions input — use these timestamps directly):\n"
+                "- Each line is [startSec–endSec] followed by the spoken text.\n"
+                "- Set 'atSec' to the startSec of the caption segment where this overlay appears.\n"
+                "- Set 'durationSec' to span the caption segments the scene covers.\n"
+                "- The 'script' field MUST be verbatim text from the captions at that timestamp.\n"
+            )
+        else:
+            timing_note = (
+                "TIMING (captions input — use these timestamps directly):\n"
+                "- Each line is [startSec–endSec] followed by the spoken text.\n"
+                "- Use caption timestamps to inform durationSec for each scene.\n"
+                "- The 'script' field MUST be verbatim text from the captions.\n"
+            )
+        content_label = "CAPTIONS (timestamped transcript from actual recording):"
+    else:
+        timing_note = ""
+        content_label = "SCRIPT:"
+
     return f"""{instructions}
 
 VIRALITY DIRECTIVES:
 {virality}
 
+{timing_note}
 COMPONENT CATALOG:
 {catalog}
 
-SCRIPT:
-{script_text}
+{content_label}
+{content_text}
 """
 
 
@@ -314,8 +438,15 @@ def total_duration(scenes: list) -> float:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate Remotion scene plan from YT script using Claude")
-    parser.add_argument("--script", required=True, help="Path to YT script markdown file")
+    parser = argparse.ArgumentParser(description="Generate Remotion scene plan from captions or script using Claude")
+    # Input sources (at least one required; captions preferred over script)
+    parser.add_argument("--captions", default=None, help="Path to .captions.json file (explicit)")
+    parser.add_argument("--reel", default=None, help="Path to reel video — Whisper transcribes if no captions file found")
+    parser.add_argument("--script", default=None, help="Path to script .md file (legacy fallback)")
+    parser.add_argument("--whisper-model", default="base",
+                        choices=["tiny", "base", "small", "medium", "large"],
+                        dest="whisper_model",
+                        help="Whisper model size when transcribing reel (default: base)")
     parser.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     parser.add_argument("--week", required=True, help="ISO week e.g. 2026-W24")
     parser.add_argument("--mode", choices=["short", "overlay"], default="short",
@@ -323,29 +454,30 @@ def main() -> None:
     parser.add_argument("--shorts", type=int, default=None,
                         help="Number of unique shorts to generate (short mode only; default: 14 for ds, 7 for life/poetry)")
     parser.add_argument("--slug", default=None,
-                        help="Override output slug (must match prepare_remotion_edit.py --slug to auto-wire)")
+                        help="Output slug (required for captions auto-detect; must match prepare_remotion_edit.py --slug)")
     parser.add_argument("--dry-run", action="store_true", help="Print plan, don't write file")
     parser.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     parser.add_argument("--no-cache", action="store_true", help="Bypass cache, call Claude fresh")
     args = parser.parse_args()
 
+    if not any([args.captions, args.reel, args.script]):
+        parser.error("provide at least one of --captions, --reel, or --script")
+
     NICHE_DEFAULT_SHORTS = {"ds": 14, "life": 7, "poetry": 7}
     if args.shorts is None:
         args.shorts = NICHE_DEFAULT_SHORTS[args.niche]
 
-    script_path = Path(args.script)
-    if not script_path.is_absolute():
-        script_path = REPO / script_path
-    if not script_path.exists():
-        print(f"ERROR: script not found: {script_path}", file=sys.stderr)
-        sys.exit(1)
+    content_text, input_type = resolve_input(args)
+    print(f"Input: {input_type}", file=sys.stderr)
 
-    raw_script = script_path.read_text()
-    script_text = parse_script_sections(raw_script)
+    # Derive slug for output path when using captions/reel without explicit --slug
+    if not args.slug and args.script:
+        args.slug = slug_from_script_path(Path(args.script))
 
     if args.project and args.project not in project_keys():
         parser.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
-    prompt = build_prompt(script_text, args.niche, args.mode, args.shorts, project_key=args.project)
+    prompt = build_prompt(content_text, args.niche, args.mode, args.shorts,
+                          project_key=args.project, input_type=input_type)
 
     temp = NICHE_TEMPS[args.niche]
     # Short mode emits {shorts}× the output of a single plan — give Claude more time.
@@ -380,7 +512,8 @@ def main() -> None:
         # Large batches: split into two passes so Claude doesn't truncate.
         half_a = args.shorts // 2
         half_b = args.shorts - half_a
-        prompt_a = build_prompt(script_text, args.niche, args.mode, half_a, project_key=args.project)
+        prompt_a = build_prompt(content_text, args.niche, args.mode, half_a,
+                                project_key=args.project, input_type=input_type)
         parsed_a = _call_and_parse(prompt_a, attempt=1)
         if len(parsed_a) != half_a:
             print(f"WARN: Pass 1 returned {len(parsed_a)} shorts (expected {half_a}).", file=sys.stderr)
@@ -391,7 +524,8 @@ def main() -> None:
             f"Now produce {half_b} MORE shorts covering DIFFERENT angles NOT in the list above. "
             f"No angle, scene, or idea may overlap with the first batch.\n\n"
         )
-        prompt_b = avoid_prefix + build_prompt(script_text, args.niche, args.mode, half_b, project_key=args.project)
+        prompt_b = avoid_prefix + build_prompt(content_text, args.niche, args.mode, half_b,
+                                               project_key=args.project, input_type=input_type)
         parsed_b = _call_and_parse(prompt_b, attempt=2)
         if len(parsed_b) != half_b:
             print(f"WARN: Pass 2 returned {len(parsed_b)} shorts (expected {half_b}).", file=sys.stderr)
@@ -414,9 +548,14 @@ def main() -> None:
                 f"but exactly {args.shorts} are required. "
                 f"You MUST return a JSON array with EXACTLY {args.shorts} elements — no more, no fewer.\n\n"
             )
-            parsed = _call_and_parse(retry_prefix + prompt, attempt=2)
+            retry_prompt = build_prompt(content_text, args.niche, args.mode, args.shorts,
+                                        project_key=args.project, input_type=input_type)
+            parsed = _call_and_parse(retry_prefix + retry_prompt, attempt=2)
 
-    slug = args.slug if args.slug else slug_from_script_path(script_path)
+    if not args.slug:
+        print("ERROR: --slug is required when not using --script", file=sys.stderr)
+        sys.exit(1)
+    slug = args.slug
 
     if args.mode == "short":
         write_shorts(parsed, slug, args)
