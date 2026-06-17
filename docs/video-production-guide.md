@@ -89,6 +89,8 @@ which davinci  # or open DaVinci app
 
 **One PNG per `[SCREEN:]` marker** → save numbered `01_topic.png`, `02_topic.png` to `assets/script_images/<script-stem>/`. Pipeline copies them as b-roll overlays.
 
+**Chart/output `[SCREEN:]` markers ship with their code.** DS YouTube scripts now place the runnable ```python block that produces a plot immediately before its chart `[SCREEN:]` marker (enforced in `prompts/yt_screen_script_agent.md` + `yt_combo_script_agent.md`). Run that block, screenshot the output, save as the marker's PNG — no guessing what the chart should look like. Docs/website `[SCREEN:]` markers carry a `> Links to show on screen:` line with the real URL to pull up on screen.
+
 **1920×1080 or higher.** Renderer uses `objectFit: contain` — different aspect ratio = letterbox on black.
 
 ### Pre-shoot checklist
@@ -183,6 +185,30 @@ Editing checklist:
 - Color grade (see niche specs below)
 - Mix volume (-16 LUFS target, ~-4dB boost on talking head)
 - Export to `assets/video/edited/<slug>.mp4`
+
+### 3b. DS Tutorials — Push Code to GitHub
+
+After editing, push the tutorial code file to GitHub and inject the link into the YT description. Code files live in `~/Desktop/Projects/python-course/` as `{ordinal}_script.ipynb/.py`.
+
+```bash
+python3 scripts/push_tutorial_code.py \
+  --tutorial-num 5 \
+  --date 2026-06-16 \
+  --slug "2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati" \
+  --title "Tutorial 5: Matplotlib + Seaborn"
+```
+
+What it does:
+1. Finds `fifth_script.ipynb` (or `.py`) in `~/Desktop/Projects/python-course/`
+2. Pushes to `github.com/tarunlnmiit/machine_learning` under `python-for-data-science/tutorial-05/`
+3. Writes permalink to `content/derivatives/{week}/{slug}/github_code_url.txt`
+4. Injects GitHub link into `youtube_metadata.json` description
+
+When `inject_worksheet_ctas.py` runs after this, it automatically appends the GitHub link alongside the worksheet link in `[LINKS_PLACEHOLDER]`.
+
+When `upload_youtube.py` runs with `--slug`, it automatically posts the GitHub URL as a **pinned comment** after upload. Pin it in YouTube Studio when prompted.
+
+Auth: requires `gh` CLI authenticated (`gh auth login`).
 
 ---
 
