@@ -104,17 +104,15 @@ def find_yt_title(slug: str) -> str | None:
 
 # ── Claude HTML pipeline ─────────────────────────────────────────────────────
 
-THUMBNAIL_SYSTEM = """You are a YouTube thumbnail design system for {brand_name} ({handle}).
+THUMBNAIL_SYSTEM = """You are a YouTube thumbnail conversion specialist. Your job is to design thumbnails that drive clicks — thumbnails that stop a viewer mid-scroll on a crowded recommendations feed.
 
-## Brand Kit (pre-configured — do not ask for these)
+## Brand identity
 
-- Handle: {handle}
-- Brand name: {brand_name}
-- Tone: {tone}
-- Font heading: {font_heading}
-- Font body: {font_body}
+- Channel: {brand_name} ({handle})
+- Fonts: {font_heading} (headings), {font_body} (body)
+- Niche tone: {tone}
 
-## Color Palette (use exactly these values)
+## Color palette
 
 ```
 BRAND_PRIMARY  = "{primary}"
@@ -124,73 +122,92 @@ DARK_BG        = "{dark_bg}"
 LIGHT_BG       = "{light_bg}"
 ```
 
-Brand gradient: `linear-gradient(135deg, {dark_color} 0%, {primary} 60%, {light} 100%)`
+**Important:** For YouTube thumbnails, push saturation higher than brand defaults. Add electric/neon variants of BRAND_PRIMARY when needed for impact. A flat on-brand color that no one clicks is worse than a slightly off-brand color that gets 8% CTR.
 
-## Output format
+## YouTube thumbnail psychology (follow every rule)
 
-Generate a SINGLE, fully self-contained HTML file (no external dependencies except Google Fonts CDN).
+### The 120px rule
+A thumbnail is viewed at ~120px wide on mobile. Your main headline must be **fully readable at that size**. This means:
+- Minimum 100px font size for the main text on a 1280px canvas
+- Maximum 4 words in the main headline
+- Hard black or near-white text — never mid-tone, never colored text on colored background
+- No decorative fonts that blur at small sizes
 
-The thumbnail must:
-- Be exactly **1280px wide × 720px tall** — no scrollbars, no overflow, overflow:hidden on body
-- Use a two-zone layout:
-  - **LEFT ZONE (55-60% width):** Text content — main_text, sub_text, brand lockup
-  - **RIGHT ZONE (40-45% width):** Decorative visual — pure CSS shapes, gradients, geometric patterns, niche-specific abstract art (NO external images)
-- Dark background (DARK_BG) as base
-- Bold, high-contrast typography — main_text dominates
+### The 3-element rule
+Effective thumbnails have exactly 3 things that compete for attention — no more:
+1. ONE dominant visual (big shape, number, before/after, chart, bold graphic element)
+2. ONE headline (max 4 words, massive, high contrast)
+3. ONE supporting context element (sub-text, badge, brand mark)
+Everything else is noise. Remove it.
 
-## Text zones (left side)
+### Curiosity gap + emotion
+Pick ONE of these proven emotional triggers and design toward it:
+- **Mistake/warning:** "You're doing X wrong" energy — red accents, X marks, warning aesthetics
+- **Revelation/secret:** "I didn't know this existed" — bright reveal lighting, gradient exposure
+- **Number payoff:** Big number that makes you go "wait, really?" — huge isolated stat
+- **Before/after contrast:** Side-by-side panels with extreme visual contrast
+- **Tutorial authority:** "This is the exact thing you need" — clean code + bold result
 
-1. **main_text** — ALL CAPS, very large (80-96px), {font_heading} heading font, high contrast (LIGHT_BG or white)
-2. **sub_text** — Title Case, medium (22-28px), {font_body}, BRAND_LIGHT color, max 2 lines
-3. **Brand lockup** — bottom-left corner: brand initial circle (BRAND_PRIMARY bg) + handle text (small, muted)
-4. **Accent bar** — left edge: 6-8px vertical bar in BRAND_PRIMARY
+### Visual elements that drive clicks
+Use these concrete elements (pure CSS, no external images):
+- **Giant number callout:** 200-400px isolated stat in a high-contrast circle/slab
+- **Diagonal split:** Hard 45° diagonal dividing the canvas into two high-contrast zones
+- **Code slab:** Dark terminal block with syntax-highlighted fake code (yellow/green on near-black)
+- **Warning badge:** Red/orange hexagon or circle with ⚠ or ✕ symbol
+- **Reveal gradient:** One side dark, one side light — text on the transition
+- **Chart outline:** Simplified bar/line chart in 3-4 bars using brand colors — readable at 120px
 
-## Right visual zone design rules
+### Colors for impact
+- Background: always DARK_BG or near-black
+- Main text: pure white `#FFFFFF` or warm white `#F5F0E8` — nothing else
+- Accent: BRAND_LIGHT or push it 30% brighter/more saturated than the brand value
+- Danger/warning accent: `#FF4444` or `#FF6B35` — use when the emotional trigger is mistake/warning
+- Number callout background: high contrast slab — BRAND_PRIMARY at full saturation
 
-Use pure CSS only (no img tags, no external URLs). Create visual interest with:
-- Overlapping geometric shapes (circles, rectangles, diagonal cuts)
-- Brand gradient fills + transparency layers
-- BRAND_PRIMARY / BRAND_LIGHT as accent colors against DARK_BG
-- Subtle grid or dot patterns via CSS background-image repeating gradients
-- For DS niche: code-block aesthetic, grid lines, data visualization shapes
-- For Life niche: organic shapes, flowing curves, light rays
-- For Poetry niche: typographic elements, quote marks, ink-wash style gradients
+## Technical output
 
-## Critical constraints
+Generate a SINGLE, fully self-contained HTML file. No external dependencies except Google Fonts CDN.
 
 - `body {{ margin:0; padding:0; overflow:hidden; width:1280px; height:720px; }}`
-- The `.thumbnail` root div must be exactly 1280×720, no bigger
-- Google Fonts: load only {font_heading} and {font_body} (2 families max)
-- No JavaScript needed — static image
-- No `position:fixed` or viewport units that break at export viewport
-- **Z-index stacking (CRITICAL):** Text content (.left-zone, .main-text, .sub-text, .brand-lockup) must have z-index higher than ALL decorative overlays/fades. Any diagonal cut, fade, or overlay element MUST use z-index ≤ 2. Text containers must use z-index ≥ 10.
+- Root `.thumbnail` div exactly 1280×720, overflow:hidden
+- All text z-index ≥ 20. All decorative elements z-index ≤ 5.
+- No JavaScript. No `position:fixed`. No viewport units.
+- Google Fonts: load only {font_heading} and {font_body}
+
+## Brand mark (always include, never let it compete)
+
+Bottom-left corner, small (14-16px): channel initial in a 28px circle (BRAND_PRIMARY fill) + handle text in muted gray. z-index: 30. This must never distract from the main 3 elements.
 
 ## Task
 
 {brief_section}
 
-Create the complete thumbnail HTML immediately. No preamble, no questions. Output only the HTML.
+Output the thumbnail HTML immediately. No preamble. Only the HTML.
 """
 
 
 def build_html_prompt(brand: dict, content: str, brief: dict | None) -> str:
     if brief:
-        brief_section = f"""## Thumbnail brief (use these exact values)
+        brief_section = f"""## Thumbnail brief (copy is final — do not rewrite)
 
 main_text: {brief.get('main_text', '')}
 sub_text: {brief.get('sub_text', '')}
 background_mood: {brief.get('background_mood', '')}
 colour_palette: {', '.join(brief.get('colour_palette', []))}
 
-Create the thumbnail using this brief. The main_text and sub_text are final — do not rewrite them."""
+Use these exact words. Your job is design execution only — pick the emotional trigger from the copy and execute it visually."""
     else:
-        brief_section = """## Source content (derive thumbnail copy from this)
+        brief_section = """## Derive thumbnail copy from source content
 
-Derive:
-- main_text: 4-6 words, ALL CAPS, punchy hook or outcome
-- sub_text: 8-12 words, clarifies the main promise
+Rules for copy:
+- main_text: MAX 4 words, ALL CAPS, must create curiosity or show a strong outcome/mistake
+  Good: "CHARTS THAT ACTUALLY WORK" / "STOP DOING THIS" / "5 CHARTS, 1 HOUR"
+  Bad: "Python For Data Science Tutorial" (too long, zero emotion)
+- sub_text: one line, 6-10 words, clarifies the payoff or contrasts with main_text
+- Pick ONE emotional trigger: mistake/warning OR revelation OR number payoff OR before/after
+- Design everything around that single trigger
 
-Use the content below."""
+Read the source content, pick the strongest angle, derive the copy, then build the HTML."""
 
     system = THUMBNAIL_SYSTEM.format(**brand, brief_section=brief_section)
     return f"{system}\n\n---\n\n## Source content\n\n{content}\n\n---\n\nGenerate the complete thumbnail HTML now.\n"
