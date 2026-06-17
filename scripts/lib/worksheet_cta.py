@@ -233,6 +233,15 @@ def inject_worksheet_ctas_to_dir(out_dir: Path, worksheet_slug: str, niche: str)
             data = json.loads(yt_file.read_text(encoding="utf-8"))
             if "[LINKS_PLACEHOLDER]" in data.get("description", ""):
                 ws_block = f"📋 Free worksheet — {title or 'Companion worksheet'}:\n{url}"
+
+                # Also append GitHub code link if available (written by push_tutorial_code.py)
+                github_url_file = out_dir / "github_code_url.txt"
+                if github_url_file.exists():
+                    from .github_links import github_yt_description_snippet, has_github_snippet
+                    github_url = github_url_file.read_text(encoding="utf-8").strip()
+                    if github_url and not has_github_snippet(data["description"]):
+                        ws_block = ws_block + "\n\n" + github_yt_description_snippet(github_url)
+
                 data["description"] = data["description"].replace("[LINKS_PLACEHOLDER]", ws_block)
                 yt_file.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
                 modified.append(str(yt_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
