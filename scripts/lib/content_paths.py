@@ -68,3 +68,13 @@ def edit_plan_path(date_str: str, slug: str) -> Path:
 def remotion_videos_path(date_str: str, filename: str) -> Path:
 	"""Path to source videos in remotion."""
 	return REPO / "remotion" / "public" / "videos" / get_iso_week(date_str) / filename
+
+
+def podcast_audio_path(date_str: str, slug: str) -> Path:
+	"""Path to final podcast MP3 (voice + BGM mixed). slug = video stem."""
+	return REPO / "assets" / "audio" / get_iso_week(date_str) / f"{slug}_podcast.mp3"
+
+
+def podcast_bgm_dir(niche: str) -> Path:
+	"""Path to BGM tracks directory for a niche (life or poetry)."""
+	return REPO / "assets" / "audio" / "bgm" / niche

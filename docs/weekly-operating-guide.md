@@ -45,10 +45,19 @@ output/animations/{week}/{slug}.mp4          ← PRIMARY output
     ├── [Thursday] upload_youtube.py → YouTube (long-form)
     │   @breathofdatascience / @breathoflife_ / @breathofpoetry
     │
+    ├── [Thursday] produce_podcast.py → Spotify for Podcasters (Life + Poetry only)
+    │   assets/audio/{week}/{slug}_podcast.mp3  ← voice + BGM mixed
+    │   Auto-uploads to Breath of Life + Breath of Poetry shows
+    │
     └── [Friday] upload_youtube_shorts_batch.py → YouTube Shorts (scheduled)
         python3 scripts/upload_youtube_shorts_batch.py \
             --slug SLUG --publish-week YYYY-Wnn [--dry-run] [--pin-comment]
 ```
+
+**Podcast publishing schedule:**
+- Breath of Life → Thursday (same day as @breathoflife_ YouTube upload)
+- Breath of Poetry → Thursday (same day as @breathofpoetry YouTube upload)
+- DS niche: no podcast
 
 ---
 

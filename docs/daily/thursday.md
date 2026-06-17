@@ -254,7 +254,44 @@ Or manually: open Notion → Contents DB → find each row → Status → Upload
 
 ---
 
-## Step 8 — Verify + refresh tracker (~3 min)
+## Step 8 — Produce + upload podcasts (~10 min)
+
+Life and Poetry YouTube videos double as podcast episodes. This step extracts audio, mixes in low-volume BGM, and uploads to Spotify for Podcasters automatically.
+
+**First time only** — log in to Spotify for Podcasters:
+```bash
+python3 scripts/produce_podcast.py --week 2026-W{nn} --setup-spotify
+# Browser opens → log in → close browser → session saved
+```
+
+**Every week:**
+```bash
+python3 scripts/produce_podcast.py --week 2026-W{nn}
+# Runs both Life + Poetry
+```
+
+Or one niche at a time:
+```bash
+python3 scripts/produce_podcast.py --week 2026-W{nn} --niche life
+python3 scripts/produce_podcast.py --week 2026-W{nn} --niche poetry
+```
+
+Audio-only (skip upload):
+```bash
+python3 scripts/produce_podcast.py --week 2026-W{nn} --no-upload
+```
+
+**Outputs:**
+- `assets/audio/{week}/{slug}_podcast.mp3` — final episode with BGM
+- `content/derivatives/{week}/{slug}/{slug}_podcast_shownotes.md` — show notes
+
+**Requirements:**
+- `SPOTIFY_LIFE_SHOW_NAME` and `SPOTIFY_POETRY_SHOW_NAME` in `.env` (exact show names as they appear in Spotify for Podcasters dashboard)
+- BGM tracks in `assets/audio/bgm/` — run `python3 scripts/download_bgm.py` once if empty
+
+---
+
+## Step 9 — Verify + refresh tracker (~3 min)
 
 ```bash
 # Confirm all 3 videos + blogs have URLs in derivatives
