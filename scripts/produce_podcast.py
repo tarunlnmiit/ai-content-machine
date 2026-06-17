@@ -57,16 +57,34 @@ SHOW_NAME_ENV: dict[str, str] = {
 
 # ── Video discovery ────────────────────────────────────────────────────────────
 
-def find_video(week: str, niche: str) -> Path:
+def find_video(week: str, niche: str, archive_dir: Path | None = None) -> Path:
     """Find the hyperframes video for a given week + niche."""
+    if archive_dir is not None:
+        # Archive structure: videos may be in niche subdirs, named with -aug.mp4 suffix
+        search_root = archive_dir / "assets" / "hyperframes" / week
+        if not search_root.exists():
+            raise FileNotFoundError(f"No hyperframes directory in archive: {search_root}")
+        candidates = [
+            p for p in search_root.rglob("*.mp4")
+            if f"_{niche}" in p.name or f"-{niche}-" in p.name
+            if p.name.endswith("-aug.mp4")
+            if "-short-" not in p.name
+        ]
+        if not candidates:
+            raise FileNotFoundError(
+                f"No {niche} long-form video (*-aug.mp4) found under {search_root}"
+            )
+        matches = sorted(candidates)
+        if len(matches) > 1:
+            print(f"  [warn] Multiple {niche} archive videos found; using latest: {matches[-1].name}")
+        return matches[-1]
+
     week_dir = HYPERFRAMES_DIR / week
     if not week_dir.exists():
         raise FileNotFoundError(f"No hyperframes directory for {week}: {week_dir}")
-
     pattern = f"*_{niche}_*.mp4"
     matches = sorted(week_dir.glob(pattern))
     if not matches:
-        # Also try without the trailing match (e.g. 2026-06-13_life_w24.mp4)
         matches = sorted(week_dir.glob(f"*_{niche}*.mp4"))
     if not matches:
         raise FileNotFoundError(f"No {niche} video found in {week_dir}/  (pattern: {pattern})")
@@ -75,12 +93,12 @@ def find_video(week: str, niche: str) -> Path:
     return matches[-1]
 
 
-def find_derivatives_slug(week: str, niche: str) -> str | None:
+def find_derivatives_slug(week: str, niche: str, archive_dir: Path | None = None) -> str | None:
     """Find the derivatives slug matching this week + niche."""
-    week_dir = DERIVATIVES_DIR / week
+    base = (archive_dir / "content" / "derivatives") if archive_dir else DERIVATIVES_DIR
+    week_dir = base / week
     if not week_dir.exists():
         return None
-    # Slug format: {date}_{niche-tags}_{title}
     niche_tag = "life" if niche == "life" else "poetry"
     for slug_dir in sorted(week_dir.iterdir()):
         if slug_dir.is_dir() and f"_{niche_tag}_" in slug_dir.name:
@@ -90,8 +108,9 @@ def find_derivatives_slug(week: str, niche: str) -> str | None:
 
 # ── Metadata ───────────────────────────────────────────────────────────────────
 
-def load_youtube_metadata(week: str, slug: str) -> dict:
-    meta_path = DERIVATIVES_DIR / week / slug / "youtube_metadata.json"
+def load_youtube_metadata(week: str, slug: str, derivatives_base: Path | None = None) -> dict:
+    base = derivatives_base if derivatives_base else DERIVATIVES_DIR
+    meta_path = base / week / slug / "youtube_metadata.json"
     if not meta_path.exists():
         return {}
     return json.loads(meta_path.read_text())
@@ -319,18 +338,28 @@ def upload_to_spotify(
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
-def process_niche(week: str, niche: str, *, dry_run: bool, no_upload: bool) -> None:
+def process_niche(
+    week: str,
+    niche: str,
+    *,
+    dry_run: bool,
+    no_upload: bool,
+    archive_dir: Path | None = None,
+) -> None:
     print(f"\n{'='*50}")
     print(f"  Niche: {niche.upper()}  |  Week: {week}")
+    if archive_dir:
+        print(f"  Archive: {archive_dir}")
     print(f"{'='*50}")
 
     # 1. Find video
-    video = find_video(week, niche)
+    video = find_video(week, niche, archive_dir=archive_dir)
     print(f"  Video: {video.name}")
 
     # 2. Load metadata
-    slug = find_derivatives_slug(week, niche)
-    meta = load_youtube_metadata(week, slug) if slug else {}
+    derivatives_base = (archive_dir / "content" / "derivatives") if archive_dir else None
+    slug = find_derivatives_slug(week, niche, archive_dir=archive_dir)
+    meta = load_youtube_metadata(week, slug, derivatives_base=derivatives_base) if slug else {}
     title = meta.get("title", f"{niche.capitalize()} — {week}")
     description = format_podcast_description(meta.get("description", ""))
 
@@ -368,6 +397,13 @@ def main() -> None:
         action="store_true",
         help="Open browser (non-headless) for manual Spotify login, then save session",
     )
+    parser.add_argument(
+        "--archive-dir",
+        type=Path,
+        default=None,
+        metavar="PATH",
+        help="Root of archived week directory (e.g. /Volumes/Archive/content-archive/2026/W21)",
+    )
     args = parser.parse_args()
 
     niches = [args.niche] if args.niche else ["life", "poetry"]
@@ -381,9 +417,18 @@ def main() -> None:
         print("Session saved. Run without --setup-spotify for headless uploads.")
         return
 
+    archive_dir = args.archive_dir
+    if archive_dir and not archive_dir.exists():
+        sys.exit(f"ERROR: --archive-dir does not exist: {archive_dir}")
+
     for niche in niches:
         try:
-            process_niche(args.week, niche, dry_run=args.dry_run, no_upload=args.no_upload)
+            process_niche(
+                args.week, niche,
+                dry_run=args.dry_run,
+                no_upload=args.no_upload,
+                archive_dir=archive_dir,
+            )
         except FileNotFoundError as e:
             print(f"  [error] {e}")
         except EnvironmentError as e:
