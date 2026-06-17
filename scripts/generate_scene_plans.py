@@ -458,6 +458,7 @@ def main() -> None:
     parser.add_argument("--dry-run", action="store_true", help="Print plan, don't write file")
     parser.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     parser.add_argument("--no-cache", action="store_true", help="Bypass cache, call Claude fresh")
+    parser.add_argument("--force", action="store_true", help="Overwrite existing scene-plan files")
     args = parser.parse_args()
 
     if not any([args.captions, args.reel, args.script]):
@@ -473,6 +474,22 @@ def main() -> None:
     # Derive slug for output path when using captions/reel without explicit --slug
     if not args.slug and args.script:
         args.slug = slug_from_script_path(Path(args.script))
+
+    # Skip-if-exists guard (before any Claude call — no wasted tokens)
+    if not args.dry_run and not args.force and args.slug:
+        if args.mode == "overlay":
+            _existing = output_path(args.week, args.slug, args.mode)
+            if _existing.exists():
+                print(f"[skip] {_existing.relative_to(REPO)} already exists (--force to overwrite)")
+                return
+        else:
+            _existing_shorts = [
+                short_output_path(args.week, args.slug, f"s{i + 1:02d}")
+                for i in range(args.shorts)
+            ]
+            if all(p.exists() for p in _existing_shorts):
+                print(f"[skip] All {args.shorts} shorts for '{args.slug}' already exist (--force to overwrite)")
+                return
 
     if args.project and args.project not in project_keys():
         parser.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
