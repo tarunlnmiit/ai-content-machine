@@ -349,31 +349,72 @@ def main() -> None:
 
     temp = NICHE_TEMPS[args.niche]
     # Short mode emits {shorts}× the output of a single plan — give Claude more time.
-    timeout = 600 if args.mode == "short" else 180
-    print(f"Calling Claude Opus 4.8 (temp={temp}, mode={args.mode}, "
+    timeout = 600 if args.mode == "short" else 360
+    _model_id = model_for("scene_plan")
+    print(f"Calling {_model_id} (temp={temp}, mode={args.mode}, "
           f"{f'shorts={args.shorts}, ' if args.mode == 'short' else ''}"
           f"cache={'off' if args.no_cache else 'on'})...", file=sys.stderr)
 
-    raw = call_claude(
-        prompt,
-        cache=not args.no_cache,
-        model=model_for("scene_plan"),
-        temperature=temp,
-        timeout=timeout,
-        stream=True,
-        progress_label=f"Analyzing script for {args.niche.upper()} scene plan",
-    )
+    def _call_and_parse(p: str, attempt: int) -> list:
+        raw = call_claude(
+            p,
+            cache=not args.no_cache,
+            model=model_for("scene_plan"),
+            temperature=temp,
+            timeout=timeout,
+            stream=True,
+            progress_label=f"Analyzing script for {args.niche.upper()} scene plan (attempt {attempt})",
+        )
+        try:
+            result = extract_json(raw)
+        except json.JSONDecodeError as e:
+            print(f"ERROR: Claude returned invalid JSON: {e}", file=sys.stderr)
+            print("Raw output (first 500 chars):", raw[:500], file=sys.stderr)
+            sys.exit(1)
+        if not isinstance(result, list):
+            print(f"ERROR: Expected JSON array, got {type(result)}", file=sys.stderr)
+            sys.exit(1)
+        return result
 
-    try:
-        parsed = extract_json(raw)
-    except json.JSONDecodeError as e:
-        print(f"ERROR: Claude returned invalid JSON: {e}", file=sys.stderr)
-        print("Raw output (first 500 chars):", raw[:500], file=sys.stderr)
-        sys.exit(1)
+    if args.mode == "short" and args.shorts > 7:
+        # Large batches: split into two passes so Claude doesn't truncate.
+        half_a = args.shorts // 2
+        half_b = args.shorts - half_a
+        prompt_a = build_prompt(script_text, args.niche, args.mode, half_a, project_key=args.project)
+        parsed_a = _call_and_parse(prompt_a, attempt=1)
+        if len(parsed_a) != half_a:
+            print(f"WARN: Pass 1 returned {len(parsed_a)} shorts (expected {half_a}).", file=sys.stderr)
+        used_angles = "\n".join(f"- {s.get('angle', '')}" for s in parsed_a)
+        avoid_prefix = (
+            f"PASS 2 — you already produced the first {half_a} shorts covering these angles:\n"
+            f"{used_angles}\n\n"
+            f"Now produce {half_b} MORE shorts covering DIFFERENT angles NOT in the list above. "
+            f"No angle, scene, or idea may overlap with the first batch.\n\n"
+        )
+        prompt_b = avoid_prefix + build_prompt(script_text, args.niche, args.mode, half_b, project_key=args.project)
+        parsed_b = _call_and_parse(prompt_b, attempt=2)
+        if len(parsed_b) != half_b:
+            print(f"WARN: Pass 2 returned {len(parsed_b)} shorts (expected {half_b}).", file=sys.stderr)
+        # Re-index shortIds across both passes to avoid collisions.
+        for i, s in enumerate(parsed_a):
+            s["shortId"] = f"s{i + 1:02d}"
+        for i, s in enumerate(parsed_b):
+            s["shortId"] = f"s{half_a + i + 1:02d}"
+        parsed = parsed_a + parsed_b
+    else:
+        parsed = _call_and_parse(prompt, attempt=1)
 
-    if not isinstance(parsed, list):
-        print(f"ERROR: Expected JSON array, got {type(parsed)}", file=sys.stderr)
-        sys.exit(1)
+        if args.mode == "short" and len(parsed) != args.shorts:
+            print(
+                f"WARN: Attempt 1 returned {len(parsed)} shorts (expected {args.shorts}). Retrying with stricter instruction...",
+                file=sys.stderr,
+            )
+            retry_prefix = (
+                f"CRITICAL COUNT CORRECTION: Your previous attempt returned {len(parsed)} shorts "
+                f"but exactly {args.shorts} are required. "
+                f"You MUST return a JSON array with EXACTLY {args.shorts} elements — no more, no fewer.\n\n"
+            )
+            parsed = _call_and_parse(retry_prefix + prompt, attempt=2)
 
     slug = args.slug if args.slug else slug_from_script_path(script_path)
 

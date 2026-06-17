@@ -48,6 +48,18 @@ performance note → niche fit.
 - "Don't fix me. Just stay."
 - Performance: counter-programs the feed's forced positivity; strong saves. **Poetry + Life.**
 
+### 9. Fear Trigger — name what they're already scared of but won't say
+`[Specific fear] + [why it's valid] + [the harder truth underneath]`
+- "The thing nobody tells you about anxiety: it gets quieter, but it doesn't leave."
+- "You're not afraid of failure. You're afraid that failure means you were never good enough."
+- Performance: high saves + comments; people tag others silently. Fear that names itself = relief. **Poetry + Life.**
+
+### 10. Curiosity Gap / Revelation — "I didn't know until..."
+`[Common belief] + [what's actually true] + [why it changes everything]`
+- "I thought silence meant peace. It didn't. It meant I'd run out of things to pretend."
+- "What I thought was strength turned out to be the inability to ask for help."
+- Performance: strong shares; curiosity drives the click, resonance drives the save. **Poetry + Life.**
+
 ## How to use across formats
 - **Blog/YouTube title:** pick the archetype matching the piece's emotional core (Specific Loss for grief poems;
   Social Proof Inversion / Bold Declaration for life).

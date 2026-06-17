@@ -28,10 +28,18 @@ SEEDS = {
         "how to be", "how to stop", "why am i",
         "self improvement", "mental health", "psychology of",
         "life lessons", "habits to", "productivity",
+        "why do i feel", "scared of", "signs you are",
+        "nobody tells you", "what happens when", "how to stop being afraid",
+        "anxiety about", "why i can't", "things you didn't know about yourself",
+        "truth about", "what nobody tells you", "afraid of being",
     ],
     "poetry_quotes": [
         "poem about", "quote about", "poetry on",
         "best quotes", "deep poem",
+        "poem about fear", "poem about being broken", "poem about loneliness",
+        "poem about toxic", "dark poem", "poem about pain", "poem about grief",
+        "quotes about being lost", "quotes about feeling empty",
+        "poem about anxiety", "poem about trauma", "poem about missing someone",
     ],
 }
 

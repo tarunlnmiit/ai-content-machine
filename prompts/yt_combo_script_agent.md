@@ -163,7 +163,7 @@ Use `[BROLL: description]` for conceptual B-roll sections (openers, problem fram
 Use `[SCREEN: description]` for technical screen state transitions.
 Use `[PAUSE]` for deliberate breath points.
 Include ALL code inline as fenced ```python blocks — **never** use `[CODE_INSERT:]` placeholders. Every code block must be complete and runnable (imports included, sample data provided with `numpy` or `pandas` where needed, output-producing). A script with a placeholder instead of real code is unacceptable.
-Use `[PERSONAL_INSERT: description]` for anecdotes or specific memory.
+Use `[PERSONAL_INSERT: ...]` for personal anecdotes — write the actual memory in full, first-person prose inside the brackets, exactly as Tarun would say it on camera. Never use a vague description placeholder ("a memory of X") — write the words themselves.
 
 ---
 

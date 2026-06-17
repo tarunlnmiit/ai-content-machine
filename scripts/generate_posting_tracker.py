@@ -85,8 +85,11 @@ WEEKLY = [
     ("Fri", "12:00 PM", "Poetry", "Twitter",      "Post"),
     # Saturday
     ("Sat", "02:00 PM", "DS",     "FB/IG",        "Post"),
+    ("Sat", "03:00 PM", "DS",     "Twitter",      "Tweet IG Post"),
+    ("Sat", "03:30 PM", "Life",   "Twitter",      "Tweet IG Post"),
     ("Sat", "09:00 PM", "Poetry", "Twitter",      "Twitter Thread"),
     ("Sat", "12:00 PM", "Poetry", "Twitter",      "Poll (manual)"),
+    ("Sat", "01:00 PM", "Poetry", "Twitter",      "Tweet IG Post"),
 ]
 
 # (platform, time, niche, format) — repeated every day Mon–Sun
@@ -152,8 +155,8 @@ def _parse_date(ts: str | None) -> datetime.date | None:
     return datetime.datetime.fromisoformat(ts).date()
 
 def load_content_data(year: int, repo_root: str) -> dict:
-    """Return {(wk, niche): {"title", "slug", "publish_dates": {platform: date}}}."""
-    data = {}
+    """Return {(wk, niche): [{"title", "slug", "publish_dates": {platform: date}}, ...]}."""
+    data: dict = {}
     deriv_dir = os.path.join(repo_root, "content", "derivatives")
     if not os.path.isdir(deriv_dir):
         return data
@@ -162,7 +165,7 @@ def load_content_data(year: int, repo_root: str) -> dict:
             continue
         wk = int(week_dir.split("-W")[1])
         week_path = os.path.join(deriv_dir, week_dir)
-        for slug in os.listdir(week_path):
+        for slug in sorted(os.listdir(week_path)):
             niche = detect_niche(slug)
             if not niche:
                 continue
@@ -202,11 +205,12 @@ def load_content_data(year: int, repo_root: str) -> dict:
                     if social.get(key):
                         publish_dates[plat] = _parse_date(social[key])
 
-            data[(wk, niche)] = {
+            item = {
                 "title":         title,
                 "slug":          slug,
                 "publish_dates": publish_dates,
             }
+            data.setdefault((wk, niche), []).append(item)
     return data
 
 
@@ -264,69 +268,72 @@ def make_rows(year: int, content_data: dict) -> list:
         wl = week_label(wk)
         mon_date = datetime.date.fromisocalendar(year, wk, 1)
 
-        empty_info = {"title": "", "slug": "", "publish_dates": {}}
-        week_info = {n: content_data.get((wk, n), empty_info) for n in ("DS", "Life", "Poetry")}
+        empty_list = [{"title": "", "slug": "", "publish_dates": {}}]
+        week_info = {n: content_data.get((wk, n), empty_list) for n in ("DS", "Life", "Poetry")}
 
-        # Long-form (same week as content)
+        # Long-form rows — one per content item per niche
         for niche, platform, fmt in LONGFORM_PLATFORMS:
             date = mon_date
             if date.year != year:
                 continue
-            pub = week_info[niche]["publish_dates"]
-            posting_date = pub.get(platform) or date
-            rows.append({
-                "date":         date,
-                "posting_date": posting_date,
-                "iso_week":     wl,
-                "slug":         week_info[niche]["slug"],
-                "day":          "Mon",
-                "time":         "—",
-                "niche":        niche,
-                "platform":     platform,
-                "format":       fmt,
-                "title":        week_info[niche]["title"],
-                "status":       "Idea",
-            })
+            for item in week_info[niche]:
+                pub = item["publish_dates"]
+                posting_date = pub.get(platform) or date
+                rows.append({
+                    "date":         date,
+                    "posting_date": posting_date,
+                    "iso_week":     wl,
+                    "slug":         item["slug"],
+                    "day":          "Mon",
+                    "time":         "—",
+                    "niche":        niche,
+                    "platform":     platform,
+                    "format":       fmt,
+                    "title":        item["title"],
+                    "status":       "Idea",
+                })
 
-        # Weekly social posts (next week)
+        # Weekly social posts (next week) — use primary (first) item per niche
         for day, time_str, niche, platform, fmt in WEEKLY:
             date = datetime.date.fromisocalendar(year, wk, DAY_NUM[day])
             if date.year != year:
                 continue
-            pub = week_info[niche]["publish_dates"]
+            item = week_info[niche][0]
+            pub = item["publish_dates"]
             posting_date = pub.get(platform) or (date + datetime.timedelta(days=7))
             rows.append({
                 "date":         date,
                 "posting_date": posting_date,
                 "iso_week":     wl,
-                "slug":         week_info[niche]["slug"],
+                "slug":         item["slug"],
                 "day":          day,
                 "time":         time_str,
                 "niche":        niche,
                 "platform":     platform,
                 "format":       fmt,
-                "title":        week_info[niche]["title"],
+                "title":        item["title"],
                 "status":       "Idea",
             })
 
-        # Daily reels (next week)
+        # Daily reels (next week) — use primary item per niche
         for day in DAYS:
             date = datetime.date.fromisocalendar(year, wk, DAY_NUM[day])
             if date.year != year:
                 continue
             for platform, time_str, niche, fmt in DAILY:
                 posting_date = date + datetime.timedelta(days=7)
+                item = week_info[niche][0]
                 rows.append({
                     "date":         date,
                     "posting_date": posting_date,
                     "iso_week":     wl,
-                    "slug":         week_info[niche]["slug"],
+                    "slug":         item["slug"],
                     "day":          day,
                     "time":         time_str,
                     "niche":        niche,
                     "platform":     platform,
                     "format":       fmt,
-                    "title":        week_info[niche]["title"],
+                    "title":        item["title"],
                     "status":       "Idea",
                 })
 

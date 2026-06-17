@@ -71,9 +71,26 @@ If LinkedIn count = 0: run `python3 scripts/load_posts.py` on Monday.
 
 ---
 
+## Step 5 — Evergreen teasers (optional, ~10 min)
+
+The week's analytics surface which old pieces still pull. Turn a couple into teasers + backlinks
+and post them by hand this week. Pick the back-catalogue winners from `weekly_insights.md`.
+
+```bash
+python3 scripts/teaser_from_published.py --url <youtube-or-medium-url> --dry-run   # preview
+python3 scripts/teaser_from_published.py --urls urls.txt                            # batch
+```
+
+Output → `content/derivatives/{week}/{slug}/` (`*_teaser.txt` + `teasers.md` bundle), each with a
+UTM backlink. Tag-existing instead: `--inject-link content/derivatives/{week}/{slug} --url <url>`.
+Full reference: `docs/medium-repurposing-guide.md`.
+
+---
+
 ## Checklist
 
 - [ ] `weekly_insights.md` read + notes added to `research_log.txt`
 - [ ] `master_brief.md` read — ready for Monday topic picks
 - [ ] Ideas synced to Notion
 - [ ] Scheduler running, LinkedIn queue ≥ 3 pending
+- [ ] (Optional) 1–2 evergreen teasers generated from back catalogue

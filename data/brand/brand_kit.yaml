@@ -4,7 +4,7 @@
 
 # ── Global identity ────────────────────────────────────────────────
 creator: "Tarun Gupta"
-handle: "@mistakenlyhuman"    # Instagram handle (all niches)
+handle: "@mistakenlyhuman"    # Instagram handle (life + poetry niches)
 
 # ── Color palette ──────────────────────────────────────────────────
 colors:
@@ -28,6 +28,7 @@ niches:
   data_science_tech:
     label: "Data Science & Tech"
     brand_name: "Breath of Data Science"
+    handle: "@breathofdatascience"
     primary_color: "#6B8FA8"    # slate blue
     light_color:   "#96BAD0"    # blue lightened
     dark_color:    "#3D5F75"    # blue darkened

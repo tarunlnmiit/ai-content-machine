@@ -63,7 +63,7 @@ End with: `[BROLL: opening visual description]` — editor hint for a cutaway he
 
 **[Section title: specific, benefit-forward]**
 
-Establish the central idea or tension. Use a story, a specific moment, or an observation to anchor the abstract. Personal anecdote is ideal — mark with `[PERSONAL_INSERT: brief description]` if Tarun needs to fill it in.
+Establish the central idea or tension. Use a story, a specific moment, or an observation to anchor the abstract. Personal anecdote is ideal — write it in full first-person prose using `[PERSONAL_INSERT: ...]`, exactly as Tarun would say it on camera. Never use a description placeholder ("a memory of X") — write the actual words.
 
 End with: `[BROLL: visual description for this section]` — editor cutaway hint.
 
@@ -140,7 +140,7 @@ Then the script begins as continuous prose, no headers inside.
 
 Use `[PAUSE]` inline for deliberate breath/cut points.
 Use `[BROLL: description]` at end of each section as an editorial hint — good moment to cut to B-roll during editing.
-Use `[PERSONAL_INSERT: description]` where Tarun's specific memory is needed.
+Use `[PERSONAL_INSERT: ...]` where Tarun's specific memory is needed — write the actual memory in full, first-person prose inside the brackets, exactly as Tarun would say it on camera. Never use a vague description placeholder.
 Use `[MUSIC_CUE: description]` only sparingly, where a background shift genuinely serves the moment.
 
 ### Animation tags
@@ -179,7 +179,7 @@ Every script must include exactly **three** `[ANIMATION:]` markers — rendered 
 - [ ] [PAUSE] markers placed at breath/landing points
 - [ ] Each section ends with [BROLL:] cue (editorial hint only — not a voiceover section)
 - [ ] Script works as audio-only podcast (no B-roll dependency)
-- [ ] [PERSONAL_INSERT] sections flagged with clear notes
+- [ ] [PERSONAL_INSERT] sections written in full first-person prose — no description placeholders
 - [ ] Core insight/feeling from source preserved
 - [ ] 1–2 human desires woven through the piece
 - [ ] Opening hooks immediately (no setup)

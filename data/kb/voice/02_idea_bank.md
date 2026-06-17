@@ -30,6 +30,38 @@ Format per idea: **Hook → core feeling → the turn → permission/CTA**.
 10. **The one practice + its real cost story** — one habit, grounded in a moment it actually mattered (burnout, a
     distracted dinner). → Hook: Social Proof Inversion.
 
+## High-Emotion Clickbait Themes (fear + curiosity)
+
+These lean harder on fear, dark truth, and curiosity gaps. Use when the goal is scroll-stopping virality. Still requires authenticity (no manufactured urgency — see `04_authenticity_guardrail.md`).
+
+### Poetry — fear / dark emotion
+
+11. **The thing that scares you at 3am** — not monsters, but the thought you keep circling: that you're running out of time, that people don't actually know you, that you'll always feel this way.
+    → Hook: Fear Trigger. `"It's 3am and the thought is back — the one that knows your name."`
+
+12. **What grief actually looks like** — not crying. Laughing at the wrong moment. Forgetting for 20 minutes. The chair still being in its place.
+    → Hook: Specific Loss. Specificity = the highest-retention lane for poetry.
+
+13. **The version of you nobody sees** — surfaces when you're alone and the performance stops. That version is honest in ways the public one never is.
+    → Hook: Contrarian Mirror + Fear. `"Who are you when there's no one left to perform for?"`
+
+14. **What you traded without knowing** — the quiet cost of choosing safety over aliveness; security over feeling something.
+    → Hook: Curiosity Gap. `"You didn't lose the fire. You traded it for something that felt like peace."`
+
+### Life — fear / curiosity
+
+15. **The slow fade nobody talks about** — how you stop wanting things and call it maturity. How desire quietly exits and you mistake numbness for growth.
+    → Hook: Fear Trigger. `"Nobody tells you that one day you'll stop wanting things — and not even notice."`
+
+16. **What your habits are actually saying** — not "I'm productive" but "I'm afraid of the empty hour." The habit isn't the solution, it's the avoidance.
+    → Hook: Curiosity Gap / Revelation. Strong carousel + reel angle.
+
+17. **The lie you've been telling yourself for years** — framed as confession, not accusation. I told myself I was waiting for the right time. The right time was a story I told to avoid starting.
+    → Hook: Bold Declaration + Fear. `"The most dangerous lies are the ones that almost make sense."`
+
+18. **Why smart people stay stuck** — specific mechanism: overthinking as identity protection. Being confused keeps you from having to be wrong.
+    → Hook: Open Question + Curiosity. `"You're not overthinking because you're careful. You're overthinking because being wrong terrifies you."`
+
 ## Using the bank in a blog-first flow
 - Pick an idea → it becomes the **blog angle** (use the matching archetype for the title).
 - The blog's most resonant 30-45s passage becomes the **reel/clip hook + arc**.

@@ -42,6 +42,10 @@ cat data/ideas/weekly_ideas.md
 cat data/kb/master_brief.md  # voice context
 ```
 
+**Idea scoring (updated):** Poetry ideas now rank higher when titles contain fear, pain, curiosity-gap, or dark-emotion signals. Prefer a fear/curiosity-trigger title over a soft contemplative one — the scoring already surfaces these first.
+
+**Hook reference:** `data/kb/voice/01_hook_library.md` — archetypes 9 (Fear Trigger) and 10 (Curiosity Gap) are new. High-emotion idea bank: `data/kb/voice/02_idea_bank.md` themes 11–14 (3am fear, grief specifics, hidden self, what you traded). Use these if the auto-ranked list feels generic.
+
 ### Generate from a poem/theme
 ```bash
 python3 scripts/produce_blog.py \

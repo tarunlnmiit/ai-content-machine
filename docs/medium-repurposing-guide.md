@@ -23,6 +23,51 @@
 
 ---
 
+## Quick Teaser + Backlink — Existing Published Pieces
+
+When you already have a published **YouTube video** or **Medium blog** and just want a short
+teaser of the *whole thing* plus a link back to it (manual posting — no scheduler), use
+`scripts/teaser_from_published.py`. It writes copy-paste-ready files with the UTM backlink
+already in the body.
+
+```bash
+# Single piece (niche auto-detected; --niche to force)
+python3 scripts/teaser_from_published.py --url https://medium.com/@tarun-gupta/<id> --niche ds
+python3 scripts/teaser_from_published.py --url https://youtu.be/<id> --niche poetry
+
+# Preview without writing
+python3 scripts/teaser_from_published.py --url <URL> --dry-run
+
+# Batch — one URL per line: `url[, niche][, project]`  ('#' comments allowed)
+python3 scripts/teaser_from_published.py --urls urls.txt
+
+# Pick platforms (default: all five)
+python3 scripts/teaser_from_published.py --url <URL> --platforms twitter linkedin newsletter
+```
+
+**Where text comes from:** YouTube → transcript (via `youtube-transcript-api`) + title/channel
+via oEmbed. Medium → article scrape, falling back to the local `content/blogs/**/*.md` when the
+URL is in `output/published/medium_posts.json` (handles Medium's bot wall).
+
+**Output** → `content/derivatives/{week}/{slug}/`:
+`twitter_teaser.txt`, `linkedin_teaser.txt`, `instagram_teaser.txt`, `threads_teaser.txt`,
+`newsletter_teaser.txt`, plus `teasers.md` (all-in-one bundle) and `source.json`.
+Each post ends with a UTM-tagged backlink (`utm_source` / `utm_medium` / `utm_campaign` /
+`utm_content=<slug>`). Default campaign `evergreen-repurpose` (`--campaign` to change).
+
+**Tag existing posts instead of writing new ones** — append the backlink to derivative files
+already in a slug folder (idempotent; safe to re-run):
+
+```bash
+python3 scripts/teaser_from_published.py \
+  --inject-link content/derivatives/2026-W22/<slug> \
+  --url https://medium.com/@tarun-gupta/<id>
+```
+
+Then schedule each post **by hand** on the platform. No CSV / Metricool / Publer step.
+
+---
+
 ## Weekly Batch Workflow (Repeating)
 
 Each week: **1 Medium blog → 1 YouTube video + 1 podcast episode + 4 social posts**

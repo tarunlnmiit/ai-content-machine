@@ -304,6 +304,9 @@ Weekly per active project:
 5. Star attribution lands automatically in the Sunday `collect_analytics.py` run
    (GitHub stars + 7-day delta in `weekly_insights.md`).
 
+> Hands-on daily version + weekly rotation log: [`daily/tuesday.md` → Step 2b — Weekly combo reel](daily/tuesday.md).
+> Idea bank: `data/kb/reels/working_combos.md`.
+
 ---
 
 ## Content Buffer
@@ -396,11 +399,26 @@ Free Sunday? Skip daily grind. Use **[Sunday Batch Playbook](sunday-batch.md)** 
 # Python packages
 pip install openai-whisper nltk anthropic python-dotenv
 
+# Teasers from existing published pieces (scripts/teaser_from_published.py)
+pip install youtube-transcript-api requests beautifulsoup4
+
 # ffmpeg (required for Whisper + caption generation)
 brew install ffmpeg
 
 # Whisper
 pip install openai-whisper
+```
+
+### Teasers + backlinks from existing published content
+
+`scripts/teaser_from_published.py` turns an already-published YouTube/Medium URL into short
+per-platform teasers + a UTM backlink (manual posting — files only). See
+`docs/medium-repurposing-guide.md` → "Quick Teaser + Backlink". Quick start:
+
+```bash
+python3 scripts/teaser_from_published.py --url <youtube-or-medium-url> --dry-run   # preview
+python3 scripts/teaser_from_published.py --urls urls.txt                            # batch write
+python3 scripts/teaser_from_published.py --inject-link content/derivatives/<week>/<slug> --url <url>
 ```
 
 ### Remotion (video rendering)
@@ -537,6 +555,7 @@ LinkedIn tokens expire every 60 days. Refresh: `python3 scripts/auth_linkedin.py
 | Day 6 | First full production run | ⚠️ Blogs + derivatives exist, no posts loaded, no videos |
 | Day 7 | SOP + analytics | ⚠️ `collect_analytics.py` done — Streamlit dashboard not built |
 | Day 8 | Remotion video pipeline | ✅ Done — 25 compositions + 13 scene components + render scripts + generate_custom_scene.py |
+| Virality Layer | Two-tier engine (Voice KB + Reels KB) across all 9 generators + both shorts pipelines; virality-weighted topic selection in idea_scorer.py; feedback loop appends YouTube results to swipe files | ✅ Done |
 
 **Remaining before fully automated:**
 - Load current blogs: `python3 scripts/load_posts.py`
@@ -551,7 +570,7 @@ LinkedIn tokens expire every 60 days. Refresh: `python3 scripts/auth_linkedin.py
 | Time | What |
 |------|------|
 | Every day 6am | `scripts/daily_ideas.sh` chains Reddit + YouTube + external feeds + Google/YouTube suggest + idea scorer → `data/ideas/weekly_ideas.md`. Install: see [launchd-daily-ideas.md](launchd-daily-ideas.md) |
-| Sunday 8pm | `collect_analytics.py` → `data/analytics/weekly_insights.md` |
+| Sunday 8pm | `collect_analytics.py` → `data/analytics/weekly_insights.md` + appends YouTube results to matching swipe file (`data/kb/voice/03_swipe_file.md` or `data/kb/reels/03_swipe_file.md`) — closes virality feedback loop |
 | Sunday 10pm | `build_knowledge_base.py` → `data/kb/master_brief.md` (`com.contentmachine.buildkb` installed) |
 | Continuous | `scripts/scheduler.py` → fires pending posts from `data/scheduling.db` every 60s. Managed by launchd (`com.contentmachine.scheduler`, KeepAlive + RunAtLoad). |
 

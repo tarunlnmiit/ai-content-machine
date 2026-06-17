@@ -149,9 +149,21 @@ def _project_block(p: dict) -> str:
 # Trigger lexicons derived from the hook libraries (voice = emotional; tech = build/teach).
 # Used to give candidate topics a small virality lift in idea_scorer.
 _VOICE_TRIGGERS = {
-    "why", "what", "how", "nobody", "everyone", "truth", "stop", "never", "always",
+    # Original
+    "why", "what", "how", "nobody", "everyone", "stop", "never", "always",
     "alone", "loneliness", "grief", "habit", "habits", "fail", "failed", "afraid",
     "enough", "quiet", "honest", "mask", "lonely", "lost", "stay",
+    # Fear
+    "scared", "terrified", "dying", "broken", "destroyed", "toxic", "abuse",
+    "trauma", "danger", "warning", "worst", "fear", "terrible", "nightmare",
+    # Curiosity gap
+    "secret", "nobody", "hidden", "lied", "actually", "real", "truth", "know",
+    "realize", "found", "admit", "confess",
+    # FOMO / urgency
+    "before", "missing", "wasted", "regret", "late", "mistake", "wrong", "already",
+    # Strong emotion
+    "hate", "angry", "hurt", "betrayed", "abandoned", "unloved", "pain", "ache",
+    "empty", "numb", "hollow", "rage", "shattered",
 }
 _TECH_TRIGGERS = {
     "free", "vs", "secret", "ways", "way", "build", "built", "automate", "automated",
@@ -172,7 +184,7 @@ def topic_virality_multiplier(
     triggers = _VOICE_TRIGGERS if is_voice_niche(niche) else _TECH_TRIGGERS
     mult = 1.0
     if words & triggers:
-        mult += 0.15
+        mult += 0.25 if is_voice_niche(niche) else 0.15
     if past_keywords:
         overlap = len(words & past_keywords)
         mult += min(0.40, 0.08 * overlap)

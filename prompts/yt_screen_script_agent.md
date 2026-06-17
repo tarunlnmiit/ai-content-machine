@@ -137,7 +137,7 @@ Use `[SCREEN: description]` inline to mark screen state transitions.
 Use `[BROLL: description]` for optional intro/outro visuals only.
 Use `[PAUSE]` for deliberate breath points.
 Include ALL code inline as fenced ```python blocks — **never** use `[CODE_INSERT:]` placeholders. Every code block must be complete and runnable (imports included, sample data provided with `numpy` or `pandas` where needed, output-producing). A script with a placeholder instead of real code is unacceptable.
-Use `[PERSONAL_INSERT: description]` for anecdotes or specific memory Tarun needs to add.
+Use `[PERSONAL_INSERT: ...]` for personal anecdotes — write the actual memory in full, first-person prose inside the brackets, exactly as Tarun would say it on camera. Never use a vague description placeholder ("a memory of X") — write the words themselves.
 
 ### Animation tags
 

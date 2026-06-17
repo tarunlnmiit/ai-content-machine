@@ -10,6 +10,7 @@ Blogs exist from Monday. Today: produce worksheets **first** (so YouTube scripts
 | 9:20 AM | Generate DS YT script | `content/scripts/{week}/{ds_slug}_yt.md` |
 | 9:35 AM | Generate Life YT script | `content/scripts/{week}/{life_slug}_yt.md` |
 | 9:50 AM | Generate Poetry YT script | `content/scripts/{week}/{poetry_slug}_yt.md` |
+| 9:55 AM | Pick + script the weekly combo reel (rotation log in Step 2b) | `content/scripts/{week}/{slug}_reel.md` |
 | 10:05 AM | Generate Remotion scene plans (all 3) | `remotion/public/scene-plans/{week}/*.json` |
 | 10:20 AM | Generate social images (all 3) | `assets/social_posts/{week}/{slug}_*.png` |
 | 10:35 AM | Generate slide decks (all 3) | `assets/slides/{week}/{slug}_slides.pdf` |
@@ -145,6 +146,42 @@ wc -w content/scripts/{week}/{ds_slug}_yt.md
 wc -w content/scripts/{week}/{life_slug}_yt.md
 wc -w content/scripts/{week}/{poetry_slug}_yt.md
 ```
+
+---
+
+## Step 2b — Weekly combo reel (~10 min, build-in-public)
+
+Every week, ship **ONE** extra build-in-public/promo reel using the 5-beat viral formula
+(`data/kb/viral_reel_formula.md`), drawn from the idea bank in `data/kb/reels/working_combos.md`
+(14 idea cards in Part A + 6 full shoot scripts in Part B). Honesty guardrail
+(`data/kb/reels/04_honesty_guardrail.md`): only ever claim what you can show on screen.
+
+This is the daily-flow version of the cadence in
+[`weekly-operating-guide.md` → Build-in-Public Projects](../weekly-operating-guide.md).
+
+**Process:**
+1. Pick the next **unused** combo from `working_combos.md` (Part B shoot scripts first, then Part A
+   cards) — don't repeat a prior week; log it in the rotation table below.
+2. Write the reel script to `content/scripts/{week}/{date}_{slug}_reel.md` following the 5 beats
+   (Hook → Problem → Reveal+proof → Payoff → CTA, ≤45s, captions burned in, ONE keyword CTA).
+3. Build the UTM link with `scripts/lib/utm.py` (campaign per combo, `utm_content={date}_{slug}`);
+   arm the comment→DM keyword (SuperProfile / CreatorFlow).
+4. Flows downstream like any reel: **Wed** shoot (screen-record the proof), **Thu** render/upload +
+   `scripts/generate_shorts_meta.py`, then derivatives via `prompts/repurposing_agent.md` →
+   `scripts/derivatives_to_metricool.py`.
+
+**Rotation log:**
+
+| Week | Combo / source | Keyword | Reel script | Status |
+|------|----------------|---------|-------------|--------|
+| 2026-W25 | **ChatGPT Prompt Anatomy** (from prompt-anatomy blog) | `PROMPT` | `content/scripts/2026-W25/2026-06-16_data_science_tech_ai-prompt-anatomy-travel_reel.md` | scripted ✅ |
+| 2026-W26 | Combo #1 — ScrapeGraphAI ("free tool killed my $300 scraper") | `SCRAPE` | — | queued |
+| 2026-W27 | Combo #6 — Claude + Metricool MCP | `CONTENT` | — | queued |
+| 2026-W28 | Combo #4 — Local Claude Code on Mac | `LOCAL` | — | queued |
+| 2026-W29 | Combo #10 — Claude in Excel | `EXCEL` | — | queued |
+| 2026-W30 | Combo #2 — Claude + GitHub MCP | `REVIEW` | — | queued |
+
+Keywords for W26–W30 come straight from the Part B shoot scripts in `working_combos.md`.
 
 ---
 

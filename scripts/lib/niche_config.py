@@ -85,7 +85,7 @@ def load_brand_base(niche_key: str) -> dict:
     colors = kit["colors"]
     return {
         "creator": kit["creator"],
-        "handle": kit["handle"],
+        "handle": niche.get("handle", kit["handle"]),
         "brand_name": niche["brand_name"],
         "primary": niche["primary_color"],
         "light": niche["light_color"],

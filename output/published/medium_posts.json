@@ -148,5 +148,77 @@
     ],
     "published_at": "2026-06-10T05:46:32.105991+00:00",
     "token_used": "personal"
+  },
+  {
+    "title": "Python for Data Science: Tutorial 2/10 — Variables, Data Types, and the Structures That Actually Matter",
+    "medium_url": "https://medium.com/@tarun-gupta/97deebd2ad22",
+    "medium_id": "97deebd2ad22",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.md",
+    "status": "draft",
+    "tags": [
+      "python",
+      "data-science",
+      "programming",
+      "coding",
+      "education"
+    ],
+    "published_at": "2026-06-16T03:12:56.726360+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "Python for Data Science: Tutorial 2/10 — Variables, Data Types, and the Structures That Actually Matter",
+    "medium_url": "https://medium.com/@tarun-gupta/2393bcab9c79",
+    "medium_id": "2393bcab9c79",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.md",
+    "status": "draft",
+    "tags": [
+      "data-science",
+      "python",
+      "programming",
+      "education",
+      "coding"
+    ],
+    "published_at": "2026-06-16T12:31:50.510095+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "The Lie We Inherited About Strength",
+    "medium_url": "https://medium.com/@tarun-gupta/4680ca8fd155",
+    "medium_id": "4680ca8fd155",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas.md",
+    "status": "draft",
+    "tags": [
+      "mental-health",
+      "psychology",
+      "self-improvement",
+      "society",
+      "life-lessons"
+    ],
+    "published_at": "2026-06-16T12:32:17.416412+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "\"The Hangover That Won't Lift\"",
+    "medium_url": "https://medium.com/@tarun-gupta/6dee883b512f",
+    "medium_id": "6dee883b512f",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses.md",
+    "status": "draft",
+    "tags": [
+      "poetry",
+      "love",
+      "relationships",
+      "psychology",
+      "life-lessons"
+    ],
+    "published_at": "2026-06-16T12:32:38.217954+00:00",
+    "token_used": "personal"
   }
 ]

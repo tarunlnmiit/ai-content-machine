@@ -78,7 +78,7 @@ def auto_select_tags(blog_text: str) -> list[str]:
     )
     result = subprocess.run(
         ["claude", "--model", "claude-haiku-4-5-20251001", "--print", "-p", prompt],
-        capture_output=True, text=True, timeout=30,
+        capture_output=True, text=True, timeout=90,
     )
     if result.returncode != 0:
         print(f"  Warning: Claude CLI failed — {result.stderr.strip()[:100]}")

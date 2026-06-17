@@ -1,0 +1,92 @@
+{
+  "data_science_tech": {
+    "data science": {
+      "google": [],
+      "youtube": []
+    },
+    "machine learning": {
+      "google": [],
+      "youtube": []
+    },
+    "python": {
+      "google": [],
+      "youtube": []
+    },
+    "mlops": {
+      "google": [],
+      "youtube": []
+    },
+    "data analytics": {
+      "google": [],
+      "youtube": []
+    },
+    "data engineering": {
+      "google": [],
+      "youtube": []
+    },
+    "ai for": {
+      "google": [],
+      "youtube": []
+    }
+  },
+  "life_self_dev": {
+    "how to be": {
+      "google": [],
+      "youtube": []
+    },
+    "how to stop": {
+      "google": [],
+      "youtube": []
+    },
+    "why am i": {
+      "google": [],
+      "youtube": []
+    },
+    "self improvement": {
+      "google": [],
+      "youtube": []
+    },
+    "mental health": {
+      "google": [],
+      "youtube": []
+    },
+    "psychology of": {
+      "google": [],
+      "youtube": []
+    },
+    "life lessons": {
+      "google": [],
+      "youtube": []
+    },
+    "habits to": {
+      "google": [],
+      "youtube": []
+    },
+    "productivity": {
+      "google": [],
+      "youtube": []
+    }
+  },
+  "poetry_quotes": {
+    "poem about": {
+      "google": [],
+      "youtube": []
+    },
+    "quote about": {
+      "google": [],
+      "youtube": []
+    },
+    "poetry on": {
+      "google": [],
+      "youtube": []
+    },
+    "best quotes": {
+      "google": [],
+      "youtube": []
+    },
+    "deep poem": {
+      "google": [],
+      "youtube": []
+    }
+  }
+}

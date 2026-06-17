@@ -207,29 +207,55 @@ def build_prompt(brand: dict, outline: dict, brief: dict | None,
     return f"{system}\n\n---\n\n## Virality Directives\n\n{virality}\n"
 
 
+def _extract_html(raw: str) -> str:
+    """Extract a full HTML document from a Claude response.
+
+    Prefers anchoring on <!DOCTYPE / </html> boundaries so that inner code
+    fences (e.g. a Python tutorial slide that contains ```html examples) don't
+    cause the extractor to grab a mid-file fragment.
+    """
+    lower = raw.lower()
+    start = lower.find("<!doctype")
+    if start == -1:
+        start = lower.find("<html")
+    if start != -1:
+        end = lower.rfind("</html>")
+        if end != -1:
+            return raw[start : end + len("</html>")].strip()
+        return raw[start:].strip()
+    # Fallback: grab between outermost ```html … ``` fences
+    if "```html" in raw:
+        fence_start = raw.index("```html") + 7
+        fence_end = raw.find("```", fence_start)
+        if fence_end != -1:
+            return raw[fence_start:fence_end].strip()
+    return raw.strip()
+
+
 def generate_html(brand: dict, outline: dict, brief: dict | None,
                   niche_key: str = "life_self_dev", project_key: str | None = None) -> str:
     prompt = build_prompt(brand, outline, brief, niche_key, project_key)
-    html = call_claude(
-        prompt,
-        cache=True,
-        model=model_for("html_asset"),
-        timeout=600,
-        temperature=brand["temperature"],
-        normalize=False,
-        stream=True,
-        progress_label=f"Generating slide deck ({brand['label']})",
-    )
-    if "```html" in html:
-        start = html.index("```html") + 7
-        end = html.index("```", start)
-        return html[start:end].strip()
-    if "<!DOCTYPE" in html or "<html" in html:
-        return html.strip()
-    return html.strip()
+    for attempt in range(3):
+        html = call_claude(
+            prompt,
+            cache=(attempt == 0),  # bust cache on retry
+            model=model_for("html_asset"),
+            timeout=600,
+            temperature=brand["temperature"],
+            normalize=False,
+            stream=True,
+            progress_label=f"Generating slide deck ({brand['label']})" + (f" [retry {attempt}]" if attempt else ""),
+        )
+        extracted = _extract_html(html)
+        low = extracted.lower()
+        if "<html" in low or "<!doctype" in low:
+            return extracted
+        sys.stderr.write(f"  ⚠ Non-HTML response on attempt {attempt + 1} ({len(html):,} chars) — retrying\n")
+        sys.stderr.flush()
+    raise RuntimeError("Claude returned non-HTML after 3 attempts")
 
 
-def process_slug(slug: str, export: bool, force: bool) -> bool:
+def process_slug(slug: str, export: bool, force: bool, project: str | None = None) -> bool:
     slug_dir = find_slug_dir(slug)
     if not slug_dir:
         console.print(f"[red]Slug dir not found: {slug}[/red]")
@@ -269,7 +295,7 @@ def process_slug(slug: str, export: bool, force: bool) -> bool:
         except json.JSONDecodeError:
             pass
 
-    html_content = generate_html(brand, outline, brief, niche_key, args.project)
+    html_content = generate_html(brand, outline, brief, niche_key, project)
     html_out.write_text(html_content, encoding="utf-8")
     console.print(f"  [green]✓[/green] HTML → {html_out.relative_to(REPO)}")
 
@@ -306,7 +332,7 @@ def main() -> None:
 
     ok = 0
     for slug in slugs:
-        if process_slug(slug, args.export, args.force):
+        if process_slug(slug, args.export, args.force, args.project):
             ok += 1
 
     console.print(f"\n[bold]Done[/bold] — {ok}/{len(slugs)} slugs processed")

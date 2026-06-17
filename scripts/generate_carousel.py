@@ -27,6 +27,7 @@ from _console import console  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
 from lib.niche_config import NICHE_MAP, load_brand_base, model_for  # noqa: E402
 from lib.virality import virality_block, project_keys  # noqa: E402
+from lib.schedule_calc import get_iso_week  # noqa: E402
 
 BRAND_KIT = REPO / "data" / "brand" / "brand_kit.yaml"
 CAROUSEL_DIR = REPO / "assets" / "carousels"
