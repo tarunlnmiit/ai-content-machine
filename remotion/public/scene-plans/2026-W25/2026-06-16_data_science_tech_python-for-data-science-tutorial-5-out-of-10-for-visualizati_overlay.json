@@ -22,7 +22,9 @@
         "Labeled axes with units"
       ],
       "transformLabel": "sns.set_theme + rcParams"
-    }
+    },
+    "atSec": 28.57,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-02",
@@ -35,7 +37,9 @@
       "value": 0.94,
       "label": "R\u00b2 Score \u2014 still judged on the chart",
       "suffix": ""
-    }
+    },
+    "atSec": 57.14,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-03",
@@ -47,7 +51,9 @@
     "props": {
       "quote": "Visualization is where your analysis either lands or disappears. It's not cosmetic. It's communication.",
       "attribution": "Breath of Data Science"
-    }
+    },
+    "atSec": 85.71,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-04",
@@ -77,7 +83,9 @@
           "Final cleanup layer"
         ]
       }
-    }
+    },
+    "atSec": 114.29,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-05",
@@ -90,7 +98,9 @@
       "value": 95,
       "label": "of visualization needs covered by two libraries",
       "suffix": "%"
-    }
+    },
+    "atSec": 142.86,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-06",
@@ -112,7 +122,9 @@
         }
       ],
       "chartType": "bar"
-    }
+    },
+    "atSec": 171.43,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-07",
@@ -138,7 +150,9 @@
       "language": "python",
       "highlightLine": 5,
       "annotationText": "Run once per notebook \u2014 every subsequent plot inherits these defaults"
-    }
+    },
+    "atSec": 200.0,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-08",
@@ -166,7 +180,9 @@
           "icon": "\u2705"
         }
       ]
-    }
+    },
+    "atSec": 228.57,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-09",
@@ -204,7 +220,9 @@
           "body": "Group distributions, medians, and outliers"
         }
       ]
-    }
+    },
+    "atSec": 257.14,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-10",
@@ -230,7 +248,9 @@
       "language": "python",
       "highlightLine": 3,
       "annotationText": "kde=True overlays a density curve \u2014 shape and count in one view"
-    }
+    },
+    "atSec": 285.71,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-11",
@@ -260,7 +280,9 @@
         }
       ],
       "chartType": "bar"
-    }
+    },
+    "atSec": 314.29,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-12",
@@ -286,7 +308,9 @@
         }
       ],
       "chartType": "bar"
-    }
+    },
+    "atSec": 342.86,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-13",
@@ -297,7 +321,9 @@
     "layout": "fullscreen",
     "props": {
       "niche": "ds"
-    }
+    },
+    "atSec": 371.43,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-14",
@@ -308,7 +334,9 @@
     "layout": "fullscreen",
     "props": {
       "description": "Animate a two-layer architecture stack. The bottom layer labeled 'matplotlib' pulses in dark navy \u2014 individual elements (Figure, Axes, rcParams, spines) appear as glowing nodes. Above it, a translucent teal layer labeled 'seaborn' floats in, with high-level labels (histplot, barplot, heatmap, scatterplot). Animated arrows show seaborn calls flowing downward into matplotlib objects, then a rendered chart rises back up from the stack as output. The visual makes the wrapper relationship viscerally clear: seaborn is the shortcut, matplotlib is the engine underneath."
-    }
+    },
+    "atSec": 400.0,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-15",
@@ -335,7 +363,9 @@
       "language": "python",
       "highlightLine": 2,
       "annotationText": "fig.suptitle() sets one shared title across all subplot panels"
-    }
+    },
+    "atSec": 428.57,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-16",
@@ -346,7 +376,7 @@
     "layout": "panel-right",
     "props": {
       "title": "seaborn \u2194 matplotlib feedback loop",
-      "phases": [
+      "steps": [
         {
           "label": "seaborn plots"
         },
@@ -360,7 +390,9 @@
           "label": "save + ship"
         }
       ]
-    }
+    },
+    "atSec": 457.14,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-17",
@@ -373,7 +405,9 @@
       "value": 300,
       "label": "DPI \u2014 what presentations actually need",
       "suffix": ""
-    }
+    },
+    "atSec": 485.71,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-18",
@@ -384,7 +418,9 @@
     "layout": "panel-left",
     "props": {
       "niche": "ds"
-    }
+    },
+    "atSec": 514.29,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-19",
@@ -412,7 +448,9 @@
           "body": "Add plt.ylim(0, 1) explicitly \u2014 matplotlib won't enforce it"
         }
       ]
-    }
+    },
+    "atSec": 542.86,
+    "atSecSource": "interp"
   },
   {
     "sceneId": "scene-20",
@@ -424,6 +462,8 @@
     "props": {
       "quote": "These aren't design skills. They're intentions. And they're the difference between a chart that communicates and a chart that misleads.",
       "attribution": "Tutorial 5 of 10"
-    }
+    },
+    "atSec": 571.43,
+    "atSecSource": "interp"
   }
 ]

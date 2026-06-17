@@ -7,13 +7,15 @@ export interface HabitStep {
 }
 
 export interface HabitLoopProps extends Record<string, unknown> {
-  steps: HabitStep[];
+  steps?: HabitStep[];
+  phases?: HabitStep[];
   title?: string;
   progress?: number;
   niche: Niche;
 }
 
-export function HabitLoop({ steps, title = "The Habit Loop", progress = 1, niche }: HabitLoopProps) {
+export function HabitLoop({ steps: stepsProp, phases, title = "The Habit Loop", progress = 1, niche }: HabitLoopProps) {
+  const steps = stepsProp ?? phases ?? [];
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
