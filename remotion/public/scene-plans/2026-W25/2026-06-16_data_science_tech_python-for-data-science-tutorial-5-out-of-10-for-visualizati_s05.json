@@ -1,0 +1,138 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "here's where people get stuck: they want to combine charts and it breaks",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Here's where people get stuck: they want to combine charts and it breaks.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "every seaborn call returns a matplotlib object",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "headline": "The key insight: seaborn returns matplotlib",
+      "cards": [
+        {
+          "term": "The unlock",
+          "definition": "Every seaborn call returns a matplotlib object \u2014 once you know that, both libraries become one tool",
+          "icon": "\ud83d\udd11"
+        },
+        {
+          "term": "fig, axes = plt.subplots(2, 2)",
+          "definition": "Create a 2\u00d72 grid. Pass each ax= to a seaborn call.",
+          "icon": "\ud83d\udcd0"
+        },
+        {
+          "term": "Result",
+          "definition": "Four charts, consistent styling, shared title \u2014 under 25 lines",
+          "icon": "\u2705"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CodeAnnotation",
+    "script": "fig, axes = plt.subplots(2, 2, figsize=(14, 10))",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "fig, axes = plt.subplots(2, 2, figsize=(14, 10))",
+        "fig.suptitle(\"Titanic EDA Dashboard\",",
+        "             fontsize=16, fontweight=\"bold\")",
+        "",
+        "sns.barplot(data=df, x=\"pclass\", y=\"survived\",",
+        "            palette=\"Blues_d\", ax=axes[0, 0])",
+        "sns.barplot(data=df, x=\"sex\", y=\"survived\",",
+        "            palette=\"Set2\", ax=axes[1, 1])"
+      ],
+      "language": "python",
+      "highlightLine": 1,
+      "annotationText": "Pass ax=axes[row, col] to each seaborn call \u2014 that's how each chart lands in the right panel"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "four charts. consistent styling. a shared title. under 25 lines.",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 25,
+      "label": "lines of code for a 4-chart EDA dashboard",
+      "prefix": "under "
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "one figure. two insights that interact.",
+    "niche": "ds",
+    "durationSec": 8,
+    "props": {
+      "description": "A 2\u00d72 grid of Titanic EDA charts assembles on screen sequentially \u2014 survival by class (bar, Blues_d palette) slides in top-left, age distribution (histogram, steelblue) top-right, fare by class (boxplot, pastel) bottom-left, survival by sex (bar, Set2) bottom-right. Each panel appears with a brief luminous glow on entry. Once all four are visible, glowing arc lines draw between the class-survival panel and the sex-survival panel, pulsing twice to highlight their interaction. A text overlay fades in centered across the grid: 'Two insights. One figure.' Dark charcoal background with white chart surfaces.",
+      "componentName": "TitanicDashboardReveal"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "TransformationArc",
+    "script": "before I was going slide by slide, chart by chart",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "beforeLabel": "Slide-by-slide",
+      "afterLabel": "One dashboard",
+      "beforePoints": [
+        "One chart per slide",
+        "You connect everything out loud",
+        "Audience follows passively"
+      ],
+      "afterPoints": [
+        "Four charts together",
+        "Viewer makes connections themselves",
+        "Insights emerge without prompting"
+      ],
+      "transformLabel": "plt.subplots(2, 2)"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "they made the connection themselves. I didn't have to lead them there.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "They made the connection themselves. I didn't have to lead them there.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "WordReveal",
+    "script": "build your own Titanic dashboard this week",
+    "niche": "ds",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Build",
+        "the",
+        "dashboard.",
+        "This",
+        "week."
+      ],
+      "emphasis": [
+        0,
+        2
+      ]
+    }
+  }
+]

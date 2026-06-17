@@ -1,0 +1,128 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "The analysis became secondary the moment the charts made people work",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The analysis became secondary the moment the charts made people work.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "six weeks of analysis, solid methodology, results I stood behind",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 6,
+      "label": "weeks of analysis before the client feedback",
+      "suffix": " wks"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "The feedback I got back wasn't about any of that",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "The first comment was: 'these charts are really hard to read.' That was it. That was the conversation.",
+      "attribution": "\u2014 actual client feedback"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "TransformationArc",
+    "script": "Visualization is where your analysis either lands or disappears",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "beforeLabel": "Chart makes people work",
+      "afterLabel": "Chart communicates immediately",
+      "beforePoints": [
+        "Gray background (default)",
+        "Fonts too small for slides",
+        "Border spines add no info",
+        "Analysis becomes secondary"
+      ],
+      "afterPoints": [
+        "White grid (whitegrid theme)",
+        "font_scale=1.2 bumped up",
+        "Spines removed",
+        "Analysis lands with the chart"
+      ],
+      "transformLabel": "Fix defaults before you share"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "I remember sending a client a notebook I was genuinely proud of",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "description": "A slide deck appears split into two panels: left shows a gray-background default matplotlib chart with tiny fonts, right shows a model metrics table (R\u00b2=0.94, clean pipeline summary). A speech bubble animates in over the chart reading 'these charts are really hard to read' in red. The model metrics panel dims and shrinks to a corner while the speech bubble expands to fill the frame \u2014 visually demonstrating how bad chart defaults make the analysis invisible even when the model is strong."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "WordReveal",
+    "script": "It's not cosmetic. It's communication.",
+    "niche": "ds",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "It's",
+        "not",
+        "cosmetic.",
+        "It's",
+        "communication."
+      ],
+      "emphasis": [
+        3,
+        4
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "I've never sent a default matplotlib figure since",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "I've never sent a default matplotlib figure since.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "NumberedTips",
+    "script": "By the end, you'll never paste a gray-background plot again",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "title": "Before You Share Any Chart",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Kill the gray background",
+          "body": "sns.set_theme(style='whitegrid')"
+        },
+        {
+          "number": 2,
+          "headline": "Bump the font size",
+          "body": "font_scale=1.2 in set_theme"
+        },
+        {
+          "number": 3,
+          "headline": "Remove the box borders",
+          "body": "axes.spines.top/right = False"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,153 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "seaborn for the 80%, matplotlib for the last 20%",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Seaborn for the 80%. Matplotlib for the last 20%.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "two tools that handle 95% of everything you'll ever need",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 95,
+      "label": "% of Python visualization needs covered by two libraries",
+      "suffix": "%"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ConceptExplainer",
+    "script": "they're not competing libraries. They're layers.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "headline": "Not Competitors \u2014 Layers",
+      "cards": [
+        {
+          "term": "seaborn",
+          "definition": "Built on top of matplotlib. High-level. Beautiful defaults. 3\u20135 lines per plot.",
+          "icon": "\ud83d\udcca"
+        },
+        {
+          "term": "matplotlib",
+          "definition": "The foundation. Low-level control. Titles, fonts, layout, saving.",
+          "icon": "\ud83d\udd27"
+        },
+        {
+          "term": "Together",
+          "definition": "Every seaborn call returns a matplotlib object. One tool, two interfaces.",
+          "icon": "\u26a1"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ToolComparison",
+    "script": "seaborn for the 80%, matplotlib for the last 20%",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "seaborn (the 80%)",
+        "points": [
+          "Distributions",
+          "Correlations",
+          "Category comparisons",
+          "Beautiful defaults",
+          "3\u20135 lines of code"
+        ]
+      },
+      "rightSide": {
+        "label": "matplotlib (the 20%)",
+        "points": [
+          "Titles and labels",
+          "Font sizes",
+          "Save to file",
+          "Multi-panel layouts",
+          "Fine-grained control"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "HabitLoop",
+    "script": "the cleanup \u2014 titles, font sizes, saving to file \u2014 that's matplotlib",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "title": "The seaborn \u2192 matplotlib workflow",
+      "phases": [
+        {
+          "label": "sns.histplot() \u2192 get the chart"
+        },
+        {
+          "label": "ax.set_title() \u2192 add context"
+        },
+        {
+          "label": "plt.tight_layout() \u2192 fix spacing"
+        },
+        {
+          "label": "fig.savefig() \u2192 ship it"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "NumberedTips",
+    "script": "most of your plots can be written in three to five lines of seaborn",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "How to use both libraries together",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Use seaborn for the plot type",
+          "body": "histplot, scatterplot, barplot, heatmap, boxplot"
+        },
+        {
+          "number": 2,
+          "headline": "Use matplotlib for the cleanup",
+          "body": "set_title(), set_xlabel(), tight_layout(), savefig()"
+        },
+        {
+          "number": 3,
+          "headline": "Set theme once at the top",
+          "body": "sns.set_theme() \u2014 every plot in the notebook inherits it"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "WordReveal",
+    "script": "follow along for tutorial six next week",
+    "niche": "ds",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Follow",
+        "for",
+        "Tutorial",
+        "6",
+        "\u2014",
+        "next week"
+      ],
+      "emphasis": [
+        2,
+        3
+      ]
+    }
+  }
+]

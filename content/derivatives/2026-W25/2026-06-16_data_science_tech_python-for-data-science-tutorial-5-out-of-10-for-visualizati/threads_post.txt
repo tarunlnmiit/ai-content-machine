@@ -1,0 +1,3 @@
+Your charts get judged before your model does. Found this out after pasting default matplotlib output into a stakeholder deck — gray background, tiny fonts, the works. First feedback wasn't about the 0.94 R². It was about how hard the charts were to read. One setup block at the top of every notebook changes this permanently. Full tutorial: [BLOG_LINK]
+
+#python #datascience #machinelearning

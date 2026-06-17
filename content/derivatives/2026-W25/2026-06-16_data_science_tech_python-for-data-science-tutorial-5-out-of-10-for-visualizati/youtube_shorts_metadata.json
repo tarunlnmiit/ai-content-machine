@@ -1,0 +1,13 @@
+{
+  "title": "One block that fixes every Python chart instantly",
+  "description": "Stop using default matplotlib. This goes at the top of every notebook.\nsns.set_theme() + remove spines + dpi=150 = professional charts in 4 lines.\n#Shorts #python #datascience #matplotlib #datavisualization",
+  "tags": [
+    "Shorts",
+    "python",
+    "matplotlib",
+    "datascience",
+    "datavisualization"
+  ],
+  "hook_visual": "Screen recording: a gray default matplotlib chart fills the screen for 1 second — then 4 lines of code appear typed in real time and the chart transforms to a clean seaborn-styled version. Text overlay in the first frame: 'Add this to every notebook.'",
+  "end_screen_cta": "Comment your biggest matplotlib frustration — full tutorial with all 5 chart types linked in description."
+}

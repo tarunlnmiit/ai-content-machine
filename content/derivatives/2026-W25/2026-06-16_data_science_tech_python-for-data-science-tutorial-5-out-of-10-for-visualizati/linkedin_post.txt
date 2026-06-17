@@ -1,0 +1,17 @@
+Your charts get judged before your model does — and nobody warns you about this going into your first data science role.
+
+I learned this the wrong way. Six months of feature engineering, a clean pipeline, a 0.94 R² score — then I pasted the default matplotlib output into the deck. Gray background. Tiny fonts. The first comments weren't about the analysis. They were about how difficult the charts were to read.
+
+Visualization isn't cosmetic. It's communication. And in Python, you have two tools that handle 95% of what you'll ever need: matplotlib for control, seaborn for speed.
+
+They're not competing libraries. Seaborn is built on top of matplotlib — it gives you high-level plots that look good in 3–5 lines. Matplotlib gives you control over every pixel when seaborn's defaults aren't enough. The mental model I use: seaborn for the 80%, matplotlib for the last 20%.
+
+There are five plot types that cover nearly everything in exploratory data analysis: distributions, relationships, categorical comparisons, correlations, and grouped distributions. Learn those cold and you'll be fast on any dataset.
+
+The bigger unlock is combining both libraries in a multi-panel figure. Instead of presenting charts sequentially, you hand stakeholders a dashboard — four related views in one frame. The conversation changes. People stop reading individual numbers and start seeing the story emerge across all of them.
+
+That's the shift worth chasing: from 'how do I make this chart' to 'what does this chart need to say.'
+
+Tutorial 5 of 10 in my Python for Data Science series. Full code in comments.
+
+#matplotlib #datascience #python #machinelearning

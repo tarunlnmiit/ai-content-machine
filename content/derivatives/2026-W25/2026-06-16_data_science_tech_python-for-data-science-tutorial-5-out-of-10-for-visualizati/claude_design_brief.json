@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The moment you realize your analysis is invisible if the chart doesn't communicate — technical skill is necessary, but presentation is what gets heard in the room.",
+  "tone": [
+    "analytical",
+    "direct",
+    "self-aware"
+  ],
+  "visual_metaphor": "A before/after split — the same Titanic data shown as a default gray matplotlib chart on one side and a clean styled seaborn chart on the other: identical data, completely different story told",
+  "key_quotes": [
+    "Visualization is where your analysis either lands or disappears.",
+    "Your charts will get judged before your model does.",
+    "The shift: from 'how do I make this chart' to 'what does this chart need to say.'"
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "A person at a laptop, proud of their work — cut to a meeting room where people squint at a projected gray chart with tiny, unreadable text",
+      "text": "Good analysis. Wrong chart."
+    },
+    {
+      "frame": 2,
+      "visual": "Close-up of default matplotlib output: gray background, box border on all sides, small fonts, cluttered tick marks",
+      "text": "This is what 72 DPI looks like."
+    },
+    {
+      "frame": 3,
+      "visual": "Same chart after sns.set_theme() — white background, subtle gridlines, no top or right border, readable font sizes",
+      "text": "One block. Everything changes."
+    },
+    {
+      "frame": 4,
+      "visual": "Five chart thumbnail previews arranged in a clean grid, each labeled: histplot, scatterplot, barplot, heatmap, boxplot",
+      "text": "90% of EDA. Five chart types."
+    },
+    {
+      "frame": 5,
+      "visual": "A 2×2 grid of four Titanic charts — survival by class, age distribution, fare by class, survival by sex — all consistent styling",
+      "text": "25 lines. One dashboard."
+    },
+    {
+      "frame": 6,
+      "visual": "Zoomed comparison of the same PNG at 72 DPI (left, blurry text) vs 300 DPI (right, crisp and sharp) — obvious difference at this scale",
+      "text": "dpi=300. Always."
+    },
+    {
+      "frame": 7,
+      "visual": "Person presenting to a small group pointing at a clean, well-labeled multi-panel chart on screen — audience engaged, no confusion, conversation happening",
+      "text": "Your analysis, finally heard."
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "A single habit is fragile. A habit that cues another is recursive.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "A single habit is fragile.",
+      "subtext": "LOOP 2: HABIT STACKS"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "script": "each link makes the next one cheaper to install.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "A habit that automatically cues another habit is a recursive structure. Each link makes the next one cheaper to install."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "NumberedTips",
+    "script": "My most reliable chain starts with movement. A morning walk creates enough mental space.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "title": "My Morning Stack",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Morning walk",
+          "body": "Creates enough mental space"
+        },
+        {
+          "number": 2,
+          "headline": "Stay off phone",
+          "body": "Walk makes this natural"
+        },
+        {
+          "number": 3,
+          "headline": "Write first",
+          "body": "Phone-free start clears the block"
+        },
+        {
+          "number": 4,
+          "headline": "Day organizes itself",
+          "body": "Around creation, not consumption"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "What looked like three separate habits was actually one system with a single keystone.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 3,
+      "label": "habits \u2014 actually one system",
+      "suffix": " habits"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "HabitLoop",
+    "script": "Staying off my phone makes writing first feel natural.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "title": "The Keystone Chain",
+      "phases": [
+        {
+          "label": "Morning Walk"
+        },
+        {
+          "label": "Phone-Free"
+        },
+        {
+          "label": "Write First"
+        },
+        {
+          "label": "Creative Day"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "TransformationArc",
+    "script": "I skipped the walk for several days. The writing became harder to start.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "beforeLabel": "Isolated habits",
+      "afterLabel": "Habit stack",
+      "beforePoints": [
+        "Each habit stands alone",
+        "Hard to install separately",
+        "Fragile under pressure"
+      ],
+      "afterPoints": [
+        "Each link enables the next",
+        "One keystone pulls the chain",
+        "Self-reinforcing system"
+      ],
+      "transformLabel": "Chain them"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "What looked like three separate habits was actually one system with a single keystone.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "description": "Four glowing domino tiles stand in sequence against a dark background labeled WALK \u2192 NO PHONE \u2192 WRITE \u2192 CREATE. The first tile tips in slow motion, triggering a chain reaction where each domino glows brighter as it falls and topples the next. After all four fall, they rise back upright connected by golden threads forming an unbroken loop. Text fades in at the bottom: 'Skip one. The chain cracks.'"
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "ImageTextReveal",
+    "script": "Every time you consider adding a habit, ask: does this cue or enable anything else?",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "Which habit pulls your chain?",
+      "subtext": "DROP A COMMENT BELOW"
+    }
+  }
+]

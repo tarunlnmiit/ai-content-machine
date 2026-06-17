@@ -1,0 +1,117 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "I consumed productivity content the way some people consume news: constantly.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "I consumed productivity content the way people consume news.",
+      "subtext": "LOOP 1: INFORMATION DIET"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ToolComparison",
+    "script": "The shift came when I stopped asking what's the next productivity trick.",
+    "niche": "life",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Motivation Content",
+        "points": [
+          "Fades after a weekend",
+          "Feels like progress",
+          "Evaporates completely"
+        ]
+      },
+      "rightSide": {
+        "label": "Mental Models",
+        "points": [
+          "Changes every decision after",
+          "How the mind actually works",
+          "Compounds indefinitely"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "motivation fades after a weekend. A better mental model changes how you approach every decision.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "Motivation fades after a weekend. A better mental model changes how you approach every decision that follows."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "Books on cognition, systems thinking, behavioral psychology. Not motivation \u2014 mental models.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "Mental Models vs Motivation",
+      "cards": [
+        {
+          "term": "Motivation",
+          "definition": "An emotional state that fades after a weekend",
+          "icon": "\u26a1"
+        },
+        {
+          "term": "Mental Model",
+          "definition": "A framework that changes how you make every decision after",
+          "icon": "\ud83e\udde0"
+        },
+        {
+          "term": "The Difference",
+          "definition": "One evaporates. One compounds.",
+          "icon": "\u267e\ufe0f"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "WordReveal",
+    "script": "do you know something new \u2014 or do you see something differently?",
+    "niche": "life",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Know",
+        "something",
+        "new?",
+        "Or",
+        "see",
+        "differently?"
+      ],
+      "emphasis": [
+        0,
+        4
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "When you curate inputs that change how you curate inputs, the loop starts running itself.",
+    "niche": "life",
+    "durationSec": 7,
+    "props": {
+      "description": "A stream of content thumbnails and book covers flows downward like a waterfall. Most items fade and evaporate before reaching the bottom, tagged 'motivation content.' A few items glow amber \u2014 tagged 'mental model' \u2014 and instead of evaporating, crystallize into geometric shapes stacking into a growing tower. A glowing wire connects the tower back up to the input stream, filtering what enters next. The loop closes with text: 'Better models select better inputs.'"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "ImageTextReveal",
+    "script": "When you curate inputs that change how you curate inputs, the loop starts running itself.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "Curate inputs that change how you curate inputs.",
+      "subtext": "FOLLOW FOR CONTENT THAT COMPOUNDS"
+    }
+  }
+]

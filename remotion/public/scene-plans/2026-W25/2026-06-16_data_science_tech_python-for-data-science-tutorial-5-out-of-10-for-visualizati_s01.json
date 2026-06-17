@@ -1,0 +1,136 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "your charts will get judged before your model does",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Your charts will get judged before your model does.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "build a regression with a 0.94 R\u00b2",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 0.94,
+      "label": "R\u00b2 \u2014 clean model, ignored because of the charts",
+      "prefix": ""
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "TransformationArc",
+    "script": "six weeks of analysis, solid methodology, results I stood behind",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "beforeLabel": "Six weeks of analysis",
+      "afterLabel": "First comment received",
+      "beforePoints": [
+        "0.94 R\u00b2",
+        "Clean pipeline",
+        "Six months of feature engineering",
+        "Solid methodology"
+      ],
+      "afterPoints": [
+        "'These charts are really hard to read'",
+        "Analysis became secondary",
+        "Model never mentioned"
+      ],
+      "transformLabel": "Client feedback"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "ConceptExplainer",
+    "script": "Visualization is not cosmetic. It's communication.",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "headline": "Visualization \u2260 Cosmetic",
+      "cards": [
+        {
+          "term": "What you built",
+          "definition": "Accurate model, clean pipeline, six months of feature engineering",
+          "icon": "\ud83e\uddee"
+        },
+        {
+          "term": "What they judged",
+          "definition": "Gray background, tiny fonts, unreadable default matplotlib figures",
+          "icon": "\ud83d\udc41\ufe0f"
+        },
+        {
+          "term": "The fix",
+          "definition": "matplotlib + seaborn cover 95% of everything you need",
+          "icon": "\u2705"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ToolComparison",
+    "script": "paste a default matplotlib figure into the slide deck, gray background and all",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "leftSide": {
+        "label": "Default matplotlib",
+        "points": [
+          "Gray background",
+          "Tiny default fonts",
+          "Box border on all sides",
+          "No confidence intervals",
+          "Looks unfinished"
+        ]
+      },
+      "rightSide": {
+        "label": "matplotlib + seaborn styled",
+        "points": [
+          "White grid background",
+          "font_scale=1.2",
+          "Spines removed",
+          "Auto confidence intervals",
+          "Presentation-ready"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "Visualization is where your analysis either lands or disappears",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "Visualization is where your analysis either lands or disappears.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "WordReveal",
+    "script": "share it with one person who's learning Python right now",
+    "niche": "ds",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Share",
+        "with",
+        "one",
+        "Python",
+        "learner",
+        "today"
+      ],
+      "emphasis": [
+        0,
+        4
+      ]
+    }
+  }
+]

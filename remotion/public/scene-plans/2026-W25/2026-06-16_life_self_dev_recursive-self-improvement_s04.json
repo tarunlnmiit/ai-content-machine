@@ -1,0 +1,104 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "Most people journal the same way for years. Same prompts, same blind spots.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "Most people journal the same way for years.",
+      "subtext": "LOOP 3: REVIEW SYSTEM"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "script": "The journal becomes a record of who you already were \u2014 not a diagnostic for who you're becoming.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "The journal becomes a record of who you already were \u2014 not a diagnostic for who you're becoming."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "TransformationArc",
+    "script": "The upgrade is to review your reviews. Once a quarter, look for patterns.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "beforeLabel": "Standard journal",
+      "afterLabel": "Self-reviewing review",
+      "beforePoints": [
+        "Same prompts, same format",
+        "Documents who you already were",
+        "Confirms existing blind spots"
+      ],
+      "afterPoints": [
+        "Quarterly pattern audit",
+        "Reveals who you're becoming",
+        "Blind spots surface across months"
+      ],
+      "transformLabel": "Add one meta-question"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "Add one meta-question to every monthly review.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 1,
+      "label": "meta-question per monthly review"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ConceptExplainer",
+    "script": "Once a quarter, look for patterns between what you wrote and what actually happened.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "The Meta-Review Loop",
+      "cards": [
+        {
+          "term": "Monthly Review",
+          "definition": "Log what happened and how you felt",
+          "icon": "\ud83d\udcd4"
+        },
+        {
+          "term": "Quarterly Audit",
+          "definition": "Find patterns across multiple months",
+          "icon": "\ud83d\udd0d"
+        },
+        {
+          "term": "Meta-Question",
+          "definition": "What am I not asking myself that I should be?",
+          "icon": "\u2753"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "looking at several months together, a different pattern emerged.",
+    "niche": "life",
+    "durationSec": 7,
+    "props": {
+      "description": "Calendar pages for several months flip in sequence, each showing handwritten journal entries. As months accumulate, certain repeated phrases glow amber and float off the pages: 'low motivation,' 'waiting for energy,' 'creative block.' They connect into a constellation labeled 'Pattern: Waiting \u2192 Stuck.' Then a second constellation emerges in gold connecting different entries: 'shipped poem \u2192 energy spike,' 'published article \u2192 productive week.' The gold pattern overpowers the amber one with a final line appearing: 'Creating generates energy. Waiting keeps you stuck.'"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "ImageTextReveal",
+    "script": "What am I not asking myself that I should be?",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "What am I not asking myself that I should be?",
+      "subtext": "ADD THIS TO YOUR NEXT REVIEW"
+    }
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "When you make something that feels too raw to share, what do you actually do?",
+    "options": [
+      "Post it, brace myself",
+      "Edit until it's safe",
+      "Save it, never share",
+      "Delete it"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "Once you have an audience, does it change what you create?",
+    "options": [
+      "Yes, I self-censor more",
+      "Yes, for the better",
+      "No real change",
+      "I haven't noticed"
+    ]
+  }
+]

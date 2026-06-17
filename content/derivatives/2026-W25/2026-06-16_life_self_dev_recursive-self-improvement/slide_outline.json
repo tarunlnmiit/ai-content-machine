@@ -1,0 +1,77 @@
+{
+  "format": "Canva",
+  "title_slide": "5 Loops That Make Self-Improvement Self-Sustaining",
+  "slides": [
+    {
+      "slide_number": 1,
+      "heading": "5 Loops That Make Self-Improvement Self-Sustaining",
+      "bullet_points": [
+        "Most improvement plateaus — not because the advice is wrong",
+        "Single-layer improvement has a structural ceiling",
+        "Recursive improvement fixes the process, not just the output"
+      ],
+      "speaker_note": "Open on the frustration of having done the work and still plateauing — frame who this is for in the first ten seconds."
+    },
+    {
+      "slide_number": 2,
+      "heading": "The Treadmill Problem",
+      "bullet_points": [
+        "Read the book → start the habit → fall off → repeat",
+        "Each new habit costs the same willpower as the last",
+        "The second-order move: improve how you improve"
+      ],
+      "speaker_note": "Name the pattern everyone has felt but hasn't seen articulated — that's the moment of recognition that earns the rest of the deck."
+    },
+    {
+      "slide_number": 3,
+      "heading": "Loop 1: Fix Your Information Diet First",
+      "bullet_points": [
+        "Bad inputs make every habit built on top fragile",
+        "Switch from consuming content to consuming mental models",
+        "Test: does this change what I read next — or only feel like progress?"
+      ],
+      "speaker_note": "The distinction between updates and frameworks is the core insight — land it clearly before moving on."
+    },
+    {
+      "slide_number": 4,
+      "heading": "Loop 2: Build Habit Stacks, Not Habits",
+      "bullet_points": [
+        "A single habit maintains momentum — it doesn't generate it",
+        "When one behavior cues another, each link makes the next cheaper",
+        "Find the upstream keystone — usually something physical"
+      ],
+      "speaker_note": "Concrete example: morning walk → no phone → writing first. One keystone, three behaviors. Removing it collapses the chain."
+    },
+    {
+      "slide_number": 5,
+      "heading": "Loop 3: Build a Review System That Reviews Itself",
+      "bullet_points": [
+        "Most journals record who you were — not who you're becoming",
+        "Once a quarter: review your reviews, find consistent blind spots",
+        "Meta-question: what am I not asking myself that I should be?"
+      ],
+      "speaker_note": "Second-order review teaches you how you think, not just what you think — that's the distinction worth repeating here."
+    },
+    {
+      "slide_number": 6,
+      "heading": "Loop 4: Find Skills That Unlock Other Skills",
+      "bullet_points": [
+        "Skills exist in a network — some nodes have far more edges",
+        "Writing clearly → thinking clearly → faster learning in any domain",
+        "High-leverage skills look soft — that's why they're underinvested"
+      ],
+      "speaker_note": "The recursive test for a skill: does getting better at this make it easier to get better at other things? If yes, it earns disproportionate investment."
+    },
+    {
+      "slide_number": 7,
+      "heading": "Loop 5: Rewrite the Identity Narrative First",
+      "bullet_points": [
+        "Behavior follows identity — the story you tell yourself sets your defaults",
+        "Write who you're becoming as if it's already true + one behavior as evidence",
+        "When identity updates, willpower becomes less relevant"
+      ],
+      "speaker_note": "This is the deepest loop — make it concrete with the specific identity/behavior gap before closing on the takeaway."
+    }
+  ],
+  "total_slides": 7
+}

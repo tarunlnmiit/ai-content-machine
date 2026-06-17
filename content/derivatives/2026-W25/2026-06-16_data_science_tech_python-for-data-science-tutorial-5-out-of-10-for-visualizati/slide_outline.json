@@ -1,0 +1,98 @@
+{
+  "format": "Google Slides",
+  "title_slide": "Making Your Data Tell a Story: Matplotlib + Seaborn in Python",
+  "slides": [
+    {
+      "slide_number": 1,
+      "heading": "Making Your Data Tell a Story",
+      "bullet_points": [
+        "matplotlib + seaborn",
+        "Python for Data Science — Tutorial 5 of 10",
+        "Tarun Gupta"
+      ],
+      "speaker_note": "Open with the central insight: your charts are evaluated before your model is — and most people find out the hard way."
+    },
+    {
+      "slide_number": 2,
+      "heading": "The Problem: Default Charts Kill Good Analysis",
+      "bullet_points": [
+        "Gray backgrounds, tiny fonts, cluttered axes",
+        "First impressions form before the numbers land",
+        "Visualization is communication, not decoration"
+      ],
+      "speaker_note": "Share the personal story — 0.94 R² model, default matplotlib output, feedback on the charts rather than the analysis."
+    },
+    {
+      "slide_number": 3,
+      "heading": "matplotlib vs seaborn: Layers, Not Competitors",
+      "bullet_points": [
+        "Seaborn is built on top of matplotlib",
+        "Seaborn for the 80%: fast, good-looking defaults",
+        "matplotlib for the 20%: pixel-level control"
+      ],
+      "speaker_note": "Clarify the mental model once so people stop treating them as alternatives."
+    },
+    {
+      "slide_number": 4,
+      "heading": "Setup: One Block for Every Notebook",
+      "bullet_points": [
+        "sns.set_theme(style='whitegrid', font_scale=1.2)",
+        "Remove top + right spines — they add no information",
+        "Set figure DPI to 150 — default 72 is too low"
+      ],
+      "speaker_note": "Walk through what each line does and show a before/after side by side."
+    },
+    {
+      "slide_number": 5,
+      "heading": "The 5 Plot Types That Cover 90% of EDA",
+      "bullet_points": [
+        "histplot → distribution shape",
+        "scatterplot → two-variable relationship",
+        "barplot → categorical comparison + heatmap → correlation",
+        "boxplot → distribution across categories"
+      ],
+      "speaker_note": "Preview each chart type with a Titanic dataset screenshot — one image per type."
+    },
+    {
+      "slide_number": 6,
+      "heading": "Combining seaborn + matplotlib: The Key Insight",
+      "bullet_points": [
+        "Every seaborn call returns a matplotlib object",
+        "Use axes-level functions with explicit ax= targets",
+        "Build a full dashboard in under 25 lines"
+      ],
+      "speaker_note": "Show the 2×2 dashboard code and resulting output side by side — this is the moment the two libraries click."
+    },
+    {
+      "slide_number": 7,
+      "heading": "Three Details That Make or Break a Chart",
+      "bullet_points": [
+        "Units on every axis — 'Fare (£)' not 'Fare'",
+        "Consistent color assignment across figures",
+        "Zero baseline on all bar charts — always"
+      ],
+      "speaker_note": "Show bad vs good examples for each — these are honest mistakes almost every beginner makes."
+    },
+    {
+      "slide_number": 8,
+      "heading": "Saving Publication-Quality Output",
+      "bullet_points": [
+        "dpi=300 — not the 72 default",
+        "bbox_inches='tight' prevents edge cropping",
+        "SVG and PDF for resolution-independent files"
+      ],
+      "speaker_note": "Show a zoomed comparison between 72 DPI and 300 DPI on a slide — the difference is visible immediately."
+    },
+    {
+      "slide_number": 9,
+      "heading": "What's Next: Statistical Testing",
+      "bullet_points": [
+        "Tutorial 6: scipy + statsmodels",
+        "When to use which test",
+        "Reporting results in plain English"
+      ],
+      "speaker_note": "Close with the series arc — they have good data and good charts; next is knowing if what they see is real."
+    }
+  ],
+  "total_slides": 9
+}

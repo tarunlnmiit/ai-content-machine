@@ -1,0 +1,94 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "you build a habit, achieve something real, and quietly return to behaving like you didn't.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "headline": "You achieve something real. Then return to behaving like you didn't.",
+      "subtext": "LOOP 5: IDENTITY"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "script": "There was a strange lag between the evidence and the story I told myself.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "quote": "There was a strange lag between the evidence and the story I told myself."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "TransformationArc",
+    "script": "I was publishing articles, writing poetry, recording content every week.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "beforeLabel": "Identity lag",
+      "afterLabel": "Updated identity",
+      "beforePoints": [
+        "Publishing articles",
+        "Writing poetry weekly",
+        "Recording content",
+        "Still saying 'I'm trying to write'"
+      ],
+      "afterPoints": [
+        "Pitched bigger ideas",
+        "Published more consistently",
+        "Took creative work seriously",
+        "No longer a visitor in my field"
+      ],
+      "transformLabel": "Stop waiting for permission"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "write down who you're becoming as if it's already true, with one specific behavior as evidence.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "value": 1,
+      "label": "specific behavior \u2014 the evidence that rewrites your story"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "HandwrittenReveal",
+    "script": "writers write \u2014 and I was already writing.",
+    "niche": "life",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "Writers write.",
+        "I was already writing.",
+        "The story just hadn't caught up."
+      ],
+      "niche": "life"
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "Once I stopped waiting for permission and accepted that writers write \u2014 the decisions became easier.",
+    "niche": "life",
+    "durationSec": 7,
+    "props": {
+      "description": "Split-screen animation on a dark background. Left panel: evidence stacks accumulate \u2014 article thumbnails, poem titles, video thumbnails, hours-logged progress bars \u2014 each glowing green and growing taller. Right panel: a faded grey speech bubble reads 'I'm still trying to write.' As the evidence stack on the left grows, the grey bubble on the right slowly cracks apart and dissolves. It reforms as a clear bright statement: 'I am a writer.' The two panels merge into one unified screen as identity catches up to evidence."
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "ImageTextReveal",
+    "script": "write down who you're becoming as if it's already true, with one specific behavior as evidence.",
+    "niche": "life",
+    "durationSec": 5,
+    "props": {
+      "headline": "Write down who you're becoming. Present tense.",
+      "subtext": "START TODAY"
+    }
+  }
+]

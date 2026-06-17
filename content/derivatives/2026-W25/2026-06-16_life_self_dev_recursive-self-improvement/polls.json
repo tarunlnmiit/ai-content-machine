@@ -1,0 +1,22 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "Which self-improvement loop do you think you're most stuck in?",
+    "options": [
+      "Bad information diet",
+      "No habit stack",
+      "No review system",
+      "Wrong skill priorities"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "What makes self-improvement hardest to compound over time?",
+    "options": [
+      "Picking the right habits",
+      "Staying consistent long-term",
+      "Knowing which skills matter",
+      "Updating how I see myself"
+    ]
+  }
+]

@@ -1,0 +1,332 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "Most self-improvement advice is a treadmill. You read",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Most self-improvement advice is a treadmill.",
+      "subtext": "There's a second-order game nobody tells you about"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "script": "When the process improves itself, you stop needing willpower to keep going",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "quote": "When the process improves itself, you stop needing willpower to keep going.",
+      "attribution": "Recursive Self-Improvement"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "I want to walk through five of these loops today",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "value": 5,
+      "label": "Recursive Loops",
+      "suffix": ""
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "BrowserTabOverload",
+    "script": "I consumed productivity content the way some people consume news: constantly",
+    "niche": "life",
+    "durationSec": 10,
+    "layout": "fullscreen",
+    "props": {
+      "niche": "life"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ToolComparison",
+    "script": "motivation fades after a weekend. A better mental model changes how you approach every decision",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "Motivation",
+        "points": [
+          "Fades after a weekend",
+          "Feels like progress while reading",
+          "Evaporates under friction",
+          "Needs constant external refueling"
+        ]
+      },
+      "rightSide": {
+        "label": "Mental Models",
+        "points": [
+          "Changes every decision that follows",
+          "Compounds across domains",
+          "Filters what's worth consuming",
+          "Self-reinforcing over time"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "LineReveal",
+    "script": "do you know something new \u2014 or do you see something differently?",
+    "niche": "life",
+    "durationSec": 8,
+    "layout": "panel-left",
+    "props": {
+      "lines": [
+        "Do you know something new?",
+        "Or do you see something differently?",
+        "The second one compounds.",
+        "The first one evaporates."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "ConceptExplainer",
+    "script": "A single habit is fragile. A habit that automatically cues another is a recursive structure",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Habit Stacks vs. Single Habits",
+      "cards": [
+        {
+          "term": "Single Habit",
+          "definition": "Fragile. Requires fresh willpower to restart after every break.",
+          "icon": "\u26a0\ufe0f"
+        },
+        {
+          "term": "Habit Stack",
+          "definition": "Each behavior automatically cues the next. The chain self-reinforces.",
+          "icon": "\ud83d\udd17"
+        },
+        {
+          "term": "Keystone Habit",
+          "definition": "One behavior whose presence makes the entire chain cheaper to run.",
+          "icon": "\ud83d\udd11"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "NumberedTips",
+    "script": "morning walk creates enough mental space that staying off my phone becomes easier",
+    "niche": "life",
+    "durationSec": 9,
+    "layout": "panel-right",
+    "props": {
+      "title": "The Morning Keystone Chain",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Morning Walk",
+          "body": "Creates mental space, reduces reactive urges"
+        },
+        {
+          "number": 2,
+          "headline": "Off the Phone",
+          "body": "Walk makes this feel natural, not forced"
+        },
+        {
+          "number": 3,
+          "headline": "Write First",
+          "body": "Day organizes around creation, not consumption"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "HabitLoop",
+    "script": "What looked like three separate habits was actually one system with a single keystone",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "The Keystone Loop",
+      "phases": [
+        {
+          "label": "Move (Walk)"
+        },
+        {
+          "label": "Clear Mind"
+        },
+        {
+          "label": "Resist Phone"
+        },
+        {
+          "label": "Write First"
+        },
+        {
+          "label": "Create > Consume"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "AtmosphericQuote",
+    "script": "The journal becomes a record of who you already were \u2014 not a diagnostic for who you're becoming",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-top",
+    "props": {
+      "quote": "The journal becomes a record of who you already were \u2014 not a diagnostic for who you're becoming.",
+      "attribution": "Loop 3: A Review System That Reviews Itself"
+    }
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "TransformationArc",
+    "script": "my most productive weeks weren't the weeks after rest. They were the weeks after I'd shipped something",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "beforeLabel": "Waiting for Energy",
+      "afterLabel": "Creating Energy",
+      "beforePoints": [
+        "Blamed low output on motivation",
+        "Rested before attempting creative work",
+        "Stuck in the same low-output cycle"
+      ],
+      "afterPoints": [
+        "Shipped something \u2014 poem, article, rough draft",
+        "Creating generated the energy to keep going",
+        "Most productive weeks followed output, not rest"
+      ],
+      "transformLabel": "The Real Pattern"
+    }
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "DataVizReveal",
+    "script": "Skills aren't flat \u2014 they exist in a network, and some nodes have far more connections than others",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Skill Leverage: Connections in the Network",
+      "data": [
+        {
+          "label": "Writing",
+          "value": 95
+        },
+        {
+          "label": "Communication",
+          "value": 88
+        },
+        {
+          "label": "Systems Thinking",
+          "value": 75
+        },
+        {
+          "label": "Domain Knowledge",
+          "value": 52
+        },
+        {
+          "label": "Tools & Tactics",
+          "value": 28
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-13",
+    "componentName": "WordReveal",
+    "script": "The code didn't change. The pull did.",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "panel-right",
+    "props": {
+      "words": [
+        "The",
+        "code",
+        "didn't",
+        "change.",
+        "The",
+        "pull",
+        "did."
+      ],
+      "emphasis": [
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-14",
+    "componentName": "TransformationArc",
+    "script": "There was a strange lag between the evidence and the story I told myself",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "beforeLabel": "Identity Lag",
+      "afterLabel": "Identity Update",
+      "beforePoints": [
+        "Publishing articles, recording content",
+        "Hours every week developing ideas",
+        "Still described writing as 'trying to'"
+      ],
+      "afterPoints": [
+        "Accepted: writers write \u2014 I was already writing",
+        "Pitched bigger ideas, published consistently",
+        "No longer acting like a visitor in my own field"
+      ],
+      "transformLabel": "Stop Waiting for Permission"
+    }
+  },
+  {
+    "sceneId": "scene-15",
+    "componentName": "HandwrittenReveal",
+    "script": "I stopped waiting for permission and accepted that writers write \u2014 and I was already writing",
+    "niche": "life",
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "I stopped waiting for permission.",
+        "Writers write \u2014",
+        "and I was already writing."
+      ],
+      "niche": "life"
+    }
+  },
+  {
+    "sceneId": "scene-16",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "they don't make you better in isolation. They make the process of getting better more accurate",
+    "niche": "life",
+    "durationSec": 10,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Five labeled loops \u2014 Information Diet, Habit Stacks, Review System, Skill Network, Identity \u2014 orbit in a pentagon formation, each glowing node connected by flowing directional arrows. As the animation progresses, each loop sends a pulse signal to the next, and a second outer ring appears spinning faster, visualizing compounding momentum. A central label 'Recursive Self-Improvement' brightens from dim to full luminance as all five loops synchronize, then hold on the completed pentagon with a subtle heartbeat pulse."
+    }
+  },
+  {
+    "sceneId": "scene-17",
+    "componentName": "AtmosphericQuote",
+    "script": "at what level are you currently optimizing? Most people are playing the game",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "quote": "Most people are playing the game. The recursive move is improving the quality of how you play it.",
+      "attribution": "Breath of Life"
+    }
+  }
+]

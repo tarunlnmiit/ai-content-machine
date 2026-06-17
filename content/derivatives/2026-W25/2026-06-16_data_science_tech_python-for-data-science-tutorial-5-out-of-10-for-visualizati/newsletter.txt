@@ -1,0 +1,20 @@
+Subject: Your charts are judged before your model is
+Preview: One setup block + five plot types = 90% of EDA covered.
+
+Nobody warns you about this before your first data science job: your visualization gets evaluated before your model does.
+
+I found out the hard way. Great analysis, default gray charts, bad first impression. The feedback wasn't about the numbers at all.
+
+Tutorial 5 of 10 fixes this permanently.
+
+Here's what's in it: a single setup block you paste at the top of every notebook — it removes the gray background, bumps font size, strips unnecessary borders, and every chart inherits it automatically.
+
+The five plot types that handle 90% of exploratory data analysis: histplot, scatterplot, barplot, heatmap, and boxplot. Runnable code for each using the Titanic dataset.
+
+How to combine seaborn and matplotlib in a multi-panel figure — the approach that changes how stakeholder meetings go. Instead of flipping through charts one at a time, you hand people a dashboard.
+
+And the save settings most people skip: 300 DPI, tight bounding box, white background. Night-and-day difference on a projector.
+
+Full tutorial with all code: [READ_LINK]
+
+Tutorial 6 drops next week — statistical testing with scipy.

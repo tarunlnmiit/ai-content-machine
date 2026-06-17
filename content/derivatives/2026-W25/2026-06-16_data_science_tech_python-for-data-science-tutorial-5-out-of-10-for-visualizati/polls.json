@@ -1,0 +1,32 @@
+[
+  {
+    "platform": "Twitter",
+    "question": "When you do EDA in Python, which library do you reach for first?",
+    "options": [
+      "matplotlib only",
+      "seaborn only",
+      "Both from the start",
+      "plotly or other"
+    ]
+  },
+  {
+    "platform": "LinkedIn",
+    "question": "What was the biggest visualization mistake you made early in your data science work?",
+    "options": [
+      "Default matplotlib styles",
+      "Missing titles or units",
+      "Wrong chart type",
+      "Low DPI when saving"
+    ]
+  },
+  {
+    "platform": "YouTube Community",
+    "question": "Which Python visualization topic should I cover next in this series?",
+    "options": [
+      "Interactive charts with plotly",
+      "Geospatial maps",
+      "Time series animation",
+      "Dashboard tools (Dash/Streamlit)"
+    ]
+  }
+]

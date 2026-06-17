@@ -1,0 +1,51 @@
+{
+  "emotional_core": "The quiet frustration of doing the work and still plateauing — and the relief of realizing it's a level problem, not a discipline problem.",
+  "tone": [
+    "analytical",
+    "warm",
+    "grounded"
+  ],
+  "visual_metaphor": "A spiral staircase versus a treadmill — one creates altitude with each step, one burns energy while staying at exactly the same level.",
+  "key_quotes": [
+    "When your improvement process improves itself, you stop needing willpower to sustain it.",
+    "Behavior follows identity. If your self-concept doesn't update as you improve, you'll unconsciously self-sabotage back to whoever you used to be.",
+    "The test: after consuming something, do you know something new, or do you see something differently? The second one compounds. The first one evaporates."
+  ],
+  "story_frames": [
+    {
+      "frame": 1,
+      "visual": "Person on a treadmill, fully equipped, working hard — overhead shot, warm morning light, clear effort. The belt moves. They stay in place. Metaphor for single-layer improvement rendered as a literal image.",
+      "text": "The treadmill runs. You don't move."
+    },
+    {
+      "frame": 2,
+      "visual": "Close-up of a hand underlining a single sentence in a book — not highlighting, underlining with deliberate pressure. Stack of books in soft focus behind. Morning light from the left.",
+      "text": "Stop consuming updates. Consume frameworks."
+    },
+    {
+      "frame": 3,
+      "visual": "Overhead flat-lay: running shoes, journal, water bottle, phone face-down — each object touching the next in a horizontal chain. Clean surface, warm tone. The chain structure is the point.",
+      "text": "One keystone. Three habits follow."
+    },
+    {
+      "frame": 4,
+      "visual": "Open journal spread: left page headed 'What I expected' with confident handwriting, right page headed 'What actually happened' with honest corrections. Gap between the two is visible and honest.",
+      "text": "Review your reviews."
+    },
+    {
+      "frame": 5,
+      "visual": "Network diagram drawn on a whiteboard — nodes of varying sizes connected by edges. One central node noticeably larger with many more connections than the others. Hand visible at the edge, mid-draw.",
+      "text": "Some skills unlock everything else."
+    },
+    {
+      "frame": 6,
+      "visual": "Person standing at a mirror, but their reflection stands slightly differently — same clothes, same face, but posture shifted forward, bearing more settled. No dramatic transformation. Just a quiet update.",
+      "text": "The story decides the defaults."
+    },
+    {
+      "frame": 7,
+      "visual": "Spiral staircase viewed from directly below — each step visible, ascending into soft light. No destination shown. The movement itself is the subject.",
+      "text": "This is what compounding actually looks like."
+    }
+  ]
+}

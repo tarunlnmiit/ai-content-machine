@@ -1,0 +1,130 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "High-fare passengers cluster with more survivors",
+    "niche": "ds",
+    "durationSec": 5,
+    "props": {
+      "quote": "High-fare passengers cluster with more survivors \u2014 one scatterplot, three variables, zero extra charts.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "sns.scatterplot with a hue parameter encodes a third variable with color",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "value": 3,
+      "label": "variables encoded in one seaborn scatterplot",
+      "suffix": " vars"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ConceptExplainer",
+    "script": "sns.scatterplot with a hue parameter encodes a third variable with color \u2014 in this case survival",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "headline": "hue= in seaborn scatterplot",
+      "cards": [
+        {
+          "term": "x= and y=",
+          "definition": "Two numeric axes \u2014 fare on x, age on y",
+          "icon": "\ud83d\udccd"
+        },
+        {
+          "term": "hue=",
+          "definition": "Third variable encoded as dot color \u2014 survived or not",
+          "icon": "\ud83c\udfa8"
+        },
+        {
+          "term": "Pattern",
+          "definition": "High-fare cluster in upper-right skews steelblue (survived)",
+          "icon": "\ud83d\udd0d"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CodeAnnotation",
+    "script": "sns.scatterplot with a hue parameter encodes a third variable with color",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "code": [
+        "sns.scatterplot(",
+        "    data=df,",
+        "    x='fare',",
+        "    y='age',",
+        "    hue='survived',",
+        "    palette={1: 'steelblue', 0: 'salmon'},",
+        "    alpha=0.6",
+        ")"
+      ],
+      "language": "python",
+      "highlightLine": 5,
+      "annotationText": "hue='survived' assigns steelblue to survivors, salmon to non-survivors \u2014 the cluster pattern appears instantly"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "High-fare passengers cluster with more survivors",
+    "niche": "ds",
+    "durationSec": 7,
+    "props": {
+      "description": "An animated scatter plot builds on screen: dots populate as gray circles across fare (x) and age (y) axes. Then they color-split \u2014 steelblue for survived, salmon for not survived. The camera slowly zooms into the upper-right quadrant (high fare, mixed age) where steelblue dots dominate. A callout annotation appears: 'High fare = more survivors.' The animation turns the statistical pattern into a visual discovery moment rather than a static chart."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "DataVizReveal",
+    "script": "High-fare passengers cluster with more survivors",
+    "niche": "ds",
+    "durationSec": 6,
+    "props": {
+      "title": "Titanic Survival Rate by Fare Tier",
+      "data": [
+        {
+          "label": "Under \u00a350",
+          "value": 28
+        },
+        {
+          "label": "\u00a350\u2013\u00a3100",
+          "value": 45
+        },
+        {
+          "label": "Over \u00a3100",
+          "value": 62
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "WordReveal",
+    "script": "Color is data, not decoration",
+    "niche": "ds",
+    "durationSec": 4,
+    "props": {
+      "words": [
+        "Color",
+        "is",
+        "data,",
+        "not",
+        "decoration."
+      ],
+      "emphasis": [
+        0,
+        3,
+        4
+      ]
+    }
+  }
+]

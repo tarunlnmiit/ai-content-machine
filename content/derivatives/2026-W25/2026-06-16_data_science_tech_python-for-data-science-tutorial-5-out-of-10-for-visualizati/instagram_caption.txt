@@ -1,0 +1,34 @@
+Format: carousel
+Why: DS tutorial content with named steps, code examples, and five distinct chart types maps directly to a slide-by-slide carousel structure — and carousel outperforms every other format for the DS niche per account analytics.
+
+Your charts get judged before your model does.
+
+Nobody tells you this in your first data science job.
+
+You can build a 0.94 R² model, clean pipeline, six months of work — then paste a default matplotlib chart into the deck and watch the room quietly decide you don't know what you're doing.
+
+Visualization is communication. Not decoration.
+
+This carousel covers:
+→ One setup block that makes every chart professional
+→ The 5 plot types that handle 90% of EDA
+→ How to combine seaborn + matplotlib in a dashboard
+→ Saving at 300 DPI (most people skip this)
+
+Tutorial 5 of 10 in the Python for Data Science series.
+Full code with Titanic dataset — link in bio.
+
+Slides:
+  1. Your charts are judged before your model
+  2. matplotlib vs seaborn: layers, not competitors
+  3. Setup: one block for every notebook
+  4. Remove these two things from every chart
+  5. Plot type 1: Distribution (histplot)
+  6. Plot type 2: Relationship (scatterplot)
+  7. Plot type 3: Categorical (barplot)
+  8. Plot type 4: Correlation (heatmap)
+  9. Plot type 5: Grouped distribution (boxplot)
+  10. Build a 2×2 dashboard in 25 lines
+  11. Save at 300 DPI — here's what changes
+
+#datascience #python #matplotlib #datavisualization #pythontutorial #seaborn #machinelearning #dataanalytics #datascientist #coding #programming #ai

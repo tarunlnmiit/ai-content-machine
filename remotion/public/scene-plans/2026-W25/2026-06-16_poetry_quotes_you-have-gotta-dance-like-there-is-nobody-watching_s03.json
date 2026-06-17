@@ -1,0 +1,84 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "There's a version of yourself that exists only when nobody's watching.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "headline": "There's a version of yourself that exists only when nobody's watching.",
+      "subtext": "not a better version \u2014 an unfiltered one"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "HandwrittenReveal",
+    "script": "even with the wrong body the untrained hands the borrowed rhythm",
+    "niche": "poetry",
+    "durationSec": 6,
+    "props": {
+      "lines": [
+        "even with the wrong body",
+        "the untrained hands",
+        "the borrowed rhythm."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "Not a better version. An unfiltered one.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "Not a better version. An unfiltered one. The one that moves before the movement is polished."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "I've been making content for three years.",
+    "niche": "poetry",
+    "durationSec": 7,
+    "props": {
+      "value": 3,
+      "label": "years making content",
+      "suffix": "yrs"
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "The pieces that connected \u2014 the ones where I forgot to perform.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "quote": "The pieces that connected were almost always the ones where I forgot to perform."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "LineReveal",
+    "script": "What connected wasn't polish. It was recognition.",
+    "niche": "poetry",
+    "durationSec": 5,
+    "props": {
+      "lines": [
+        "What connected wasn't polish.",
+        "It was recognition."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "AtmosphericQuote",
+    "script": "Share this with someone waiting for the right version of themselves.",
+    "niche": "poetry",
+    "durationSec": 4,
+    "props": {
+      "quote": "Share this with someone waiting for the right version of themselves.",
+      "attribution": "\u2192 comments open"
+    }
+  }
+]

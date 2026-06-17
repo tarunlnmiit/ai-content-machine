@@ -1,0 +1,69 @@
+I spent 6 months building a 0.94 R² model. Then pasted a default matplotlib chart into the deck.
+
+Gray background. Tiny fonts. Cluttered axes.
+
+The first feedback wasn't about the model. It was about the charts.
+
+Here's what I learned about Python visualization the hard way:
+
+matplotlib and seaborn are not competing libraries. They're layers.
+
+Seaborn is built on top of matplotlib. High-level plots that look good in 3–5 lines.
+Matplotlib gives you pixel-level control when seaborn's defaults aren't enough.
+
+Mental model: seaborn for the 80%, matplotlib for the last 20%.
+
+One block at the top of every notebook eliminates 90% of your chart ugliness:
+
+sns.set_theme(style='whitegrid', palette='muted', font_scale=1.2)
+plt.rcParams.update({'figure.dpi': 150, 'axes.spines.top': False, 'axes.spines.right': False})
+
+Run once. Every chart inherits it.
+
+The 5 plot types that cover 90% of EDA:
+
+1. sns.histplot — distribution shape
+2. sns.scatterplot — two-variable relationship
+3. sns.barplot — categorical comparison
+4. sns.heatmap — correlation matrix
+5. sns.boxplot — distribution across categories
+
+Learn these cold. Everything else is variation.
+
+Where beginners get stuck: combining seaborn + matplotlib in one figure.
+
+Key insight: every seaborn call returns a matplotlib object.
+
+Use axes-level functions with explicit ax= targets:
+
+fig, axes = plt.subplots(2, 2)
+sns.barplot(..., ax=axes[0, 0])
+sns.histplot(..., ax=axes[0, 1])
+
+Full dashboard in 25 lines.
+
+Three details that separate good charts from bad ones:
+
+1. Titles with units — 'Fare (£)' not 'Fare'
+2. Consistent color assignment — same variable = same color across all charts
+3. Zero baseline on bar charts — plt.ylim(0, 1)
+
+None require design skill. Just intention.
+
+Default matplotlib saves at 72 DPI. Slides render at 150–300 DPI.
+
+Your chart gets stretched. Text goes fuzzy. Looks fine small. Falls apart on a projector.
+
+Fix: fig.savefig('chart.png', dpi=300, bbox_inches='tight', facecolor='white')
+
+One line. Completely different result.
+
+Visualization is where your analysis either lands or disappears.
+
+Not cosmetic. Communication.
+
+Full tutorial — setup block, all 5 chart types, dashboard code, save settings — link in bio.
+
+Tutorial 6 drops next week: statistical testing with scipy.
+
+#datascience #python

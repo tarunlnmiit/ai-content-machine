@@ -1,0 +1,18 @@
+{
+  "title": "Matplotlib + Seaborn Python Tutorial: 5 Charts Every Data Scientist Needs",
+  "description": "Your charts get judged before your model does — and nobody warns you about this. In this tutorial, you'll learn why matplotlib and seaborn are not competing libraries and how to use them together to build professional visualizations that actually communicate your analysis.\n\nThis is Tutorial 5 of 10 in the Python for Data Science series. By the end, you'll have a setup block that makes every notebook chart look professional, five essential plot types with full code, a multi-panel dashboard, and the save settings that prevent blurry slides.\n\nWe use the classic Titanic dataset throughout — it ships with seaborn, no download needed.\n\n[TIMESTAMPS_PLACEHOLDER]\n\nWhat you'll build:\n• A one-block style baseline that every chart inherits automatically\n• Distribution, relationship, categorical, correlation, and grouped distribution charts\n• A 2×2 dashboard figure in under 25 lines of code\n• PNG and vector output saved at publication quality\n\nThe shift this tutorial is really about: from 'how do I make this chart' to 'what does this chart need to say.'\n\n[LINKS_PLACEHOLDER]\n\nTutorial 6 covers statistical testing with scipy and statsmodels — how to tell if what you see in the charts is actually real.",
+  "tags": [
+    "python",
+    "matplotlib",
+    "seaborn",
+    "data science",
+    "data visualization",
+    "python tutorial",
+    "matplotlib tutorial",
+    "seaborn tutorial",
+    "exploratory data analysis",
+    "python for data science"
+  ],
+  "thumbnail_concept": "Split screen: left half shows the same Titanic age distribution as a default gray matplotlib chart (cluttered, small font, gray background), right half shows it styled with seaborn (white background, clean gridlines, readable labels). Bold text overlay: 'Before vs After'. Dark border between halves. Bottom strip: 'Tutorial 5/10 — Python for Data Science'.",
+  "end_screen_suggestion": "Surface the Python for Data Science playlist with Tutorial 4 (pandas) and Tutorial 6 (statistical testing) as the two recommended related videos."
+}
