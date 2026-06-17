@@ -509,6 +509,21 @@ def main():
     if args.slug:
         print(f"Slug:      {args.slug}")
 
+    # Post GitHub code link as pinned comment for DS tutorial long-form uploads
+    if args.slug and not args.shorts and video_id_m:
+        video_id = video_id_m.group(1)
+        date_str = args.slug[:10]
+        week = get_iso_week(date_str)
+        github_url_file = BASE_DIR / "content" / "derivatives" / week / args.slug / "github_code_url.txt"
+        if github_url_file.exists():
+            github_url = github_url_file.read_text(encoding="utf-8").strip()
+            if github_url:
+                comment_text = f"💻 Full tutorial code (GitHub):\n{github_url}"
+                comment_id = post_comment(youtube, video_id, comment_text)
+                if comment_id:
+                    print(f"[comment] GitHub code link posted")
+                    print(f"[comment] PIN in YouTube Studio → https://studio.youtube.com/video/{video_id}/comments")
+
     # Auto-save long_form_url into shorts metadata after a non-shorts upload
     if args.slug and not args.shorts:
         date_str = args.slug[:10]
