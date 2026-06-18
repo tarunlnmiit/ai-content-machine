@@ -261,6 +261,7 @@ def upload_to_spotify(
     with sync_playwright() as pw:
         ctx = pw.chromium.launch_persistent_context(
             str(SPOTIFY_SESSION_DIR),
+            channel="chrome",  # real Chrome avoids Spotify's "browser not secure" block
             headless=headless,
             slow_mo=200,
         )
