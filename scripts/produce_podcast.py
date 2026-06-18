@@ -255,19 +255,25 @@ def upload_to_spotify(
         )
 
     show_name = get_show_name(niche)
-    SPOTIFY_SESSION_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Use Chrome's real profile so existing Spotify login is inherited.
+    # Chrome MUST be fully closed before running — two instances can't share a profile.
+    chrome_profile = Path.home() / "Library" / "Application Support" / "Google" / "Chrome"
+    if not chrome_profile.exists():
+        chrome_profile = SPOTIFY_SESSION_DIR  # fallback for non-macOS
+    chrome_profile.mkdir(parents=True, exist_ok=True)
+
+    print("  NOTE: Chrome must be fully closed (Cmd+Q) before this runs.")
     print(f"  Launching browser (headless={headless})...")
     with sync_playwright() as pw:
         ctx = pw.chromium.launch_persistent_context(
-            str(SPOTIFY_SESSION_DIR),
+            str(chrome_profile),
             channel="chrome",
             headless=headless,
             slow_mo=200,
             args=["--disable-blink-features=AutomationControlled"],
             ignore_default_args=["--enable-automation"],
         )
-        # Hide navigator.webdriver so Spotify OAuth doesn't flag as bot
         ctx.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         page = ctx.new_page()
 
