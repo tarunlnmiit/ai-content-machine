@@ -226,6 +226,23 @@ def write_show_notes(week: str, slug: str | None, title: str, description: str) 
 
 # ── Spotify upload (Playwright) ────────────────────────────────────────────────
 
+def _ensure_chrome_closed() -> None:
+    """Kill Chrome if running so Playwright can take over its profile."""
+    check = subprocess.run(["pgrep", "-x", "Google Chrome"], capture_output=True)
+    if check.returncode != 0:
+        return  # not running
+    print("  Chrome is running — quitting it to allow profile access...")
+    subprocess.run(["pkill", "-x", "Google Chrome"], capture_output=True)
+    import time
+    time.sleep(2)
+    # Confirm it's gone
+    check2 = subprocess.run(["pgrep", "-x", "Google Chrome"], capture_output=True)
+    if check2.returncode == 0:
+        sys.exit(
+            "ERROR: Could not quit Chrome. Please Cmd+Q Chrome manually and retry."
+        )
+    print("  Chrome closed. Will reopen after upload.")
+
 def get_show_name(niche: str) -> str:
     env_key = SHOW_NAME_ENV[niche]
     name = os.environ.get(env_key)
@@ -257,13 +274,13 @@ def upload_to_spotify(
     show_name = get_show_name(niche)
 
     # Use Chrome's real profile so existing Spotify login is inherited.
-    # Chrome MUST be fully closed before running — two instances can't share a profile.
+    # Chrome cannot share a profile with another running instance — kill it first.
     chrome_profile = Path.home() / "Library" / "Application Support" / "Google" / "Chrome"
     if not chrome_profile.exists():
         chrome_profile = SPOTIFY_SESSION_DIR  # fallback for non-macOS
     chrome_profile.mkdir(parents=True, exist_ok=True)
 
-    print("  NOTE: Chrome must be fully closed (Cmd+Q) before this runs.")
+    _ensure_chrome_closed()
     print(f"  Launching browser (headless={headless})...")
     with sync_playwright() as pw:
         ctx = pw.chromium.launch_persistent_context(
@@ -345,6 +362,9 @@ def upload_to_spotify(
         print(f"  [ok] Episode published: {title}")
 
         ctx.close()
+
+    # Reopen Chrome for normal use
+    subprocess.Popen(["open", "-a", "Google Chrome"])
 
 
 # ── Main ───────────────────────────────────────────────────────────────────────
