@@ -261,10 +261,14 @@ def upload_to_spotify(
     with sync_playwright() as pw:
         ctx = pw.chromium.launch_persistent_context(
             str(SPOTIFY_SESSION_DIR),
-            channel="chrome",  # real Chrome avoids Spotify's "browser not secure" block
+            channel="chrome",
             headless=headless,
             slow_mo=200,
+            args=["--disable-blink-features=AutomationControlled"],
+            ignore_default_args=["--enable-automation"],
         )
+        # Hide navigator.webdriver so Spotify OAuth doesn't flag as bot
+        ctx.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         page = ctx.new_page()
 
         # Go to dashboard
