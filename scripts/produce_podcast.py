@@ -273,14 +273,30 @@ def upload_to_spotify(
 
     show_name = get_show_name(niche)
 
-    # Use Chrome's real profile so existing Spotify login is inherited.
-    # Chrome cannot share a profile with another running instance — kill it first.
-    chrome_profile = Path.home() / "Library" / "Application Support" / "Google" / "Chrome"
-    if not chrome_profile.exists():
+    # Chrome blocks --remote-debugging-pipe on its own default profile dir.
+    # Fix: rsync the profile (excluding caches) to a custom path, use that for Playwright.
+    real_chrome_profile = Path.home() / "Library" / "Application Support" / "Google" / "Chrome"
+    playwright_profile = Path.home() / ".playwright-chrome-profile"
+
+    _ensure_chrome_closed()
+
+    if real_chrome_profile.exists():
+        print("  Syncing Chrome profile for Playwright...")
+        subprocess.run([
+            "rsync", "-a", "--delete",
+            "--exclude=*/Cache/*",
+            "--exclude=*/GPUCache/*",
+            "--exclude=*/Code Cache/*",
+            "--exclude=*/CacheStorage/*",
+            "--exclude=*/Service Worker/CacheStorage/*",
+            f"{real_chrome_profile}/",
+            f"{playwright_profile}/",
+        ], check=True, capture_output=True)
+        chrome_profile = playwright_profile
+    else:
         chrome_profile = SPOTIFY_SESSION_DIR  # fallback for non-macOS
     chrome_profile.mkdir(parents=True, exist_ok=True)
 
-    _ensure_chrome_closed()
     print(f"  Launching browser (headless={headless})...")
     with sync_playwright() as pw:
         ctx = pw.chromium.launch_persistent_context(
