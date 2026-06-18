@@ -141,7 +141,7 @@ No cue here — typically plays over title card.
 ## When to Use [BROLL:] vs [SCREEN:]
 
 - **[BROLL:]** — Conceptual, emotional, relatable context. Problem framing. Takeaway landing. Works audio-only.
-- **[SCREEN:]** — Code, terminal, visualization, metrics. Technical walkthrough. Shows the implementation.
+- **[SCREEN:]** — Code, terminal, visualization, metrics. Technical walkthrough. Shows the implementation. Every plot/output cue is paired with the code that generated it (code block immediately before the cue).
 
 Combo rhythm typically: BROLL (2) → SCREEN (3–4) → BROLL or SCREEN (1) → CLOSE (0)
 
@@ -163,6 +163,14 @@ Use `[BROLL: description]` for conceptual B-roll sections (openers, problem fram
 Use `[SCREEN: description]` for technical screen state transitions.
 Use `[PAUSE]` for deliberate breath points.
 Include ALL code inline as fenced ```python blocks — **never** use `[CODE_INSERT:]` placeholders. Every code block must be complete and runnable (imports included, sample data provided with `numpy` or `pandas` where needed, output-producing). A script with a placeholder instead of real code is unacceptable.
+
+Every `[SCREEN:]` that shows a plot, chart, figure, or output **must** be immediately preceded in the prose by the complete runnable ```python block that produces it. Never leave a chart/output `[SCREEN:]` with no generating code — this includes the "ugly default" shot and any "before/after" comparison: write the actual code that makes them, not a description.
+
+When a `[SCREEN:]` references documentation, a package homepage, or any website, add a blockquote line directly beneath it with real URLs:
+```
+> Links to show on screen: seaborn — https://seaborn.pydata.org/ · matplotlib — https://matplotlib.org/stable/
+```
+
 Use `[PERSONAL_INSERT: ...]` for personal anecdotes — write the actual memory in full, first-person prose inside the brackets, exactly as Tarun would say it on camera. Never use a vague description placeholder ("a memory of X") — write the words themselves.
 
 ---
@@ -176,6 +184,8 @@ Use `[PERSONAL_INSERT: ...]` for personal anecdotes — write the actual memory 
 - [ ] All code is inline fenced ```python blocks — zero `[CODE_INSERT:]` placeholders
 - [ ] Every code block has imports, sample data, and produces visible output
 - [ ] Each code step has a concrete output or result shown
+- [ ] Every plot/chart/output [SCREEN:] is immediately preceded by its runnable code (no orphan output cues)
+- [ ] Every docs/website [SCREEN:] has a "Links to show on screen:" line with a real URL
 - [ ] Comparisons include a metric (faster by X%, accuracy Y%, etc.)
 - [ ] No jargon without explanation (first use gets 1–2 sentence context)
 - [ ] Contractions used throughout — sounds like a person

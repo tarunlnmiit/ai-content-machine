@@ -55,6 +55,12 @@ def _build_prompt(hook_text: str, niche: str, shot_index: int,
 Creator context: {voice}
 Banned words: {BANNED_WORDS}
 
+SELF-CONTAINED: This caption, title, and description must read standalone. The
+viewer may never have seen the long-form or any sibling short. Never write "part
+N", "continued", "in the previous short", or "watch the full video to
+understand". Sell THIS clip as a complete piece. (A CTA pointing to the full
+video for MORE is fine; requiring it to UNDERSTAND is not.)
+
 This is shot #{shot_index + 1}. The clip's hook / opening line:
 "{hook_text}"
 

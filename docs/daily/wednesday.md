@@ -181,7 +181,7 @@ All 6 URLs should be present. Missing Medium URL → add manually. Missing Subst
 - [ ] Clap once before each take / major section (audio spike = easy cut point)
 - [ ] Show code RUNNING end-to-end — not just typed, actually executed
 - [ ] Follow `[SCREEN:]` cues — zoom/highlight relevant code region
-- [ ] Follow `[CODE_INSERT:]` cues — paste the code block and talk through it live
+- [ ] Talk through each inline ```python block live; for chart `[SCREEN:]` cues, run the preceding block and screenshot the output as the marker PNG. Pull up any "Links to show on screen:" URLs.
 - [ ] Record 2 takes for the most important demo sections
 - [ ] End with 3 seconds of silence
 

@@ -126,6 +126,9 @@ Rules:
 - title: Under 60 chars. Hook in first 3 words. {ctx['title_tip']} No trailing ellipsis.
 - description: 2-3 punchy sentences in creator voice. End with 2-3 relevant hashtags including #Shorts.
 - tags: 5-8 strings, mix broad + specific. No "#" prefix in tags array.
+- SELF-CONTAINED: title and description must stand alone. No part numbers, no
+  "watch the previous short", no implying the long-form is required to
+  understand this clip. (A CTA to the full video for MORE is fine.)
 
 Return ONLY valid JSON, no prose, no markdown fences:
 {{"title": "...", "description": "...", "tags": [...]}}"""

@@ -82,7 +82,10 @@ DS script structure:
 ```
 [HOOK: opening line that stops the scroll]
 [SCREEN: show the problem visually]
-[CODE_INSERT: paste code block here]
+```python
+# code inline as a fenced block — NOT a [CODE_INSERT:] placeholder
+```
+[SCREEN: chart output]   # chart cues sit right after their generating code
 [PAUSE]
 [BROLL: cut to relevant b-roll]
 [ANIMATION: describe what to animate]
@@ -137,7 +140,7 @@ python3 scripts/worksheet_links.py --week {week}
 Each script should be:
 - 500–1,500 words (8–12 min at 120 wpm)
 - Personal voice, no jargon without explanation
-- `[SCREEN:]` / `[BROLL:]` / `[CODE_INSERT:]` cues throughout
+- `[SCREEN:]` / `[BROLL:]` / `[ANIMATION:]` cues throughout — code inline as fenced ```python blocks, **no** `[CODE_INSERT:]` placeholders (banned). DS chart `[SCREEN:]` cues sit right after their generating code; docs `[SCREEN:]` cues carry a "Links to show on screen:" line.
 - For DS/Life: a `[WORKSHEET CTA]` line near the end (if a worksheet exists)
 - No banned words
 

@@ -527,7 +527,7 @@ Each sheet lists every overlay's **Time** (measured from your first spoken word)
 
 Color grading, title card, lower third, outro card, and overlay motion graphics are now automated — `TalkingHeadEdit.tsx` reads them from the edit plan JSON and renders them in Remotion.
 
-Shorts are generated via `clip_shorts.py` on the final MP4.
+Shorts are generated via `clip_shorts.py` on the final MP4, each self-contained — stands alone with no references to other clips or the source long-form.
 
 ---
 

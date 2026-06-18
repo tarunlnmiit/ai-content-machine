@@ -56,11 +56,16 @@ DS script cues:
 ```
 [HOOK: opening line that stops the scroll]
 [SCREEN: show the problem visually]
-[CODE_INSERT: paste code block here]
 [PAUSE]
 [BROLL: cut to relevant b-roll]
 [ANIMATION: describe what to animate]
 ```
+
+Code + plot rules (enforced in `prompts/yt_screen_script_agent.md` + `yt_combo_script_agent.md`):
+- All code inline as fenced ```python blocks — **no** `[CODE_INSERT:]` placeholders (banned).
+- Every chart/plot/output `[SCREEN:]` is immediately preceded by the runnable ```python block that produces it — incl. ugly-default + before/after shots.
+- Every docs/website `[SCREEN:]` carries a `> Links to show on screen: <name> — <url>` line.
+- At record time: run the block, screenshot output → numbered PNG (see `docs/video-production-guide.md`).
 
 **Verify:**
 ```bash

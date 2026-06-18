@@ -52,7 +52,12 @@ Goal: find {count} segments, each 30-60 seconds, that work as self-contained Sho
 
 Rank candidates by HOOK STRENGTH (not mere presence) and pick the strongest. Each segment must:
 - Open with a strong hook in the first 3s (one of the hook archetypes above)
-- Be self-contained (no "as I mentioned earlier", no missing setup)
+- Be COMPLETE ON ITS OWN: a viewer seeing only this clip, cold, gets the full
+  hook→payoff with zero outside context. Reject any segment whose hook or payoff
+  depends on setup that lives outside the cut. Ban references to other parts of
+  the video: no "as I mentioned", "earlier", "like I said", "part 2 / next /
+  previous", "continued", "watch the full video". Prefer segments that already
+  contain their own setup.
 - Contain a clear problem -> payoff/proof arc; end on insight, payoff, or cliffhanger
 - Carry one concrete proof/specific detail
 

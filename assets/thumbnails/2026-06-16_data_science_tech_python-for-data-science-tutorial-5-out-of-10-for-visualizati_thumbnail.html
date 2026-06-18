@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1280px; height: 720px; overflow: hidden; background: #1E1B2E; }
+
+  .thumbnail {
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Space Grotesk', sans-serif;
+    background: #1E1B2E;
+  }
+
+  /* Diagonal split */
+  .zone-left {
+    position: absolute;
+    top: 0; left: 0;
+    width: 700px; height: 720px;
+    background: #12101F;
+    clip-path: polygon(0 0, 620px 0, 520px 720px, 0 720px);
+    z-index: 1;
+  }
+
+  .zone-right {
+    position: absolute;
+    top: 0; right: 0;
+    width: 680px; height: 720px;
+    background: #0F1A26;
+    z-index: 1;
+  }
+
+  /* Noise texture overlay */
+  .noise {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    z-index: 2;
+  }
+
+  /* ---- LEFT SIDE: ugly gray chart ---- */
+  .chart-ugly {
+    position: absolute;
+    top: 160px; left: 50px;
+    width: 360px; height: 280px;
+    background: #BEBEBE;
+    border: 2px solid #999;
+    z-index: 4;
+    padding: 16px 20px 24px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .chart-ugly-title {
+    position: absolute;
+    top: 10px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  .ugly-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    height: 190px;
+    border-left: 2px solid #555;
+    border-bottom: 2px solid #555;
+    padding: 0 8px 4px 8px;
+  }
+
+  .ugly-bar {
+    background: #4472C4;
+    flex: 1;
+  }
+
+  .ugly-gridlines {
+    position: absolute;
+    top: 30px; left: 36px; right: 20px; bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .ugly-grid-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.15);
+  }
+
+  /* X mark over ugly chart */
+  .x-mark {
+    position: absolute;
+    top: 120px; left: 50px;
+    width: 360px; height: 280px;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .x-circle {
+    width: 110px; height: 110px;
+    background: #FF2222;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    color: #fff;
+    font-weight: 900;
+    line-height: 1;
+    box-shadow: 0 0 40px rgba(255,34,34,0.6);
+    opacity: 0.92;
+  }
+
+  .label-before {
+    position: absolute;
+    top: 104px; left: 76px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #FF4444;
+    letter-spacing: 4px;
+    z-index: 9;
+    text-transform: uppercase;
+  }
+
+  /* ---- RIGHT SIDE: clean chart ---- */
+  .chart-clean {
+    position: absolute;
+    top: 160px; right: 54px;
+    width: 360px; height: 280px;
+    background: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    z-index: 4;
+    padding: 16px 20px 24px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  .chart-clean-title {
+    position: absolute;
+    top: 10px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #333;
+    font-weight: 600;
+    white-space: nowrap;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .clean-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+    height: 190px;
+    border-left: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    padding: 0 8px 4px 8px;
+  }
+
+  .clean-bar-1 { background: #6B8FA8; flex: 1; }
+  .clean-bar-2 { background: #96BAD0; flex: 1; }
+  .clean-bar-3 { background: #4FC3F7; flex: 1; }
+  .clean-bar-4 { background: #3D5F75; flex: 1; }
+  .clean-bar-5 { background: #26C6DA; flex: 1; }
+
+  .clean-gridlines {
+    position: absolute;
+    top: 30px; left: 36px; right: 20px; bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .clean-grid-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(0,0,0,0.08);
+  }
+
+  /* Check mark over clean chart */
+  .check-mark {
+    position: absolute;
+    top: 120px; right: 54px;
+    width: 360px; height: 280px;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .check-circle {
+    width: 110px; height: 110px;
+    background: #00C853;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 58px;
+    color: #fff;
+    font-weight: 900;
+    box-shadow: 0 0 40px rgba(0,200,83,0.5);
+    opacity: 0.92;
+  }
+
+  .label-after {
+    position: absolute;
+    top: 104px; right: 78px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #00E676;
+    letter-spacing: 4px;
+    z-index: 9;
+    text-transform: uppercase;
+  }
+
+  /* ---- DIAGONAL DIVIDER LINE ---- */
+  .divider {
+    position: absolute;
+    top: 0;
+    left: 510px;
+    width: 4px;
+    height: 720px;
+    background: linear-gradient(180deg, transparent 0%, #FF4444 20%, #FF4444 50%, #00E676 80%, transparent 100%);
+    transform: rotate(-8deg) translateX(-10px);
+    transform-origin: top center;
+    z-index: 10;
+    opacity: 0.7;
+  }
+
+  /* ---- MAIN TEXT ---- */
+  .main-text-wrap {
+    position: absolute;
+    top: 32px;
+    left: 0; right: 0;
+    text-align: center;
+    z-index: 20;
+  }
+
+  .main-text {
+    display: inline-block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 118px;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 0.9;
+    letter-spacing: -3px;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.8), 0 0 60px rgba(0,0,0,0.6);
+  }
+
+  .main-text .word-bad {
+    color: #FF4444;
+  }
+
+  /* ---- SUB TEXT ---- */
+  .sub-text {
+    position: absolute;
+    bottom: 60px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 2px;
+    z-index: 20;
+    text-transform: uppercase;
+  }
+
+  /* ---- TUTORIAL BADGE ---- */
+  .tutorial-badge {
+    position: absolute;
+    top: 36px;
+    right: 40px;
+    background: #6B8FA8;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    z-index: 25;
+  }
+
+  /* ---- BRAND MARK ---- */
+  .brand-mark {
+    position: absolute;
+    bottom: 18px;
+    left: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 30;
+  }
+
+  .brand-dot {
+    width: 28px; height: 28px;
+    background: #6B8FA8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .brand-handle {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="thumbnail">
+  <div class="zone-left"></div>
+  <div class="zone-right"></div>
+  <div class="noise"></div>
+
+  <!-- Ugly chart left -->
+  <div class="chart-ugly">
+    <span class="chart-ugly-title">Untitled</span>
+    <div class="ugly-gridlines">
+      <div class="ugly-grid-line"></div>
+      <div class="ugly-grid-line"></div>
+      <div class="ugly-grid-line"></div>
+      <div class="ugly-grid-line"></div>
+    </div>
+    <div class="ugly-bars">
+      <div class="ugly-bar" style="height:55%"></div>
+      <div class="ugly-bar" style="height:78%"></div>
+      <div class="ugly-bar" style="height:40%"></div>
+      <div class="ugly-bar" style="height:91%"></div>
+      <div class="ugly-bar" style="height:63%"></div>
+    </div>
+  </div>
+
+  <!-- Clean chart right -->
+  <div class="chart-clean">
+    <span class="chart-clean-title">Survival Rate by Class</span>
+    <div class="clean-gridlines">
+      <div class="clean-grid-line"></div>
+      <div class="clean-grid-line"></div>
+      <div class="clean-grid-line"></div>
+      <div class="clean-grid-line"></div>
+    </div>
+    <div class="clean-bars">
+      <div class="clean-bar-1" style="height:55%"></div>
+      <div class="clean-bar-2" style="height:78%"></div>
+      <div class="clean-bar-3" style="height:40%"></div>
+      <div class="clean-bar-4" style="height:91%"></div>
+      <div class="clean-bar-5" style="height:63%"></div>
+    </div>
+  </div>
+
+  <!-- X mark over ugly -->
+  <div class="x-mark">
+    <div class="x-circle">✕</div>
+  </div>
+  <div class="label-before">BEFORE</div>
+
+  <!-- Check over clean -->
+  <div class="check-mark">
+    <div class="check-circle">✓</div>
+  </div>
+  <div class="label-after">AFTER</div>
+
+  <!-- Diagonal divider -->
+  <div class="divider"></div>
+
+  <!-- Main text -->
+  <div class="main-text-wrap">
+    <div class="main-text">YOUR CHARTS<br><span class="word-bad">LOOK BAD</span></div>
+  </div>
+
+  <!-- Sub text -->
+  <div class="sub-text">matplotlib + seaborn · fix it in 10 minutes</div>
+
+  <!-- Tutorial badge -->
+  <div class="tutorial-badge">5 / 10</div>
+
+  <!-- Brand mark -->
+  <div class="brand-mark">
+    <div class="brand-dot">B</div>
+    <span class="brand-handle">@breathofdatascience</span>
+  </div>
+</div>
+</body>
+</html>

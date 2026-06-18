@@ -73,11 +73,18 @@ def fetch_video_snippet(youtube, video_id: str) -> dict:
 
 
 def update_description(youtube, video_id: str, snippet: dict, new_description: str) -> None:
-    """Update the video description. snippet must be the full snippet dict."""
-    snippet["description"] = new_description
+    """Update the video description. Strips read-only fields before sending."""
+    writable = {
+        "title": snippet["title"],
+        "description": new_description,
+        "categoryId": snippet.get("categoryId", "28"),
+        "tags": snippet.get("tags", []),
+        "defaultLanguage": snippet.get("defaultLanguage", "en"),
+        "defaultAudioLanguage": snippet.get("defaultAudioLanguage", "en"),
+    }
     youtube.videos().update(
         part="snippet",
-        body={"id": video_id, "snippet": snippet},
+        body={"id": video_id, "snippet": writable},
     ).execute()
 
 

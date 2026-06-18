@@ -96,7 +96,7 @@ export function AtmosphericQuote({ quote, attribution, niche }: AtmosphericQuote
             opacity: quoteOpacity,
             transform: `translateY(${quoteY}px)`,
             color: COLORS.text,
-            fontSize: 72,
+            fontSize: 42,
             fontFamily: FONTS.heading,
             fontWeight: FONTS.headingWeight,
             lineHeight: 1.25,

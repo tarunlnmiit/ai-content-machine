@@ -114,7 +114,7 @@ No "thanks for watching" without something real to come back for.
 
 ## When to Use [SCREEN:] vs [BROLL:]
 
-- **[SCREEN:]** — Show code, terminal output, plots, datasets, IDE state. Core to understanding.
+- **[SCREEN:]** — Show code, terminal output, plots, datasets, IDE state. Core to understanding. Every plot/output cue is paired with the code that generated it (code block immediately before the cue).
 - **[BROLL:]** — Optional intro/outro visual, transition graphic, title card. Nice-to-have polish.
 
 For a tight 5–6 min video, you may have 8–10 `[SCREEN:]` cues and 0–2 `[BROLL:]` cues.
@@ -137,6 +137,14 @@ Use `[SCREEN: description]` inline to mark screen state transitions.
 Use `[BROLL: description]` for optional intro/outro visuals only.
 Use `[PAUSE]` for deliberate breath points.
 Include ALL code inline as fenced ```python blocks — **never** use `[CODE_INSERT:]` placeholders. Every code block must be complete and runnable (imports included, sample data provided with `numpy` or `pandas` where needed, output-producing). A script with a placeholder instead of real code is unacceptable.
+
+Every `[SCREEN:]` that shows a plot, chart, figure, or output **must** be immediately preceded in the prose by the complete runnable ```python block that produces it. Never leave a chart/output `[SCREEN:]` with no generating code — this includes the "ugly default" shot and any "before/after" comparison: write the actual code that makes them, not a description.
+
+When a `[SCREEN:]` references documentation, a package homepage, or any website, add a blockquote line directly beneath it with real URLs:
+```
+> Links to show on screen: seaborn — https://seaborn.pydata.org/ · matplotlib — https://matplotlib.org/stable/
+```
+
 Use `[PERSONAL_INSERT: ...]` for personal anecdotes — write the actual memory in full, first-person prose inside the brackets, exactly as Tarun would say it on camera. Never use a vague description placeholder ("a memory of X") — write the words themselves.
 
 ### Animation tags
@@ -168,6 +176,8 @@ Every script must include exactly **three** `[ANIMATION:]` markers — rendered 
 - [ ] All code is inline fenced ```python blocks — zero `[CODE_INSERT:]` placeholders
 - [ ] Every code block has imports, sample data, and produces visible output
 - [ ] Each step has a concrete output or result shown
+- [ ] Every plot/chart/output [SCREEN:] is immediately preceded by its runnable code (no orphan output cues)
+- [ ] Every docs/website [SCREEN:] has a "Links to show on screen:" line with a real URL
 - [ ] Comparisons include a metric (faster by X%, accuracy of Y%, etc.)
 - [ ] No jargon without explanation (first use gets 1–2 sentence context)
 - [ ] Contractions used throughout — sounds like a person

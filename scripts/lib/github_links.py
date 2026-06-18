@@ -6,13 +6,13 @@ upload_youtube.py to inject tutorial code links into DS video metadata.
 
 from __future__ import annotations
 
-GITHUB_CODE_MARKER = "<!-- github-code -->"
+GITHUB_CODE_MARKER = "github.com/tarunlnmiit/machine_learning"
 
 
 def github_yt_description_snippet(url: str, title: str | None = None) -> str:
     """Block to include in the YouTube video description."""
     label = title or "Tutorial code"
-    return f"{GITHUB_CODE_MARKER}\n💻 {label} (GitHub):\n{url}"
+    return f"💻 {label} (GitHub):\n{url}"
 
 
 def github_yt_pinned_comment(url: str, title: str | None = None) -> str:

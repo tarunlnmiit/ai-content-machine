@@ -91,7 +91,7 @@ python3 scripts/update_schedule.py \
 - [ ] Clap once before each take / major section
 - [ ] Show code RUNNING end-to-end — not just typed, actually executed
 - [ ] Follow `[SCREEN:]` cues — zoom/highlight relevant code region
-- [ ] Follow `[CODE_INSERT:]` cues — paste block and talk through it live
+- [ ] Talk through each inline ```python block live; for chart `[SCREEN:]` cues, run the preceding block and screenshot the output as the marker PNG. Pull up any "Links to show on screen:" URLs.
 - [ ] Record 2 takes for critical demo sections
 - [ ] End with 3 seconds of silence
 

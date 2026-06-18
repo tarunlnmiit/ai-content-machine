@@ -22,7 +22,7 @@ export function CaptionPage({ page, fontSize = 48 }: CaptionPageProps) {
     <div
       style={{
         position: "absolute",
-        bottom: 80,
+        bottom: 180,
         left: 0,
         right: 0,
         display: "flex",

@@ -102,6 +102,13 @@ Rules for the SET of shorts:
 
 Rules for EACH short:
 - 6–12 scenes, played sequentially, self-contained (own hook + payoff).
+- COMPLETE ON ITS OWN: this short must make full sense to a viewer who sees ONLY
+  this short, cold, having watched nothing else. Its scenes must not depend on
+  setup shown in another short or in an un-included part of the source script.
+  Ban every reference to other parts/shorts: no "as I mentioned", "earlier",
+  "like I said", "part 2 / next / previous", "continued", "in this series",
+  "watch the full video". Each verbatim "script" excerpt and the short's angle
+  must carry their own context.
 - Per-short total durationSec MUST land in 30–60s.
 - Each scene must use exactly one component from the catalog.
 - Fill in the props with REAL content extracted from the script (actual data, actual code, actual words).

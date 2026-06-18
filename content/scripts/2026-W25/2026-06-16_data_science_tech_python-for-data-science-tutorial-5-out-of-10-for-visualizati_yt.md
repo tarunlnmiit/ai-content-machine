@@ -13,6 +13,15 @@ Nobody tells you this in your first data science job, but your charts will get j
 
 [SCREEN: default matplotlib figure — gray background, tiny fonts, cluttered axes]
 
+```python
+import matplotlib.pyplot as plt, seaborn as sns
+df = sns.load_dataset("titanic")
+plt.figure()                       # raw matplotlib defaults — gray bg, tiny fonts
+plt.hist(df["age"].dropna(), bins=30)
+plt.title("age")
+plt.show()
+```
+
 You can build a regression with a 0.94 R², a clean pipeline, six months of feature engineering — and then paste a default matplotlib figure into the slide deck, gray background and all, and watch everyone in the room quietly decide you don't know what you're doing.
 
 I remember sending a client a notebook I was genuinely proud of — six weeks of analysis, solid methodology, results I stood behind. The feedback I got back wasn't about any of that. The first comment was: these charts are really hard to read. That was it. That was the conversation. The analysis became secondary the moment the charts made people work. I've never sent a default matplotlib figure since.
@@ -20,6 +29,8 @@ I remember sending a client a notebook I was genuinely proud of — six weeks of
 Visualization is where your analysis either lands or disappears. It's not cosmetic. It's communication. And in Python, you have two tools that handle 95% of everything you'll ever need: matplotlib for control, seaborn for speed. This is tutorial five of ten. By the end, you'll never paste a gray-background plot again.
 
 [SCREEN: seaborn docs homepage alongside matplotlib docs — showing they're separate packages]
+
+> Links to show on screen: seaborn — https://seaborn.pydata.org/ · matplotlib — https://matplotlib.org/stable/
 
 Here's what most tutorials skip about matplotlib and seaborn: they're not competing libraries. They're layers. Seaborn is built on top of matplotlib — it gives you high-level plot types that look good with almost no configuration. Matplotlib gives you low-level control when seaborn's defaults aren't enough.
 
@@ -89,6 +100,17 @@ Age is roughly normal. Fare is heavily skewed right — most passengers paid und
 
 [SCREEN: 2x2 grid of all five chart types side by side]
 
+```python
+fig, ax = plt.subplots(2, 3, figsize=(16, 9))
+sns.histplot(df["age"].dropna(), kde=True, ax=ax[0,0], color="steelblue"); ax[0,0].set_title("histplot")
+sns.scatterplot(data=df, x="age", y="fare", hue="survived", ax=ax[0,1]); ax[0,1].set_title("scatterplot")
+sns.barplot(data=df, x="pclass", y="survived", palette="Blues_d", ax=ax[0,2]); ax[0,2].set_title("barplot")
+sns.heatmap(df[["survived","pclass","age","fare"]].corr(), annot=True, cmap="coolwarm", ax=ax[1,0]); ax[1,0].set_title("heatmap")
+sns.boxplot(data=df, x="pclass", y="age", palette="pastel", ax=ax[1,1]); ax[1,1].set_title("boxplot")
+ax[1,2].axis("off")
+plt.tight_layout(); plt.show()
+```
+
 Here's where people get stuck: they want to combine these into one figure, and it breaks. The key insight is that every seaborn call returns a matplotlib object. Once you know that, the two libraries become one tool.
 
 ```python
@@ -139,6 +161,15 @@ Three chart details that separate good from bad: every numeric axis needs units 
 These aren't design skills. They're intentions. And they're the difference between a chart that communicates and a chart that misleads.
 
 [SCREEN: before/after comparison — default matplotlib vs styled dashboard]
+
+```python
+fig, (l, r) = plt.subplots(1, 2, figsize=(14, 5))
+sns.reset_defaults()                                  # left = ugly default
+l.hist(df["age"].dropna(), bins=30); l.set_title("Before — default")
+sns.set_theme(style="whitegrid", palette="muted", font_scale=1.2)
+sns.histplot(df["age"].dropna(), kde=True, ax=r, color="steelblue"); r.set_title("After — styled")
+plt.tight_layout(); plt.show()
+```
 
 Start with one notebook. Load a dataset you care about. Build all five chart types. Save at 300 DPI. Then ask: does someone who's never seen this data understand the key pattern within five seconds of looking? If not — the chart needs work, not the data.
 
