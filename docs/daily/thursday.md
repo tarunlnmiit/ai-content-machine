@@ -256,12 +256,17 @@ Or manually: open Notion → Contents DB → find each row → Status → Upload
 
 ## Step 8 — Produce + upload podcasts (~10 min)
 
-Life and Poetry YouTube videos double as podcast episodes. This step extracts audio, mixes in low-volume BGM, and uploads to Spotify for Podcasters automatically.
+Life and Poetry YouTube videos double as podcast episodes. This step extracts audio, mixes in
+low-volume BGM, uploads the MP3 to GitHub Releases, and pushes an RSS feed update. Spotify polls
+the RSS feed and picks up new episodes automatically (within ~1hr).
 
-**First time only** — log in to Spotify for Podcasters:
+**First time only** — create the public podcast-feed repo:
 ```bash
-python3 scripts/produce_podcast.py --week 2026-W{nn} --setup-spotify
-# Browser opens → log in → close browser → session saved
+gh repo create tarunlnmiit/podcast-feed --public --description "Podcast RSS feeds"
+# Then in GitHub → repo Settings → Pages → Source: main branch, / (root)
+# Then in Spotify for Podcasters → Import podcast → paste RSS URLs:
+#   https://tarunlnmiit.github.io/podcast-feed/life.xml
+#   https://tarunlnmiit.github.io/podcast-feed/poetry.xml
 ```
 
 **Every week:**
@@ -276,17 +281,19 @@ python3 scripts/produce_podcast.py --week 2026-W{nn} --niche life
 python3 scripts/produce_podcast.py --week 2026-W{nn} --niche poetry
 ```
 
-Audio-only (skip upload):
+Audio-only (skip RSS publish):
 ```bash
 python3 scripts/produce_podcast.py --week 2026-W{nn} --no-upload
 ```
 
 **Outputs:**
 - `assets/audio/{week}/{slug}_podcast.mp3` — final episode with BGM
+- `data/podcast/rss/{niche}.xml` — updated RSS feed (pushed to GitHub Pages)
 - `content/derivatives/{week}/{slug}/{slug}_podcast_shownotes.md` — show notes
 
 **Requirements:**
-- `SPOTIFY_LIFE_SHOW_NAME` and `SPOTIFY_POETRY_SHOW_NAME` in `.env` (exact show names as they appear in Spotify for Podcasters dashboard)
+- `gh` CLI authenticated (`gh auth status`)
+- `tarunlnmiit/podcast-feed` public GitHub repo exists
 - BGM tracks in `assets/audio/bgm/` — run `python3 scripts/download_bgm.py` once if empty
 
 ---

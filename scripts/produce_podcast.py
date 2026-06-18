@@ -1,34 +1,34 @@
 #!/usr/bin/env python3
 """
-produce_podcast.py — Extract audio from Life/Poetry video, mix BGM, upload to Spotify.
+produce_podcast.py — Extract audio from Life/Poetry video, mix BGM, publish via RSS.
 
 Audio source: assets/hyperframes/{week}/{date}_{niche}_*.mp4
 BGM source:   assets/audio/bgm/{niche}/*.mp3  (see download_bgm.py)
 Output:       assets/audio/{week}/{slug}_podcast.mp3
+RSS:          data/podcast/rss/{niche}.xml  (pushed to GitHub Pages)
 
 USAGE:
     python3 scripts/produce_podcast.py --week 2026-W25 --niche life
     python3 scripts/produce_podcast.py --week 2026-W25 --niche poetry
     python3 scripts/produce_podcast.py --week 2026-W25          # both
 
-    # First-time Spotify login (opens browser):
-    python3 scripts/produce_podcast.py --week 2026-W25 --setup-spotify
-
-    # Audio-only, skip upload:
+    # Audio-only, skip RSS upload:
     python3 scripts/produce_podcast.py --week 2026-W25 --no-upload
 
     # Dry-run (no ffmpeg, no upload):
     python3 scripts/produce_podcast.py --week 2026-W25 --dry-run
 
+    # Retroactive from archive drive:
+    python3 scripts/produce_podcast.py --week 2026-W21 --archive-dir /Volumes/Archive/...
+
 REQUIRES:
     ffmpeg installed (brew install ffmpeg)
-    playwright installed (pip install playwright && playwright install chromium)
-    SPOTIFY_LIFE_SHOW_NAME and SPOTIFY_POETRY_SHOW_NAME in .env
+    gh CLI authenticated (gh auth login)
+    Public GitHub repo: tarunlnmiit/podcast-feed (gh repo create tarunlnmiit/podcast-feed --public)
 """
 
 import argparse
 import json
-import os
 import random
 import re
 import subprocess
@@ -45,14 +45,6 @@ HYPERFRAMES_DIR = BASE_DIR / "assets" / "hyperframes"
 AUDIO_OUT_DIR = BASE_DIR / "assets" / "audio"
 BGM_DIR = BASE_DIR / "assets" / "audio" / "bgm"
 DERIVATIVES_DIR = BASE_DIR / "content" / "derivatives"
-
-# Spotify session persisted here so login survives across runs
-SPOTIFY_SESSION_DIR = Path.home() / ".config" / "content-machine" / "spotify-session"
-
-SHOW_NAME_ENV: dict[str, str] = {
-    "life": "SPOTIFY_LIFE_SHOW_NAME",
-    "poetry": "SPOTIFY_POETRY_SHOW_NAME",
-}
 
 
 # ── Video discovery ────────────────────────────────────────────────────────────
@@ -224,163 +216,19 @@ def write_show_notes(week: str, slug: str | None, title: str, description: str) 
     return out_path
 
 
-# ── Spotify upload (Playwright) ────────────────────────────────────────────────
+# ── RSS publish ────────────────────────────────────────────────────────────────
 
-def _ensure_chrome_closed() -> None:
-    """Kill Chrome if running so Playwright can take over its profile."""
-    check = subprocess.run(["pgrep", "-x", "Google Chrome"], capture_output=True)
-    if check.returncode != 0:
-        return  # not running
-    print("  Chrome is running — quitting it to allow profile access...")
-    subprocess.run(["pkill", "-x", "Google Chrome"], capture_output=True)
-    import time
-    time.sleep(2)
-    # Confirm it's gone
-    check2 = subprocess.run(["pgrep", "-x", "Google Chrome"], capture_output=True)
-    if check2.returncode == 0:
-        sys.exit(
-            "ERROR: Could not quit Chrome. Please Cmd+Q Chrome manually and retry."
-        )
-    print("  Chrome closed. Will reopen after upload.")
-
-def get_show_name(niche: str) -> str:
-    env_key = SHOW_NAME_ENV[niche]
-    name = os.environ.get(env_key)
-    if not name:
-        raise EnvironmentError(
-            f"{env_key} not set in .env\n"
-            f"Add: {env_key}=Breath of Life"
-        )
-    return name
-
-
-def upload_to_spotify(
+def publish_via_rss(
     audio_mp3: Path,
     title: str,
     description: str,
     niche: str,
-    *,
-    headless: bool = True,
+    week: str,
 ) -> None:
-    """Upload episode to Spotify for Podcasters via Playwright browser automation."""
-    try:
-        from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
-    except ImportError:
-        sys.exit(
-            "playwright not installed.\n"
-            "Run: pip install playwright && playwright install chromium"
-        )
-
-    show_name = get_show_name(niche)
-
-    # Chrome blocks --remote-debugging-pipe on its own default profile dir.
-    # Fix: rsync the profile (excluding caches) to a custom path, use that for Playwright.
-    real_chrome_profile = Path.home() / "Library" / "Application Support" / "Google" / "Chrome"
-    playwright_profile = Path.home() / ".playwright-chrome-profile"
-
-    _ensure_chrome_closed()
-
-    if real_chrome_profile.exists():
-        print("  Syncing Chrome profile for Playwright...")
-        subprocess.run([
-            "rsync", "-a", "--delete",
-            "--exclude=*/Cache/*",
-            "--exclude=*/GPUCache/*",
-            "--exclude=*/Code Cache/*",
-            "--exclude=*/CacheStorage/*",
-            "--exclude=*/Service Worker/CacheStorage/*",
-            f"{real_chrome_profile}/",
-            f"{playwright_profile}/",
-        ], check=True, capture_output=True)
-        chrome_profile = playwright_profile
-    else:
-        chrome_profile = SPOTIFY_SESSION_DIR  # fallback for non-macOS
-    chrome_profile.mkdir(parents=True, exist_ok=True)
-
-    print(f"  Launching browser (headless={headless})...")
-    with sync_playwright() as pw:
-        ctx = pw.chromium.launch_persistent_context(
-            str(chrome_profile),
-            channel="chrome",
-            headless=headless,
-            slow_mo=200,
-            args=["--disable-blink-features=AutomationControlled"],
-            ignore_default_args=["--enable-automation"],
-        )
-        ctx.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        page = ctx.new_page()
-
-        # Go to dashboard
-        page.goto("https://podcasters.spotify.com/", timeout=30_000)
-        page.wait_for_load_state("networkidle", timeout=20_000)
-
-        # If not logged in, the page shows a login prompt
-        if "login" in page.url.lower() or page.get_by_text("Log in").is_visible():
-            if headless:
-                ctx.close()
-                raise RuntimeError(
-                    "Not logged in. Run with --setup-spotify to open browser for login."
-                )
-            print("  [login] Please log in to Spotify for Podcasters in the browser window...")
-            page.wait_for_url("**/pod/**", timeout=120_000)
-
-        # Find and click into the correct show
-        try:
-            page.get_by_text(show_name, exact=False).first.click(timeout=10_000)
-            page.wait_for_load_state("networkidle", timeout=15_000)
-        except PWTimeout:
-            print(f"  [warn] Could not find show '{show_name}' by text — trying to proceed from current page")
-
-        # Navigate to new episode creation
-        try:
-            new_ep_btn = (
-                page.get_by_role("link", name="New episode")
-                or page.get_by_role("button", name="New episode")
-                or page.get_by_text("New episode", exact=False).first
-            )
-            new_ep_btn.click(timeout=10_000)
-        except PWTimeout:
-            # Fallback: navigate directly
-            page.goto("https://podcasters.spotify.com/pod/episode-builder", timeout=20_000)
-
-        page.wait_for_load_state("networkidle", timeout=20_000)
-
-        # Upload audio file
-        print(f"  Uploading audio file: {audio_mp3.name}")
-        file_input = page.locator("input[type='file']").first
-        file_input.set_input_files(str(audio_mp3))
-
-        # Wait for upload to complete (progress bar disappears or title field becomes active)
-        page.wait_for_timeout(3_000)
-
-        # Fill episode title
-        title_field = (
-            page.get_by_label("Episode title", exact=False)
-            or page.get_by_placeholder("Add a title", exact=False)
-        )
-        title_field.first.fill(title)
-
-        # Fill episode description
-        desc_field = (
-            page.get_by_label("Episode description", exact=False)
-            or page.get_by_placeholder("Tell listeners what this episode is about", exact=False)
-            or page.locator("textarea").first
-        )
-        desc_field.first.fill(description)
-
-        # Publish / Save
-        try:
-            page.get_by_role("button", name="Publish").click(timeout=10_000)
-        except PWTimeout:
-            page.get_by_role("button", name="Save").click(timeout=10_000)
-
-        page.wait_for_timeout(3_000)
-        print(f"  [ok] Episode published: {title}")
-
-        ctx.close()
-
-    # Reopen Chrome for normal use
-    subprocess.Popen(["open", "-a", "Google Chrome"])
+    """Publish episode via RSS feed + GitHub Releases."""
+    sys.path.insert(0, str(BASE_DIR / "scripts"))
+    import podcast_rss
+    podcast_rss.publish_episode(audio_mp3, title, description, niche, week)
 
 
 # ── Main ───────────────────────────────────────────────────────────────────────
@@ -420,13 +268,13 @@ def process_niche(
     if not dry_run:
         write_show_notes(week, slug, title, description)
 
-    # 5. Upload
+    # 5. Publish via RSS
     if no_upload or dry_run:
         print(f"  [skip upload] Audio ready at: {final_mp3.relative_to(BASE_DIR)}")
         return
 
-    print(f"  Uploading to Spotify for Podcasters ({niche})...")
-    upload_to_spotify(final_mp3, title, description, niche)
+    print(f"  Publishing via RSS ({niche})...")
+    publish_via_rss(final_mp3, title, description, niche, week)
 
 
 def main() -> None:
@@ -437,13 +285,8 @@ def main() -> None:
     )
     parser.add_argument("--week", required=True, help="ISO week, e.g. 2026-W25")
     parser.add_argument("--niche", choices=["life", "poetry"], help="One niche only (default: both)")
-    parser.add_argument("--no-upload", action="store_true", help="Skip Spotify upload")
+    parser.add_argument("--no-upload", action="store_true", help="Skip RSS publish (audio only)")
     parser.add_argument("--dry-run", action="store_true", help="No ffmpeg, no upload — print plan only")
-    parser.add_argument(
-        "--setup-spotify",
-        action="store_true",
-        help="Open browser (non-headless) for manual Spotify login, then save session",
-    )
     parser.add_argument(
         "--archive-dir",
         type=Path,
@@ -454,15 +297,6 @@ def main() -> None:
     args = parser.parse_args()
 
     niches = [args.niche] if args.niche else ["life", "poetry"]
-
-    if args.setup_spotify:
-        # Run with headless=False so user can log in
-        print("Opening browser for Spotify login. Log in and then close the browser.")
-        # Trigger with a dummy niche just to open the browser
-        dummy_mp3 = Path("/dev/null")
-        upload_to_spotify(dummy_mp3, "setup", "setup", "life", headless=False)
-        print("Session saved. Run without --setup-spotify for headless uploads.")
-        return
 
     archive_dir = args.archive_dir
     if archive_dir and not archive_dir.exists():
