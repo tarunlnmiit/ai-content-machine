@@ -268,6 +268,14 @@ def process_slug(slug: str, export: bool, force: bool, project: str | None = Non
 
     week = get_iso_week(slug[:10])
     niche_key = detect_niche(slug)
+
+    # Policy (subtract-to-focus): decks are a LinkedIn-strong format for DS + Life.
+    # Poetry does not ship a deck — the poem itself is the artifact.
+    if niche_key == "poetry_quotes" and not force:
+        console.print(f"[yellow]Skip deck for poetry slug {slug} (policy: no poetry deck). "
+                      "Use --force to override.[/yellow]")
+        return True
+
     brand = load_brand(niche_key)
 
     slides_week_dir = SLIDES_DIR / week

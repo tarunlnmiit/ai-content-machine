@@ -198,25 +198,6 @@ def inject_worksheet_ctas_to_dir(out_dir: Path, worksheet_slug: str, niche: str)
             threads_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
             modified.append(str(threads_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
 
-    # Twitter: append to closing tweet + hashtags fallback
-    twitter_file = out_dir / "twitter_thread.txt"
-    if twitter_file.exists():
-        text = twitter_file.read_text(encoding="utf-8")
-        if url not in text:
-            lines = text.rstrip("\n").split("\n\n")  # tweets separated by blank lines
-            if lines:
-                last_tweet = lines[-1]
-                # Add hashtags to closing tweet if missing
-                if not last_tweet.lstrip().startswith("#"):
-                    tags = hashtag_line(niche, "twitter")
-                    if tags:
-                        last_tweet = last_tweet.rstrip() + "\n\n" + tags
-                # Append worksheet URL to closing tweet
-                lines[-1] = last_tweet.rstrip() + "\n\n" + f"📋 {url}"
-
-            twitter_file.write_text("\n\n".join(lines) + "\n", encoding="utf-8")
-            modified.append(str(twitter_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
-
     # Newsletter: append worksheet URL line
     newsletter_file = out_dir / "newsletter.txt"
     if newsletter_file.exists():

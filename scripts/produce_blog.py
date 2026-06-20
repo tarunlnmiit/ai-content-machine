@@ -82,9 +82,11 @@ def build_prompt(
         "poetry": "Poetry/Quotes",
     }[niche]
     word_count_constraint = (
-        "\n**Word count: 800–1,000 words total. Every section must be shorter than usual. "
-        "Hook ≤100w, Context ≤150w, each Section ≤150w, Takeaway ≤100w, CTA ≤80w. "
-        "Lyrical economy — cut anything that does not earn its line.**"
+        "\n**POETRY FORMAT — the poem leads, the essay is short.** Structure: the complete "
+        "poem in one blockquote, then a SHORT reflective essay of 150–350 words (not 800+). "
+        "Do not pad to long-form length. The poem is the product; the essay is one honest, "
+        "specific reflection around it — no listicle, no sections, no motivational crescendo. "
+        "Cut anything that does not earn its line.**"
         if niche == "poetry" else ""
     )
     listicle_block = build_listicle_directive(listicle, topic, niche) if listicle else ""
