@@ -53,84 +53,60 @@ LONGFORM_PLATFORMS = [
 ]
 
 # (day, time, niche, platform, format)
+# Static weekly posts/polls/decks/carousels. NO Twitter (dropped). Threads kept.
+# Decks: DS + Life → LinkedIn (PDF/document); poetry deck dropped.
+# LinkedIn auto-posts via scheduler.py daemon; the blog link goes in the pinned first comment.
 WEEKLY = [
     # Monday
     ("Mon", "08:00 AM", "DS",     "LinkedIn",     "Post"),
-    ("Mon", "12:00 PM", "DS",     "Twitter",      "Post"),
     ("Mon", "04:00 PM", "DS",     "FB/IG",        "Carousel"),
     ("Mon", "06:00 PM", "DS",     "LinkedIn",     "Poll"),
     ("Mon", "07:00 PM", "Life",   "Meta Threads", "Native Text Post"),
     # Tuesday
     ("Tue", "08:00 AM", "Life",   "LinkedIn",     "Post"),
-    ("Tue", "12:00 PM", "DS",     "Twitter",      "Poll (manual)"),
     ("Tue", "06:00 PM", "Life",   "LinkedIn",     "Poll"),
     ("Tue", "08:30 PM", "Poetry", "FB/IG",        "Post"),
-    ("Tue", "09:00 PM", "DS",     "Twitter",      "Twitter Thread"),
+    ("Tue", "08:00 PM", "DS",     "Meta Threads", "Native Text Post"),
     # Wednesday
     ("Wed", "06:00 AM", "DS",     "LinkedIn",     "Slide Deck"),
     ("Wed", "06:00 AM", "Poetry", "FB/IG",        "Carousel"),
     ("Wed", "08:00 AM", "Poetry", "LinkedIn",     "Post"),
-    ("Wed", "12:00 PM", "Life",   "Twitter",      "Post"),
     ("Wed", "06:00 PM", "Poetry", "LinkedIn",     "Poll"),
-    ("Wed", "08:00 PM", "DS",     "Meta Threads", "Native Text Post"),
     # Thursday
     ("Thu", "08:00 AM", "Life",   "LinkedIn",     "Slide Deck"),
     ("Thu", "10:00 AM", "Life",   "FB/IG",        "Carousel"),
-    ("Thu", "12:00 PM", "Life",   "Twitter",      "Poll (manual)"),
     ("Thu", "07:00 PM", "Poetry", "Meta Threads", "Native Text Post"),
-    ("Thu", "09:00 PM", "Life",   "Twitter",      "Twitter Thread"),
     # Friday
-    ("Fri", "08:00 AM", "Poetry", "LinkedIn",     "Slide Deck"),
     ("Fri", "10:00 AM", "Life",   "FB/IG",        "Post"),
-    ("Fri", "12:00 PM", "Poetry", "Twitter",      "Post"),
-    # Saturday
-    ("Sat", "02:00 PM", "DS",     "FB/IG",        "Post"),
-    ("Sat", "03:00 PM", "DS",     "Twitter",      "Tweet IG Post"),
-    ("Sat", "03:30 PM", "Life",   "Twitter",      "Tweet IG Post"),
-    ("Sat", "09:00 PM", "Poetry", "Twitter",      "Twitter Thread"),
-    ("Sat", "12:00 PM", "Poetry", "Twitter",      "Poll (manual)"),
-    ("Sat", "01:00 PM", "Poetry", "Twitter",      "Tweet IG Post"),
+    ("Fri", "02:00 PM", "DS",     "FB/IG",        "Post"),
 ]
 
-# (platform, time, niche, format) — repeated every day Mon–Sun
-# DS Clip Short and Remotion Reels: 2× per day = 14 per week
-DAILY = [
-    # FB/IG
-    ("FB/IG",        "07:00 AM", "Life",   "Clip Short Reel"),
-    ("FB/IG",        "09:00 AM", "DS",     "Remotion Reel"),
-    ("FB/IG",        "10:00 AM", "Poetry", "Remotion Reel"),
-    ("FB/IG",        "01:00 PM", "DS",     "Clip Short Reel"),
-    ("FB/IG",        "03:00 PM", "DS",     "Remotion Reel"),
-    ("FB/IG",        "09:00 PM", "DS",     "Clip Short Reel"),
-    ("FB/IG",        "09:00 PM", "Life",   "Remotion Reel"),
-    ("FB/IG",        "10:00 PM", "Poetry", "Clip Short Reel"),
-    # LinkedIn
-    ("LinkedIn",     "07:00 AM", "Life",   "Clip Short Reel"),
-    ("LinkedIn",     "09:00 AM", "Poetry", "Clip Short Reel"),
-    ("LinkedIn",     "10:00 AM", "DS",     "Clip Short Reel"),
-    ("LinkedIn",     "02:00 PM", "DS",     "Remotion Reel"),
-    ("LinkedIn",     "04:00 PM", "DS",     "Clip Short Reel"),
-    ("LinkedIn",     "06:00 PM", "Life",   "Remotion Reel"),
-    ("LinkedIn",     "07:00 PM", "Poetry", "Remotion Reel"),
-    ("LinkedIn",     "08:00 PM", "DS",     "Remotion Reel"),
-    # Twitter
-    ("Twitter",      "11:00 AM", "DS",     "Clip Short Reel"),
-    ("Twitter",      "01:00 PM", "Life",   "Clip Short Reel"),
-    ("Twitter",      "02:00 PM", "Poetry", "Clip Short Reel"),
-    ("Twitter",      "03:00 PM", "DS",     "Remotion Reel"),
-    ("Twitter",      "05:00 PM", "DS",     "Clip Short Reel"),
-    ("Twitter",      "07:00 PM", "DS",     "Remotion Reel"),
-    ("Twitter",      "08:00 PM", "Life",   "Remotion Reel"),
-    ("Twitter",      "09:00 PM", "Poetry", "Remotion Reel"),
-    # YouTube Shorts — DS 2×/day, Life 1×/day, Poetry 1×/day
-    ("YouTube Shorts", "08:00 AM", "DS",     "Remotion Reel"),
-    ("YouTube Shorts", "10:00 AM", "Life",   "Clip Short Reel"),
-    ("YouTube Shorts", "10:00 AM", "Poetry", "Remotion Reel"),
-    ("YouTube Shorts", "11:00 AM", "DS",     "Clip Short Reel"),
-    ("YouTube Shorts", "02:00 PM", "DS",     "Remotion Reel"),
-    ("YouTube Shorts", "07:00 PM", "Life",   "Remotion Reel"),
-    ("YouTube Shorts", "08:00 PM", "DS",     "Clip Short Reel"),
-    ("YouTube Shorts", "09:00 PM", "Poetry", "Clip Short Reel"),
+# Weekly REEL set — each reel posted ONCE (not repeated daily). Distinct ideas, not slices.
+# Surfaces: FB/IG (Reels, +FB auto-mirror) and YouTube Shorts ONLY — no LinkedIn/Twitter shorts.
+# Per niche: DS + Life = 2 clip reels + 1 virality reel + 1 comment→DM tool reel; Poetry = 1 poem short.
+# ≈9 reels/week (down from ~56).
+WEEKLY_REELS = [
+    # DS — 4 ideas × {FB/IG, YouTube Shorts}
+    ("Mon", "11:00 AM", "DS",     "FB/IG",          "Clip Short Reel"),
+    ("Mon", "11:00 AM", "DS",     "YouTube Shorts", "Clip Short Reel"),
+    ("Tue", "11:00 AM", "DS",     "FB/IG",          "Clip Short Reel"),
+    ("Tue", "11:00 AM", "DS",     "YouTube Shorts", "Clip Short Reel"),
+    ("Wed", "11:00 AM", "DS",     "FB/IG",          "Virality Reel"),
+    ("Wed", "11:00 AM", "DS",     "YouTube Shorts", "Virality Reel"),
+    ("Thu", "11:00 AM", "DS",     "FB/IG",          "Comment→DM Tool Reel"),
+    ("Thu", "11:00 AM", "DS",     "YouTube Shorts", "Comment→DM Tool Reel"),
+    # Life — 4 ideas × {FB/IG, YouTube Shorts}
+    ("Mon", "07:00 AM", "Life",   "FB/IG",          "Clip Short Reel"),
+    ("Mon", "07:00 AM", "Life",   "YouTube Shorts", "Clip Short Reel"),
+    ("Tue", "07:00 AM", "Life",   "FB/IG",          "Clip Short Reel"),
+    ("Tue", "07:00 AM", "Life",   "YouTube Shorts", "Clip Short Reel"),
+    ("Wed", "07:00 AM", "Life",   "FB/IG",          "Virality Reel"),
+    ("Wed", "07:00 AM", "Life",   "YouTube Shorts", "Virality Reel"),
+    ("Thu", "07:00 AM", "Life",   "FB/IG",          "Comment→DM Tool Reel"),
+    ("Thu", "07:00 AM", "Life",   "YouTube Shorts", "Comment→DM Tool Reel"),
+    # Poetry — 1 poem short (poem only) × {FB/IG, YouTube Shorts}
+    ("Tue", "10:00 AM", "Poetry", "FB/IG",          "Poem Short"),
+    ("Tue", "10:00 AM", "Poetry", "YouTube Shorts", "Poem Short"),
 ]
 
 
@@ -197,7 +173,6 @@ def load_content_data(year: int, repo_root: str) -> dict:
                 social = sched.get("social", {})
                 _social_map = {
                     "linkedin_publish_at":  "LinkedIn",
-                    "twitter_publish_at":   "Twitter",
                     "ig_fb_publish_at":     "FB/IG",
                     "threads_publish_at":   "Meta Threads",
                 }
@@ -315,27 +290,26 @@ def make_rows(year: int, content_data: dict) -> list:
                 "status":       "Idea",
             })
 
-        # Daily reels (next week) — use primary item per niche
-        for day in DAYS:
+        # Weekly reels (next week) — each reel posted ONCE on its scheduled day.
+        for day, time_str, niche, platform, fmt in WEEKLY_REELS:
             date = datetime.date.fromisocalendar(year, wk, DAY_NUM[day])
             if date.year != year:
                 continue
-            for platform, time_str, niche, fmt in DAILY:
-                posting_date = date + datetime.timedelta(days=7)
-                item = week_info[niche][0]
-                rows.append({
-                    "date":         date,
-                    "posting_date": posting_date,
-                    "iso_week":     wl,
-                    "slug":         item["slug"],
-                    "day":          day,
-                    "time":         time_str,
-                    "niche":        niche,
-                    "platform":     platform,
-                    "format":       fmt,
-                    "title":        item["title"],
-                    "status":       "Idea",
-                })
+            item = week_info[niche][0]
+            posting_date = date + datetime.timedelta(days=7)
+            rows.append({
+                "date":         date,
+                "posting_date": posting_date,
+                "iso_week":     wl,
+                "slug":         item["slug"],
+                "day":          day,
+                "time":         time_str,
+                "niche":        niche,
+                "platform":     platform,
+                "format":       fmt,
+                "title":        item["title"],
+                "status":       "Idea",
+            })
 
     rows.sort(key=lambda r: (r["posting_date"], r["date"], r["time"] == "—", r["time"]))
     return rows

@@ -98,7 +98,6 @@ def latest_derivatives_dir(niche: str, date_filter: str | None) -> Path | None:
 def build_social_copy(deriv_dir: Path) -> str:
     parts = []
     for fname, label in [
-        ("twitter_thread.txt", "Twitter/X"),
         ("linkedin_post.txt", "LinkedIn"),
         ("instagram_caption.txt", "Instagram"),
         ("threads_post.txt", "Threads"),

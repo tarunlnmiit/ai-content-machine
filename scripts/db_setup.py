@@ -13,12 +13,12 @@ DB_PATH = REPO / "data" / "scheduling.db"
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS posts (
     id                INTEGER PRIMARY KEY AUTOINCREMENT,
-    platform          TEXT NOT NULL,          -- twitter|linkedin|instagram|facebook
+    platform          TEXT NOT NULL,          -- linkedin|instagram|facebook|threads
     content_text      TEXT,
     media_path        TEXT,
     scheduled_at      DATETIME NOT NULL,
     status            TEXT DEFAULT 'pending', -- pending|posted|failed|cancelled
-    thread_parent_id  INTEGER,                -- for Twitter thread chaining
+    thread_parent_id  INTEGER,                -- legacy thread chaining (unused; kept for compat)
     metadata_json     TEXT,                   -- platform-specific extras (JSON string)
     slug              TEXT,                   -- which blog this came from
     created_at        DATETIME DEFAULT CURRENT_TIMESTAMP,

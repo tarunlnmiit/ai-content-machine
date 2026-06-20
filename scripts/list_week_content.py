@@ -32,21 +32,18 @@ TIMINGS: dict[tuple[str, str], tuple[str, str]] = {
     ("data_science_tech", "instagram"):      ("Wed 8:00 AM IST",   "+1 wk"),
     ("data_science_tech", "threads"):        ("Wed 8:00 PM IST",   "+1 wk"),
     ("data_science_tech", "linkedin"):       ("Tue 8:00 AM IST",   "+1 wk"),
-    ("data_science_tech", "twitter"):        ("—",                 ""),
     ("life_self_dev",     "blog"):           ("Wed 2:00 PM IST",  "same wk"),
     ("life_self_dev",     "youtube"):        ("Thu upload",        "same wk"),
     ("life_self_dev",     "youtube_shorts"): ("Thu upload",        "same wk"),
     ("life_self_dev",     "instagram"):      ("Tue 8:00 AM IST",   "+1 wk"),
     ("life_self_dev",     "threads"):        ("Tue 8:00 PM IST",   "+1 wk"),
     ("life_self_dev",     "linkedin"):       ("Tue 8:00 AM IST",   "+1 wk"),
-    ("life_self_dev",     "twitter"):        ("Mon 1:00 PM IST",   "+1 wk"),
     ("poetry_quotes",     "blog"):           ("Wed 2:00 PM IST",  "same wk"),
     ("poetry_quotes",     "youtube"):        ("Thu upload",        "same wk"),
     ("poetry_quotes",     "youtube_shorts"): ("Thu upload",        "same wk"),
     ("poetry_quotes",     "instagram"):      ("Fri 10:00 AM IST",  "+1 wk"),
     ("poetry_quotes",     "threads"):        ("Fri 12:00 PM IST",  "+1 wk"),
     ("poetry_quotes",     "linkedin"):       ("Tue 8:00 AM IST",   "+1 wk"),
-    ("poetry_quotes",     "twitter"):        ("Fri 12:00 PM IST",  "+1 wk"),
 }
 
 # (label, timing_key_or_None, filename_or_None)
@@ -58,13 +55,12 @@ CONTENT_ROWS: list[tuple[str, str | None, str | None]] = [
     ("Instagram/FB",  "instagram",      "instagram_caption.txt"),
     ("Threads",       "threads",        "threads_post.txt"),
     ("LinkedIn",      "linkedin",       "linkedin_post.txt"),
-    ("Twitter/X",     "twitter",        "twitter_thread.txt"),
     ("Newsletter",    None,             "newsletter.txt"),
     ("Slide Outline", None,             "slide_outline.json"),
     ("Schedule",      None,             "schedule.json"),
 ]
 
-IMAGE_KEYS = ["instagram", "linkedin", "threads", "twitter"]
+IMAGE_KEYS = ["instagram", "linkedin", "threads"]
 
 
 def parse_week(week_str: str) -> tuple[int, int]:
@@ -291,7 +287,7 @@ def print_plan(data: list[dict], week: str) -> None:
         blog = next((r for r in s["content"] if r["label"] == "Blog"), None)
         label = NICHE_LABEL.get(s["niche"], s["niche"])
         print(f"  {mark(blog['exists'] if blog else False)}  {label:8}  {blog['path'] if blog else '—'}")
-    deriv_labels = {"YouTube", "Instagram/FB", "Threads", "LinkedIn", "Twitter/X"}
+    deriv_labels = {"YouTube", "Instagram/FB", "Threads", "LinkedIn"}
     deriv_ok = sum(1 for s in data if _content_ready(s, deriv_labels))
     print(f"  {mark(deriv_ok == len(data))}  Derivatives   content/derivatives/{week}/  ({deriv_ok}/{len(data)} slugs fully populated)")
 

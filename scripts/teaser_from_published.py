@@ -16,7 +16,7 @@ Tag-existing mode (inject a UTM backlink into already-generated derivative files
         --url https://medium.com/@x/post
 
 Output per piece → content/derivatives/{week}/{slug}/:
-    twitter_teaser.txt, linkedin_teaser.txt, instagram_teaser.txt,
+    linkedin_teaser.txt, instagram_teaser.txt,
     threads_teaser.txt, newsletter_teaser.txt, teasers.md (bundle), source.json
 """
 
@@ -42,12 +42,11 @@ from lib.utm import build_utm_url, PLATFORMS  # noqa: E402
 from lib.content_paths import derivatives_dir  # noqa: E402
 
 DEFAULT_CAMPAIGN = "evergreen-repurpose"
-PLATFORM_ORDER = ["twitter", "linkedin", "instagram", "threads", "newsletter"]
+PLATFORM_ORDER = ["linkedin", "instagram", "threads", "newsletter"]
 TEASER_FILES = {p: f"{p}_teaser.txt" for p in PLATFORM_ORDER}
 
 # platform → (utm_source, utm_medium). Newsletter is not a UTM source → handled manually.
 _UTM_MAP = {
-    "twitter": ("twitter", "thread"),
     "linkedin": ("linkedin", "post"),
     "instagram": ("instagram", "post"),
     "threads": ("threads", "post"),
@@ -96,17 +95,6 @@ def build_prompt(agent: str, niche: str, project: str | None, title: str, body: 
 
 # ── Formatters (one per platform) ──────────────────────────────────────────
 
-def _fmt_twitter(d: dict, niche: str, link: str) -> str:
-    tweets = list(d.get("tweets", []))
-    if not tweets:
-        return ""
-    tags = hashtag_line(niche, "twitter", d.get("hashtags"))
-    tweets[-1] = _apply_link(tweets[-1], link)
-    if tags:
-        tweets[-1] = (tweets[-1].rstrip() + "\n\n" + tags).strip()
-    return "\n\n".join(t for t in tweets if t)
-
-
 def _fmt_linkedin(d: dict, niche: str, link: str) -> str:
     body = _apply_link(d.get("body", ""), link)
     lines = [d.get("opening_line", ""), "", body]
@@ -142,7 +130,6 @@ def _fmt_newsletter(d: dict, niche: str, link: str) -> str:
 
 
 _FORMATTERS = {
-    "twitter": ("twitter_teaser", _fmt_twitter),
     "linkedin": ("linkedin_teaser", _fmt_linkedin),
     "instagram": ("instagram_teaser", _fmt_instagram),
     "threads": ("threads_teaser", _fmt_threads),

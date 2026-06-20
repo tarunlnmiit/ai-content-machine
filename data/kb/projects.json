@@ -1,5 +1,5 @@
 {
-  "_comment": "Build-in-public projects the content-machine produces + distributes on a cadence. Each project reuses the viral reel formula (data/kb/viral_reel_formula.md), the repurposing agent, the derivatives->Metricool bridge, and UTM star-attribution.",
+  "_comment": "Build-in-public projects the content-machine produces + distributes on a cadence. Each project reuses the viral reel formula (data/kb/viral_reel_formula.md), the repurposing agent, the scheduler.py auto-publish daemon (LinkedIn/IG/Threads), and UTM star-attribution.",
   "projects": [
     {
       "key": "autopilot",
@@ -27,14 +27,41 @@
         "instagram": "reel + comment->DM (keyword 'jobs') via SuperProfile or CreatorFlow (ManyChat replacements)",
         "youtube_shorts": "same cut; repo link line 1 of description + pinned comment",
         "tiktok": "same cut; link in bio",
-        "twitter": "thread, repo link in final tweet",
         "threads": "post",
-        "linkedin": "DRAFT only until employer clearance",
+        "linkedin": "active (employer cleared); text post via scheduler.py, repo link in pinned first comment",
         "medium": "narrative build story (publish via scripts/publish_medium.py)",
-        "excluded": ["hacker_news (account blocked)", "reddit (blocked)"]
+        "excluded": ["twitter (dropped — dead in analytics)", "hacker_news (account blocked)", "reddit (blocked)"]
       },
       "dm_link_template": "https://github.com/tarunlnmiit/autopilot-jobhunt?utm_source=instagram&utm_medium=dm&utm_campaign=autopilot-jobhunt",
       "source_assets": "../../autopilot-jobs/demo (reels, launch copy, articles)"
+    },
+    {
+      "key": "free_tool",
+      "_status": "PLACEHOLDER — fill from creator's comment-automation + 2-tools spec before producing. Tool #1 = Claude; tool #2 = one free tool layered on top (or two other tools, at least one free).",
+      "name": "",
+      "repo": "",
+      "repo_url": "",
+      "pitch": "",
+      "honesty_guardrail": "State exactly what the tool does. Never overclaim.",
+      "hashtag_niche": "",
+      "utm_campaign": "",
+      "dm_keyword": "",
+      "primary_goal": "email_capture",
+      "niches": ["ds", "life"],
+      "cadence": {
+        "frequency": "weekly",
+        "format": "comment->DM give-a-tool reel (1/week per DS + Life)",
+        "angle_rotation": []
+      },
+      "channels": {
+        "instagram": "reel + comment->DM (keyword TBD) via SuperProfile or CreatorFlow",
+        "youtube_shorts": "same cut; tool link line 1 of description + pinned comment",
+        "threads": "post",
+        "linkedin": "active (employer cleared); text post via scheduler.py, link in pinned first comment",
+        "excluded": ["twitter (dropped)", "hacker_news (blocked)", "reddit (blocked)"]
+      },
+      "dm_link_template": "",
+      "source_assets": ""
     }
   ]
 }

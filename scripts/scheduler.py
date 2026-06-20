@@ -2,8 +2,14 @@
 """
 APScheduler daemon — polls scheduling.db every 60 seconds.
 Fires pending posts when scheduled_at <= now.
-Dispatches to post_twitter.py and post_linkedin.py.
+Dispatches to post_linkedin.py, post_instagram.py, post_facebook.py, post_threads.py.
 Updates DB status to 'posted' or 'failed'.
+
+Twitter was dropped from the pipeline. LinkedIn is active (employer cleared).
+IG / FB / Threads publish via the Meta Graph API (see scripts/lib/meta_graph.py and
+docs/one-time-platform-setup.md). Only platforms with valid credentials fire — the
+rest are logged and skipped. Recording, the content-approval gate, and replies stay
+manual (honesty guardrail: this is "minimal manual", not "zero manual").
 
 Run as background daemon:
     nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
@@ -43,43 +49,92 @@ log = logging.getLogger("scheduler")
 
 # ── Dispatch functions ────────────────────────────────────────────────────
 
-def dispatch_twitter(post: dict):
-    """Collect the full thread (parent + children) and post."""
+def _post_meta(post: dict) -> dict:
+    """Parse metadata_json for a post row (carries media_url(s) + kind for Meta)."""
+    raw = post.get("metadata_json")
+    if not raw:
+        return {}
+    try:
+        return json.loads(raw)
+    except (TypeError, ValueError):
+        return {}
+
+
+def dispatch_instagram(post: dict):
     sys.path.insert(0, str(REPO / "scripts"))
-    from post_twitter import post_thread, parse_thread_file
+    from post_instagram import post_reel, post_image, post_carousel
 
     post_id = post["id"]
     slug = post["slug"]
-    content = post["content_text"]
+    caption = post["content_text"]
+    meta = _post_meta(post)
+    kind = meta.get("kind", "reel")
 
-    # Gather all tweets in thread order (parent first, then children by id)
-    conn = sqlite3.connect(DB_PATH)
-    rows = conn.execute(
-        "SELECT id, content_text FROM posts WHERE (id=? OR thread_parent_id=?) AND platform='twitter' ORDER BY id ASC",
-        (post_id, post_id),
-    ).fetchall()
-    conn.close()
-
-    tweets = [r[1] for r in rows]
-    db_ids = [r[0] for r in rows]
-
-    log.info(f"Posting Twitter thread: slug={slug}, {len(tweets)} tweets")
+    log.info(f"Posting Instagram ({kind}): slug={slug}")
     try:
-        posted_ids = post_thread(tweets, db_post_id=post_id, slug=slug)
-        # Mark all thread rows as posted
-        conn = sqlite3.connect(DB_PATH)
-        now = datetime.now(timezone.utc).isoformat()
-        for db_id in db_ids:
-            conn.execute(
-                "UPDATE posts SET status='posted', posted_at=? WHERE id=?",
-                (now, db_id),
-            )
-        conn.commit()
-        conn.close()
-        log.info(f"Twitter thread posted: {posted_ids[0] if posted_ids else 'unknown'}")
+        if kind == "reel":
+            media_id = post_reel(meta["media_url"], caption)
+        elif kind == "carousel":
+            media_id = post_carousel(meta["media_urls"], caption)
+        else:  # single image
+            media_id = post_image(meta["media_url"], caption)
+        _mark_posted(post_id, {"media_id": media_id, "slug": slug})
+        log.info(f"Instagram posted: {media_id}")
+    except KeyError:
+        _mark_failed(post_id, "missing media_url/media_urls in metadata_json")
+        log.error(f"Instagram skip {slug}: no public media URL staged")
     except Exception as e:
         _mark_failed(post_id, str(e))
-        log.error(f"Twitter post failed: {e}")
+        log.error(f"Instagram post failed: {e}")
+
+
+def dispatch_facebook(post: dict):
+    sys.path.insert(0, str(REPO / "scripts"))
+    from post_facebook import post_text, post_photo, post_video
+
+    post_id = post["id"]
+    slug = post["slug"]
+    message = post["content_text"]
+    meta = _post_meta(post)
+    kind = meta.get("kind", "text")
+
+    log.info(f"Posting Facebook ({kind}): slug={slug}")
+    try:
+        if kind == "video":
+            post_obj = post_video(meta["media_url"], message)
+        elif kind in ("image", "photo"):
+            post_obj = post_photo(meta["media_url"], message)
+        else:
+            post_obj = post_text(message, meta.get("link"))
+        _mark_posted(post_id, {"fb_id": post_obj, "slug": slug})
+        log.info(f"Facebook posted: {post_obj}")
+    except KeyError:
+        _mark_failed(post_id, "missing media_url in metadata_json")
+        log.error(f"Facebook skip {slug}: no public media URL staged")
+    except Exception as e:
+        _mark_failed(post_id, str(e))
+        log.error(f"Facebook post failed: {e}")
+
+
+def dispatch_threads(post: dict):
+    sys.path.insert(0, str(REPO / "scripts"))
+    from post_threads import post_thread
+
+    post_id = post["id"]
+    slug = post["slug"]
+    text = post["content_text"]
+    meta = _post_meta(post)
+
+    log.info(f"Posting Threads: slug={slug}")
+    try:
+        thread_id = post_thread(
+            text, image_url=meta.get("media_url"), video_url=meta.get("video_url")
+        )
+        _mark_posted(post_id, {"thread_id": thread_id, "slug": slug})
+        log.info(f"Threads posted: {thread_id}")
+    except Exception as e:
+        _mark_failed(post_id, str(e))
+        log.error(f"Threads post failed: {e}")
 
 
 def dispatch_linkedin(post: dict):
@@ -105,8 +160,10 @@ def dispatch_linkedin(post: dict):
 
 
 DISPATCHERS = {
-    "twitter": dispatch_twitter,
     "linkedin": dispatch_linkedin,
+    "instagram": dispatch_instagram,
+    "facebook": dispatch_facebook,
+    "threads": dispatch_threads,
 }
 
 
@@ -186,6 +243,25 @@ def main():
     log.info("Starting APScheduler daemon (IST timezone)")
     log.info(f"DB: {DB_PATH}")
     log.info("Polling every 60 seconds. Stop with: pkill -f scheduler.py")
+
+    # Fail-soft credential check — log which Meta platforms can publish. LinkedIn
+    # validates lazily on first post via post_linkedin.get_credentials().
+    try:
+        sys.path.insert(0, str(REPO / "scripts"))
+        from lib.meta_graph import validate_credentials
+
+        creds = validate_credentials()
+        log.info(
+            "Meta credential check — "
+            + ", ".join(f"{k}={'ok' if v else 'MISSING'}" for k, v in creds.items())
+        )
+        if not any(creds.values()):
+            log.warning(
+                "No Meta credentials valid — IG/FB/Threads posts will fail until "
+                "tokens are set (see docs/one-time-platform-setup.md). LinkedIn unaffected."
+            )
+    except Exception as e:
+        log.warning(f"Meta credential check skipped: {e}")
 
     scheduler = BackgroundScheduler(timezone=IST)
     scheduler.add_job(poll_and_fire, "interval", seconds=60, id="poll_and_fire")

@@ -9,7 +9,7 @@ Outputs:
   assets/social_posts/{week}/{slug}_instagram.png
   assets/social_posts/{week}/{slug}_linkedin.png
   assets/social_posts/{week}/{slug}_threads.png
-  assets/social_posts/{week}/{slug}_twitter.png
+  assets/social_posts/{week}/{slug}_threads.png
   assets/social_posts/{week}/{slug}_tweet_ig.png
   assets/slides/{week}/{slug}_social.html  (HTML source)
   assets/slides/{week}/{slug}_tweet.html   (tweet mockup HTML source)
@@ -49,14 +49,13 @@ DERIVATIVES_DIR = REPO / "content" / "derivatives"
 SOCIAL_DIR = REPO / "assets" / "social_posts"
 SLIDES_DIR = REPO / "assets" / "slides"
 
-PLATFORMS = ["instagram", "linkedin", "threads", "twitter"]
+PLATFORMS = ["instagram", "linkedin", "threads"]
 
 # (css_class, width_px, height_px)
 PLATFORM_FRAME = {
     "instagram": ("ig",  1080, 1080),
     "linkedin":  ("li",  1200,  628),
     "threads":   ("th",  1080, 1080),
-    "twitter":   ("tw",  1200,  675),
 }
 
 

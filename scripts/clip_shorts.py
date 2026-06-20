@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
-"""Cut polished long-form video → 3-5 vertical Shorts/Reels clips.
+"""Cut polished long-form video → a few DISTINCT vertical Shorts/Reels clips.
+
+Volume policy (post "subtract to focus"): pick the 2 strongest distinct ideas per
+DS/Life long-form, NOT 14 slices of the same video. Poetry uses the poem-only short
+path, not this clipper. Default count is 2; the weekly runner passes --count per niche.
 
 Pipeline:
   1. Load edit metadata + SRT for finished long-form
-  2. Ask Claude (subprocess) to pick 3-5 best 30-60s hook segments from transcript
+  2. Ask Claude (subprocess) to pick the strongest 30-60s hook segments from transcript
   3. ffmpeg cut each segment from long-form
   4. Crop 16:9 → 9:16 (center crop), burn caption subset
   5. Output: assets/video/edited/shorts/{slug}_short_{NN}.mp4
 
 Usage:
-  python3 scripts/clip_shorts.py --slug 2026-05-21-poetry-when-dreams
-  python3 scripts/clip_shorts.py --slug ... --count 3
+  python3 scripts/clip_shorts.py --slug 2026-05-21-data_science_tech-... --count 2
 """
 
 import argparse
@@ -141,7 +144,8 @@ def fallback_pick(srt_path: Path, count: int, video_duration: float) -> list:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--slug", required=True)
-    ap.add_argument("--count", type=int, default=4)
+    ap.add_argument("--count", type=int, default=2,
+                    help="Number of distinct clips (default 2: DS/Life = 2 core ideas).")
     ap.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     ap.add_argument("--no-claude", action="store_true",
                     help="Skip claude clip selection, use fallback")

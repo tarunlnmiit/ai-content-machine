@@ -27,9 +27,9 @@ def drive_id_to_url(file_id: str) -> str:
 
 
 def platform_from_filename(filename: str) -> str | None:
-    """Extract platform from filename (instagram, threads, twitter, linkedin)."""
+    """Extract platform from filename (instagram, threads, linkedin)."""
     lower = filename.lower()
-    for platform in ["instagram", "threads", "twitter", "linkedin"]:
+    for platform in ["instagram", "threads", "linkedin"]:
         if f"_{platform}" in lower:
             return platform
     return None
@@ -38,7 +38,7 @@ def platform_from_filename(filename: str) -> str | None:
 def slug_from_filename(filename: str) -> str:
     """Extract slug from filename."""
     name = filename.rsplit(".", 1)[0]
-    for platform in ["instagram", "threads", "twitter", "linkedin"]:
+    for platform in ["instagram", "threads", "linkedin"]:
         if f"_{platform}" == name[-len(platform)-1:]:
             name = name[:-len(platform)-1]
             break

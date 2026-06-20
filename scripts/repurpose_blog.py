@@ -24,7 +24,6 @@ REPO = Path(__file__).parent.parent
 load_dotenv(REPO / ".env")
 
 DERIVATIVE_FILES = {
-    "twitter_thread": ("twitter_thread.txt", "text"),
     "linkedin_post": ("linkedin_post.txt", "text"),
     "instagram_caption": ("instagram_caption.txt", "text"),
     "threads_post": ("threads_post.txt", "text"),
@@ -184,23 +183,25 @@ def generate(prompt: str) -> tuple[dict, dict]:
 
 # ── Save derivatives ──────────────────────────────────────────────────────
 
-def format_twitter_thread(data: dict, niche: str = "life") -> str:
-    parts = [data.get("hook_tweet", "")]
-    parts.extend(data.get("tweets", []))
-    closing = data.get("closing_tweet", "")
-    # Sparse hashtags on the closing tweet only (Twitter convention).
-    tags = hashtag_line(niche, "twitter", data.get("hashtags"))
-    if tags:
-        closing = (closing + "\n\n" + tags).strip()
-    parts.append(closing)
-    return "\n\n".join(t for t in parts if t)
-
-
 def format_linkedin(data: dict, niche: str = "life") -> str:
+    """LinkedIn post body. The blog link goes in the FIRST COMMENT, not the body
+    (LinkedIn suppresses reach on posts with outbound links in the body), so we
+    emit a clearly-separated pinned-comment block for the operator/daemon to post
+    as the first comment."""
     lines = [data.get("opening_line", ""), "", data.get("body", "")]
     tags = hashtag_line(niche, "linkedin", data.get("hashtags"))
     if tags:
         lines += ["", tags]
+    blog_url = data.get("blog_url") or data.get("canonical_url") or ""
+    pinned = data.get("first_comment") or (
+        f"Full post → {blog_url}" if blog_url else ""
+    )
+    if pinned:
+        lines += [
+            "",
+            "--- FIRST COMMENT (post as pinned reply, not in body) ---",
+            pinned,
+        ]
     return "\n".join(lines)
 
 
@@ -243,7 +244,6 @@ def save_derivatives(out_dir: Path, data: dict, platforms: list[str] | None = No
                      niche: str = "life") -> list[str]:
     saved = []
     formatters = {
-        "twitter_thread": format_twitter_thread,
         "linkedin_post": format_linkedin,
         "instagram_caption": format_instagram,
         "threads_post": format_threads,
@@ -252,7 +252,6 @@ def save_derivatives(out_dir: Path, data: dict, platforms: list[str] | None = No
 
     # Map platform names to derivative keys
     platform_map = {
-        "twitter": "twitter_thread",
         "linkedin": "linkedin_post",
         "instagram": "instagram_caption",
         "threads": "threads_post",
@@ -299,7 +298,7 @@ def main():
     parser.add_argument(
         "--platforms",
         nargs="+",
-        choices=["twitter", "linkedin", "instagram", "threads", "newsletter", "slides", "youtube"],
+        choices=["linkedin", "instagram", "threads", "newsletter", "slides", "youtube"],
         help="Platform derivatives to generate (default: all)",
     )
     parser.add_argument(

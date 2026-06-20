@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
-Read all derivative files from content/derivatives/*/
-Insert LinkedIn posts into data/scheduling.db for the scheduler daemon (direct API).
+Read all derivative files from content/derivatives/*/ and stage every postable
+platform into data/scheduling.db for the scheduler.py daemon (direct API).
 
-No Metricool, no Publer, no aggregator CSV — Instagram / Facebook / Threads are posted
-MANUALLY (see docs/weekly-runner.md Step 22). This script only stages LinkedIn for the
-scheduler/API path, which itself stays dormant until employer clearance.
+Auto-published by the daemon (one stage step → daemon fires everything):
+  LinkedIn  — text post, Tue 8am / Thu 12pm IST (employer cleared)
+  Threads   — native text post, engagement window (no media needed)
+  Instagram — image/carousel/reel; requires a PUBLIC media_url (Graph API ingests
+              from a URL, not local bytes). Staged only when a media_url is known;
+              otherwise skipped with a warning (host the asset first).
+  Facebook  — usually mirrors from IG; direct FB staging optional.
 
-Schedule logic:
-  LinkedIn posts   — Tuesday 8am IST, Thursday 12pm IST  (direct API via scheduler.py)
-  Twitter threads  — manual (post content/derivatives/{slug}/twitter_thread.md)
-  Instagram / FB / Threads — manual, in-app, in the niche's engagement window
+Twitter was dropped from the pipeline. No Metricool/Publer CSV.
 
 Also emits output/scheduled/upload_shorts.sh — pre-filled YouTube Shorts upload commands.
 
@@ -46,8 +47,11 @@ load_dotenv(REPO / ".env")
 IST = timezone(timedelta(hours=5, minutes=30))
 
 
-# LinkedIn slots — direct API via scheduler.py (Tue 8am, Thu 12pm IST)
-LINKEDIN_SLOTS = [(1, 8, 0), (3, 12, 0)]
+# Per-platform engagement-window slots (weekday 0=Mon, hour, minute IST).
+# The scheduler daemon fires each row at its scheduled_at.
+LINKEDIN_SLOTS = [(1, 8, 0), (3, 12, 0)]      # Tue 8am, Thu 12pm
+THREADS_SLOTS = [(0, 19, 0), (3, 19, 0)]      # Mon/Thu 7pm
+INSTAGRAM_SLOTS = [(0, 16, 0), (3, 10, 0)]    # Mon 4pm, Thu 10am
 
 
 def slug_already_loaded(conn: sqlite3.Connection, slug: str, platform: str) -> bool:
@@ -56,47 +60,6 @@ def slug_already_loaded(conn: sqlite3.Connection, slug: str, platform: str) -> b
         (slug, platform),
     ).fetchone()
     return row is not None
-
-
-def parse_twitter_thread(txt_path: Path) -> list[str]:
-    """Split on blank lines — each block = one tweet."""
-    text = txt_path.read_text(encoding="utf-8").strip()
-    return [b.strip() for b in text.split("\n\n") if b.strip()]
-
-
-def insert_twitter(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_index: int):
-    if slug_already_loaded(conn, slug, "twitter"):
-        print(f"  [skip] twitter/{slug} already in DB")
-        return
-
-    tweets = parse_twitter_thread(txt_path)
-    if not tweets:
-        print(f"  [skip] twitter/{slug} — empty thread file")
-        return
-
-    weekday, hour, minute = SCHEDULE["twitter"][slot_index % len(SCHEDULE["twitter"])]
-    scheduled_at = next_weekday(weekday, hour, minute).isoformat()
-
-    # Insert hook tweet as main row; rest as thread children
-    parent_id = None
-    for i, tweet in enumerate(tweets):
-        row = conn.execute(
-            """INSERT INTO posts (platform, content_text, scheduled_at, status, thread_parent_id,
-               metadata_json, slug)
-               VALUES (?,?,?,'pending',?,?,?)""",
-            (
-                "twitter",
-                tweet,
-                scheduled_at,
-                parent_id,
-                json.dumps({"tweet_index": i, "total_tweets": len(tweets)}),
-                slug,
-            ),
-        )
-        if i == 0:
-            parent_id = row.lastrowid
-
-    print(f"  [queued] twitter/{slug} — {len(tweets)} tweets at {scheduled_at}")
 
 
 def insert_linkedin(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_index: int):
@@ -121,9 +84,79 @@ def insert_linkedin(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_in
         """INSERT INTO posts (platform, content_text, media_path, scheduled_at, status,
            metadata_json, slug)
            VALUES (?,?,?,?,?,?,?)""",
-        ("linkedin", text, media_path, scheduled_at, "pending", json.dumps({}), slug),
+        ("linkedin", text, media_path, scheduled_at, "pending",
+         json.dumps({"kind": "image" if media_path else "text"}), slug),
     )
     print(f"  [queued] linkedin/{slug} — at {scheduled_at}" + (f" + image" if media_path else ""))
+
+
+def insert_threads(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_index: int):
+    """Stage a Threads native text post (no media needed — publishes immediately)."""
+    if slug_already_loaded(conn, slug, "threads"):
+        print(f"  [skip] threads/{slug} already in DB")
+        return
+    text = txt_path.read_text(encoding="utf-8").strip()
+    if not text:
+        return
+    weekday, hour, minute = THREADS_SLOTS[slot_index % len(THREADS_SLOTS)]
+    scheduled_at = next_weekday(weekday, hour, minute).isoformat()
+    conn.execute(
+        """INSERT INTO posts (platform, content_text, scheduled_at, status,
+           metadata_json, slug) VALUES (?,?,?,?,?,?)""",
+        ("threads", text, scheduled_at, "pending", json.dumps({"kind": "text"}), slug),
+    )
+    print(f"  [queued] threads/{slug} — at {scheduled_at}")
+
+
+def _instagram_media_url(slug: str) -> tuple[str, str] | None:
+    """Return (kind, media_url) for an IG static post if a public URL is known.
+
+    Reads schedule.json's social.ig_media_url / ig_media_urls (populated by
+    populate_image_urls_from_gdrive.py). Returns None when no public URL exists —
+    the IG Graph API ingests from a URL, so we cannot stage IG without one.
+    """
+    date_str = slug[:10]
+    week = get_iso_week(date_str)
+    sched = REPO / "content" / "derivatives" / week / slug / "schedule.json"
+    if not sched.exists():
+        return None
+    try:
+        social = json.loads(sched.read_text(encoding="utf-8")).get("social", {})
+    except (ValueError, OSError):
+        return None
+    urls = social.get("ig_media_urls")
+    if isinstance(urls, list) and len(urls) >= 2:
+        return ("carousel", urls)
+    single = social.get("ig_media_url")
+    if single:
+        return ("image", single)
+    return None
+
+
+def insert_instagram(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_index: int):
+    """Stage an Instagram static post — only if a public media_url is available."""
+    if slug_already_loaded(conn, slug, "instagram"):
+        print(f"  [skip] instagram/{slug} already in DB")
+        return
+    caption = txt_path.read_text(encoding="utf-8").strip()
+    if not caption:
+        return
+    media = _instagram_media_url(slug)
+    if not media:
+        print(f"  [skip] instagram/{slug} — no public media_url "
+              "(run populate_image_urls_from_gdrive.py; IG API needs a hosted URL)")
+        return
+    kind, url = media
+    meta = {"kind": kind}
+    meta["media_urls" if kind == "carousel" else "media_url"] = url
+    weekday, hour, minute = INSTAGRAM_SLOTS[slot_index % len(INSTAGRAM_SLOTS)]
+    scheduled_at = next_weekday(weekday, hour, minute).isoformat()
+    conn.execute(
+        """INSERT INTO posts (platform, content_text, scheduled_at, status,
+           metadata_json, slug) VALUES (?,?,?,?,?,?)""",
+        ("instagram", caption, scheduled_at, "pending", json.dumps(meta), slug),
+    )
+    print(f"  [queued] instagram/{slug} ({kind}) — at {scheduled_at}")
 
 
 def build_shorts_upload_script(slugs: list[str]) -> Path | None:
@@ -229,14 +262,27 @@ def main():
         if linkedin_file.exists():
             insert_linkedin(conn, slug, linkedin_file, i)
 
+        threads_file = slug_dir / "threads_post.txt"
+        if threads_file.exists():
+            insert_threads(conn, slug, threads_file, i)
+
+        instagram_file = slug_dir / "instagram_caption.txt"
+        if instagram_file.exists():
+            insert_instagram(conn, slug, instagram_file, i)
+
     conn.commit()
 
     # Summary
     total = conn.execute("SELECT COUNT(*) FROM posts WHERE status='pending'").fetchone()[0]
+    by_platform = conn.execute(
+        "SELECT platform, COUNT(*) FROM posts WHERE status='pending' GROUP BY platform"
+    ).fetchall()
     conn.close()
 
-    print(f"\nDB: {total} pending LinkedIn post(s) in scheduling.db")
-    print("  Instagram / Facebook / Threads → post manually (no Metricool/Publer CSV).")
+    print(f"\nDB: {total} pending post(s) in scheduling.db")
+    for platform, n in by_platform:
+        print(f"  {platform}: {n}")
+    print("  Facebook → mirrors from Instagram on publish (no separate staging).")
 
     # YouTube Shorts upload script
     shorts_script = build_shorts_upload_script(slugs)
@@ -247,8 +293,9 @@ def main():
     else:
         print("YT Shorts script  : skipped (no youtube_shorts_metadata.json found)")
 
-    print("\nNext: start APScheduler daemon (LinkedIn only):")
+    print("\nNext: start APScheduler daemon (LinkedIn + Instagram + Threads):")
     print("  nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &")
+    print("  (IG needs Meta tokens — see docs/one-time-platform-setup.md)")
 
 
 if __name__ == "__main__":

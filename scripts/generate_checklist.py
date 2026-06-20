@@ -122,8 +122,8 @@ def generate_checklist_content(week_start: datetime, slugs_by_week: dict[str, di
             time_str = lf_dt.strftime("%-I:%M %p").replace("AM", "AM").replace("PM", "PM")
             niche_emoji = {"ds": "🔵", "life": "🟢", "poetry": "🟣"}.get(niche, "")
             lines.append(
-                f"| {niche_emoji} {niche.replace('_', ' ').title()} Video (long-form) + Blog + Newsletter | "
-                f"YouTube / Substack+Medium / Beehiiv | {day_name} | {time_str} |"
+                f"| {niche_emoji} {niche.replace('_', ' ').title()} Video (long-form) + Blog | "
+                f"YouTube / Medium | {day_name} | {time_str} |"
             )
 
             # LinkedIn
@@ -136,16 +136,6 @@ def generate_checklist_content(week_start: datetime, slugs_by_week: dict[str, di
                     f"| {niche_emoji} {niche.replace('_', ' ').title()} LinkedIn post | LinkedIn | {li_day} | {li_time} |"
                 )
 
-            # Twitter
-            tw_publish_str = sched.get("social", {}).get("twitter_publish_at", "")
-            tw_dt = datetime.fromisoformat(tw_publish_str) if tw_publish_str else None
-            if tw_dt:
-                tw_day = tw_dt.strftime("%a %b %d")
-                tw_time = tw_dt.strftime("%-I:%M %p").replace("AM", "AM").replace("PM", "PM")
-                lines.append(
-                    f"| {niche_emoji} {niche.replace('_', ' ').title()} Twitter thread | Twitter/X | {tw_day} | {tw_time} |"
-                )
-
     lines += [
         "",
         "---",
@@ -156,8 +146,8 @@ def generate_checklist_content(week_start: datetime, slugs_by_week: dict[str, di
         "",
         "1. **YouTube uploads:** Upload long-form videos with `--publish-at` matching schedule above.",
         "2. **Blog/Substack/Medium:** Publish blogs at scheduled times.",
-        "3. **LinkedIn:** staged in scheduling.db (held manual until employer clearance).",
-        "4. **Instagram / Facebook / Threads:** post manually in-app (no Metricool/Publer CSV).",
+        "3. **LinkedIn:** staged in scheduling.db → auto-posts via scheduler.py daemon (employer cleared).",
+        "4. **Instagram / Threads:** staged in scheduling.db → auto-publish via scheduler.py (Meta Graph API). Facebook mirrors from Instagram.",
         "",
         "---",
         "",
