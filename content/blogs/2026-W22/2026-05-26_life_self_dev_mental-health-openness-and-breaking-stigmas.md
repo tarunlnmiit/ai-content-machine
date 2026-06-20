@@ -48,7 +48,8 @@ They weren't being cruel. They were being practical — passing down the only fr
 
 The gap between what we need and what we're trained to give each other — that's where the stigma lives. It's not malicious. It's inherited. And inherited things feel like truth until someone names them for what they actually are: old code running on new hardware.
 
-Physical pain has a clear social script. Emotional pain doesn't — because we never wrote one. So we improvise with dismissal, logic, and "just push through it." We hand someone drowning a map of the shoreline instead of a rope.
+Physical pain has a clear social script. Emotional pain doesn't — because we never wrote one. So we improvise with dismissal, logic, and "just push through it." [QUOTABLE]
+We hand someone drowning a map of the shoreline instead of a rope.
 
 `[One memory that still bothers me: a friend called late at night after weeks of sounding "off." I could hear it immediately — the flat voice, the long pauses, the way every answer sounded mechanically functional instead of alive. He was overwhelmed financially, exhausted from work, and clearly carrying something heavier than the practical details he kept talking about.
 And what did I do? I went straight into optimization mode.
@@ -95,7 +96,7 @@ Therapy is a tool for growth — not evidence that you've failed, but evidence t
 
 ## SECTION 3 — ~400 words
 
-### The Specific Weight Men Are Carrying
+### Why Men's Silence Has a Different Kind of Lethality
 
 Men's mental health deserves its own paragraph — not because women don't struggle, they do and differently — but because the silence in men has a particular lethality.
 

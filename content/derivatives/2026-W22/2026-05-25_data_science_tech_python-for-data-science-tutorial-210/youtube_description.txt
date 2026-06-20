@@ -1,0 +1,17 @@
+The type error that produces a wrong answer with no crash — and how to catch it before it ruins a report.
+
+In this tutorial:
+0:00 — The silent bug: Python gave me a wrong answer with no error
+2:15 — The four Python primitives every data scientist uses
+8:30 — Lists: sequences, slicing, and comprehensions
+16:40 — Dictionaries: from single records to full datasets
+24:10 — Functions: writing reusable analysis code
+30:00 — Real pipeline example using all four
+
+📄 Full write-up: medium.com/@tarun-gupta/the-type-error-that-makes-your-analysis-wrong-without-crashing
+📊 Free worksheet: https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210
+🔔 Tutorial 1 of 10: [Tutorial 1 link] | Tutorial 3 coming soon
+
+This is Tutorial 2 of a 10-part Python for Data Science series built for people who want to understand what their code is actually doing — not just copy-paste from Stack Overflow.
+
+#Python #DataScience #PythonTutorial #DataAnalysis

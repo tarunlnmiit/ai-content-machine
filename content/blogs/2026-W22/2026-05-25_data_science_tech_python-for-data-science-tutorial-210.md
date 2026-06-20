@@ -2,7 +2,7 @@ The file that's there is Tutorial 1. Tutorial 2 is what you pasted — it's the 
 
 ---
 
-# Python for Data Science: Tutorial 2/10 — Variables, Data Types, and the Structures That Actually Matter
+# The Type Error That Makes Your Analysis Wrong Without Crashing
 
 ## HOOK
 
@@ -12,6 +12,7 @@ Here's how it happens: your CSV comes in with a column labeled `age`. You load i
 
 Tutorial 2 is about types. The difference between data that *looks* like a number and data Python *treats* like a number. The structures that make data science work before you ever touch a library.
 
+[QUOTABLE]
 Every silent bug in data analysis traces back to the same root: the programmer didn't understand what kind of thing they were holding.
 
 `![Python code on laptop screen with data types highlighted](/content/blogs/2026-05-25_data_science_tech_python-for-data-science-tutorial-210_images/01_context_python-code-on-laptop-screen-with-data-types-highl.jpg)
@@ -92,7 +93,7 @@ Rule: any data from a CSV, API, or user input arrives as a string until you conv
 
 ---
 
-## SECTION 2 — Lists: The Workhorse of Sequences
+## SECTION 2 — Why `[1:3]` Never Gives You What You Think
 
 A list is an ordered, mutable sequence. Create with square brackets:
 
@@ -133,7 +134,7 @@ Read comprehensions left to right: "for each `s` in `scores`, if `s > 85`, inclu
 
 ---
 
-## SECTION 3 — Dictionaries: How Data Science Thinks About Records
+## SECTION 3 — Lists Give You Sequences. Dicts Give You Rows.
 
 A dictionary maps keys to values. Create with curly braces:
 
@@ -240,7 +241,11 @@ The last three lines do something real: compute a mean, flag outliers, return on
 
 ## TAKEAWAY
 
-Four things most beginners don't understand: types encode intention / lists are sequences, dicts are records / list comprehensions are concise loops / functions make code testable. Tutorial 3 brings NumPy — these structures scale to millions of rows.
+Four things most beginners don't understand: types encode intention / lists are sequences, dicts are records / list comprehensions are concise loops / functions make code testable.
+
+Every pipeline you'll ever build rests on these four things. Not the libraries. These.
+
+Tutorial 3 brings NumPy — these structures scale to millions of rows.
 
 ## CTA
 
