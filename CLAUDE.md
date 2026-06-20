@@ -53,9 +53,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   (5-beat structure reverse-engineered from a reel that hit 38,501 views / 1.1k saves). Use its hook
   taxonomy (`data/kb/twitter_hook_patterns.json`) and the beat→Remotion-scene map. Never skip the
   hook re-record/regenerate step — first 3 seconds decide everything.
-- **PROJECTS REGISTRY:** Build-in-public projects (e.g. autopilot-jobhunt) live in
-  `data/kb/projects.json` — repo, UTM campaign, DM keyword, weekly cadence, honesty guardrail,
-  per-channel plan. Read it before producing project content; rotate `cadence.angle_rotation`.
+- **PROJECTS REGISTRY:** Build-in-public projects live in `data/kb/projects.json` — repo, UTM
+  campaign, DM keyword, weekly cadence, honesty guardrail, per-channel plan. Current: `autopilot`
+  (job-hunt), `free_tool_ds` (Claude + n8n nightly agent, DM keyword `FLOW`), `free_tool_life`
+  (Claude + Notion brain-dump→system, DM keyword `SYSTEM`). The weekly comment→DM **tool reels are
+  baked into the idea machine** — `scripts/idea_scorer.py:weekly_project_reel()` auto-adds one tool
+  reel per niche (DS/Life) to `data/ideas/weekly_ideas.md`, rotating `cadence.angle_rotation` by ISO
+  week. Produce one with `--project free_tool_ds|free_tool_life` on the reel/derivative generators.
 - **HONESTY GUARDRAIL:** State what a tool actually does. Never overclaim (e.g. don't say a job
   tool "auto-applies" if it only drafts). Overclaiming kills trust and invites roasting.
 - **DISTRIBUTION (auto-publish daemon — "subtract to focus", 2026):** One piece → viable

@@ -263,6 +263,45 @@ def classify_idea(title: str, niche: str) -> str:
     return "uncategorized"
 
 
+_NICHE_SHORT = {"data_science_tech": "ds", "life_self_dev": "life", "poetry_quotes": "poetry"}
+
+
+def weekly_project_reel(niche_long: str) -> dict | None:
+    """Guaranteed weekly comment->DM tool-reel idea for this niche, pulled from
+    data/kb/projects.json. Rotates the angle by ISO week so reels don't repeat.
+
+    Returns None for niches with no weekly project (e.g. poetry). This is how the
+    free_tool give-aways get baked into every week's idea list automatically.
+    """
+    short = _NICHE_SHORT.get(niche_long)
+    if not short:
+        return None
+    pj = REPO / "data" / "kb" / "projects.json"
+    try:
+        projects = json.loads(pj.read_text(encoding="utf-8")).get("projects", [])
+    except (OSError, ValueError):
+        return None
+    week_idx = datetime.now().isocalendar().week
+    for p in projects:
+        cadence = p.get("cadence") or {}
+        if cadence.get("frequency") != "weekly":
+            continue
+        if short not in (p.get("niches") or []):
+            continue
+        angles = cadence.get("angle_rotation") or [""]
+        angle = angles[week_idx % len(angles)]
+        keyword = p.get("dm_keyword", "")
+        title = f"{p.get('name', p.get('key'))} — {angle}" if angle else p.get("name", p.get("key"))
+        return {
+            "title": title,
+            "project_key": p.get("key"),
+            "dm_keyword": keyword,
+            "deliverable": p.get("deliverable", ""),
+            "guardrail": p.get("honesty_guardrail", ""),
+        }
+    return None
+
+
 def score_ideas(output_dir="data/ideas", top_n=5):
     console.rule("[info]Idea Scorer[/info]")
 
@@ -330,6 +369,20 @@ def score_ideas(output_dir="data/ideas", top_n=5):
     for niche, ideas_list in final_ideas.items():
         lines.append(f"## {niche.replace('_', ' ').title()}")
         lines.append("")
+
+        # Baked-in weekly comment->DM tool reel (free_tool projects). Always first.
+        reel = weekly_project_reel(niche)
+        if reel:
+            lines += [
+                f"### ⭐ Tool Reel (weekly): {reel['title']}",
+                "- **Type:** comment→DM give-a-tool reel (auto-baked from projects.json)",
+                f"- **DM keyword:** comment `{reel['dm_keyword']}` → auto-DM the deliverable",
+                f"- **Deliverable:** {reel['deliverable']}",
+                f"- **Guardrail:** {reel['guardrail']}",
+                f"- **Produce with:** `--project {reel['project_key']}` on the reel/derivative generators",
+                "",
+            ]
+
         for i, idea in enumerate(ideas_list, 1):
             lines += [
                 f"### {i}. {idea.get('title', 'Untitled')}",

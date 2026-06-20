@@ -36,31 +36,73 @@
       "source_assets": "../../autopilot-jobs/demo (reels, launch copy, articles)"
     },
     {
-      "key": "free_tool",
-      "_status": "PLACEHOLDER — fill from creator's comment-automation + 2-tools spec before producing. Tool #1 = Claude; tool #2 = one free tool layered on top (or two other tools, at least one free).",
-      "name": "",
-      "repo": "",
-      "repo_url": "",
-      "pitch": "",
-      "honesty_guardrail": "State exactly what the tool does. Never overclaim.",
-      "hashtag_niche": "",
-      "utm_campaign": "",
-      "dm_keyword": "",
-      "primary_goal": "email_capture",
-      "niches": ["ds", "life"],
+      "key": "free_tool_ds",
+      "name": "Claude + n8n nightly agent",
+      "_todo": "Set repo_url + dm_link_template to the real public repo once the workflow is pushed.",
+      "repo": "tarunlnmiit/claude-n8n-nightly-agent",
+      "repo_url": "https://github.com/tarunlnmiit/claude-n8n-nightly-agent",
+      "pitch": "Free no-code AI agent: an n8n workflow + Claude prompts that runs a useful job every night (scrape -> summarize -> report) so you wake up to the answer, not the task.",
+      "honesty_guardrail": "It drafts and summarizes on a schedule — you review the output. It is not autonomous and does not act without you. Never say 'fully automated' or 'runs your life'.",
+      "hashtag_niche": "ds",
+      "utm_campaign": "free-tool-ds-n8n",
+      "dm_keyword": "FLOW",
+      "deliverable": "n8n workflow JSON (free import) + the Claude prompt pack, in a public repo",
+      "primary_goal": "github_stars",
+      "niches": ["ds"],
       "cadence": {
         "frequency": "weekly",
-        "format": "comment->DM give-a-tool reel (1/week per DS + Life)",
-        "angle_rotation": []
+        "format": "comment->DM give-a-tool reel (1/week, DS)",
+        "angle_rotation": [
+          "build the agent live in n8n in 60 seconds",
+          "the exact Claude prompt that powers the summary",
+          "a real nightly report it produced (redacted)",
+          "before/after: the manual task vs the agent",
+          "a new node added (a tool the agent can now use)"
+        ]
       },
       "channels": {
-        "instagram": "reel + comment->DM (keyword TBD) via SuperProfile or CreatorFlow",
-        "youtube_shorts": "same cut; tool link line 1 of description + pinned comment",
+        "instagram": "reel + comment->DM (keyword 'FLOW') via SuperProfile or CreatorFlow",
+        "youtube_shorts": "same cut; repo link line 1 of description + pinned comment",
+        "threads": "post",
+        "linkedin": "active (employer cleared); text post via scheduler.py, repo link in pinned first comment",
+        "excluded": ["twitter (dropped)", "hacker_news (blocked)", "reddit (blocked)"]
+      },
+      "dm_link_template": "https://github.com/tarunlnmiit/claude-n8n-nightly-agent?utm_source=instagram&utm_medium=dm&utm_campaign=free-tool-ds-n8n",
+      "source_assets": ""
+    },
+    {
+      "key": "free_tool_life",
+      "name": "Claude + Notion: brain-dump -> weekly system",
+      "_todo": "Set dm_link_template to the real public Notion template share URL once duplicated.",
+      "repo": "",
+      "repo_url": "",
+      "pitch": "Free Notion template + one Claude prompt that turns a messy brain-dump into a weekly system — your habits, priorities, and reviews, organised in five minutes.",
+      "honesty_guardrail": "It structures what you give it into a system. It does not build the habit for you or track on its own. Never say it 'fixes your discipline' or 'changes your life'.",
+      "hashtag_niche": "life",
+      "utm_campaign": "free-tool-life-notion",
+      "dm_keyword": "SYSTEM",
+      "deliverable": "duplicatable Notion template + the Claude brain-dump prompt (email-gated for list capture)",
+      "primary_goal": "email_capture",
+      "niches": ["life"],
+      "cadence": {
+        "frequency": "weekly",
+        "format": "comment->DM give-a-tool reel (1/week, Life)",
+        "angle_rotation": [
+          "the brain-dump -> system in real time",
+          "the exact Claude prompt (paste it on screen)",
+          "the one Notion view that makes it stick",
+          "a week reviewed with it (honest, not a flex)",
+          "why systems beat motivation (the mechanism)"
+        ]
+      },
+      "channels": {
+        "instagram": "reel + comment->DM (keyword 'SYSTEM') via SuperProfile or CreatorFlow",
+        "youtube_shorts": "same cut; template link line 1 of description + pinned comment",
         "threads": "post",
         "linkedin": "active (employer cleared); text post via scheduler.py, link in pinned first comment",
         "excluded": ["twitter (dropped)", "hacker_news (blocked)", "reddit (blocked)"]
       },
-      "dm_link_template": "",
+      "dm_link_template": "https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=claude-notion-weekly-system&utm_source=instagram&utm_medium=dm&utm_campaign=free-tool-life-notion",
       "source_assets": ""
     }
   ]
