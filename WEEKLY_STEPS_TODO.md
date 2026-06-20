@@ -191,12 +191,13 @@ Substack MCP or manual: `content/blogs/2026-05-21_data_science_tech_complete-pyt
 `content/blogs/2026-05-21_poetry_quotes_when-dreams-speak-of-love.md`
 → breathofpoetry.substack.com
 
-### [ ] Social scheduling via Publer
-Generate CSVs first (if not done):
+### [ ] Social posting (manual — no Metricool/Publer)
+Post each static derivative by hand in its window:
 ```bash
-python3 scripts/generate_publer_csv.py 2>/dev/null || echo "check script name"
+# Stage LinkedIn into the scheduler DB (held manual until employer clearance)
+python3 scripts/load_posts.py --week {WEEK}
 ```
-Then import `output/scheduled/publer_ig_fb.csv` + `output/scheduled/publer_threads.csv` into Publer.
+Then post IG/FB (`instagram_caption.txt` + social image) and Threads (`threads_post.txt`) in-app.
 
 ### [ ] Twitter threads (manual paste)
 ```bash
@@ -274,7 +275,7 @@ python3 scripts/sync_ideas_to_notion.py --dry-run
 | Reels clipped | ❌ nothing |
 | Medium published | ❌ |
 | Substack published | ❌ |
-| Social scheduled (Publer) | ❌ |
+| Social posted manually (IG/FB/Threads) | ❌ |
 | Twitter threads posted | ❌ |
 | YouTube uploaded | ❌ |
 | load_posts.py run | ❌ DB has 0 posts |

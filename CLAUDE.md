@@ -21,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | LinkedIn   | [tarun-gupta-in](https://www.linkedin.com/in/tarun-gupta-in/) |
 | Medium     | [@tarun-gupta](https://medium.com/@tarun-gupta) |
 | YouTube    | [@breathofdatascience](https://youtube.com/@breathofdatascience) · [@breathoflife_](https://youtube.com/@breathoflife_) · [@breathofpoetry](https://youtube.com/@breathofpoetry) · [@breathofrelaxingsounds](https://youtube.com/@breathofrelaxingsounds) |
-| Substack   | [breathofdatascience.substack.com](https://breathofdatascience.substack.com) · [breathofpoetry.substack.com](https://breathofpoetry.substack.com) · [thisisbreathoflife.substack.com](https://thisisbreathoflife.substack.com) |
+| Substack   | [breathofdatascience.substack.com](https://breathofdatascience.substack.com) · [breathofpoetry.substack.com](https://breathofpoetry.substack.com) · [thisisbreathoflife.substack.com](https://thisisbreathoflife.substack.com) ← accounts live, not actively publishing |
 | Podcast    | [Breath of Life (Spotify)](https://open.spotify.com/show/26d2VlDaSD0bf6tucQucie) · [Breath of Poetry (Spotify)](https://open.spotify.com/show/0d7GfbQsYPc4t0idLhpYWT) |
 
 ## Operational Rules
@@ -33,9 +33,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Content Rules
 
-- **NOTION FIRST:** Always query Notion Contents DB before writing — avoid angles covered last 90 days
+- **TRACKER FIRST:** Always check `output/trackers/annual-tracker-2026.xlsx` before writing — avoid angles covered last 90 days
 - **KB FIRST:** Always read `data/kb/master_brief.md` before any content decisions
-- **NO REPEAT ANGLES:** Check Notion Status='Published' + Publish Date for recency before choosing angle
+- **NO REPEAT ANGLES:** Read Content Title + Niche + Posting Date from the tracker; flag any overlap within 90 days
 
 ## Virality & Build-in-Public Projects
 
@@ -45,6 +45,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   `data/kb/reels/`** (build/teach). Topic selection is virality-weighted in `scripts/idea_scorer.py`.
   Pass `--project <key>` to any generator to layer in a build-in-public project's pitch/angle/DM.
   Edit the KB markdown to change behavior — the engine reads it at runtime.
+  For caption content types (IG/shorts caption, social image, overlay scene plan) it also injects a
+  **per-niche caption/thumbnail formula** — the `## Engine digest (compact)` section of
+  `data/kb/reels/06_mavgpt_caption_formula.md` (DS: caption-IS-product, comment→DM CTA, full value
+  verbatim, outcome thumbnail), `data/kb/voice/life_formula.md`, and `data/kb/voice/poetry_formula.md`.
 - **REEL FORMULA:** For any short-form reel/Short, follow `data/kb/viral_reel_formula.md`
   (5-beat structure reverse-engineered from a reel that hit 38,501 views / 1.1k saves). Use its hook
   taxonomy (`data/kb/twitter_hook_patterns.json`) and the beat→Remotion-scene map. Never skip the
@@ -54,10 +58,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   per-channel plan. Read it before producing project content; rotate `cadence.angle_rotation`.
 - **HONESTY GUARDRAIL:** State what a tool actually does. Never overclaim (e.g. don't say a job
   tool "auto-applies" if it only drafts). Overclaiming kills trust and invites roasting.
-- **DISTRIBUTION:** One piece → all viable channels via `prompts/repurposing_agent.md` →
-  `scripts/derivatives_to_metricool.py` (writes a Metricool CSV to `output/scheduled/<week>/`).
-  Excluded: Hacker News + Reddit (blocked). LinkedIn rows write as DRAFT until employer
-  clearance (`--linkedin-live` to flip).
+- **DISTRIBUTION (manual — no Metricool/Publer):** One piece → all viable channels via
+  `prompts/repurposing_agent.md` → per-platform derivative files. Posting is **manual in-app**
+  for Instagram / Facebook / Threads / Twitter (post in the engagement window, reply early).
+  LinkedIn can be staged into `data/scheduling.db` via `scripts/load_posts.py` for the
+  `scheduler.py` API daemon, but stays **held manual until employer clearance**. Excluded:
+  Hacker News + Reddit (blocked). See `docs/weekly-runner.md` Step 22.
 - **STAR ATTRIBUTION:** Tag every repo link with UTM params via `scripts/lib/utm.py`.
   `scripts/collect_analytics.py` tracks GitHub stars + 7-day delta so you can see which piece
   drove stars (set `GITHUB_REPOS` env, optional `GITHUB_TOKEN`).
@@ -96,7 +102,7 @@ output/
   animations/
     2026-Wnn/     # Remotion title cards, lower thirds, outros
   scheduled/
-    2026-Wnn/     # Metricool CSVs, Publer exports, design prompts
+    2026-Wnn/     # upload_shorts.sh, design prompts (distribution is manual — no Metricool/Publer CSVs)
   visuals/        # Blog cover images, HTML assets
   worksheets/
     2026-Wnn/     # PDF worksheets
@@ -162,19 +168,17 @@ This replaces the flat structure where all files lived in a single directory. Ke
 - `scripts/lib/schedule_calc.py:get_iso_week(date_str: str) → str` — converts YYYY-MM-DD to YYYY-Wnn
 - `scripts/lib/content_paths.py` — centralized path construction (e.g., `derivatives_dir(date_str, slug)`)
 
-## NOTION CONTENT DATABASE (Contents DB — id `df13d49a-bbfc-40cd-a8f1-d4fb98d2d4ec`)
+## CONTENT TRACKER (annual-tracker-2026.xlsx)
 
-Schema:
-- **Name** (title) · **Status** (Idea/Started/Script/Editing/Ready to publish/Uploaded/Published/Archived) · **Topic** (Tech/Life/Poetry) · **URL** · **Description**
-
-Sync top ideas to DB: `python3 scripts/sync_ideas_to_notion.py` (Sunday step 6).
+File: `output/trackers/annual-tracker-2026.xlsx`
+Sheets: one per month (May, Jun, Jul … Dec)
+Columns: ISO Week · Slug · Day · Date · Posting Date · Time · Niche · Platform · Format · Content Title · Status · ✓
 
 Before writing any blog or content, ALWAYS:
-1. Query Notion Contents DB filtering Status = 'Published' for this topic/niche
-2. Check Name and Topic fields to list angles already covered in last 90 days (use Publish Date for recency)
-3. Review Description and Notes fields for context on past coverage
-4. Identify what has NOT been said yet — write ONLY from the unexplored angle
-5. After publishing, update the item's Status to 'Published', set Publish Date, and log engagement in the Notes field
+1. Read all monthly sheets; filter rows where Posting Date is within the last 90 days
+2. Group by Niche (DS / Life / Poetry) — list all unique Content Titles in that window
+3. Compare new angle against that list — if the angle is covered, pick a different one
+4. After publishing, update the Status field to 'Published' for all rows matching that Slug
 
 ## Development Protocol (Antigravity V2.0)
 

@@ -1,6 +1,14 @@
 # ⚡ AI CONTENT CREATION MACHINE
 ## The Complete Playbook v11
 
+> ⚠️ **Distribution is now MANUAL — this doc predates that change.** Wherever this playbook
+> says **Publer**, **Metricool**, an aggregator **CSV**, or "APScheduler fires everything to all
+> platforms automatically," that is no longer true. Current model: Instagram / Facebook / Threads /
+> Twitter are posted **by hand** in-app; LinkedIn can be staged into `scheduling.db` via
+> `scripts/load_posts.py` for the `scheduler.py` API path but is **held manual until employer
+> clearance** (daemon stays off). `derivatives_to_metricool.py` has been deleted. Authoritative
+> flow: `docs/weekly-runner.md` Step 22 and `docs/daily/friday.md`.
+
 **Architecture · Tool Stack · Existing Platform Integration · 7-Day Build Guide · Weekly SOP**
 
 Claude Code Pro · Canva Pro · 7 Platforms · 3 Niches · ~$51/mo  

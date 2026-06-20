@@ -49,32 +49,35 @@ Return exactly this JSON structure. All keys required. No extra keys. No markdow
 
   "twitter_thread": {
     "hook_type": "string — contrarian | number-lead | personal-failure | reframe | data-first | stakes",
-    "hook_tweet": "string — the opening tweet, max 280 chars, ends with a colon or line break signal",
+    "hook_tweet": "string — opening tweet, max 280 chars. PER-NICHE virality angle (see the niche formula injected above): DS → state the OUTCOME/counterintuitive result, not the topic. Life → a contrarian DECLARATION, never a question. Poetry → the most resonant line, concrete nouns, works as a standalone screenshot. No 'A thread on X'.",
     "tweets": [
-      "string — tweet 2 of thread",
+      "string — tweet 2. Each tweet stands alone if screenshotted. DS: every tweet = a usable step (real code/command) — the thread IS the product, actionable without the link. Life: include the mechanism line (WHY this keeps happening) as its own screenshot-worthy tweet; lead from the analytical-identity disarmer where it fits. Poetry: never explain the poem.",
       "string — tweet 3",
       "string — tweet 4",
       "string — tweet 5",
       "string — tweet 6 (optional — include if content warrants)",
       "string — tweet 7 (optional)"
     ],
-    "closing_tweet": "string — wrap-up + soft CTA (follow / retweet if useful), max 280 chars",
+    "closing_tweet": "string — max 280 chars. DS: Medium link, optionally 'comment KEYWORD for the full snippet' (honesty guardrail — only claim what the code shows). Life: close flat/instructional, NO motivational crescendo. Poetry: close on permission, not a sad summary. Soft follow CTA OK.",
     "hashtags": ["string — 1–2 TOPICAL keywords specific to this post, lowercase, no '#' prefix; curated niche tags are added automatically"]
   },
 
   "linkedin_post": {
-    "opening_line": "string — first line only, no hook formula, just the strongest sentence from the piece",
-    "body": "string — 150–250 words, paragraph breaks with \\n\\n, no bullet points, professional but personal tone",
-    "hashtags": ["string — 2–3 TOPICAL keywords specific to this post's subject (not generic), lowercase, no '#' prefix; curated niche tags are merged + capped automatically"]
+    "opening_line": "string — first 2 lines must force a stop (standalone-tweet strength). PER-NICHE (see the niche formula injected above): DS → state the OUTCOME/specific result, not the topic. Life → a contrarian DECLARATION, not a question.",
+    "body": "string — 200–400 words, paragraph breaks with \\n\\n, no bullet points in the hook section, professional but personal. DS: include a usable takeaway (a concrete rule/snippet), not a teaser; honesty guardrail. Life: name the mechanism (WHY this keeps happening); lead from the analytical-identity disarmer where it fits; no motivational crescendo.",
+    "closing_question": "string — one specific, answerable question (not 'what do you think?') — e.g. 'What's the worst silent bug you've ever shipped?'",
+    "hashtags": ["string — 3–5 TOPICAL keywords specific to this post's subject (not generic), lowercase, no '#' prefix; curated niche tags are merged + capped automatically"]
   },
 
   "instagram_caption": {
     "format_chosen": "string — carousel | single-image | reel-concept",
     "format_rationale": "string — one sentence explaining why this format",
     "hook_line": "string — first line of caption, must work as a standalone sentence in feed preview",
-    "caption_body": "string — 80–150 words, short paragraphs, no em-dash overuse",
+    "caption_body": "string — short paragraphs, no em-dash overuse. STRUCTURE BY NICHE (the CAPTION FORMULA block injected above is authoritative): (DS/build) the caption IS the product — line 1 = 'Comment \"KEYWORD\" and I'll send you [deliverable] 👆', line 2 = one specific claim, then the FULL value verbatim as a numbered list (prompts/steps/tools), not a teaser. (Life) lead from the analytical-identity disarmer, then the mechanism line as the product (or a 5-sentence essay+vulnerability for heavy topics); close flat/instructional, never a motivational crescendo; never put a product in the caption (DM keyword or pinned first comment instead). (Poetry) the poem verbatim OR a single devastating line + emoji OR a hook line only; never explain the poem; concrete nouns, one playful detail, permission close.",
+    "cta_line": "string — DS: 'Comment KEYWORD …' DM trigger. Life: community ask + 'safe space, you are not alone' ONLY when the topic is weighty, else omit. Poetry: usually none.",
+    "series_name": "string — DS only, optional: 'Prompt Anatomy pt1' style serialization; '' otherwise",
     "slide_titles": ["string — slide 1 title", "string — slide 2 title"],
-    "hashtags": ["string — 4–6 TOPICAL keywords specific to this post, lowercase, no '#' prefix; curated niche tags are merged + capped automatically"]
+    "hashtags": ["string — niche policy: DS ≤5 (#datascience #ai #chatgpt #python #dataanalyst); Life 0–3 category tags; Poetry 0 by default (≤3 community tags). lowercase, no '#' prefix; curated niche tags are merged + capped automatically"]
   },
 
   "newsletter_summary": {
@@ -98,10 +101,10 @@ Return exactly this JSON structure. All keys required. No extra keys. No markdow
   },
 
   "youtube_metadata": {
-    "title": "string — YouTube title, 60–70 chars, no clickbait, benefit-forward",
-    "description": "string — first 2 lines must stand alone (shown before 'Show more'), full description 150–200 words, includes [TIMESTAMPS_PLACEHOLDER] and [LINKS_PLACEHOLDER]",
+    "title": "string — 60–70 chars, no clickbait. PER-NICHE (niche formula injected above): DS → state the OUTCOME, not the topic, NO series number in the title. Life → a contrarian declaration, not a question. Poetry → name the exact feeling. No 'Tutorial N/10' as the lead.",
+    "description": "string — first 2 lines must land cold and stand alone (shown before 'Show more'), full description 150–200 words, includes [TIMESTAMPS_PLACEHOLDER] and [LINKS_PLACEHOLDER]. DS: add one concrete usable takeaway line, not just a link tease. Do NOT hand-write the worksheet URL — inject_worksheet_ctas.py appends it (DS + Life).",
     "tags": ["string", "string", "string", "string", "string", "string", "string", "string"],
-    "thumbnail_concept": "string — visual concept in plain English: what's shown, what text overlaid, color mood",
+    "thumbnail_concept": "string — per-niche thumbnail rule: DS → state the outcome ([N] hidden X / [tool] just killed Y); Life → a declarative text-wall claim, not a question; Poetry → the first line of the poem as a standalone phrase. Describe what's shown, text overlaid, color mood.",
     "end_screen_suggestion": "string — what related video/playlist to surface"
   },
 
