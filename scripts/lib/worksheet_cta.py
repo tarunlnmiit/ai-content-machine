@@ -158,6 +158,20 @@ def inject_worksheet_ctas_to_dir(out_dir: Path, worksheet_slug: str, niche: str)
             ig_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
             modified.append(str(ig_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
 
+    # Instagram clean (post-ready) caption: append worksheet line before hashtags.
+    ig_clean = out_dir / "instagram_caption_clean.txt"
+    if ig_clean.exists():
+        text = ig_clean.read_text(encoding="utf-8")
+        if url not in text:
+            lines = text.rstrip("\n").split("\n")
+            ws_line = f"📋 Free worksheet → {url}"
+            if lines and lines[-1].startswith("#"):
+                lines.insert(-1, ws_line)
+            else:
+                lines.append(ws_line)
+            ig_clean.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            modified.append(str(ig_clean.relative_to(Path(__file__).resolve().parent.parent.parent)))
+
     # LinkedIn: append at end with hashtags fallback
     li_file = out_dir / "linkedin_post.txt"
     if li_file.exists():

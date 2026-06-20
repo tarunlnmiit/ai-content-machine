@@ -244,43 +244,11 @@ After editing all three files, print a summary table:
 
 ### Phase 2 — Derivative copy
 
-**Step 4 — Twitter threads** [CLAUDE]
+**Step 4 — ~~Twitter threads~~ DROPPED — skip** [N/A]
 
-Why: Twitter virality is almost entirely the first tweet. If it doesn't get replies in the first 2 hours, the thread dies. The hook must contain a counterintuitive claim, paradox, or emotional precision line — not a topic description.
-
-```
-Read:
-- content/blogs/{week}/{ds_slug}.md (already audited)
-- content/blogs/{week}/{life_slug}.md
-- content/blogs/{week}/{poetry_slug}.md
-- data/kb/twitter_hook_patterns.json
-- data/kb/reels/06_mavgpt_caption_formula.md (DS virality)
-- data/kb/voice/life_formula.md (Life virality)
-- data/kb/voice/poetry_formula.md (Poetry virality)
-
-Write the Twitter thread for each niche and save to the paths below.
-
-DS (8 tweets):
-Structure: hook tweet (counterintuitive claim) → bug demo → fix → insight → broader rule → CTA with Medium link
-Virality angle (mavgpt): hook tweet states the OUTCOME, not the topic ("Your analysis is wrong and Python won't warn you" > "Understanding type errors"). The thread IS the product — each tweet carries a standalone, usable step (real code/command), so a reader can act from the thread alone, not just the link. Final tweet = Medium link; optionally "comment KEYWORD and I'll send the full snippet." Honesty guardrail: only claim what the code shows.
-Save to: content/derivatives/{week}/{ds_slug}/twitter_thread.md
-
-Life (6 tweets):
-Structure: hook (specific contrast) → mechanism → personal confession → paradox → quotable line → CTA with Medium link
-Virality angle (life_formula): hook = a contrarian DECLARATION, not a question ("Most people who say they're busy aren't — they have no priorities"). The mechanism line is a standalone screenshot tweet (name WHY this keeps happening). Lead from the analytical-identity disarmer where it fits ("I work with data, not feelings, and yet…"). NO motivational crescendo — close flat/instructional.
-Save to: content/derivatives/{week}/{life_slug}/twitter_thread.md
-
-Poetry (single tweet + 2-tweet alternative):
-Single tweet: poem excerpt (the most resonant 2 lines) + 1-line close + Medium link
-2-tweet alternative: hook → excerpt + link
-Virality angle (poetry_formula): pick the line with concrete nouns (a physical object), not abstract emotion — it must work as a standalone screenshot. Never explain the poem. Close on permission, not a sad summary.
-Save to: content/derivatives/{week}/{poetry_slug}/twitter_thread.md
-
-Rules for all threads:
-- No thread starts with "Hey everyone" or "A thread on X:"
-- Each tweet must stand alone if screenshotted
-- Twitter threads and polls cannot be scheduled — you will post these manually
-```
+Twitter is dropped from the pipeline (dead in analytics). No threads, no polls, no staging.
+Derivative copy for the live platforms (LinkedIn / Instagram / Threads) is produced by
+`scripts/repurpose_blog.py` and Step 5 below. Go straight to Step 5.
 
 ---
 
@@ -314,7 +282,9 @@ Save DS post to:   content/derivatives/{week}/{ds_slug}/linkedin_post.md
 Save Life post to: content/derivatives/{week}/{life_slug}/linkedin_post.md
 ```
 
-**Publishing (no Metricool):** LinkedIn posts go out via the scheduler — `load_posts.py` → `data/scheduling.db` → `scheduler.py` (LinkedIn API). **Employer-clearance gate:** until cleared, do NOT load them live; keep the `.md` drafted and post manually only if you choose.
+**Publishing:** LinkedIn is **active** (employer cleared). Posts go out via the daemon —
+`load_posts.py` → `data/scheduling.db` → `scheduler.py` → `post_linkedin.py`. The blog link is
+posted as the **pinned first comment** (from `linkedin_first_comment.txt`), never in the body.
 
 ---
 
@@ -433,7 +403,7 @@ python3 -c "import json; m=json.load(open('worksheets-manifest.json'))['workshee
 
 **Step 9 — Generate slide decks** [SCRIPT]
 
-Why: slide decks are repurposed as LinkedIn carousels and Instagram carousel posts. Running this now means the assets are ready when scheduling runs in Phase 7 (scheduler/API where possible, manual otherwise — no Metricool).
+Why: slide decks (DS + Life; **poetry deck dropped**) are repurposed as the LinkedIn document/PDF post and Instagram carousel. Running this now means the assets are ready when the daemon publishes in Phase 7.
 
 The generator pulls the per-niche virality formula, so the **cover slide** follows the niche's hook rule (DS = outcome claim; Life = declarative text-wall claim; Poetry = the strongest line) — edit the `## Engine digest` of the niche's formula file to change it.
 
@@ -560,7 +530,7 @@ Caption schema: list of `{{text, startMs, endMs, …}}`. Read the lines, pick th
 
 **Step 15 — Clip vertical reels** [SCRIPT]
 
-Why: Run once per viral segment found in Step 14 caption analysis. Use each clip's natural speech endpoint — NOT a fixed 60s. Clips that end cleanly at 27s should be 27s. Only ask for user confirmation if the natural endpoint exceeds 60s. Target 3–5 clips per niche; post strongest on publish day, release others Days 3–5 for sustained week-long reach.
+Why: Run once per viral segment found in Step 14 caption analysis. Use each clip's natural speech endpoint — NOT a fixed 60s. Clips that end cleanly at 27s should be 27s. Only ask for user confirmation if the natural endpoint exceeds 60s. **Target 2 DISTINCT clips per niche (DS/Life)** — the 2 strongest ideas, not slices of one. Poetry uses the poem-only short, not this clipper. Add 1 virality reel + 1 comment→DM tool reel separately (≈9 reels/week total, not ~56).
 
 ```bash
 # Pattern — run once per clip. --start accepts seconds (from Step 14, e.g. 6.5) OR MM:SS.
@@ -573,8 +543,7 @@ python3 scripts/create_vertical_reels.py \
   --output-name {slug}_short_{nn}.mp4 \
   --smart-crop          # DS screen recordings only — finds the code editor region
 
-# Minimum: 1 clip per niche (the strongest from Step 14 analysis)
-# Target: 3–5 clips per niche
+# Target: 2 distinct clips per niche (DS/Life). Poetry = poem-only short (not this clipper).
 ```
 
 Verify clips exist:
@@ -820,36 +789,33 @@ For each of the 3 reels:
 
 ### Phase 7 — Schedule
 
-**Step 22 — Post static derivatives (LinkedIn · Instagram · Threads)** [YOU]
+**Step 22 — Stage derivatives → auto-publish daemon (LinkedIn · Threads · Instagram-static)** [SCRIPT]
 
-Why: No Metricool, no Publer, no aggregator CSV. Each static post goes up by hand in its engagement window — same as Reels (Step 21) and Twitter (Step 23). LinkedIn stays **manual until employer clearance** (do not load it into the scheduler — `scheduler.py` would auto-post any `pending` row via API). The scheduler/API path (`load_posts.py` → `scheduling.db` → `scheduler.py` → `post_linkedin.py`) exists but is adopted later, post-clearance.
+Why: distribution is now an **auto-publish daemon**, not manual in-app posting (canonical model:
+`docs/pipeline-2026.md`). One stage step queues the week; `scheduler.py` fires each row in its
+engagement window. **LinkedIn is active** (employer cleared); **Threads** posts text natively;
+**Instagram-static** stages only when a public media URL exists. **Twitter is dropped** — no Step 23.
 
-Post each from its derivative file, in the niche's window, replying to early comments:
+```bash
+# Stage the week into scheduling.db (LinkedIn + Threads now; IG-static when a media_url is present)
+python3 scripts/load_posts.py --week {week}
 
-| Platform | Source file (`content/derivatives/{week}/{slug}/`) | Niches | Notes |
-|----------|----------------------------------------------------|--------|-------|
-| LinkedIn | `linkedin_post.txt` | DS, Life | Poetry skips LinkedIn. **Manual until clearance.** First-hour comments drive reach — reply fast. |
-| Instagram (carousel/single) | `instagram_caption.txt` (+ `slide_outline.json` for carousels) | all 3 | Reels are Step 21. Cover/first slide = the hook. |
-| Threads | `threads_post.txt` | all 3 | Reads differently from the IG caption by design — post as-is. |
+# Start the daemon (LinkedIn + Threads fire immediately; IG needs Meta tokens — see
+# docs/one-time-platform-setup.md). It logs a credential check at startup.
+nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
+```
 
-> Per-niche posting windows: DS → @breathofdatascience; Life + Poetry → @mistakenlyhuman. Use the same day/time slots as the Reel + Thread tables (Steps 21, 23). Don't pre-schedule — post in-window and reply to comments in the first 2 hours.
+| Platform | Source | Niches | How it posts |
+|----------|--------|--------|--------------|
+| LinkedIn | `linkedin_post.txt` (+ `linkedin_first_comment.txt`) | DS, Life | Daemon posts the body, then the **pinned first comment** (blog link). Poetry skips LinkedIn. |
+| Threads | `threads_post.txt` | all 3 | Daemon posts native text. |
+| Instagram (static) | `instagram_caption.txt` | all 3 | Daemon posts **only if** a public `social.ig_media_url(s)` is in `schedule.json` (else skipped with a warning). |
 
-> ✅ Metricool fully removed repo-wide: `derivatives_to_metricool.py` deleted; `load_posts.py` now only stages LinkedIn into `scheduling.db` (+ emits the Shorts upload script); IG/FB/Threads are manual everywhere. The scheduler/API path (`scheduler.py` → `post_linkedin.py`) exists but stays dormant until employer clearance.
+> **Instagram Reels stay MANUAL for now (Step 21)** — reel auto-publish is scaffolded but not
+> wired (no public video hosting yet). See the "live vs scaffolded" section in `docs/pipeline-2026.md`.
 
----
-
-**Step 23 — Schedule Twitter threads** [YOU]
-
-Post the 3 threads manually (Twitter threads + polls cannot be scheduled) from the **`.md`** file — that's the Step 4 `[CLAUDE]` virality-baked version. Ignore the older auto-generated `twitter_thread.txt` in the same folder.
-- `content/derivatives/{week}/{ds_slug}/twitter_thread.md`
-- `content/derivatives/{week}/{life_slug}/twitter_thread.md`
-- `content/derivatives/{week}/{poetry_slug}/twitter_thread.md`
-
-| Thread | Day | Time IST |
-|--------|-----|---------|
-| DS (8 tweets) | Thursday | 8:00 AM |
-| Life (6 tweets) | Friday | 8:00 AM |
-| Poetry (single tweet) | Friday | 8:00 PM |
+> Per-niche identities: DS → @breathofdatascience; Life + Poetry → @mistakenlyhuman. Reply to
+> comments/DMs in the first 2 hours — that part is yours.
 
 ---
 
@@ -910,6 +876,6 @@ print(f'Updated {updated} rows to Published in {file}')
 | Captions mis-timed | `docs/daily/wednesday-poetry.md` → Troubleshooting |
 | Remotion won't render | `docs/daily/thursday.md` → Troubleshooting |
 | YouTube upload auth error | `scripts/upload_youtube.py --register` |
-| Static post won't go out | Step 22 is manual now (no Metricool/Publer) — post by hand from the derivative file |
-| LinkedIn scheduler / clearance | Step 22 note + line 312 — held manual until employer clearance |
+| Static post won't go out | Step 22: `load_posts.py --week` then start `scheduler.py`; check the daemon's startup credential log |
+| IG didn't auto-post | IG-static needs a public `social.ig_media_url` in schedule.json; IG **reels are manual** (Step 21) until hosting lands |
 | Medium publish script error | `docs/daily/wednesday-ds.md` → Troubleshooting |

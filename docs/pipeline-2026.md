@@ -57,17 +57,20 @@ record the talking-head video · ~10-min content approval · reply to comments/D
 - **Threads** native text post, via `post_threads.py`. ✅
 - **YouTube** long-form + Shorts uploads. ✅
 
-**Scaffolded but NOT yet fully wired — stays MANUAL until the plumbing lands:**
-- **Instagram Reels auto-publish.** `post_instagram.post_reel()` works, but: (a) reels are not
-  staged by `load_posts.py` yet (only YouTube Shorts are), and (b) IG ingests from a **public
-  video URL** that nothing hosts yet. → **Post reels to IG manually for now.**
-- **Instagram static (image/carousel).** `insert_instagram` only stages when
-  `schedule.json` carries `social.ig_media_url(s)`, which no step writes yet; and
-  `instagram_caption.txt` is currently a human *brief* (leads with `Format:/Why:`), not a clean
-  caption. → Needs: a media-URL writer + a caption-only field before IG static auto-fires.
-- **Facebook** direct publish (mirrors from IG in practice).
+**Wired — needs only a Vercel Blob token + one smoke test:**
+- **Instagram Reels auto-publish.** Full chain exists: render reels →
+  `scripts/upload_reels_blob.py --week <Wnn>` hosts each at a public URL and writes
+  `data/reel_media_urls.json` → `load_posts.py` stages them → `scheduler.py` →
+  `post_instagram.post_reel()`. Caption is the post-ready `instagram_caption_clean.txt` (no
+  brief header). **Gate:** set `BLOB_READ_WRITE_TOKEN` in `.env` and verify one upload; until
+  then IG reels stay manual.
+- **Instagram static (image/carousel).** Clean caption now generated
+  (`instagram_caption_clean.txt`). Still needs a step to write `social.ig_media_url(s)` into
+  `schedule.json` (host the static image) before it auto-fires.
 
-Closing these three is the next work item to reach true "minimal manual" on Instagram.
+**Still manual:**
+- **Facebook** direct publish (mirrors from IG in practice — no action needed).
+- IG Stories (not API-publishable).
 
 ## Close the loop (run before producing)
 

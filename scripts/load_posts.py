@@ -52,6 +52,13 @@ IST = timezone(timedelta(hours=5, minutes=30))
 LINKEDIN_SLOTS = [(1, 8, 0), (3, 12, 0)]      # Tue 8am, Thu 12pm
 THREADS_SLOTS = [(0, 19, 0), (3, 19, 0)]      # Mon/Thu 7pm
 INSTAGRAM_SLOTS = [(0, 16, 0), (3, 10, 0)]    # Mon 4pm, Thu 10am
+# Reel slots — spread the ~2-3 reels/niche across the week (Mon/Tue/Wed mornings).
+REEL_SLOTS = [(0, 7, 0), (1, 11, 0), (2, 9, 0)]
+
+# Public video-URL manifest the IG reel publisher reads. IG Graph API ingests reels
+# from a public https URL (not local bytes), so an uploader (scripts/upload_reels_blob.py)
+# must host each reel and write its URL here before reels can auto-publish.
+REEL_MANIFEST = REPO / "data" / "reel_media_urls.json"
 
 
 def slug_already_loaded(conn: sqlite3.Connection, slug: str, platform: str) -> bool:
@@ -140,6 +147,50 @@ def _instagram_media_url(slug: str) -> tuple[str, str] | None:
     if single:
         return ("image", single)
     return None
+
+
+def _reel_manifest() -> dict:
+    """Load the slug → [{index, url, caption?}] public-URL manifest, or {} if absent."""
+    if not REEL_MANIFEST.exists():
+        return {}
+    try:
+        return json.loads(REEL_MANIFEST.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return {}
+
+
+def insert_instagram_reels(conn: sqlite3.Connection, slug: str, clean_caption: str | None,
+                           manifest: dict):
+    """Stage Instagram Reels for a slug from public URLs in the reel manifest.
+
+    Each manifest entry is {"index": int, "url": str, "caption": optional str}. Falls
+    back to the slug's clean IG caption when an entry has no caption. No-op (with a
+    note) when the slug has no hosted reels yet — IG reels stay manual until then.
+    """
+    entries = manifest.get(slug) or []
+    if not entries:
+        return 0
+    staged = 0
+    for entry in entries:
+        url = entry.get("url")
+        idx = entry.get("index", 0)
+        if not url:
+            continue
+        reel_slug = f"{slug}#reel{idx}"
+        if slug_already_loaded(conn, reel_slug, "instagram"):
+            continue
+        caption = entry.get("caption") or clean_caption or ""
+        weekday, hour, minute = REEL_SLOTS[idx % len(REEL_SLOTS)]
+        scheduled_at = next_weekday(weekday, hour, minute).isoformat()
+        meta = {"kind": "reel", "media_url": url}
+        conn.execute(
+            """INSERT INTO posts (platform, content_text, scheduled_at, status,
+               metadata_json, slug) VALUES (?,?,?,?,?,?)""",
+            ("instagram", caption, scheduled_at, "pending", json.dumps(meta), reel_slug),
+        )
+        staged += 1
+        print(f"  [queued] instagram-reel/{reel_slug} — at {scheduled_at}")
+    return staged
 
 
 def insert_instagram(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_index: int):
@@ -259,6 +310,7 @@ def main():
     print(f"Loading {len(slugs)} slug(s) from {week_label} into scheduling.db ...\n")
 
     conn = sqlite3.connect(DB_PATH)
+    reel_manifest = _reel_manifest()
 
     for i, slug in enumerate(slugs):
         # Find slug_dir under the correct week folder
@@ -275,9 +327,15 @@ def main():
         if threads_file.exists():
             insert_threads(conn, slug, threads_file, i)
 
-        instagram_file = slug_dir / "instagram_caption.txt"
+        # Prefer the post-ready clean caption; fall back to the brief file.
+        clean_file = slug_dir / "instagram_caption_clean.txt"
+        instagram_file = clean_file if clean_file.exists() else slug_dir / "instagram_caption.txt"
         if instagram_file.exists():
             insert_instagram(conn, slug, instagram_file, i)
+
+        # Instagram Reels — staged only for slugs whose reels are hosted (manifest).
+        clean_caption = clean_file.read_text(encoding="utf-8").strip() if clean_file.exists() else None
+        insert_instagram_reels(conn, slug, clean_caption, reel_manifest)
 
     conn.commit()
 

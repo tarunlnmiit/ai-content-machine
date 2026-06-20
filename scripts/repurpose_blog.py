@@ -224,6 +224,23 @@ def format_instagram(data: dict, niche: str = "life") -> str:
     return "\n".join(lines)
 
 
+def format_instagram_caption_clean(data: dict, niche: str = "life") -> str:
+    """The POST-READY Instagram caption (no Format:/Why:/Slides brief header).
+
+    `format_instagram` produces a human review brief; this is what actually gets
+    published — hook line, caption body, CTA, hashtags. Written to a separate file
+    so the auto-publish daemon stages real caption text, not the brief.
+    """
+    parts = [data.get("hook_line", ""), "", data.get("caption_body", "")]
+    cta = data.get("cta_line", "")
+    if cta:
+        parts += ["", cta]
+    tags = hashtag_line(niche, "instagram", data.get("hashtags"))
+    if tags:
+        parts += ["", tags]
+    return "\n".join(p for p in parts if p is not None).strip()
+
+
 def format_newsletter(data: dict, niche: str = "life") -> str:
     return (
         f"Subject: {data.get('subject_line', '')}\n"
@@ -292,6 +309,15 @@ def save_derivatives(out_dir: Path, data: dict, platforms: list[str] | None = No
                 if comment:
                     cpath = out_dir / "linkedin_first_comment.txt"
                     cpath.write_text(comment, encoding="utf-8")
+                    saved.append(str(cpath.relative_to(REPO)))
+
+            # Instagram: write the post-ready caption alongside the human brief, so
+            # the auto-publish daemon stages clean caption text (not Format:/Why:…).
+            if key == "instagram_caption":
+                clean = format_instagram_caption_clean(value, niche)
+                if clean:
+                    cpath = out_dir / "instagram_caption_clean.txt"
+                    cpath.write_text(clean, encoding="utf-8")
                     saved.append(str(cpath.relative_to(REPO)))
 
             progress.advance(task)
