@@ -1,0 +1,2053 @@
+{
+  "data_science_tech": [
+    {
+      "source": "hn_top",
+      "title": "Zero-Touch OAuth for MCP",
+      "url": "https://blog.modelcontextprotocol.io/posts/enterprise-managed-auth/",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 21:54:10 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "Update on Ocean Observatories Initiative",
+      "url": "https://www.nsf.gov/news/update-ocean-observatories-initiative",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 23:41:48 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "I found 10k GitHub repositories distributing Trojan malware",
+      "url": "https://orchidfiles.com/github-repositories-distributing-malware/",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 11:45:43 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "Cell-based architecture for resilient payment systems",
+      "url": "https://americanexpress.io/cell-based-architecture-for-resilient-payment-systems/",
+      "summary": "Comments",
+      "published": "Mon, 15 Jun 2026 22:36:33 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "The AirPods Effect",
+      "url": "https://www.theescapenewsletter.com/p/the-airpods-effect",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 23:08:35 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "The Korean telecom giant at the center of Anthropic's Mythos controversy",
+      "url": "https://www.wired.com/story/sk-telecom-anthropic-mythos-export-controls/",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 12:44:09 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "Ubiquiti: Enterprise NAS, Built on ZFS",
+      "url": "https://blog.ui.com/article/introducing-enterprise-nas",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 14:24:30 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "Swiss parliament lifts ban on new nuclear power plants",
+      "url": "https://www.bluewin.ch/en/news/switzerland/parliament-lifts-ban-on-new-nuclear-power-plants-3257535.html",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 14:17:07 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "Zork name origin got an update on Wikipedia",
+      "url": "https://www.dpolakovic.space/blogs/zork-part2#update",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 20:27:28 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "I told them forced consent was unlawful. 5 years later it cost Elkjop \u20ac1.8M",
+      "url": "https://www.thatprivacyguy.com/blog/elkjop-forced-consent-fine/",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 18:31:23 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "CS 6120: Advanced Compilers: The Self-Guided Online Course (2020)",
+      "url": "https://www.cs.cornell.edu/courses/cs6120/2025fa/self-guided/",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 11:04:31 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "Hospitals and universities repurposing drugs at lower cost",
+      "url": "https://www.kcl.ac.uk/news/hospitals-and-universities-repurposing-drugs-at-90-lower-cost",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 10:33:22 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "The Token Compression Illusion: Why I'm Skeptical of RTK",
+      "url": "https://mroczek.dev/articles/the-token-compression-illusion-why-im-skeptical-of-rtk/",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 17:37:00 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "It doesn't matter if it works",
+      "url": "https://henry.codes/writing/it-doesnt-matter-if-it-works/",
+      "summary": "Comments",
+      "published": "Mon, 15 Jun 2026 10:48:59 +0000"
+    },
+    {
+      "source": "hn_top",
+      "title": "Show HN: Are You in the Weights?",
+      "url": "https://www.intheweights.com/",
+      "summary": "Comments",
+      "published": "Thu, 18 Jun 2026 20:49:03 +0000"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "Gaussian Mixture Attention: Linear-Time Sequence Mixing via Probabilistic Latent Routing",
+      "url": "https://arxiv.org/abs/2606.18283",
+      "summary": "arXiv:2606.18283v1 Announce Type: new \nAbstract: The dense token-to-token interaction pattern of standard dot-product attention remains a central bottleneck in scaling Transformer architectures to long contexts. We introduce \\textbf{Gaussian Mixture Attention (GMA)}, a probabilistic attention-style sequence mixer that replaces explicit pairwise query--key comparison with routing through $K$ learne",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "Breaking the Solver Bottleneck: Training Task Generators at the Learnable Frontier",
+      "url": "https://arxiv.org/abs/2606.18284",
+      "summary": "arXiv:2606.18284v1 Announce Type: new \nAbstract: The limiting resource for training agents via reinforcement learning (RL) is increasingly frontier task supply: valid, solvable tasks just difficult enough to train the current model. As reasoning and agentic models improve, fixed task distributions saturate, while naive synthetic generation yields tasks that are trivial, impossible, or ill-posed. T",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "CODEBLOCK: Learning to Supervise Code at the Right Granularity",
+      "url": "https://arxiv.org/abs/2606.18286",
+      "summary": "arXiv:2606.18286v1 Announce Type: new \nAbstract: Supervised fine-tuning of code LLMs typically applies uniform cross-entropy loss to all response tokens, implicitly assuming that every token provides equally useful learning signal. Recent token-level selection methods challenge this assumption in natural-language SFT by supervising only high-value tokens. However, directly transferring token-level",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "Artemis: Anatomy-Resolved inTervention for Eliminating Multimodal NeuroImage confounderS",
+      "url": "https://arxiv.org/abs/2606.18287",
+      "summary": "arXiv:2606.18287v1 Announce Type: new \nAbstract: Multimodal neuroimaging, integrating functional connectivity from fMRI and structural connectivity from DTI, enables non-invasive analysis of brain networks using graph neural networks. However, demographic factors such as age and sex systematically confound the relationship between brain connectivity and clinical outcomes, causing GNNs to exploit s",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "A Link between Shock-wave Theory and Symmetry-reduced Stochastic Gradient Descent for Artificial Neural Networks",
+      "url": "https://arxiv.org/abs/2606.18303",
+      "summary": "arXiv:2606.18303v1 Announce Type: new \nAbstract: We develop a mathematically explicit link between shock-wave theory and the symmetry-quotiented learning dynamics of stochastic gradient descent, drawing on differential geometry, Lie group theory, and fluid mechanics. Specifically, after quotienting parameter symmetries and applying local-entropy coarse-graining, the effective dynamics satisfy a vi",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "Attribution-Guided and Coverage-Maximized Pruning for Structural MoE Compression",
+      "url": "https://arxiv.org/abs/2606.18304",
+      "summary": "arXiv:2606.18304v1 Announce Type: new \nAbstract: Mixture-of-Experts (MoE) models scale compute efficiently, yet remain expensive to deploy due to their substantial memory footprint and inference overhead. Prior compression methods mainly operate at the expert level, either removing entire experts or ranking experts by coarse-grained importance scores. However, such expert-wise decisions are often",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "Fisher Width: A Geometric Measure of Complexity on Statistical Manifolds",
+      "url": "https://arxiv.org/abs/2606.18306",
+      "summary": "arXiv:2606.18306v1 Announce Type: new \nAbstract: Gaussian width is a central geometric complexity measure in high-dimensional probability, compressed sensing, convex optimization, and learning theory. It quantifies the average extent of a set along random directions, thereby capturing the effective dimension of constraint sets, hypothesis classes, and descent cones. However, this notion is intrins",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "DRIFT: Refining Instruction Data via On-Policy Data Attribution",
+      "url": "https://arxiv.org/abs/2606.18307",
+      "summary": "arXiv:2606.18307v1 Announce Type: new \nAbstract: Optimizing the training data distribution for Supervised Fine-Tuning (SFT) dictates the capability of Large Language Models (LLMs). While existing data curation methods excel at accelerating training under constrained budgets, they are less suited to elevating the capability upper bound. The challenge here is no longer to identify a smaller subset t",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "TRIDENT: Breaking the Hybrid-Safety-Physics Coupling for Provably Safe Multi-Agent Reinforcement Learning",
+      "url": "https://arxiv.org/abs/2606.18308",
+      "summary": "arXiv:2606.18308v1 Announce Type: new \nAbstract: Safe coordination in networked cyber-physical systems forces learning algorithms to simultaneously handle hybrid discrete-continuous actions, hard training-time safety constraints, and physics-governed dynamics. We show that these three features form a directed cycle of biases that defeats any naive composition of off-the-shelf modules, and formaliz",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "SAGE: Retain-Aware Post-Hoc Sanitization of Final Unlearning Vector",
+      "url": "https://arxiv.org/abs/2606.18309",
+      "summary": "arXiv:2606.18309v1 Announce Type: new \nAbstract: Large Language Model (LLM) unlearning aims to remove undesirable knowledge or behaviors while preserving retained capabilities. Current unlearning methods all involve a trade-off between unlearning and retention. We have found that the retention activation bias can also be used to quantify the damage an unlearning method inflicts on retention, witho",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "Ghost Attractor Networks: Basin-Structured Dynamical Decoders for Closed-Loop Sequential Generation",
+      "url": "https://arxiv.org/abs/2606.18315",
+      "summary": "arXiv:2606.18315v1 Announce Type: new \nAbstract: Sequential output generation with large-scale Transformer and diffusion decoders pays a memory cost that grows with sequence length, plus iterative per-step computation. Replacing them with small feed-forward decoders restores efficiency but produces unstructured latent representations that limit closed-loop control: phase-conditioned action generat",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "A Survey on Data-Driven Models for Soil Moisture Regression and Classification",
+      "url": "https://arxiv.org/abs/2606.18316",
+      "summary": "arXiv:2606.18316v1 Announce Type: new \nAbstract: Soil Moisture (SM) modelling constitutes a complex spatiotemporal learning problem characterised by nonlinear environmental interactions, heterogeneous data sources, and limited ground observations. Physics-based approaches, such as water balance models, rely on explicit hydrological equations and high-quality inputs, but their computational cost an",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "Enhanced Graph Neural Networks using K-Hop Gaussian Diffusion",
+      "url": "https://arxiv.org/abs/2606.18317",
+      "summary": "arXiv:2606.18317v1 Announce Type: new \nAbstract: Most graph neural network (GNN) cores rely on graph convolutions, typically implemented as message passing between direct (single-hop) neighbors. In many real-world graphs, edges can be noisy or poorly defined, limiting information propagation to local neighborhoods. Existing diffusion kernels, such as Personalized PageRank (PPR) and Heat Kernel, al",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "ASTRA: A Scalable Next-Generation ATCO Training Simulator with Autonomous Simpilots",
+      "url": "https://arxiv.org/abs/2606.18319",
+      "summary": "arXiv:2606.18319v1 Announce Type: new \nAbstract: Air Traffic Control Operators (ATCOs) are vital in ensuring the safe, orderly, and efficient flow of air traffic, yet training capacity is constrained by reliance on specialized human trainers known as simpilots, who must role-play both pilots and ATCOs in a simulated airspace. Existing automated solutions rely on Western-centric speech models that",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_lg",
+      "title": "SAE Interventions are Unreliable: Post-Intervention Recovery of Suppressed Behavior",
+      "url": "https://arxiv.org/abs/2606.18322",
+      "summary": "arXiv:2606.18322v1 Announce Type: new \nAbstract: Sparse Autoencoders (SAEs) decompose residual-stream activations into interpretable features. Recent latent-space defenses increasingly rely on these decompositions, assuming that identified \"unsafe\" SAE features serve as actionable handles for monitoring and intervention. In this paradigm, clamping a specific harmful feature is expected to reliably",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "NAVI-Orbital: First In-Orbit Demonstration of a Zero-Shot Vision-Language Model for Autonomous Earth Observation",
+      "url": "https://arxiv.org/abs/2606.18271",
+      "summary": "arXiv:2606.18271v1 Announce Type: new \nAbstract: As Earth Observation data generation outpaces downlink bandwidth and human-in-the-loop processing, a widening gap has emerged between onboard collection and actionable ground intelligence. This paper presents NAVI-Orbital, a software system deployed on a Low Earth Orbit (LEO) spacecraft. On April 16, 2026, NAVI-Orbital achieved what is, to the autho",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "CaVe-VLM-CoT: An Interpretable Vision-Language Model Framework",
+      "url": "https://arxiv.org/abs/2606.18385",
+      "summary": "arXiv:2606.18385v1 Announce Type: new \nAbstract: Vision-Language Models (VLMs) remain prone to hallucinations, producing fluent but visually unfaithful outputs. Existing chain-of-thought and retrieval-augmented methods only partially address this, as they neither enforce step-level citation grounding nor route verification failures back to retrieval for correction. We present CaVe-VLM-CoT, a modul",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "Searching for Synergy in Shared Workspace Human-AI Collaboration",
+      "url": "https://arxiv.org/abs/2606.18413",
+      "summary": "arXiv:2606.18413v1 Announce Type: new \nAbstract: Automated AI agents are increasingly capable, yet many scientific and professional tasks require human judgment and contextual expertise. We study shared-workspace human-AI teams, where AI agents and human collaborators must coordinate responsibilities before submitting a final answer. Using the Collaborative Gym environment with DiscoveryBench task",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "CEO-Bench: Can Agents Play the Long Game?",
+      "url": "https://arxiv.org/abs/2606.18543",
+      "summary": "arXiv:2606.18543v1 Announce Type: new \nAbstract: Language model agents are becoming proficient executors at isolated, short-horizon tasks such as software engineering and customer service. Yet real-world challenges require a combination of sophisticated skills that remain largely untested in agents: (1) navigating long horizons amid uncertainty; (2) acquiring information in noisy environments; (3)",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "DeFAb: A Verifiable Benchmark for Defeasible Abduction in Foundation Models",
+      "url": "https://arxiv.org/abs/2606.18557",
+      "summary": "arXiv:2606.18557v1 Announce Type: new \nAbstract: A rule-based logic solver resolves every instance in our benchmark in under 50 microseconds with 100% accuracy; the best frontier language model reaches 65% at best and drops to 23.5% under rendering-robust evaluation (worst case over four surface renderings). We introduce DeFAb (Defeasible Abduction Benchmark), a dataset and generation pipeline tha",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "Optimizing Lithium Production Decisions under Geological, Demand, and Pricing Uncertainties: A POMDP Framework for Multi-Objective Decision Making",
+      "url": "https://arxiv.org/abs/2606.18598",
+      "summary": "arXiv:2606.18598v1 Announce Type: new \nAbstract: Decision making in lithium production is challenging, whether from an investor's perspective or a strategic production standpoint. Determining which mines to open and when to open them involves not only geological and price uncertainties, but also complexities around the choice of extraction method, from direct lithium extraction to hard rock mining",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "ForecastBench-Sim: A Simulated-World Forecasting Benchmark",
+      "url": "https://arxiv.org/abs/2606.18686",
+      "summary": "arXiv:2606.18686v1 Announce Type: new \nAbstract: Forecasting benchmarks for general-purpose AI systems usually inherit the constraints of the real world: outcomes resolve slowly, tail events are rare, and counterfactual questions are difficult to score. We introduce ForecastBench-Sim, a simulated-world forecasting benchmark built on game rollouts from Freeciv, a turn-based strategy game modelled o",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "What Must Generalist Agents Remember?",
+      "url": "https://arxiv.org/abs/2606.18746",
+      "summary": "arXiv:2606.18746v1 Announce Type: new \nAbstract: This paper develops a formal account of what generalist agents must store in memory in order to act near-optimally across multiple environments and goals. It shows that when two domains share an observational bottleneck but require incompatible optimal actions, any uniformly near-optimal policy must induce distinct memory distributions at that bottl",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "R2D-RL: A RoboCup 2D Soccer Environment for Multi-Agent Reinforcement Learning",
+      "url": "https://arxiv.org/abs/2606.18786",
+      "summary": "arXiv:2606.18786v1 Announce Type: new \nAbstract: Robot soccer is a challenging testbed for multi-agent reinforcement learning because it combines partial observability, cooperative and adversarial interaction, sparse rewards, and long-horizon tactical behavior. RoboCup 2D Soccer Simulation (RCSS2D) provides a mature robot-soccer platform, but its competition-oriented server-client architecture is",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "ProfiLLM: Utility-Aligned Agentic User Profiling for Industrial Ride-Hailing Dispatch",
+      "url": "https://arxiv.org/abs/2606.18803",
+      "summary": "arXiv:2606.18803v1 Announce Type: new \nAbstract: Bringing Large Language Models (LLMs) into industrial ride-hailing dispatch as semantic feature extractors over platform-scale behavioral logs is a compelling but under-explored data systems problem. Production matching pipelines remain dominated by structured numerical features, yet decisive behavioral signals (e.g., a driver's habitual aversion to",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "WorldLines: Benchmarking and Modeling Long-Horizon Stateful Embodied Agents",
+      "url": "https://arxiv.org/abs/2606.18847",
+      "summary": "arXiv:2606.18847v1 Announce Type: new \nAbstract: To assist humans over extended periods in real homes, embodied agents must remember user routines, world states, and past interactions. Existing long-term memory benchmarks mainly evaluate language-centric retrieval and question answering, while embodied benchmarks often focus on short-horizon task execution without testing long-term memory use in d",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "Externalizing Research Synthesis and Validation in AI Scientists through a Research Harness",
+      "url": "https://arxiv.org/abs/2606.18874",
+      "summary": "arXiv:2606.18874v1 Announce Type: new \nAbstract: AI systems can increasingly automate scientific workflows, but the reasoning that links prior evidence, generated ideas, experiments and final claims often remains implicit inside model inference. Here we introduce Xcientist, a research harness that externalizes research synthesis and experimental validation into inspectable, contract-governed proce",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "Generative-Model Predictive Planning for Navigation in Partially Observable Environments",
+      "url": "https://arxiv.org/abs/2606.18888",
+      "summary": "arXiv:2606.18888v1 Announce Type: new \nAbstract: Navigation in partially observable environments presents a significant challenge for autonomous agents, requiring effective decision-making with limited sensory information in unknown environments. Belief-based methods, particularly those using neural networks to approximate the belief space, often fail to capture the inherent multimodality of belie",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "Skill-Guided Continuation Distillation for GUI Agents",
+      "url": "https://arxiv.org/abs/2606.18890",
+      "summary": "arXiv:2606.18890v1 Announce Type: new \nAbstract: Improving GUI agents typically relies on behavior cloning on expert trajectories. However, as the current policy deviates from the expert policy, it inevitably encounters policy-induced off-trajectory states during closed-loop execution, i.e., states that fall outside the expert trajectories. Since expert trajectories provide no demonstrations for t",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_cs_ai",
+      "title": "SciRisk-Bench: A Risk-Dimension-Aware Benchmark for AI4Science Safety",
+      "url": "https://arxiv.org/abs/2606.18936",
+      "summary": "arXiv:2606.18936v1 Announce Type: new \nAbstract: Large language models (LLMs) are increasingly embedded in AI for Science (AI4Science) workflows, from scientific question answering and literature analysis to laboratory planning and autonomous discovery. This progress creates an urgent need for safety benchmarks that evaluate not only scientific competence, but also whether models recognize and avo",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "Pointwise is Pointless? A Multimodal Ablation Study for Precipitation Nowcasting with Graph Neural Networks",
+      "url": "https://arxiv.org/abs/2606.18436",
+      "summary": "arXiv:2606.18436v1 Announce Type: new \nAbstract: Sparse point observations are increasingly available for precipitation nowcasting, but it is unclear how much they improve dense radar-field forecasts. We partially address this question with a multimodal graph neural network nowcasting system over the Nordic radar domain. The model predicts rain rate every five minutes up to two hours ahead and is",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "ToolChain-CRC: Conformal Risk Control for Agentic AI Under Retrieval and Tool-Use Drift",
+      "url": "https://arxiv.org/abs/2606.18467",
+      "summary": "arXiv:2606.18467v1 Announce Type: new \nAbstract: Modern AI agents retrieve documents, call tools, check intermediate information, and then produce a final answer or action. This creates a risk-control problem that is not visible from the final answer alone. A final response may look acceptable even when the retrieval was weak, a tool output was wrong, or an earlier step was unsupported. We propose",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "Compact Geometric Representations of Hierarchies",
+      "url": "https://arxiv.org/abs/2606.18520",
+      "summary": "arXiv:2606.18520v1 Announce Type: new \nAbstract: Computing geometric representations of data is a cornerstone of modern machine learning, typically achieved by training dual encoders which map queries and documents into a shared embedding space. Recent work of You et al. [NeurIPS '25] has extended this approach to hierarchical retrieval, where relevance is determined by the ancestor-descendant rel",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "Toward Simultaneously Optimal Regret in U-Calibration",
+      "url": "https://arxiv.org/abs/2606.18527",
+      "summary": "arXiv:2606.18527v1 Announce Type: new \nAbstract: U-calibration studies online forecasting algorithms whose predictions can be consumed by any unknown downstream agent, guaranteeing sublinear regret simultaneously for all proper loss functions. Existing U-calibration algorithms achieve worst-case optimal $O(\\sqrt{T})$ regret for every bounded proper loss, but they fail to adapt to easier losses: as",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "When Does Trajectory-Level Supervision Permit Efficient Offline Reinforcement Learning?",
+      "url": "https://arxiv.org/abs/2606.18531",
+      "summary": "arXiv:2606.18531v1 Announce Type: new \nAbstract: Offline reinforcement learning is typically analyzed under process-level reward supervision, yet many sequential decision datasets\n  record only trajectory-level outcomes. We develop a statistical theory for offline policy optimization from such outcome-level\n  supervision. We first study the canonical setting where the target remains the expected c",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "Bridging Data Gaps in Structural Fragility Modeling through Transfer Learning: Methodology and Case Studies",
+      "url": "https://arxiv.org/abs/2606.18567",
+      "summary": "arXiv:2606.18567v1 Announce Type: new \nAbstract: This paper presents a methodology-centered transfer learning framework for fragility adaptation under domain shift, class imbalance, and scarce target labels while preserving engineering interpretability and supporting decision-making under uncertainty. Four transfer learning strategies (instance-based, parameter-based, hierarchical Bayesian, and mu",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "TimeLAVA: Learning-Agnostic Data Valuation for Time Series",
+      "url": "https://arxiv.org/abs/2606.18729",
+      "summary": "arXiv:2606.18729v1 Announce Type: new \nAbstract: Data valuation quantifies the intrinsic quality of individual samples to enable principled data curation, quality control, and robust learning. For time series in critical domains such as healthcare, finance, and industrial monitoring, effective valuation methods are essential yet fundamentally lacking. Existing approaches are either model-dependent",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "Kernel of Partition Paths: A Unified Representation for Tree Ensembles",
+      "url": "https://arxiv.org/abs/2606.18853",
+      "summary": "arXiv:2606.18853v1 Announce Type: new \nAbstract: A recent line of work has reframed individual decision trees as linear models on engineered features associated with their splits, opening routes for oracle inequalities and feature-importance reinterpretation, but leaving open the question of what unified geometric object a forest induces when one indexes its feature map by nodes rather than by spl",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "FOSC-X: An Extended Framework for Optimal Local Cuts and Non-Horizontal Cluster Selection from Clustering Hierarchies",
+      "url": "https://arxiv.org/abs/2606.18972",
+      "summary": "arXiv:2606.18972v1 Announce Type: new \nAbstract: Extracting a flat clustering solution from a hierarchy is a common task in practical cluster analysis and can be formulated as an optimisation problem. Existing approaches focus on finding a single optimal solution. We introduce FOSC-X, a framework for extracting the top-M globally optimal flat clusterings from local, non-horizontal cuts of a hierar",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "Sequential Kernel-based Conditional Independence Testing via Adaptive Betting",
+      "url": "https://arxiv.org/abs/2606.18993",
+      "summary": "arXiv:2606.18993v1 Announce Type: new \nAbstract: Testing conditional independence is fundamental yet intrinsically difficult: without additional assumptions, Type I error control is impossible in general. The \"Model-X'' paradigm addresses this difficulty by assuming exact knowledge of a relevant conditional distribution. While small deviations from this assumption can sometimes be tolerated in cla",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "Quantifying and Auditing LLM Evaluation via Positive--Unlabeled Learning",
+      "url": "https://arxiv.org/abs/2606.19057",
+      "summary": "arXiv:2606.19057v1 Announce Type: new \nAbstract: Large Language Models (LLMs) are increasingly used as judges for scalable evaluation, yet such LLM--as--a--Judge systems exhibit systematic biases that are decoupled from semantic quality, most notably verbosity bias. Meanwhile, human supervision is costly and typically selective, yielding reliable positive judgments but leaving most outputs unlabel",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "On Local Population-Risk Certificates",
+      "url": "https://arxiv.org/abs/2606.19147",
+      "summary": "arXiv:2606.19147v1 Announce Type: new \nAbstract: This paper develops local certificates for population-risk increments around a current model. For a local candidate set \\(\\mathcal D\\), the certificate is a two-sided confidence band for \\(P({\\ell_{\\theta+v}-\\ell_\\theta})\\) over \\(v\\in\\mathcal D\\). As an application, the upper endpoint of this band yields a risk-controlled update rule: an update is",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "Generalised Eigenvalue Geometry of Semantic Adversarial Attacks",
+      "url": "https://arxiv.org/abs/2606.19212",
+      "summary": "arXiv:2606.19212v1 Announce Type: new \nAbstract: Recent empirical work shows that semantically equivalent paraphrases can fool financial sentiment classifiers: although a paraphrase remains close to the original under a strong reference embedding, it may shift the target model's representation enough to change the predicted class. Existing robustness theory either assumes a single-model threat mod",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "The Implicit Bias of Steepest Descent with Mini-batch Stochastic Gradient",
+      "url": "https://arxiv.org/abs/2602.11557",
+      "summary": "arXiv:2602.11557v2 Announce Type: cross \nAbstract: A variety of widely used optimization methods like SignSGD and Muon can be interpreted as instances of steepest descent under different norm-induced geometries. In this work, we study the implicit bias of mini-batch stochastic steepest descent in multi-class classification, characterizing how batch size, momentum, and variance reduction shape the",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "arxiv_stat_ml",
+      "title": "A Guide to Estimating Conditional Average Treatment Effects in Competing Risks Settings",
+      "url": "https://arxiv.org/abs/2606.18281",
+      "summary": "arXiv:2606.18281v1 Announce Type: cross \nAbstract: Conditional average treatment effects (CATEs) are central to treatment decision-making in personalized medicine. In competing risks settings, estimating CATEs from survival data allows for patient-specific assessments of treatment effectiveness for a specific event of interest while properly accounting for alternative event types. This distinction",
+      "published": "Thu, 18 Jun 2026 00:00:00 -0400"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "Ontology as the Foundation of Trust and Data Governance: Replacing Thousands of Human-in-the-Loop\u2026",
+      "url": "https://medium.com/@anythinggraph/ontology-as-the-foundation-of-trust-and-data-governance-replacing-thousands-of-human-in-the-loop-41d21fe32269?source=rss------data_science-5",
+      "summary": "Introduction   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:21:21 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "From 100,000 Orders to Business Intelligence: How I Built an End-to-End Analytics System on\u2026",
+      "url": "https://medium.com/@gabrielnguyen2603/from-100-000-orders-to-business-intelligence-how-i-built-an-end-to-end-analytics-system-on-78e09f9b3df9?source=rss------data_science-5",
+      "summary": "What if you could see every sale, every delivery failure, every unhappy customer, and turn that chaos into a strategy?   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:01 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "The Peeking Problem: Why Checking Your Test Early Destroys Validity",
+      "url": "https://medium.com/@atticusli/the-peeking-problem-why-checking-your-test-early-destroys-validity-92d5a7031e64?source=rss------data_science-5",
+      "summary": "Early peeking at A/B test results inflates false positive rates and leads to costly decisions based on noise. Learn why premature analysis&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:01 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "I Fine-Tuned a 66M-Parameter Model That Matched Llama 3.1 70B on Financial Sentiment",
+      "url": "https://medium.com/@priyankavadivelneu/i-fine-tuned-a-66m-parameter-model-that-matched-llama-3-1-70b-on-financial-sentiment-43c95eb5355a?source=rss------data_science-5",
+      "summary": "And in the process learned why the three best approaches all fail differently   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:45:14 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "From Data Collection to Revenue Generation ( Audio version included)",
+      "url": "https://medium.com/@AAZZ01/from-data-collection-to-revenue-generation-audio-version-included-09e90e500ff4?source=rss------data_science-5",
+      "summary": "&#x201c;Why Most Companies Have Tons of Data but Still Can&#x2019;t Use It&#x201d;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:41:00 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "Thanks to NVIDIA, I No Longer Need Local AI Models",
+      "url": "https://medium.com/macoclock/thanks-to-nvidia-i-no-longer-need-local-ai-models-26d79ca2a0f0?source=rss------data_science-5",
+      "summary": "I almost broke my no-home-server rule for AI. Then cloud models finally became useful enough.   Continue reading on Mac O\u2019Clock \u00bb",
+      "published": "Thu, 18 Jun 2026 23:37:14 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "How I Parsed 100,000 E-Commerce GPS Nodes into a Lighting Fast Distance Matrix API.",
+      "url": "https://medium.com/@technation012/how-i-parsed-100-000-e-commerce-gps-nodes-into-a-lighting-fast-distance-matrix-api-52de26e27700?source=rss------data_science-5",
+      "summary": "If you&#x2019;ve ever tried to build a Travelling Salesperson Problem algorithm for last mile delivery, you know the math isn&#x2019;t the hardest part&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:33:00 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "Why are we ignoring the boring stuff",
+      "url": "https://medium.com/@EthutengData/why-are-we-ignoring-the-boring-stuff-49dd2ea1c4eb?source=rss------data_science-5",
+      "summary": "Whenever I get online to read or watch videos about working in data there is one thing that is very apparent, and that is: no one cares&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:20:41 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "Null means something to the business",
+      "url": "https://medium.com/@EthutengData/null-means-something-to-the-business-958551180923?source=rss------data_science-5",
+      "summary": "Have you ever looked at the data during the ETL process and thought to yourself, &#x201c;I have never seen so much missing data in my life&#x201d;&#xa0;:)&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:18:13 GMT"
+    },
+    {
+      "source": "medium_data_science",
+      "title": "STARS BEYOND THE MONOLITH\u200a\u2014 CAP\u00cdTULO 3: EL MUNDO QUE MIRA DE VUELTA",
+      "url": "https://aminparker.medium.com/stars-beyond-the-monolith-cap%C3%ADtulo-3-el-mundo-que-mira-de-vuelta-da744202cd6c?source=rss------data_science-5",
+      "summary": "El planeta no dorm&#xed;a.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 22:57:26 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "Testing Machine Learning Models in Production",
+      "url": "https://medium.com/@ali.younes2/testing-machine-learning-models-in-production-d595a2b6edbd?source=rss------mlops-5",
+      "summary": "The only reliable way to evaluate how a model performs under real-world conditions is to deploy it. Offline evaluation is useful, but it&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:08:17 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "AZURE ML: Deploy and monitor a model in Azure ML using managed online endpoints, blue/green\u2026",
+      "url": "https://ougabriel.medium.com/azure-ml-deploy-and-monitor-a-model-in-azure-ml-using-managed-online-endpoints-blue-green-85fd2cbdfd2d?source=rss------mlops-5",
+      "summary": "Picture a Cardiff energy company running short-term load forecasts for the Welsh grid.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 22:46:33 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "Use Cache to Stop re-running work in your pipelines",
+      "url": "https://medium.com/union-ai/use-cache-to-stop-re-running-work-in-your-pipelines-97bb846ebd9b?source=rss------mlops-5",
+      "summary": "A weekly roundup of tips, releases, and community news from the flyte.org &amp; union.ai ecosystem.   Continue reading on Union-ai \u00bb",
+      "published": "Thu, 18 Jun 2026 22:14:25 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "Why I Built a 4-Signal Drift Detector Without Ground Truth Labels",
+      "url": "https://medium.com/@sharjeel6392/why-i-built-a-4-signal-drift-detector-without-ground-truth-labels-33bf59f0f291?source=rss------mlops-5",
+      "summary": "One of the first things you learn when deploying a machine learning model is that the metric you care about most &#x2014; accuracy &#x2014; is the one&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 20:40:57 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "The open-source LLM eval frameworks I actually compared, and the question that sorts them",
+      "url": "https://medium.com/@ethan-writes-AI/the-open-source-llm-eval-frameworks-i-actually-compared-and-the-question-that-sorts-them-f4869dfad354?source=rss------mlops-5",
+      "summary": "&#x201c;Eval framework&#x201d; covers app-output graders, RAG-specific scorers, and academic benchmark harnesses. They are not substitutes. Pick by what&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 19:53:35 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "Kubernetes Machine Learning Pipeline \u2014 Part 4: CI-CD with Jenkins and ArgoCD",
+      "url": "https://medium.com/@yuanhuang100/kubernetes-machine-learning-pipeline-part-4-ci-cd-with-jenkins-and-argocd-1d7124fc58d9?source=rss------mlops-5",
+      "summary": "This is the fourth article in the Kubernetes Machine Learning Pipeline series. In the previous installment, we built a CI&#x2011;driven workflow&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 19:43:22 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "When Physics Gets It Almost Right: Building an ML Correction Layer for ECMWF Temperature Forecasts",
+      "url": "https://medium.com/@conyeneke1/when-physics-gets-it-almost-right-building-an-ml-correction-layer-for-ecmwf-temperature-forecasts-b5e92aa3daa3?source=rss------mlops-5",
+      "summary": "How I used 5 million operational records, a Random Forest, and a FastAPI service to shave systematic bias off numerical weather predictions   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 17:20:02 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "Mastering ML Pipelines: How to Seamlessly Track Metrics with DVC",
+      "url": "https://medium.com/@adidaroshan/mastering-ml-pipelines-how-to-seamlessly-track-metrics-with-dvc-0ce6f0542e92?source=rss------mlops-5",
+      "summary": "In the rapidly evolving world of machine learning and data science, reproducibility is everything. While Git does an excellent job of&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 14:36:36 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "AZURE ML: Automate ML training with GitHub Actions using OIDC federation, az ml CLI v2, environment\u2026",
+      "url": "https://ougabriel.medium.com/azure-ml-automate-ml-training-with-github-actions-using-oidc-federation-az-ml-cli-v2-environment-bf7f424b2aef?source=rss------mlops-5",
+      "summary": "Picture a Leeds mortgage lender pushing roughly 4,200 affordability decisions an hour through a gradient-boosted credit risk model. The&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 14:13:41 GMT"
+    },
+    {
+      "source": "medium_mlops",
+      "title": "Cleaned data is still not AI-ready",
+      "url": "https://medium.com/@alscks/cleaned-data-is-still-not-ai-ready-14b8db5896bd?source=rss------mlops-5",
+      "summary": "Part two of a series on the missing layer between enterprise data and the AI that runs on it. Part one asked what data has to become. This&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 13:21:00 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "When the Numbers Tell a Story: What 4 Years of Pharmaceutical Sales Data Revealed",
+      "url": "https://medium.com/@abiolarereloluwa/when-the-numbers-tell-a-story-what-4-years-of-pharmaceutical-sales-data-revealed-382a7fe690f1?source=rss------data_analytics-5",
+      "summary": "Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 19:57:50 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "Product Profitability & Margin Leakage Analysis",
+      "url": "https://medium.com/@iksantri/product-profitability-margin-leakage-analysis-148dbc87be51?source=rss------data_analytics-5",
+      "summary": "Revenue $5.19M, tapi bisnis ini punya missing problem yang tidak tertulis di laporan keuangan   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 19:29:43 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "Behind Every \u2018Order Placed\u2019: Understanding OLTP vs OLAP",
+      "url": "https://medium.com/@susmetaa01/behind-every-order-placed-understanding-oltp-vs-olap-a30684fd6bd1?source=rss------data_analytics-5",
+      "summary": "Some technical concepts sound simple when explained in one line, but still do not fully click until you understand the problem they are&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 15:41:00 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "AI \u00c7a\u011f\u0131nda Pazarlama Okuryazarl\u0131\u011f\u0131: Yeni Y\u00f6netici Yetkinli\u011fi",
+      "url": "https://medium.com/t%C3%BCrkiye/ai-%C3%A7a%C4%9F%C4%B1nda-pazarlama-okuryazarl%C4%B1%C4%9F%C4%B1-yeni-y%C3%B6netici-yetkinli%C4%9Fi-8ae1bef9ea28?source=rss------data_analytics-5",
+      "summary": "Eskiden bir pazarlama y&#xf6;neticisinin sormas&#x131; gereken en kritik sorulardan biri &#x15f;uydu:   Continue reading on T\u00fcrk\u00e7e Yay\u0131n \u00bb",
+      "published": "Thu, 18 Jun 2026 14:07:19 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "You Don\u2019t Need More Reports. You Need a Decision Factory.",
+      "url": "https://medium.com/@nathalieelbarche/you-dont-need-more-reports-you-need-a-decision-factory-dc987a56c43a?source=rss------data_analytics-5",
+      "summary": "What traditional companies miss when they confuse dashboards, reports, and systems with real transformation.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 13:29:13 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "The Real Difference Between a Junior and Senior Cloud Engineer -It\u2019s Not What You Think",
+      "url": "https://medium.com/@dixitsatyam051/the-real-difference-between-a-junior-and-senior-cloud-engineer-its-not-what-you-think-b011217f1ff7?source=rss------data_analytics-5",
+      "summary": "After working alongside engineers at both ends of the spectrum for years, the gap I&#x2019;ve observed has almost nothing to do with how many AWS&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 12:15:29 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "Utilising Generative AI and the Future of F1 Racing",
+      "url": "https://claudynnlee.medium.com/utilising-generative-ai-and-the-future-of-f1-racing-4db3c0bef72f?source=rss------data_analytics-5",
+      "summary": "Not too long ago, I attended an F1 tech talk titled:   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 12:06:17 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "The Technical Skills UK Employers Want in 2026: Aligning Your MSc for Success",
+      "url": "https://medium.com/@arpangoswami49/the-technical-skills-uk-employers-want-in-2026-aligning-your-msc-for-success-37b09ea8f2aa?source=rss------data_analytics-5",
+      "summary": "If you are currently looking at postgraduate programs in the United Kingdom, you already know how overwhelming the research phase can be&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 11:27:56 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "Can two identical-looking drugs actually be different? I ran the numbers to find out",
+      "url": "https://medium.com/@seeaditya112/can-two-identical-looking-drugs-actually-be-different-i-ran-the-numbers-to-find-out-d9679fb1e8ec?source=rss------data_analytics-5",
+      "summary": "(Z vs T, CLT, confidence intervals, hypothesis testing) into one real example.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 10:54:50 GMT"
+    },
+    {
+      "source": "medium_analytics",
+      "title": "Data Certification Program for Career Growth Online | IABAC",
+      "url": "https://medium.com/@seenivasan.v_80567/data-certification-program-for-career-growth-online-iabac-a59512ab89a1?source=rss------data_analytics-5",
+      "summary": "In today&#x2019;s digital world, data plays an important role in almost every industry. Companies collect information from customers, operations&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 10:29:00 GMT"
+    },
+    {
+      "source": "devto_top",
+      "title": "How We Saved Big and Simplified Our Image Pipeline: Adopting bunny.net on DEV",
+      "url": "https://dev.to/devteam/how-we-saved-big-and-simplified-our-image-pipeline-adopting-bunnynet-on-dev-3d53",
+      "summary": "Hey everyone, Ben here.  If you\u2019ve been following the journey of DEV and our open source project...",
+      "reactions": 76,
+      "published": "2026-06-16T16:41:51Z",
+      "tags": [
+        "performance",
+        "webdev",
+        "design",
+        "bunny"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Top 7 Featured DEV Posts of the Week",
+      "url": "https://dev.to/devteam/top-7-featured-dev-posts-of-the-week-1h65",
+      "summary": "Welcome to this week's Top 7, where the DEV editorial team handpicks their favorite posts from the...",
+      "reactions": 61,
+      "published": "2026-06-16T14:26:21Z",
+      "tags": [
+        "top7",
+        "discuss"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "What was your win this week?",
+      "url": "https://dev.to/devteam/what-was-your-win-this-week-4k11",
+      "summary": "\ud83d\udc4b\ud83d\udc4b\ud83d\udc4b\ud83d\udc4b Looking back on your week -- what was something you're proud of? All wins count -- big or small...",
+      "reactions": 57,
+      "published": "2026-06-12T06:00:00Z",
+      "tags": [
+        "discuss",
+        "weeklyretro"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Who Here Has Worked with Legacy? The Longer You Wait, the Worse It Gets",
+      "url": "https://dev.to/sylwia-lask/who-here-has-worked-with-legacy-the-longer-you-wait-the-worse-it-gets-58bk",
+      "summary": "I promised myself that starting this week I'd switch to lighter topics. But on Monday, my JSNation...",
+      "reactions": 54,
+      "published": "2026-06-18T07:25:04Z",
+      "tags": [
+        "javascript",
+        "webdev",
+        "programming",
+        "architecture"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Turning Gemma 4 into an Old Korean Translator",
+      "url": "https://dev.to/googleai/turning-gemma-4-into-an-old-korean-translator-hop",
+      "summary": "There\u2019s something uniquely beautiful about old books. The smell of weathered paper, the texture of...",
+      "reactions": 31,
+      "published": "2026-06-15T06:13:07Z",
+      "tags": [
+        "finetuning",
+        "gemma",
+        "ai"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "AI took the friction out of my work. Then I found out the friction was holding up two things: my ideas and my brakes. Twenty-five years in a confession.",
+      "url": "https://dev.to/sfrangulov/ai-took-the-friction-out-of-my-work-then-i-found-out-the-friction-was-holding-up-two-things-my-4971",
+      "summary": "For a long time now the news and the roundups have all said the same thing. AI will take away the...",
+      "reactions": 18,
+      "published": "2026-06-16T13:24:32Z",
+      "tags": [
+        "ai",
+        "productivity",
+        "career",
+        "discuss"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Letters to Tomorrow: A June Solstice Game About the Things We Carry Into Tomorrow",
+      "url": "https://dev.to/hemapriya_kanagala/letters-to-tomorrow-a-june-solstice-game-about-the-things-we-carry-into-tomorrow-1lnf",
+      "summary": "This is a submission for the June Solstice Game Jam  \ud83c\udfae Play the Game: Letters to Tomorrow  \ud83d\udcbb Source...",
+      "reactions": 66,
+      "published": "2026-06-15T13:28:14Z",
+      "tags": [
+        "devchallenge",
+        "gamechallenge",
+        "gamedev",
+        "discuss"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Dev Opportunity Radar #3: Neo Scholars, a $2M AI Challenge, and an $85K AI Fellowship",
+      "url": "https://dev.to/devengers/dev-opportunity-radar-3-neo-scholars-a-2m-ai-challenge-and-an-85k-ai-fellowship-cjf",
+      "summary": "TL;DR  Welcome back to Dev Opportunity Radar.  This is a weekly series where I share opportunities,...",
+      "reactions": 56,
+      "published": "2026-06-12T13:47:44Z",
+      "tags": [
+        "discuss",
+        "community",
+        "opportunities",
+        "resources"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Building a Chrome Extension to Make AI Use More Intentional",
+      "url": "https://dev.to/javz/building-a-chrome-extension-to-make-ai-use-more-intentional-20k0",
+      "summary": "After posting several articles about the impact of AI on developers and sharing resources to help...",
+      "reactions": 41,
+      "published": "2026-06-15T14:44:53Z",
+      "tags": [
+        "ai",
+        "webdev",
+        "productivity",
+        "buildinpublic"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Congrats to the Gemma 4 Challenge Winners!",
+      "url": "https://dev.to/devteam/congrats-to-the-gemma-4-challenge-winners-4fgc",
+      "summary": "We are so excited to announce the winners of the Gemma 4 Challenge!  This is officially our most...",
+      "reactions": 32,
+      "published": "2026-06-18T18:56:22Z",
+      "tags": [
+        "devchallenge",
+        "gemmachallenge",
+        "gemma"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Quando o Pomodoro n\u00e3o funciona: organiza\u00e7\u00e3o realista para TDAH em burnout",
+      "url": "https://dev.to/pddesign/quando-o-pomodoro-nao-funciona-organizacao-realista-para-tdah-em-burnout-2a4c",
+      "summary": "Um relato honesto de algu\u00e9m que trabalha com design, vive com TDAH e est\u00e1 cansada de dicas...",
+      "reactions": 136,
+      "published": "2026-06-15T21:45:00Z",
+      "tags": [
+        "braziliandevs",
+        "productivity",
+        "mentalhealth",
+        "career"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Congrats to the Hermes Agent Challenge Winners!",
+      "url": "https://dev.to/devteam/congrats-to-the-hermes-agent-challenge-winners-3on0",
+      "summary": "We are thrilled to announce the winners of the Hermes Agent Challenge! Over the past few weeks, the...",
+      "reactions": 13,
+      "published": "2026-06-18T22:13:44Z",
+      "tags": [
+        "hermesagentchallenge",
+        "devchallenge",
+        "agents"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Tower Before Dusk: I Built a Puzzle Game for Humans and AI",
+      "url": "https://dev.to/gramli/tower-before-dusk-i-built-a-puzzle-game-for-humans-and-ai-oao",
+      "summary": "This is a submission for the June Solstice Game Jam  It's interesting how the most exciting ideas...",
+      "reactions": 39,
+      "published": "2026-06-18T06:49:04Z",
+      "tags": [
+        "devchallenge",
+        "gamechallenge",
+        "gamedev",
+        "ai"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Tailwind CSS4: Why Those Inline Styles Are Actually More Scalable - A Senior CSS Developer's Guide",
+      "url": "https://dev.to/cathylai/tailwind-css4-why-those-inline-styles-are-actually-more-scalable-a-senior-css-developers-guide-hdj",
+      "summary": "So you have heard about the Tailwind CSS and want to incorporate into your new project. But those...",
+      "reactions": 37,
+      "published": "2026-06-16T05:09:55Z",
+      "tags": [
+        "tailwindcss",
+        "css",
+        "webdev",
+        "frontend"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "What are your goals for the week? #183",
+      "url": "https://dev.to/jarvisscript/what-are-your-goals-for-the-week-183-2hp3",
+      "summary": "What are your goals for the week?    What are you building this week? What do you want to...",
+      "reactions": 16,
+      "published": "2026-06-15T14:00:00Z",
+      "tags": [
+        "career",
+        "devjournal",
+        "discuss",
+        "productivity"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Welcome Thread - v380",
+      "url": "https://dev.to/devteam/welcome-thread-v380-oi4",
+      "summary": "Leave a comment below to introduce yourself! You can talk about what brought you here, what you're...",
+      "reactions": 48,
+      "published": "2026-06-17T04:00:00Z",
+      "tags": [
+        "welcome"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "IOS Midsommer Madness",
+      "url": "https://dev.to/gde/ios-midsommer-madness-5h4",
+      "summary": "This is a submission for the June Solstice Game Jam  Your Iphone can now celebrate the Solstace! When...",
+      "reactions": 10,
+      "published": "2026-06-12T12:43:27Z",
+      "tags": [
+        "antigravitycli",
+        "devchallenge",
+        "gamechallenge",
+        "gamedev"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Ask a DEV Community Mod! \ud83d\ude80",
+      "url": "https://dev.to/francistrdev/ask-a-dev-community-mod-50hk",
+      "summary": "Disclaimer: Please read the full post before commenting. This post will be refined overtime, so I...",
+      "reactions": 92,
+      "published": "2026-06-16T16:52:39Z",
+      "tags": [
+        "discuss",
+        "community",
+        "publicinbox",
+        "ama"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "I Asked AI to Write My Commit Messages It Was Embarrassing.",
+      "url": "https://dev.to/harsh2644/i-asked-ai-to-write-my-commit-messages-it-was-embarrassing-a6i",
+      "summary": "I asked AI to write a commit message for me last week The code change was simple. A bug fix One line,...",
+      "reactions": 38,
+      "published": "2026-06-16T10:44:59Z",
+      "tags": [
+        "git",
+        "programming",
+        "humor",
+        "productivity"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "End of the Year idea for DEV?",
+      "url": "https://dev.to/devengers/end-of-the-year-idea-for-dev-f8p",
+      "summary": "Hey all!  I have this thought in mind that we should all come together as a community to celebrate...",
+      "reactions": 29,
+      "published": "2026-06-15T20:24:36Z",
+      "tags": [
+        "discuss",
+        "community",
+        "watercooler"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "I Switched to the Agent Toolkit for AWS. Here's Why.",
+      "url": "https://dev.to/aws/i-switched-to-the-agent-toolkit-for-aws-heres-why-5hf",
+      "summary": "A hands-on look at the official Agent Toolkit for AWS: what it is, why I switched from the old MCP server, and how to set it up.",
+      "reactions": 23,
+      "published": "2026-06-12T16:45:05Z",
+      "tags": [
+        "aws",
+        "mcp",
+        "ai",
+        "devtools"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Gotta Earn 'Em All: The Gym Badges of Agentic Engineering (Part 1)",
+      "url": "https://dev.to/kaleman15/gotta-earn-em-all-the-gym-badges-of-agentic-engineering-part-1-5bff",
+      "summary": "There's a guy who stands at the entrance to the Indigo Plateau and will not let you through. Level 80...",
+      "reactions": 10,
+      "published": "2026-06-17T20:13:57Z",
+      "tags": [
+        "ai",
+        "agents",
+        "programming",
+        "career"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "June Jubilee - An iOS Arcade Game",
+      "url": "https://dev.to/nithish_59/june-jubilee-a-swiftui-solstice-arcade-game-for-the-june-solstice-game-jam-232o",
+      "summary": "Hey DEV community! I'm Nithish. I built June Jubilee, a touch-first iOS arcade game made with SwiftUI...",
+      "reactions": 18,
+      "published": "2026-06-16T20:19:10Z",
+      "tags": [
+        "swift",
+        "gamedev",
+        "gamechallenge",
+        "ios"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "Building an agentic PR reviewer with Antigravity SDK",
+      "url": "https://dev.to/googleai/building-an-agentic-pr-reviewer-with-antigravity-sdk-3b0i",
+      "summary": "As announced in this blog post on June 18, 2026, Gemini CLI and Gemini Code Assist IDE extensions...",
+      "reactions": 9,
+      "published": "2026-06-18T19:21:08Z",
+      "tags": [
+        "antigravity",
+        "gemini",
+        "ai",
+        "programming"
+      ]
+    },
+    {
+      "source": "devto_top",
+      "title": "I'm not a developer, but I built a calendar app to fix my most annoying work task",
+      "url": "https://dev.to/googleai/im-not-a-developer-but-i-built-a-calendar-app-to-fix-my-most-annoying-work-task-dj4",
+      "summary": "I\u2019m not a developer! I\u2019ve never coded anything in my life. As far as I\u2019m concerned, a Cloudtop is...",
+      "reactions": 8,
+      "published": "2026-06-18T21:59:19Z",
+      "tags": [
+        "ai",
+        "productivity",
+        "beginners",
+        "discuss"
+      ]
+    },
+    {
+      "source": "github_trending_python",
+      "title": "NVIDIA/SkillSpector",
+      "url": "https://github.com/NVIDIA/SkillSpector",
+      "summary": "Security scanner for AI agent skills. Detect vulnerabilities, malicious patterns, and security risks."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "Panniantong/Agent-Reach",
+      "url": "https://github.com/Panniantong/Agent-Reach",
+      "summary": "Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu \u2014 one CLI, zero API fees."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "chopratejas/headroom",
+      "url": "https://github.com/chopratejas/headroom",
+      "summary": "Compress tool outputs, logs, files, and RAG chunks before they reach the LLM. 60-95% fewer tokens, same answers. Library, proxy, MCP server."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "LMCache/LMCache",
+      "url": "https://github.com/LMCache/LMCache",
+      "summary": "LMCache: Supercharge Your LLM with the Fastest KV Cache Layer"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "pytest-dev/pytest",
+      "url": "https://github.com/pytest-dev/pytest",
+      "summary": "The pytest framework makes it easy to write small tests, yet scales to support complex functional testing"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "mvanhorn/last30days-skill",
+      "url": "https://github.com/mvanhorn/last30days-skill",
+      "summary": "AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "google/agents-cli",
+      "url": "https://github.com/google/agents-cli",
+      "summary": "The CLI and skills that turn any coding assistant into an expert at creating, evaluating, and deploying AI agents on Google Cloud."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "google-research/timesfm",
+      "url": "https://github.com/google-research/timesfm",
+      "summary": "TimesFM (Time Series Foundation Model) is a pretrained time-series foundation model developed by Google Research for time-series forecasting."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "frappe/frappe",
+      "url": "https://github.com/frappe/frappe",
+      "summary": "Low code web framework for real world applications, in Python and Javascript"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "PaddlePaddle/PaddleOCR",
+      "url": "https://github.com/PaddlePaddle/PaddleOCR",
+      "summary": "Turn any PDF or image document into structured data for your AI. A powerful, lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs. Supports 100+ languages."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "soxoj/maigret",
+      "url": "https://github.com/soxoj/maigret",
+      "summary": "\ud83d\udd75\ufe0f\u200d\u2642\ufe0f Collect a dossier on a person by username from 3000+ sites"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "Free-TV/IPTV",
+      "url": "https://github.com/Free-TV/IPTV",
+      "summary": "M3U Playlist for free TV channels"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "music-assistant/server",
+      "url": "https://github.com/music-assistant/server",
+      "summary": "Music Assistant is a free, opensource Media library manager that connects to your streaming services and a wide range of connected speakers. The server is the beating heart, the core of Music Assistant and must run on an always-on device like a Raspberry Pi, a NAS or an Intel NUC or alike."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "shuvonsec/claude-bug-bounty",
+      "url": "https://github.com/shuvonsec/claude-bug-bounty",
+      "summary": "AI-powered bug bounty hunting from your terminal - recon, 20 vuln classes, autonomous hunting, and report generation. All inside Claude Code."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "infiniflow/ragflow",
+      "url": "https://github.com/infiniflow/ragflow",
+      "summary": "RAGFlow is a leading open-source Retrieval-Augmented Generation (RAG) engine that fuses cutting-edge RAG with Agent capabilities to create a superior context layer for LLMs"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "maziyarpanahi/openmed",
+      "url": "https://github.com/maziyarpanahi/openmed",
+      "summary": "Local-first healthcare AI: clinical NER & HIPAA PII de-identification that runs 100% on-device. 1,000+ medical models, 12 languages, Apple MLX + Python, no cloud, no patient data leaving your network. Apache-2.0"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "MODSetter/SurfSense",
+      "url": "https://github.com/MODSetter/SurfSense",
+      "summary": "An open source, privacy focused alternative to NotebookLM for teams with no data limits. Join our Discord: https://discord.gg/ejRNvftDp9"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "NVIDIA/physicsnemo",
+      "url": "https://github.com/NVIDIA/physicsnemo",
+      "summary": "Open-source deep-learning framework for building, training, and fine-tuning deep learning models using state-of-the-art Physics-ML methods"
+    },
+    {
+      "source": "github_trending_python",
+      "title": "LLMQuant/quant-mind",
+      "url": "https://github.com/LLMQuant/quant-mind",
+      "summary": "QuantMind is an intelligent knowledge extraction and retrieval framework for quantitative finance."
+    },
+    {
+      "source": "github_trending_python",
+      "title": "Asabeneh/30-Days-Of-Python",
+      "url": "https://github.com/Asabeneh/30-Days-Of-Python",
+      "summary": "The 30 Days of Python programming challenge is a step-by-step guide to learn the Python programming language in 30 days. This challenge may take more than 100 days. Follow your own pace. These videos may help too: https://www.youtube.com/channel/UC7PNRuno1rzYPb1xLa4yktw"
+    }
+  ],
+  "life_self_dev": [
+    {
+      "source": "medium_self_improvement",
+      "title": "The Culture Wall: Why Some Countries Refuse to Bring Same-Sex Marriage to Their Shores",
+      "url": "https://medium.com/illumination/the-culture-wall-why-some-countries-refuse-to-bring-same-sex-marriage-to-their-shores-443125629ad5?source=rss------self_improvement-5",
+      "summary": "Let&#x2019;s be completely honest for a second: the international conversation surrounding marriage legislation is often presented through a&#x2026;   Continue reading on ILLUMINATION \u00bb",
+      "published": "Fri, 19 Jun 2026 00:20:39 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "Stop Gritting Your Teeth",
+      "url": "https://medium.com/illumination/stop-gritting-your-teeth-122a85d4ec91?source=rss------self_improvement-5",
+      "summary": "Willpower is the wrong tool for procrastination. Here is what actually gets you moving.   Continue reading on ILLUMINATION \u00bb",
+      "published": "Fri, 19 Jun 2026 00:12:10 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "Don\u2019t Breathe Yet: Finishing a Business Plan the Hard Way",
+      "url": "https://medium.com/@kyunghoon.seong/dont-breathe-yet-finishing-a-business-plan-the-hard-way-4974138e8436?source=rss------self_improvement-5",
+      "summary": "I love swimming.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:08:35 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "Quitting Social Media and Embracing Individuality\u200b",
+      "url": "https://medium.com/@milosgarage/quitting-social-media-and-embracing-individuality-f1ad0dbf6c0a?source=rss------self_improvement-5",
+      "summary": "In a modern world so dominated by various forms of media consumption, I&#x2019;ve noticed a disappearance of individuality. I think this is no&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:07:35 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "The Most Valuable Skill in 2030 Won\u2019t Be Coding - It Will Be Focus",
+      "url": "https://medium.com/@dhruvingale1926/the-most-valuable-skill-in-2030-wont-be-coding-it-will-be-focus-3204f9efdc24?source=rss------self_improvement-5",
+      "summary": "In a world overflowing with information, attention is becoming the ultimate competitive advantage.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:03:04 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "Motivation Lied to Me. Discipline Changed My Life.",
+      "url": "https://medium.com/@SuccessAndBeyondOfficial/motivation-lied-to-me-discipline-changed-my-life-d97ba5cfa946?source=rss------self_improvement-5",
+      "summary": "Can I tell you something most people in the self-improvement space never say out loud?   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:02 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "Covert Narcissism and the Invisible Ledger of Emotional Debt",
+      "url": "https://waheedahmedofficial.medium.com/covert-narcissism-and-the-invisible-ledger-of-emotional-debt-0d2da1b6d127?source=rss------self_improvement-5",
+      "summary": "The kindest person you&#x2019;ve ever known might be running a silent collections agency on your soul   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:02 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "Why Successful People Focus on Consistency Instead of Motivation",
+      "url": "https://medium.com/@oliviersery.grc/why-successful-people-focus-on-consistency-instead-of-motivation-96dab8b77ecd?source=rss------self_improvement-5",
+      "summary": "Most people wait for motivation before taking action, but successful people understand that motivation is unreliable. Instead, they build&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:01 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "Phone addiction and how to overcome it",
+      "url": "https://medium.com/@zenychmaxim/phone-addiction-and-how-to-overcome-it-2a6a81a522cd?source=rss------self_improvement-5",
+      "summary": "Many people use phones almost every single day nowadays &#x2014; that&#x2019;s a fact. Moreover, many people don&#x2019;t even realize how often they use their&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:00:09 GMT"
+    },
+    {
+      "source": "medium_self_improvement",
+      "title": "[PREVIEW] THE MIND OF ROCKEFELLER",
+      "url": "https://medium.com/@cipheron/preview-the-mind-of-rockefeller-55a0417ebec7?source=rss------self_improvement-5",
+      "summary": "inside the mind of a giant: a complete psychological autopsy of the richest man who ever lived.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:53:52 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "Forgiveness Is Not an Invitation to Be Hurt Again",
+      "url": "https://medium.com/@jennajeff003/forgiveness-is-not-an-invitation-to-be-hurt-again-e1f25954360e?source=rss------psychology-5",
+      "summary": "The hardest lesson I learned was that letting go of anger does not require giving someone another chance to break your heart.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:21:37 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "Encouraging Defiance Toward the Targeted Parent: A Common Sign of Parental Alienation",
+      "url": "https://medium.com/@brittneysblogs/encouraging-defiance-toward-the-targeted-parent-a-common-sign-of-parental-alienation-f322280da6dd?source=rss------psychology-5",
+      "summary": "One of the most confusing aspects of parental alienation isn&#x2019;t always what the child says &#x2014; it&#x2019;s what they aren&#x2019;t corrected for saying.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:16:00 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "Stop Gritting Your Teeth",
+      "url": "https://medium.com/illumination/stop-gritting-your-teeth-122a85d4ec91?source=rss------psychology-5",
+      "summary": "Willpower is the wrong tool for procrastination. Here is what actually gets you moving.   Continue reading on ILLUMINATION \u00bb",
+      "published": "Fri, 19 Jun 2026 00:12:10 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "How to Win Your Ex-Girlfriend Back: Understanding Female Psychology",
+      "url": "https://medium.com/@qunmo-lexus/how-to-win-your-ex-girlfriend-back-understanding-female-psychology-116ce5db627e?source=rss------psychology-5",
+      "summary": "Understanding Her Mind: How to Win Your Ex-Girlfriend Back the Right Way   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:11:00 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "The Blindspot Principle",
+      "url": "https://medium.com/@wirngo23/the-blindspot-principle-50ee629f8804?source=rss------psychology-5",
+      "summary": "The missing theory that makes the unconscious mind unnecessary   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:05:06 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "What\u2019s the best l way to move $5,500 USDT from my trust Wallet to an exchange and then to a Binance?",
+      "url": "https://medium.com/@sorosbuyer0001/whats-the-best-l-way-to-move-5-500-usdt-from-my-trust-wallet-to-an-exchange-and-then-to-a-binance-7ff978ab753e?source=rss------psychology-5",
+      "summary": "12 Seed phrase: misery exit memory buddy doctor sing fat physical virtual ticket category secret   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:58:51 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "[PREVIEW] THE MIND OF ROCKEFELLER",
+      "url": "https://medium.com/@cipheron/preview-the-mind-of-rockefeller-55a0417ebec7?source=rss------psychology-5",
+      "summary": "inside the mind of a giant: a complete psychological autopsy of the richest man who ever lived.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:53:52 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "The Metrics and The Money Problems",
+      "url": "https://medium.com/@theborrowedsixteen/the-metrics-and-the-money-problems-c9add6f537de?source=rss------psychology-5",
+      "summary": "I avoided the taboo by not putting much attention on money earlier, now the taboo is coming back to collect.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:52:02 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "No eres quien crees",
+      "url": "https://medium.com/@caropinatorres/no-eres-quien-crees-4130fa63711e?source=rss------psychology-5",
+      "summary": "&#xbf;Qu&#xe9; pasa cuando tus acciones no encajan contigo?   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:46:37 GMT"
+    },
+    {
+      "source": "medium_psychology",
+      "title": "Why Most Self-Help Books Don\u2019t Change Your Life",
+      "url": "https://medium.com/@strata-atlas/why-most-self-help-books-dont-change-your-life-78e8f06a24a0?source=rss------psychology-5",
+      "summary": "They&#x2019;re solving the wrong problem.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:36:01 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "Change is Hard (And Exhausting)",
+      "url": "https://medium.com/@JF-Thacker/change-is-hard-and-exhausting-d60856c1a8d1?source=rss------mental_health-5",
+      "summary": "I wanted to celebrate my 44th with a sojourn to Yogaville as a part of my intention for this upcoming year of my life: to integrate.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:22:37 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "Who takes care of the people society expects to take care of everyone else?",
+      "url": "https://medium.com/@joyazubuike/who-takes-care-of-the-people-society-expects-to-take-care-of-everyone-else-c51940daceb4?source=rss------mental_health-5",
+      "summary": "June is Men&#x2019;s Mental Health Awareness Month.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:17:38 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "Vent\nToi qui m\u2019apporte le beau temps,\nMoi je te vois autrement.",
+      "url": "https://medium.com/@lulucaledonc/vent-toi-qui-mapporte-le-beau-temps-moi-je-te-vois-autrement-935bb79d89f7?source=rss------mental_health-5",
+      "summary": "Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:10:50 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "Covert Narcissism and the Invisible Ledger of Emotional Debt",
+      "url": "https://waheedahmedofficial.medium.com/covert-narcissism-and-the-invisible-ledger-of-emotional-debt-0d2da1b6d127?source=rss------mental_health-5",
+      "summary": "The kindest person you&#x2019;ve ever known might be running a silent collections agency on your soul   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:02 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "Covert Narcissism and the Marketplace of Manufactured Guilt",
+      "url": "https://waheedahmedofficial.medium.com/covert-narcissism-and-the-marketplace-of-manufactured-guilt-4a962dde81b2?source=rss------mental_health-5",
+      "summary": "They Don&#x2019;t Sell You Products. They Sell You a Version of Yourself That Owes Them Something   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:01 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "Positivity For Breakfast",
+      "url": "https://medium.com/@marciarojas/positivity-for-breakfast-e1f6472816f0?source=rss------mental_health-5",
+      "summary": "We can not shame ourselves into change; we can only love ourselves into evolving.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:00:07 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "The Loneliness Nobody Warned Us About After 40",
+      "url": "https://medium.com/@2pm_club_builder/the-loneliness-nobody-warned-us-about-after-40-13f3db52182a?source=rss------mental_health-5",
+      "summary": "Midlife loneliness doesn&apos;t arrive like grief. It arrives like quiet. A note on the thing no one warns you about, and what helps.    Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:58:53 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "The Quiet Days",
+      "url": "https://medium.com/@thejoanharris/the-quiet-days-8672a0360b38?source=rss------mental_health-5",
+      "summary": "Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:44:20 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "Why Am I So Tired? What\u2019s Secretly Exposing Your Energy Crisis.",
+      "url": "https://medium.com/@liveoptimum/why-am-i-so-tired-whats-secretly-exposing-your-energy-crisis-8aee856a5634?source=rss------mental_health-5",
+      "summary": "Chronic fatigue is not a sleep problem. It is a system problem. Here is what is actually draining you and how to close the gap.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:40:31 GMT"
+    },
+    {
+      "source": "medium_mental_health",
+      "title": "The Quiet Life and the Terrible Fear of Being Ordinary",
+      "url": "https://medium.com/@jerrychoke89/the-quiet-life-and-the-terrible-fear-of-being-ordinary-571bf3a34e87?source=rss------mental_health-5",
+      "summary": "For most of my life, I believed suffering had a purpose   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:39:28 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "How to Audit a Program in Trouble",
+      "url": "https://medium.com/@iam_70428/how-to-audit-a-program-in-trouble-fe3b54c5fed9?source=rss------productivity-5",
+      "summary": "The Questions Every PMO Should Ask Before Fixing Anything   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:22:01 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "Stop Gritting Your Teeth",
+      "url": "https://medium.com/illumination/stop-gritting-your-teeth-122a85d4ec91?source=rss------productivity-5",
+      "summary": "Willpower is the wrong tool for procrastination. Here is what actually gets you moving.   Continue reading on ILLUMINATION \u00bb",
+      "published": "Fri, 19 Jun 2026 00:12:10 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "I moved all my day one entries to apple notes and it kept my created date",
+      "url": "https://medium.com/@patricecunliffe/i-moved-all-my-day-one-entries-to-apple-notes-and-it-kept-my-created-date-d48311f6c421?source=rss------productivity-5",
+      "summary": "And they all kept their original created date   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:11:00 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "The Most Valuable Skill in 2030 Won\u2019t Be Coding - It Will Be Focus",
+      "url": "https://medium.com/@dhruvingale1926/the-most-valuable-skill-in-2030-wont-be-coding-it-will-be-focus-3204f9efdc24?source=rss------productivity-5",
+      "summary": "In a world overflowing with information, attention is becoming the ultimate competitive advantage.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:03:04 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "Motivation Lied to Me. Discipline Changed My Life.",
+      "url": "https://medium.com/@SuccessAndBeyondOfficial/motivation-lied-to-me-discipline-changed-my-life-d97ba5cfa946?source=rss------productivity-5",
+      "summary": "Can I tell you something most people in the self-improvement space never say out loud?   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:02 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "Why Successful People Focus on Consistency Instead of Motivation",
+      "url": "https://medium.com/@oliviersery.grc/why-successful-people-focus-on-consistency-instead-of-motivation-96dab8b77ecd?source=rss------productivity-5",
+      "summary": "Most people wait for motivation before taking action, but successful people understand that motivation is unreliable. Instead, they build&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:01 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "The Human Dividend",
+      "url": "https://medium.com/for-humans-x/the-human-dividend-a5e18986de7e?source=rss------productivity-5",
+      "summary": "What Happens When Intelligence Becomes Abundant?   Continue reading on For Humans X \u00bb",
+      "published": "Thu, 18 Jun 2026 23:53:54 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "Using Obsidian to Read Tech. Papers",
+      "url": "https://medium.com/@gcasamass/using-obsidian-to-read-tech-papers-56b4f3e4c8b1?source=rss------productivity-5",
+      "summary": "Table of Contents:   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:48:41 GMT"
+    },
+    {
+      "source": "medium_productivity",
+      "title": "No shade, but that agent should have been a Python script",
+      "url": "https://medium.com/@jeremiahdillon/no-shade-but-that-agent-should-have-been-a-python-script-0a98069a4497?source=rss------productivity-5",
+      "summary": "Agentic problems come in three shapes. We keep overengineering them into the hardest one.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:45:01 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "Lost and Found in Words",
+      "url": "https://medium.com/introvert-ink/lost-and-found-in-words-746b795224f6?source=rss------life_lessons-5",
+      "summary": "I thought I was documenting my thoughts. Turns out, I was finding my people.   Continue reading on Introvert Ink \u00bb",
+      "published": "Fri, 19 Jun 2026 00:30:11 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "\u201cHow To Become Yourself \u2019\u2019",
+      "url": "https://medium.com/@susterjely/how-to-become-yourself-2b8c3e144ee1?source=rss------life_lessons-5",
+      "summary": "When I have recreation in Dedek Hara waterfall in Romang village   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:22:05 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "Many Dreams, One Needed Touch",
+      "url": "https://medium.com/@ireoluwababayemi/many-dreams-one-needed-touch-87580b5996eb?source=rss------life_lessons-5",
+      "summary": "Episode 1 &#x2014; The Fall   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:19:33 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "Vent\nToi qui m\u2019apporte le beau temps,\nMoi je te vois autrement.",
+      "url": "https://medium.com/@lulucaledonc/vent-toi-qui-mapporte-le-beau-temps-moi-je-te-vois-autrement-935bb79d89f7?source=rss------life_lessons-5",
+      "summary": "Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:10:50 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "Vocare: The Difference Between a Job and a Calling",
+      "url": "https://medium.com/@dawnawitte/vocare-the-difference-between-a-job-and-a-calling-4d45b1674630?source=rss------life_lessons-5",
+      "summary": "There are moments in life when a word does not simply teach us something new.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:07:09 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "The Loneliness Nobody Warned Us About After 40",
+      "url": "https://medium.com/@2pm_club_builder/the-loneliness-nobody-warned-us-about-after-40-13f3db52182a?source=rss------life_lessons-5",
+      "summary": "Midlife loneliness doesn&apos;t arrive like grief. It arrives like quiet. A note on the thing no one warns you about, and what helps.    Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:58:53 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "Intimacy Without Boundaries.",
+      "url": "https://medium.com/@jlop3007/intimacy-without-boundaries-b85e39efed0d?source=rss------life_lessons-5",
+      "summary": "How intimacy changes the nature of a relationship when expectations are left undefined.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:48:18 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "The Quiet Days",
+      "url": "https://medium.com/@thejoanharris/the-quiet-days-8672a0360b38?source=rss------life_lessons-5",
+      "summary": "Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:44:20 GMT"
+    },
+    {
+      "source": "medium_life_lessons",
+      "title": "Sleep is medicine",
+      "url": "https://medium.com/@iamsarawrites/sleep-is-medicine-775fe2c5f246?source=rss------life_lessons-5",
+      "summary": "And sometimes, that medicine is all your body needs.   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:25:13 GMT"
+    }
+  ],
+  "poetry_quotes": [
+    {
+      "source": "medium_poetry",
+      "title": "The Truth Is The Gray In Between",
+      "url": "https://medium.com/@arclyly03/the-truth-is-the-gray-in-between-3925080b9e3d?source=rss------poetry-5",
+      "summary": "What does it mean to seek for the truth?   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:27:19 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "Selective Justice (Wave 1659)",
+      "url": "https://medium.com/@isaacwave/selective-justice-wave-1659-56b052ba3ef3?source=rss------poetry-5",
+      "summary": "How does justice become a tool of power? A philosophical fable that dismantles the true face of &#x2018;selective justice,&#x2019; used to condemn the&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:23:49 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "DARK ILLUMINATION",
+      "url": "https://medium.com/@shannonfeltner/dark-illumination-9229e3cd6ceb?source=rss------poetry-5",
+      "summary": "I cast a light on truths unseen Therein lies the greatest truth Waiting on lies to turn into truths I bear the greatest illumination I see&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:11:42 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "The Person I Cannot Return To",
+      "url": "https://medium.com/@thalion.veremir/the-person-i-cannot-return-to-c615d82a152b?source=rss------poetry-5",
+      "summary": "Sometimes I miss people who are still alive.   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:05:56 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "Discovery",
+      "url": "https://medium.com/@kyrellwilliams00/discovery-6ddeff48fae2?source=rss------poetry-5",
+      "summary": "IV / IV Love Series   Continue reading on Medium \u00bb",
+      "published": "Fri, 19 Jun 2026 00:01:01 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "Poem : The Suns parade",
+      "url": "https://medium.com/@wayneandilenqoko/poem-the-suns-parade-e413190d9592?source=rss------poetry-5",
+      "summary": "Image from Pinterest   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:45:14 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "Turn Poems Into Songs w/o AI",
+      "url": "https://medium.com/@papers.yanling.guo/turn-poems-into-songs-w-o-ai-2c1c06fd50d7?source=rss------poetry-5",
+      "summary": "A poem reads even better if you turn it into a song. With AI it&#x2019;s easy and I&#x2019;ll show you how to do it. If you wish more control, you can&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:33:05 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "A Jigsaw Sandwich",
+      "url": "https://medium.com/@jc-filmmaker/a-jigsaw-sandwich-b6de7456782e?source=rss------poetry-5",
+      "summary": "Bit of a mouthful! Best write it down!   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 23:06:08 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "Flipping the Channel #2",
+      "url": "https://medium.com/@vmnelson120/flipping-the-channel-8ed65668daf9?source=rss------poetry-5",
+      "summary": "&quot;The Department of Alignment and Security has officially declared a Level 4 &apos;Cognitive Pandemic.&apos; Over 14,000 citizens are currently&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 22:58:14 GMT"
+    },
+    {
+      "source": "medium_poetry",
+      "title": "A Simple Poem",
+      "url": "https://breanneszabados.medium.com/a-simple-poem-33bb1f1246e3?source=rss------poetry-5",
+      "summary": "Trying something new&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 22:56:12 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "When Thinking of a Vacation",
+      "url": "https://medium.com/@moldovan.eliza/when-thinking-of-a-vacation-be463d944aaa?source=rss------quotes-5",
+      "summary": "Thoughts and ideas about modern living   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 20:47:46 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "Rumi Quotes That Gave Me Peace When I Felt Lost",
+      "url": "https://aditiagrawal.medium.com/rumi-quotes-that-gave-me-peace-when-i-felt-lost-29da93171a29?source=rss------quotes-5",
+      "summary": "Quotes on Love, Courage, and Meaning   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 14:42:20 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "The Truths Worth Returning To",
+      "url": "https://thoughtistry.medium.com/the-truths-worth-returning-to-d9a95dd63cf7?source=rss------quotes-5",
+      "summary": "On Tolstoy, Lewis, McGilchrist, and lessons of the Tao   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 13:03:23 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "Quotes to change Life 37",
+      "url": "https://medium.com/no-time/quotes-to-change-life-37-dce0b4ffbc6c?source=rss------quotes-5",
+      "summary": "From the book Great Quotes from Great Minds   Continue reading on No Time \u00bb",
+      "published": "Thu, 18 Jun 2026 11:29:48 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "Dhruvi\u2019s Quote Journal #2",
+      "url": "https://medium.com/no-time/dhruvis-quote-journal-2-a4f0aa5b7182?source=rss------quotes-5",
+      "summary": "A life without fame can be a good life, but fame without a life is no life at all.   Continue reading on No Time \u00bb",
+      "published": "Thu, 18 Jun 2026 05:02:54 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "Day 10/100: When the Original Stops Mattering",
+      "url": "https://medium.com/@jalpatidar91g/day-10-100-when-the-original-stops-mattering-7032fbca7496?source=rss------quotes-5",
+      "summary": "&quot;The simulacrum is never that which conceals the truth, it is the truth which conceals that there is none.&quot;\n&#x2014; Jean Baudrillard   Continue reading on Medium \u00bb",
+      "published": "Thu, 18 Jun 2026 01:12:02 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "Unhein Laga Jo Ek Khel Tha, Magar Woh To Hamari Maut Ka Elaan Tha",
+      "url": "https://medium.com/@suhaibxi/unhein-laga-jo-ek-khel-tha-magar-woh-to-hamari-maut-ka-elaan-tha-bff2bfc0874d?source=rss------quotes-5",
+      "summary": "Woh khel jo tha, usmein humne apna dil lagaya tha. Dil ke badle kuch bhi na mila tha; aur woh aakhri sauda bhi naakaam tha!   Continue reading on Medium \u00bb",
+      "published": "Wed, 17 Jun 2026 19:42:47 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "Unhe Pata Chala Ke Badal Gaye Hum, Ye nahin ke zinda hi nahin rahe hum!",
+      "url": "https://medium.com/@suhaibxi/unhe-pata-chala-ke-badal-gaye-hum-6b13c585d647?source=rss------quotes-5",
+      "summary": "Continue reading on Medium \u00bb",
+      "published": "Wed, 17 Jun 2026 19:41:29 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "Where To Find Happiness",
+      "url": "https://medium.com/@rebeccadesignsalife/where-to-find-happiness-83efb50d3a07?source=rss------quotes-5",
+      "summary": "The Pursuit of Happiness is in the Declaration &#x2014; but where do you start looking?   Continue reading on Medium \u00bb",
+      "published": "Wed, 17 Jun 2026 17:27:54 GMT"
+    },
+    {
+      "source": "medium_quotes",
+      "title": "86 Countries In 86 Phrases",
+      "url": "https://medium.com/@arturoadventuro/86-countries-in-86-phrases-72a8f06bb4d3?source=rss------quotes-5",
+      "summary": "Within the last 10 years my life dramatically changed. I passed the steady transformation from unseasoned dreamer to weathered adventurer&#x2026;   Continue reading on Medium \u00bb",
+      "published": "Wed, 17 Jun 2026 08:14:20 GMT"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cYou've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.\u201d \u2015 William W. Purkey",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cYou've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.\u201d \u2015 William W. Purkey"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cBe the change that you wish to see in the world.\u201d \u2015 Mahatma Gandhi",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cBe the change that you wish to see in the world.\u201d \u2015 Mahatma Gandhi"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cDarkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.\u201d \u2015 Martin Luther King Jr., A Testament of Hope: The Essential Writings and Speeches",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cDarkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.\u201d \u2015 Martin Luther King Jr., A Testament of Hope: The Essential Writings and Speeches"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cLive as if you were to die tomorrow. Learn as if you were to live forever.\u201d \u2015 Mahatma Gandhi",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cLive as if you were to die tomorrow. Learn as if you were to live forever.\u201d \u2015 Mahatma Gandhi"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cWe accept the love we think we deserve.\u201d \u2015 Stephen Chbosky, The Perks of Being a Wallflower",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cWe accept the love we think we deserve.\u201d \u2015 Stephen Chbosky, The Perks of Being a Wallflower"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cWithout music, life would be a mistake.\u201d \u2015 Friedrich Nietzsche, Twilight of the Idols",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cWithout music, life would be a mistake.\u201d \u2015 Friedrich Nietzsche, Twilight of the Idols"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cImperfection is beauty, madness is genius and it's better to be absolutely ridiculous than absolutely boring.\u201d \u2015 Marilyn Monroe",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cImperfection is beauty, madness is genius and it's better to be absolutely ridiculous than absolutely boring.\u201d \u2015 Marilyn Monroe"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cThere are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.\u201d \u2015 Albert Einstein",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cThere are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.\u201d \u2015 Albert Einstein"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cWe are all in the gutter, but some of us are looking at the stars.\u201d \u2015 Oscar Wilde, Lady Windermere's Fan",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cWe are all in the gutter, but some of us are looking at the stars.\u201d \u2015 Oscar Wilde, Lady Windermere's Fan"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cFairy tales are more than true: not because they tell us that dragons exist, but because they tell us that dragons can be beaten.\u201d \u2015 Neil Gaiman, Coraline",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cFairy tales are more than true: not because they tell us that dragons exist, but because they tell us that dragons can be beaten.\u201d \u2015 Neil Gaiman, Coraline"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cYesterday is history, tomorrow is a mystery, today is a gift of God, which is why we call it the present.\u201d \u2015 Bill Keane",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cYesterday is history, tomorrow is a mystery, today is a gift of God, which is why we call it the present.\u201d \u2015 Bill Keane"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cI have not failed. I've just found 10,000 ways that won't work.\u201d \u2015 Thomas A. Edison",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cI have not failed. I've just found 10,000 ways that won't work.\u201d \u2015 Thomas A. Edison"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cThe opposite of love is not hate, it's indifference. The opposite of art is not ugliness, it's indifference. The opposite of faith is not heresy, it's indifference. And the opposite of life is not de",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cThe opposite of love is not hate, it's indifference. The opposite of art is not ugliness, it's indifference. The opposite of faith is not heresy, it's indifference. And the opposite of life is not death, it's indifference.\u201d \u2015 Elie Wiesel"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cIt is never too late to be what you might have been.\u201d \u2015 George Eliot",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cIt is never too late to be what you might have been.\u201d \u2015 George Eliot"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cYou have brains in your head. You have feet in your shoes. You can steer yourself any direction you choose. You're on your own. And you know what you know. And YOU are the one who'll decide where to ",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cYou have brains in your head. You have feet in your shoes. You can steer yourself any direction you choose. You're on your own. And you know what you know. And YOU are the one who'll decide where to go...\u201d \u2015 Dr. Seuss, Oh, the Places You\u2019ll Go!"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cThis life is what you make it. No matter what, you're going to mess up sometimes, it's a universal truth. But the good part is you get to decide how you're going to mess it up. Girls will be your fri",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cThis life is what you make it. No matter what, you're going to mess up sometimes, it's a universal truth. But the good part is you get to decide how you're going to mess it up. Girls will be your friends - they'll act like it anyway. But just remember, some come, some go. The ones that stay with you through everything - they're your true best friends. Don't let go of them. Also remember, sisters make the best friends in the world. As for lovers, well, they'll come and go too. And baby, I hate t"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cThere is no greater agony than bearing an untold story inside you.\u201d \u2015 Maya Angelou, I Know Why the Caged Bird Sings",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cThere is no greater agony than bearing an untold story inside you.\u201d \u2015 Maya Angelou, I Know Why the Caged Bird Sings"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cEverything you can imagine is real.\u201d \u2015 Pablo Picasso",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cEverything you can imagine is real.\u201d \u2015 Pablo Picasso"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cYou can never get a cup of tea large enough or a book long enough to suit me.\u201d \u2015 C.S. Lewis",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cYou can never get a cup of tea large enough or a book long enough to suit me.\u201d \u2015 C.S. Lewis"
+    },
+    {
+      "source": "goodreads_inspirational",
+      "title": "\u201cLife isn't about finding yourself. Life is about creating yourself.\u201d \u2015 George Bernard Shaw",
+      "url": "https://www.goodreads.com/quotes/tag/inspirational",
+      "summary": "\u201cLife isn't about finding yourself. Life is about creating yourself.\u201d \u2015 George Bernard Shaw"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cI'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my be",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cI'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my best.\u201d \u2015 Marilyn Monroe"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cYou've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.\u201d \u2015 William W. Purkey",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cYou've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.\u201d \u2015 William W. Purkey"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cYou only live once, but if you do it right, once is enough.\u201d \u2015 Mae West",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cYou only live once, but if you do it right, once is enough.\u201d \u2015 Mae West"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cIn three words I can sum up everything I've learned about life: it goes on.\u201d \u2015 Robert Frost",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cIn three words I can sum up everything I've learned about life: it goes on.\u201d \u2015 Robert Frost"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cInsanity is doing the same thing, over and over again, but expecting different results.\u201d \u2015 Narcotics Anonymous",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cInsanity is doing the same thing, over and over again, but expecting different results.\u201d \u2015 Narcotics Anonymous"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cIt is better to be hated for what you are than to be loved for what you are not.\u201d \u2015 Andre Gide, Autumn Leaves",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cIt is better to be hated for what you are than to be loved for what you are not.\u201d \u2015 Andre Gide, Autumn Leaves"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cThere are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.\u201d \u2015 Albert Einstein",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cThere are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.\u201d \u2015 Albert Einstein"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cIt does not do to dwell on dreams and forget to live.\u201d \u2015 J.K. Rowling, Harry Potter and the Sorcerer's Stone",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cIt does not do to dwell on dreams and forget to live.\u201d \u2015 J.K. Rowling, Harry Potter and the Sorcerer's Stone"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cGood friends, good books, and a sleepy conscience: this is the ideal life.\u201d \u2015 Mark Twain",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cGood friends, good books, and a sleepy conscience: this is the ideal life.\u201d \u2015 Mark Twain"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cLife is what happens to us while we are making other plans.\u201d \u2015 Allen Saunders",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cLife is what happens to us while we are making other plans.\u201d \u2015 Allen Saunders"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cI may not have gone where I intended to go, but I think I have ended up where I needed to be.\u201d \u2015 Douglas Adams, The Long Dark Tea-Time of the Soul",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cI may not have gone where I intended to go, but I think I have ended up where I needed to be.\u201d \u2015 Douglas Adams, The Long Dark Tea-Time of the Soul"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cThis life is what you make it. No matter what, you're going to mess up sometimes, it's a universal truth. But the good part is you get to decide how you're going to mess it up. Girls will be your fri",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cThis life is what you make it. No matter what, you're going to mess up sometimes, it's a universal truth. But the good part is you get to decide how you're going to mess it up. Girls will be your friends - they'll act like it anyway. But just remember, some come, some go. The ones that stay with you through everything - they're your true best friends. Don't let go of them. Also remember, sisters make the best friends in the world. As for lovers, well, they'll come and go too. And baby, I hate t"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cEverything you can imagine is real.\u201d \u2015 Pablo Picasso",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cEverything you can imagine is real.\u201d \u2015 Pablo Picasso"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cLife isn't about finding yourself. Life is about creating yourself.\u201d \u2015 George Bernard Shaw",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cLife isn't about finding yourself. Life is about creating yourself.\u201d \u2015 George Bernard Shaw"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cToday you are You, that is truer than true. There is no one alive who is Youer than You.\u201d \u2015 Dr. Seuss, Happy Birthday to You!",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cToday you are You, that is truer than true. There is no one alive who is Youer than You.\u201d \u2015 Dr. Seuss, Happy Birthday to You!"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cI'm not afraid of death; I just don't want to be there when it happens.\u201d \u2015 Woody Allen",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cI'm not afraid of death; I just don't want to be there when it happens.\u201d \u2015 Woody Allen"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cSometimes people are beautiful. Not in looks. Not in what they say. Just in what they are.\u201d \u2015 Markus Zusak, I Am the Messenger",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cSometimes people are beautiful. Not in looks. Not in what they say. Just in what they are.\u201d \u2015 Markus Zusak, I Am the Messenger"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cLife is like riding a bicycle. To keep your balance, you must keep moving.\u201d \u2015 Albert Einstein",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cLife is like riding a bicycle. To keep your balance, you must keep moving.\u201d \u2015 Albert Einstein"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cReality continues to ruin my life.\u201d \u2015 Bill Watterson, The Complete Calvin and Hobbes",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cReality continues to ruin my life.\u201d \u2015 Bill Watterson, The Complete Calvin and Hobbes"
+    },
+    {
+      "source": "goodreads_life",
+      "title": "\u201cThings change. And friends leave. Life doesn't stop for anybody.\u201d \u2015 Stephen Chbosky, The Perks of Being a Wallflower",
+      "url": "https://www.goodreads.com/quotes/tag/life",
+      "summary": "\u201cThings change. And friends leave. Life doesn't stop for anybody.\u201d \u2015 Stephen Chbosky, The Perks of Being a Wallflower"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cI'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my be",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cI'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my best.\u201d \u2015 Marilyn Monroe"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cYou've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.\u201d \u2015 William W. Purkey",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cYou've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.\u201d \u2015 William W. Purkey"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cYou know you're in love when you can't fall asleep because reality is finally better than your dreams.\u201d \u2015 Dr. Seuss",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cYou know you're in love when you can't fall asleep because reality is finally better than your dreams.\u201d \u2015 Dr. Seuss"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cDarkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.\u201d \u2015 Martin Luther King Jr., A Testament of Hope: The Essential Writings and Speeches",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cDarkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.\u201d \u2015 Martin Luther King Jr., A Testament of Hope: The Essential Writings and Speeches"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cWe accept the love we think we deserve.\u201d \u2015 Stephen Chbosky, The Perks of Being a Wallflower",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cWe accept the love we think we deserve.\u201d \u2015 Stephen Chbosky, The Perks of Being a Wallflower"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cIt is better to be hated for what you are than to be loved for what you are not.\u201d \u2015 Andre Gide, Autumn Leaves",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cIt is better to be hated for what you are than to be loved for what you are not.\u201d \u2015 Andre Gide, Autumn Leaves"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cOnly once in your life, I truly believe, you find someone who can completely turn your world around. You tell them things that you\u2019ve never shared with another soul and they absorb everything you say",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cOnly once in your life, I truly believe, you find someone who can completely turn your world around. You tell them things that you\u2019ve never shared with another soul and they absorb everything you say and actually want to hear more. You share hopes for the future, dreams that will never come true, goals that were never achieved and the many disappointments life has thrown at you. When something wonderful happens, you can\u2019t wait to tell them about it, knowing they will share in your excitement. T"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cAs he read, I fell in love the way you fall asleep: slowly, and then all at once.\u201d \u2015 John Green, The Fault in Our Stars",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cAs he read, I fell in love the way you fall asleep: slowly, and then all at once.\u201d \u2015 John Green, The Fault in Our Stars"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cIt is not a lack of love, but a lack of friendship that makes unhappy marriages.\u201d \u2015 Friedrich Nietzsche",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cIt is not a lack of love, but a lack of friendship that makes unhappy marriages.\u201d \u2015 Friedrich Nietzsche"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cThe opposite of love is not hate, it's indifference. The opposite of art is not ugliness, it's indifference. The opposite of faith is not heresy, it's indifference. And the opposite of life is not de",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cThe opposite of love is not hate, it's indifference. The opposite of art is not ugliness, it's indifference. The opposite of faith is not heresy, it's indifference. And the opposite of life is not death, it's indifference.\u201d \u2015 Elie Wiesel"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cI love you without knowing how, or when, or from where. I love you simply, without problems or pride: I love you in this way because I do not know any other way of loving but this, in which there is ",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cI love you without knowing how, or when, or from where. I love you simply, without problems or pride: I love you in this way because I do not know any other way of loving but this, in which there is no I or you, so intimate that your hand upon my chest is my hand, so intimate that when I fall asleep your eyes close.\u201d \u2015 Pablo Neruda, 100 Love Sonnets"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cLove all, trust a few, Do wrong to none: be able for thine enemy Rather in power than use; and keep thy friend Under thy own life's key: be check'd for silence, But never tax'd for speech.\u201d \u2015 William",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cLove all, trust a few, Do wrong to none: be able for thine enemy Rather in power than use; and keep thy friend Under thy own life's key: be check'd for silence, But never tax'd for speech.\u201d \u2015 William Shakespeare, All's Well That Ends Well"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cHave you ever been in love? Horrible isn't it? It makes you so vulnerable. It opens your chest and it opens up your heart and it means that someone can get inside you and mess you up.\u201d \u2015 Neil Gaiman,",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cHave you ever been in love? Horrible isn't it? It makes you so vulnerable. It opens your chest and it opens up your heart and it means that someone can get inside you and mess you up.\u201d \u2015 Neil Gaiman, The Sandman, Vol. 9: The Kindly Ones"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cBeing deeply loved by someone gives you strength, while loving someone deeply gives you courage.\u201d \u2015 Lao Tzu",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cBeing deeply loved by someone gives you strength, while loving someone deeply gives you courage.\u201d \u2015 Lao Tzu"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cThis life is what you make it. No matter what, you're going to mess up sometimes, it's a universal truth. But the good part is you get to decide how you're going to mess it up. Girls will be your fri",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cThis life is what you make it. No matter what, you're going to mess up sometimes, it's a universal truth. But the good part is you get to decide how you're going to mess it up. Girls will be your friends - they'll act like it anyway. But just remember, some come, some go. The ones that stay with you through everything - they're your true best friends. Don't let go of them. Also remember, sisters make the best friends in the world. As for lovers, well, they'll come and go too. And baby, I hate t"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cThere is never a time or place for true love. It happens accidentally, in a heartbeat, in a single flashing, throbbing moment.\u201d \u2015 Sarah Dessen, The Truth About Forever",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cThere is never a time or place for true love. It happens accidentally, in a heartbeat, in a single flashing, throbbing moment.\u201d \u2015 Sarah Dessen, The Truth About Forever"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cLove is that condition in which the happiness of another person is essential to your own.\u201d \u2015 Robert A. Heinlein, Stranger in a Strange Land",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cLove is that condition in which the happiness of another person is essential to your own.\u201d \u2015 Robert A. Heinlein, Stranger in a Strange Land"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cYou love me. Real or not real?\" I tell him, \"Real.\u201d \u2015 Suzanne Collins, Mockingjay",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cYou love me. Real or not real?\" I tell him, \"Real.\u201d \u2015 Suzanne Collins, Mockingjay"
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cYou may not be her first, her last, or her only. She loved before she may love again. But if she loves you now, what else matters? She's not perfect\u2014you aren't either, and the two of you may never be",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cYou may not be her first, her last, or her only. She loved before she may love again. But if she loves you now, what else matters? She's not perfect\u2014you aren't either, and the two of you may never be perfect together but if she can make you laugh, cause you to think twice, and admit to being human and making mistakes, hold onto her and give her the most you can. She may not be thinking about you every second of the day, but she will give you a part of her that she knows you can break\u2014her heart."
+    },
+    {
+      "source": "goodreads_love",
+      "title": "\u201cI'm in love with you,\" he said quietly. \"Augustus,\" I said. \"I am,\" he said. He was staring at me, and I could see the corners of his eyes crinkling. \"I'm in love with you, and I'm not in the busines",
+      "url": "https://www.goodreads.com/quotes/tag/love",
+      "summary": "\u201cI'm in love with you,\" he said quietly. \"Augustus,\" I said. \"I am,\" he said. He was staring at me, and I could see the corners of his eyes crinkling. \"I'm in love with you, and I'm not in the business of denying myself the simple pleasure of saying true things. I'm in love with you, and I know that love is just a shout into the void, and that oblivion is inevitable, and that we're all doomed and that there will come a day when all our labor has been returned to dust, and I know the sun will swa"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cAll that is gold does not glitter, Not all those who wander are lost; The old that is strong does not wither, Deep roots are not reached by the frost. From the ashes a fire shall be woken, A light fr",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cAll that is gold does not glitter, Not all those who wander are lost; The old that is strong does not wither, Deep roots are not reached by the frost. From the ashes a fire shall be woken, A light from the shadows shall spring; Renewed shall be blade that was broken, The crownless again shall be king.\u201d \u2015 J.R.R. Tolkien, The Fellowship of the Ring"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cI love you without knowing how, or when, or from where. I love you simply, without problems or pride: I love you in this way because I do not know any other way of loving but this, in which there is ",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cI love you without knowing how, or when, or from where. I love you simply, without problems or pride: I love you in this way because I do not know any other way of loving but this, in which there is no I or you, so intimate that your hand upon my chest is my hand, so intimate that when I fall asleep your eyes close.\u201d \u2015 Pablo Neruda, 100 Love Sonnets"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cI love you as certain dark things are to be loved, in secret, between the shadow and the soul.\u201d \u2015 Pablo Neruda, 100 Love Sonnets",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cI love you as certain dark things are to be loved, in secret, between the shadow and the soul.\u201d \u2015 Pablo Neruda, 100 Love Sonnets"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cOnly the very weak-minded refuse to be influenced by literature and poetry.\u201d \u2015 Cassandra Clare, Clockwork Angel",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cOnly the very weak-minded refuse to be influenced by literature and poetry.\u201d \u2015 Cassandra Clare, Clockwork Angel"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cMusic expresses that which cannot be put into words and that which cannot remain silent\u201d \u2015 Victor Hugo",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cMusic expresses that which cannot be put into words and that which cannot remain silent\u201d \u2015 Victor Hugo"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cWe love the things we love for what they are.\u201d \u2015 Robert Frost",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cWe love the things we love for what they are.\u201d \u2015 Robert Frost"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cYou talk when you cease to be at peace with your thoughts.\u201d \u2015 Kahlil Gibran, The Prophet",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cYou talk when you cease to be at peace with your thoughts.\u201d \u2015 Kahlil Gibran, The Prophet"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cI carry your heart with me (I carry it in my heart)I am never without it (anywhere I go you go,my dear; and whatever is done by only me is your doing,my darling) I fear no fate (for you are my fate,m",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cI carry your heart with me (I carry it in my heart)I am never without it (anywhere I go you go,my dear; and whatever is done by only me is your doing,my darling) I fear no fate (for you are my fate,my sweet)I want no world (for beautiful you are my world,my true) and it's you are whatever a moon has always meant and whatever a sun will always sing is you here is the deepest secret nobody knows (here is the root of the root and the bud of the bud and the sky of the sky of a tree called life; whi"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cTell me, what is it you plan to do with your one wild and precious life?\u201d \u2015 Mary Oliver",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cTell me, what is it you plan to do with your one wild and precious life?\u201d \u2015 Mary Oliver"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cIf you're reading this... Congratulations, you're alive. If that's not something to smile about, then I don't know what is.\u201d \u2015 Chad Sugg, Monsters Under Your Head",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cIf you're reading this... Congratulations, you're alive. If that's not something to smile about, then I don't know what is.\u201d \u2015 Chad Sugg, Monsters Under Your Head"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cI have loved the stars too fondly to be fearful of the night.\u201d \u2015 Sarah   Williams",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cI have loved the stars too fondly to be fearful of the night.\u201d \u2015 Sarah   Williams"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cTo be nobody but yourself in a world which is doing its best day and night to make you like everybody else means to fight the hardest battle which any human being can fight and never stop fighting.\u201d ",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cTo be nobody but yourself in a world which is doing its best day and night to make you like everybody else means to fight the hardest battle which any human being can fight and never stop fighting.\u201d \u2015 E.E. Cummings"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cResist much, obey little.\u201d \u2015 Walt Whitman, Leaves of Grass",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cResist much, obey little.\u201d \u2015 Walt Whitman, Leaves of Grass"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cUnbeing dead isn't being alive.\u201d \u2015 E. E. Cummings",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cUnbeing dead isn't being alive.\u201d \u2015 E. E. Cummings"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cYou do not have to be good. You do not have to walk on your knees for a hundred miles through the desert, repenting. You only have to let the soft animal of your body love what it loves. Tell me abou",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cYou do not have to be good. You do not have to walk on your knees for a hundred miles through the desert, repenting. You only have to let the soft animal of your body love what it loves. Tell me about despair, yours, and I will tell you mine. Meanwhile the world goes on. Meanwhile the sun and the clear pebbles of the rain are moving across the landscapes, over the prairies and the deep trees, the mountains and the rivers. Meanwhile the wild geese, high in the clean blue air, are heading home ag"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cA poem begins as a lump in the throat, a sense of wrong, a homesickness, a lovesickness.\u201d \u2015 Robert Frost",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cA poem begins as a lump in the throat, a sense of wrong, a homesickness, a lovesickness.\u201d \u2015 Robert Frost"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cPoets have been mysteriously silent on the subject of cheese.\u201d \u2015 G.K. Chesterton, Alarms and Discursions",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cPoets have been mysteriously silent on the subject of cheese.\u201d \u2015 G.K. Chesterton, Alarms and Discursions"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cSome say the world will end in fire, Some say in ice. From what I've tasted of desire, I hold with those who favor fire. But if it had to perish twice I think I know enough of hate To say that for de",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cSome say the world will end in fire, Some say in ice. From what I've tasted of desire, I hold with those who favor fire. But if it had to perish twice I think I know enough of hate To say that for destruction ice Is also great And would suffice.\u201d \u2015 Robert Frost"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cTrees are poems the earth writes upon the sky, We fell them down and turn them into paper, That we may record our emptiness.\u201d \u2015 Kahlil Gibran",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cTrees are poems the earth writes upon the sky, We fell them down and turn them into paper, That we may record our emptiness.\u201d \u2015 Kahlil Gibran"
+    },
+    {
+      "source": "goodreads_poetry",
+      "title": "\u201cOne ought, every day at least, to hear a little song, read a good poem, see a fine picture, and, if it were possible, to speak a few reasonable words.\u201d \u2015 Johann Wolfgang von Goethe, Wilhelm Meister's",
+      "url": "https://www.goodreads.com/quotes/tag/poetry",
+      "summary": "\u201cOne ought, every day at least, to hear a little song, read a good poem, see a fine picture, and, if it were possible, to speak a few reasonable words.\u201d \u2015 Johann Wolfgang von Goethe, Wilhelm Meister's Apprenticeship"
+    }
+  ]
+}
