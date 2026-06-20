@@ -58,12 +58,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   per-channel plan. Read it before producing project content; rotate `cadence.angle_rotation`.
 - **HONESTY GUARDRAIL:** State what a tool actually does. Never overclaim (e.g. don't say a job
   tool "auto-applies" if it only drafts). Overclaiming kills trust and invites roasting.
-- **DISTRIBUTION (manual — no Metricool/Publer):** One piece → all viable channels via
-  `prompts/repurposing_agent.md` → per-platform derivative files. Posting is **manual in-app**
-  for Instagram / Facebook / Threads / Twitter (post in the engagement window, reply early).
-  LinkedIn can be staged into `data/scheduling.db` via `scripts/load_posts.py` for the
-  `scheduler.py` API daemon, but stays **held manual until employer clearance**. Excluded:
-  Hacker News + Reddit (blocked). See `docs/weekly-runner.md` Step 22.
+- **DISTRIBUTION (auto-publish daemon — "subtract to focus", 2026):** One piece → viable
+  channels via `prompts/repurposing_agent.md` → per-platform derivatives → staged by
+  `scripts/load_posts.py` → fired by the `scripts/scheduler.py` daemon. **LinkedIn is ACTIVE**
+  (employer cleared). **Instagram / Threads** auto-publish via the Meta Graph API
+  (`scripts/post_instagram.py`, `post_threads.py`, `scripts/lib/meta_graph.py`); **Facebook**
+  mirrors from Instagram. **Twitter is DROPPED** (dead in analytics). Reels go to **Instagram
+  Reels + YouTube Shorts only** (not LinkedIn/Twitter). The only manual steps left: record the
+  video, a ~10-min content approval, and replying to comments/DMs. Excluded: Hacker News +
+  Reddit (blocked). Meta tokens: see `docs/one-time-platform-setup.md`. Canonical model:
+  `docs/pipeline-2026.md`.
 - **STAR ATTRIBUTION:** Tag every repo link with UTM params via `scripts/lib/utm.py`.
   `scripts/collect_analytics.py` tracks GitHub stars + 7-day delta so you can see which piece
   drove stars (set `GITHUB_REPOS` env, optional `GITHUB_TOKEN`).
@@ -199,9 +203,10 @@ Before writing any blog or content, ALWAYS:
 ## Platform Constraints
 
 - **LinkedIn poll options:** max 30 characters each
-- **Twitter poll options:** max 25 characters each
-- **Twitter threads & polls:** CANNOT be scheduled (must post manually)
-- **Worksheet delivery:** DS & Life niches only; URLs auto-injected into captions via `scripts/inject_worksheet_ctas.py` (W22 onwards; retroactive support available)
+- **LinkedIn link placement:** blog/repo link goes in the **pinned first comment**, never the post body (body links suppress reach)
+- **Instagram (Graph API):** publishes Reels / single image / carousel only; ingests from a **public media URL** (not local bytes) — host the asset first. Stories are not API-publishable.
+- **Twitter:** DROPPED from the pipeline (no derivatives, polls, or staging)
+- **Worksheet delivery:** DS & Life niches only; URLs auto-injected into captions via `scripts/inject_worksheet_ctas.py` (W22 onwards; retroactive support available). This is the **owned-audience email capture** (Substack retired)
 
 ## Development Status
 

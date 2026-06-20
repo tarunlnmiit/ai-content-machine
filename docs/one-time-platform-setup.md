@@ -1,6 +1,41 @@
-# One-Time Platform Setup — Instagram, LinkedIn, Twitter/X
+# One-Time Platform Setup — Instagram, LinkedIn, Threads + Meta Graph API
 
 Do each section below once. These settings persist and compound over time. Most creators skip this and wonder why their content doesn't grow — the profile is the landing page. If someone finds a reel, thread, or post compelling, they immediately tap your profile. What they see in the next 5 seconds determines whether they follow.
+
+> **Twitter/X is dropped** from the pipeline (dead in analytics). The Twitter/X profile section below is kept for reference only — no action needed.
+
+---
+
+## Meta Graph API — auto-publish credentials (Instagram / Facebook / Threads)
+
+This is what lets the `scheduler.py` daemon auto-publish instead of you posting by hand.
+Do it once; tokens are long-lived. See `scripts/lib/meta_graph.py` for how they're used.
+
+1. **Convert IG to a Business/Creator account** (above) and **link it to a Facebook Page**
+   (Meta Business Suite → Settings → Accounts). IG content-publishing requires this link.
+2. **Create a Meta app** at developers.facebook.com → My Apps → Create App (type "Business").
+   Add the products: *Instagram Graph API*, *Facebook Login*, and *Threads API*.
+3. **Generate a long-lived access token** with scopes:
+   `instagram_basic, instagram_content_publish, pages_read_engagement, pages_manage_posts`
+   (Graph API Explorer → exchange the short-lived token for a 60-day token, then refresh).
+4. **Find your IDs:** `IG_USER_ID` (Graph API: `me/accounts` → page → `instagram_business_account`),
+   `META_PAGE_ID` (the linked Page), and for Threads `THREADS_USER_ID` + a separate
+   `THREADS_ACCESS_TOKEN` (Threads API has its own token flow).
+5. **Put them in `.env`:**
+   ```
+   META_GRAPH_VERSION=v21.0
+   META_ACCESS_TOKEN=...
+   IG_USER_ID=...
+   META_PAGE_ID=...
+   THREADS_ACCESS_TOKEN=...
+   THREADS_USER_ID=...
+   ```
+6. **Verify:** start the daemon — `scheduler.py` logs a credential check at startup
+   (`instagram=ok / facebook=ok / threads=ok`). Only platforms with valid creds fire.
+
+Reminder (honesty guardrail): IG publishes **Reels / single image / carousel** and ingests
+from a **public media URL** (host the asset first — Drive). IG Stories are not API-publishable;
+keep those manual. Recording, the ~10-min approval, and comment/DM replies stay human.
 
 ---
 
@@ -211,7 +246,7 @@ For now: accept all relevant connection requests (data scientists, content creat
 
 ---
 
-## Twitter/X — @mistakenlyhuman
+## Twitter/X — @mistakenlyhuman — DROPPED (reference only, no action)
 
 ### 1. Profile photo + header
 

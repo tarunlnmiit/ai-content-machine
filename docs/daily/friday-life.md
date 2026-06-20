@@ -1,3 +1,8 @@
+> ⚠️ **PIPELINE UPDATED 2026-06-20 — canonical model: [`docs/pipeline-2026.md`](../pipeline-2026.md).**
+> Twitter **dropped**. Instagram / Threads **auto-publish** via the Meta Graph API (`scripts/scheduler.py`); Facebook mirrors Instagram; LinkedIn **active** (employer cleared), blog link in the **pinned first comment**. Reels → **Instagram Reels + YouTube Shorts only**, ≈9 **distinct** reels/week (not ~56). Poetry short = **poem only**. Worksheet email CTA (DS/Life) is the owned channel (Substack retired). Run `python3 scripts/weekly_winners.py` before producing. Manual steps left: record · ~10-min approve · reply.
+>
+> Where any step below disagrees, the canonical doc wins.
+
 # Friday — Life Track (~20 min)
 
 Videos are live on YouTube from Thursday. Today: stage the Life LinkedIn post, gather the Life blog URL for captions, and queue the Life Twitter thread. **No Metricool/Publer** — IG / FB / Threads / Twitter are posted manually; LinkedIn is manual until employer clearance.

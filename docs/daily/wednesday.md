@@ -1,3 +1,8 @@
+> ⚠️ **PIPELINE UPDATED 2026-06-20 — canonical model: [`docs/pipeline-2026.md`](../pipeline-2026.md).**
+> Twitter **dropped**. Instagram / Threads **auto-publish** via the Meta Graph API (`scripts/scheduler.py`); Facebook mirrors Instagram; LinkedIn **active** (employer cleared) with the blog link in the **pinned first comment**. Reels → **Instagram Reels + YouTube Shorts only**, ≈9 **distinct** reels/week (not ~56). 3 long-form (1/niche). Poetry short = **poem only**; poetry Medium = poem + 150–350w essay. Worksheet email CTA (DS/Life) is the owned channel (Substack retired). Run `python3 scripts/weekly_winners.py` before producing. Only manual steps left: record · ~10-min approve · reply to comments/DMs.
+>
+> Where any step below disagrees with this banner or the canonical doc, the canonical doc wins.
+
 # Wednesday — Publish Blogs + Shoot Videos + Prepare Edit Plans (~3 hrs)
 
 Scripts and assets exist from Tuesday. Today: publish all 3 blogs to Medium, shoot all 3 videos, generate captions, and build edit plans so Thursday's renders can start immediately.
