@@ -30,6 +30,21 @@ PROJECTS_JSON = KB / "projects.json"
 # Niches that use the emotional Voice KB (canonical names).
 VOICE_NICHES = {"poetry_quotes", "life_self_dev"}
 
+# Per-niche caption/thumbnail formula reference files. Only the "## Engine digest (compact)"
+# section of each is injected — edit that section to change generator behavior at runtime.
+CAPTION_FORMULA = {
+    "data_science_tech": REELS_DIR / "06_mavgpt_caption_formula.md",
+    "life_self_dev": VOICE_DIR / "life_formula.md",
+    "poetry_quotes": VOICE_DIR / "poetry_formula.md",
+}
+
+# Content types whose hook/cover/caption is governed by the per-niche virality formula
+# (the formula's thumbnail rule applies to a slide cover the same way it does to a thumbnail).
+_FORMULA_TYPES = {
+    "shorts_caption", "shorts_meta", "social_image", "instagram_caption", "scene_plan_overlay",
+    "slide_deck",
+}
+
 # Short hook key per canonical niche (matches twitter_hook_patterns use_for).
 _HOOK_KEY = {"poetry_quotes": "poetry", "life_self_dev": "life", "data_science_tech": "ds"}
 
@@ -65,6 +80,7 @@ _CTA = {
     "slide_deck": "CTA: close on one action.",
     "social_image": "CTA: one action in the caption.",
     "shorts_caption": "CTA: ONE concrete action, not 'subtle' (comment a keyword / read the blog).",
+    "instagram_caption": "CTA: one action — comment a keyword for the DM, or the niche's native close.",
     "shorts_meta": "CTA: description ends with one concrete action.",
     "scene_plan_short": "CTA: the final scene is one keyword/action.",
     "scene_plan_overlay": "CTA: reinforce one action.",
@@ -87,6 +103,31 @@ def _read(path: Path) -> str:
         return path.read_text(encoding="utf-8")
     except OSError:
         return ""
+
+
+def _engine_digest(md: str) -> str:
+    """Extract the '## Engine digest (compact)' section (to the next H2 / EOF)."""
+    lines = md.splitlines()
+    out: list[str] = []
+    capture = False
+    for line in lines:
+        if line.startswith("## "):
+            if capture:  # reached the next H2 — stop
+                break
+            if "engine digest" in line.lower():
+                capture = True
+            continue
+        if capture:
+            out.append(line)
+    return "\n".join(out).strip()
+
+
+def caption_formula_digest(niche: Optional[str]) -> str:
+    """Compact caption/thumbnail formula digest for this niche (or "" if unavailable)."""
+    path = CAPTION_FORMULA.get(_norm(niche))
+    if not path:
+        return ""
+    return _engine_digest(_read(path))
 
 
 def _h3_headings(md: str) -> list[str]:
@@ -216,6 +257,11 @@ def virality_block(content_type: str, niche: Optional[str], project_key: Optiona
 
     if content_type in ("clip_select", "scene_plan_short"):
         parts.append(_FIVE_BEAT)
+
+    if content_type in _FORMULA_TYPES:
+        digest = caption_formula_digest(niche)
+        if digest:
+            parts.append("NICHE VIRALITY FORMULA (cover/hook/caption — this niche):\n" + digest)
 
     proj = load_project(project_key)
     if proj:

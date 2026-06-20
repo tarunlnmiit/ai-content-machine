@@ -20,6 +20,16 @@ def derivatives_dir(date_str: str, slug: str) -> Path:
 	return REPO / "content" / "derivatives" / get_iso_week(date_str) / slug
 
 
+def edited_video_dir(date_str: str) -> Path:
+	"""Directory holding finished long-form video for a date's ISO week."""
+	return REPO / "assets" / "video" / "edited" / get_iso_week(date_str)
+
+
+def shorts_dir(date_str: str) -> Path:
+	"""Directory holding vertical Shorts/Reels clips for a date's ISO week."""
+	return REPO / "assets" / "video" / "edited" / "shorts" / get_iso_week(date_str)
+
+
 def raw_asset_path(date_str: str, filename: str) -> Path:
 	"""Path to a raw asset file (MOV, etc.)."""
 	return REPO / "assets" / "raw" / get_iso_week(date_str) / filename

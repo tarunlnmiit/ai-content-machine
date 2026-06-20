@@ -33,6 +33,8 @@ from lib.claude_cli import call_claude  # noqa: E402
 from lib.niche_config import model_for  # noqa: E402
 from lib.virality import virality_block, project_keys  # noqa: E402
 from lib.shorts_captions import detect_niche  # noqa: E402
+from lib.content_paths import shorts_dir as shorts_week_dir  # noqa: E402
+from lib.schedule_calc import get_iso_week  # noqa: E402
 
 
 def transcript_text(srt_path: Path) -> str:
@@ -153,20 +155,36 @@ def main():
     edited_dir = REPO / "assets" / "video" / "edited"
 
     def find_video(slug: str) -> tuple:
-        """Find video file (mp4 or mov) and return (video_path, meta_path)."""
+        """Find video file (mp4 or mov) in the ISO-week subfolder; return (video, meta).
+
+        reorganize_iso_weeks.py moves edited videos into assets/video/edited/<week>/,
+        so search the computed week dir first, then any week subfolder, then the legacy
+        flat root. Meta file is resolved next to the found video.
+        """
+        is_dated = len(slug) > 10 and slug[4] == "-" and slug[7] == "-"
+        names = []
         for ext in [".mp4", ".mov"]:
-            # Try plain slug
-            v = edited_dir / f"{slug}{ext}"
-            if v.exists():
-                m = edited_dir / f"{slug}_edit_meta.json"
-                return v, m
-            # Try date_slug format
-            if len(slug) > 10 and slug[4] == "-" and slug[7] == "-":
-                date_prefix = slug[:10]
-                v = edited_dir / f"{date_prefix}_{slug}{ext}"
+            names.append(f"{slug}{ext}")
+            if is_dated:
+                names.append(f"{slug[:10]}_{slug}{ext}")
+        # Search dirs: computed week first, then legacy flat root.
+        search_dirs = []
+        if is_dated:
+            try:
+                search_dirs.append(edited_dir / get_iso_week(slug[:10]))
+            except Exception:
+                pass
+        search_dirs.append(edited_dir)
+        for name in names:
+            for d in search_dirs:
+                v = d / name
                 if v.exists():
-                    m = edited_dir / f"{date_prefix}_{slug}_edit_meta.json"
-                    return v, m
+                    return v, v.with_name(f"{v.stem}_edit_meta.json")
+            # Fall back to any week subfolder (handles doubled-date _yt names).
+            hits = sorted(edited_dir.glob(f"*/{name}"))
+            if hits:
+                v = hits[0]
+                return v, v.with_name(f"{v.stem}_edit_meta.json")
         return None, None
 
     long_video, meta_file = find_video(args.slug)
@@ -178,8 +196,8 @@ def main():
         if long_video:
             print(f"  note: using base video (pre-hyperframes): {long_video.name}")
 
-    if not long_video.exists():
-        sys.exit(f"long-form not found: {long_video}\nRun auto_edit.py first.")
+    if not long_video or not long_video.exists():
+        sys.exit(f"long-form not found for slug '{args.slug}' under {edited_dir}\nRun auto_edit.py first.")
     if not meta_file.exists():
         print(f"[meta] not found — auto-generating from video…")
         duration = _probe_duration(long_video)
@@ -190,6 +208,16 @@ def main():
 
     meta = json.loads(meta_file.read_text())
     srt = Path(meta["srt"])
+    # Stored srt path can be stale after reorganize_iso_weeks.py moved files into
+    # week subfolders — fall back to the sibling .srt next to the found video.
+    if not srt.exists():
+        sibling = long_video.with_suffix(".srt")
+        if sibling.exists():
+            print(f"  [srt] stored path missing → using sibling {sibling.name}")
+            srt = sibling
+        else:
+            print(f"  [srt] not found at {srt} or {sibling} — transcribing…")
+            srt = _whisper_srt(long_video, long_video.parent)
     duration = float(meta["duration_sec"])
 
     print(f"=== clip_shorts: {args.slug} ({duration:.1f}s) ===")
@@ -221,8 +249,8 @@ def main():
         print(f"    [{i:02d}] {p['start']:.1f}-{p['end']:.1f}s  hook: {p['hook_line'][:60]}")
 
     # Cut + vertical
-    shorts_dir = edited_dir / "shorts"
-    shorts_dir.mkdir(exist_ok=True)
+    shorts_out = shorts_week_dir(args.slug[:10])
+    shorts_out.mkdir(parents=True, exist_ok=True)
     work = REPO / "assets" / "video" / "_work" / args.slug / "shorts"
     work.mkdir(parents=True, exist_ok=True)
 
@@ -236,18 +264,18 @@ def main():
         slice_srt(srt, p["start"], p["end"], sub_srt)
 
         x_center = detect_code_x_center(seg) if args.smart_crop else None
-        final = shorts_dir / f"{args.slug}_short_{i:02d}.mp4"
+        final = shorts_out / f"{args.slug}_short_{i:02d}.mp4"
         crop_vertical(seg, final, srt_in=sub_srt, x_center=x_center)
         outputs.append({"path": str(final), **p})
 
     # Manifest
-    manifest = shorts_dir / f"{args.slug}_shorts_manifest.json"
+    manifest = shorts_out / f"{args.slug}_shorts_manifest.json"
     manifest.write_text(json.dumps(outputs, indent=2))
     print(f"\n[3/3] manifest → {manifest}")
-    print(f"\n✓ done → {len(outputs)} shorts in {shorts_dir}")
+    print(f"\n✓ done → {len(outputs)} shorts in {shorts_out}")
 
     # Social captions per shot
-    from lib.shorts_captions import generate_and_write_captions, detect_niche
+    from lib.shorts_captions import generate_and_write_captions
     from lib.content_paths import derivatives_dir
     niche = detect_niche(args.slug)
     date_str = args.slug[:10]

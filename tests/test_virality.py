@@ -110,3 +110,34 @@ def test_never_raises_returns_str():
     # Even for an unknown content_type / odd niche, returns a usable string.
     out = v.virality_block("unknown_type", "ds")
     assert isinstance(out, str) and "VIRALITY SPINE" in out
+
+
+# ── per-niche caption formula injection (mavgpt + voice formulas) ─────────────
+@pytest.mark.unit
+def test_caption_formula_routes_per_niche():
+    ds = v.virality_block("instagram_caption", "data_science_tech")
+    life = v.virality_block("instagram_caption", "life_self_dev")
+    poetry = v.virality_block("instagram_caption", "poetry_quotes")
+    # DS gets mavgpt (caption-is-product); poetry/life never do.
+    assert "KEYWORD" in ds and "caption IS the product" in ds
+    assert "KEYWORD" not in poetry and "KEYWORD" not in life
+    # Each niche carries its own formula, not another's.
+    assert "mechanism line" in life
+    assert "full poem verbatim" in poetry and "close on permission" in poetry
+    assert "mechanism line" not in poetry
+
+
+@pytest.mark.unit
+def test_caption_formula_only_on_caption_content_types():
+    # blog is not a caption content type → no caption formula injected.
+    assert "CAPTION FORMULA" not in v.virality_block("blog", "data_science_tech")
+    # shorts_caption is → mavgpt present for DS.
+    assert "KEYWORD" in v.virality_block("shorts_caption", "data_science_tech")
+
+
+@pytest.mark.unit
+def test_caption_formula_digest_extracts_only_digest_section():
+    d = v.caption_formula_digest("poetry_quotes")
+    assert d and "forwarding mechanic" in d
+    # Should NOT pull the long body (e.g. the reference-account header line).
+    assert "Reference account" not in d

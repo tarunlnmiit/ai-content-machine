@@ -96,7 +96,7 @@ def main() -> None:
         help="Parallel renders (default 2). Remotion+ffmpeg is CPU-bound; raise "
         "to 3 only if CPU/RAM headroom, drop to 1 if it thrashes.",
     )
-    parser.add_argument("--niche", default=None, help="Filter by niche, e.g. life, data_science, poetry")
+    parser.add_argument("--niche", default=None, help="Filter by edit-plan niche field: ds | life | poetry")
     args = parser.parse_args()
 
     week_dir = EDIT_PLANS_DIR / args.week

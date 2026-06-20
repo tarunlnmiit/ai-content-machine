@@ -1142,8 +1142,8 @@ def parse_args():
     p.add_argument("--no-render",   action="store_true")
     p.add_argument("--no-captions", action="store_true", help="Omit burned-in subtitles from the render")
     p.add_argument("--output-dir",  type=Path, default=Path("assets/hyperframes"))
-    p.add_argument("--shorts",      action="store_true", help="Process all shorts for --slug from assets/video/edited/shorts/")
-    p.add_argument("--shorts-dir",  type=Path, default=Path("assets/video/edited/shorts"), help="Directory containing short clips")
+    p.add_argument("--shorts",      action="store_true", help="Process all shorts for --slug from assets/video/edited/shorts/<week>/")
+    p.add_argument("--shorts-dir",  type=Path, default=None, help="Directory containing short clips (default: ISO-week subfolder under assets/video/edited/shorts/, with flat-root fallback)")
     p.add_argument("--fresh",       action="store_true", help="Force wipe of cached /tmp/hf_<slug> project before run (ignores cached clip/audio/whisper/elements)")
     p.add_argument("--intensity",   choices=["minimal", "light", "standard", "dense"], default="light",
                    help="Overlay density. minimal/light = human-editor restraint (default light); "
@@ -1467,9 +1467,24 @@ def main():
     if args.shorts:
         if not args.slug:
             sys.exit("--shorts requires --slug")
-        shorts_dir = args.shorts_dir if args.shorts_dir.is_absolute() else Path.cwd()/args.shorts_dir
+        _repo = Path(__file__).resolve().parent.parent
         pattern = f"{args.slug}_short_*.mp4"
+        flat_dir = _repo / "assets" / "video" / "edited" / "shorts"
+        if args.shorts_dir is not None:
+            # Explicit override — honor verbatim.
+            shorts_dir = args.shorts_dir if args.shorts_dir.is_absolute() else Path.cwd()/args.shorts_dir
+        else:
+            # Default: ISO-week subfolder (matches reorganize_iso_weeks.py layout).
+            sys.path.insert(0, str(_repo / "scripts"))
+            from lib.content_paths import shorts_dir as shorts_week_dir
+            is_dated = len(args.slug) > 10 and args.slug[4] == "-" and args.slug[7] == "-"
+            shorts_dir = shorts_week_dir(args.slug[:10]) if is_dated else flat_dir
         clips = sorted(shorts_dir.glob(pattern))
+        if not clips and shorts_dir != flat_dir:
+            # Legacy flat-root fallback.
+            clips = sorted(flat_dir.glob(pattern))
+            if clips:
+                shorts_dir = flat_dir
         if not clips:
             sys.exit(f"No shorts found matching {shorts_dir}/{pattern}")
         print(f"Found {len(clips)} shorts for slug '{args.slug}' — running up to 3 in parallel")
