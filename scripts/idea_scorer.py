@@ -302,6 +302,29 @@ def weekly_project_reel(niche_long: str) -> dict | None:
     return None
 
 
+def weekly_raw_take_batch(niche_long: str) -> list[dict] | None:
+    """The week's 4 Raw Take questions (Hinglish opinion Shorts) for the Life niche.
+
+    Pulls from data/kb/raw_take_questions.json and rotates a non-repeating window of
+    `per_week` questions by ISO week. Returns None for non-Life niches.
+    """
+    if _NICHE_SHORT.get(niche_long) != "life":
+        return None
+    path = REPO / "data" / "kb" / "raw_take_questions.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    questions = data.get("questions") or []
+    if not questions:
+        return None
+    per_week = (data.get("cadence") or {}).get("per_week", 4)
+    week_idx = datetime.now().isocalendar().week
+    start = (week_idx * per_week) % len(questions)
+    # Rotating window (wraps around the bank) so weeks don't repeat for ~len/per_week weeks.
+    return [questions[(start + i) % len(questions)] for i in range(per_week)]
+
+
 def score_ideas(output_dir="data/ideas", top_n=5):
     console.rule("[info]Idea Scorer[/info]")
 
@@ -382,6 +405,15 @@ def score_ideas(output_dir="data/ideas", top_n=5):
                 f"- **Produce with:** `--project {reel['project_key']}` on the reel/derivative generators",
                 "",
             ]
+
+        # Baked-in Raw Take batch (Life only) — 4 Hinglish opinion Shorts/week, batch-recorded.
+        raw_batch = weekly_raw_take_batch(niche)
+        if raw_batch:
+            lines.append("### 🎤 Raw Take batch (4×/week, batch-record) — Hinglish opinion Shorts")
+            lines.append("- IG Reel (@mistakenlyhuman) + YouTube Short (Breath of Life). Open with the question verbatim.")
+            for j, qa in enumerate(raw_batch, 1):
+                lines.append(f"  {j}. \"Someone asked me — {qa['q']}\"  _(theme: {qa.get('theme','')})_")
+            lines += ["- See `docs/raw-take-format.md` for structure + guardrails.", ""]
 
         for i, idea in enumerate(ideas_list, 1):
             lines += [

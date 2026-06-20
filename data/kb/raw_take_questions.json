@@ -1,0 +1,50 @@
+{
+  "_comment": "Raw Take — 4x/week Hinglish raw-opinion Shorts for the Life niche. Format: 'Someone asked me: <question>' → Tarun's honest, unscripted opinion in Hinglish → one landing line. IG Reel (@mistakenlyhuman) + YouTube Short (Breath of Life). BATCH-RECORD the week's 4 in one sitting. The idea machine (idea_scorer.weekly_raw_take_batch) pulls 4 questions/week, rotating by ISO week so none repeats for ~7 weeks.",
+  "cadence": {
+    "per_week": 4,
+    "batch_record": true,
+    "niche": "life",
+    "language": "Hinglish",
+    "channels": ["instagram_reel @mistakenlyhuman", "youtube_shorts Breath of Life"],
+    "ramp_note": "Start 4x/week. Go daily ONLY if 2-week retention holds (run weekly_winners.py)."
+  },
+  "format": {
+    "hook": "Open with the question verbatim: 'Someone asked me — <question>' (Hinglish ok). The question is the hook; first 3s decide it.",
+    "body": "Raw, unscripted opinion. Personal example > advice. Analytical-but-warm voice. NO motivational crescendo, NO jargon. Hinglish as it actually comes out.",
+    "close": "One landing line — permission or a reframe, not a slogan. Optionally invite the next question in the comments.",
+    "length_sec": "20-45",
+    "subtitles": "Burn Hinglish captions (sound-off viewing). Add English subs on the YouTube Short for reach.",
+    "banned": ["In conclusion", "Dive into", "Leverage", "Game-changer", "Synergy", "guru tone"],
+    "loop": "After 2 weeks, keep the question THEMES that hit (relationships / career / self-doubt / discipline / comparison) and drop the rest."
+  },
+  "questions": [
+    {"q": "Log kya kahenge — isse kaise niklun?", "theme": "comparison"},
+    {"q": "Mehnat kar raha hoon par result nahi mil raha, kya karun?", "theme": "discipline"},
+    {"q": "Apne aap pe bharosa kaise rakhun jab sab fail ho raha ho?", "theme": "self-doubt"},
+    {"q": "Purane rishte ko kaise let go karun?", "theme": "relationships"},
+    {"q": "Motivation har do din me khatam ho jaati hai — kya karun?", "theme": "discipline"},
+    {"q": "Settle karun ya risk lun apne career me?", "theme": "career"},
+    {"q": "Doosron ki life perfect lagti hai, meri nahi — kyun?", "theme": "comparison"},
+    {"q": "Akela feel karta hoon bheed me bhi — normal hai kya?", "theme": "loneliness"},
+    {"q": "Past ki galti baar baar yaad aati hai, kaise bhoolun?", "theme": "self-doubt"},
+    {"q": "Job chhodun ya kuch apna shuru karun?", "theme": "career"},
+    {"q": "Kisi ko impress karne ke liye thak gaya hoon — kya karun?", "theme": "self-worth"},
+    {"q": "Discipline aur passion me se kya zyada zaroori hai?", "theme": "discipline"},
+    {"q": "Toxic dost ko kaise chhodun bina guilt ke?", "theme": "relationships"},
+    {"q": "Failure ke baad dobara start kaise karun?", "theme": "self-doubt"},
+    {"q": "Sab kuch hai phir bhi khush nahi — kyun?", "theme": "meaning"},
+    {"q": "Comparison se bachne ka koi tareeka hai?", "theme": "comparison"},
+    {"q": "Apni body image se nafrat hai, kaise accept karun?", "theme": "self-worth"},
+    {"q": "Time waste karke regret hota hai — kaise rukun?", "theme": "discipline"},
+    {"q": "Parents ke dreams ya apne dreams — kya chunun?", "theme": "career"},
+    {"q": "Breakup ke baad khud ko kaise sambhalun?", "theme": "relationships"},
+    {"q": "Overthinking band kaise karun raat ko?", "theme": "anxiety"},
+    {"q": "Confidence fake karun ya wait karun real aane tak?", "theme": "self-worth"},
+    {"q": "Logon ko 'naa' kaise bolun bina dare?", "theme": "boundaries"},
+    {"q": "Burnout me hoon par ruk nahi sakta — kya karun?", "theme": "discipline"},
+    {"q": "Apne se choti umar walon se peeche feel hota hai — kyun?", "theme": "comparison"},
+    {"q": "Maaf kaise karun jisne hurt kiya?", "theme": "relationships"},
+    {"q": "Ambition aur peace dono chahiye — possible hai?", "theme": "meaning"},
+    {"q": "Khud se honest kaise rahun jab sach dukhta ho?", "theme": "self-doubt"}
+  ]
+}

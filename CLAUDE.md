@@ -62,6 +62,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   week. Produce one with `--project free_tool_ds|free_tool_life` on the reel/derivative generators.
 - **HONESTY GUARDRAIL:** State what a tool actually does. Never overclaim (e.g. don't say a job
   tool "auto-applies" if it only drafts). Overclaiming kills trust and invites roasting.
+- **RAW TAKE (Life, 4×/week, additive lane):** Hinglish raw-opinion Shorts — "Someone asked me: Q"
+  → unscripted opinion → landing line; IG Reel (@mistakenlyhuman) + Breath of Life Short.
+  Batch-recorded. Questions live in `data/kb/raw_take_questions.json`; the idea machine
+  (`scripts/idea_scorer.py:weekly_raw_take_batch`) auto-surfaces the week's 4 under Life in
+  `weekly_ideas.md`, rotating by ISO week. Spec/guardrails: `docs/raw-take-format.md`. Does NOT
+  replace the weekly blog / long-form / 9 reels — it's a separate low-cost lane.
 - **DISTRIBUTION (auto-publish daemon — "subtract to focus", 2026):** One piece → viable
   channels via `prompts/repurposing_agent.md` → per-platform derivatives → staged by
   `scripts/load_posts.py` → fired by the `scripts/scheduler.py` daemon. **LinkedIn is ACTIVE**
