@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1280px; height: 720px; overflow: hidden; }
+
+.thumbnail {
+  width: 1280px;
+  height: 720px;
+  position: relative;
+  background: #0F0D1A;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 80% 40%, rgba(184,152,80,0.22) 0%, transparent 58%),
+    radial-gradient(ellipse 40% 50% at 18% 78%, rgba(90,55,160,0.2) 0%, transparent 52%),
+    radial-gradient(ellipse 30% 40% at 88% 88%, rgba(130,85,20,0.18) 0%, transparent 48%),
+    radial-gradient(ellipse 50% 30% at 50% 0%, rgba(60,40,110,0.2) 0%, transparent 55%),
+    #0F0D1A;
+  z-index: 1;
+}
+
+/* Vertical window-light column */
+.window-col {
+  position: absolute;
+  right: 200px;
+  top: 0;
+  width: 340px;
+  height: 100%;
+  background: linear-gradient(180deg,
+    rgba(212,188,122,0.07) 0%,
+    rgba(212,188,122,0.13) 38%,
+    rgba(184,152,80,0.08) 72%,
+    transparent 100%
+  );
+  z-index: 2;
+}
+
+/* Thin sharp beam of light */
+.beam {
+  position: absolute;
+  right: 298px;
+  top: 0;
+  width: 90px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212,188,122,0.07) 50%, transparent);
+  z-index: 2;
+}
+
+/* Floor glow pool */
+.floor-pool {
+  position: absolute;
+  bottom: 0;
+  right: 80px;
+  width: 580px;
+  height: 110px;
+  background: radial-gradient(ellipse at 48% 100%, rgba(184,152,80,0.18) 0%, transparent 68%);
+  z-index: 2;
+}
+
+/* Dividing vertical edge — subtle separation between text and dancer zones */
+.vdivide {
+  position: absolute;
+  left: 700px;
+  top: 80px;
+  bottom: 80px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(184,152,80,0.15) 40%, rgba(184,152,80,0.15) 60%, transparent);
+  z-index: 5;
+}
+
+/* ── TEXT BLOCK ── */
+.text-block {
+  position: absolute;
+  left: 72px;
+  top: 50%;
+  transform: translateY(-52%);
+  z-index: 20;
+}
+
+.eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #B89850;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.headline {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 156px;
+  line-height: 0.87;
+  letter-spacing: -5px;
+  color: #FFFFFF;
+  text-shadow: 0 4px 60px rgba(0,0,0,0.95);
+}
+
+.headline .line2 {
+  color: #FFE090;
+  display: block;
+}
+
+.rule {
+  width: 58px;
+  height: 3px;
+  background: linear-gradient(90deg, #B89850 0%, rgba(184,152,80,0.1) 100%);
+  margin: 26px 0 22px;
+}
+
+.sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(237,232,220,0.58);
+  letter-spacing: 0.5px;
+  line-height: 1.45;
+}
+
+/* ── DANCER WRAP ── */
+.dancer-wrap {
+  position: absolute;
+  right: 48px;
+  bottom: 52px;
+  width: 500px;
+  height: 600px;
+  z-index: 10;
+}
+
+/* ── BRAND MARK ── */
+.brand {
+  position: absolute;
+  bottom: 26px;
+  left: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 30;
+}
+
+.brand-circle {
+  width: 30px;
+  height: 30px;
+  background: #B89850;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0F0D1A;
+  flex-shrink: 0;
+}
+
+.brand-handle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: rgba(237,232,220,0.36);
+  letter-spacing: 0.3px;
+}
+
+/* ── FLOATING PARTICLES ── */
+.sp {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 3;
+}
+</style>
+</head>
+<body>
+<div class="thumbnail">
+
+  <div class="bg"></div>
+  <div class="window-col"></div>
+  <div class="beam"></div>
+  <div class="floor-pool"></div>
+  <div class="vdivide"></div>
+
+  <!-- Atmospheric dust motes -->
+  <div class="sp" style="width:5px;height:5px;background:rgba(212,188,122,0.55);top:128px;right:352px"></div>
+  <div class="sp" style="width:3px;height:3px;background:rgba(212,188,122,0.4);top:218px;right:508px"></div>
+  <div class="sp" style="width:7px;height:7px;background:rgba(212,188,122,0.22);top:84px;right:255px"></div>
+  <div class="sp" style="width:4px;height:4px;background:rgba(212,188,122,0.45);top:440px;right:192px"></div>
+  <div class="sp" style="width:3px;height:3px;background:rgba(212,188,122,0.38);top:310px;right:575px"></div>
+  <div class="sp" style="width:6px;height:6px;background:rgba(212,188,122,0.2);top:555px;right:428px"></div>
+  <div class="sp" style="width:4px;height:4px;background:rgba(212,188,122,0.3);top:175px;right:290px"></div>
+  <div class="sp" style="width:3px;height:3px;background:rgba(212,188,122,0.5);top:390px;right:470px"></div>
+
+  <!-- Text -->
+  <div class="text-block">
+    <div class="eyebrow">a poem</div>
+    <div class="headline">
+      DANCE
+      <span class="line2">ANYWAY</span>
+    </div>
+    <div class="rule"></div>
+    <div class="sub">you already know the move</div>
+  </div>
+
+  <!-- Dancer SVG silhouette -->
+  <div class="dancer-wrap">
+    <svg width="500" height="600" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- Soft ambient halo behind figure -->
+      <ellipse cx="255" cy="330" rx="190" ry="240" fill="rgba(184,152,80,0.05)"/>
+
+      <!-- Floor shadow pool -->
+      <ellipse cx="268" cy="562" rx="130" ry="24" fill="rgba(184,152,80,0.14)"/>
+      <ellipse cx="268" cy="558" rx="80" ry="12" fill="rgba(184,152,80,0.08)"/>
+
+      <!-- ── FIGURE ── -->
+
+      <!-- Head -->
+      <circle cx="248" cy="72" r="46" fill="rgba(184,152,80,0.74)"/>
+
+      <!-- Neck -->
+      <path d="M234 115 Q248 122 262 115 L262 142 Q248 150 234 142 Z" fill="rgba(184,152,80,0.70)"/>
+
+      <!-- Torso — slight leftward lean -->
+      <path d="M216 142 L198 272 L300 272 L278 142 Z" fill="rgba(184,152,80,0.66)"/>
+
+      <!-- LEFT ARM — raised high, diagonal to upper-left (triumph) -->
+      <path d="M220 162 Q172 118 128 62"
+            stroke="rgba(184,152,80,0.74)" stroke-width="25" stroke-linecap="round" fill="none"/>
+      <!-- Left hand -->
+      <circle cx="128" cy="62" r="19" fill="rgba(184,152,80,0.70)"/>
+
+      <!-- RIGHT ARM — swept to side and slightly back -->
+      <path d="M274 170 Q338 196 408 172"
+            stroke="rgba(184,152,80,0.74)" stroke-width="25" stroke-linecap="round" fill="none"/>
+      <!-- Right hand -->
+      <circle cx="408" cy="172" r="19" fill="rgba(184,152,80,0.70)"/>
+
+      <!-- LEFT LEG — kicked out and up to lower-left -->
+      <path d="M222 272 Q176 354 145 450"
+            stroke="rgba(184,152,80,0.68)" stroke-width="28" stroke-linecap="round" fill="none"/>
+      <!-- Left foot -->
+      <ellipse cx="140" cy="458" rx="25" ry="13" transform="rotate(-28 140 458)" fill="rgba(184,152,80,0.65)"/>
+
+      <!-- RIGHT LEG — support leg, slight bend -->
+      <path d="M272 272 Q286 388 278 540"
+            stroke="rgba(184,152,80,0.68)" stroke-width="28" stroke-linecap="round" fill="none"/>
+      <!-- Right foot -->
+      <ellipse cx="276" cy="548" rx="34" ry="14" fill="rgba(184,152,80,0.65)"/>
+
+      <!-- Motion trail — left arm arc -->
+      <path d="M122 57 Q106 72 96 96"
+            stroke="rgba(212,188,122,0.28)" stroke-width="11" stroke-linecap="round" fill="none"/>
+      <path d="M114 50 Q97 66 88 92"
+            stroke="rgba(212,188,122,0.14)" stroke-width="7" stroke-linecap="round" fill="none"/>
+
+      <!-- Motion trail — right arm -->
+      <path d="M412 166 Q428 150 434 128"
+            stroke="rgba(212,188,122,0.28)" stroke-width="11" stroke-linecap="round" fill="none"/>
+      <path d="M420 160 Q438 142 444 118"
+            stroke="rgba(212,188,122,0.14)" stroke-width="7" stroke-linecap="round" fill="none"/>
+
+      <!-- Motion trail — kicked leg -->
+      <path d="M138 454 Q120 462 106 474"
+            stroke="rgba(212,188,122,0.2)" stroke-width="8" stroke-linecap="round" fill="none"/>
+
+      <!-- Sparkle cluster near raised left hand -->
+      <circle cx="102" cy="42" r="6" fill="rgba(255,224,144,0.68)"/>
+      <circle cx="82"  cy="27" r="4" fill="rgba(255,224,144,0.52)"/>
+      <circle cx="116" cy="24" r="3" fill="rgba(255,224,144,0.58)"/>
+      <circle cx="72"  cy="50" r="3" fill="rgba(255,224,144,0.42)"/>
+      <circle cx="90"  cy="14" r="2" fill="rgba(255,224,144,0.38)"/>
+
+    </svg>
+  </div>
+
+  <!-- Brand mark -->
+  <div class="brand">
+    <div class="brand-circle">B</div>
+    <span class="brand-handle">@mistakenlyhuman</span>
+  </div>
+
+</div>
+</body>
+</html>
