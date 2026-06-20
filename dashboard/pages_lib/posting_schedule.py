@@ -30,14 +30,14 @@ LONG_FORM: list[dict] = [
     {"day": 0, "time": "13:00", "niche": "Life",   "platforms": ["Twitter/X"], "type": "Twitter thread (manual)", "week": 1},
     {"day": 2, "time": "13:00", "niche": "DS",     "platforms": ["Twitter/X"], "type": "Twitter thread (manual)", "week": 1},
     {"day": 4, "time": "12:00", "niche": "Poetry", "platforms": ["Twitter/X"], "type": "Twitter thread (manual)", "week": 1},
-    # ── Week N+1: IG + FB (Metricool CSV)
-    {"day": 1, "time": "08:00", "niche": "Life",   "platforms": ["Instagram", "Facebook"], "type": "IG carousel (Metricool)", "week": 1},
-    {"day": 2, "time": "08:00", "niche": "DS",     "platforms": ["Instagram", "Facebook"], "type": "IG carousel (Metricool)", "week": 1},
-    {"day": 4, "time": "10:00", "niche": "Poetry", "platforms": ["Instagram", "Facebook"], "type": "IG carousel (Metricool)", "week": 1},
-    # ── Week N+1: Threads (Metricool CSV)
-    {"day": 1, "time": "20:00", "niche": "Life",   "platforms": ["Threads"], "type": "Threads post (Metricool)", "week": 1},
-    {"day": 2, "time": "20:00", "niche": "DS",     "platforms": ["Threads"], "type": "Threads post (Metricool)", "week": 1},
-    {"day": 4, "time": "12:00", "niche": "Poetry", "platforms": ["Threads"], "type": "Threads post (Metricool)", "week": 1},
+    # ── Week N+1: IG + FB (manual, in-app)
+    {"day": 1, "time": "08:00", "niche": "Life",   "platforms": ["Instagram", "Facebook"], "type": "IG carousel (manual)", "week": 1},
+    {"day": 2, "time": "08:00", "niche": "DS",     "platforms": ["Instagram", "Facebook"], "type": "IG carousel (manual)", "week": 1},
+    {"day": 4, "time": "10:00", "niche": "Poetry", "platforms": ["Instagram", "Facebook"], "type": "IG carousel (manual)", "week": 1},
+    # ── Week N+1: Threads (manual, in-app)
+    {"day": 1, "time": "20:00", "niche": "Life",   "platforms": ["Threads"], "type": "Threads post (manual)", "week": 1},
+    {"day": 2, "time": "20:00", "niche": "DS",     "platforms": ["Threads"], "type": "Threads post (manual)", "week": 1},
+    {"day": 4, "time": "12:00", "niche": "Poetry", "platforms": ["Threads"], "type": "Threads post (manual)", "week": 1},
 ]
 
 # (day_offset, time_str, label)

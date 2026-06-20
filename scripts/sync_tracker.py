@@ -101,19 +101,9 @@ def count_shorts(week: str, slug_dir: str) -> int:
 
 
 def check_social_scheduled(slug_dir: str) -> str:
-    csv_dir = REPO_ROOT / "output" / "scheduled"
-    found_in = []
-    for csv_path in csv_dir.glob("metricool_*.csv"):
-        try:
-            with open(csv_path) as f:
-                content = f.read()
-            if slug_dir[:30].lower() in content.lower():
-                found_in.append(csv_path.stem.replace("metricool_", ""))
-        except Exception:
-            pass
-    if not found_in:
-        return "No"
-    return "Yes"
+    # Social (IG / FB / Threads) is posted manually now — no Metricool/Publer CSV to detect.
+    # Column kept for schema stability; "Manual" reflects the current distribution model.
+    return "Manual"
 
 
 def derive_status(schedule: dict, slug_dir: str, week: str) -> str:
