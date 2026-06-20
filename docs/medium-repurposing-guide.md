@@ -144,38 +144,28 @@ Minimal editing + load to scheduler:
 # Quick edit if needed (DaVinci Resolve can do bulk export)
 # No special effects needed — raw is fine
 
-# Load posts to database (triggers Publer CSV generation)
-python3 scripts/load_posts.py \
-  --slug {BLOG_SLUG} \
-  --video-path assets/video/edited/{DATE}_{BLOG_SLUG}_yt.mp4 \
-  --podcast-path assets/audio/{DATE}_{BLOG_SLUG}_podcast.wav \
-  --type video+podcast \
-  --publish-date $(date -d 'next Wednesday' +%Y-%m-%d)
+# Stage LinkedIn into scheduling.db (no Metricool/Publer CSV — IG/FB/Threads are manual)
+python3 scripts/load_posts.py --week {WEEK}
 
-# Output: 
-# - Notion Contents DB updated with video + podcast entries
-# - Publer CSV regenerated with social posts
-# - Status: "Ready to publish"
+# Output:
+# - data/scheduling.db: LinkedIn staged (held manual until employer clearance)
+# - output/scheduled/upload_shorts.sh: YouTube Shorts upload commands
 ```
 
 ---
 
 ### Sunday (30 min) — SYNC + PREP
 
-Load Publer + prep next week's blog:
+Prep next week's blog (distribution is manual — nothing to import):
 
 ```bash
-# 1. Check Publer CSV files generated
-ls -lh output/scheduled/publer_*.csv
+# 1. Confirm per-platform derivative files exist for manual posting
+ls content/derivatives/{WEEK}/*/instagram_caption.txt content/derivatives/{WEEK}/*/threads_post.txt
 
-# 2. Manually import to Publer.io (one-time each week):
-# - Go to Publer.io dashboard
-# - Import: output/scheduled/publer_ig_fb.csv (select Instagram + Facebook)
-# - Import: output/scheduled/publer_threads.csv (select Threads)
-# - Verify dates + times, publish
+# 2. (Post IG/FB/Threads by hand in their windows during the week — see docs/daily/friday.md)
 
-# 3. Verify scheduler is running
-ps aux | grep scheduler.py
+# 3. LinkedIn stays manual until clearance — do NOT start scheduler.py
+#    ps aux | grep scheduler.py   # expect it to be stopped
 
 # 4. Select NEXT WEEK's Medium blog
 # - Pick from top unprocessed in data/analytics/medium-stats-all.json
@@ -234,7 +224,7 @@ WEEK OF: ____________
 [ ] Thursday: Extract Medium blog + generate scripts (30 min)
 [ ] Friday: Record video (2 hrs) + podcast (1.5 hrs)
 [ ] Saturday: Edit + load posts to DB (1 hr)
-[ ] Sunday: Import Publer CSV + select next blog (30 min)
+[ ] Sunday: confirm derivative files ready for manual posting + select next blog (30 min)
 
 Blog this week: _____________________
 Video filename: _____________________
@@ -271,9 +261,9 @@ Ship 4 YouTube videos + 4 podcast episodes + 16 social posts by end of May.
 | Ghostwriter script too long | Add `--max-words 2000` to truncate |
 | DaVinci Resolve export error | H.264 MP4, 1080p, 30fps, try H.265 if h.264 fails |
 | Podcast audio too quiet | Use Audacity Normalize (Effect → Normalize to -3dB) |
-| load_posts.py fails | Check: `python3 scripts/load_posts.py --validate` |
-| Publer CSV missing | Run: `python3 scripts/load_posts.py --generate-publer-csv` manually |
-| Scheduler not posting | Restart: `pkill scheduler.py && nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &` |
+| load_posts.py fails | Run `python3 scripts/db_setup.py` first; it only takes `--week` |
+| IG/FB/Threads not going out | They're manual now — post by hand from the derivative files (no CSV) |
+| Scheduler (post-clearance only) | Only run it once LinkedIn is cleared: `nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &` |
 
 ---
 
@@ -290,7 +280,7 @@ Ship 4 YouTube videos + 4 podcast episodes + 16 social posts by end of May.
 | 5–6 | YouTube | `assets/video/edited/2026-05-14_nodejs_style_yt.mp4` | 2026-05-17 |
 | 5–6 | Podcast | `assets/audio/2026-05-14_nodejs_style_podcast.wav` | 2026-05-18 |
 | 5–6 | Social (4 posts) | `content/derivatives/.../...` | 2026-05-17–18 |
-| 7 | Publer CSV | `output/scheduled/publer_*.csv` | Import & publish |
+| 7 | Static posts (IG/FB/Threads) | `content/derivatives/{week}/{slug}/*.txt` | Post manually |
 | 7 | YouTube uploads | Directly to @breathofdatascience/@breathoflife | Live |
 | 7 | Podcast episodes | Spotify/Anchor | Live |
 
@@ -313,6 +303,6 @@ Ship 4 YouTube videos + 4 podcast episodes + 16 social posts by end of May.
 | Ghostwriter script too long (10k+ words) | Use `--max-words 2000` flag to compress |
 | DaVinci Resolve export fails | Export as H.264 MP4, 1080p, 30fps |
 | Spotify upload timeout | Break audio into <15min segments |
-| Publer CSV import errors | Check CSV format: `python3 scripts/validate_csv.py output/scheduled/publer_*.csv` |
+| Missing derivative file | Re-run `prompts/repurposing_agent.md` for that slug; post manually once present |
 | Scheduler not posting | Check: `tail -f data/analytics/scheduler.log` |
 

@@ -2,6 +2,8 @@
 
 Blog exists from Monday. Today: generate YouTube script, scene plans, social images, slide deck, and carousel. No worksheet for Poetry.
 
+> **Reference docs:** `prompts/youtube-virality-prompt.md` (YT title formula, description structure, tags) · `data/kb/voice/` (emotional hook archetypes for poetry scripts)
+
 ---
 
 ## Step 1 — Generate Poetry YouTube script (~10 min)

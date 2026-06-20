@@ -2,6 +2,8 @@
 
 Generate the Data Science blog, fill personal inserts, fetch images, and repurpose to derivatives.
 
+> **Reference docs:** `docs/weekly-operating-guide.md` · `prompts/medium-virality-prompt.md` · `data/analytics/medium-stats-2026.md` · `data/kb/projects.json` (build-in-public project keys — pass via `--project` flag) · `data/kb/voice/` (DS hook archetypes + idea bank)
+
 ---
 
 ## Preflight (~10 min)
@@ -25,11 +27,24 @@ python3 -c "from scripts.lib.schedule_calc import get_iso_week; from datetime im
 ```
 Use this `YYYY-Wnn` as `{week}` everywhere below.
 
-### Notion: recent DS angles (required)
+### Recent DS angles (required) — from shipped blog slugs
 ```bash
-python3 scripts/query_notion_recent.py --days 90 --niche ds
+python3 -c "
+import glob, os
+from datetime import datetime, timedelta
+cutoff = datetime.today() - timedelta(days=90)
+seen = set()
+for path in sorted(glob.glob('content/blogs/2026-W*/*')):
+    name = os.path.basename(path)
+    slug = name[:-7] if name.endswith('_images') else (name[:-3] if name.endswith('.md') else None)
+    if not slug or 'data_science_tech' not in slug: continue
+    try: d = datetime.strptime(slug[:10], '%Y-%m-%d')
+    except ValueError: continue
+    if d >= cutoff: seen.add((slug[:10], slug.split('data_science_tech_',1)[-1].replace('-',' ')))
+for dt, topic in sorted(seen): print(' ', dt, topic)
+"
 ```
-Never repeat an angle covered in the last 90 days.
+Never repeat an angle covered in the last 90 days. (Source = `content/blogs/` slugs, not the tracker — the tracker drops titles when a week commits.)
 
 ---
 
@@ -78,6 +93,18 @@ Output: `content/blogs/{week}/YYYY-MM-DD_data_science_tech_{slug}.md`
 - Contains `[PERSONAL_INSERT]` markers
 - Contains code blocks with valid Python
 - No banned words: "In conclusion" · "Dive into" · "Leverage" · "Game-changer" · "Synergy"
+- **Title formula** — uses one of: specific incident / counter-intuitive result / specific number + outcome. Kill: "Everything You Need to Know About X" / "The Ultimate Guide to Y" / "Why Z Matters"
+- **First paragraph test** — remove it mentally: if the article still reads fine from paragraph 2, it's throat-clearing; rewrite so the opening line *is* the hook
+- **Subheadings are hooks**, not labels — "The Bug That Cost Me 3 Days" not "The Problem"
+- **Shareable sentence** — find the one line a stranger would screenshot; mark it `[QUOTABLE]` in the draft
+- **Ending** — no bullet recap, no "Let me know your thoughts in the comments"; last line carries weight
+
+> ### ⚡ Virality angle — DS (from `data/kb/reels/06_mavgpt_caption_formula.md`)
+> The same caption-IS-product logic that drives the @mavgpt reels applies to the blog:
+> - **Title states the OUTCOME, not the topic.** "The Type Error That Makes Your Analysis Wrong Without Crashing" beats "Variables, Data Types & Structures." Pattern: `[the dramatic result]` or `[N] hidden X for [tool]` — never "Tutorial 2/10" as the lead.
+> - **The post IS the product.** Put the full, immediately-usable value in the body verbatim — runnable code, the actual prompt, the exact steps. A reader should be able to act from the post alone, not a teaser that defers to a link.
+> - **Serialize for returning readers** — name a series ("Prompt Anatomy", "DS Tools") but keep the *title* outcome-led; the series number is a subtitle, not the hook.
+> - Honesty guardrail: claim only what you can show. No "this 10x'd my salary" headlines.
 
 ---
 

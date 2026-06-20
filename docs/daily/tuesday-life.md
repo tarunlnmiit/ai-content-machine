@@ -2,6 +2,8 @@
 
 Blog exists from Monday. Today: worksheet **first**, then YouTube script, scene plans, social images, slide deck, carousel.
 
+> **Reference docs:** `documentation/WORKSHEET_WORKFLOW.md` (worksheet delivery + Kit setup) · `prompts/youtube-virality-prompt.md` (YT title formula, description structure, tags) · `data/kb/projects.json` (build-in-public project keys for `--project` flag)
+
 ---
 
 ## Step 1 — Generate worksheet (~10 min) — do this FIRST

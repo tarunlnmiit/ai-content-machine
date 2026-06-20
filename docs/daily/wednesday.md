@@ -1,15 +1,12 @@
 # Wednesday — Publish Blogs + Shoot Videos + Prepare Edit Plans (~3 hrs)
 
-Scripts and assets exist from Tuesday. Today: publish all 3 blogs to Substack + Medium, shoot all 3 videos, generate captions, and build edit plans so Thursday's renders can start immediately.
+Scripts and assets exist from Tuesday. Today: publish all 3 blogs to Medium, shoot all 3 videos, generate captions, and build edit plans so Thursday's renders can start immediately.
 
 ## Wednesday at a glance
 
 | Time | Action | Output |
 |------|--------|--------|
-| 9:00 AM | Publish DS blog → Substack (MCP) | Live on breathofdatascience.substack.com |
-| 9:10 AM | Publish Life blog → Substack (MCP) | Live on thisisbreathoflife.substack.com |
-| 9:20 AM | Publish Poetry blog → Substack (MCP) | Live on breathofpoetry.substack.com |
-| 9:30 AM | Publish all 3 → Medium | Live on medium.com/@tarun-gupta |
+| 9:00 AM | Publish all 3 blogs → Medium | Live on medium.com/@tarun-gupta |
 | 10:00 AM | Shoot DS screen recording + talking-head | `assets/raw/{week}/{ds_slug}_screen.mov` + `{ds_slug}.mov` |
 | 11:00 AM | Shoot Life talking-head | `assets/raw/{week}/{life_slug}.mov` |
 | 12:00 PM | Shoot Poetry talking-head | `assets/raw/{week}/{poetry_slug}.mov` |
@@ -19,120 +16,34 @@ Scripts and assets exist from Tuesday. Today: publish all 3 blogs to Substack + 
 
 ---
 
-## Step 1 — Publish to Substack (MCP tool calls)
+## Step 1 — Publish to Medium (~15 min)
 
-Use Claude Code with Substack MCP tools. Three MCP servers map to three publications.
+Medium is the primary publishing destination. No canonical URL needed — Medium is the original source.
 
-### DS → breathofdatascience.substack.com
-
-**1a. Upload cover image:**
-```
-mcp__substack-breathofdatascience__upload_image
-  image_path: "content/blogs/{week}/{ds_slug}_images/cover.jpg"
-```
-Returns `image_id`. Use in Step 1b.
-
-**1b. Create formatted post:**
-```
-mcp__substack-breathofdatascience__create_formatted_post
-  title: "[title from blog frontmatter]"
-  subtitle: "[first sentence of blog]"
-  cover_image_id: "[image_id from 1a]"
-```
-Returns `post_id`.
-
-**1c. Preview (recommended before publishing):**
-```
-mcp__substack-breathofdatascience__preview_draft
-  post_id: "[post_id]"
-```
-Opens preview URL — verify formatting, images, code blocks look right.
-
-**1d. Publish:**
-```
-mcp__substack-breathofdatascience__publish_post
-  post_id: "[post_id]"
-  send_email: true
-```
-
-Copy the live URL. Save it:
-```bash
-python3 scripts/update_schedule.py \
-  --slug {ds_slug} --week {week} \
-  --substack-url 'https://breathofdatascience.substack.com/p/{ds_slug}'
-```
-
-### Life → thisisbreathoflife.substack.com
-
-```
-mcp__substack-breathoflife__upload_image
-  image_path: "content/blogs/{week}/{life_slug}_images/cover.jpg"
-
-mcp__substack-breathoflife__create_formatted_post
-  title: "[title]"
-  subtitle: "[subtitle]"
-  cover_image_id: "[image_id]"
-
-mcp__substack-breathoflife__publish_post
-  post_id: "[post_id]"
-  send_email: true
-```
-
-### Poetry → breathofpoetry.substack.com
-
-```
-mcp__substack-breathofpoetry__upload_image
-  image_path: "content/blogs/{week}/{poetry_slug}_images/cover.jpg"
-
-mcp__substack-breathofpoetry__create_formatted_post
-  title: "[title]"
-  cover_image_id: "[image_id]"
-
-mcp__substack-breathofpoetry__publish_post
-  post_id: "[post_id]"
-  send_email: true
-```
-
-**Manual fallback if MCP fails:**
-Open Substack in browser, paste the blog markdown text into the editor, set cover image, publish. Save the URL manually.
-
----
-
-## Step 2 — Publish to Medium (~15 min)
-
-Medium accepts blogs with canonical URL pointing back to Substack (signals Substack as the original source — good for SEO).
+> Pre-publish check: title + first paragraph against `prompts/medium-virality-prompt.md`. Target read ratio ≥ 40%.
 
 ```bash
 # DS blog
 python3 scripts/publish_medium.py \
-  --input content/blogs/{week}/{ds_slug}.md \
-  --canonical-url 'https://breathofdatascience.substack.com/p/{ds_slug}'
+  --input content/blogs/{week}/{ds_slug}.md
 
 # Life blog
 python3 scripts/publish_medium.py \
-  --input content/blogs/{week}/{life_slug}.md \
-  --canonical-url 'https://thisisbreathoflife.substack.com/p/{life_slug}'
+  --input content/blogs/{week}/{life_slug}.md
 
 # Poetry blog
 python3 scripts/publish_medium.py \
-  --input content/blogs/{week}/{poetry_slug}.md \
-  --canonical-url 'https://breathofpoetry.substack.com/p/{poetry_slug}'
+  --input content/blogs/{week}/{poetry_slug}.md
 ```
 
 **Publish to a publication instead of personal profile:**
 ```bash
 python3 scripts/publish_medium.py \
   --input content/blogs/{week}/{ds_slug}.md \
-  --canonical-url '...' \
   --publication 'towards-data-science'
 ```
 
 Available publications (if accepted): `towards-data-science` · `humans-are-stories` · `the-ascent`
-
-**Tags (auto-generated; override if wrong):**
-```bash
---tags 'python,data-science,machine-learning'
-```
 
 After publish, save the Medium URL:
 ```bash
@@ -143,7 +54,7 @@ python3 scripts/update_schedule.py \
 
 Medium URLs are injected into Instagram/Facebook captions by `load_posts.py` on Friday.
 
-### Verify all 3 blog URLs saved
+### Verify all 3 Medium URLs saved
 
 ```bash
 python3 -c "
@@ -152,16 +63,17 @@ for f in glob.glob('content/derivatives/{week}/*/schedule.json'):
     d = json.load(open(f))
     slug = f.split('/')[-2][:45]
     print(slug)
-    print('  Substack:', d.get('substack_url', 'MISSING'))
     print('  Medium:  ', d.get('medium_url', 'MISSING'))
 "
 ```
 
-All 6 URLs should be present. Missing Medium URL → add manually. Missing Substack URL → re-run the update_schedule.py line above.
+All 3 Medium URLs should be present. Missing URL → add manually with the update_schedule.py line above.
 
 ---
 
-## Step 3 — Shoot DS video (screen recording, ~45 min)
+## Step 2 — Shoot DS video (screen recording, ~45 min)
+
+> **Full physical setup reference:** `docs/recording-guide.md` — camera position, ring light angles, audio levels, teleprompter app setup, and common recording problems. Read it once before your first shoot; use it as a quick-reference checklist after that.
 
 ### Equipment setup
 - Primary screen: IDE open, font zoomed to 20pt+
@@ -184,6 +96,9 @@ All 6 URLs should be present. Missing Medium URL → add manually. Missing Subst
 - [ ] Talk through each inline ```python block live; for chart `[SCREEN:]` cues, run the preceding block and screenshot the output as the marker PNG. Pull up any "Links to show on screen:" URLs.
 - [ ] Record 2 takes for the most important demo sections
 - [ ] End with 3 seconds of silence
+- [ ] **Sound-off readiness — hook delivery:** Your FIRST spoken words must be the hook line from the `[TEXT_OVERLAY: shown at 0:00]` tag in the script. Do NOT say "alright let's start" or "okay so today we're going to". The moment you open your mouth, the hook comes out. 40% of your viewers will hear nothing — they read it. It must be on screen as text AND spoken.
+- [ ] **Shareable moment hold:** When you reach the `[SHAREABLE_MOMENT]` line in the script, slow down and pause 0.5 seconds before and after. This gives the clip room to breathe and makes it easy to isolate for the IG reel.
+- [ ] **CTA take:** When saying the comment keyword CTA ("Comment X and I'll send you Y"), look directly at camera. Pause after the keyword. Say it once, cleanly. This 5-second window is the ending of your Instagram reel.
 
 ```bash
 mkdir -p "assets/raw/{week}"
@@ -193,7 +108,7 @@ mv ~/Desktop/{recording}.mov "assets/raw/{week}/{ds_slug}_screen.mov"
 
 ---
 
-## Step 4 — Shoot Life video (talking-head, ~30 min)
+## Step 3 — Shoot Life video (talking-head, ~30 min)
 
 ### Equipment setup
 - iPhone on tripod, 4K 30fps, front-facing
@@ -215,6 +130,9 @@ mv ~/Desktop/{recording}.mov "assets/raw/{week}/{ds_slug}_screen.mov"
 - [ ] For `[BROLL:]` cues: keep speaking — B-roll replaces the picture, not the audio
 - [ ] Record spontaneous take AFTER the scripted one (often more authentic)
 - [ ] End with 3-second silence
+- [ ] **Sound-off readiness — hook delivery:** Open your mouth with the hook line from `[TEXT_OVERLAY: shown at 0:00]` in the script. Not "Hi everyone" or "So today I want to talk about". The hook. First words. Non-negotiable.
+- [ ] **Shareable moment hold:** Slow down at the `[SHAREABLE_MOMENT]` line. 0.5-second pause before and after. This becomes the most clipped moment of your reel.
+- [ ] **CTA take:** Deliver the comment-keyword CTA looking directly at camera. Clear, unhurried. One clean take. ("Comment STIGMA and I'll send you the full post.")
 
 ```bash
 # Transfer via AirDrop or Lightning cable, then:
@@ -223,7 +141,7 @@ mv ~/Downloads/{iphone_recording}.mov "assets/raw/{week}/{life_slug}.mov"
 
 ---
 
-## Step 5 — Shoot Poetry talking-head (~30 min)
+## Step 4 — Shoot Poetry talking-head (~30 min)
 
 Poetry videos are talking-head + Remotion animations + optional B-roll. Same setup as Life.
 
@@ -246,6 +164,9 @@ Poetry videos are talking-head + Remotion animations + optional B-roll. Same set
 - [ ] For `[BROLL:]` cues: keep speaking — B-roll overlays talking head
 - [ ] Record 2–3 takes; pick the most natural read
 - [ ] End with 3-second silence
+- [ ] **Sound-off readiness — hook delivery:** The hook line from the script is your first spoken words. For poetry, this is the opening couplet or the image-description hook — say it slowly, clearly, without preamble. Viewers in a silent environment will read it as text while you speak it.
+- [ ] **Shareable moment hold:** The `[SHAREABLE_MOMENT]` line (from Tuesday's script) — deliver it like you're reading to one person. Hold the camera. 0.5-second pause before and after. This is the clip that gets saved and shared.
+- [ ] **Save CTA instead of comment CTA for Poetry:** Poetry CTAs use "Save this if it found you at the right time 🤍" — NOT a comment keyword. There is no comment keyword for poetry reels. The virality metric for poetry is saves ÷ views, not DMs.
 
 ```bash
 mv ~/Downloads/{iphone_recording}.mov "assets/raw/{week}/{poetry_slug}.mov"
@@ -253,7 +174,7 @@ mv ~/Downloads/{iphone_recording}.mov "assets/raw/{week}/{poetry_slug}.mov"
 
 ---
 
-## Step 6 — Generate captions with Whisper (~5 min per video)
+## Step 5 — Generate captions with Whisper (~5 min per video)
 
 Captions feed Remotion's TikTok-style caption system in `TalkingHeadEdit.tsx`.
 
@@ -302,7 +223,7 @@ for slug in ['{ds_slug}', '{life_slug}', '{poetry_slug}']:
 
 ---
 
-## Step 6.5 — Generate overlay scene plans (optional, before Step 7)
+## Step 5.5 — Generate overlay scene plans (optional, before Step 7)
 
 Run BEFORE `prepare_remotion_edit.py` so timestamp alignment has the file ready.
 
@@ -338,7 +259,7 @@ Panel layouts keep the speaker on screen throughout; fullscreen layouts are comp
 
 ---
 
-## Step 7 — Build edit plans (~5 min each)
+## Step 6 — Build edit plans (~5 min each)
 
 Edit plans define the Remotion assembly: cut boundaries, B-roll inserts, title card, lower third, outro, color grading, and overlay scene plan.
 
@@ -428,7 +349,7 @@ cd remotion && npm run dev
 
 ---
 
-## Step 8 — Verify (5 min)
+## Step 7 — Verify (5 min)
 
 ```bash
 # All 3 edit plans exist
@@ -449,7 +370,7 @@ for f in sorted(glob.glob('remotion/public/edit-plans/{week}/*.json')):
 
 ---
 
-## Step 8.5 — Generate overlay manifest with timestamps (if using overlays)
+## Step 7.5 — Generate overlay manifest with timestamps (if using overlays)
 
 **Only if Step 6.5 was run.** Align overlay scenes to caption timestamps and generate manifest for DaVinci placement.
 
@@ -512,10 +433,6 @@ python3 scripts/prepare_remotion_edit.py ... --week {week} --sensitivity 0.003
 # Or force single segment (no cuts):
 python3 scripts/prepare_remotion_edit.py ... --week {week} --no-clap-detection
 ```
-
-**Substack MCP returns 401 Unauthorized:**
-- Token expired — tokens last 30 days
-- Re-authenticate: check MCP server docs for re-auth flow, or re-paste cookie from browser DevTools
 
 **Medium publish fails "story too long":**
 - ~4,000 word soft cap for API publish

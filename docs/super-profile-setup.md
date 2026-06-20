@@ -27,6 +27,7 @@
 | ▶️ YouTube | https://youtube.com/@breathofdatascience |
 | ✍️ Blog | https://medium.com/@tarun-gupta |
 | 💻 Tutorial Code | https://github.com/tarunlnmiit/machine_learning |
+| ✍️ Blog | https://medium.com/@tarun-gupta |
 
 ---
 

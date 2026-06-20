@@ -2,6 +2,8 @@
 
 Edit plans + captions exist from Wednesday. Today: render Poetry long-form, render thumbnail, upload to YouTube (if authorized), render shorts, update Notion.
 
+> **Reference docs:** `prompts/youtube-virality-prompt.md` (YT title/description/tags before upload) · `data/kb/viral_reel_formula.md` (5-beat structure for any short/reel rendered today) · `prompts/podcast-virality-prompt.md` (Poetry YouTube doubles as podcast — apply before publishing to Spotify)
+
 ---
 
 ## Step 1 — Start render server (once per session)
@@ -38,20 +40,44 @@ Output: `output/animations/{week}/{poetry_slug}.mp4`
 
 ---
 
-## Step 3 — Render Poetry thumbnail (~2 min)
+## Step 3 — Generate Poetry thumbnail ⛔ BLOCKING
+
+**Audit finding:** Poetry channel has 0 views on most recent video. Branded text-only thumbnails are invisible. **Shorts are the primary output for this channel** until long-form CTR improves — but when you do upload long-form, the thumbnail must have a face.
+
+**Checklist:**
+- [ ] Face visible (lyrical, contemplative expression — or atmospheric AI portrait if no photo)
+- [ ] Hook text: the one line from the poem that makes someone stop — not the poem title
+- [ ] Drop the `||` separator style from titles entirely
 
 ```bash
-cd remotion
+# Mode A — Canva AI (atmospheric editorial style for poetry)
+python3 scripts/generate_thumbnail.py \
+  --blog content/scripts/{week}/{poetry_slug}_yt.md \
+  --niche poetry \
+  --hook "Love Doesn't Announce Itself" \
+  --week {week} \
+  --canva
 
-# Variant A — default upload
+# Mode B — with photo
+python3 scripts/generate_thumbnail.py \
+  --blog content/scripts/{week}/{poetry_slug}_yt.md \
+  --niche poetry \
+  --hook "Love Doesn't Announce Itself" \
+  --face assets/raw/{week}/thumbs/{poetry_slug}_face_01.jpg \
+  --week {week} \
+  --canva
+```
+
+Output: `output/visuals/{week}/{poetry_slug}_thumb_canva.png`
+
+**Shorts-first reminder:** For @breathofpoetry, prioritise rendering and uploading Shorts (Step 6) over long-form until the channel reaches 50+ subscribers. Long-form with 8 subscribers starts at zero every time; Shorts reach cold audiences.
+
+**Fallback (Remotion, no face):**
+```bash
+cd remotion
 npx remotion still Thumbnail \
   output/visuals/{week}/{poetry_slug}_thumb_a.png \
-  --props='{"titleText":"Your Title Here","niche":"poetry","variant":"a","bgType":"dark"}'
-
-# Variant B — A/B test alternate
-npx remotion still Thumbnail \
-  output/visuals/{week}/{poetry_slug}_thumb_b.png \
-  --props='{"titleText":"Your Title Here","niche":"poetry","variant":"b"}'
+  --props='{"titleText":"Your Hook Here","niche":"poetry","variant":"a","bgType":"dark"}'
 ```
 
 ---

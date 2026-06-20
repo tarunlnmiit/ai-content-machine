@@ -2,6 +2,8 @@
 
 Generate the Poetry blog, fill personal inserts, fetch images, and repurpose to derivatives.
 
+> **Reference docs:** `docs/weekly-operating-guide.md` · `prompts/medium-virality-prompt.md` · `data/analytics/medium-stats-2026.md` · `data/kb/voice/` (emotional hook archetypes 9–10 + idea bank themes 11–14)
+
 ---
 
 ## Preflight (~10 min)
@@ -25,11 +27,24 @@ python3 -c "from scripts.lib.schedule_calc import get_iso_week; from datetime im
 ```
 Use this `YYYY-Wnn` as `{week}` everywhere below.
 
-### Notion: recent Poetry angles (required)
+### Recent Poetry angles (required) — from shipped blog slugs
 ```bash
-python3 scripts/query_notion_recent.py --days 90 --niche poetry
+python3 -c "
+import glob, os
+from datetime import datetime, timedelta
+cutoff = datetime.today() - timedelta(days=90)
+seen = set()
+for path in sorted(glob.glob('content/blogs/2026-W*/*')):
+    name = os.path.basename(path)
+    slug = name[:-7] if name.endswith('_images') else (name[:-3] if name.endswith('.md') else None)
+    if not slug or 'poetry_quotes' not in slug: continue
+    try: d = datetime.strptime(slug[:10], '%Y-%m-%d')
+    except ValueError: continue
+    if d >= cutoff: seen.add((slug[:10], slug.split('poetry_quotes_',1)[-1].replace('-',' ')))
+for dt, topic in sorted(seen): print(' ', dt, topic)
+"
 ```
-Never repeat an angle covered in the last 90 days.
+Never repeat an angle covered in the last 90 days. (Source = `content/blogs/` slugs, not the tracker — the tracker drops titles when a week commits.)
 
 ---
 
@@ -79,6 +94,19 @@ Output: `content/blogs/{week}/YYYY-MM-DD_poetry_quotes_{slug}.md`
 - Word count ~1,200–2,000
 - Contains `[PERSONAL_INSERT]` markers
 - No banned words: "In conclusion" · "Dive into" · "Leverage" · "Game-changer" · "Synergy"
+- **Title formula** — names a specific emotion or paradox; kill vague titles ("Love Is Complicated") and generic ones ("A Poem About Grief")
+- **First paragraph test** — remove it mentally: if the poem or essay reads fine from line 2, rewrite so the opening names the sensation immediately
+- **Subheadings** (if present) — evocative lines, not section labels
+- **Shareable line** — the couplet or sentence that makes a reader stop; mark it `[QUOTABLE]` in the draft
+- **Ending** — carries the emotional landing; no summary, no "share with someone who needs this"
+
+> ### ⚡ Virality angle — Poetry (from `data/kb/voice/poetry_formula.md`)
+> Reverse-engineered from @christi.steyn + @joeykidney. The poem is a projective surface — readers feel *seen*, then share their own story:
+> - **Concrete nouns over abstract emotion.** Every line gets a physical object. "I would plant flowers on your pillow" beats "I love you so much." Tarun's edge: data/math precision — "the probability of finding you in all possible futures is less than one."
+> - **One playful/mundane detail inside the tenderness** keeps it from feeling greeting-card ("but bird language is not on duolingo").
+> - **Permission close** outperforms a sad close — "you are allowed to be this" / "and that is enough."
+> - **Never explain the poem.** No "this is about grief," no "I wrote this when…" — context kills the projective magic.
+> - The strongest single line can BE the whole social caption later (save-trigger); write toward one screenshot-worthy line.
 
 ---
 

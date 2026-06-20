@@ -2,64 +2,21 @@
 
 Scripts and assets exist from Tuesday. Today: publish DS blog, shoot screen recording, generate captions, build edit plan.
 
----
-
-## Step 1 — Publish DS blog to Substack (~10 min)
-
-**1a. Upload cover image:**
-```
-mcp__substack-breathofdatascience__upload_image
-  image_path: "content/blogs/{week}/{ds_slug}_images/cover.jpg"
-```
-Returns `image_id`.
-
-**1b. Create post:**
-```
-mcp__substack-breathofdatascience__create_formatted_post
-  title: "[title from blog frontmatter]"
-  subtitle: "[first sentence of blog]"
-  cover_image_id: "[image_id from 1a]"
-```
-Returns `post_id`.
-
-**1c. Preview:**
-```
-mcp__substack-breathofdatascience__preview_draft
-  post_id: "[post_id]"
-```
-Verify formatting, images, code blocks.
-
-**1d. Publish:**
-```
-mcp__substack-breathofdatascience__publish_post
-  post_id: "[post_id]"
-  send_email: true
-```
-
-Save the URL:
-```bash
-python3 scripts/update_schedule.py \
-  --slug {ds_slug} --week {week} \
-  --substack-url 'https://breathofdatascience.substack.com/p/{ds_slug}'
-```
-
-**Manual fallback:** Open Substack in browser, paste markdown, set cover image, publish.
+> **Reference docs:** `prompts/medium-virality-prompt.md` + `data/analytics/medium-stats-2026.md` (pre-publish title check — target read ratio ≥ 40%) · `docs/recording-guide.md` (camera, audio, OBS setup) · `docs/video-production-guide.md` (screen recording workflow)
 
 ---
 
-## Step 2 — Publish DS blog to Medium (~8 min)
+## Step 1 — Publish DS blog to Medium (~8 min)
 
 ```bash
 python3 scripts/publish_medium.py \
-  --input content/blogs/{week}/{ds_slug}.md \
-  --canonical-url 'https://breathofdatascience.substack.com/p/{ds_slug}'
+  --input content/blogs/{week}/{ds_slug}.md
 ```
 
 **To publish to Towards Data Science (if accepted):**
 ```bash
 python3 scripts/publish_medium.py \
   --input content/blogs/{week}/{ds_slug}.md \
-  --canonical-url 'https://breathofdatascience.substack.com/p/{ds_slug}' \
   --publication towards-data-science
 ```
 
@@ -72,7 +29,7 @@ python3 scripts/update_schedule.py \
 
 ---
 
-## Step 3 — Shoot DS screen recording (~60 min)
+## Step 2 — Shoot DS screen recording (~60 min)
 
 ### Setup
 - Primary screen: IDE open, font zoomed to 20pt+
@@ -102,7 +59,7 @@ mv ~/Desktop/{recording}.mov "assets/raw/{week}/{ds_slug}_screen.mov"
 
 ---
 
-## Step 4 — Generate captions (~5 min)
+## Step 3 — Generate captions (~5 min)
 
 ```bash
 python3 scripts/generate_captions.py \
@@ -123,7 +80,7 @@ print(f'{len(caps)} tokens, {caps[0][\"startMs\"]}–{caps[-1][\"endMs\"]}ms')
 
 ---
 
-## Step 5 — Generate overlay scene plan (optional, run before Step 6)
+## Step 4 — Generate overlay scene plan (optional, run before Step 5)
 
 ```bash
 python3 scripts/generate_scene_plans.py \
@@ -143,7 +100,7 @@ If file missing when edit plan builds, overlays are silently skipped.
 
 ---
 
-## Step 6 — Build edit plan (~5 min)
+## Step 5 — Build edit plan (~5 min)
 
 ```bash
 python3 scripts/prepare_remotion_edit.py \
@@ -191,9 +148,6 @@ python3 scripts/prepare_remotion_edit.py ... --week {week} --sensitivity 0.003
 # Or:
 python3 scripts/prepare_remotion_edit.py ... --week {week} --no-clap-detection
 ```
-
-**Substack 401:**
-Token expired (30-day TTL). Re-authenticate via MCP server docs or re-paste browser cookie.
 
 **Medium "story too long" (~4,000 word cap):**
 Trim blog or publish manually via browser.

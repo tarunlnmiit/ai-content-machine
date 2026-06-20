@@ -28,7 +28,7 @@ Run from project root: `cd "/Users/tarungupta/Making It Big/Claude/content-machi
 1. **YouTube uploads:** Upload long-form videos with `--publish-at` matching schedule above.
 2. **Blog/Substack/Medium:** Publish blogs at scheduled times.
 3. **LinkedIn:** Posts auto-queue via scheduler.py.
-4. **Social (week after):** Import Metricool CSVs in the following week.
+4. **Social (week after):** post IG/FB/Threads manually in-app (no Metricool/Publer CSV).
 
 ---
 

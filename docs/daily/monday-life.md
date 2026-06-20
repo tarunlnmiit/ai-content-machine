@@ -2,6 +2,8 @@
 
 Generate the Life & Self-Development blog, fill personal inserts, fetch images, and repurpose to derivatives.
 
+> **Reference docs:** `docs/weekly-operating-guide.md` · `prompts/medium-virality-prompt.md` · `data/analytics/medium-stats-2026.md` · `data/kb/projects.json` (build-in-public project keys — pass via `--project` flag) · `data/kb/voice/` (Life hook archetypes + high-emotion idea bank)
+
 ---
 
 ## Preflight (~10 min)
@@ -25,11 +27,24 @@ python3 -c "from scripts.lib.schedule_calc import get_iso_week; from datetime im
 ```
 Use this `YYYY-Wnn` as `{week}` everywhere below.
 
-### Notion: recent Life angles (required)
+### Recent Life angles (required) — from shipped blog slugs
 ```bash
-python3 scripts/query_notion_recent.py --days 90 --niche life
+python3 -c "
+import glob, os
+from datetime import datetime, timedelta
+cutoff = datetime.today() - timedelta(days=90)
+seen = set()
+for path in sorted(glob.glob('content/blogs/2026-W*/*')):
+    name = os.path.basename(path)
+    slug = name[:-7] if name.endswith('_images') else (name[:-3] if name.endswith('.md') else None)
+    if not slug or 'life_self_dev' not in slug: continue
+    try: d = datetime.strptime(slug[:10], '%Y-%m-%d')
+    except ValueError: continue
+    if d >= cutoff: seen.add((slug[:10], slug.split('life_self_dev_',1)[-1].replace('-',' ')))
+for dt, topic in sorted(seen): print(' ', dt, topic)
+"
 ```
-Never repeat an angle covered in the last 90 days.
+Never repeat an angle covered in the last 90 days. (Source = `content/blogs/` slugs, not the tracker — the tracker drops titles when a week commits.)
 
 ---
 
@@ -79,6 +94,19 @@ Output: `content/blogs/{week}/YYYY-MM-DD_life_self_dev_{slug}.md`
 - Word count ~1,200–2,000
 - Contains `[PERSONAL_INSERT]` markers — Life blogs require the most personal content
 - No banned words: "In conclusion" · "Dive into" · "Leverage" · "Game-changer" · "Synergy"
+- **Title formula** — uses one of: specific incident / named lesson / counter-intuitive result. Kill: "Everything You Need to Know About X" / "Why Z Matters" / anything that describes content without tension
+- **First paragraph test** — remove it mentally: if the article reads fine from paragraph 2, it's throat-clearing; rewrite so the opening line *is* the specific moment
+- **Subheadings are hooks**, not labels — "The Call That Made Me Realise" not "The Turning Point"
+- **Shareable sentence** — the one line someone would DM to a friend; mark it `[QUOTABLE]` in the draft
+- **Ending** — no bullet recap, no "Let me know your thoughts in the comments"; end on the quotable sentence, a question, or a one-sentence implication
+
+> ### ⚡ Virality angle — Life (from `data/kb/voice/life_formula.md`)
+> Reverse-engineered from @ankurwarikoo + @joeykidney. The teach-don't-inspire system:
+> - **Title = a declarative claim, not a question.** "Self-discipline is a myth" beats "Is self-discipline real?" The reader reacts (agree/disagree) before they click.
+> - **The mechanism line is the product.** Name *why* this keeps happening to the reader in one precise sentence ("you don't procrastinate from laziness — the task has no clear first step"). That line is the `[QUOTABLE]`.
+> - **Unexpected-source angle fits Tarun exactly** — find the life truth in data/probability/systems ("What Bayesian thinking taught me about regret"). Merges DS + Life without forcing it.
+> - **Lead from the analytical identity as the disarmer** for heavy topics ("I work with data, I don't feel things easily, and yet…").
+> - **No motivational crescendo.** Close flat and instructional ("start with the one that stings"), never "YOU'VE GOT THIS."
 
 ---
 

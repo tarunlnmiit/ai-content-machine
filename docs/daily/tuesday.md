@@ -2,6 +2,14 @@
 
 Blogs exist from Monday. Today: produce worksheets **first** (so YouTube scripts can reference them in the description), generate YouTube scripts for all 3 niches, Remotion scene plans for motion shorts, and all social visual assets.
 
+> **Reference docs:**
+> - DS screen-recording script agent (use when prompting Claude): `prompts/yt_screen_script_agent.md`
+> - DS combo script agent (stock B-roll + screen recording hybrid): `prompts/yt_combo_script_agent.md`
+> - Life + Poetry script agent (also produces podcast script): `prompts/podcast_agent.md`
+> - 5-beat viral Shorts formula (reverse-engineered from 38k-view reel): `data/kb/viral_reel_formula.md`
+> - Twitter hook patterns (load before Viral Readiness Audit Step 5): `data/kb/twitter_hook_patterns.json`
+> - YouTube virality framework (titles, thumbnails, retention): `prompts/youtube-virality-prompt.md`
+
 ## Tuesday at a glance
 
 | Time | Task | Output |
@@ -112,7 +120,10 @@ Life script structure:
 
 ### Poetry (voiceover over visuals, ~10 min)
 
+The poem IS the script. The Medium blog file is also the YouTube script — no separate generation needed unless you want explicit B-roll cues.
+
 ```bash
+# Optional: generate a version with BROLL cues added
 python3 scripts/ghostwrite.py \
   --source content/blogs/{week}/{poetry_slug}.md \
   --niche poetry \
@@ -123,10 +134,14 @@ Output: `content/scripts/{week}/{poetry_slug}_yt.md`
 
 Poetry script structure:
 ```
-[HOOK: opening line]
-[BROLL: abstract/nature visual suggestion]
-[PAUSE: intentional silence beat]
+[HOOK: first 2-3 lines from the Medium hook]
+[Read the poem — each line spoken slowly]
+[PAUSE: intentional silence beat before the close line]
+[Close line from the Medium piece]
+[BROLL: atmospheric visual suggestion — one per stanza]
 ```
+
+If you skip the script generation, copy the Medium blog file as-is to `content/scripts/{week}/{poetry_slug}_yt.md` — it's ready to read from.
 
 ### Worksheet CTA (DS/Life, auto)
 
@@ -134,6 +149,27 @@ Because Step 1 built the worksheet manifest, the **DS and Life** scripts now car
 ```bash
 python3 scripts/worksheet_links.py --week {week}
 ```
+
+### DS script — Series compounding (add this to the END of every DS script)
+
+Every DS script must end with a tease for next week's DS piece. This builds a pre-warmed audience who comes back for the sequel.
+
+Open `content/scripts/{week}/{ds_slug}_yt.md` and verify the outro contains something like:
+
+```
+[OUTRO TEASE: "Next week — [1-sentence description of next DS topic]. If you don't want to miss it, subscribe."]
+```
+
+If it doesn't exist, add it manually. It should be:
+- **One sentence maximum** describing the next piece
+- **Specific** — not "more Python tips", but "next week I'll show you the pandas mistake that corrupted 6 months of data silently"
+- Placed right before the subscribe CTA
+
+If you don't know next week's topic yet, use a placeholder: `[OUTRO TEASE: "Next week — [next DS topic here]. Subscribe so you don't miss it."]`
+
+You will fill this in once Monday's topic selection is done next week.
+
+---
 
 ### Verify scripts
 
@@ -149,6 +185,204 @@ wc -w content/scripts/{week}/{ds_slug}_yt.md
 wc -w content/scripts/{week}/{life_slug}_yt.md
 wc -w content/scripts/{week}/{poetry_slug}_yt.md
 ```
+
+---
+
+## Step 2c — Viral Readiness Audit for each script (10 min, MANDATORY)
+
+Do this for ALL THREE scripts before moving to Step 3. This prevents weak reels from being produced on Thursday.
+
+Open each script file in VS Code. Go through the three checks below:
+
+### Check 1 — Hook validation
+
+Read the **first 3 sentences** of each script. The opening line must contain a specific number, result, or named moment.
+
+**DS script hook test:**
+```bash
+head -5 content/scripts/{week}/{ds_slug}_yt.md
+```
+- Does it start with a specific incident, number, or named failure? → ✅ passes
+- Does it start with "Today I want to talk about…", "In this video…", or any vague setup? → ❌ REWRITE IT
+
+**How to rewrite a failing DS hook** — replace the opening with the specific-incident sentence you wrote down on Monday (the hook pre-qual test result). If you didn't write it down, open the blog and find the most surprising/counter-intuitive sentence.
+
+**Life script hook test:**
+```bash
+head -5 content/scripts/{week}/{life_slug}_yt.md
+```
+Same check. Life hooks must open with a specific personal incident, not a generalization.
+
+**Poetry script hook test:**
+```bash
+head -5 content/scripts/{week}/{poetry_slug}_yt.md
+```
+Poetry hooks must name a specific emotion or paradox in the opening line, not describe what the poem is about.
+
+---
+
+### Check 2 — Shareable moment identification
+
+For each script, find the one line a stranger would send to a friend. This is the "shareable moment."
+
+It is typically:
+- A counter-intuitive observation ("The more I fixed it, the more wrong it got")
+- A specific personal admission ("I didn't realise I was the reason the team was slow")
+- A line that names a universal feeling specifically ("Not the anxiety before the deadline — the quiet dread after it passes")
+
+Once you find it, add a `[SHAREABLE_MOMENT]` comment tag on the line above it in the script:
+
+```
+[SHAREABLE_MOMENT]
+Python gave me a perfectly confident wrong number. No error. No crash. I trusted it for a week.
+```
+
+This tag is for your reference — it tells Claude which moment to prioritise when generating the IG reel brief on Thursday. If `generate_ig_reel_brief.py` sees this tag, it surfaces that moment as Hook Option 1.
+
+---
+
+### Check 3 — Sound-off overlay plan
+
+40% of Instagram Reels are watched with sound OFF. Every critical moment in your reel must also appear as visible text on screen. These tags feed directly into `generate_scene_plans.py --mode overlay` on Thursday — Remotion reads them and bakes the overlays into the final reel automatically. No manual overlay work needed. Plan them now while the script is in front of you.
+
+For each script, identify exactly **3 lines that MUST appear as text overlays** in the reel:
+
+1. **The hook line** (your opening statement — always overlay #1, shown at second 0:00)
+2. **The shareable moment** (the line tagged `[SHAREABLE_MOMENT]` above)
+3. **The CTA line** (the comment-keyword prompt — "Comment KEYWORD and I'll send you X")
+
+Add a `[TEXT_OVERLAY]` tag above each of those three lines in the script file:
+
+```
+[TEXT_OVERLAY: shown at 0:00]
+Python gave me a perfectly confident wrong number.
+```
+
+```
+[TEXT_OVERLAY: shareable moment]
+I trusted it for a week. No error. No warning.
+```
+
+```
+[TEXT_OVERLAY: CTA]
+Comment TYPES and I'll send you the full breakdown.
+```
+
+You do NOT need more than 3. Additional overlays are optional. These 3 are non-negotiable.
+
+---
+
+### Check 4 — LinkedIn post hook
+
+LinkedIn collapses every post after line 3. The reader sees only the first ~250 characters before a "…see more" button. If those first 3 lines don't make them click, they don't read the post. They definitely don't comment.
+
+Open `content/derivatives/{week}/{slug}/linkedin_post.txt` for each niche.
+
+**The test:** read only the first 3 lines. Ask: *"Would I click 'see more' if this appeared in my feed?"*
+
+LinkedIn hook rules — the first line must be one of:
+- A **bold, specific claim** — "I built a job application tracker in 4 hours using Python. Here's every line of code."
+- A **counter-intuitive statement** — "The more I optimised my model, the worse my results got."
+- A **specific personal admission** — "I called my parents when I was drowning in anxiety at work. They listed budgeting tips."
+- A **direct question with a specific answer implied** — "Do you know what your pandas merge is doing with duplicate keys? Most data scientists don't."
+
+LinkedIn hook anti-patterns — **rewrite immediately if you see any of these:**
+- "I'm excited to share…"
+- "Today I want to talk about…"
+- "In this post, I'll cover…"
+- "Mental health is important." (too vague)
+- Starting with a hashtag
+
+**If the first line fails:** open `linkedin_post.txt`, delete the first line, and replace it with the hook sentence you wrote during Monday's pre-qualification test. Then add a line break. The rest of the post can stay.
+
+Add a `[LINKEDIN_HOOK]` tag comment at the top of each linkedin_post.txt to mark that the hook has been validated:
+
+```
+[LINKEDIN_HOOK: validated]
+Python gave me a perfectly confident wrong number. No error. No crash. I trusted it for a week.
+
+Here's what actually happened — and the one-line fix that would have caught it...
+```
+
+---
+
+### Check 5 — Twitter thread opener
+
+Twitter thread openers have one job: make someone tap "Show this thread." Tweet 1 must work as a **standalone tweet** — someone who never reads the rest of the thread should still find value in it. If tweet 1 only makes sense with tweets 2–12, nobody will tap through.
+
+Open `content/derivatives/{week}/{slug}/twitter_thread.txt` for each niche.
+
+**Read only tweet 1.** Apply this test: if this were posted as a single tweet with no thread, would it get likes or replies on its own?
+
+Twitter thread opener formulas that work:
+- **The bold lesson** — "I spent 3 days debugging a pandas merge. The bug was one character. Here's what I learned: 🧵"
+- **The counter-intuitive result** — "More features made my model worse. Here's why (and the fix): 🧵"
+- **The personal hook** — "I called my parents when I was drowning in anxiety. They gave me budgeting tips. That gap is what mental health stigma actually looks like: 🧵"
+- **The specific question** — "What does Python do when you divide by zero in a list comprehension? Not what you think: 🧵"
+
+Twitter opener anti-patterns — **rewrite if any of these:**
+- "A thread on [topic]:"
+- "Here are X things about Y:"
+- Starting with context before the hook ("As a data scientist who has worked in…")
+- No 🧵 emoji at the end (signals it's a thread — readers expect it)
+
+**If tweet 1 fails:** rewrite it to lead with the specific incident or counter-intuitive result. The rest of the thread can stay.
+
+Add a `[TWITTER_HOOK: validated]` tag comment at the top of each `twitter_thread.txt`.
+
+---
+
+### Viral Readiness Audit checklist
+
+Run this for all 3 scripts + derivatives before closing Tuesday:
+
+- [ ] DS hook opens with a specific number, result, or named moment (not a generic setup)
+- [ ] Life hook opens with a specific personal incident (not a generalization)
+- [ ] Poetry hook names a specific emotion or paradox (not a description of the poem)
+- [ ] `[SHAREABLE_MOMENT]` tag added to each script
+- [ ] `[TEXT_OVERLAY: shown at 0:00]` tag on the hook line in each script
+- [ ] `[TEXT_OVERLAY: CTA]` tag on the comment-keyword line in each script
+- [ ] DS script ends with `[OUTRO TEASE:]` for next week's DS piece
+- [ ] LinkedIn first line validated for all 3 posts — `[LINKEDIN_HOOK: validated]` tag added
+- [ ] Twitter tweet 1 validated for all 3 threads — `[TWITTER_HOOK: validated]` tag added
+- [ ] Thumbnail hook written for all 3 scripts (Step 2d below) ← **new**
+
+---
+
+## Step 2d — Write thumbnail hooks (5 min, do BEFORE closing Tuesday)
+
+This is where thumbnail CTR is actually won or lost — not Thursday. The hook text for the thumbnail comes from this script session, while the angle is clearest in your head.
+
+For each script, take the `[HOOK]` opening line and compress it to **3–5 words** that:
+- Name the specific mistake, result, or feeling — not the topic category
+- Work at 120px wide (no full sentences, no punctuation-heavy phrases)
+- Have no series numbers ("Tutorial 1/10" → banned)
+
+Write these to a thumbnail brief file:
+
+```bash
+python3 scripts/generate_thumbnail.py \
+  --blog content/scripts/{week}/{ds_slug}_yt.md \
+  --niche ds \
+  --hook "Setup That Breaks Everything" \
+  --week {week} \
+  --canva --dry-run
+```
+
+The `--dry-run` flag writes the brief JSON and prompt file without executing Canva — so Thursday's generation is a single command with no thinking required.
+
+**Hook examples by niche:**
+
+| Niche | Bad (too generic) | Good (specific) |
+|-------|-------------------|-----------------|
+| DS | "Python Tutorial" | "Setup That Breaks Everything" |
+| DS | "Data Science Tips" | "Wrong for 6 Months" |
+| Life | "Self Improvement" | "3 Years. Wrong." |
+| Life | "Mental Health Tips" | "I Called Home. Budget Tips." |
+| Poetry | "Love Poem" | "Love Doesn't Announce Itself" |
+| Poetry | "About Loneliness" | "The Room Goes Quiet" |
+
+Save each hook to the thumbnail brief so Thursday is just running a command, not thinking.
 
 ---
 
@@ -171,7 +405,7 @@ This is the daily-flow version of the cadence in
    arm the comment→DM keyword (SuperProfile / CreatorFlow).
 4. Flows downstream like any reel: **Wed** shoot (screen-record the proof), **Thu** render/upload +
    `scripts/generate_shorts_meta.py`, then derivatives via `prompts/repurposing_agent.md` →
-   `scripts/derivatives_to_metricool.py`.
+   posted manually (no Metricool/Publer CSV; see `docs/daily/friday.md`).
 
 **Rotation log:**
 
@@ -370,21 +604,9 @@ python3 scripts/generate_social_images.py --slug {poetry_slug}
 | `{slug}_threads.png` | 1080×1080 | Threads |
 | `{slug}_twitter.png` | 1200×675 | Twitter/X |
 
-After generating, **upload images to Google Drive** (public link required for Metricool CSV):
-1. Upload each `{slug}_instagram.png` to Drive → `Content/{week}/social/`
-2. Right-click → Get link → set "Anyone with the link can view"
-3. Copy the direct download link (use `drive.google.com/uc?id=FILE_ID&export=view` format)
-4. Save URL to `schedule.json`:
-   ```bash
-   python3 scripts/update_schedule.py \
-     --slug {ds_slug} \
-     --week {week} \
-     --image-url 'https://drive.google.com/uc?id=FILE_ID&export=view'
-   ```
-   Or edit `content/derivatives/{week}/{ds_slug}/schedule.json` directly:
-   ```json
-   { "image_url": "https://drive.google.com/uc?id=FILE_ID&export=view" }
-   ```
+These PNGs live at `assets/social_posts/{week}/`. Posting is **manual** now — no public Drive
+URL needed: attach the local PNG directly when you post in-app on Friday (IG/FB/Threads). No
+Metricool CSV, so the old `--image-url` / `schedule.json` public-link step is obsolete.
 
 ---
 

@@ -2,6 +2,8 @@
 
 Edit plans + captions exist from Wednesday. Today: render DS long-form, render thumbnail, upload to YouTube (if authorized), render shorts, update Notion.
 
+> **Reference docs:** `prompts/youtube-virality-prompt.md` (YT title/description/tags before upload) · `data/kb/viral_reel_formula.md` (5-beat structure for any short/reel rendered today) · `data/kb/twitter_hook_patterns.json` (hook taxonomy for thumbnail text)
+
 ---
 
 ## Step 1 — Start render server (once per session)
@@ -40,21 +42,44 @@ Output: `output/animations/{week}/{ds_slug}.mp4`
 
 ---
 
-## Step 3 — Render DS thumbnail (~2 min)
+## Step 3 — Generate DS thumbnail ⛔ BLOCKING
+
+Face + hook text thumbnails target 5%+ CTR. Text-only Remotion thumbnails produce ~0.5% CTR. Do not upload without completing this step.
+
+**Checklist:**
+- [ ] Face visible (surprised/confused expression, 40–60% of frame)
+- [ ] Hook text: 3–5 words, high contrast, no "Tutorial 1/10" numbering
+- [ ] Hook matches Tuesday's `thumbnail_brief` (if you wrote it) — use that hook
 
 ```bash
-cd remotion
+# Mode A — Canva AI (no face photo needed, hook from Tuesday brief)
+python3 scripts/generate_thumbnail.py \
+  --blog content/scripts/{week}/{ds_slug}_yt.md \
+  --niche ds \
+  --hook "Your 3-5 word hook here" \
+  --week {week} \
+  --canva
 
-# Variant A (dark, left-aligned) — default upload
+# Mode B — Canva AI + reaction photo (higher CTR)
+python3 scripts/generate_thumbnail.py \
+  --blog content/scripts/{week}/{ds_slug}_yt.md \
+  --niche ds \
+  --hook "Your 3-5 word hook here" \
+  --face assets/raw/{week}/thumbs/{ds_slug}_face_01.jpg \
+  --week {week} \
+  --canva
+```
+
+Output: `output/visuals/{week}/{ds_slug}_thumb_canva.png`
+
+**Fallback (Canva MCP unavailable):**
+```bash
+cd remotion
 npx remotion still Thumbnail \
   output/visuals/{week}/{ds_slug}_thumb_a.png \
-  --props='{"titleText":"Your Title Here","niche":"ds","variant":"a","bgType":"dark"}'
-
-# Variant B (centered glass card) — A/B test alternate
-npx remotion still Thumbnail \
-  output/visuals/{week}/{ds_slug}_thumb_b.png \
-  --props='{"titleText":"Your Title Here","niche":"ds","variant":"b"}'
+  --props='{"titleText":"Your Hook Here","niche":"ds","variant":"a","bgType":"dark"}'
 ```
+⚠️ Fallback has no face — expect ~0.5% CTR. Replace as soon as Canva is available.
 
 ---
 
@@ -89,7 +114,7 @@ If the augmented output is better, use it for upload below.
 python3 scripts/upload_youtube.py \
   --video output/animations/{week}/{ds_slug}.mp4 \
   --metadata content/derivatives/{week}/{ds_slug}/youtube_metadata.json \
-  --thumbnail output/visuals/{week}/{ds_slug}_thumb_a.png \
+  --thumbnail output/visuals/{week}/{ds_slug}_thumb_canva.png \
   --channel breathofdatascience \
   --scheduled "2026-MM-DDTHH:MM:00+05:30"
 ```
@@ -99,7 +124,7 @@ python3 scripts/upload_youtube.py \
 python3 scripts/upload_youtube.py \
   --video "assets/hyperframes/{date}_{ds_slug}-aug.mp4" \
   --metadata content/derivatives/{week}/{ds_slug}/youtube_metadata.json \
-  --thumbnail output/visuals/{week}/{ds_slug}_thumb_a.png \
+  --thumbnail output/visuals/{week}/{ds_slug}_thumb_canva.png \
   --channel breathofdatascience \
   --scheduled "2026-MM-DDTHH:MM:00+05:30"
 ```
@@ -147,7 +172,7 @@ Skip AI selection (even-spacing fallback):
 python3 scripts/clip_shorts.py --slug {ds_slug} --count 4 --smart-crop --no-claude
 ```
 
-Output: `assets/video/edited/shorts/{ds_slug}_short_00.mp4`, `_short_01.mp4`, …
+Output: `assets/video/edited/shorts/{week}/{ds_slug}_short_00.mp4`, `_short_01.mp4`, … (grouped in the ISO-week subfolder).
 
 ### Augment the clips with HyperFrames (optional)
 
@@ -155,7 +180,7 @@ Add Claude-powered overlays (code callouts, stat cards) on top of the cut clips:
 ```bash
 python3 scripts/hyperframes_render.py --shorts --slug {ds_slug}
 ```
-`--shorts` processes every `assets/video/edited/shorts/{ds_slug}_short_*.mp4` → augmented MP4s in `assets/hyperframes/`. Portrait clips are auto re-encoded (stream-copy corrupts portrait framing under parallel load). Upload the augmented version if it beats the plain crop.
+`--shorts` processes every `assets/video/edited/shorts/{week}/{ds_slug}_short_*.mp4` (auto-resolves the ISO-week subfolder; falls back to the flat root for legacy clips) → augmented MP4s in `assets/hyperframes/`. Portrait clips are auto re-encoded (stream-copy corrupts portrait framing under parallel load). Upload the augmented version if it beats the plain crop.
 
 ---
 

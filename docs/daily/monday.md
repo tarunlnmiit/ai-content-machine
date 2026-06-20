@@ -2,6 +2,19 @@
 
 All three niches processed today. By end of Monday: every blog draft, every derivative file, and every schedule.json for the week exists and is verified.
 
+> **Reference docs:**
+> - First time running the machine? Complete `docs/one-time-platform-setup.md` before starting week 1.
+> - Full weekly rhythm and task-batching overview: `docs/weekly-operating-guide.md`
+> - How the 6 AM ideas script works and how to set it up: `docs/launchd-daily-ideas.md`
+> - Medium virality framework (full prompt + real examples): `prompts/medium-virality-prompt.md`
+> - Real read-ratio data from 75 Tarun articles (June 2026): `data/analytics/medium-stats-2026.md`
+> - Brand colors, AutoTune temperatures, and model routing (single source of truth): `data/brand/brand_kit.yaml`
+> - Virality KB for Life/Poetry — read the index first: `data/kb/voice/INDEX.md`
+> - Virality KB for DS/build-in-public — read the index first: `data/kb/reels/INDEX.md`
+> - Build-in-public projects (angle + DM keyword + cadence per project): `data/kb/projects.json`
+> - Blog writing agent (use when prompting Claude to write long-form): `prompts/writing_agent.md`
+> - Ghostwriter agent (use when converting your own notes/transcript to a blog): `prompts/ghostwriter_agent.md`
+
 ## Monday at a glance
 
 | Time | Task | Output |
@@ -50,12 +63,31 @@ python3 -c "from scripts.lib.schedule_calc import get_iso_week; from datetime im
 
 Use this `YYYY-Wnn` string everywhere below as `{week}`.
 
-### 0d. Query Notion for recent angles (REQUIRED before picking topics)
+### 0d. Recent angles (REQUIRED before picking topics) — from shipped blog slugs
+
+Source = `content/blogs/2026-W*/` slugs, NOT the tracker (the tracker drops `Content Title` when a week commits, so it can't list recent angles). Covers every week — `.md` for recent, `_images/` dirs for older.
 
 ```bash
-python3 scripts/query_notion_recent.py --days 90 --niche ds
-python3 scripts/query_notion_recent.py --days 90 --niche life
-python3 scripts/query_notion_recent.py --days 90 --niche poetry
+python3 -c "
+import glob, os
+from datetime import datetime, timedelta
+cutoff = datetime.today() - timedelta(days=90)
+NICHE = {'data_science_tech':'DS','life_self_dev':'Life','poetry_quotes':'Poetry'}
+seen = {'DS':set(), 'Life':set(), 'Poetry':set()}
+for path in sorted(glob.glob('content/blogs/2026-W*/*')):
+    name = os.path.basename(path)
+    slug = name[:-7] if name.endswith('_images') else (name[:-3] if name.endswith('.md') else None)
+    if not slug: continue
+    try: d = datetime.strptime(slug[:10], '%Y-%m-%d')
+    except ValueError: continue
+    if d < cutoff: continue
+    rest = slug[11:]
+    for k, lab in NICHE.items():
+        if rest.startswith(k): seen[lab].add((slug[:10], rest[len(k)+1:].replace('-',' '))); break
+for lab in ['DS','Life','Poetry']:
+    print(f'\n--- {lab} ---')
+    for dt, topic in sorted(seen[lab]): print(f'  {dt}  {topic}')
+"
 ```
 
 Lists topics/angles published in last 90 days. **Never repeat an angle covered in this window.** If no script exists yet, check Notion Contents DB manually: filter Status = Published, sort by Publish Date descending, review Name + Topic columns.
@@ -73,6 +105,20 @@ cat data/ideas/weekly_ideas.md
 ```
 
 Pick the top-scoring idea NOT covered in last 90 days (per Step 0d).
+
+> ### ⚡ STOP — Viral Hook Pre-Qualification Test (30 seconds, MANDATORY)
+>
+> Before generating the blog, verify this topic can form a specific hook. A hook MUST contain **at least one** of:
+> - A **specific number** — "I lost 3 days to this bug", "91% model accuracy and it was completely wrong", "40% of men won't seek help"
+> - A **specific result** — "the merge silently returned wrong data for 6 days with no error"
+> - A **named moment** — "the exact line that made my manager pull the model", "the call I got at midnight"
+>
+> **The test:** finish this sentence: *"I [did something] and [a specific, concrete thing happened]."*
+>
+> - ✅ You can finish it with specifics → **topic passes. Continue to Step 1b.**
+> - ❌ You cannot finish it specifically (e.g., "I learned about X and it was useful") → **this topic will produce a weak reel.** Go back to `data/ideas/weekly_ideas.md`, pick the next-ranked DS idea, and run the test again.
+>
+> **Write the sentence down somewhere.** It becomes your first IG reel hook candidate on Thursday.
 
 ### 1b. Generate the blog
 
@@ -130,6 +176,20 @@ Open and check:
 - Contains `[PERSONAL_INSERT]` markers for custom sections
 - Contains code blocks (DS only) with valid Python
 - No banned words: "In conclusion" · "Dive into" · "Leverage" · "Game-changer" · "Synergy"
+- **Title formula** — specific incident / counter-intuitive result / specific number + outcome. Kill: "Everything You Need to Know About X" / "The Ultimate Guide to Y" / "Why Z Matters"
+- **First paragraph test** — remove it mentally: if the article reads fine from paragraph 2, it's throat-clearing; rewrite so the opening line is the hook
+- **Subheadings are hooks**, not labels — "The Bug That Cost Me 3 Days" not "The Problem"
+- **Ending** — no bullet recap, no "Let me know your thoughts in the comments"
+
+> ### 🎯 Identify the Shareable Moment (1 minute)
+>
+> Skim the blog and find **the single most shareable sentence** — the one a stranger would screenshot and send to a friend. This is NOT the thesis. It is a surprising observation, a counter-intuitive fact, or a moment of specific vulnerability.
+>
+> Examples:
+> - "Python gave me a perfectly confident wrong number. No error. No crash. I trusted it for a week."
+> - "The model was 91% accurate on the training set. On production data it predicted the same class for everything."
+>
+> **Mark it in the draft file with `[QUOTABLE]` inline.** It becomes the "shareable moment" cue in Tuesday's script (`[SHAREABLE_MOMENT]` tag), the hook for the IG reel brief on Thursday, and the closing sentence candidate if it's the strongest line in the piece.
 
 ---
 
@@ -163,15 +223,46 @@ Output: `content/blogs/{week}/YYYY-MM-DD_life_self_dev_{slug}.md`
 
 Check for `[PERSONAL_INSERT]` markers — Life blogs require the most personal content; these sections must be filled before publishing (Step 4).
 
+Verify:
+- **Title formula** — specific incident / named lesson / counter-intuitive result. Kill: "Everything You Need to Know About X" / "Why Z Matters"
+- **First paragraph test** — remove it mentally: if the article reads fine from paragraph 2, rewrite so the opening line is the specific moment
+- **Subheadings are hooks**, not labels — "The Call That Made Me Realise" not "The Turning Point"
+- **Shareable sentence** — mark it `[QUOTABLE]` in the draft; it's the line someone would DM to a friend
+- **Ending** — no bullet recap, no "Let me know your thoughts in the comments"
+
+> ### ⚡ Viral Hook Pre-Qualification Test — Life topic
+>
+> Same test as DS. Finish: *"I [did something] and [a specific, concrete thing happened]."*
+>
+> Examples of Life hooks that pass:
+> - "I called my parents when I was drowning in anxiety at work. They listed budgeting tips. I needed someone to just say: I hear you."
+> - "I used to start every morning checking Twitter. The anxiety it created lasted until noon. I didn't notice until I stopped."
+>
+> - ✅ Can finish it specifically → proceed.
+> - ❌ Cannot → return to `data/ideas/weekly_ideas.md`, pick next Life idea, test again.
+>
+> **Write the sentence down.** It becomes your reel hook on Thursday.
+
 ---
 
-## Step 3 — Generate Poetry blog (~15 min)
+## Step 3 — Write Poetry piece (~10 min)
 
-**From a poem/theme:**
+Poetry on Medium is the poem + minimal framing. The poem is the product — not an essay about it. Total length: ~150–200 words including the poem.
+
+**Format (strict):**
+1. **Hook** — 2–3 lines max. The specific feeling or moment that triggered the poem. No preamble, no "today I wrote a poem about X."
+2. `---` divider
+3. **Poem** — as a blockquote (`> line`)
+4. `---` divider
+5. **Close** — 1–2 lines. One honest observation. NOT a summary, NOT a lesson, NOT "share this with someone who needs it."
+6. **Podcast CTA** — one line: `*Prefer listening? Available on [Breath of Poetry](https://open.spotify.com/show/0d7GfbQsYPc4t0idLhpYWT).*`
+
+**Generate:**
 ```bash
 python3 scripts/produce_blog.py \
   --topic 'YOUR POEM TITLE OR THEME' \
   --niche poetry \
+  --format poem \
   --humanize
 ```
 
@@ -180,19 +271,27 @@ python3 scripts/produce_blog.py \
 python3 scripts/ghostwrite.py \
   --source data/poems/{poem_slug}.txt \
   --niche poetry \
-  --format blog
-```
-
-**Listicle (e.g., "5 Poems on Solitude"):**
-```bash
-python3 scripts/produce_blog.py \
-  --topic 'Top 5 Poems About the Passage of Time' \
-  --niche poetry \
-  --listicle 5 \
-  --humanize
+  --format poem
 ```
 
 Output: `content/blogs/{week}/YYYY-MM-DD_poetry_quotes_{slug}.md`
+
+**Checklist:**
+- [ ] Hook is 2–3 lines, names a specific sensation — NOT "today I wrote a poem about X"
+- [ ] Poem is indented as blockquote (`> line`)
+- [ ] Close is 1–2 lines — one honest observation, nothing more
+- [ ] Podcast CTA present (Breath of Poetry link)
+- [ ] NO reflections, NO takeaways, NO analysis sections
+
+> ### ⚡ Hook test — Poetry
+>
+> The hook must name the specific feeling: *"There's a specific kind of [X] that [exact detail]."*
+>
+> ✅ "There's a specific kind of madness that doesn't announce itself. One day you're fine. The next, someone's laugh is living rent-free in your head."
+> ✅ "There's a moment — usually quiet, usually late — when the performance stops making sense."
+> ❌ "Today I want to share a poem I wrote about love."
+>
+> **Write the hook line down.** It becomes your reel caption on Thursday.
 
 ---
 
@@ -261,6 +360,8 @@ python3 scripts/repurpose_blog.py \
   --input content/blogs/{week}/{poetry_slug}.md
 ```
 
+> The prompt template behind `repurpose_blog.py` is `prompts/repurposing_agent.md`. Edit it to change derivative formats, platform copy rules, or hashtag strategy — no code change needed.
+
 ### What each repurpose produces
 
 Each run creates `content/derivatives/{week}/{slug}/` with:
@@ -268,16 +369,16 @@ Each run creates `content/derivatives/{week}/{slug}/` with:
 | File | Content | Used by |
 |------|---------|---------|
 | `twitter_thread.txt` | 8–12 tweet thread (+ 2 hashtags on closing tweet) | Friday manual post |
-| `linkedin_post.txt` | 1,200-char professional post (+ 4 hashtags) | scheduler.py auto |
-| `instagram_caption.txt` | Caption + hashtags (up to 12) | Metricool CSV |
-| `threads_post.txt` | Threads-formatted post (+ 3 hashtags) | Metricool CSV |
+| `linkedin_post.txt` | 1,200-char professional post (+ 4 hashtags) | scheduler.py staged (manual until clearance) |
+| `instagram_caption.txt` | Caption + hashtags (up to 12) | Friday manual post (IG/FB) |
+| `threads_post.txt` | Threads-formatted post (+ 3 hashtags) | Friday manual post (Threads) |
 | `newsletter.txt` | Email newsletter (~400 words) | Beehiiv Sunday |
 | `youtube_metadata.json` | Title, description, tags, chapter markers | Thursday YouTube upload |
 | `youtube_shorts_metadata.json` | Short-form title, description, tags | Thursday Shorts upload |
 | `slide_outline.json` | 7-slide structure | Tuesday slide deck gen |
 | `thumbnail_brief.json` | Hook, visual direction, colors | Tuesday Remotion thumbnail |
 | `claude_design_brief.json` | Emotional core, story frames | Tuesday social images |
-| `schedule.json` | Computed publish timestamps | Friday Metricool CSV |
+| `schedule.json` | Computed publish timestamps | Friday manual posting reference |
 
 **Hashtags (auto, per platform):** all four social derivatives get hashtags — Claude's topical tags merged with a curated per-niche pool, deduped + capped (Twitter 2 · Threads 3 · LinkedIn 4 · Instagram 12). Edit the pools in `config/hashtags.json` — no code change needed.
 

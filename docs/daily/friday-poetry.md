@@ -1,22 +1,24 @@
 # Friday — Poetry Track (~20 min)
 
-Videos are live on YouTube from Thursday. Today: generate Poetry Metricool CSV, import it, verify LinkedIn scheduler for Poetry, and queue Poetry Twitter thread.
+Videos are live on YouTube from Thursday. Today: stage the Poetry LinkedIn post, gather the Poetry blog URL for captions, and queue the Poetry Twitter thread. **No Metricool/Publer** — IG / FB / Threads / Twitter are posted manually; LinkedIn is manual until employer clearance.
 
 **Pivot rule:** Content produced this week posts NEXT week.
 
+> **Reference docs:** `config/hashtags.json` (edit per-niche hashtag pools — no code change needed) · `docs/weekly-operating-guide.md` (scheduler.py setup) · `docs/weekly-runner.md` Step 22 (manual posting model)
+
 ---
 
-## Step 1 — Generate Metricool CSV (~2 min)
+## Step 1 — Stage Poetry LinkedIn + gather blog URL (~2 min)
 
 ```bash
 python3 scripts/load_posts.py
 ```
 
-Writes: `output/scheduled/metricool_mistakenlyhuman.csv` (Poetry + Life combined)
+Inserts the Poetry LinkedIn post into `data/scheduling.db` (held manual until clearance). No Metricool/Publer CSV.
 
-Also inserts Poetry LinkedIn post into `data/scheduling.db`.
+> Note: Poetry often skips LinkedIn — only stage/post it if the piece translates to a professional context.
 
-### If Poetry blog URL is missing in the CSV
+### Gather the Poetry Medium URL for your captions
 
 ```bash
 python3 -c "
@@ -24,44 +26,24 @@ import json, glob
 for f in glob.glob('content/derivatives/{week}/*poetry_quotes*/schedule.json'):
     d = json.load(open(f))
     print('Medium:', d.get('medium_url', 'MISSING'))
-    print('Substack:', d.get('substack_url', 'MISSING'))
 "
 ```
 
-Add missing URL, then re-run `load_posts.py`:
+Record a missing URL so it's on hand when you post:
 ```bash
 python3 scripts/update_schedule.py \
   --slug {poetry_slug} --week {week} \
   --medium-url 'https://medium.com/@tarun-gupta/{poetry_slug}'
-
-python3 scripts/load_posts.py
-```
-
-### If Poetry image URL is missing
-
-1. Upload `assets/social_posts/{week}/{poetry_slug}_instagram.png` to Google Drive
-2. Set "Anyone with the link can view"
-3. Get URL: `https://drive.google.com/uc?id=FILE_ID&export=view`
-4. Save and regenerate:
-```bash
-python3 scripts/update_schedule.py \
-  --slug {poetry_slug} --week {week} \
-  --image-url 'https://drive.google.com/uc?id=FILE_ID&export=view'
-python3 scripts/load_posts.py
 ```
 
 ---
 
-## Step 2 — Import Poetry portion into Metricool (~5 min)
+## Step 2 — Post Poetry static content manually (~5 min)
 
-1. [metricool.com](https://metricool.com) → select brand **"Mistakenly Human"**
-2. **Schedule** → **Bulk Schedule** → **Upload CSV**
-3. Select: `output/scheduled/metricool_mistakenlyhuman.csv` (contains both Poetry + Life rows)
-4. Verify preview — confirm Poetry rows:
-   - `poetry_quotes` slug rows land on **Friday** (IG 10 AM, Threads 12 PM)
-   - Dates are NEXT week
-   - Images show thumbnail (not red X)
-5. Click **Schedule All**
+Post by hand in the Poetry window (no Metricool import):
+
+- **Instagram + Facebook** (@mistakenlyhuman): caption `content/derivatives/{week}/{poetry_slug}/instagram_caption.txt`; image `assets/social_posts/{week}/{poetry_slug}_instagram.png`. Poetry caption is often the poem verbatim — save trigger, not a link dump.
+- **Threads:** body `content/derivatives/{week}/{poetry_slug}/threads_post.txt`.
 
 **Poetry posting schedule (next week):**
 
@@ -69,12 +51,15 @@ python3 scripts/load_posts.py
 |---------|-----|---------|
 | Instagram + Facebook | Fri | 10:00 AM |
 | Threads | Fri | 12:00 PM |
-| LinkedIn | Tue | 8:00 AM *(scheduler.py)* |
+| LinkedIn | Tue | 8:00 AM *(manual until clearance, often skipped)* |
 
 ---
 
-## Step 3 — Verify Poetry in LinkedIn scheduler (~3 min)
+## Step 3 — Poetry LinkedIn: staged, post manually (~3 min)
 
+If you staged a Poetry LinkedIn post, it's **manual until employer clearance** — daemon stays off. Post `linkedin_post.txt` by hand at the slot, then add the Medium link as the first comment.
+
+Confirm it's staged:
 ```bash
 sqlite3 data/scheduling.db \
   "SELECT platform, scheduled_at, substr(content_text,1,80) AS preview
@@ -84,17 +69,7 @@ sqlite3 data/scheduling.db \
    ORDER BY scheduled_at LIMIT 5"
 ```
 
-Expected: 1 Poetry row, scheduled next Tuesday ~8:00 AM.
-
-Scheduler running check:
-```bash
-ps aux | grep 'scheduler.py' | grep -v grep
-```
-
-Not running → start it:
-```bash
-nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
-```
+(Do NOT start `scheduler.py` until cleared.)
 
 ---
 
@@ -111,7 +86,7 @@ Poetry thread format:
 2. Poem excerpt (2–3 tweets)
 3. Context: what inspired the poem
 4. Personal reflection
-5. CTA: "Read the full piece → [Substack link]"
+5. CTA: "Read the full piece → medium.com/@tarun-gupta/{poetry_slug}"
 
 Edit to match your current voice before posting.
 
@@ -138,10 +113,9 @@ conda run -n content_engine_env python3 scripts/generate_buffer.py --niche poetr
 
 Run once after all 3 niche Friday guides are done:
 
-- [ ] Metricool CSVs imported for both brands
-- [ ] Metricool calendar shows posts: Tue (Life), Wed (DS), Fri (Poetry) next week
-- [ ] LinkedIn queue has 3 pending posts in DB
-- [ ] scheduler.py running (or launchd plist loaded)
+- [ ] Static captions/images ready for all 3 niches (IG + Threads)
+- [ ] Reminders set for next-week posting windows: Tue (Life), Wed (DS), Fri (Poetry)
+- [ ] LinkedIn queue has up to 3 pending posts in DB (daemon OFF until clearance)
 - [ ] Twitter reminders set: Life Mon 1 PM, DS (flexible), Poetry Fri 12 PM
 - [ ] YouTube videos uploaded and scheduled (done Thursday)
 - [ ] Notion status: Uploaded for all 3 content items

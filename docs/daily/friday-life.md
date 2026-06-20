@@ -1,22 +1,22 @@
 # Friday — Life Track (~20 min)
 
-Videos are live on YouTube from Thursday. Today: generate Life Metricool CSV, import it, verify LinkedIn scheduler for Life, and queue Life Twitter thread.
+Videos are live on YouTube from Thursday. Today: stage the Life LinkedIn post, gather the Life blog URL for captions, and queue the Life Twitter thread. **No Metricool/Publer** — IG / FB / Threads / Twitter are posted manually; LinkedIn is manual until employer clearance.
 
 **Pivot rule:** Content produced this week posts NEXT week.
 
+> **Reference docs:** `config/hashtags.json` (edit per-niche hashtag pools — no code change needed) · `docs/weekly-operating-guide.md` (scheduler.py setup) · `docs/weekly-runner.md` Step 22 (manual posting model)
+
 ---
 
-## Step 1 — Generate Metricool CSV (~2 min)
+## Step 1 — Stage Life LinkedIn + gather blog URL (~2 min)
 
 ```bash
 python3 scripts/load_posts.py
 ```
 
-Writes: `output/scheduled/metricool_mistakenlyhuman.csv` (Life + Poetry combined)
+Inserts the Life LinkedIn post into `data/scheduling.db` (held manual until clearance). No Metricool/Publer CSV.
 
-Also inserts Life LinkedIn post into `data/scheduling.db`.
-
-### If Life blog URL is missing in the CSV
+### Gather the Life Medium URL for your captions
 
 ```bash
 python3 -c "
@@ -24,44 +24,24 @@ import json, glob
 for f in glob.glob('content/derivatives/{week}/*life_self_dev*/schedule.json'):
     d = json.load(open(f))
     print('Medium:', d.get('medium_url', 'MISSING'))
-    print('Substack:', d.get('substack_url', 'MISSING'))
 "
 ```
 
-Add missing URL, then re-run `load_posts.py`:
+Record a missing URL so it's on hand when you post:
 ```bash
 python3 scripts/update_schedule.py \
   --slug {life_slug} --week {week} \
   --medium-url 'https://medium.com/@tarun-gupta/{life_slug}'
-
-python3 scripts/load_posts.py
-```
-
-### If Life image URL is missing
-
-1. Upload `assets/social_posts/{week}/{life_slug}_instagram.png` to Google Drive
-2. Set "Anyone with the link can view"
-3. Get URL: `https://drive.google.com/uc?id=FILE_ID&export=view`
-4. Save and regenerate:
-```bash
-python3 scripts/update_schedule.py \
-  --slug {life_slug} --week {week} \
-  --image-url 'https://drive.google.com/uc?id=FILE_ID&export=view'
-python3 scripts/load_posts.py
 ```
 
 ---
 
-## Step 2 — Import Life portion into Metricool (~5 min)
+## Step 2 — Post Life static content manually (~5 min)
 
-1. [metricool.com](https://metricool.com) → select brand **"Mistakenly Human"**
-2. **Schedule** → **Bulk Schedule** → **Upload CSV**
-3. Select: `output/scheduled/metricool_mistakenlyhuman.csv` (contains both Life + Poetry rows)
-4. Verify preview — confirm Life rows:
-   - `life_self_dev` slug rows land on **Tuesday** (IG 8 AM, Threads 8 PM)
-   - Dates are NEXT week
-   - Images show thumbnail (not red X)
-5. Click **Schedule All**
+Post by hand in the Life window (no Metricool import):
+
+- **Instagram + Facebook** (@mistakenlyhuman): caption `content/derivatives/{week}/{life_slug}/instagram_caption.txt`; image `assets/social_posts/{week}/{life_slug}_instagram.png`. Paste the Medium URL inline.
+- **Threads:** body `content/derivatives/{week}/{life_slug}/threads_post.txt`.
 
 **Life posting schedule (next week):**
 
@@ -69,12 +49,15 @@ python3 scripts/load_posts.py
 |---------|-----|---------|
 | Instagram + Facebook | Tue | 8:00 AM |
 | Threads | Tue | 8:00 PM |
-| LinkedIn | Tue | 8:00 AM *(scheduler.py)* |
+| LinkedIn | Tue | 8:00 AM *(manual until clearance)* |
 
 ---
 
-## Step 3 — Verify Life in LinkedIn scheduler (~3 min)
+## Step 3 — Life LinkedIn: staged, post manually (~3 min)
 
+LinkedIn is **manual until employer clearance** — staged in the DB but the daemon stays off. At the Tuesday 8 AM slot, post `linkedin_post.txt` by hand, then add the Medium link as the first comment.
+
+Confirm it's staged:
 ```bash
 sqlite3 data/scheduling.db \
   "SELECT platform, scheduled_at, substr(content_text,1,80) AS preview
@@ -84,17 +67,7 @@ sqlite3 data/scheduling.db \
    ORDER BY scheduled_at LIMIT 5"
 ```
 
-Expected: 1 Life row, scheduled next Tuesday ~8:00 AM.
-
-Scheduler running check:
-```bash
-ps aux | grep 'scheduler.py' | grep -v grep
-```
-
-Not running → start it:
-```bash
-nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
-```
+Expected: 1 Life row, scheduled next Tuesday ~8:00 AM. (Do NOT start `scheduler.py` until cleared.)
 
 ---
 

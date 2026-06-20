@@ -2,62 +2,23 @@
 
 Scripts and assets exist from Tuesday. Today: publish Poetry blog, shoot talking-head, generate captions, build edit plan.
 
----
-
-## Step 1 — Publish Poetry blog to Substack (~10 min)
-
-**1a. Upload cover image:**
-```
-mcp__substack-breathofpoetry__upload_image
-  image_path: "content/blogs/{week}/{poetry_slug}_images/cover.jpg"
-```
-Returns `image_id`.
-
-**1b. Create post:**
-```
-mcp__substack-breathofpoetry__create_formatted_post
-  title: "[title from blog frontmatter]"
-  cover_image_id: "[image_id from 1a]"
-```
-Returns `post_id`.
-
-**1c. Preview:**
-```
-mcp__substack-breathofpoetry__preview_draft
-  post_id: "[post_id]"
-```
-
-**1d. Publish:**
-```
-mcp__substack-breathofpoetry__publish_post
-  post_id: "[post_id]"
-  send_email: true
-```
-
-Save URL:
-```bash
-python3 scripts/update_schedule.py \
-  --slug {poetry_slug} --week {week} \
-  --substack-url 'https://breathofpoetry.substack.com/p/{poetry_slug}'
-```
-
-**Manual fallback:** Open Substack in browser, paste markdown, set cover image, publish.
+> **Reference docs:** `prompts/medium-virality-prompt.md` + `data/analytics/medium-stats-2026.md` (pre-publish title check — target read ratio ≥ 40%) · `docs/recording-guide.md` (camera, ring light, audio setup)
 
 ---
 
-## Step 2 — Publish Poetry blog to Medium (~8 min)
+## Step 1 — Publish Poetry piece to Medium (~8 min)
+
+Poetry format: hook (2–3 lines) → poem → close (1–2 lines) → podcast CTA. Total ~150–200 words. If the file has reflection sections or a takeaway, trim before publishing.
 
 ```bash
 python3 scripts/publish_medium.py \
-  --input content/blogs/{week}/{poetry_slug}.md \
-  --canonical-url 'https://breathofpoetry.substack.com/p/{poetry_slug}'
+  --input content/blogs/{week}/{poetry_slug}.md
 ```
 
 **To publish to Humans Are Stories (if accepted):**
 ```bash
 python3 scripts/publish_medium.py \
   --input content/blogs/{week}/{poetry_slug}.md \
-  --canonical-url 'https://breathofpoetry.substack.com/p/{poetry_slug}' \
   --publication humans-are-stories
 ```
 
@@ -70,7 +31,7 @@ python3 scripts/update_schedule.py \
 
 ---
 
-## Step 3 — Shoot Poetry talking-head (~45 min)
+## Step 2 — Shoot Poetry talking-head (~45 min)
 
 Poetry videos are talking-head + Remotion animations + optional B-roll. Slower, more intentional pacing than Life.
 
@@ -101,7 +62,7 @@ mv ~/Downloads/{iphone_recording}.mov "assets/raw/{week}/{poetry_slug}.mov"
 
 ---
 
-## Step 4 — Generate captions (~5 min)
+## Step 3 — Generate captions (~5 min)
 
 Use `large` model for Poetry — slow speech, pauses, and accuracy matter.
 
@@ -124,7 +85,7 @@ print(f'{len(caps)} tokens, {caps[0][\"startMs\"]}–{caps[-1][\"endMs\"]}ms')
 
 ---
 
-## Step 5 — Generate overlay scene plan (optional, run before Step 6)
+## Step 4 — Generate overlay scene plan (optional, run before Step 5)
 
 ```bash
 python3 scripts/generate_scene_plans.py \
@@ -144,7 +105,7 @@ Poetry videos are reflective → typically 2–4 overlay moments. Less is more.
 
 ---
 
-## Step 6 — Build edit plan (~5 min)
+## Step 5 — Build edit plan (~5 min)
 
 ```bash
 python3 scripts/prepare_remotion_edit.py \

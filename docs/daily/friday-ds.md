@@ -1,69 +1,47 @@
 # Friday — DS Track (~20 min)
 
-Videos are live on YouTube from Thursday. Today: generate DS Metricool CSV, import it, verify LinkedIn scheduler for DS, and queue DS Twitter thread.
+Videos are live on YouTube from Thursday. Today: stage the DS LinkedIn post, gather the DS blog URL for captions, and queue the DS Twitter thread. **No Metricool/Publer** — IG / FB / Threads / Twitter are posted manually; LinkedIn is manual until employer clearance.
 
 **Pivot rule:** Content produced this week posts NEXT week.
 
+> **Reference docs:** `config/hashtags.json` (edit per-niche hashtag pools — no code change needed) · `docs/weekly-operating-guide.md` (scheduler.py setup) · `docs/weekly-runner.md` Step 22 (manual posting model)
+
 ---
 
-## Step 1 — Generate Metricool CSV (~2 min)
+## Step 1 — Stage DS LinkedIn + gather blog URL (~2 min)
 
 ```bash
 python3 scripts/load_posts.py
 ```
 
-Writes: `output/scheduled/metricool_breathofds.csv`
+Inserts the DS LinkedIn post into `data/scheduling.db` (held manual until clearance). No Metricool/Publer CSV.
 
-Also inserts DS LinkedIn post into `data/scheduling.db`.
-
-### If DS blog URL is missing in the CSV
+### Gather the DS Medium URL for your captions
 
 ```bash
-# Check:
 python3 -c "
 import json, glob
 for f in glob.glob('content/derivatives/{week}/*data_science_tech*/schedule.json'):
     d = json.load(open(f))
     print('Medium:', d.get('medium_url', 'MISSING'))
-    print('Substack:', d.get('substack_url', 'MISSING'))
 "
 ```
 
-Add missing URL, then re-run `load_posts.py`:
+Record a missing URL so it's on hand when you post:
 ```bash
 python3 scripts/update_schedule.py \
   --slug {ds_slug} --week {week} \
   --medium-url 'https://medium.com/@tarun-gupta/{ds_slug}'
-
-python3 scripts/load_posts.py
-```
-
-### If DS image URL is missing
-
-1. Upload `assets/social_posts/{week}/{ds_slug}_instagram.png` to Google Drive
-2. Set "Anyone with the link can view"
-3. Get URL: `https://drive.google.com/uc?id=FILE_ID&export=view`
-4. Save and regenerate:
-```bash
-python3 scripts/update_schedule.py \
-  --slug {ds_slug} --week {week} \
-  --image-url 'https://drive.google.com/uc?id=FILE_ID&export=view'
-python3 scripts/load_posts.py
 ```
 
 ---
 
-## Step 2 — Import DS CSV into Metricool (~5 min)
+## Step 2 — Post DS static content manually (~5 min)
 
-1. [metricool.com](https://metricool.com) → select brand **"Breath of Data Science"**
-2. **Schedule** → **Bulk Schedule** → **Upload CSV**
-3. Select: `output/scheduled/metricool_breathofds.csv`
-4. Verify preview:
-   - Dates are NEXT week
-   - Captions include blog link
-   - Images show thumbnail (not red X)
-   - Timezone: Asia/Kolkata (IST)
-5. Click **Schedule All**
+Post by hand in the DS window (no Metricool import):
+
+- **Instagram + Facebook** (@breathofdatascience): caption `content/derivatives/{week}/{ds_slug}/instagram_caption.txt`; image `assets/social_posts/{week}/{ds_slug}_instagram.png`. Paste the Medium URL inline.
+- **Threads:** body `content/derivatives/{week}/{ds_slug}/threads_post.txt`.
 
 **DS posting schedule (next week):**
 
@@ -71,12 +49,15 @@ python3 scripts/load_posts.py
 |---------|-----|---------|
 | Instagram + Facebook | Wed | 8:00 AM |
 | Threads | Wed | 8:00 PM |
-| LinkedIn | Tue | 8:00 AM *(scheduler.py)* |
+| LinkedIn | Tue | 8:00 AM *(manual until clearance)* |
 
 ---
 
-## Step 3 — Verify DS in LinkedIn scheduler (~3 min)
+## Step 3 — DS LinkedIn: staged, post manually (~3 min)
 
+LinkedIn is **manual until employer clearance** — the post is staged in the DB but the daemon stays off. At the Tuesday 8 AM slot, post `linkedin_post.txt` by hand, then add the Medium link as the first comment.
+
+Confirm it's staged:
 ```bash
 sqlite3 data/scheduling.db \
   "SELECT platform, scheduled_at, substr(content_text,1,80) AS preview
@@ -86,17 +67,7 @@ sqlite3 data/scheduling.db \
    ORDER BY scheduled_at LIMIT 5"
 ```
 
-Expected: 1 DS row, scheduled next Tuesday ~8:00 AM.
-
-Scheduler running check:
-```bash
-ps aux | grep 'scheduler.py' | grep -v grep
-```
-
-Not running → start it:
-```bash
-nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
-```
+Expected: 1 DS row, scheduled next Tuesday ~8:00 AM. (Do NOT start `scheduler.py` until cleared.)
 
 ---
 

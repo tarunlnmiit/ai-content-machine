@@ -2,6 +2,8 @@
 
 Edit plans + captions exist from Wednesday. Today: render Life long-form, render thumbnail, upload to YouTube (if authorized), render shorts, update Notion.
 
+> **Reference docs:** `prompts/youtube-virality-prompt.md` (YT title/description/tags before upload) · `data/kb/viral_reel_formula.md` (5-beat structure for any short/reel rendered today) · `prompts/podcast-virality-prompt.md` (Life YouTube doubles as podcast — apply before publishing to Spotify)
+
 ---
 
 ## Step 1 — Start render server (once per session)
@@ -38,21 +40,44 @@ Output: `output/animations/{week}/{life_slug}.mp4`
 
 ---
 
-## Step 3 — Render Life thumbnail (~2 min)
+## Step 3 — Generate Life thumbnail ⛔ BLOCKING
+
+**Audit finding:** 1.1% CTR on Life channel — branded text-only thumbnails. Target: 5%+. Do not upload without completing this step.
+
+**Checklist:**
+- [ ] Face visible (personal, warm expression — not posed, natural reaction)
+- [ ] Hook text: 3–5 words from a specific personal incident — not self-help jargon
+- [ ] No series/episode numbers in thumbnail
 
 ```bash
-cd remotion
+# Mode A — Canva AI (hook from Tuesday brief)
+python3 scripts/generate_thumbnail.py \
+  --blog content/scripts/{week}/{life_slug}_yt.md \
+  --niche life \
+  --hook "3 Years. Wrong." \
+  --week {week} \
+  --canva
 
-# Variant A — default upload
+# Mode B — with reaction photo
+python3 scripts/generate_thumbnail.py \
+  --blog content/scripts/{week}/{life_slug}_yt.md \
+  --niche life \
+  --hook "3 Years. Wrong." \
+  --face assets/raw/{week}/thumbs/{life_slug}_face_01.jpg \
+  --week {week} \
+  --canva
+```
+
+Output: `output/visuals/{week}/{life_slug}_thumb_canva.png`
+
+**Fallback (Remotion, no face):**
+```bash
+cd remotion
 npx remotion still Thumbnail \
   output/visuals/{week}/{life_slug}_thumb_a.png \
-  --props='{"titleText":"Your Title Here","niche":"life","variant":"a","bgType":"dark"}'
-
-# Variant B — A/B test alternate
-npx remotion still Thumbnail \
-  output/visuals/{week}/{life_slug}_thumb_b.png \
-  --props='{"titleText":"Your Title Here","niche":"life","variant":"b"}'
+  --props='{"titleText":"Your Hook Here","niche":"life","variant":"a","bgType":"dark"}'
 ```
+⚠️ No face = ~0.5% CTR. Replace ASAP.
 
 ---
 

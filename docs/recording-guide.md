@@ -49,6 +49,51 @@
 
 ---
 
+## Thumbnail Reaction Shots ⚡ Do this BEFORE breaking down your setup
+
+While the camera, lights, and mic are still live — capture 3–4 expression photos for each video's thumbnail. **This is the face layer** that makes the difference between 0.5% and 5%+ CTR.
+
+**Why now:** you're already framed, lit, and mic'd. Reaction shots take 2 minutes. Breaking down setup and re-creating it for a thumbnail session costs 30 minutes. Don't skip this.
+
+### What to shoot (per video):
+
+| Shot | Expression | Use case |
+|------|-----------|----------|
+| `_face_01.jpg` | Surprised / jaw drop | "I didn't expect this" moments, bugs, failures |
+| `_face_02.jpg` | Confused / raised eyebrow | "This makes no sense" — contrarian hooks |
+| `_face_03.jpg` | Pointing at camera | Direct address — "You're doing X wrong" |
+| `_face_04.jpg` | Smiling / nodding | Positive results, validation, "it works" |
+
+### How to shoot:
+
+1. Have someone read the video title out loud — react naturally, don't pose
+2. If alone: read the title to yourself and hold the expression for 3 seconds, then shoot
+3. Shoot in burst mode (hold shutter) — keep best 1 from each burst
+4. Check: face in focus, eyes sharp, expression reads at small size
+
+### Save to:
+
+```
+assets/raw/{week}/thumbs/
+  {ds_slug}_face_01.jpg
+  {ds_slug}_face_02.jpg
+  {ds_slug}_face_03.jpg
+  {ds_slug}_face_04.jpg
+  {life_slug}_face_01.jpg   # repeat pattern
+  {poetry_slug}_face_01.jpg # repeat pattern
+```
+
+Create the folder if it doesn't exist:
+```bash
+mkdir -p assets/raw/{week}/thumbs/
+```
+
+### If you skip this:
+
+`generate_thumbnail.py --niche ds --hook "..."` still runs (Mode A, AI-generated) — but Mode B (photo + AI composite) produces higher CTR thumbnails because the face is real. Missing shots = lower CTR ceiling. Shoot them.
+
+---
+
 ## File Output
 
 | Niche | Save to |

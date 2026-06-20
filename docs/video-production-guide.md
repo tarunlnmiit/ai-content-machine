@@ -570,7 +570,7 @@ cd /tmp/hf_<slug> && npm run render
 
 # Process ALL shorts for a slug in one command
 python3 scripts/hyperframes_render.py --shorts --slug 2026-05-25_data_science_tech_python-for-data-science-tutorial-210
-# → finds assets/video/edited/shorts/<slug>_short_*.mp4 and runs the full pipeline on each
+# → finds assets/video/edited/shorts/<week>/<slug>_short_*.mp4 (auto ISO-week subfolder, flat-root fallback) and runs the full pipeline on each
 
 # Force-rebuild cache (use when shorts get re-exported with same filename)
 python3 scripts/hyperframes_render.py --shorts --slug <slug> --fresh

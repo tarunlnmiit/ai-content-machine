@@ -428,33 +428,20 @@ python3 scripts/db_setup.py
 python3 scripts/load_posts.py
 ```
 
-What `load_posts.py` does:
-- **LinkedIn posts** → inserted into `data/scheduling.db`
-- **Metricool CSVs** generated with:
-  - Medium blog URLs auto-injected into captions: "Full post 👉 {url}"
-  - Images auto-populated from `schedule.json` if available (skipped if missing)
-- **Prompts** (if running interactively):
-  - Blog URL per niche (Medium only — skips if found in `medium_posts.json`)
-  - Image URL per post with local image (Google Drive/Dropbox public link)
-  - Saves both to `schedule.json` for re-runs (idempotent)
+What `load_posts.py` does (no Metricool/Publer CSV):
+- **LinkedIn posts** → inserted into `data/scheduling.db` (held manual until employer clearance)
+- Emits `output/scheduled/upload_shorts.sh` (Shorts upload commands)
+- Idempotent — re-running skips slugs already in the DB
 
 Outputs:
-- `data/scheduling.db` — LinkedIn posts queued
-- `output/scheduled/metricool_mistakenlyhuman.csv` — Account 1: IG + Facebook + Threads (Life + Poetry)
-- `output/scheduled/metricool_breathofds.csv` — Account 2: IG + Facebook + Threads (DS only)
+- `data/scheduling.db` — LinkedIn posts staged
+- `output/scheduled/upload_shorts.sh` — YouTube Shorts upload commands
 
-```bash
-python3 scripts/scheduler.py &
-```
-
-Verify running:
-```bash
-pgrep -f scheduler.py
-```
+> Do **not** start `scheduler.py` until LinkedIn is cleared — the daemon auto-posts every `pending` row.
 
 - [ ] db_setup.py ran without errors
-- [ ] load_posts.py ran — Metricool CSVs present in output/scheduled/
-- [ ] scheduler.py daemon running (pgrep shows PID)
+- [ ] load_posts.py ran — LinkedIn staged in scheduling.db
+- [ ] scheduler.py daemon **stopped** (manual-until-clearance)
 
 Verify LinkedIn posts are queued (3 rows expected — one per niche):
 
@@ -468,41 +455,27 @@ sqlite3 data/scheduling.db "SELECT slug, scheduled_at FROM posts WHERE platform=
 
 ---
 
-## STEP 6 — Import Metricool CSVs (week of Jun 16–20 — one week after long-forms)
+## STEP 6 — Post static posts manually (week of Jun 16–20 — one week after long-forms)
 
 > **Pivot:** social posts (IG, FB, Threads) publish the week AFTER YouTube/Substack/Medium.
 
-Run `load_posts.py` first if CSVs not yet generated (STEP 5). CSVs schedule automatically to the correct dates (week_offset=1 baked in).
+Distribution is **manual** — no Metricool/Publer CSV. For each slug, post the static content by
+hand in its window:
+- **Instagram + Facebook:** `content/derivatives/{week}/{slug}/instagram_caption.txt` + image `assets/social_posts/{week}/{slug}_instagram.png`. Paste the Medium URL inline ("Full post 👉 …").
+- **Threads:** `content/derivatives/{week}/{slug}/threads_post.txt`.
 
-**Before import:** Check if images were populated in the CSVs:
-```bash
-python3 -c "import csv; r=list(csv.DictReader(open('output/scheduled/metricool_mistakenlyhuman.csv')))[0]; print(f'Has images: {r[\"Picture Url 1\"]}')"
-```
-
-If `Picture Url 1` is empty, you either skipped the prompt or ran non-interactively. Add image URLs manually in Metricool after import (Google Drive public link or Dropbox public link).
-
-**Account 1 — mistakenlyhuman** (Life + Poetry: IG + Facebook + Threads):
-1. Open Metricool → Planner → Import CSV
-2. Import `output/scheduled/metricool_mistakenlyhuman.csv`
-
-**Account 2 — Breath of Data Science** (DS: IG + Facebook + Threads):
-3. Switch to Breath of DS brand in Metricool
-4. Import `output/scheduled/metricool_breathofds.csv`
-
-Blog URLs are already injected in captions ("Full post 👉 {url}"). Images populate automatically if saved to `schedule.json` during `load_posts.py` — add manually only if missing.
-
-Scheduled dates in the CSVs:
+Posting windows:
 - 🟢 Life IG/FB: **Tue Jun 17, 8 AM** · Threads: **Tue Jun 17, 8 PM**
 - 🔵 DS IG/FB: **Wed Jun 18, 8 AM** · Threads: **Wed Jun 18, 8 PM**
 - 🟣 Poetry IG/FB: **Fri Jun 20, 10 AM** · Threads: **Fri Jun 20, 12 PM**
 
-- [ ] mistakenlyhuman Metricool CSV imported (Life + Poetry IG/FB + Threads)
-- [ ] Breath of DS Metricool CSV imported (DS IG/FB + Threads)
-- [ ] Verified images in CSVs or manually added to Metricool
+- [ ] Life IG/FB + Threads posted (Tue)
+- [ ] DS IG/FB + Threads posted (Wed)
+- [ ] Poetry IG/FB + Threads posted (Fri)
 
 ---
 
-## STEP 7 — Twitter threads (manual in Publer)
+## STEP 7 — Twitter threads (manual)
 
 Source files: `content/derivatives/{slug}/twitter_thread.txt`
 
@@ -510,7 +483,7 @@ Source files: `content/derivatives/{slug}/twitter_thread.txt`
 - Life: `content/derivatives/2026-05-21_life_self_dev_how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals/twitter_thread.txt`
 - Poetry: `content/derivatives/2026-05-21_poetry_quotes_when-dreams-speak-of-love/twitter_thread.txt`
 
-Twitter threads publish the week AFTER the long-form (pivot rule). Schedule manually in Metricool or post directly.
+Twitter threads publish the week AFTER the long-form (pivot rule). Post directly — threads can't be scheduled.
 
 - Life: **Mon Jun 16, 1 PM IST** *(recurring reminder set — fires every Monday)*
 - DS: **Wed Jun 18, 1 PM IST** *(manual)*
