@@ -1,23 +1,15 @@
 [
   {
     "sceneId": "scene-12",
-    "componentName": "WordReveal",
-    "script": "Do your most dreaded tasks first, but only one frog",
+    "componentName": "AtmosphericQuote",
+    "atSec": 187.4,
+    "script": "the gap between what we need and what we are trained",
     "niche": "life",
-    "durationSec": 5,
+    "durationSec": 6,
     "layout": "panel-left",
     "props": {
-      "words": [
-        "Eat",
-        "the",
-        "frog",
-        "first"
-      ],
-      "emphasis": [
-        2
-      ]
-    },
-    "atSec": 268.78,
-    "atSecSource": "anchor"
+      "quote": "The gap between what we need and what we are trained to give each other — that's where the stigma lives.",
+      "attribution": null
+    }
   }
 ]

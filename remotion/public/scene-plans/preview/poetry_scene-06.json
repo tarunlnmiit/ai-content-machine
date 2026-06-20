@@ -1,16 +1,15 @@
 [
   {
     "sceneId": "scene-06",
-    "componentName": "ImageTextReveal",
-    "script": "Poetry was already in the server room.",
+    "componentName": "AtmosphericQuote",
+    "script": "I know this isn't going to do any good to me",
     "niche": "poetry",
+    "atSec": 71.0,
     "durationSec": 6,
-    "layout": "fullscreen",
+    "layout": "panel-right",
     "props": {
-      "headline": "Poetry was already in the server room",
-      "subtext": "It was never waiting for an invitation"
-    },
-    "atSec": 149.16,
-    "atSecSource": "anchor"
+      "quote": "I know this isn't going to do any good to me, but the heart wants what the heart wants.",
+      "attribution": ""
+    }
   }
 ]

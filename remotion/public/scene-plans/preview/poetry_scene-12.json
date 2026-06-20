@@ -1,26 +1,15 @@
 [
   {
     "sceneId": "scene-12",
-    "componentName": "DataVizReveal",
-    "script": "Facts tell you what happened. Poetry tells you what stayed behind.",
+    "componentName": "ImageTextReveal",
+    "script": "No ground to stand on, or a sky to cover my head with.",
     "niche": "poetry",
-    "durationSec": 6,
+    "atSec": 303.0,
+    "durationSec": 7,
     "layout": "fullscreen",
     "props": {
-      "title": "What it tells you",
-      "data": [
-        {
-          "label": "Facts: what happened",
-          "value": 50
-        },
-        {
-          "label": "Poetry: what stayed behind",
-          "value": 50
-        }
-      ],
-      "chartType": "bar"
-    },
-    "atSec": 270.44,
-    "atSecSource": "anchor"
+      "headline": "No ground to stand on. No sky to cover my head with.",
+      "subtext": "DISORIENTATION"
+    }
   }
 ]

@@ -2,26 +2,25 @@
   {
     "sceneId": "scene-07",
     "componentName": "ConceptExplainer",
-    "script": "our brains fixate on unfinished work until we register closure",
+    "atSec": 80.5,
+    "script": "this isn't a weakness problem, it's a structural one",
     "niche": "life",
     "durationSec": 6,
     "layout": "fullscreen",
     "props": {
-      "headline": "The Zeigarnik Effect",
+      "headline": "Not a Weakness Problem — a Structural One",
       "cards": [
         {
-          "term": "Open loops",
-          "definition": "The brain keeps spinning on unfinished tasks",
-          "icon": "🔁"
+          "term": "Individual Framing",
+          "definition": "\"He just needs to toughen up\"",
+          "icon": "❌"
         },
         {
-          "term": "Artificial closure",
-          "definition": "The ritual signals 'done' so the loop releases",
-          "icon": "✅"
+          "term": "Structural Reality",
+          "definition": "Systematic failure to give people permission to struggle out loud",
+          "icon": "🔩"
         }
       ]
-    },
-    "atSec": 143.88,
-    "atSecSource": "anchor"
+    }
   }
 ]

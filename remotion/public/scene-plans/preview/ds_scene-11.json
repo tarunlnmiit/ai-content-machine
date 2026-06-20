@@ -1,22 +1,21 @@
 [
   {
     "sceneId": "scene-11",
-    "componentName": "WordReveal",
-    "script": "The isnull().sum() line is the one most beginners skip. Don't skip it",
+    "componentName": "CodeAnnotation",
+    "script": "print 28 plus 35, and let me remove the rest of the code",
     "niche": "ds",
-    "durationSec": 5,
-    "layout": "panel-right",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "atSec": 398,
     "props": {
-      "words": [
-        "Don't",
-        "skip",
-        "isnull().sum()"
+      "code": [
+        "print(28 + 35)      # → 63     ✓  int + int",
+        "print(28.0 + 35.0)  # → 63.0   ✓  float + float",
+        "print('28' + '35')  # → '2835' ✗  str concatenation!"
       ],
-      "emphasis": [
-        2
-      ]
-    },
-    "atSec": 351.48,
-    "atSecSource": "anchor"
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Same + operator — completely different behaviour by type"
+    }
   }
 ]

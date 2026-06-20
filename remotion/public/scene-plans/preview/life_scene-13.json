@@ -1,30 +1,26 @@
 [
   {
     "sceneId": "scene-13",
-    "componentName": "ToolComparison",
-    "script": "then I would have a frog festival and wonder why",
+    "componentName": "WordReveal",
+    "atSec": 200.9,
+    "script": "old code running on your hardware",
     "niche": "life",
-    "durationSec": 7,
-    "layout": "fullscreen",
+    "durationSec": 5,
+    "layout": "panel-right",
     "props": {
-      "leftSide": {
-        "label": "One frog",
-        "points": [
-          "Kills one program",
-          "Removes the avoidance drag",
-          "Day feels lighter"
-        ]
-      },
-      "rightSide": {
-        "label": "A frog festival",
-        "points": [
-          "No multiplied benefit",
-          "Multiplies the drag",
-          "Fighting uphill all day"
-        ]
-      }
-    },
-    "atSec": 276.18,
-    "atSecSource": "anchor"
+      "words": [
+        "old",
+        "code",
+        "running",
+        "on",
+        "your",
+        "hardware"
+      ],
+      "emphasis": [
+        0,
+        2,
+        5
+      ]
+    }
   }
 ]

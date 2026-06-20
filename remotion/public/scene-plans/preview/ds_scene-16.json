@@ -1,23 +1,29 @@
 [
   {
     "sceneId": "scene-16",
-    "componentName": "CodeAnnotation",
-    "script": "The errors='coerce' argument is doing critical work here",
+    "componentName": "ToolComparison",
+    "script": "The benefit of this is called list comprehension",
     "niche": "ds",
     "durationSec": 7,
     "layout": "fullscreen",
+    "atSec": 743,
     "props": {
-      "code": [
-        "df['order_date'] = pd.to_datetime(df['order_date'], errors='coerce')",
-        "df['revenue'] = pd.to_numeric(df['revenue'], errors='coerce')",
-        "df['region'] = df['region'].str.strip().str.title()",
-        "df['age'] = df['age'].fillna(df['age'].median())"
-      ],
-      "language": "python",
-      "highlightLine": 2,
-      "annotationText": "errors='coerce' turns bad values into NaN instead of crashing"
-    },
-    "atSec": 1183.48,
-    "atSecSource": "anchor"
+      "leftSide": {
+        "label": "For Loop — 3 lines",
+        "points": [
+          "for score in scores:",
+          "    if score > 85:",
+          "        print(score)"
+        ]
+      },
+      "rightSide": {
+        "label": "List Comprehension — 1 line",
+        "points": [
+          "[s for s in scores if s > 85]",
+          "Concise and readable",
+          "Every data scientist uses this"
+        ]
+      }
+    }
   }
 ]

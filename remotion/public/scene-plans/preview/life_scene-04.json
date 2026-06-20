@@ -1,37 +1,14 @@
 [
   {
     "sceneId": "scene-04",
-    "componentName": "NumberedTips",
-    "script": "It happened at the end of the day",
+    "componentName": "BrowserTabOverload",
+    "atSec": 48.6,
+    "script": "running mental loops, I couldn't switch off",
     "niche": "life",
-    "durationSec": 8,
-    "layout": "panel-right",
+    "durationSec": 10,
+    "layout": "fullscreen",
     "props": {
-      "title": "The Shutdown Ritual",
-      "tips": [
-        {
-          "number": 1,
-          "headline": "Scan the task list",
-          "body": "Note what's unfinished"
-        },
-        {
-          "number": 2,
-          "headline": "Mark the pickup point",
-          "body": "Where you'll resume tomorrow"
-        },
-        {
-          "number": 3,
-          "headline": "Write one sentence",
-          "body": "What you got done today"
-        },
-        {
-          "number": 4,
-          "headline": "Say it out loud",
-          "body": "\"Shutdown complete\""
-        }
-      ]
-    },
-    "atSec": 66.12,
-    "atSecSource": "anchor"
+      "niche": "life"
+    }
   }
 ]

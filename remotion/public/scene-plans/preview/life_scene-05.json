@@ -2,17 +2,15 @@
   {
     "sceneId": "scene-05",
     "componentName": "CounterReveal",
-    "script": "My shutdown ritual takes four minutes",
+    "atSec": 61.9,
+    "script": "research by priori group found that 40% of men",
     "niche": "life",
-    "durationSec": 5,
+    "durationSec": 6,
     "layout": "fullscreen",
     "props": {
-      "value": 4,
-      "label": "Minutes to close the day",
-      "prefix": "",
-      "suffix": " min"
-    },
-    "atSec": 89.42,
-    "atSecSource": "anchor"
+      "value": 40,
+      "label": "of men won't talk about their mental health — not to friends, not to family, not to anyone",
+      "suffix": "%"
+    }
   }
 ]

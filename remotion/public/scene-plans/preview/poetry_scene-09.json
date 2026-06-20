@@ -1,15 +1,16 @@
 [
   {
     "sceneId": "scene-09",
-    "componentName": "AtmosphericQuote",
-    "script": "grief insists on specificity",
+    "componentName": "VoiceMemoryDissolve",
+    "script": "our voice cut through the noise without warning",
     "niche": "poetry",
-    "durationSec": 6,
-    "layout": "panel-right",
+    "atSec": 244.0,
+    "durationSec": 13,
+    "layout": "fullscreen",
     "props": {
-      "quote": "Grief insists on specificity."
-    },
-    "atSec": 248.96,
-    "atSecSource": "anchor"
+      "niche": "poetry",
+      "voiceName": "Echo",
+      "particleCount": 56
+    }
   }
 ]

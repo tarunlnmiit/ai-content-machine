@@ -1,18 +1,31 @@
 [
   {
     "sceneId": "scene-06",
-    "componentName": "CounterReveal",
-    "script": "make it workable in under an hour",
+    "componentName": "ConceptExplainer",
+    "script": "Python is dynamically typed. That means you don't declare what type",
     "niche": "ds",
-    "durationSec": 5,
+    "durationSec": 6,
     "layout": "fullscreen",
+    "atSec": 141,
     "props": {
-      "value": 1,
-      "label": "unfamiliar dataset to workable",
-      "prefix": "< ",
-      "suffix": " hr"
-    },
-    "atSec": 100.04,
-    "atSecSource": "anchor"
+      "headline": "Python Dynamic Typing",
+      "cards": [
+        {
+          "term": "No declarations",
+          "definition": "You assign a value; Python decides the type at runtime",
+          "icon": "⚡"
+        },
+        {
+          "term": "Feels like a feature",
+          "definition": "Write x = 28 instead of int x = 28",
+          "icon": "✅"
+        },
+        {
+          "term": "Hidden risk",
+          "definition": "Wrong type = silent wrong answer, zero crash",
+          "icon": "⚠️"
+        }
+      ]
+    }
   }
 ]

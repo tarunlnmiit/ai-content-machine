@@ -1,15 +1,20 @@
 [
   {
     "sceneId": "scene-03",
-    "componentName": "AtmosphericQuote",
-    "script": "The lyric form is the one that admits what human experience refuses to sort",
+    "componentName": "HandwrittenReveal",
+    "script": "Love has taken away all my senses, like that of alcohol",
     "niche": "poetry",
-    "durationSec": 7,
-    "layout": "panel-top",
+    "atSec": 29.0,
+    "durationSec": 8,
+    "layout": "fullscreen",
     "props": {
-      "quote": "The lyric form admits what human experience refuses to sort."
-    },
-    "atSec": 73.4,
-    "atSecSource": "anchor"
+      "lines": [
+        "Love has taken away all my senses,",
+        "like that of alcohol,",
+        "effects of booze reside for a short period —",
+        "but your intoxication doesn't want to go away."
+      ],
+      "niche": "poetry"
+    }
   }
 ]

@@ -1,18 +1,26 @@
 [
   {
     "sceneId": "scene-08",
-    "componentName": "CounterReveal",
-    "script": "I spend 20 minutes writing down everything that is in my head",
+    "componentName": "TransformationArc",
+    "atSec": 86.3,
+    "script": "the stigma is inherited, passed down like outdated furniture",
     "niche": "life",
-    "durationSec": 5,
-    "layout": "fullscreen",
+    "durationSec": 6,
+    "layout": "panel-left",
     "props": {
-      "value": 20,
-      "label": "Minutes to empty your head",
-      "prefix": "",
-      "suffix": " min"
-    },
-    "atSec": 175.06,
-    "atSecSource": "anchor"
+      "beforeLabel": "Inherited",
+      "afterLabel": "Unexamined",
+      "beforePoints": [
+        "Passed generation to generation",
+        "Nobody questions it",
+        "Comes with the household"
+      ],
+      "afterPoints": [
+        "Becomes invisible wallpaper",
+        "Nobody notices anymore",
+        "Feels like truth"
+      ],
+      "transformLabel": "Outdated furniture nobody uses — but nobody throws away"
+    }
   }
 ]

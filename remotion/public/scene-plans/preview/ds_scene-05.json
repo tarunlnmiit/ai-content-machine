@@ -1,15 +1,15 @@
 [
   {
-    "componentName": "DataPipelineFlow",
-    "script": "loading and exploring, selecting and filtering, cleaning messy data, and aggregating",
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "No error message. No warning. Just a wrong answer sitting",
     "niche": "ds",
     "durationSec": 7,
-    "layout": "fullscreen",
+    "layout": "panel-left",
+    "atSec": 105,
     "props": {
-      "description": "Animated data pipeline: four operations (Load → Select → Clean → Aggregate) shown as flowing data rows transforming sequentially. Raw table rows enter left, each stage highlights one operation with niche accent color, clean rows exit right. Motion-graphic style, no code — pure data flow."
-    },
-    "sceneId": "scene-05",
-    "atSec": 87.56,
-    "atSecSource": "anchor"
+      "quote": "No error. No warning. Just a wrong answer sitting in your spreadsheet, looking completely legitimate.",
+      "attribution": null
+    }
   }
 ]

@@ -1,26 +1,15 @@
 [
   {
     "sceneId": "scene-15",
-    "componentName": "DataVizReveal",
-    "script": "one 90-minute block of deep work per day",
+    "componentName": "AtmosphericQuote",
+    "atSec": 249.6,
+    "script": "some moments don't need a mechanic, they need a witness",
     "niche": "life",
     "durationSec": 7,
-    "layout": "fullscreen",
+    "layout": "panel-top",
     "props": {
-      "title": "Focus block length vs. real output",
-      "data": [
-        {
-          "label": "25-min Pomodoro",
-          "value": 25
-        },
-        {
-          "label": "90-min deep block",
-          "value": 90
-        }
-      ],
-      "chartType": "bar"
-    },
-    "atSec": 357.86,
-    "atSecSource": "anchor"
+      "quote": "Some moments don't need a mechanic. They need a witness.",
+      "attribution": null
+    }
   }
 ]

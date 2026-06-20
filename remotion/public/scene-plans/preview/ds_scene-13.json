@@ -1,23 +1,28 @@
 [
   {
     "sceneId": "scene-13",
-    "componentName": "CodeAnnotation",
-    "script": "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
+    "componentName": "WordReveal",
+    "script": "No error, no warning, just plain, wrong answer",
     "niche": "ds",
-    "durationSec": 7,
-    "layout": "fullscreen",
+    "durationSec": 5,
+    "layout": "panel-left",
+    "atSec": 447,
     "props": {
-      "code": [
-        "high_value = df.loc[df['revenue'] > 10000, ['customer_id', 'revenue']]",
-        "filtered = df[(df['region'] == 'North') & (df['revenue'] > 5000)]",
-        "filtered_v2 = df.query(\"region == 'North' and revenue > 5000\")",
-        "df[df['status'].isin(['active', 'trial'])]"
+      "words": [
+        "No",
+        "error.",
+        "No",
+        "warning.",
+        "Just",
+        "a",
+        "wrong",
+        "answer."
       ],
-      "language": "python",
-      "highlightLine": 3,
-      "annotationText": ".query() is far more readable for multi-condition filters"
-    },
-    "atSec": 436.4,
-    "atSecSource": "interp"
+      "emphasis": [
+        1,
+        3,
+        7
+      ]
+    }
   }
 ]

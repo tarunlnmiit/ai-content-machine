@@ -1,27 +1,15 @@
 [
   {
     "sceneId": "scene-02",
-    "componentName": "TransformationArc",
-    "script": "busy, sure, organized technically, but not moving",
+    "componentName": "AtmosphericQuote",
+    "atSec": 13.8,
+    "script": "have you tried going outside more?",
     "niche": "life",
-    "durationSec": 6,
-    "layout": "panel-left",
+    "durationSec": 5,
+    "layout": "panel-top",
     "props": {
-      "beforeLabel": "Chasing the perfect setup",
-      "afterLabel": "Habits simple enough to do on bad days",
-      "beforePoints": [
-        "Second brain",
-        "Five-step weekly reviews",
-        "Busy, but not moving"
-      ],
-      "afterPoints": [
-        "No app required",
-        "Done even on bad days",
-        "Output, not just organized"
-      ],
-      "transformLabel": "Strip it back"
-    },
-    "atSec": 19.34,
-    "atSecSource": "anchor"
+      "quote": "Have you tried going outside more?",
+      "attribution": "What passes for mental health support"
+    }
   }
 ]

@@ -1,27 +1,28 @@
 [
   {
     "sceneId": "scene-07",
-    "componentName": "ConceptExplainer",
-    "script": "A DataFrame column is a NumPy array with a name",
+    "componentName": "HabitLoop",
+    "script": "it lets you concatenate numbers like their words and call it a sum",
     "niche": "ds",
-    "durationSec": 6,
-    "layout": "fullscreen",
+    "durationSec": 7,
+    "layout": "panel-right",
+    "atSec": 154,
     "props": {
-      "headline": "Pandas Builds on NumPy",
-      "cards": [
+      "title": "The Silent Bug Cycle",
+      "phases": [
         {
-          "term": "DataFrame column",
-          "definition": "A NumPy array with a name attached",
-          "icon": "🏷️"
+          "label": "Load CSV"
         },
         {
-          "term": ".apply() & boolean indexing",
-          "definition": "Higher-level interface for the same NumPy ideas",
-          "icon": "⚙️"
+          "label": "Run sum()"
+        },
+        {
+          "label": "Get plausible result"
+        },
+        {
+          "label": "Trust wrong answer"
         }
       ]
-    },
-    "atSec": 106.12,
-    "atSecSource": "anchor"
+    }
   }
 ]

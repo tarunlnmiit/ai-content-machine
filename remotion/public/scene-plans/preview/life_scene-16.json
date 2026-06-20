@@ -1,18 +1,26 @@
 [
   {
     "sceneId": "scene-16",
-    "componentName": "CounterReveal",
-    "script": "The first 15 to 20 minutes of any focus session are transitional",
+    "componentName": "TransformationArc",
+    "atSec": 257.6,
+    "script": "here is the version of strength we have been sold",
     "niche": "life",
-    "durationSec": 5,
-    "layout": "fullscreen",
+    "durationSec": 7,
+    "layout": "panel-left",
     "props": {
-      "value": 20,
-      "label": "Minutes lost per context switch",
-      "prefix": "",
-      "suffix": " min"
-    },
-    "atSec": 366.66,
-    "atSecSource": "anchor"
+      "beforeLabel": "Sold Version of Strength",
+      "afterLabel": "What It Actually Looks Like",
+      "beforePoints": [
+        "Handle it yourself",
+        "Show no cracks",
+        "Keep moving"
+      ],
+      "afterPoints": [
+        "Passive aggressive in rooms you used to feel safe",
+        "Snapping at people who don't deserve it",
+        "Sleepless nights running loops that go nowhere"
+      ],
+      "transformLabel": "The cost of performing fine"
+    }
   }
 ]

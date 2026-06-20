@@ -1,33 +1,16 @@
 [
   {
     "sceneId": "scene-04",
-    "componentName": "NumberedTips",
-    "script": "loading and exploring, selecting and filtering, cleaning messy data, and aggregating",
+    "componentName": "CounterReveal",
+    "script": "in this case and it will become 2835 and 42",
     "niche": "ds",
-    "durationSec": 7,
-    "layout": "panel-left",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "atSec": 91,
     "props": {
-      "title": "Four Pandas Skills",
-      "tips": [
-        {
-          "number": 1,
-          "headline": "Load & Explore"
-        },
-        {
-          "number": 2,
-          "headline": "Select & Filter"
-        },
-        {
-          "number": 3,
-          "headline": "Clean"
-        },
-        {
-          "number": 4,
-          "headline": "Aggregate"
-        }
-      ]
-    },
-    "atSec": 87.56,
-    "atSecSource": "anchor"
+      "value": 2835,
+      "label": "Wrong answer — strings concatenated, not added",
+      "suffix": "42"
+    }
   }
 ]

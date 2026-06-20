@@ -1,15 +1,31 @@
 [
   {
     "sceneId": "scene-15",
-    "componentName": "AtmosphericQuote",
-    "script": "Cleaning is analysis. You can't separate them",
+    "componentName": "ConceptExplainer",
+    "script": "A list is a sequence and ordered collection of items",
     "niche": "ds",
-    "durationSec": 5,
-    "layout": "panel-left",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "atSec": 573,
     "props": {
-      "quote": "Cleaning is analysis. You can't separate them."
-    },
-    "atSec": 518.04,
-    "atSecSource": "anchor"
+      "headline": "Python Lists",
+      "cards": [
+        {
+          "term": "Create",
+          "definition": "scores = [85, 92, 78, 95]  — square brackets",
+          "icon": "📋"
+        },
+        {
+          "term": "Access",
+          "definition": "scores[0] → 85  (zero-indexed)",
+          "icon": "🔍"
+        },
+        {
+          "term": "Slice",
+          "definition": "scores[1:3] → [92, 78]  (exclusive end!)",
+          "icon": "✂️"
+        }
+      ]
+    }
   }
 ]

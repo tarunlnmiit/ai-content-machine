@@ -1,15 +1,33 @@
 [
   {
-    "componentName": "BrowserTabOverload",
-    "script": "my brain had become a browser with fifty tabs open",
+    "sceneId": "scene-10",
+    "componentName": "ToolComparison",
+    "atSec": 124.3,
+    "script": "nobody tells you to man up when you are in a cast",
     "niche": "life",
-    "durationSec": 6,
+    "durationSec": 7,
     "layout": "fullscreen",
     "props": {
-      "description": "Chaotic browser-tab overload animation: 50 tabs spawn and stack rapidly across the screen, each labeled with a real thought (groceries, deadline, call mom, fix email). Screen fills with noise and fragmented text, then in one beat everything collapses to silence and a single empty tab. Represents cognitive overwhelm → clarity."
-    },
-    "sceneId": "scene-10",
-    "atSec": 197.02,
-    "atSecSource": "interp"
+      "leftSide": {
+        "label": "Broken Arm",
+        "points": [
+          "Visible. Legible.",
+          "Doctor is covered",
+          "Recovery timeline is clear",
+          "People bring food",
+          "\"Take all the time you need\""
+        ]
+      },
+      "rightSide": {
+        "label": "Mental Health",
+        "points": [
+          "Invisible. No clear timeline.",
+          "No food delivery",
+          "\"Have you tried going outside?\"",
+          "\"Man up\"",
+          "Carry it alone"
+        ]
+      }
+    }
   }
 ]

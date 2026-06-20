@@ -1,16 +1,25 @@
 [
   {
     "sceneId": "scene-06",
-    "componentName": "ImageTextReveal",
-    "script": "suddenly realizing that I hadn't actually heard the last few minutes",
+    "componentName": "DataVizReveal",
+    "atSec": 72.6,
+    "script": "men died by suicide at significantly higher rates than women",
     "niche": "life",
-    "durationSec": 6,
+    "durationSec": 7,
     "layout": "fullscreen",
     "props": {
-      "headline": "Physically at the table. Mentally still inside my laptop.",
-      "subtext": "WHY THE RITUAL STARTED"
-    },
-    "atSec": 115.04,
-    "atSecSource": "anchor"
+      "title": "Global Suicide Rates — Men vs Women (relative ratio)",
+      "data": [
+        {
+          "label": "Men",
+          "value": 3
+        },
+        {
+          "label": "Women",
+          "value": 1
+        }
+      ],
+      "chartType": "bar"
+    }
   }
 ]

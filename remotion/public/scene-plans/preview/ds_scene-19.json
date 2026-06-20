@@ -1,27 +1,14 @@
 [
   {
     "sceneId": "scene-19",
-    "componentName": "TransformationArc",
-    "script": "It removes the mechanical friction that gets between you and thinking",
+    "componentName": "DataPipelineFlow",
+    "script": "this pattern list of dictionaries filter with comprehension aggregate",
     "niche": "ds",
     "durationSec": 6,
-    "layout": "panel-right",
+    "layout": "fullscreen",
+    "atSec": 1210,
     "props": {
-      "beforeLabel": "Plumbing problems",
-      "afterLabel": "Data science problems",
-      "beforePoints": [
-        "How to reach row 400",
-        "Renaming without losing data",
-        "Energy spent on logistics"
-      ],
-      "afterPoints": [
-        "Energy on the real question",
-        "Conversation with the data",
-        "Friction removed"
-      ],
-      "transformLabel": "Learn Pandas properly"
-    },
-    "atSec": 1722.52,
-    "atSecSource": "anchor"
+      "niche": "ds"
+    }
   }
 ]

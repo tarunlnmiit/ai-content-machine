@@ -1,17 +1,23 @@
 [
   {
     "sceneId": "scene-02",
-    "componentName": "CounterReveal",
-    "script": "I spent two weeks on that dataset before I ran a single analysis",
+    "componentName": "CodeAnnotation",
+    "script": "Your CSV comes in with a column called H. You load it",
     "niche": "ds",
-    "durationSec": 6,
+    "durationSec": 7,
     "layout": "fullscreen",
+    "atSec": 10,
     "props": {
-      "value": 2,
-      "label": "weeks cleaning before any analysis",
-      "suffix": " wks"
-    },
-    "atSec": 33.4,
-    "atSecSource": "anchor"
+      "code": [
+        "import pandas as pd",
+        "",
+        "df = pd.read_csv('data.csv')",
+        "total = sum(df['H'])   # column H looks numeric...",
+        "print(total)           # what does Python actually return?"
+      ],
+      "language": "python",
+      "highlightLine": 3,
+      "annotationText": "sum() on a string column = silent wrong answer"
+    }
   }
 ]

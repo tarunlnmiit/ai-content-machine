@@ -1,0 +1,249 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "There is a specific kind of madness that does not announce itself.",
+    "niche": "poetry",
+    "atSec": 0.0,
+    "durationSec": 6,
+    "layout": "panel-top",
+    "props": {
+      "quote": "There is a specific kind of madness that does not announce itself.",
+      "attribution": ""
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ImageTextReveal",
+    "script": "running on a hangover that you did not consent to",
+    "niche": "poetry",
+    "atSec": 22.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Running on a hangover you did not consent to.",
+      "subtext": "INTOXICATED SENSES"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "HandwrittenReveal",
+    "script": "Love has taken away all my senses, like that of alcohol",
+    "niche": "poetry",
+    "atSec": 29.0,
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "Love has taken away all my senses,",
+        "like that of alcohol,",
+        "effects of booze reside for a short period \u2014",
+        "but your intoxication doesn't want to go away."
+      ],
+      "niche": "poetry"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "LineReveal",
+    "script": "your twinkling eyes, your enlightening smile, your ebony hair",
+    "niche": "poetry",
+    "atSec": 42.0,
+    "durationSec": 8,
+    "layout": "panel-right",
+    "props": {
+      "lines": [
+        "your twinkling eyes,",
+        "your enlightening smile,",
+        "your ebony hair,",
+        "has stuck with me, like a newborn sticks to her mother."
+      ]
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "LineReveal",
+    "script": "like a moth attracted to the flame, like waves to the shore",
+    "niche": "poetry",
+    "atSec": 57.0,
+    "durationSec": 8,
+    "layout": "panel-left",
+    "props": {
+      "lines": [
+        "like a moth attracted to the flame,",
+        "like waves to the shore,",
+        "like coal to the winter,",
+        "like a rainbow after the rain."
+      ]
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "AtmosphericQuote",
+    "script": "I know this isn't going to do any good to me",
+    "niche": "poetry",
+    "atSec": 71.0,
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "quote": "I know this isn't going to do any good to me, but the heart wants what the heart wants.",
+      "attribution": ""
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "their ecosystems have collided, deciding not to comply with each other",
+    "niche": "poetry",
+    "atSec": 78.0,
+    "durationSec": 10,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Two luminous orbs \u2014 one cool blue (mind), one warm amber (heart) \u2014 orbit each other in perfect synchrony, then accelerate toward each other and collide in a burst of scattered light fragments. The fragments slowly drift apart, each following its own erratic spiral outward into a dark void, never reconnecting \u2014 leaving the screen split between two diverging trails of light with no shared trajectory."
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "CounterReveal",
+    "script": "Four terminals open, Databricks logs scrolling endlessly",
+    "niche": "poetry",
+    "atSec": 235.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 4,
+      "label": "Terminals Open",
+      "context": "debugging a model pipeline"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "VoiceMemoryDissolve",
+    "script": "our voice cut through the noise without warning",
+    "niche": "poetry",
+    "atSec": 240.0,
+    "durationSec": 13,
+    "layout": "fullscreen",
+    "props": {
+      "niche": "poetry",
+      "voiceName": "Echo",
+      "particleCount": 56
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "WordReveal",
+    "script": "It preserves texture, tone, timing.",
+    "niche": "poetry",
+    "atSec": 266.0,
+    "durationSec": 5,
+    "layout": "panel-left",
+    "props": {
+      "words": [
+        "texture.",
+        "tone.",
+        "timing."
+      ],
+      "emphasis": [
+        0,
+        1,
+        2
+      ]
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "DataVizReveal",
+    "script": "Earlier, my mind and heart worked in sync, but it seems like their ecosystems have collided",
+    "niche": "poetry",
+    "atSec": 281.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Sync Rate: Mind & Heart",
+      "data": [
+        {
+          "label": "Before",
+          "value": 94
+        },
+        {
+          "label": "After Collision",
+          "value": 8
+        }
+      ],
+      "chartType": "bar"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "ImageTextReveal",
+    "script": "No ground to stand on, or a sky to cover my head with.",
+    "niche": "poetry",
+    "atSec": 303.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "No ground to stand on. No sky to cover my head with.",
+      "subtext": "DISORIENTATION"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-13",
+    "componentName": "HandwrittenReveal",
+    "script": "You're standing at a false line where two tectonic plates have met.",
+    "niche": "poetry",
+    "atSec": 321.0,
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "You're not broken.",
+        "You're standing at a false line",
+        "where two tectonic plates have met.",
+        "And the ground has dissolved mid-step."
+      ],
+      "niche": "poetry"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-14",
+    "componentName": "AtmosphericQuote",
+    "script": "That's not a malfunction. That's a signal.",
+    "niche": "poetry",
+    "atSec": 401.0,
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "quote": "That's not a malfunction. That's a signal \u2014 the only honest one you'll get.",
+      "attribution": ""
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-15",
+    "componentName": "ImageTextReveal",
+    "script": "Just a full unfiltered weight of being alive enough to feel it.",
+    "niche": "poetry",
+    "atSec": 415.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "The full, unfiltered weight of being alive enough to feel it.",
+      "subtext": "THAT'S NOT A PROBLEM TO SOLVE"
+    },
+    "atSecSource": "anchor"
+  }
+]

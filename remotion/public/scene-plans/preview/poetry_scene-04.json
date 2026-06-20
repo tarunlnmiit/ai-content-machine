@@ -1,26 +1,19 @@
 [
   {
     "sceneId": "scene-04",
-    "componentName": "DataVizReveal",
-    "script": "One used numbers. The other used metaphor. Tools different. Curiosity identical.",
+    "componentName": "LineReveal",
+    "script": "your twinkling eyes, your enlightening smile, your ebony hair",
     "niche": "poetry",
-    "durationSec": 6,
-    "layout": "fullscreen",
+    "atSec": 42.0,
+    "durationSec": 8,
+    "layout": "panel-right",
     "props": {
-      "title": "Tools different. Curiosity identical.",
-      "data": [
-        {
-          "label": "Numbers",
-          "value": 50
-        },
-        {
-          "label": "Metaphor",
-          "value": 50
-        }
-      ],
-      "chartType": "bar"
-    },
-    "atSec": 129.74,
-    "atSecSource": "anchor"
+      "lines": [
+        "your twinkling eyes,",
+        "your enlightening smile,",
+        "your ebony hair,",
+        "has stuck with me, like a newborn sticks to her mother."
+      ]
+    }
   }
 ]

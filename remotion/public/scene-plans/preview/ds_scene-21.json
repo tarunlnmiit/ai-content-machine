@@ -1,0 +1,41 @@
+[
+  {
+    "sceneId": "scene-21",
+    "componentName": "DataVizReveal",
+    "script": "150 is a bit suspicious in this list so we want to check if it is an outlier",
+    "niche": "ds",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "atSec": 1485,
+    "props": {
+      "title": "Outlier Detection — Scores Dataset",
+      "data": [
+        {
+          "label": "85",
+          "value": 85
+        },
+        {
+          "label": "92",
+          "value": 92
+        },
+        {
+          "label": "78",
+          "value": 78
+        },
+        {
+          "label": "95",
+          "value": 95
+        },
+        {
+          "label": "88",
+          "value": 88
+        },
+        {
+          "label": "150 ⚠️",
+          "value": 150
+        }
+      ],
+      "chartType": "bar"
+    }
+  }
+]

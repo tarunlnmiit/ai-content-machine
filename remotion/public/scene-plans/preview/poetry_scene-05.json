@@ -2,17 +2,18 @@
   {
     "sceneId": "scene-05",
     "componentName": "LineReveal",
-    "script": "The best commit messages have grief in them sometimes.",
+    "script": "like a moth attracted to the flame, like waves to the shore",
     "niche": "poetry",
-    "durationSec": 7,
+    "atSec": 57.0,
+    "durationSec": 8,
     "layout": "panel-left",
     "props": {
       "lines": [
-        "The best scientific papers have rhythm.",
-        "The best commit messages have grief in them."
+        "like a moth attracted to the flame,",
+        "like waves to the shore,",
+        "like coal to the winter,",
+        "like a rainbow after the rain."
       ]
-    },
-    "atSec": 142.12,
-    "atSecSource": "anchor"
+    }
   }
 ]

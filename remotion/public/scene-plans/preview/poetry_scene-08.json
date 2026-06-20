@@ -1,20 +1,16 @@
 [
   {
     "sceneId": "scene-08",
-    "componentName": "HandwrittenReveal",
-    "script": "The grey of a commute counts. The brown of bad coffee counts.",
+    "componentName": "CounterReveal",
+    "script": "Four terminals open, Databricks logs scrolling endlessly",
     "niche": "poetry",
-    "durationSec": 7,
+    "atSec": 235.0,
+    "durationSec": 6,
     "layout": "fullscreen",
     "props": {
-      "lines": [
-        "The grey of a commute counts.",
-        "The brown of bad coffee counts.",
-        "The particular blue of a Tuesday afternoon."
-      ],
-      "niche": "poetry"
-    },
-    "atSec": 188.42,
-    "atSecSource": "anchor"
+      "value": 4,
+      "label": "Terminals Open",
+      "context": "debugging a model pipeline"
+    }
   }
 ]

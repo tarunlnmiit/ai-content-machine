@@ -1,27 +1,14 @@
 [
   {
     "sceneId": "scene-11",
-    "componentName": "ConceptExplainer",
-    "script": "Getting information out of your head and onto paper frees up capacity",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "atSec": 147.8,
+    "script": "sitting in my car after work one evening, engine still running",
     "niche": "life",
-    "durationSec": 6,
+    "durationSec": 8,
     "layout": "fullscreen",
     "props": {
-      "headline": "Offloading",
-      "cards": [
-        {
-          "term": "Out of working memory",
-          "definition": "Move it from your head to an external store",
-          "icon": "🧠"
-        },
-        {
-          "term": "Free up resources",
-          "definition": "Capacity returns for actual thinking",
-          "icon": "💡"
-        }
-      ]
-    },
-    "atSec": 208.0,
-    "atSecSource": "anchor"
+      "description": "Dark cinematic close-up of a car interior at night — warm amber dashboard glow, rain blurring the windshield, hands resting on the steering wheel. Text fades in word by word: 'I couldn't make myself go upstairs yet.' The frame holds completely still. A slow, barely-audible heartbeat pulse on the audio layer, like the engine idling in the dark — weight without motion."
+    }
   }
 ]

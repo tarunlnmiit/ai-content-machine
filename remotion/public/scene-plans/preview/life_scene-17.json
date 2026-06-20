@@ -1,32 +1,31 @@
 [
   {
     "sceneId": "scene-17",
-    "componentName": "NumberedTips",
-    "script": "write exactly three priorities for tomorrow",
+    "componentName": "ToolComparison",
+    "atSec": 312.7,
+    "script": "nobody mocks you for hiring a personal trainer to get physically stronger",
     "niche": "life",
     "durationSec": 7,
-    "layout": "panel-left",
+    "layout": "fullscreen",
     "props": {
-      "title": "Plan tomorrow tonight",
-      "tips": [
-        {
-          "number": 1,
-          "headline": "Exactly three",
-          "body": "Three forces real prioritization"
-        },
-        {
-          "number": 2,
-          "headline": "Written tonight",
-          "body": "You still have today's context"
-        },
-        {
-          "number": 3,
-          "headline": "Decision pre-made",
-          "body": "Morning-you never has to choose"
-        }
-      ]
-    },
-    "atSec": 425.18,
-    "atSecSource": "anchor"
+      "leftSide": {
+        "label": "Personal Trainer",
+        "points": [
+          "Expert help for physical strength",
+          "No stigma attached",
+          "Widely respected decision",
+          "\"Taking your health seriously\""
+        ]
+      },
+      "rightSide": {
+        "label": "Therapist",
+        "points": [
+          "Expert help for mental strength",
+          "Sudden social judgment",
+          "\"Not strong enough to handle life\"",
+          "Same logic. Completely different response."
+        ]
+      }
+    }
   }
 ]

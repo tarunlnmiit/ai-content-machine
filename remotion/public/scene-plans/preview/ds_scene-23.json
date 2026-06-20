@@ -1,0 +1,14 @@
+[
+  {
+    "sceneId": "scene-23",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "type confusion causes silent bugs as I showed you you load data",
+    "niche": "ds",
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "atSec": 1589,
+    "props": {
+      "description": "A split-screen animation showing two parallel data paths flowing from a single CSV file. Left path (red): column values flow as strings labelled 'str' through a sum() node, visibly concatenate rather than add, and land as '283542' in a dashboard cell with a subtle red glow — looks plausible, is wrong. Right path (green): same values pass through an int() conversion node first, type label flips from 'str' to 'int', then sum correctly to 105, glowing green in the dashboard. Both paths animate simultaneously with particle streams so the viewer can see exactly where the invisible type system makes the two outcomes diverge."
+    }
+  }
+]

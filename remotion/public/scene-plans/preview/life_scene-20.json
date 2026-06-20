@@ -1,0 +1,18 @@
+[
+  {
+    "sceneId": "scene-20",
+    "componentName": "LineReveal",
+    "atSec": 545.0,
+    "script": "strength that requires silence is just brittleness, waiting for the right",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "lines": [
+        "Strength that requires silence",
+        "is just brittleness,",
+        "waiting for the right amount of pressure."
+      ]
+    }
+  }
+]

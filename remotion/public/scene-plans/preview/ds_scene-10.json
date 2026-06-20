@@ -1,17 +1,29 @@
 [
   {
     "sceneId": "scene-10",
-    "componentName": "CounterReveal",
-    "script": "Run df.describe() and in thirty seconds you know",
+    "componentName": "ToolComparison",
+    "script": "Python treats them completely different even when they look the same",
     "niche": "ds",
-    "durationSec": 5,
+    "durationSec": 7,
     "layout": "fullscreen",
+    "atSec": 312,
     "props": {
-      "value": 30,
-      "label": "seconds to spot bad columns",
-      "suffix": " s"
-    },
-    "atSec": 304.92,
-    "atSecSource": "anchor"
+      "leftSide": {
+        "label": "Looks identical",
+        "points": [
+          "x = 1   → integer",
+          "y = 1.0 → float",
+          "z = '1' → string"
+        ]
+      },
+      "rightSide": {
+        "label": "Behaves differently",
+        "points": [
+          "x + x = 2   (addition)",
+          "y + y = 2.0 (addition)",
+          "z + z = '11' (concatenation!)"
+        ]
+      }
+    }
   }
 ]

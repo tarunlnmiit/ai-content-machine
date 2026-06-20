@@ -1,19 +1,23 @@
 [
   {
     "sceneId": "scene-10",
-    "componentName": "LineReveal",
-    "script": "You miss how they said your name. The exact pitch of their laugh.",
+    "componentName": "WordReveal",
+    "script": "It preserves texture, tone, timing.",
     "niche": "poetry",
-    "durationSec": 7,
+    "atSec": 266.0,
+    "durationSec": 5,
     "layout": "panel-left",
     "props": {
-      "lines": [
-        "You don't miss a person.",
-        "You miss how they said your name.",
-        "The exact pitch of their laugh."
+      "words": [
+        "texture.",
+        "tone.",
+        "timing."
+      ],
+      "emphasis": [
+        0,
+        1,
+        2
       ]
-    },
-    "atSec": 257.36,
-    "atSecSource": "anchor"
+    }
   }
 ]

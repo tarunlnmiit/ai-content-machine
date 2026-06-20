@@ -1,17 +1,14 @@
 [
   {
     "sceneId": "scene-07",
-    "componentName": "CounterReveal",
-    "script": "You've done this a hundred times.",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "their ecosystems have collided, deciding not to comply with each other",
     "niche": "poetry",
-    "durationSec": 4,
+    "atSec": 78.0,
+    "durationSec": 10,
     "layout": "fullscreen",
     "props": {
-      "start": 0,
-      "end": 100,
-      "label": "times you've scraped the toast over the sink"
-    },
-    "atSec": 162.82,
-    "atSecSource": "anchor"
+      "description": "Two luminous orbs — one cool blue (mind), one warm amber (heart) — orbit each other in perfect synchrony, then accelerate toward each other and collide in a burst of scattered light fragments. The fragments slowly drift apart, each following its own erratic spiral outward into a dark void, never reconnecting — leaving the screen split between two diverging trails of light with no shared trajectory."
+    }
   }
 ]

@@ -1,15 +1,15 @@
 [
   {
     "sceneId": "scene-02",
-    "componentName": "AtmosphericQuote",
-    "script": "a poem finds the exact nerve no dataset ever mapped",
+    "componentName": "ImageTextReveal",
+    "script": "running on a hangover that you did not consent to",
     "niche": "poetry",
-    "durationSec": 6,
-    "layout": "panel-right",
+    "atSec": 22.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
     "props": {
-      "quote": "A poem finds the exact nerve no dataset ever mapped."
-    },
-    "atSec": 26.32,
-    "atSecSource": "anchor"
+      "headline": "Running on a hangover you did not consent to.",
+      "subtext": "INTOXICATED SENSES"
+    }
   }
 ]

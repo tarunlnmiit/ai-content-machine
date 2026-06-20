@@ -1,30 +1,36 @@
 [
   {
     "sceneId": "scene-14",
-    "componentName": "ToolComparison",
-    "script": "use & and | for boolean filters, not Python's and and or",
+    "componentName": "NumberedTips",
+    "script": "four conversion functions that you should be aware of",
     "niche": "ds",
     "durationSec": 7,
-    "layout": "fullscreen",
+    "layout": "panel-right",
+    "atSec": 496,
     "props": {
-      "leftSide": {
-        "label": "and / or",
-        "points": [
-          "Python keywords",
-          "Don't work on arrays",
-          "Silently break filters"
-        ]
-      },
-      "rightSide": {
-        "label": "& / |",
-        "points": [
-          "Vectorized operators",
-          "Work on Series",
-          "Wrap each condition in ()"
-        ]
-      }
-    },
-    "atSec": 448.68,
-    "atSecSource": "anchor"
+      "title": "Type Conversion Functions",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "int()",
+          "body": "int('28') → 28  |  int(3.9) → 3"
+        },
+        {
+          "number": 2,
+          "headline": "float()",
+          "body": "float('42.5') → 42.5"
+        },
+        {
+          "number": 3,
+          "headline": "str()",
+          "body": "str(42) → '42'"
+        },
+        {
+          "number": 4,
+          "headline": "bool()",
+          "body": "bool(0) → False  |  bool(1) → True"
+        }
+      ]
+    }
   }
 ]

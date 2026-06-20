@@ -1,0 +1,404 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "atSec": 0.0,
+    "script": "they hold the door, they say, take it easy",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "They sign your cast. They say 'take it easy.'",
+      "subtext": "Then you mention you haven't slept in three weeks",
+      "imageUrl": null
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "AtmosphericQuote",
+    "atSec": 13.8,
+    "script": "have you tried going outside more?",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "panel-top",
+    "props": {
+      "quote": "Have you tried going outside more?",
+      "attribution": "What passes for mental health support"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "HandwrittenReveal",
+    "atSec": 37.76,
+    "script": "for years I white knuckle life, passive aggressive in meetings",
+    "niche": "life",
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "For years I white-knuckled life.",
+        "Passive aggressive in meetings.",
+        "Waking at 3am.",
+        "Running loops I couldn't switch off."
+      ],
+      "niche": "life"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "BrowserTabOverload",
+    "atSec": 48.6,
+    "script": "running mental loops, I couldn't switch off",
+    "niche": "life",
+    "durationSec": 10,
+    "layout": "fullscreen",
+    "props": {
+      "niche": "life"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "CounterReveal",
+    "atSec": 61.88,
+    "script": "research by priori group found that 40% of men",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 40,
+      "label": "of men won't talk about their mental health \u2014 not to friends, not to family, not to anyone",
+      "suffix": "%"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "DataVizReveal",
+    "atSec": 72.6,
+    "script": "men died by suicide at significantly higher rates than women",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Global Suicide Rates \u2014 Men vs Women (relative ratio)",
+      "data": [
+        {
+          "label": "Men",
+          "value": 3
+        },
+        {
+          "label": "Women",
+          "value": 1
+        }
+      ],
+      "chartType": "bar"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "ConceptExplainer",
+    "atSec": 80.52,
+    "script": "this isn't a weakness problem, it's a structural one",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Not a Weakness Problem \u2014 a Structural One",
+      "cards": [
+        {
+          "term": "Individual Framing",
+          "definition": "\"He just needs to toughen up\"",
+          "icon": "\u274c"
+        },
+        {
+          "term": "Structural Reality",
+          "definition": "Systematic failure to give people permission to struggle out loud",
+          "icon": "\ud83d\udd29"
+        }
+      ]
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "TransformationArc",
+    "atSec": 86.28,
+    "script": "the stigma is inherited, passed down like outdated furniture",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "beforeLabel": "Inherited",
+      "afterLabel": "Unexamined",
+      "beforePoints": [
+        "Passed generation to generation",
+        "Nobody questions it",
+        "Comes with the household"
+      ],
+      "afterPoints": [
+        "Becomes invisible wallpaper",
+        "Nobody notices anymore",
+        "Feels like truth"
+      ],
+      "transformLabel": "Outdated furniture nobody uses \u2014 but nobody throws away"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "LineReveal",
+    "atSec": 99.56,
+    "script": "Real men don't cry, therapy is for people who can't handle life",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "panel-right",
+    "props": {
+      "lines": [
+        "Real men don't cry.",
+        "Therapy is for people who can't handle life.",
+        "Reinforced in living rooms, locker rooms, workplaces.",
+        "Until it became wallpaper nobody notices anymore."
+      ]
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "ToolComparison",
+    "atSec": 124.32,
+    "script": "nobody tells you to man up when you are in a cast",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "Broken Arm",
+        "points": [
+          "Visible. Legible.",
+          "Doctor is covered",
+          "Recovery timeline is clear",
+          "People bring food",
+          "\"Take all the time you need\""
+        ]
+      },
+      "rightSide": {
+        "label": "Mental Health",
+        "points": [
+          "Invisible. No clear timeline.",
+          "No food delivery",
+          "\"Have you tried going outside?\"",
+          "\"Man up\"",
+          "Carry it alone"
+        ]
+      }
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "atSec": 147.84,
+    "script": "sitting in my car after work one evening, engine still running",
+    "niche": "life",
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Dark cinematic close-up of a car interior at night \u2014 warm amber dashboard glow, rain blurring the windshield, hands resting on the steering wheel. Text fades in word by word: 'I couldn't make myself go upstairs yet.' The frame holds completely still. A slow, barely-audible heartbeat pulse on the audio layer, like the engine idling in the dark \u2014 weight without motion."
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "AtmosphericQuote",
+    "atSec": 187.44,
+    "script": "the gap between what we need and what we are trained",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-left",
+    "props": {
+      "quote": "The gap between what we need and what we are trained to give each other \u2014 that's where the stigma lives.",
+      "attribution": null
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-13",
+    "componentName": "WordReveal",
+    "atSec": 200.88,
+    "script": "old code running on your hardware",
+    "niche": "life",
+    "durationSec": 5,
+    "layout": "panel-right",
+    "props": {
+      "words": [
+        "old",
+        "code",
+        "running",
+        "on",
+        "your",
+        "hardware"
+      ],
+      "emphasis": [
+        0,
+        2,
+        5
+      ]
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-14",
+    "componentName": "VoiceMemoryDissolve",
+    "atSec": 206.76,
+    "script": "a friend once called me late at night sounding completely flat",
+    "niche": "life",
+    "durationSec": 13,
+    "layout": "fullscreen",
+    "props": {
+      "niche": "life",
+      "voiceName": "Friend",
+      "particleCount": 56
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-15",
+    "componentName": "AtmosphericQuote",
+    "atSec": 249.64,
+    "script": "some moments don't need a mechanic, they need a witness",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "panel-top",
+    "props": {
+      "quote": "Some moments don't need a mechanic. They need a witness.",
+      "attribution": null
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-16",
+    "componentName": "TransformationArc",
+    "atSec": 249.64,
+    "script": "here is the version of strength we have been sold",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "beforeLabel": "Sold Version of Strength",
+      "afterLabel": "What It Actually Looks Like",
+      "beforePoints": [
+        "Handle it yourself",
+        "Show no cracks",
+        "Keep moving"
+      ],
+      "afterPoints": [
+        "Passive aggressive in rooms you used to feel safe",
+        "Snapping at people who don't deserve it",
+        "Sleepless nights running loops that go nowhere"
+      ],
+      "transformLabel": "The cost of performing fine"
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-17",
+    "componentName": "ToolComparison",
+    "atSec": 306.76,
+    "script": "nobody mocks you for hiring a personal trainer to get physically stronger",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "Personal Trainer",
+        "points": [
+          "Expert help for physical strength",
+          "No stigma attached",
+          "Widely respected decision",
+          "\"Taking your health seriously\""
+        ]
+      },
+      "rightSide": {
+        "label": "Therapist",
+        "points": [
+          "Expert help for mental strength",
+          "Sudden social judgment",
+          "\"Not strong enough to handle life\"",
+          "Same logic. Completely different response."
+        ]
+      }
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-18",
+    "componentName": "AtmosphericQuote",
+    "atSec": 442.08,
+    "script": "vulnerability isn't the opposite of strength, it's proof of it",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "quote": "Vulnerability isn't the opposite of strength. It's proof of it.",
+      "attribution": null
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-19",
+    "componentName": "NumberedTips",
+    "atSec": 504.64,
+    "script": "this is what breaking stigma looks like at the level",
+    "niche": "life",
+    "durationSec": 7,
+    "layout": "panel-left",
+    "props": {
+      "title": "Breaking Stigma \u2014 How It Actually Looks",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Check in and mean it",
+          "body": "Ask how they are, then wait for the real answer"
+        },
+        {
+          "number": 2,
+          "headline": "Listen without pivoting to solutions",
+          "body": "They called because they didn't want to feel alone"
+        },
+        {
+          "number": 3,
+          "headline": "Mention therapy without drama",
+          "body": "A door worth walking through \u2014 not a last resort"
+        },
+        {
+          "number": 4,
+          "headline": "Create space, then hold it",
+          "body": "Ask what's wrong, then stay in the silence"
+        }
+      ]
+    },
+    "atSecSource": "anchor"
+  },
+  {
+    "sceneId": "scene-20",
+    "componentName": "LineReveal",
+    "atSec": 538.8,
+    "script": "strength that requires silence is just brittleness, waiting for the right",
+    "niche": "life",
+    "durationSec": 6,
+    "layout": "panel-right",
+    "props": {
+      "lines": [
+        "Strength that requires silence",
+        "is just brittleness,",
+        "waiting for the right amount of pressure."
+      ]
+    },
+    "atSecSource": "anchor"
+  }
+]

@@ -1,21 +1,36 @@
 [
   {
     "sceneId": "scene-19",
-    "componentName": "HandwrittenReveal",
-    "script": "Start with one. The one that stings a little when you read it",
+    "componentName": "NumberedTips",
+    "atSec": 511.4,
+    "script": "this is what breaking stigma looks like at the level",
     "niche": "life",
     "durationSec": 7,
-    "layout": "fullscreen",
+    "layout": "panel-left",
     "props": {
-      "lines": [
-        "You don't need all seven.",
-        "Start with one.",
-        "The one that stings a little —",
-        "that's the right one."
-      ],
-      "niche": "life"
-    },
-    "atSec": 577.04,
-    "atSecSource": "anchor"
+      "title": "Breaking Stigma — How It Actually Looks",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Check in and mean it",
+          "body": "Ask how they are, then wait for the real answer"
+        },
+        {
+          "number": 2,
+          "headline": "Listen without pivoting to solutions",
+          "body": "They called because they didn't want to feel alone"
+        },
+        {
+          "number": 3,
+          "headline": "Mention therapy without drama",
+          "body": "A door worth walking through — not a last resort"
+        },
+        {
+          "number": 4,
+          "headline": "Create space, then hold it",
+          "body": "Ask what's wrong, then stay in the silence"
+        }
+      ]
+    }
   }
 ]

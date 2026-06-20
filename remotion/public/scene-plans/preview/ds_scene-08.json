@@ -1,25 +1,36 @@
 [
   {
     "sceneId": "scene-08",
-    "componentName": "CodeAnnotation",
-    "script": "Before you analyze anything, you orient yourself",
+    "componentName": "NumberedTips",
+    "script": "Four primitive types that Python uses. Integers, floats, strings and Booleans",
     "niche": "ds",
     "durationSec": 7,
     "layout": "fullscreen",
+    "atSec": 185,
     "props": {
-      "code": [
-        "import pandas as pd",
-        "df = pd.read_csv('sales_records.csv')",
-        "print(df.shape)",
-        "print(df.dtypes)",
-        "print(df.describe())",
-        "print(df.isnull().sum())"
-      ],
-      "language": "python",
-      "highlightLine": 6,
-      "annotationText": "Orient first: shape, types, summary, nulls"
-    },
-    "atSec": 133.8,
-    "atSecSource": "anchor"
+      "title": "Python's 4 Primitive Types",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "int",
+          "body": "Whole numbers — age = 28, year = 2024"
+        },
+        {
+          "number": 2,
+          "headline": "float",
+          "body": "Decimals — accuracy = 0.95"
+        },
+        {
+          "number": 3,
+          "headline": "str",
+          "body": "Text — role = 'analyst'"
+        },
+        {
+          "number": 4,
+          "headline": "bool",
+          "body": "True/False — has_missing = False"
+        }
+      ]
+    }
   }
 ]

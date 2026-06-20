@@ -41,9 +41,9 @@ def find_overlay_plan(week: str, niche: str) -> Optional[Path]:
         if candidate.exists():
             return candidate
     # Fallback: glob for any overlay file containing the niche keyword
-    niche_map = {"ds": "data-science", "life": "life-self-dev", "poetry": "poetry"}
-    keyword = niche_map.get(niche, niche)
-    matches = list(week_dir.glob(f"*{keyword}*_overlay.json"))
+    niche_map = {"ds": ["data-science", "data_science"], "life": ["life-self-dev", "life_self_dev"], "poetry": ["poetry"]}
+    keywords = niche_map.get(niche, [niche])
+    matches = [m for kw in keywords for m in week_dir.glob(f"*{kw}*_overlay.json")]
     return matches[0] if matches else None
 
 
@@ -118,6 +118,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Render overlay scenes as standalone MP4s")
     parser.add_argument("--week", required=True, help="ISO week, e.g. 2026-W24")
     parser.add_argument("--niche", choices=["ds", "life", "poetry"], help="Only render one niche")
+    parser.add_argument("--component", help="Only render scenes with this componentName (e.g. DataPipelineFlow)")
     parser.add_argument("--dry-run", action="store_true", help="Print commands without rendering")
     args = parser.parse_args()
 
@@ -130,6 +131,8 @@ def main() -> None:
             print(f"  [WARN] No overlay plan found for {niche} in {args.week}")
             continue
         scenes = json.loads(plan_path.read_text())
+        if args.component:
+            scenes = [s for s in scenes if s.get("componentName") == args.component]
         print(f"  {niche}: {len(scenes)} scenes from {plan_path.name}")
         for scene in scenes:
             all_scenes.append((niche, scene))

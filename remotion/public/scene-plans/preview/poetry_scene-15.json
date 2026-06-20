@@ -1,24 +1,15 @@
 [
   {
     "sceneId": "scene-15",
-    "componentName": "WordReveal",
-    "script": "A crack is enough.",
+    "componentName": "ImageTextReveal",
+    "script": "Just a full unfiltered weight of being alive enough to feel it.",
     "niche": "poetry",
-    "durationSec": 5,
-    "layout": "panel-right",
+    "atSec": 413.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
     "props": {
-      "words": [
-        "A",
-        "crack",
-        "is",
-        "enough"
-      ],
-      "emphasis": [
-        1,
-        3
-      ]
-    },
-    "atSec": 336.12,
-    "atSecSource": "anchor"
+      "headline": "The full, unfiltered weight of being alive enough to feel it.",
+      "subtext": "THAT'S NOT A PROBLEM TO SOLVE"
+    }
   }
 ]
