@@ -39,7 +39,7 @@ DERIVATIVE_FILES = {
 
 from lib.slug import slugify
 from lib.hashtags import hashtag_line
-from lib.virality import virality_block, project_keys
+from lib.virality import virality_block, caption_formula_digest, project_keys
 
 
 def niche_from_slug(slug: str) -> str:
@@ -67,6 +67,13 @@ def build_prompt(repurposing_agent: str, hook_patterns: str | None,
     virality = virality_block("thread", niche, project_key)
     if virality:
         sections.append("## Virality Directives (apply to every platform)\n\n" + virality)
+
+    caption_formula = caption_formula_digest(niche)
+    if caption_formula:
+        sections.append(
+            "## CAPTION FORMULA (authoritative for instagram_caption — this niche)\n\n"
+            + caption_formula
+        )
 
     if hook_patterns:
         sections.append(

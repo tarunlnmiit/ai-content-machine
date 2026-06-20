@@ -99,4 +99,71 @@ piece (see `data/kb/` tracking convention / `scripts/collect_analytics.py`).
 - [ ] Honesty guardrail held (no overclaim)
 - [ ] CTA = one keyword; comment→DM tool armed (SuperProfile / CreatorFlow)
 - [ ] UTM link in DM/description/bio
-- [ ] Derivatives generated (`prompts/repurposing_agent.md`) → Metricool CSV
+- [ ] Derivatives generated (`prompts/repurposing_agent.md`) → posted manually (no Metricool/Publer CSV)
+
+---
+
+## @mavgpt caption formula (reference: 887k followers, reels hitting 3.8m views)
+
+Reverse-engineered from @mavgpt (Maverick Maltin). The structural insight that separates their
+top reels from mid performers: **the caption IS the product**. The reel hooks people into
+watching; the caption is what they screenshot and save. The full value (prompts, steps, list)
+lives in the caption body — not just behind the DM keyword.
+
+### Caption structure (mandatory order)
+
+```
+Line 1:  Comment "[KEYWORD]" and I'll send you [specific deliverable] 👆
+Line 2:  [One-line proof/claim — specific and verifiable-sounding]
+Line 3+: [Numbered list — the full value verbatim, actionable items]
+Last:    #hashtag1 #hashtag2 #hashtag3 #hashtag4 #hashtag5
+```
+
+**Real examples from top reels:**
+
+3.8m reel — "Comment 'Jobs' and I'll send you all the prompts 👆 / What happens when you ask
+ChatGPT to apply to 500 jobs for you? / I tried this and landed 12 interviews in 24 hours. /
+Prompt 1: Upload your resume... / Prompt 2: Rewrite my resume... / [etc]"
+
+1.1m reel — "Comment 'AI' and I'll send you my 2026 AI stack 👆 / The best AI for every task
+right now. / Writing emails: Claude / Brainstorming new ideas: ChatGPT / [etc]"
+
+104k reel — "Comment 'Settings' and I'll send you my full list 👆 / 5 hidden ChatGPT settings
+most people never turn on. / 1. Memory / Settings → Personalization → [exact steps] / [etc]"
+
+### Thumbnail text formula
+
+The thumbnail text IS the hook — it must state the outcome/claim, not the topic:
+
+| Works | Doesn't work |
+|-------|-------------|
+| "ChatGPT applied to 500 jobs for me 😳" | "How to use ChatGPT for job hunting" |
+| "5 Secret Settings for ChatGPT 🤯" | "ChatGPT tips" |
+| "Claude just killed personal trainers 🤯" | "Claude for fitness" |
+| "Things you didn't know you could do with AI pt12" | "AI tips part 12" |
+
+Pattern options:
+- `[Number] [secret/hidden] [things] for [tool] 🤯`
+- `[Tool] just [killed/replaced/changed] [industry/task] 🤯`
+- `[I/tool] [did dramatic thing] to [specific outcome] 😳`
+- `[BAD/GOOD/GREAT]` visual for comparisons
+
+### Serialization pattern
+
+Number your series ("pt1", "pt2"...) — builds returning viewers and algorithmic advantage.
+Example: "Things you didn't know you could do with AI pt12" implies pt1–11 also exist.
+Name your series in the thumbnail text from the first installment.
+
+### Burned-in captions during the reel
+
+One word or short phrase per beat — not full sentences. Confirms what he's saying verbally:
+`HERE` / `THINGS` / `CHATGPT` / `WHAT` / `BEFORE` / `AFTER`
+
+### What this means for Tarun's DS reels
+
+- The 5-part prompt template belongs IN the caption, not DM-only. DM sends a formatted
+  version; caption has it too (abbreviated is fine, but it must be there).
+- Thumbnail text must state the specific data science outcome: "I gave ChatGPT 100 data
+  problems. Here's the best prompt 😳" not "Better prompting for data scientists"
+- Series opportunity: "Prompt Anatomy pt1" — can keep making these and pt2 gets easy views
+- Keep hashtags DS-focused: #datascience #ai #chatgpt #python #dataanalyst (max 5)

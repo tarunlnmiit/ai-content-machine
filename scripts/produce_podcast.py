@@ -72,14 +72,27 @@ def find_video(week: str, niche: str, archive_dir: Path | None = None) -> Path:
         return matches[-1]
 
     week_dir = HYPERFRAMES_DIR / week
-    if not week_dir.exists():
-        raise FileNotFoundError(f"No hyperframes directory for {week}: {week_dir}")
     pattern = f"*_{niche}_*.mp4"
-    matches = sorted(week_dir.glob(pattern))
+
+    # Search week subfolder first (preferred location)
+    if week_dir.exists():
+        matches = sorted(week_dir.glob(pattern))
+        if not matches:
+            matches = sorted(week_dir.glob(f"*_{niche}*.mp4"))
+        # Filter out shorts — they live in the week dir but aren't podcast sources
+        matches = [m for m in matches if "-short-" not in m.name]
+
+    # Fallback: loose files at the hyperframes root (naming: YYYY-MM-DD_{niche}_w{nn}.mp4)
+    if not week_dir.exists() or not matches:
+        matches = sorted(HYPERFRAMES_DIR.glob(pattern))
+        if not matches:
+            matches = sorted(HYPERFRAMES_DIR.glob(f"*_{niche}*.mp4"))
+        matches = [m for m in matches if "-short-" not in m.name]
+
     if not matches:
-        matches = sorted(week_dir.glob(f"*_{niche}*.mp4"))
-    if not matches:
-        raise FileNotFoundError(f"No {niche} video found in {week_dir}/  (pattern: {pattern})")
+        raise FileNotFoundError(
+            f"No {niche} video found in {week_dir}/ or {HYPERFRAMES_DIR}/  (pattern: {pattern})"
+        )
     if len(matches) > 1:
         print(f"  [warn] Multiple {niche} videos found; using latest: {matches[-1].name}")
     return matches[-1]
@@ -108,15 +121,61 @@ def load_youtube_metadata(week: str, slug: str, derivatives_base: Path | None = 
     return json.loads(meta_path.read_text())
 
 
-def format_podcast_description(yt_description: str) -> str:
-    """Convert YouTube description to podcast show notes."""
+_SHOW_NAMES = {"life": "Breath of Life", "poetry": "Breath of Poetry"}
+
+
+def format_podcast_description(yt_description: str, niche: str = "life") -> str:
+    """
+    Convert YouTube description to a Spotify episode description following the virality formula:
+
+        Line 1  — hook (first substantive paragraph — the most compelling line)
+        Lines 2–3 — emotional promise (what the listener will feel/realise by the end)
+        Line 4  — "Full piece: medium.com/@tarun-gupta/<slug>"
+        Line 5  — "Follow <show> for new episodes every week."
+
+    Spotify only shows the first 1–2 sentences in search previews, so the hook must land cold.
+    No preamble, no "In this episode…", no "Welcome back."
+    """
     text = yt_description
-    # Strip placeholder tokens
+    # Strip YouTube placeholder tokens
     text = re.sub(r"\[TIMESTAMPS_PLACEHOLDER\]", "", text)
     text = re.sub(r"\[LINKS_PLACEHOLDER\]", "", text)
-    # Collapse excess blank lines
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
-    return text
+
+    if not text:
+        show = _SHOW_NAMES.get(niche, "Breath of Life")
+        return f"Follow {show} for new episodes every week."
+
+    # Extract Medium URL if present in the YouTube description
+    medium_match = re.search(
+        r"https?://medium\.com/@tarun[-_]gupta/[\w-]+", text
+    )
+    medium_url = medium_match.group(0) if medium_match else None
+
+    # Split into content paragraphs (skip pure-URL lines and short metadata lines)
+    paragraphs = [p.strip() for p in text.split("\n\n") if p.strip()]
+    content_paras = [
+        p for p in paragraphs
+        if not p.startswith("http") and not p.startswith("#") and len(p) > 40
+    ]
+
+    if not content_paras:
+        # Fallback: cleaned raw text
+        return text
+
+    hook = content_paras[0]
+    body = content_paras[1] if len(content_paras) > 1 else ""
+
+    parts = [hook]
+    if body:
+        parts.append(body)
+    if medium_url:
+        parts.append(f"Full piece: {medium_url}")
+
+    show = _SHOW_NAMES.get(niche, "Breath of Life")
+    parts.append(f"Follow {show} for new episodes every week.")
+
+    return "\n\n".join(parts)
 
 
 # ── BGM ────────────────────────────────────────────────────────────────────────
@@ -256,7 +315,7 @@ def process_niche(
     slug = find_derivatives_slug(week, niche, archive_dir=archive_dir)
     meta = load_youtube_metadata(week, slug, derivatives_base=derivatives_base) if slug else {}
     title = meta.get("title", f"{niche.capitalize()} — {week}")
-    description = format_podcast_description(meta.get("description", ""))
+    description = format_podcast_description(meta.get("description", ""), niche=niche)
 
     print(f"  Title: {title}")
     print(f"  Slug:  {slug or '[not found]'}")

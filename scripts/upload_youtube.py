@@ -362,6 +362,12 @@ def main():
     )
     parser.add_argument("--slug", default=None, help="Optional content slug (for logging)")
     parser.add_argument(
+        "--thumbnail",
+        type=Path,
+        default=None,
+        help="Path to thumbnail image (PNG, 1280×720). Uploaded after video completes.",
+    )
+    parser.add_argument(
         "--shorts",
         action="store_true",
         help="Mark as YouTube Short. Injects #Shorts into description. Video must be vertical (9:16).",
@@ -403,7 +409,10 @@ def main():
             raw_meta = json.loads(shorts_meta_path.read_text())
             long_form_url = ""
 
-            m = re.search(r"short_(\d+)", str(args.video.name))
+            # Match both shorts naming schemes: Path A "{slug}_short_NN.mp4"
+            # and Path B Remotion-motion "{slug}_sNN.mp4". Anchor to the
+            # extension so a "_sNN" inside the slug can't be picked by mistake.
+            m = re.search(r"_s(?:hort_)?(\d+)\.\w+$", str(args.video.name))
             idx = int(m.group(1)) if m else 0
 
             if isinstance(raw_meta, dict) and "shorts" in raw_meta:
@@ -496,10 +505,26 @@ def main():
     # Normalise to short URL for cleaner storage
     video_id_m = re.search(r"[?&]v=([A-Za-z0-9_-]{11})", url)
     short_url = f"https://youtu.be/{video_id_m.group(1)}" if video_id_m else url
+    video_id = video_id_m.group(1) if video_id_m else None
 
     print(f"\nUpload complete!")
     print(f"Channel:   {channel['name']} ({channel['id']})")
     print(f"Video URL: {short_url}")
+
+    # Upload thumbnail immediately after video
+    if args.thumbnail and video_id:
+        thumb_path = args.thumbnail if args.thumbnail.is_absolute() else BASE_DIR / args.thumbnail
+        if not thumb_path.exists():
+            print(f"[thumbnail] WARNING: file not found — {thumb_path}")
+        else:
+            try:
+                youtube.thumbnails().set(
+                    videoId=video_id,
+                    media_body=MediaFileUpload(str(thumb_path), mimetype="image/png"),
+                ).execute()
+                print(f"[thumbnail] uploaded: {thumb_path.name}")
+            except HttpError as e:
+                print(f"[thumbnail] ERROR: {e}")
 
     if args.publish_at:
         print(f"Scheduled: {args.publish_at}")
@@ -510,8 +535,7 @@ def main():
         print(f"Slug:      {args.slug}")
 
     # Post GitHub code link as pinned comment for DS tutorial long-form uploads
-    if args.slug and not args.shorts and video_id_m:
-        video_id = video_id_m.group(1)
+    if args.slug and not args.shorts and video_id:
         date_str = args.slug[:10]
         week = get_iso_week(date_str)
         github_url_file = BASE_DIR / "content" / "derivatives" / week / args.slug / "github_code_url.txt"
@@ -556,7 +580,6 @@ def main():
                     pass
 
         if longform_url:
-            video_id = video_id_m.group(1) if video_id_m else None
             if video_id:
                 comment_text = f"Watch the full video: {longform_url}"
                 comment_id = post_comment(youtube, video_id, comment_text)

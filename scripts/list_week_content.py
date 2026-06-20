@@ -333,10 +333,9 @@ def print_plan(data: list[dict], week: str) -> None:
     # FRI
     print(f"\nFRI {days[4].strftime('%b %d')}   Schedule social media for {prev_week_str}")
     print(bar)
-    print(f"  → python3 scripts/load_posts.py --week {prev_week_str}")
-    print(f"  → CSVs: output/scheduled/metricool_breathofds.csv")
-    print(f"          output/scheduled/metricool_mistakenlyhuman.csv")
-    print(f"  → Import both CSVs into Metricool dashboard")
+    print(f"  → python3 scripts/load_posts.py --week {prev_week_str}  (stages LinkedIn into scheduling.db)")
+    print(f"  → Instagram / Facebook / Threads: post MANUALLY in-app (no Metricool/Publer CSV)")
+    print(f"  → LinkedIn: held manual until employer clearance — see weekly-runner Step 22")
     print()
 
 

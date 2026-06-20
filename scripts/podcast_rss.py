@@ -39,13 +39,24 @@ PAGES_BASE = "https://tarunlnmiit.github.io/podcast-feed"
 SHOW_CONFIG: dict[str, dict] = {
     "life": {
         "title": "Breath of Life",
-        "description": "Personal development and life lessons from a 10-year data scientist.",
+        # Spotify show description — appears on the show page; must sell the show in 3 sentences.
+        # Virality rule: no welcome, no generic promises — raw and specific.
+        "description": (
+            "Writing about the things we feel but don't say. "
+            "Mental health, self-awareness, and the messy space between who we are and who we were told to be. "
+            "New episodes every week — raw, specific, and never generic."
+        ),
         "category": "Self-Improvement",
         "link": "https://youtube.com/@breathoflife_",
     },
     "poetry": {
         "title": "Breath of Poetry",
-        "description": "Poetry, reflection, and the art of feeling seen.",
+        # Virality rule: name the emotional experience, not the topic.
+        "description": (
+            "Spoken-word poems and readings about love, loss, intoxication, and the unnamed feelings in between. "
+            "Each episode is one poem — read slowly, felt deeply. "
+            "New episodes every week."
+        ),
         "category": "Arts",
         "link": "https://youtube.com/@breathofpoetry",
     },

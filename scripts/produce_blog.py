@@ -118,6 +118,16 @@ Produce the full blog post in clean Markdown, structured exactly as specified.
 **MANDATORY REQUIREMENTS (no exceptions):**
 1. Include at least 1 `[IMAGE_INSERT: concrete pexels search term]` marker in the blog body.
 2. For poetry niche: embed the complete poem (if one is core to the topic) in one unbroken blockquote block right after the HOOK.
+3. **Title** — use one of these four formulas (pick the strongest for the topic):
+   - Specific incident: "The [Thing] That [Concrete Result]"
+   - Counter-intuitive result: "My [X] Was [Impressive Metric]. It Was Also [Failure]."
+   - Named lesson: "I [Situation]. Here's What [the Silence/Mistake] Was Hiding."
+   - Specific number + outcome: "[N] [Things] That [Consequence]"
+   NEVER use: "Everything You Need to Know About X" / "The Ultimate Guide to Y" / "Why Z Matters"
+4. **First paragraph** — open on the specific incident or counter-intuitive fact, NOT with context-setting. Hook line first. One sentence of context second. The reader must know exactly why they're reading this by the end of the first paragraph.
+5. **Subheadings** — every subheading must be a hook that pulls a skimmer in, not a section label. "The Problem" → "The Problem That 6 Months of Work Couldn't Solve". No exceptions.
+6. **Shareable sentence** — identify the single most shareable sentence in the piece (the one a stranger would screenshot and send to a friend — NOT the thesis, but the most specific or emotionally precise observation). Mark it inline with `[QUOTABLE]`.
+7. **Final paragraph** — end with weight. No bullet-point recap of what you covered. No "Let me know your thoughts in the comments." End on the [QUOTABLE] sentence, a question that stays with the reader, or a one-sentence implication of everything that came before.
 {listicle_block}"""
 
 

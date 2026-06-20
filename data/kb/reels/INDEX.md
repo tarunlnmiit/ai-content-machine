@@ -10,6 +10,7 @@ Read this first. This folder holds the content-pattern knowledge base, reverse-e
 | `03_swipe_file.md` | Every reference reel: creator, hook, CTA, engagement, post ID. | Ideation + when citing why a pattern is used. |
 | `04_honesty_guardrail.md` | Overclaim rules + real cautionary cases. | Final QA pass at EVERY format. |
 | `05_pipeline_map.md` | Exactly where each doc wires into your blog-first pipeline. | Setup / when editing prompts & scripts. |
+| `06_mavgpt_caption_formula.md` | @mavgpt caption-IS-product formula: comment→DM CTA, full value verbatim, outcome thumbnails, serialization. Its `## Engine digest` is injected by `virality.py` into DS/project caption generators. | IG/Shorts caption + thumbnail for DS/build reels. |
 
 Conventions:
 - These are reference docs for agents/prompts to load. Keep them small and single-purpose.
