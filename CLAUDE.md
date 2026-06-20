@@ -106,7 +106,7 @@ output/
   animations/
     2026-Wnn/     # Remotion title cards, lower thirds, outros
   scheduled/
-    2026-Wnn/     # upload_shorts.sh, design prompts (distribution is manual — no Metricool/Publer CSVs)
+    2026-Wnn/     # upload_shorts.sh, design prompts (auto-publish via scheduler.py daemon — see docs/pipeline-2026.md)
   visuals/        # Blog cover images, HTML assets
   worksheets/
     2026-Wnn/     # PDF worksheets
