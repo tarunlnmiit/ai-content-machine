@@ -80,14 +80,23 @@ def insert_linkedin(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_in
     weekday, hour, minute = LINKEDIN_SLOTS[slot_index % len(LINKEDIN_SLOTS)]
     scheduled_at = next_weekday(weekday, hour, minute).isoformat()
 
+    # Pinned first comment (blog link) — posted by the daemon after the post.
+    meta = {"kind": "image" if media_path else "text"}
+    comment_file = txt_path.with_name("linkedin_first_comment.txt")
+    if comment_file.exists():
+        comment = comment_file.read_text(encoding="utf-8").strip()
+        if comment:
+            meta["first_comment"] = comment
+
     conn.execute(
         """INSERT INTO posts (platform, content_text, media_path, scheduled_at, status,
            metadata_json, slug)
            VALUES (?,?,?,?,?,?,?)""",
-        ("linkedin", text, media_path, scheduled_at, "pending",
-         json.dumps({"kind": "image" if media_path else "text"}), slug),
+        ("linkedin", text, media_path, scheduled_at, "pending", json.dumps(meta), slug),
     )
-    print(f"  [queued] linkedin/{slug} — at {scheduled_at}" + (f" + image" if media_path else ""))
+    extras = ("".join([" + image" if media_path else "",
+                       " + comment" if meta.get("first_comment") else ""]))
+    print(f"  [queued] linkedin/{slug} — at {scheduled_at}{extras}")
 
 
 def insert_threads(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_index: int):

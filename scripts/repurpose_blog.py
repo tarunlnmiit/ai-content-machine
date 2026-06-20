@@ -184,25 +184,25 @@ def generate(prompt: str) -> tuple[dict, dict]:
 # ── Save derivatives ──────────────────────────────────────────────────────
 
 def format_linkedin(data: dict, niche: str = "life") -> str:
-    """LinkedIn post body. The blog link goes in the FIRST COMMENT, not the body
-    (LinkedIn suppresses reach on posts with outbound links in the body), so we
-    emit a clearly-separated pinned-comment block for the operator/daemon to post
-    as the first comment."""
+    """LinkedIn post BODY only — clean, no outbound link. The blog link belongs in
+    the pinned first comment (LinkedIn suppresses reach on body links); that comment
+    is written to a separate file by save_derivatives (format_linkedin_comment) and
+    posted by the scheduler daemon after the post is created."""
     lines = [data.get("opening_line", ""), "", data.get("body", "")]
     tags = hashtag_line(niche, "linkedin", data.get("hashtags"))
     if tags:
         lines += ["", tags]
-    blog_url = data.get("blog_url") or data.get("canonical_url") or ""
-    pinned = data.get("first_comment") or (
-        f"Full post → {blog_url}" if blog_url else ""
-    )
-    if pinned:
-        lines += [
-            "",
-            "--- FIRST COMMENT (post as pinned reply, not in body) ---",
-            pinned,
-        ]
     return "\n".join(lines)
+
+
+def format_linkedin_comment(data: dict, niche: str = "life") -> str:
+    """The pinned first comment for a LinkedIn post (carries the blog link).
+
+    May still contain the [BLOG_LINK] placeholder if the blog isn't published yet —
+    the publish flow substitutes the real URL, and the daemon refuses to post a
+    comment that still holds an unresolved placeholder.
+    """
+    return (data.get("first_comment") or "").strip()
 
 
 def format_instagram(data: dict, niche: str = "life") -> str:
@@ -284,6 +284,16 @@ def save_derivatives(out_dir: Path, data: dict, platforms: list[str] | None = No
                 text = formatter(value, niche) if formatter else str(value)
                 path.write_text(text, encoding="utf-8")
             saved.append(str(path.relative_to(REPO)))
+
+            # LinkedIn pinned first comment → separate file (blog link lives here,
+            # never in the post body). Staged + posted by the scheduler daemon.
+            if key == "linkedin_post":
+                comment = format_linkedin_comment(value, niche)
+                if comment:
+                    cpath = out_dir / "linkedin_first_comment.txt"
+                    cpath.write_text(comment, encoding="utf-8")
+                    saved.append(str(cpath.relative_to(REPO)))
+
             progress.advance(task)
 
     return saved

@@ -139,12 +139,13 @@ def dispatch_threads(post: dict):
 
 def dispatch_linkedin(post: dict):
     sys.path.insert(0, str(REPO / "scripts"))
-    from post_linkedin import post_text, get_credentials
+    from post_linkedin import post_text, post_comment, get_credentials
 
     post_id = post["id"]
     slug = post["slug"]
     text = post["content_text"]
     media_path = post["media_path"]
+    meta = _post_meta(post)
 
     image_path = (REPO / media_path) if media_path else None
 
@@ -152,7 +153,23 @@ def dispatch_linkedin(post: dict):
     try:
         token, urn = get_credentials()
         post_urn = post_text(token, urn, text, image_path)
-        _mark_posted(post_id, {"post_urn": post_urn, "slug": slug})
+        result = {"post_urn": post_urn, "slug": slug}
+
+        # Pinned first comment with the blog link — skip if the link is still an
+        # unresolved placeholder (blog not published yet).
+        comment = (meta.get("first_comment") or "").strip()
+        if comment and "[BLOG_LINK]" not in comment:
+            try:
+                result["comment_id"] = post_comment(token, urn, post_urn, comment)
+                log.info("LinkedIn first comment posted")
+            except Exception as ce:
+                result["comment_error"] = str(ce)
+                log.warning(f"LinkedIn post OK but comment failed: {ce}")
+        elif comment:
+            result["comment_skipped"] = "unresolved [BLOG_LINK] placeholder"
+            log.warning(f"LinkedIn comment skipped for {slug}: link not yet resolved")
+
+        _mark_posted(post_id, result)
         log.info(f"LinkedIn posted: {post_urn}")
     except Exception as e:
         _mark_failed(post_id, str(e))

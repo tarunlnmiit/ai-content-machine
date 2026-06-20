@@ -119,6 +119,28 @@ def post_text(token: str, urn: str, text: str, image_path: Path | None = None) -
     return resp.headers.get("x-restli-id", "unknown")
 
 
+def post_comment(token: str, urn: str, post_urn: str, text: str) -> str:
+    """Add a comment to a freshly created post (used for the pinned first comment
+    carrying the blog link — LinkedIn suppresses reach on body links).
+
+    Returns the comment id, or raises requests.HTTPError.
+    """
+    from urllib.parse import quote
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+        "X-Restli-Protocol-Version": "2.0.0",
+    }
+    encoded = quote(post_urn, safe="")
+    payload = {"actor": urn, "object": post_urn, "message": {"text": text}}
+    resp = requests.post(
+        f"{LI_API}/socialActions/{encoded}/comments", headers=headers, json=payload
+    )
+    resp.raise_for_status()
+    return resp.json().get("id", "unknown")
+
+
 def _log_result(db_post_id: int | None, status: str, detail: dict):
     if db_post_id is None or not DB_PATH.exists():
         return

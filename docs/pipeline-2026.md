@@ -50,6 +50,25 @@ repurpose_blog.py → load_posts.py (stages LinkedIn/Threads/Instagram) → sche
 **Manual, and only this (honesty guardrail — "minimal manual", not "zero"):**
 record the talking-head video · ~10-min content approval · reply to comments/DMs in the window.
 
+### What is actually live today vs scaffolded (honesty guardrail)
+
+**Live now (verified to stage + dispatch):**
+- **LinkedIn** text post + **pinned first comment** (blog link), via `post_linkedin.py`. ✅
+- **Threads** native text post, via `post_threads.py`. ✅
+- **YouTube** long-form + Shorts uploads. ✅
+
+**Scaffolded but NOT yet fully wired — stays MANUAL until the plumbing lands:**
+- **Instagram Reels auto-publish.** `post_instagram.post_reel()` works, but: (a) reels are not
+  staged by `load_posts.py` yet (only YouTube Shorts are), and (b) IG ingests from a **public
+  video URL** that nothing hosts yet. → **Post reels to IG manually for now.**
+- **Instagram static (image/carousel).** `insert_instagram` only stages when
+  `schedule.json` carries `social.ig_media_url(s)`, which no step writes yet; and
+  `instagram_caption.txt` is currently a human *brief* (leads with `Format:/Why:`), not a clean
+  caption. → Needs: a media-URL writer + a caption-only field before IG static auto-fires.
+- **Facebook** direct publish (mirrors from IG in practice).
+
+Closing these three is the next work item to reach true "minimal manual" on Instagram.
+
 ## Close the loop (run before producing)
 
 `python3 scripts/weekly_winners.py` reads `data/analytics/weekly_insights.md` and prints last
