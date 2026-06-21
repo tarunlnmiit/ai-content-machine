@@ -135,7 +135,8 @@ def render(composition: str, out_file: Path, edit_plan_rel: str, dry: bool) -> b
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Voiceover-first pipeline orchestrator (one niche)")
-    ap.add_argument("--audio", required=True, help="Voiceover source — wav/mp3/m4a or a video (mov/mp4); only the audio is used")
+    ap.add_argument("--audio", help="Voiceover source — wav/mp3/m4a or a video (mov/mp4); only the audio is used")
+    ap.add_argument("--screen", help="DS screencast (video WITH narration) used as the visual base + audio; no B-roll, long-form only")
     ap.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     ap.add_argument("--week", required=True)
     ap.add_argument("--slug", required=True, help="Full slug e.g. 2026-06-22_ds_slug")
@@ -154,17 +155,25 @@ def main() -> None:
     force = args.force
     force_flag = ["--force"] if force else []
 
+    # Screen mode: the screencast is both the visual base and the audio source.
+    screen_mode = bool(args.screen)
+    if not args.audio and not args.screen:
+        ap.error("provide --audio (voiceover) or --screen (DS screencast)")
+    if screen_mode:
+        args.skip_shorts = True  # screencast → long-form only
+
     def skip(label: str, exists: bool) -> bool:
         """Return True (→ skip the step) when output exists and not --force."""
         if exists and not force:
             print(f"  [skip] {label} (exists; --force to redo)")
             return True
         return False
-    audio = Path(args.audio)
+
+    audio = Path(args.screen if screen_mode else args.audio)
     if not audio.is_absolute():
         audio = REPO / audio
     if not audio.exists() and not dry:
-        sys.exit(f"ERROR: audio not found: {audio}")
+        sys.exit(f"ERROR: {'screen' if screen_mode else 'audio'} not found: {audio}")
 
     caps_rel = f"captions/{args.week}/{args.slug}.captions.json"
     caps_path = REMOTION_PUBLIC / caps_rel
@@ -197,19 +206,23 @@ def main() -> None:
         run(["python3", SCRIPTS / "generate_scene_plans.py", "--captions", str(caps_path),
              "--niche", args.niche, "--week", args.week, "--slug", args.slug, "--mode", "voiceover"] + force_flag, dry)
 
-    # ── 4. Landscape B-roll from transcript ────────────────────────
+    # ── 4. Landscape B-roll from transcript (skipped in screen mode) ──
     step("[4/8] Fetch landscape B-roll (from transcript)")
-    duration = probe_duration(audio) if not dry else 240.0
-    if not skip("b-roll", broll_ready(broll_dir)):
-        run(["python3", SCRIPTS / "fetch_videos.py", "--captions", str(caps_path),
-             "--niche", args.niche, "--orientation", "landscape",
-             "--target-clips", str(target_clips(duration))], dry)
+    if screen_mode:
+        print("  [skip] b-roll — screen mode uses the screencast as the visual base")
+    else:
+        duration = probe_duration(audio) if not dry else 240.0
+        if not skip("b-roll", broll_ready(broll_dir)):
+            run(["python3", SCRIPTS / "fetch_videos.py", "--captions", str(caps_path),
+                 "--niche", args.niche, "--orientation", "landscape",
+                 "--target-clips", str(target_clips(duration))], dry)
 
     # ── 5. Long-form edit plan ─────────────────────────────────────
-    step("[5/8] Build long-form edit plan (montage)")
+    step("[5/8] Build long-form edit plan (montage)" if not screen_mode else "[5/8] Build long-form edit plan (screen base)")
     if not skip("edit plan", edit_plan_path.exists()):
-        run(["python3", SCRIPTS / "prepare_voiceover_edit.py", "--audio", str(audio),
-             "--broll-dir", str(broll_dir), "--scene-plan", scene_rel,
+        visual = ["--base-video", str(audio)] if screen_mode else ["--broll-dir", str(broll_dir)]
+        run(["python3", SCRIPTS / "prepare_voiceover_edit.py", "--audio", str(audio)] + visual + [
+             "--scene-plan", scene_rel,
              "--niche", args.niche, "--week", args.week, "--slug", args.slug,
              "--output-size", "16x9", "--grade", args.grade, "--captions", caps_rel], dry)
 

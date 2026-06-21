@@ -26,7 +26,25 @@ python3 scripts/run_voiceover_week.py \
   --niche ds --week 2026-W26 --slug 2026-06-22_ds_slug
 ```
 
-Flags: `--grade`, `--no-captions`, `--caption-y 0.82`, `--skip-shorts`, `--force`, `--dry-run`.
+Flags: `--grade`, `--no-captions`, `--caption-y 0.82`, `--skip-shorts`, `--force`, `--dry-run`,
+`--screen` (DS screencast mode).
+
+### DS screencast mode (`--screen`)
+
+For DS the video is usually a **screen recording (code/terminal) with narration baked in** — no
+B-roll, no separate voiceover. Pass the screencast as `--screen` (instead of `--audio`):
+
+```bash
+python3 scripts/run_voiceover_week.py --screen assets/raw/2026-W26/<slug>_screen.mov \
+  --niche ds --week 2026-W26 --slug 2026-06-22_ds_<slug>
+```
+
+- The screencast is **both the visual base and the audio track** (its narration is transcribed for
+  captions + scene plan).
+- **B-roll fetch is skipped**; the screen plays full-frame (16:9, `objectFit:cover`).
+- **Long-form only** — DS screencast shorts are skipped.
+- **Grade defaults to `none`** (no letterbox/teal over code); override with `--grade` if you want.
+- Overlays (Remotion scene plan) + hyperframes captions still apply.
 
 ### Looks (`--grade`)
 

@@ -141,10 +141,32 @@ def build_montage(clip_paths: list[Path], total_sec: float, week: str, slug: str
     return cues
 
 
+def copy_base_video(base_video: Path, week: str, slug: str) -> Path:
+    """Stage a single screencast as the visual base. Returns the staged dst path."""
+    dst_dir = REMOTION_PUBLIC / "broll" / week / slug
+    dst_dir.mkdir(parents=True, exist_ok=True)
+    dst = dst_dir / f"screen{base_video.suffix.lower()}"
+    if not (dst.exists() and dst.stat().st_size == base_video.stat().st_size):
+        shutil.copy2(base_video, dst)
+    return dst
+
+
+def build_single_cue(clip: Path, total_sec: float, week: str, slug: str) -> list[dict]:
+    """One full-length cue — the screencast plays continuously (no 6s re-start tiling)."""
+    return [{
+        "id": "cue-0",
+        "description": "screen recording base",
+        "clipFile": f"broll/{week}/{slug}/{clip.name}",
+        "startSec": 0.0,
+        "durationSec": round(total_sec, 2),
+    }]
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build a voiceover-lane EditPlan (audio + B-roll montage + overlays)")
+    parser = argparse.ArgumentParser(description="Build a voiceover-lane EditPlan (audio + B-roll montage OR screen recording + overlays)")
     parser.add_argument("--audio", required=True, help="Voiceover source for THIS plan (wav/mp3/m4a/mov/mp4; audio only is used)")
-    parser.add_argument("--broll-dir", required=True, help="Dir with downloaded clips + VIDEO_MAP.json")
+    parser.add_argument("--broll-dir", help="Dir with downloaded clips + VIDEO_MAP.json (omit when --base-video given)")
+    parser.add_argument("--base-video", help="Single screencast used as the full-length visual base (DS screen mode; no B-roll)")
     parser.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     parser.add_argument("--week", required=True)
     parser.add_argument("--slug", required=True)
@@ -157,17 +179,14 @@ def main() -> None:
     parser.add_argument("--slot-sec", type=float, default=DEFAULT_SLOT_SEC)
     args = parser.parse_args()
 
+    if not args.broll_dir and not args.base_video:
+        sys.exit("ERROR: provide --broll-dir (B-roll montage) or --base-video (screencast base)")
+
     audio = Path(args.audio)
     if not audio.is_absolute():
         audio = REPO / audio
     if not audio.exists():
         sys.exit(f"ERROR: audio not found: {audio}")
-
-    broll_dir = Path(args.broll_dir)
-    if not broll_dir.is_absolute():
-        broll_dir = REPO / broll_dir
-    if not broll_dir.exists():
-        sys.exit(f"ERROR: broll dir not found: {broll_dir}")
 
     print(f"\n=== Voiceover edit plan: {args.slug} ({args.output_size}) ===")
 
@@ -177,10 +196,27 @@ def main() -> None:
     print(f"[audio] duration {duration:.1f}s")
 
     audio_file = convert_audio(audio, args.week, args.slug)
-    clip_paths = copy_broll(broll_dir, args.week, args.slug)
-    print(f"[broll] {len(clip_paths)} clip(s) copied")
-    montage = build_montage(clip_paths, duration, args.week, args.slug, args.slot_sec)
-    print(f"[montage] {len(montage)} slot(s) tiling {duration:.1f}s")
+
+    if args.base_video:
+        # DS screencast mode: one continuous clip as the base, no B-roll.
+        bv = Path(args.base_video)
+        if not bv.is_absolute():
+            bv = REPO / bv
+        if not bv.exists():
+            sys.exit(f"ERROR: base video not found: {bv}")
+        staged = copy_base_video(bv, args.week, args.slug)
+        montage = build_single_cue(staged, duration, args.week, args.slug)
+        print(f"[screen] base video staged → single full-length cue ({duration:.1f}s)")
+    else:
+        broll_dir = Path(args.broll_dir)
+        if not broll_dir.is_absolute():
+            broll_dir = REPO / broll_dir
+        if not broll_dir.exists():
+            sys.exit(f"ERROR: broll dir not found: {broll_dir}")
+        clip_paths = copy_broll(broll_dir, args.week, args.slug)
+        print(f"[broll] {len(clip_paths)} clip(s) copied")
+        montage = build_montage(clip_paths, duration, args.week, args.slug, args.slot_sec)
+        print(f"[montage] {len(montage)} slot(s) tiling {duration:.1f}s")
 
     scene_plan_file = None
     if args.scene_plan:
@@ -191,8 +227,10 @@ def main() -> None:
             print(f"[scenes] scene plan not found at {args.scene_plan}, skipping overlays", file=sys.stderr)
 
     captions_file = args.captions or ""
-    color_grading, look = resolve_grade(args.grade, args.niche)
-    print(f"[look] grade={args.grade} → look={look}")
+    # Screencast base: don't letterbox/duotone over code — default auto → none.
+    grade = "none" if (args.base_video and args.grade == "auto") else args.grade
+    color_grading, look = resolve_grade(grade, args.niche)
+    print(f"[look] grade={grade} → look={look}")
 
     plan = {
         "slug": args.slug,
