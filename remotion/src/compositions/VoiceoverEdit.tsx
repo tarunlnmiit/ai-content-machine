@@ -192,8 +192,10 @@ export function VoiceoverEdit({ editPlanFile }: VoiceoverEditProps) {
         const durationFrames = Math.ceil(scene.durationSec * fps);
         if (durationFrames <= 0) return null;
         const isLowerThird = scene.layout === "lower-third";
+        // Sits in the lower-MIDDLE band (30%–56% from bottom) so it clears the caption
+        // zone that hyperframes burns near the bottom (default caption_y ≈ 0.82 → ~18% up).
         const containerStyle: CSSProperties = isLowerThird
-          ? { position: "absolute", left: 0, right: 0, bottom: "8%", height: "30%", overflow: "hidden" }
+          ? { position: "absolute", left: 0, right: 0, bottom: "30%", height: "26%", overflow: "hidden" }
           : { position: "absolute", inset: 0 };
         return (
           <Sequence key={`ov-${scene.sceneId}`} from={from} durationInFrames={durationFrames}>

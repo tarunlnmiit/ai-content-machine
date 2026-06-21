@@ -116,7 +116,7 @@ def main() -> None:
     ap.add_argument("--week", required=True)
     ap.add_argument("--slug", required=True, help="Full slug e.g. 2026-06-22_ds_slug")
     ap.add_argument("--no-captions", action="store_true", help="Do not burn captions in hyperframes")
-    ap.add_argument("--caption-y", type=float, default=0.70, help="Caption vertical position (0=top,1=bottom). Raised default 0.70.")
+    ap.add_argument("--caption-y", type=float, default=0.82, help="Caption vertical position (0=top,1=bottom). Default 0.82 = a little above the bottom, clear of lower-third overlays.")
     ap.add_argument("--skip-shorts", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
