@@ -7,6 +7,11 @@
 > B-roll-montage long-form + auto-detected portrait shorts, with captions burned by hyperframes.
 > It does NOT replace anything here. See **[voiceover-runner.md](voiceover-runner.md)**.
 
+> **One-command blog pipeline (2026-06-21):** `scripts/run_blog_pipeline.py --input <blog.md>`
+> (or `--topic … --niche …`) produces ALL non-video derivatives + media in one idempotent run
+> (text, social images, carousel, slide deck, IG reel brief, thumbnail, worksheet outline → stage).
+> Videos stay separate. See **[blog-pipeline.md](blog-pipeline.md)**.
+
 ## Why this changed
 
 Analytics said the effort was pouring into dead surfaces and starving the live one:

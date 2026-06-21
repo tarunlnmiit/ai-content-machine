@@ -75,6 +75,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   composition `VoiceoverEdit` (`VoiceoverLong`/`VoiceoverShort`, `kind:"voiceover"` EditPlan).
   B-roll keywords come from the transcript, not the script. Does NOT replace the talking-head
   pipeline. Canonical doc: `docs/voiceover-runner.md`.
+- **ONE-COMMAND BLOG PIPELINE (2026-06-21):** `scripts/run_blog_pipeline.py --input <blog.md>`
+  (or `--topic "..." --niche <ds|life|poetry>` to write the blog first) produces ALL non-video
+  derivatives + media in one idempotent run: text posts (`repurpose_blog`), social images+carousel,
+  slide deck, IG reel brief, thumbnail brief+HTML, worksheet outline (DS/Life), then stages via
+  `load_posts`. `--force` redoes all; `--no-stage`/`--skip-thumbnail` opt-outs. **Videos excluded**
+  (separate `run_voiceover_week.py`). Worksheet PDF + thumbnail Canva pass stay manual. Doc:
+  `docs/blog-pipeline.md`.
 - **DISTRIBUTION (auto-publish daemon — "subtract to focus", 2026):** One piece → viable
   channels via `prompts/repurposing_agent.md` → per-platform derivatives → staged by
   `scripts/load_posts.py` → fired by the `scripts/scheduler.py` daemon. **LinkedIn is ACTIVE**
