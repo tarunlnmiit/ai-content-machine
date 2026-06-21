@@ -55,12 +55,16 @@ def default_grading(niche: str) -> dict:
 
 
 def convert_audio(audio: Path, week: str, slug: str) -> str:
-    """Loudnorm the voiceover to m4a under remotion/public/audio/. Returns staticFile path."""
+    """Loudnorm the voiceover to m4a under remotion/public/audio/. Returns staticFile path.
+
+    Accepts any ffmpeg-readable input (wav/mp3/mov/mp4/m4a) — -vn drops any video track so
+    a video file used as the voiceover source yields audio only.
+    """
     dst = REMOTION_PUBLIC / "audio" / week / f"{slug}.m4a"
     dst.parent.mkdir(parents=True, exist_ok=True)
     if not dst.exists():
         r = subprocess.run([
-            FFMPEG_BIN, "-i", str(audio),
+            FFMPEG_BIN, "-i", str(audio), "-vn",
             "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
             "-c:a", "aac", "-b:a", "192k", str(dst), "-y",
         ], capture_output=True, text=True)
@@ -116,7 +120,7 @@ def build_montage(clip_paths: list[Path], total_sec: float, week: str, slug: str
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build a voiceover-lane EditPlan (audio + B-roll montage + overlays)")
-    parser.add_argument("--audio", required=True, help="Voiceover audio for THIS plan (full or a cut section)")
+    parser.add_argument("--audio", required=True, help="Voiceover source for THIS plan (wav/mp3/m4a/mov/mp4; audio only is used)")
     parser.add_argument("--broll-dir", required=True, help="Dir with downloaded clips + VIDEO_MAP.json")
     parser.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     parser.add_argument("--week", required=True)

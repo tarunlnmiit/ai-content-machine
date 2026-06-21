@@ -64,13 +64,11 @@ def probe_duration(media: Path) -> float:
 
 
 def cut_wav(src: Path, start: float, end: float, dst: Path, dry: bool) -> bool:
+    """Cut [start,end] of any source (wav/mp3/mov/mp4) to a WAV slice. -vn keeps audio only."""
     dst.parent.mkdir(parents=True, exist_ok=True)
     return run([
         FFMPEG_BIN, "-ss", f"{start:.2f}", "-to", f"{end:.2f}", "-i", str(src),
-        "-c", "copy" if src.suffix.lower() == ".wav" else "pcm_s16le", str(dst), "-y",
-    ], dry) if src.suffix.lower() != ".wav" else run([
-        FFMPEG_BIN, "-ss", f"{start:.2f}", "-to", f"{end:.2f}", "-i", str(src),
-        "-c:a", "pcm_s16le", str(dst), "-y",
+        "-vn", "-c:a", "pcm_s16le", str(dst), "-y",
     ], dry)
 
 
@@ -111,7 +109,7 @@ def render(composition: str, out_file: Path, edit_plan_rel: str, dry: bool) -> b
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Voiceover-first pipeline orchestrator (one niche)")
-    ap.add_argument("--audio", required=True, help="Audio-only voiceover (wav/mp3)")
+    ap.add_argument("--audio", required=True, help="Voiceover source — wav/mp3/m4a or a video (mov/mp4); only the audio is used")
     ap.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     ap.add_argument("--week", required=True)
     ap.add_argument("--slug", required=True, help="Full slug e.g. 2026-06-22_ds_slug")

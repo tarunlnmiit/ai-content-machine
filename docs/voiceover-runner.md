@@ -5,8 +5,9 @@
 
 ## What it is
 
-You write the 3 blogs as usual, then record an **audio-only voiceover** per niche (no face on
-camera). From each voiceover the pipeline produces, fully automatically:
+You write the 3 blogs as usual, then record a **voiceover** per niche (no face on camera). The
+`--audio` input accepts **wav / mp3 / m4a or a video file (mov / mp4)** — only the audio track is
+used. From each voiceover the pipeline produces, fully automatically:
 
 - **1 long-form LANDSCAPE video** = full-screen B-roll montage + your voiceover + Remotion
   overlay scenes, then **hyperframes** (which also burns the captions).
