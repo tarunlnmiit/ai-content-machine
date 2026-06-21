@@ -23,7 +23,16 @@ import json
 import math
 import subprocess
 import sys
+import time
 from pathlib import Path
+
+_T0 = time.time()
+
+
+def step(label: str) -> None:
+    """Print a clear, timestamped stage banner so progress is visible in logs."""
+    elapsed = time.time() - _T0
+    print(f"\n{'━' * 64}\n▶ {label}   (+{elapsed:.0f}s elapsed)\n{'━' * 64}", flush=True)
 
 REPO = Path(__file__).parent.parent
 REMOTION_DIR = REPO / "remotion"
@@ -132,35 +141,44 @@ def main() -> None:
     scene_rel = f"scene-plans/{args.week}/{args.slug}_voiceover.json"
     broll_dir = REPO / "assets" / "videos" / args.slug
 
+    print(f"\n=== Voiceover-first pipeline: {args.slug} ({args.niche}) ===")
+
     # ── 1. Transcribe ──────────────────────────────────────────────
+    step("[1/8] Transcribe voiceover (Whisper)")
     caps_path.parent.mkdir(parents=True, exist_ok=True)
     if not run(["python3", SCRIPTS / "generate_captions.py", "--audio", str(audio),
                 "--format", "remotion_json", "--output", str(caps_path), "--model", "base"], dry):
         sys.exit(1)
 
     # ── 2. YouTube script deliverable ──────────────────────────────
+    step("[2/8] Generate YouTube script (deliverable)")
     run(["python3", SCRIPTS / "generate_yt_script.py", "--captions", str(caps_path),
          "--niche", args.niche, "--week", args.week, "--slug", args.slug], dry)
 
     # ── 3. Overlay scene plan (voiceover mode) ─────────────────────
+    step("[3/8] Generate overlay scene plan")
     run(["python3", SCRIPTS / "generate_scene_plans.py", "--captions", str(caps_path),
          "--niche", args.niche, "--week", args.week, "--slug", args.slug, "--mode", "voiceover"], dry)
 
     # ── 4. Landscape B-roll from transcript ────────────────────────
+    step("[4/8] Fetch landscape B-roll (from transcript)")
     duration = probe_duration(audio) if not dry else 240.0
     run(["python3", SCRIPTS / "fetch_videos.py", "--captions", str(caps_path),
          "--niche", args.niche, "--orientation", "landscape",
          "--target-clips", str(target_clips(duration))], dry)
 
     # ── 5. Long-form edit plan ─────────────────────────────────────
+    step("[5/8] Build long-form edit plan (montage)")
     run(["python3", SCRIPTS / "prepare_voiceover_edit.py", "--audio", str(audio),
          "--broll-dir", str(broll_dir), "--scene-plan", scene_rel,
          "--niche", args.niche, "--week", args.week, "--slug", args.slug,
          "--output-size", "16x9", "--captions", caps_rel], dry)
 
     # ── 6. Render long-form + hyperframes ──────────────────────────
+    step("[6/8] Render long-form (Remotion)")
     long_out = REPO / "output" / "animations" / args.week / f"{args.slug}.mp4"
     render("VoiceoverLong", long_out, f"edit-plans/{args.week}/{args.slug}.json", dry)
+    step("[6/8] Hyperframes long-form (captions + overlays)")
     hyperframes(long_out, f"{args.week}_{args.slug}", captions_on, args.caption_y, dry=dry)
 
     if args.skip_shorts:
@@ -168,6 +186,7 @@ def main() -> None:
         return
 
     # ── 7. Detect self-complete sections ───────────────────────────
+    step("[7/8] Detect self-complete short sections")
     sections_path = REPO / "content" / "derivatives" / args.week / args.slug / "short_sections.json"
     run(["python3", SCRIPTS / "detect_short_sections.py", "--captions", str(caps_path),
          "--niche", args.niche, "--week", args.week, "--slug", args.slug], dry)
@@ -183,11 +202,12 @@ def main() -> None:
     full_caps = json.loads(caps_path.read_text())
 
     # ── 8. Per-section portrait shorts ─────────────────────────────
+    step(f"[8/8] Build {len(sections)} portrait short(s)")
     for i, sec in enumerate(sections):
         nn = f"{i + 1:02d}"
         sslug = f"{args.slug}_s{nn}"
         start, end = float(sec["startSec"]), float(sec["endSec"])
-        print(f"\n──── Short {nn}: {start:.1f}-{end:.1f}s ────")
+        print(f"\n──── Short {nn}/{len(sections)}: {start:.1f}-{end:.1f}s ────")
 
         sec_wav = REPO / "assets" / "audio" / args.week / f"{sslug}_voiceover.wav"
         cut_wav(audio, start, end, sec_wav, dry)
