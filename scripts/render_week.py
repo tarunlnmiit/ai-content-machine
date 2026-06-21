@@ -37,8 +37,14 @@ def render_plan(plan_file: Path, week: str, dry_run: bool) -> tuple[str, bool, f
     plan = load_plan(plan_file)
     slug = plan.get("slug", plan_file.stem)
     output_size = plan.get("outputSize", "16x9")
+    kind = plan.get("kind", "talkinghead")
 
-    if output_size == "9x16":
+    if kind == "voiceover":
+        # Audio-only lane: B-roll montage + overlays, no rawVideo. Captions added
+        # later by hyperframes. Size picks the portrait vs landscape composition.
+        composition = "VoiceoverShort" if output_size == "9x16" else "VoiceoverLong"
+        extra_props = {"editPlanFile": f"edit-plans/{week}/{plan_file.name}"}
+    elif output_size == "9x16":
         composition = "ShortClip"
         extra_props = {
             "editPlanFile": f"edit-plans/{week}/{plan_file.name}",

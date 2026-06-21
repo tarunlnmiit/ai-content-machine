@@ -303,7 +303,7 @@ export function TalkingHeadEdit({ editPlanFile }: TalkingHeadEditProps) {
         {segmentLayouts.map(({ seg, startFrame, endFrame, durationFrames, editOffset }, i) => (
           <Sequence key={`seg-${i}`} from={editOffset} durationInFrames={durationFrames}>
             <CameraSegment
-              src={staticFile(plan.rawVideo)}
+              src={staticFile(plan.rawVideo ?? "")}
               trimBefore={startFrame}
               trimAfter={endFrame}
               filter={plan.greenScreen ? "none" : grading.filter}

@@ -11,6 +11,8 @@ import { ShortClip } from "./compositions/ShortClip";
 import type { ShortClipProps } from "./compositions/ShortClip";
 import { DSMotionShort, LifeMotionShort, PoetryMotionShort } from "./compositions/MotionShort";
 import type { DSMotionShortProps } from "./compositions/MotionShort";
+import { VoiceoverLong, VoiceoverShort } from "./compositions/VoiceoverEdit";
+import type { VoiceoverEditProps } from "./compositions/VoiceoverEdit";
 import { AudiogramFeed, AudiogramStory } from "./compositions/Audiogram";
 import { SocialCard1x1, SocialCard9x16 } from "./compositions/SocialCard";
 import { Thumbnail } from "./compositions/Thumbnail";
@@ -95,6 +97,17 @@ const calcMetaShortClip: CalculateMetadataFunction<ShortClipProps> = async ({ pr
   return { durationInFrames: Math.ceil(dur * FPS) };
 };
 
+const calcMetaVoiceover: CalculateMetadataFunction<VoiceoverEditProps> = async ({ props }) => {
+  try {
+    const plan = await loadEditPlan(props.editPlanFile);
+    const titleCardSec = plan.titleCard ? plan.titleCard.durationFrames / FPS : 0;
+    const outroCardSec = plan.outroCard ? plan.outroCard.durationFrames / FPS : 0;
+    return { durationInFrames: Math.ceil((plan.durationSec + titleCardSec + outroCardSec) * FPS) };
+  } catch {
+    return { durationInFrames: 900 };
+  }
+};
+
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -129,6 +142,28 @@ export const RemotionRoot: React.FC = () => {
         durationInFrames={900}
         defaultProps={{ editPlanFile: "edit-plans/2026-W24/2026-06-10_2026-06-08-life-self-dev-the-simple-habit-that-changed-my-pr.json" }}
         calculateMetadata={calcMetaTalkingHead}
+      />
+
+      {/* ── Voiceover-first lane (audio + B-roll montage + overlays; no baked captions) ── */}
+      <Composition
+        id="VoiceoverLong"
+        component={VoiceoverLong}
+        fps={FPS}
+        width={1920}
+        height={1080}
+        durationInFrames={900}
+        defaultProps={{ editPlanFile: "edit-plans/2026-W24/voiceover-sample.json" }}
+        calculateMetadata={calcMetaVoiceover}
+      />
+      <Composition
+        id="VoiceoverShort"
+        component={VoiceoverShort}
+        fps={FPS}
+        width={1080}
+        height={1920}
+        durationInFrames={900}
+        defaultProps={{ editPlanFile: "edit-plans/2026-W24/voiceover-sample.json" }}
+        calculateMetadata={calcMetaVoiceover}
       />
 
       {/* ── Overlay components (preview in studio) ── */}

@@ -37,7 +37,11 @@ export interface OutroCardConfig {
 export interface EditPlan {
   slug: string;
   niche: Niche;
-  rawVideo: string; // relative to public/
+  // Discriminator: "talkinghead" (face base layer, default) or "voiceover"
+  // (audio-only — B-roll montage base layer, no rawVideo). Absent = talkinghead.
+  kind?: "talkinghead" | "voiceover";
+  rawVideo?: string; // relative to public/ — required for talkinghead, omitted for voiceover
+  audioFile?: string; // relative to public/ — the voiceover track (voiceover kind only)
   durationSec: number;
   silenceTrimStartSec: number;
   silenceTrimEndSec: number;
@@ -71,7 +75,7 @@ export interface ScenePlan {
   durationSec: number;
   props: Record<string, unknown>;
   atSec?: number;
-  layout?: "fullscreen" | "panel-left" | "panel-right" | "panel-top";
+  layout?: "fullscreen" | "panel-left" | "panel-right" | "panel-top" | "lower-third";
 }
 
 export interface AudiogramPlan {

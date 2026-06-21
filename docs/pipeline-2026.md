@@ -2,6 +2,11 @@
 
 *Adopted 2026-06-20. This is the source of truth. Where any older guide disagrees, this wins.*
 
+> **Additive lane (2026-06-21):** A **voiceover-first / audio-only** video path exists alongside
+> the talking-head lane — record an audio voiceover (no face) and the pipeline builds a full-screen
+> B-roll-montage long-form + auto-detected portrait shorts, with captions burned by hyperframes.
+> It does NOT replace anything here. See **[voiceover-runner.md](voiceover-runner.md)**.
+
 ## Why this changed
 
 Analytics said the effort was pouring into dead surfaces and starving the live one:

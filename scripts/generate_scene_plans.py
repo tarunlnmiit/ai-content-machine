@@ -228,6 +228,65 @@ Return ONLY the JSON array. No prose, no markdown fences, no explanation.
 """
 
 
+VOICEOVER_INSTRUCTIONS = """
+You are analyzing a VOICEOVER transcript for the niche: {niche_label}.
+
+This is an AUDIO-ONLY video: there is NO talking head. Full-screen B-roll footage plays under
+the entire voiceover. Your job: identify moments where a Remotion motion graphic should appear
+OVER the B-roll to amplify what the voice is saying.
+
+Because there is no face on screen, there are only TWO layouts (no panels):
+- "fullscreen": the motion graphic replaces the B-roll entirely. Use for data, code,
+  comparisons, concept explainers, counters, cinematic headlines — anything that needs the
+  whole frame. durationSec: 4–7s.
+- "lower-third": a band near the bottom of the frame over the continuing B-roll. Use for short
+  labels, a name/term, a one-line reinforcement. durationSec: 4–8s. Use sparingly.
+
+NEVER use "panel-left", "panel-right", or "panel-top" — there is no speaker to make room for.
+
+COUNT — keep overlays SPARSE so the B-roll breathes. Base it on content density: roughly one
+overlay every 15–30 seconds of voiceover. A 4-minute voiceover ≈ 8–14 overlays.
+
+MANDATORY BEATS (these three MUST exist, same as every other lane):
+- HOOK at the very start: the first overlay's atSec must be 0 (or within the first 2s), landing
+  on the opening hook line.
+- A SHAREABLE MOMENT near the middle: the single most quotable/savable line, given a fullscreen
+  treatment (AtmosphericQuote / ImageTextReveal / CounterReveal).
+- A CTA at the end: the final overlay lands on the closing line / call to action.
+
+CREATIVE DIRECTION — you are the motion graphics director, not a caption writer:
+- WordReveal is a LAST RESORT (≤20% of scenes). Prefer CounterReveal, DataVizReveal,
+  AtmosphericQuote, NumberedTips, LineReveal, ImageTextReveal, HandwrittenReveal.
+- CounterReveal: whenever the voice cites a specific number, stat, percentage, or metric.
+- ImageTextReveal: narrative peaks, emotional beats, cinematic atmosphere.
+- HandwrittenReveal: poetry verses / intimate lines — life and poetry only.
+- Every scene should SHOW and VISUALIZE — captions themselves are added separately, so do NOT
+  just echo the words.
+
+REQUIRED COMPONENT RULES (hard constraints):
+- If ANY number/stat/percentage/metric appears → at least ONE scene MUST use CounterReveal.
+- If niche is life or poetry → at least ONE scene MUST use ImageTextReveal.
+- If niche is poetry → at least ONE scene MUST use HandwrittenReveal.
+- EXACTLY ONE scene MUST use CUSTOM_SCENE_SLOT — the single most visually complex moment; set
+  props.description to a clear 2–3 sentence brief.
+
+Each object in the array MUST have exactly these fields:
+{{
+  "sceneId": "scene-01",
+  "componentName": "ExactComponentName",
+  "script": "verbatim excerpt 5–15 words",
+  "niche": "{niche}",
+  "atSec": 0.0,
+  "durationSec": 5,
+  "layout": "fullscreen",
+  "props": {{ ... component-specific props ... }}
+}}
+
+sceneId values: "scene-01", "scene-02", etc. (zero-padded index).
+Return ONLY the JSON array. No prose, no markdown fences, no explanation.
+"""
+
+
 def clean_script(text: str) -> str:
     return EDITOR_TAGS.sub("", text).strip()
 
@@ -346,7 +405,7 @@ def extract_json(raw: str) -> list:
     return result
 
 
-VALID_LAYOUTS = {"fullscreen", "panel-left", "panel-right", "panel-top"}
+VALID_LAYOUTS = {"fullscreen", "panel-left", "panel-right", "panel-top", "lower-third"}
 
 # These components hardcode widths that break at 1/3 screen (~640px).
 # Automatically coerced to "fullscreen" if the model assigns a panel layout.
@@ -382,6 +441,8 @@ def build_prompt(content_text: str, niche: str, mode: str, shorts: int = 7,
         instructions = SHORT_INSTRUCTIONS.format(
             niche_label=niche_label, niche=niche, shorts=shorts
         )
+    elif mode == "voiceover":
+        instructions = VOICEOVER_INSTRUCTIONS.format(niche_label=niche_label, niche=niche)
     else:
         instructions = OVERLAY_INSTRUCTIONS.format(niche_label=niche_label, niche=niche)
     catalog = load_component_catalog(niche)
@@ -389,7 +450,7 @@ def build_prompt(content_text: str, niche: str, mode: str, shorts: int = 7,
     virality = virality_block(content_type, niche, project_key)
 
     if input_type == "captions":
-        if mode == "overlay":
+        if mode in ("overlay", "voiceover"):
             timing_note = (
                 "TIMING (captions input — use these timestamps directly):\n"
                 "- Each line is [startSec–endSec] followed by the spoken text.\n"
@@ -432,7 +493,7 @@ def slug_from_script_path(script_path: Path) -> str:
 
 
 def output_path(week: str, slug: str, mode: str) -> Path:
-    suffix = "_overlay" if mode == "overlay" else ""
+    suffix = {"overlay": "_overlay", "voiceover": "_voiceover"}.get(mode, "")
     return SCENE_PLANS_ROOT / week / f"{slug}{suffix}.json"
 
 
@@ -456,8 +517,9 @@ def main() -> None:
                         help="Whisper model size when transcribing reel (default: base)")
     parser.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     parser.add_argument("--week", required=True, help="ISO week e.g. 2026-W24")
-    parser.add_argument("--mode", choices=["short", "overlay"], default="short",
-                        help="short = sequential scenes for motion short; overlay = inject into long-form")
+    parser.add_argument("--mode", choices=["short", "overlay", "voiceover"], default="short",
+                        help="short = sequential motion short; overlay = inject into talking-head long-form; "
+                             "voiceover = fullscreen/lower-third overlays over an audio-only B-roll montage")
     parser.add_argument("--shorts", type=int, default=None,
                         help="Number of unique shorts to generate (short mode only; default: 14 for ds, 7 for life/poetry)")
     parser.add_argument("--slug", default=None,
@@ -484,7 +546,7 @@ def main() -> None:
 
     # Skip-if-exists guard (before any Claude call — no wasted tokens)
     if not args.dry_run and not args.force and args.slug:
-        if args.mode == "overlay":
+        if args.mode in ("overlay", "voiceover"):
             _existing = output_path(args.week, args.slug, args.mode)
             if _existing.exists():
                 print(f"[skip] {_existing.relative_to(REPO)} already exists (--force to overwrite)")
@@ -587,7 +649,19 @@ def main() -> None:
         write_overlay(parsed, slug, args)
 
 
+# Voiceover lane has no speaker → panel layouts are meaningless. Coerce them.
+VOICEOVER_LAYOUTS = {"fullscreen", "lower-third"}
+
+
+def coerce_voiceover_layouts(scenes: list) -> None:
+    for s in scenes:
+        if s.get("layout") not in VOICEOVER_LAYOUTS:
+            s["layout"] = "fullscreen"
+
+
 def write_overlay(scenes: list, slug: str, args) -> None:
+    if args.mode == "voiceover":
+        coerce_voiceover_layouts(scenes)
     errors = []
     for i, scene in enumerate(scenes):
         try:

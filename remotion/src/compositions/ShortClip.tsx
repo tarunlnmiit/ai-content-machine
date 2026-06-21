@@ -95,7 +95,7 @@ export function ShortClip({
       {/* 9:16 center crop — OffthreadVideo fills the container, objectFit=cover crops to portrait */}
       <AbsoluteFill>
         <OffthreadVideo
-          src={staticFile(plan.rawVideo)}
+          src={staticFile(plan.rawVideo ?? "")}
           trimBefore={Math.floor(clipStartSec * fps)}
           trimAfter={Math.ceil(clipEndSec * fps)}
           volume={1.6}

@@ -1082,7 +1082,7 @@ def build_caption_tl(lines, duration):
     return js
 
 
-def generate_html(lines, elements, duration, video_fn, show_captions=True, width=1920, height=1080):
+def generate_html(lines, elements, duration, video_fn, show_captions=True, width=1920, height=1080, caption_y=None):
     cap_divs = "\n".join(f'      <div class="line sz-md" id="l{i+1:02d}">{ln["text"]}</div>' for i,ln in enumerate(lines)) if show_captions else ""
     aug_html_parts, aug_js_parts = [], []
     for el in elements:
@@ -1098,6 +1098,11 @@ def generate_html(lines, elements, duration, video_fn, show_captions=True, width
     aug_js   = "".join(aug_js_parts)
     cap_tl   = build_caption_tl(lines, duration) if show_captions else ""
     css = _CSS.replace("__W__", str(width)).replace("__H__", str(height))
+    # Raise captions off the bottom when caption_y is set (fraction from top → px from bottom).
+    if caption_y is not None:
+        cy = max(0.0, min(1.0, caption_y))
+        bottom_px = int(round(height * (1 - cy)))
+        css += f"\n      .line{{bottom:{bottom_px}px !important}}"
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -1141,6 +1146,9 @@ def parse_args():
     p.add_argument("--model",      default="base", choices=["tiny","base","small","medium"])
     p.add_argument("--no-render",   action="store_true")
     p.add_argument("--no-captions", action="store_true", help="Omit burned-in subtitles from the render")
+    p.add_argument("--caption-y", type=float, default=None,
+                   help="Caption vertical position as a fraction from the top (0=top, 1=bottom). "
+                        "Default keeps the built-in bottom anchor; e.g. 0.70 raises captions off the bottom.")
     p.add_argument("--output-dir",  type=Path, default=Path("assets/hyperframes"))
     p.add_argument("--shorts",      action="store_true", help="Process all shorts for --slug from assets/video/edited/shorts/<week>/")
     p.add_argument("--shorts-dir",  type=Path, default=None, help="Directory containing short clips (default: ISO-week subfolder under assets/video/edited/shorts/, with flat-root fallback)")
@@ -1251,7 +1259,15 @@ def transcribe(audio, model_name):
              for seg in data.get("segments",[]) for w in seg.get("words",[])]
     return words, data.get("text","").strip()
 
+# Filler words dropped from BURNED CAPTIONS only (element analysis still sees full text).
+_CAPTION_FILLER = {"so"}
+
+def _norm_tok(word: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", word.lower())
+
 def group_lines(words):
+    # Drop standalone filler ("so") from captions — keeps timing of surrounding words intact.
+    words = [w for w in words if _norm_tok(w["word"]) not in _CAPTION_FILLER]
     lines,cur=[],[]
     for i,w in enumerate(words):
         if cur:
@@ -1447,7 +1463,7 @@ def run_pipeline(video: Path, slug: str, args):
         print(f"    [{el['type']:16s}] {el['id']} @ {el['start_at']}s | {json.dumps(el.get('content',{}))[:70]}")
 
     print("[5/5] Generating HTML...")
-    html_=generate_html(lines,elements,dur,"clip.mp4",show_captions=not args.no_captions,width=vid_w,height=vid_h)
+    html_=generate_html(lines,elements,dur,"clip.mp4",show_captions=not args.no_captions,width=vid_w,height=vid_h,caption_y=getattr(args,"caption_y",None))
     (proj/"index.html").write_text(html_,encoding="utf-8")
 
     if args.no_render:

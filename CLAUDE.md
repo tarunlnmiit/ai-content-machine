@@ -68,6 +68,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   (`scripts/idea_scorer.py:weekly_raw_take_batch`) auto-surfaces the week's 4 under Life in
   `weekly_ideas.md`, rotating by ISO week. Spec/guardrails: `docs/raw-take-format.md`. Does NOT
   replace the weekly blog / long-form / 9 reels — it's a separate low-cost lane.
+- **VOICEOVER-FIRST LANE (additive, 2026-06-21):** Record an **audio-only voiceover** (no face)
+  and `scripts/run_voiceover_week.py` builds a full-screen **B-roll-montage** long-form (landscape)
+  + auto-detected **portrait shorts**, with Remotion overlay scenes and **captions burned by
+  hyperframes** (drops standalone "so", raised `--caption-y`, `--no-captions` toggle). New Remotion
+  composition `VoiceoverEdit` (`VoiceoverLong`/`VoiceoverShort`, `kind:"voiceover"` EditPlan).
+  B-roll keywords come from the transcript, not the script. Does NOT replace the talking-head
+  pipeline. Canonical doc: `docs/voiceover-runner.md`.
 - **DISTRIBUTION (auto-publish daemon — "subtract to focus", 2026):** One piece → viable
   channels via `prompts/repurposing_agent.md` → per-platform derivatives → staged by
   `scripts/load_posts.py` → fired by the `scripts/scheduler.py` daemon. **LinkedIn is ACTIVE**
