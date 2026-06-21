@@ -26,7 +26,25 @@ python3 scripts/run_voiceover_week.py \
   --niche ds --week 2026-W26 --slug 2026-06-22_ds_slug
 ```
 
-Flags: `--no-captions`, `--caption-y 0.70`, `--skip-shorts`, `--dry-run`.
+Flags: `--grade`, `--no-captions`, `--caption-y 0.82`, `--skip-shorts`, `--force`, `--dry-run`.
+
+### Looks (`--grade`)
+
+Each video gets a color **look**, applied to both long-form and shorts:
+- `auto` (default) → **poetry** niche gets the poetry look, **ds/life** get **cinematic**.
+- `cinematic` — teal-orange tint + 2.39:1 letterbox bars + vignette.
+- `poetry` — warm dreamy bloom + soft vignette + gentle grain.
+- `niche` — the plain per-niche tint (no extra layers); `none` — same grading, no look layers.
+
+Override per run, e.g. `--grade poetry` even on a DS slug. Presets live in
+`scripts/prepare_voiceover_edit.py:resolve_grade`; the layers render in
+`remotion/src/compositions/VoiceoverEdit.tsx` (driven by the `look` field in the EditPlan).
+
+### Idempotency (`--force`)
+
+Every step skips when its output already exists (prints `[skip] <step> (exists)`), so re-running
+after a failure resumes instead of redoing transcription / B-roll downloads / renders. Pass
+`--force` to redo everything (also re-runs hyperframes with `--fresh`).
 
 Run it once per niche (ds / life / poetry). Outputs land in
 `output/animations/{week}/{slug}.mp4` (long-form) and `…/{slug}_sNN.mp4` (shorts), then the

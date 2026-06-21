@@ -79,6 +79,79 @@ function FilmGrainOverlay({ niche }: { niche: Niche }) {
   );
 }
 
+// ── Named looks ────────────────────────────────────────────────────────────
+
+// Black letterbox bars. Landscape → 2.39:1 crop; portrait → thin stylistic bars.
+function Letterbox() {
+  const { width, height } = useVideoConfig();
+  const isLandscape = width >= height;
+  const barFrac = isLandscape
+    ? Math.max(0, (1 - width / 2.39 / height) / 2) // (height - width/2.39)/2 as fraction
+    : 0.06;
+  const barPct = `${(barFrac * 100).toFixed(2)}%`;
+  return (
+    <>
+      <AbsoluteFill style={{ top: 0, height: barPct, backgroundColor: "#000", pointerEvents: "none" }} />
+      <AbsoluteFill style={{ top: "auto", bottom: 0, height: barPct, backgroundColor: "#000", pointerEvents: "none" }} />
+    </>
+  );
+}
+
+// Teal shadows / orange highlights + vignette. Letterbox added separately above.
+function CinematicGrade() {
+  return (
+    <>
+      <AbsoluteFill style={{ backgroundColor: "rgba(0,80,100,0.12)", mixBlendMode: "multiply", pointerEvents: "none" }} />
+      <AbsoluteFill
+        style={{
+          background: "radial-gradient(ellipse 75% 65% at 50% 48%, rgba(255,150,60,0.12) 0%, transparent 60%)",
+          mixBlendMode: "screen",
+          pointerEvents: "none",
+        }}
+      />
+      <AbsoluteFill
+        style={{
+          background: "radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.50) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+    </>
+  );
+}
+
+// Warm dreamy bloom + soft vignette + gentle grain.
+function PoetryBloom() {
+  const frame = useCurrentFrame();
+  const offset = (frame % 8) * 2;
+  return (
+    <>
+      <AbsoluteFill
+        style={{
+          background: "radial-gradient(ellipse 80% 70% at 50% 45%, rgba(255,200,140,0.18) 0%, transparent 62%)",
+          mixBlendMode: "screen",
+          pointerEvents: "none",
+        }}
+      />
+      <AbsoluteFill
+        style={{
+          backgroundImage: NOISE_SVG_URL,
+          backgroundSize: "300px 300px",
+          backgroundPosition: `${offset}px ${offset}px`,
+          opacity: 0.06,
+          mixBlendMode: "overlay",
+          pointerEvents: "none",
+        }}
+      />
+      <AbsoluteFill
+        style={{
+          background: "radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.22) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+    </>
+  );
+}
+
 export interface VoiceoverEditProps extends Record<string, unknown> {
   editPlanFile: string;
 }
@@ -185,6 +258,10 @@ export function VoiceoverEdit({ editPlanFile }: VoiceoverEditProps) {
         />
       )}
 
+      {/* Named look — duotone/bloom graded over the montage (below overlays) */}
+      {plan.look === "cinematic" && <CinematicGrade />}
+      {plan.look === "poetry" && <PoetryBloom />}
+
       {/* Overlay scenes — fullscreen replaces montage; lower-third sits in a bottom band */}
       {overlayScenes.map((scene) => {
         const from = atSecToFrame(scene.atSec!);
@@ -206,8 +283,8 @@ export function VoiceoverEdit({ editPlanFile }: VoiceoverEditProps) {
         );
       })}
 
-      {/* Film grain + vignette (life/poetry only) */}
-      <FilmGrainOverlay niche={plan.niche} />
+      {/* Film grain + vignette (only when no named look owns its own grade) */}
+      {(plan.look === undefined || plan.look === "none") && <FilmGrainOverlay niche={plan.niche} />}
 
       {/* Optional OutroCard appended after body */}
       {plan.outroCard && (
@@ -220,6 +297,9 @@ export function VoiceoverEdit({ editPlanFile }: VoiceoverEditProps) {
           />
         </Sequence>
       )}
+
+      {/* Letterbox bars frame the whole composition (above all layers) */}
+      {plan.look === "cinematic" && <Letterbox />}
     </AbsoluteFill>
   );
 }

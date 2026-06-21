@@ -54,6 +54,8 @@ export interface EditPlan {
   outroCard?: OutroCardConfig;
   scenePlanFile?: string;
   colorGrading?: ColorGrading;
+  // Named cinematic/poetry "look" for the voiceover lane (extra letterbox/duotone/bloom layers).
+  look?: "cinematic" | "poetry" | "none";
   greenScreen?: boolean; // replace bg with #00FF00 for DaVinci keying
   webcamSplit?: "left" | "right" | null;
   outputSize?: "16x9" | "9x16" | "1x1";

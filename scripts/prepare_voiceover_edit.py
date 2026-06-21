@@ -54,6 +54,27 @@ def default_grading(niche: str) -> dict:
             "brightness": 1.02, "overlayColor": "rgba(255, 180, 120, 0.05)"}
 
 
+# Named look presets. Each → (ColorGrading dict, look id). The look id drives the extra
+# letterbox/duotone/bloom layers in VoiceoverEdit.tsx; colorGrading is the base filter/tint.
+CINEMATIC_GRADE = {"saturate": 1.05, "hueRotate": -4, "contrast": 1.14,
+                   "brightness": 0.97, "overlayColor": "rgba(0, 70, 90, 0.10)"}
+POETRY_GRADE = {"saturate": 1.16, "hueRotate": -3, "contrast": 1.03,
+                "brightness": 1.04, "overlayColor": "rgba(255, 180, 120, 0.10)"}
+
+
+def resolve_grade(grade: str, niche: str) -> tuple[dict, str]:
+    """Return (colorGrading, look) for a --grade choice. 'auto' → poetry for poetry niche,
+    cinematic otherwise."""
+    if grade == "auto":
+        grade = "poetry" if niche == "poetry" else "cinematic"
+    if grade == "cinematic":
+        return CINEMATIC_GRADE, "cinematic"
+    if grade == "poetry":
+        return POETRY_GRADE, "poetry"
+    # 'niche' and 'none' both use the plain niche grading; 'none' just labels look=none.
+    return default_grading(niche), "none"
+
+
 def convert_audio(audio: Path, week: str, slug: str) -> str:
     """Loudnorm the voiceover to m4a under remotion/public/audio/. Returns staticFile path.
 
@@ -89,7 +110,9 @@ def copy_broll(broll_dir: Path, week: str, slug: str) -> list[Path]:
     for i, name in enumerate(names):
         src = broll_dir / name
         dst = dst_dir / f"cue-{i}{src.suffix}"
-        shutil.copy2(src, dst)
+        # Skip re-copying GBs if the clip is already staged (idempotent rebuilds).
+        if not (dst.exists() and dst.stat().st_size == src.stat().st_size):
+            shutil.copy2(src, dst)
         ordered.append(dst)
     return ordered
 
@@ -127,6 +150,9 @@ def main() -> None:
     parser.add_argument("--slug", required=True)
     parser.add_argument("--scene-plan", default=None, help="Overlay scene plan path relative to remotion/public/ (with atSec set)")
     parser.add_argument("--output-size", default="16x9", choices=["16x9", "9x16", "1x1"])
+    parser.add_argument("--grade", default="auto",
+                        choices=["auto", "cinematic", "poetry", "niche", "none"],
+                        help="Color look. auto = poetry niche→poetry, else cinematic.")
     parser.add_argument("--captions", default=None, help="Captions path relative to remotion/public/ (for the captionsFile field)")
     parser.add_argument("--slot-sec", type=float, default=DEFAULT_SLOT_SEC)
     args = parser.parse_args()
@@ -165,6 +191,8 @@ def main() -> None:
             print(f"[scenes] scene plan not found at {args.scene_plan}, skipping overlays", file=sys.stderr)
 
     captions_file = args.captions or ""
+    color_grading, look = resolve_grade(args.grade, args.niche)
+    print(f"[look] grade={args.grade} → look={look}")
 
     plan = {
         "slug": args.slug,
@@ -178,7 +206,8 @@ def main() -> None:
         "captionsFile": captions_file,
         "showSubtitles": False,  # captions are added by hyperframes, not Remotion
         **({"scenePlanFile": scene_plan_file} if scene_plan_file else {}),
-        "colorGrading": default_grading(args.niche),
+        "colorGrading": color_grading,
+        "look": look,
         "outputSize": args.output_size,
     }
 
