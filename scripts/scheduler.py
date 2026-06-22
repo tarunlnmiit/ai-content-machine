@@ -137,7 +137,7 @@ def dispatch_threads(post: dict):
         log.error(f"Threads post failed: {e}")
 
 
-COMMENT_FIRE_DELAY_S = 5 * 60  # fire comments 5 min after scheduled publish time
+COMMENT_FIRE_DELAY_S = 2 * 60  # fire comments 2 min after scheduled publish time
 
 
 def _fire_linkedin_comments(token: str, urn: str, post_urn: str, meta: dict,
