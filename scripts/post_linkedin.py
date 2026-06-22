@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
 """
-Post text / document to LinkedIn via LinkedIn API v2.
-Credential: LINKEDIN_ACCESS_TOKEN from .env
-             LINKEDIN_PERSON_URN from .env (format: urn:li:person:XXXXXXXX)
+Post text / document to LinkedIn via LinkedIn REST API (LinkedIn-Version: 202401).
+Approved product: "Share on LinkedIn" — endpoints /rest/posts, /rest/images, /rest/documents.
 
-Get access token:
-  1. Create app at developer.linkedin.com
-  2. Request scopes: r_liteprofile + w_member_social
-  3. Run OAuth flow → save token to .env as LINKEDIN_ACCESS_TOKEN
-  4. Get your person URN: curl -H "Authorization: Bearer TOKEN" https://api.linkedin.com/v2/me
-     → copy 'id' field, format as urn:li:person:{id}
+Credentials in .env:
+  LINKEDIN_ACCESS_TOKEN  — OAuth Bearer token with w_member_social scope
+  LINKEDIN_PERSON_URN    — urn:li:person:{id}
 
 Usage (standalone):
     python3 scripts/post_linkedin.py --post-file content/derivatives/{slug}/linkedin_post.txt
@@ -24,6 +20,7 @@ import sqlite3
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import quote
 
 import requests
 from dotenv import load_dotenv
@@ -32,7 +29,23 @@ REPO = Path(__file__).parent.parent
 DB_PATH = REPO / "data" / "scheduling.db"
 load_dotenv(REPO / ".env")
 
-LI_API = "https://api.linkedin.com/v2"
+LI_REST = "https://api.linkedin.com/rest"
+LI_VERSION = "202506"
+
+
+def _rest_headers(token: str) -> dict:
+    return {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+        "LinkedIn-Version": LI_VERSION,
+        "X-Restli-Protocol-Version": "2.0.0",
+    }
+
+
+def _normalize_urn(urn: str) -> str:
+    """REST API needs urn:li:person:{encoded_id}. Strip member: prefix if stored incorrectly."""
+    # member: numeric IDs don't work — LINKEDIN_PERSON_URN must be the encoded person URN
+    return urn.replace("urn:li:member:", "urn:li:person:")
 
 
 def get_credentials() -> tuple[str, str]:
@@ -40,184 +53,151 @@ def get_credentials() -> tuple[str, str]:
     urn = os.getenv("LINKEDIN_PERSON_URN")
 
     if not token:
-        sys.exit(
+        raise RuntimeError(
             "LINKEDIN_ACCESS_TOKEN not set in .env\n"
             "Get it via OAuth at developer.linkedin.com — see script docstring."
         )
     if not urn:
-        sys.exit(
+        raise RuntimeError(
             "LINKEDIN_PERSON_URN not set in .env\n"
-            "Format: urn:li:person:XXXXXXXX\n"
-            f"Find your ID: curl -H 'Authorization: Bearer {token[:20]}...' {LI_API}/me"
+            "Format: urn:li:person:XXXXXXXX"
         )
-    return token, urn
+    return token, _normalize_urn(urn)
 
 
 def upload_image(token: str, urn: str, image_path: Path) -> str:
-    """Register image upload + upload binary. Returns asset URN."""
-    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    """Initialize image upload + upload binary. Returns urn:li:image:XXXXX."""
+    headers = _rest_headers(token)
 
-    # Step 1: register upload
-    reg_payload = {
-        "registerUploadRequest": {
-            "recipes": ["urn:li:digitalmediaRecipe:feedshare-image"],
-            "owner": urn,
-            "serviceRelationships": [{
-                "relationshipType": "OWNER",
-                "identifier": "urn:li:userGeneratedContent",
-            }],
-        }
-    }
-    reg = requests.post(f"{LI_API}/assets?action=registerUpload", headers=headers, json=reg_payload)
-    reg.raise_for_status()
-    reg_data = reg.json()
+    init = requests.post(
+        f"{LI_REST}/images?action=initializeUpload",
+        headers=headers,
+        json={"initializeUploadRequest": {"owner": urn}},
+    )
+    init.raise_for_status()
+    data = init.json()["value"]
+    upload_url = data["uploadUrl"]
+    image_urn = data["image"]
 
-    upload_url = reg_data["value"]["uploadMechanism"]["com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest"]["uploadUrl"]
-    asset_urn = reg_data["value"]["asset"]
-
-    # Step 2: upload binary
     with open(image_path, "rb") as f:
         img_data = f.read()
-    upload_resp = requests.put(
+    put = requests.put(
         upload_url,
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/octet-stream"},
         data=img_data,
     )
-    upload_resp.raise_for_status()
-    return asset_urn
-
-
-def post_text(token: str, urn: str, text: str, image_path: Path | None = None,
-             scheduled_unix_ms: int | None = None) -> str:
-    """Post to LinkedIn. Returns post URN.
-
-    scheduled_unix_ms: Unix epoch milliseconds — LinkedIn holds the post and publishes
-    it natively. Must be >= 10 min from now. Omit to publish immediately.
-    """
-    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json", "X-Restli-Protocol-Version": "2.0.0"}
-
-    payload = {
-        "author": urn,
-        "lifecycleState": "SCHEDULED" if scheduled_unix_ms else "PUBLISHED",
-        "specificContent": {
-            "com.linkedin.ugc.ShareContent": {
-                "shareCommentary": {"text": text},
-                "shareMediaCategory": "NONE",
-            }
-        },
-        "visibility": {"com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"},
-    }
-
-    if scheduled_unix_ms:
-        payload["scheduledPublishTime"] = scheduled_unix_ms
-
-    if image_path and image_path.exists():
-        print(f"  Uploading image: {image_path.name} ...", end=" ", flush=True)
-        asset_urn = upload_image(token, urn, image_path)
-        print("OK")
-        payload["specificContent"]["com.linkedin.ugc.ShareContent"]["shareMediaCategory"] = "IMAGE"
-        payload["specificContent"]["com.linkedin.ugc.ShareContent"]["media"] = [{
-            "status": "READY",
-            "description": {"text": ""},
-            "media": asset_urn,
-            "title": {"text": ""},
-        }]
-
-    resp = requests.post(f"{LI_API}/ugcPosts", headers=headers, json=payload)
-    resp.raise_for_status()
-    return resp.headers.get("x-restli-id", "unknown")
+    put.raise_for_status()
+    return image_urn
 
 
 def upload_document(token: str, urn: str, pdf_path: Path) -> str:
-    """Register document upload + upload PDF binary. Returns asset URN."""
-    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    """Initialize document upload + upload PDF binary. Returns urn:li:document:XXXXX."""
+    headers = _rest_headers(token)
 
-    reg_payload = {
-        "registerUploadRequest": {
-            "recipes": ["urn:li:digitalmediaRecipe:feedshare-document"],
-            "owner": urn,
-            "serviceRelationships": [{
-                "relationshipType": "OWNER",
-                "identifier": "urn:li:userGeneratedContent",
-            }],
-        }
-    }
-    reg = requests.post(f"{LI_API}/assets?action=registerUpload", headers=headers, json=reg_payload)
-    reg.raise_for_status()
-    reg_data = reg.json()
-
-    upload_url = reg_data["value"]["uploadMechanism"]["com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest"]["uploadUrl"]
-    asset_urn = reg_data["value"]["asset"]
+    init = requests.post(
+        f"{LI_REST}/documents?action=initializeUpload",
+        headers=headers,
+        json={"initializeUploadRequest": {"owner": urn}},
+    )
+    init.raise_for_status()
+    data = init.json()["value"]
+    upload_url = data["uploadUrl"]
+    doc_urn = data["document"]
 
     with open(pdf_path, "rb") as f:
         pdf_data = f.read()
-    upload_resp = requests.put(
+    put = requests.put(
         upload_url,
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/octet-stream"},
         data=pdf_data,
     )
-    upload_resp.raise_for_status()
-    return asset_urn
+    put.raise_for_status()
+    return doc_urn
+
+
+def _distribution() -> dict:
+    return {
+        "feedDistribution": "MAIN_FEED",
+        "targetEntities": [],
+        "thirdPartyDistributionChannels": [],
+    }
+
+
+def post_text(token: str, urn: str, text: str, image_path: Path | None = None,
+              scheduled_unix_ms: int | None = None) -> str:
+    """Post text (optionally with image) to LinkedIn. Returns post URN."""
+    headers = _rest_headers(token)
+    urn = _normalize_urn(urn)
+
+    payload: dict = {
+        "author": urn,
+        "commentary": text,
+        "visibility": "PUBLIC",
+        "distribution": _distribution(),
+        "lifecycleState": "PUBLISHED",
+        "isReshareDisabledByAuthor": False,
+    }
+
+    if image_path and image_path.exists():
+        print(f"  Uploading image: {image_path.name} ...", end=" ", flush=True)
+        image_urn = upload_image(token, urn, image_path)
+        print("OK")
+        payload["content"] = {
+            "media": {
+                "title": image_path.stem,
+                "id": image_urn,
+            }
+        }
+
+    resp = requests.post(f"{LI_REST}/posts", headers=headers, json=payload)
+    resp.raise_for_status()
+    return resp.headers.get("x-restli-id") or resp.headers.get("X-RestLi-Id", "unknown")
 
 
 def post_document(token: str, urn: str, text: str, pdf_path: Path, title: str,
                   scheduled_unix_ms: int | None = None) -> str:
     """Post a PDF document to LinkedIn. Returns post URN."""
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
-        "X-Restli-Protocol-Version": "2.0.0",
-    }
+    headers = _rest_headers(token)
+    urn = _normalize_urn(urn)
 
     print(f"  Uploading document: {pdf_path.name} ...", end=" ", flush=True)
-    asset_urn = upload_document(token, urn, pdf_path)
+    doc_urn = upload_document(token, urn, pdf_path)
     print("OK")
 
     payload = {
         "author": urn,
-        "lifecycleState": "SCHEDULED" if scheduled_unix_ms else "PUBLISHED",
-        "specificContent": {
-            "com.linkedin.ugc.ShareContent": {
-                "shareCommentary": {"text": text},
-                "shareMediaCategory": "DOCUMENT",
-                "media": [{
-                    "status": "READY",
-                    "media": asset_urn,
-                    "title": {"text": title},
-                }],
+        "commentary": text,
+        "visibility": "PUBLIC",
+        "distribution": _distribution(),
+        "content": {
+            "media": {
+                "title": title or pdf_path.stem,
+                "id": doc_urn,
             }
         },
-        "visibility": {"com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"},
+        "lifecycleState": "PUBLISHED",
+        "isReshareDisabledByAuthor": False,
     }
 
-    if scheduled_unix_ms:
-        payload["scheduledPublishTime"] = scheduled_unix_ms
-
-    resp = requests.post(f"{LI_API}/ugcPosts", headers=headers, json=payload)
+    resp = requests.post(f"{LI_REST}/posts", headers=headers, json=payload)
     resp.raise_for_status()
-    return resp.headers.get("x-restli-id", "unknown")
+    return resp.headers.get("x-restli-id") or resp.headers.get("X-RestLi-Id", "unknown")
 
 
 def post_comment(token: str, urn: str, post_urn: str, text: str) -> str:
-    """Add a comment to a freshly created post (used for the pinned first comment
-    carrying the blog link — LinkedIn suppresses reach on body links).
-
-    Returns the comment id, or raises requests.HTTPError.
-    """
-    from urllib.parse import quote
-
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
-        "X-Restli-Protocol-Version": "2.0.0",
-    }
+    """Add a comment to a post. Returns comment id or raises HTTPError."""
+    headers = _rest_headers(token)
+    urn = _normalize_urn(urn)
     encoded = quote(post_urn, safe="")
-    payload = {"actor": urn, "object": post_urn, "message": {"text": text}}
+
+    payload = {"actor": urn, "message": {"text": text}}
     resp = requests.post(
-        f"{LI_API}/socialActions/{encoded}/comments", headers=headers, json=payload
+        f"{LI_REST}/socialActions/{encoded}/comments",
+        headers=headers,
+        json=payload,
     )
     resp.raise_for_status()
-    return resp.json().get("id", "unknown")
+    return resp.headers.get("x-restli-id") or resp.json().get("id", "unknown")
 
 
 def _log_result(db_post_id: int | None, status: str, detail: dict):
@@ -233,7 +213,7 @@ def _log_result(db_post_id: int | None, status: str, detail: dict):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Post to LinkedIn.")
+    parser = argparse.ArgumentParser(description="Post to LinkedIn (REST API v202401).")
     parser.add_argument("--post-file", required=True, help="Path to linkedin_post.txt")
     parser.add_argument("--image", help="Optional image path (PNG/JPG)")
     parser.add_argument("--document", help="Optional PDF path — posts as a document/slide deck")
@@ -261,7 +241,11 @@ def main():
         print("Dry run — nothing posted.")
         return
 
-    token, urn = get_credentials()
+    try:
+        token, urn = get_credentials()
+    except RuntimeError as e:
+        sys.exit(str(e))
+
     print("Posting to LinkedIn ...", end=" ", flush=True)
 
     try:
@@ -273,7 +257,7 @@ def main():
         print(f"Post URN: {post_urn}")
         _log_result(None, "posted", {"post_urn": post_urn})
     except requests.HTTPError as e:
-        print(f"FAILED: {e.response.status_code} — {e.response.text[:200]}", file=sys.stderr)
+        print(f"FAILED: {e.response.status_code} — {e.response.text[:300]}", file=sys.stderr)
         _log_result(None, "failed", {"error": str(e)})
         sys.exit(1)
 
