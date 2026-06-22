@@ -1,0 +1,62 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "CodeAnnotation",
+    "script": "these conversion functions, they look something like this",
+    "niche": "ds",
+    "atSec": 0.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "int(42)",
+        "float('42.5')",
+        "str(42)",
+        "bool(0)"
+      ],
+      "language": "python",
+      "highlightLine": 0,
+      "annotationText": "Python's 4 built-in type converters"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CounterReveal",
+    "script": "integer of 42 will give me 42, float of 42.5 as string",
+    "niche": "ds",
+    "atSec": 5.6,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 4,
+      "label": "built-in type converters in Python",
+      "prefix": "",
+      "suffix": ""
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "any data from a CSV, API or user input arrives as a string",
+    "niche": "ds",
+    "atSec": 36.6,
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "Any data from a CSV, API, or user input arrives as a string \u2014 until you convert it.",
+      "attribution": "Python Rule of Thumb"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "This is where the silent bugs start",
+    "niche": "ds",
+    "atSec": 56.2,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Dark terminal aesthetic: raw CSV rows appear labeled '\"42\"' in amber \u2014 a missing int() call triggers a red TypeError flash with the word SILENT in bold white. Final frame fades to 'Type mismatch kills production pipelines.' Builds urgency and stakes for the viewer."
+    }
+  }
+]

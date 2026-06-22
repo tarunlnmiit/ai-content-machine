@@ -1,0 +1,44 @@
+[
+  {
+    "text": "Then the moth to flame arrives, and it's not romantic.",
+    "startMs": 0,
+    "endMs": 4000,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "Moths don't choose the flame, they are wired to the light.",
+    "startMs": 4000,
+    "endMs": 8000,
+    "timestampMs": 4000,
+    "confidence": null
+  },
+  {
+    "text": "No deliberation, no weighing of outcomes, just pull pure and indifferent to consequence.",
+    "startMs": 8000,
+    "endMs": 14000,
+    "timestampMs": 8000,
+    "confidence": null
+  },
+  {
+    "text": "When love starts feeling like physics instead of a decision, you are somewhere in you.",
+    "startMs": 14000,
+    "endMs": 20000,
+    "timestampMs": 14000,
+    "confidence": null
+  },
+  {
+    "text": "And the unsettling part isn't losing control, and discovering that you are not entirely unhappy about it.",
+    "startMs": 20000,
+    "endMs": 26000,
+    "timestampMs": 20000,
+    "confidence": null
+  },
+  {
+    "text": "There was one night while training and debugging a model pipeline for me.",
+    "startMs": 26000,
+    "endMs": 31000,
+    "timestampMs": 26000,
+    "confidence": null
+  }
+]

@@ -1,0 +1,79 @@
+{
+  "slug": "2026-05-27_poetry_quotes_intoxicated-senses_s04",
+  "niche": "poetry",
+  "kind": "voiceover",
+  "audioFile": "audio/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04.m4a",
+  "durationSec": 45.0,
+  "silenceTrimStartSec": 0.0,
+  "silenceTrimEndSec": 45.0,
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04/cue-0.mp4",
+      "startSec": 0.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-1",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04/cue-1.mp4",
+      "startSec": 6.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-2",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04/cue-2.mp4",
+      "startSec": 12.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-3",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04/cue-3.mp4",
+      "startSec": 18.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-4",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04/cue-0.mp4",
+      "startSec": 24.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-5",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04/cue-1.mp4",
+      "startSec": 30.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-6",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04/cue-2.mp4",
+      "startSec": 36.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-7",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04/cue-3.mp4",
+      "startSec": 42.0,
+      "durationSec": 3.0
+    }
+  ],
+  "captionsFile": "captions/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04.captions.json",
+  "showSubtitles": false,
+  "scenePlanFile": "scene-plans/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s04_voiceover.json",
+  "colorGrading": {
+    "saturate": 1.16,
+    "hueRotate": -3,
+    "contrast": 1.03,
+    "brightness": 1.04,
+    "overlayColor": "rgba(255, 180, 120, 0.10)"
+  },
+  "look": "poetry",
+  "outputSize": "9x16"
+}

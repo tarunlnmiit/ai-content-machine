@@ -31,3 +31,16 @@ Once a piece ships, add a row. Your own pieces are the highest-priority signal a
 | Date | Niche | Format (blog/YT/reel/carousel) | Hook archetype | Topic | Likes | Shares | Saves | Retention | Notes |
 |---|---|---|---|---|---|---|---|---|---|
 | | | | | | | | | | |
+
+
+## Auto-logged results (collect_analytics)
+- [2026-06-18] YT · A Good System Needs Less Willpower, Not More — 11 views, 0 likes, 0 comments
+- [2026-06-17] YT · The Sunday Question That Improves Your Whole Week — 0 views, 0 likes, 0 comments
+- [2026-06-17] YT · Three Habit Categories That Actually Work — 5 views, 0 likes, 0 comments
+- [2026-06-16] YT · Here's What Nobody Tells You About Discipline — 0 views, 0 likes, 0 comments
+- [2026-06-16] YT · My habits weren't helping — they were amplifying — 210 views, 1 likes, 0 comments
+- [2026-06-18] YT · Safe Doesn't Mean Unchanged. Alive Doesn't Mean Reckless. — 4 views, 0 likes, 0 comments
+- [2026-06-17] YT · When Love Becomes Real in Your Family's Eyes — 9 views, 0 likes, 0 comments
+- [2026-06-17] YT · The Person Your Whole World Would Also Choose — 1 views, 0 likes, 0 comments
+- [2026-06-16] YT · Embarrassment Is the Key to Love — 3 views, 0 likes, 0 comments
+- [2026-06-16] YT · What Love Stories Get Wrong About Longing — 65 views, 1 likes, 0 comments

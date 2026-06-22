@@ -1,0 +1,250 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "There is a specific kind of madness that does not announce itself.",
+    "niche": "poetry",
+    "atSec": 0.0,
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "There is a specific kind of madness that does not announce itself."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "WordReveal",
+    "script": "The trouble isn't the feeling, it's what comes after.",
+    "niche": "poetry",
+    "atSec": 18.0,
+    "durationSec": 4,
+    "layout": "fullscreen",
+    "props": {
+      "words": [
+        "The trouble",
+        "isn't the feeling \u2014",
+        "it's what",
+        "comes after."
+      ],
+      "emphasis": [
+        0,
+        3
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "HandwrittenReveal",
+    "script": "Love has taken away all my senses, like that of alcohol",
+    "niche": "poetry",
+    "atSec": 29.0,
+    "durationSec": 9,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "Love has taken away all my senses,",
+        "like that of alcohol \u2014",
+        "effects of booze reside for a short period.",
+        "But your intoxication doesn't want to go away."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "LineReveal",
+    "script": "like a moth attracted to the flame, like waves to the shore",
+    "niche": "poetry",
+    "atSec": 57.0,
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "like a moth attracted to the flame,",
+        "like waves to the shore,",
+        "like coal to the winter,",
+        "like a rainbow after the rain."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "my mind and heart worked in sync, but their ecosystems have collided",
+    "niche": "poetry",
+    "atSec": 78.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "Earlier, my mind and heart worked in sync. But it seems their ecosystems have collided."
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "love has taken away all my senses, like that of alcohol",
+    "niche": "poetry",
+    "atSec": 95.0,
+    "durationSec": 14,
+    "layout": "fullscreen",
+    "props": {
+      "description": "The poem is read a second time \u2014 visualise this as an echo chamber. The poem text from the first reading ghosts behind in deep grey, slightly blurred and offset; the current line surfaces in crisp white above it, as if the words are remembering themselves. A slow radial pulse (like a sound wave) expands outward from each new line as it lands. The effect is intimate and recursive: a voice returning to its own words and finding them heavier the second time through."
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "LineReveal",
+    "script": "The hangover metaphor works because hangovers have an end point",
+    "niche": "poetry",
+    "atSec": 157.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "Hangovers have an end point.",
+        "You sleep it off.",
+        "You hydrate. You move on.",
+        "This one doesn't schedule a time out."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "AtmosphericQuote",
+    "script": "Moths don't choose the flame, they are wired to the light.",
+    "niche": "poetry",
+    "atSec": 208.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "Moths don't choose the flame. They are wired to the light.",
+      "attribution": "no deliberation. no weighing of outcomes. just pull."
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "ImageTextReveal",
+    "script": "When love starts feeling like physics instead of a decision",
+    "niche": "poetry",
+    "atSec": 218.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "When love starts feeling like physics instead of a decision",
+      "subtext": "breath of poetry"
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "CounterReveal",
+    "script": "Four terminals open, Databricks logs scrolling endlessly",
+    "niche": "poetry",
+    "atSec": 235.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Terminals open. Coffee cold. Still \u2014 she cut through.",
+      "data": [
+        {
+          "label": "terminals open",
+          "value": 4
+        }
+      ],
+      "chartType": "number"
+    }
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "LineReveal",
+    "script": "The brain doesn't archive what matters logically. It preserves texture, tone",
+    "niche": "poetry",
+    "atSec": 263.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "The brain doesn't archive what matters logically.",
+        "It preserves texture. Tone. Timing.",
+        "The microscopic human details",
+        "you never consciously chose to keep."
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "ImageTextReveal",
+    "script": "Then someone walks in, and the whole architecture resets.",
+    "niche": "poetry",
+    "atSec": 297.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Then someone walks in, and the whole architecture resets.",
+      "subtext": "on collision"
+    }
+  },
+  {
+    "sceneId": "scene-13",
+    "componentName": "HandwrittenReveal",
+    "script": "You're standing at a false line where two tectonic plates have met.",
+    "niche": "poetry",
+    "atSec": 321.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "You're not broken.",
+        "You're standing at a false line",
+        "where two tectonic plates have met \u2014",
+        "and the ground has dissolved mid-step."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-14",
+    "componentName": "WordReveal",
+    "script": "The heart wants what the heart wants.",
+    "niche": "poetry",
+    "atSec": 384.0,
+    "durationSec": 4,
+    "layout": "fullscreen",
+    "props": {
+      "words": [
+        "The heart",
+        "wants",
+        "what",
+        "the heart wants."
+      ],
+      "emphasis": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-15",
+    "componentName": "AtmosphericQuote",
+    "script": "That's not a malfunction. That's a signal.",
+    "niche": "poetry",
+    "atSec": 405.0,
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "That's not a malfunction. That's a signal. The only honest one you'll get.",
+      "attribution": "that something actually matters enough to overturn the whole system."
+    }
+  },
+  {
+    "sceneId": "scene-16",
+    "componentName": "AtmosphericQuote",
+    "script": "share it with the one person it makes you think of",
+    "niche": "poetry",
+    "atSec": 427.0,
+    "durationSec": 8,
+    "layout": "lower-third",
+    "props": {
+      "quote": "Share it with the one person it makes you think of."
+    }
+  }
+]

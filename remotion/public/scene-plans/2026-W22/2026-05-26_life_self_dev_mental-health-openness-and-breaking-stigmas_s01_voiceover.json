@@ -1,0 +1,54 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "for years I white knuckle life, passive aggressive",
+    "niche": "life",
+    "atSec": 0.0,
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "For years I white-knuckled life.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "waking at 3am, running mental loops, I couldn't switch off",
+    "niche": "life",
+    "atSec": 10.8,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Dark bedroom at 3:00 AM: clock digits glow cold blue while fragmented text phrases \u2014 'rude', 'passive', 'can't stop', 'just the cost' \u2014 spiral outward from center, cycling faster until they blur and dissolve into white silence. Communicates the visual exhaustion of a mind that cannot stop running its own loops."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ImageTextReveal",
+    "script": "it was a person who needed help and had no framework for asking for it",
+    "niche": "life",
+    "atSec": 16.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "A person who needed help and had no way to ask.",
+      "subtext": "The cost wasn't ambition."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CounterReveal",
+    "script": "research by priori group found that 40% of men",
+    "niche": "life",
+    "atSec": 24.1,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 40,
+      "label": "of men \u2014 Priori Group",
+      "suffix": "%"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+Claude was writing novels. I fixed it. 🤖
+
+Every extra word Claude writes burns tokens from your context window.
+
+In a long coding session it adds up — restating your question, "here's what I did" summaries after every code block, explanations 3× longer than the actual answer.
+
+One command in your CLAUDE.md cuts replies ~65%.
+
+Code blocks: untouched.
+Accuracy: intact.
+Fluff: gone.
+
+Result: longer sessions before you hit limits. Faster answers. Less scrolling.
+
+Comment "Tokens" and I'll DM you the skill directly 👆
+
+#claude #claudecode #ai #datascience #python #aitools #llm #devproductivity #machinelearning #opentowork

@@ -1,0 +1,89 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "the silent bug which every beginner has encountered",
+    "niche": "ds",
+    "atSec": 0.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "The silent bug that bites every Python beginner.",
+      "attribution": "No error. No warning. Just wrong."
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "CodeAnnotation",
+    "script": "if I write something like print 28 plus 35",
+    "niche": "ds",
+    "atSec": 8.9,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "print(28 + 35)       # \u2192 63",
+        "print(28.0 + 35)     # \u2192 63.0",
+        "print(\"28\" + \"35\")   # \u2192 2835"
+      ],
+      "language": "python",
+      "highlightLine": 2,
+      "annotationText": "Same + operator. Wildly different result."
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "this will be 2835, not as expected as 63",
+    "niche": "ds",
+    "atSec": 30.9,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 2835,
+      "label": "Python's answer when you mix types silently",
+      "suffix": ""
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "Python did not add those numbers, it concatenated the text",
+    "niche": "ds",
+    "atSec": 50.5,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "A dark terminal window shows the line print('28' + '35') executing. The output '2835' appears in white text \u2014 followed by three red labels that fade in one by one across the lower frame: 'No error.', 'No warning.', 'Just wrong.' Each label lingers for ~1.5s. The terminal cursor blinks throughout, reinforcing that Python ran and exited cleanly with a broken result."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ConceptExplainer",
+    "script": "You use the type method or the function built in Python",
+    "niche": "ds",
+    "atSec": 64.1,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Debug types before they debug you",
+      "cards": [
+        {
+          "term": "type(x)",
+          "definition": "Built-in function \u2014 reveals exactly what Python is holding",
+          "icon": "\ud83d\udd0d"
+        },
+        {
+          "term": "int + int",
+          "definition": "Addition \u2192 63",
+          "icon": "\u2705"
+        },
+        {
+          "term": "str + str",
+          "definition": "Concatenation \u2192 '2835' (silent!)",
+          "icon": "\u26a0\ufe0f"
+        }
+      ]
+    }
+  }
+]

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Post text + optional image to LinkedIn via LinkedIn API v2.
+Post text / document to LinkedIn via LinkedIn API v2.
 Credential: LINKEDIN_ACCESS_TOKEN from .env
              LINKEDIN_PERSON_URN from .env (format: urn:li:person:XXXXXXXX)
 
@@ -14,6 +14,7 @@ Get access token:
 Usage (standalone):
     python3 scripts/post_linkedin.py --post-file content/derivatives/{slug}/linkedin_post.txt
     python3 scripts/post_linkedin.py --post-file path/to/post.txt --image assets/thumbnails/slug.png
+    python3 scripts/post_linkedin.py --post-file path/to/caption.txt --document assets/slides/slug.pdf --doc-title "My Slide Deck"
 """
 
 import argparse
@@ -86,13 +87,18 @@ def upload_image(token: str, urn: str, image_path: Path) -> str:
     return asset_urn
 
 
-def post_text(token: str, urn: str, text: str, image_path: Path | None = None) -> str:
-    """Post to LinkedIn. Returns post URN."""
+def post_text(token: str, urn: str, text: str, image_path: Path | None = None,
+             scheduled_unix_ms: int | None = None) -> str:
+    """Post to LinkedIn. Returns post URN.
+
+    scheduled_unix_ms: Unix epoch milliseconds — LinkedIn holds the post and publishes
+    it natively. Must be >= 10 min from now. Omit to publish immediately.
+    """
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json", "X-Restli-Protocol-Version": "2.0.0"}
 
     payload = {
         "author": urn,
-        "lifecycleState": "PUBLISHED",
+        "lifecycleState": "SCHEDULED" if scheduled_unix_ms else "PUBLISHED",
         "specificContent": {
             "com.linkedin.ugc.ShareContent": {
                 "shareCommentary": {"text": text},
@@ -101,6 +107,9 @@ def post_text(token: str, urn: str, text: str, image_path: Path | None = None) -
         },
         "visibility": {"com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"},
     }
+
+    if scheduled_unix_ms:
+        payload["scheduledPublishTime"] = scheduled_unix_ms
 
     if image_path and image_path.exists():
         print(f"  Uploading image: {image_path.name} ...", end=" ", flush=True)
@@ -113,6 +122,76 @@ def post_text(token: str, urn: str, text: str, image_path: Path | None = None) -
             "media": asset_urn,
             "title": {"text": ""},
         }]
+
+    resp = requests.post(f"{LI_API}/ugcPosts", headers=headers, json=payload)
+    resp.raise_for_status()
+    return resp.headers.get("x-restli-id", "unknown")
+
+
+def upload_document(token: str, urn: str, pdf_path: Path) -> str:
+    """Register document upload + upload PDF binary. Returns asset URN."""
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+
+    reg_payload = {
+        "registerUploadRequest": {
+            "recipes": ["urn:li:digitalmediaRecipe:feedshare-document"],
+            "owner": urn,
+            "serviceRelationships": [{
+                "relationshipType": "OWNER",
+                "identifier": "urn:li:userGeneratedContent",
+            }],
+        }
+    }
+    reg = requests.post(f"{LI_API}/assets?action=registerUpload", headers=headers, json=reg_payload)
+    reg.raise_for_status()
+    reg_data = reg.json()
+
+    upload_url = reg_data["value"]["uploadMechanism"]["com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest"]["uploadUrl"]
+    asset_urn = reg_data["value"]["asset"]
+
+    with open(pdf_path, "rb") as f:
+        pdf_data = f.read()
+    upload_resp = requests.put(
+        upload_url,
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/octet-stream"},
+        data=pdf_data,
+    )
+    upload_resp.raise_for_status()
+    return asset_urn
+
+
+def post_document(token: str, urn: str, text: str, pdf_path: Path, title: str,
+                  scheduled_unix_ms: int | None = None) -> str:
+    """Post a PDF document to LinkedIn. Returns post URN."""
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json",
+        "X-Restli-Protocol-Version": "2.0.0",
+    }
+
+    print(f"  Uploading document: {pdf_path.name} ...", end=" ", flush=True)
+    asset_urn = upload_document(token, urn, pdf_path)
+    print("OK")
+
+    payload = {
+        "author": urn,
+        "lifecycleState": "SCHEDULED" if scheduled_unix_ms else "PUBLISHED",
+        "specificContent": {
+            "com.linkedin.ugc.ShareContent": {
+                "shareCommentary": {"text": text},
+                "shareMediaCategory": "DOCUMENT",
+                "media": [{
+                    "status": "READY",
+                    "media": asset_urn,
+                    "title": {"text": title},
+                }],
+            }
+        },
+        "visibility": {"com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"},
+    }
+
+    if scheduled_unix_ms:
+        payload["scheduledPublishTime"] = scheduled_unix_ms
 
     resp = requests.post(f"{LI_API}/ugcPosts", headers=headers, json=payload)
     resp.raise_for_status()
@@ -157,6 +236,8 @@ def main():
     parser = argparse.ArgumentParser(description="Post to LinkedIn.")
     parser.add_argument("--post-file", required=True, help="Path to linkedin_post.txt")
     parser.add_argument("--image", help="Optional image path (PNG/JPG)")
+    parser.add_argument("--document", help="Optional PDF path — posts as a document/slide deck")
+    parser.add_argument("--doc-title", default="", help="Title shown on the document card")
     parser.add_argument("--dry-run", action="store_true", help="Print post without publishing")
     args = parser.parse_args()
 
@@ -168,10 +249,13 @@ def main():
 
     text = post_path.read_text(encoding="utf-8").strip()
     image_path = Path(args.image) if args.image else None
+    doc_path = Path(args.document) if args.document else None
 
     print(f"Post ({len(text)} chars):\n{text[:200]}{'...' if len(text) > 200 else ''}\n")
     if image_path:
         print(f"Image: {image_path}")
+    if doc_path:
+        print(f"Document: {doc_path}")
 
     if args.dry_run:
         print("Dry run — nothing posted.")
@@ -181,7 +265,10 @@ def main():
     print("Posting to LinkedIn ...", end=" ", flush=True)
 
     try:
-        post_urn = post_text(token, urn, text, image_path)
+        if doc_path and doc_path.exists():
+            post_urn = post_document(token, urn, text, doc_path, args.doc_title or doc_path.stem)
+        else:
+            post_urn = post_text(token, urn, text, image_path)
         print("OK")
         print(f"Post URN: {post_urn}")
         _log_result(None, "posted", {"post_urn": post_urn})

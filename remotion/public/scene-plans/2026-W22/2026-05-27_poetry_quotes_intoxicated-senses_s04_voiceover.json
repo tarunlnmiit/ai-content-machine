@@ -1,0 +1,68 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "ImageTextReveal",
+    "script": "There was one night while training and debugging a model pipeline for me",
+    "niche": "poetry",
+    "atSec": 0.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "One Night While the Model Trained",
+      "subtext": "a memory"
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "HandwrittenReveal",
+    "script": "just the way she laughed after interrupting herself mid-sentence days earlier",
+    "niche": "poetry",
+    "atSec": 14.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "the way she laughed,",
+        "mid-sentence,",
+        "days earlier."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "AtmosphericQuote",
+    "script": "That's the unsettling thing about attachment",
+    "niche": "poetry",
+    "atSec": 30.0,
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "That's the unsettling thing about attachment."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "It preserves texture, tone, timing",
+    "niche": "poetry",
+    "atSec": 36.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Three word-cards \u2014 TEXTURE, TONE, TIMING \u2014 emerge one by one from film-grain static on a near-black field; each word arrives in a distinct tactile treatment (embossed relief, waveform-traced outline, pendulum-sweep animation). All three converge at center frame, overlap briefly, then dissolve together into a single softly glowing word: MEMORY."
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "AtmosphericQuote",
+    "script": "The point's real subject arrives near the end",
+    "niche": "poetry",
+    "atSec": 45.0,
+    "durationSec": 4,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "The point's real subject arrives near the end."
+    }
+  }
+]

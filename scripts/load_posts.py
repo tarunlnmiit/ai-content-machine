@@ -50,6 +50,7 @@ IST = timezone(timedelta(hours=5, minutes=30))
 # Per-platform engagement-window slots (weekday 0=Mon, hour, minute IST).
 # The scheduler daemon fires each row at its scheduled_at.
 LINKEDIN_SLOTS = [(1, 8, 0), (3, 12, 0)]      # Tue 8am, Thu 12pm
+LINKEDIN_DOC_SLOTS = [(2, 10, 0), (4, 10, 0)] # Wed 10am, Fri 10am (slide deck posts)
 THREADS_SLOTS = [(0, 19, 0), (3, 19, 0)]      # Mon/Thu 7pm
 INSTAGRAM_SLOTS = [(0, 16, 0), (3, 10, 0)]    # Mon 4pm, Thu 10am
 # Reel slots — spread the ~2-3 reels/niche across the week (Mon/Tue/Wed mornings).
@@ -87,13 +88,18 @@ def insert_linkedin(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_in
     weekday, hour, minute = LINKEDIN_SLOTS[slot_index % len(LINKEDIN_SLOTS)]
     scheduled_at = next_weekday(weekday, hour, minute).isoformat()
 
-    # Pinned first comment (blog link) — posted by the daemon after the post.
+    # Comments posted by daemon immediately after the post goes live.
     meta = {"kind": "image" if media_path else "text"}
     comment_file = txt_path.with_name("linkedin_first_comment.txt")
     if comment_file.exists():
         comment = comment_file.read_text(encoding="utf-8").strip()
         if comment:
             meta["first_comment"] = comment
+    second_comment_file = txt_path.with_name("linkedin_second_comment.txt")
+    if second_comment_file.exists():
+        second = second_comment_file.read_text(encoding="utf-8").strip()
+        if second:
+            meta["second_comment"] = second
 
     conn.execute(
         """INSERT INTO posts (platform, content_text, media_path, scheduled_at, status,
@@ -101,9 +107,62 @@ def insert_linkedin(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_in
            VALUES (?,?,?,?,?,?,?)""",
         ("linkedin", text, media_path, scheduled_at, "pending", json.dumps(meta), slug),
     )
-    extras = ("".join([" + image" if media_path else "",
-                       " + comment" if meta.get("first_comment") else ""]))
+    n_comments = sum(1 for k in ("first_comment", "second_comment") if meta.get(k))
+    extras = "".join([
+        " + image" if media_path else "",
+        f" + {n_comments} comment(s)" if n_comments else "",
+    ])
     print(f"  [queued] linkedin/{slug} — at {scheduled_at}{extras}")
+
+
+def insert_linkedin_document(conn: sqlite3.Connection, slug: str, slot_index: int):
+    """Stage a LinkedIn document post for the slide deck PDF, if one exists."""
+    date_str = slug[:10]
+    week = get_iso_week(date_str)
+    pdf_path = REPO / "assets" / "slides" / week / f"{slug}_slides.pdf"
+    if not pdf_path.exists():
+        return
+
+    doc_slug = f"{slug}#slides"
+    if slug_already_loaded(conn, doc_slug, "linkedin"):
+        print(f"  [skip] linkedin-doc/{doc_slug} already in DB")
+        return
+
+    # Caption: optional override file, else auto-generate.
+    slug_dir = REPO / "content" / "derivatives" / week / slug
+    cap_file = slug_dir / "linkedin_document_caption.txt"
+    if cap_file.exists():
+        caption = cap_file.read_text(encoding="utf-8").strip()
+    else:
+        # Humanize slug: strip date + niche segment, title-case the rest.
+        parts = slug.split("_")
+        # slug format: YYYY-MM-DD_niche1_niche2_title-words
+        title_parts = parts[3:] if len(parts) > 3 else parts[1:]
+        title = " ".join(title_parts).replace("-", " ").title()
+        caption = f"Slides from this week's post.\n\n{title} — swipe through for the key ideas 👆"
+
+    # Document title for the card.
+    try:
+        yt_meta = json.loads((slug_dir / "youtube_metadata.json").read_text(encoding="utf-8"))
+        doc_title = yt_meta.get("title", slug)[:100]
+    except (OSError, ValueError):
+        doc_title = slug
+
+    weekday, hour, minute = LINKEDIN_DOC_SLOTS[slot_index % len(LINKEDIN_DOC_SLOTS)]
+    scheduled_at = next_weekday(weekday, hour, minute).isoformat()
+
+    meta = {
+        "kind": "document",
+        "doc_path": str(pdf_path.relative_to(REPO)),
+        "doc_title": doc_title,
+    }
+    conn.execute(
+        """INSERT INTO posts (platform, content_text, scheduled_at, status,
+           metadata_json, slug)
+           VALUES (?,?,?,?,?,?)""",
+        ("linkedin", caption, scheduled_at, "pending", json.dumps(meta), doc_slug),
+    )
+    print(f"  [queued] linkedin-doc/{doc_slug} — at {scheduled_at} ({pdf_path.name})")
 
 
 def insert_threads(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_index: int):
@@ -322,6 +381,8 @@ def main():
         linkedin_file = slug_dir / "linkedin_post.txt"
         if linkedin_file.exists():
             insert_linkedin(conn, slug, linkedin_file, i)
+
+        insert_linkedin_document(conn, slug, i)
 
         threads_file = slug_dir / "threads_post.txt"
         if threads_file.exists():

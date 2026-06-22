@@ -1,0 +1,20 @@
+I automated the worst part of job hunting. 🤖
+
+Most job search advice is "apply to more jobs."
+
+Nobody tells you how to actually *find* the right ones without spending 3 hours a day on career pages.
+
+So I built a script.
+
+Every night it:
+→ Scrapes 130+ company career pages for new roles
+→ Scores every role 0–100 against my resume using an LLM
+→ Texts me only my top matches on Telegram
+
+By morning, I have a curated shortlist. No LinkedIn doomscrolling. No missed opportunities at companies I actually care about.
+
+Free. Open source. Runs on your own machine. No subscription. No data leaving your system.
+
+Comment "Jobs" and I'll DM you the GitHub repo 👇
+
+#buildinpublic #jobsearch #ai #opentowork #aitools #python #automation #careertips #datascience #softwaredeveloper #techtools #opentowork #jobhunting

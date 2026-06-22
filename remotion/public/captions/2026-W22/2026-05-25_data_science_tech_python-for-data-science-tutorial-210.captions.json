@@ -1,0 +1,1486 @@
+[
+  {
+    "text": "Your analysis is going to give you a wrong answer someday and the worst part, it won't crash.",
+    "startMs": 0,
+    "endMs": 6480,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "It won't throw an error. Python will just sit there and hand you a number.",
+    "startMs": 6480,
+    "endMs": 10000,
+    "timestampMs": 6480,
+    "confidence": null
+  },
+  {
+    "text": "So plausible that you will believe it. Here is how this happens. Your CSV comes in",
+    "startMs": 10000,
+    "endMs": 15680,
+    "timestampMs": 10000,
+    "confidence": null
+  },
+  {
+    "text": "with a column called H. You load it. You sum the values. Python reports a total and you move on.",
+    "startMs": 16320,
+    "endMs": 22880,
+    "timestampMs": 16320,
+    "confidence": null
+  },
+  {
+    "text": "Except that column was stored as text or string. Not numbers. So when Python added them,",
+    "startMs": 22880,
+    "endMs": 28800,
+    "timestampMs": 22880,
+    "confidence": null
+  },
+  {
+    "text": "it did not calculate, for example, 28 plus 35 plus 42. Rather, it smashed the strings together,",
+    "startMs": 28800,
+    "endMs": 39760,
+    "timestampMs": 28800,
+    "confidence": null
+  },
+  {
+    "text": "essentially what it did. So let me create a file first.",
+    "startMs": 40480,
+    "endMs": 52960,
+    "timestampMs": 40480,
+    "confidence": null
+  },
+  {
+    "text": "Okay, so what I'm trying to say here is",
+    "startMs": 59760,
+    "endMs": 61680,
+    "timestampMs": 59760,
+    "confidence": null
+  },
+  {
+    "text": "you were expecting something like",
+    "startMs": 69680,
+    "endMs": 71280,
+    "timestampMs": 69680,
+    "confidence": null
+  },
+  {
+    "text": "equal to some number. But since your numbers were stored as strings",
+    "startMs": 74720,
+    "endMs": 81120,
+    "timestampMs": 74720,
+    "confidence": null
+  },
+  {
+    "text": "in the CSV, Python will give you something different. So Python will give you some string",
+    "startMs": 81760,
+    "endMs": 91360,
+    "timestampMs": 81760,
+    "confidence": null
+  },
+  {
+    "text": "in this case and it will become 2835 and 42.",
+    "startMs": 91360,
+    "endMs": 101760,
+    "timestampMs": 91360,
+    "confidence": null
+  },
+  {
+    "text": "So this is not what you actually want. No error message. No warning. Just a wrong answer",
+    "startMs": 105920,
+    "endMs": 110560,
+    "timestampMs": 105920,
+    "confidence": null
+  },
+  {
+    "text": "sitting in your spreadsheet, looking completely legitimate. And this is what this second tutorial",
+    "startMs": 110560,
+    "endMs": 117280,
+    "timestampMs": 110560,
+    "confidence": null
+  },
+  {
+    "text": "is about. It's about the difference between data that looks like a number and data Python actually",
+    "startMs": 117280,
+    "endMs": 122880,
+    "timestampMs": 117280,
+    "confidence": null
+  },
+  {
+    "text": "treats as a number. It's about the structures that let you build analysis that does not lie to you",
+    "startMs": 122880,
+    "endMs": 129120,
+    "timestampMs": 122880,
+    "confidence": null
+  },
+  {
+    "text": "by accident. So in tutorial one, you build the first script you used lists, dictionaries, you",
+    "startMs": 129120,
+    "endMs": 135600,
+    "timestampMs": 129120,
+    "confidence": null
+  },
+  {
+    "text": "look through them, calculated an average, you handled several data types without ever naming them.",
+    "startMs": 135680,
+    "endMs": 141280,
+    "timestampMs": 135680,
+    "confidence": null
+  },
+  {
+    "text": "Integer, string, floats, maybe a Boolean. Python is dynamically typed. That means you don't",
+    "startMs": 141920,
+    "endMs": 147360,
+    "timestampMs": 141920,
+    "confidence": null
+  },
+  {
+    "text": "declare what type something is. You just assign it a value and Python figures it out. This feels",
+    "startMs": 147360,
+    "endMs": 154000,
+    "timestampMs": 147360,
+    "confidence": null
+  },
+  {
+    "text": "like a feature and it is right up until the moment. It lets you concatenate numbers like their words",
+    "startMs": 154000,
+    "endMs": 160480,
+    "timestampMs": 154000,
+    "confidence": null
+  },
+  {
+    "text": "and call set a sum. For beginners, this complexity causes confusion. For data scientist,",
+    "startMs": 160560,
+    "endMs": 166720,
+    "timestampMs": 160560,
+    "confidence": null
+  },
+  {
+    "text": "it causes expensive confusion. The kind where your analysis runs fine, your numbers look reasonable",
+    "startMs": 166720,
+    "endMs": 173520,
+    "timestampMs": 166720,
+    "confidence": null
+  },
+  {
+    "text": "and then six months later someone asks, wait, how did you get that? And you can't trace it back",
+    "startMs": 173520,
+    "endMs": 179120,
+    "timestampMs": 173520,
+    "confidence": null
+  },
+  {
+    "text": "because the bug was never in your logic. It was in your data types all along. Here is what we are",
+    "startMs": 179120,
+    "endMs": 185200,
+    "timestampMs": 179120,
+    "confidence": null
+  },
+  {
+    "text": "covering today. Four primitive types that Python uses. Integers, floats, strings and Booleans.",
+    "startMs": 185280,
+    "endMs": 191920,
+    "timestampMs": 185280,
+    "confidence": null
+  },
+  {
+    "text": "Lists which are sequences, dictionaries which are how data scientists think about records",
+    "startMs": 192720,
+    "endMs": 198960,
+    "timestampMs": 192720,
+    "confidence": null
+  },
+  {
+    "text": "and functions which turn code you copy paste into code you actually reuse. By the end, you will",
+    "startMs": 198960,
+    "endMs": 205840,
+    "timestampMs": 198960,
+    "confidence": null
+  },
+  {
+    "text": "understand what type every piece of your data is, why that matters and how to catch type mistakes",
+    "startMs": 205840,
+    "endMs": 214400,
+    "timestampMs": 205840,
+    "confidence": null
+  },
+  {
+    "text": "before they become silent bugs. I will tell you something here. So let's me assign",
+    "startMs": 214400,
+    "endMs": 220000,
+    "timestampMs": 214400,
+    "confidence": null
+  },
+  {
+    "text": "with four primitives. Integer, floats, string and Boolean. But before that, I want to tell you about",
+    "startMs": 221520,
+    "endMs": 228240,
+    "timestampMs": 221520,
+    "confidence": null
+  },
+  {
+    "text": "something Python has which is type to tell you the data type. So if I type in type 28 and if I",
+    "startMs": 228240,
+    "endMs": 237680,
+    "timestampMs": 228240,
+    "confidence": null
+  },
+  {
+    "text": "print it and if I copy and remove these codes around it and run this file. So if you remember,",
+    "startMs": 238640,
+    "endMs": 250000,
+    "timestampMs": 238640,
+    "confidence": null
+  },
+  {
+    "text": "we created a virtual environment last time around. So let me activate it first again.",
+    "startMs": 250000,
+    "endMs": 254960,
+    "timestampMs": 250000,
+    "confidence": null
+  },
+  {
+    "text": "Once that is activated, I will run this script. So you can see, first is string and second is",
+    "startMs": 256080,
+    "endMs": 263120,
+    "timestampMs": 256080,
+    "confidence": null
+  },
+  {
+    "text": "integer. So now coming back to our four primitives, integer, float, string and Boolean.",
+    "startMs": 264080,
+    "endMs": 268080,
+    "timestampMs": 264080,
+    "confidence": null
+  },
+  {
+    "text": "An integer is a whole number. So if I assign a variable x is equal to 1, it is an integer.",
+    "startMs": 268080,
+    "endMs": 275760,
+    "timestampMs": 268080,
+    "confidence": null
+  },
+  {
+    "text": "So if I assign any number which are decimal, let's say y equal to 1.5, it is a float.",
+    "startMs": 276880,
+    "endMs": 287280,
+    "timestampMs": 276880,
+    "confidence": null
+  },
+  {
+    "text": "And if I let's say write z equal to 3, this is a string and if I say write a equal to true,",
+    "startMs": 288000,
+    "endMs": 302800,
+    "timestampMs": 288000,
+    "confidence": null
+  },
+  {
+    "text": "then this is a Boolean. So and it is a critical part because Python treats them completely different",
+    "startMs": 304480,
+    "endMs": 312640,
+    "timestampMs": 304480,
+    "confidence": null
+  },
+  {
+    "text": "even when they look the same. So if I let's say write it as 1, it looks completely same,",
+    "startMs": 312640,
+    "endMs": 319760,
+    "timestampMs": 312640,
+    "confidence": null
+  },
+  {
+    "text": "the 3 of them x, y and z, but they are entirely different in terms of Python. So here is what",
+    "startMs": 319760,
+    "endMs": 326960,
+    "timestampMs": 319760,
+    "confidence": null
+  },
+  {
+    "text": "each primitive will look like. Let me give you a few more examples.",
+    "startMs": 326960,
+    "endMs": 329920,
+    "timestampMs": 326960,
+    "confidence": null
+  },
+  {
+    "text": "So as you can see, these are a few examples.",
+    "startMs": 330560,
+    "endMs": 338720,
+    "timestampMs": 330560,
+    "confidence": null
+  },
+  {
+    "text": "Age is 28, year is 2024. If I print the type of age, it should be integer. Let me type for",
+    "startMs": 339680,
+    "endMs": 350720,
+    "timestampMs": 339680,
+    "confidence": null
+  },
+  {
+    "text": "year as well, then for accuracy, and then for role as well,",
+    "startMs": 350800,
+    "endMs": 358800,
+    "timestampMs": 350800,
+    "confidence": null
+  },
+  {
+    "text": "and then for has missing as well. So now when I run it, you should see a similar kind of a result.",
+    "startMs": 362800,
+    "endMs": 371440,
+    "timestampMs": 362800,
+    "confidence": null
+  },
+  {
+    "text": "So you can see first two are integers because they do not have any decimal,",
+    "startMs": 372640,
+    "endMs": 376080,
+    "timestampMs": 372640,
+    "confidence": null
+  },
+  {
+    "text": "second two are floats, third and fourth variables because they have decimal values.",
+    "startMs": 376800,
+    "endMs": 382480,
+    "timestampMs": 376800,
+    "confidence": null
+  },
+  {
+    "text": "Then in quotes, it's a string and if it is false or true, then it's a Boolean.",
+    "startMs": 383200,
+    "endMs": 388480,
+    "timestampMs": 383200,
+    "confidence": null
+  },
+  {
+    "text": "Now here is the silent book which every beginner has encountered or it bites every beginner.",
+    "startMs": 390000,
+    "endMs": 397920,
+    "timestampMs": 390000,
+    "confidence": null
+  },
+  {
+    "text": "So if I write something like print 28 plus 35, and let me remove the rest of the code.",
+    "startMs": 398880,
+    "endMs": 409760,
+    "timestampMs": 398880,
+    "confidence": null
+  },
+  {
+    "text": "And if I print a float value as well in then a string. So if you as you can see, it should be 63,",
+    "startMs": 411360,
+    "endMs": 420880,
+    "timestampMs": 411360,
+    "confidence": null
+  },
+  {
+    "text": "it should be 63.0 and this will be 2835, not as expected as 63 or 63.0.",
+    "startMs": 420880,
+    "endMs": 427840,
+    "timestampMs": 420880,
+    "confidence": null
+  },
+  {
+    "text": "So if I run the script again,",
+    "startMs": 428400,
+    "endMs": 429840,
+    "timestampMs": 428400,
+    "confidence": null
+  },
+  {
+    "text": "you can see as expected. So Python did not add those numbers, it concatenated the text in the last",
+    "startMs": 440480,
+    "endMs": 447440,
+    "timestampMs": 440480,
+    "confidence": null
+  },
+  {
+    "text": "example. No error, no warning, just plain, wrong answer. So how do you check what you are holding?",
+    "startMs": 447440,
+    "endMs": 454080,
+    "timestampMs": 447440,
+    "confidence": null
+  },
+  {
+    "text": "You use the type method or the function built in Python. So if you are reading from CSV,",
+    "startMs": 454080,
+    "endMs": 461760,
+    "timestampMs": 454080,
+    "confidence": null
+  },
+  {
+    "text": "right? So let's take this one as an example again. So if you try, it came from a CSV, let's assume",
+    "startMs": 461760,
+    "endMs": 470160,
+    "timestampMs": 461760,
+    "confidence": null
+  },
+  {
+    "text": "this row H came from a CSV, it's a string. And then if you want to use it as a number, you convert",
+    "startMs": 470160,
+    "endMs": 476160,
+    "timestampMs": 470160,
+    "confidence": null
+  },
+  {
+    "text": "explicitly to an integer and then you add something to it. So if I run this script now,",
+    "startMs": 476480,
+    "endMs": 481680,
+    "timestampMs": 476480,
+    "confidence": null
+  },
+  {
+    "text": "you can see initially it was string, but at the end, it gave me 38 because I converted it into",
+    "startMs": 482800,
+    "endMs": 488640,
+    "timestampMs": 482800,
+    "confidence": null
+  },
+  {
+    "text": "number or an integer here exactly and then added 10. Now here are four conversion functions that",
+    "startMs": 488640,
+    "endMs": 496480,
+    "timestampMs": 488640,
+    "confidence": null
+  },
+  {
+    "text": "you should be aware of. So these conversion functions, they look something like this.",
+    "startMs": 496480,
+    "endMs": 502080,
+    "timestampMs": 496480,
+    "confidence": null
+  },
+  {
+    "text": "Integer, I just showed you. So integer of 42 will give me 42, float of 42.5 as string,",
+    "startMs": 502080,
+    "endMs": 510240,
+    "timestampMs": 502080,
+    "confidence": null
+  },
+  {
+    "text": "give me 42.5, string 42 will give me string and bool 0 will give me false. So let me just print them.",
+    "startMs": 510240,
+    "endMs": 526720,
+    "timestampMs": 510240,
+    "confidence": null
+  },
+  {
+    "text": "So if I run, you can see as expected in the outputs. So a rule of thumb here, any data from a CSV,",
+    "startMs": 533040,
+    "endMs": 552720,
+    "timestampMs": 533040,
+    "confidence": null
+  },
+  {
+    "text": "API or user input arrives as a string until you convert it. This is where the silent bugs start.",
+    "startMs": 552720,
+    "endMs": 559600,
+    "timestampMs": 552720,
+    "confidence": null
+  },
+  {
+    "text": "You load your CSV, summer column, get a result that looks plausible and never realize it was",
+    "startMs": 559680,
+    "endMs": 565840,
+    "timestampMs": 559680,
+    "confidence": null
+  },
+  {
+    "text": "concatenation instead of addition. So now let's talk about lists. A list is a sequence and ordered",
+    "startMs": 565840,
+    "endMs": 573040,
+    "timestampMs": 565840,
+    "confidence": null
+  },
+  {
+    "text": "collection of items. You create one with square brackets. So for example, this is a list.",
+    "startMs": 573040,
+    "endMs": 578720,
+    "timestampMs": 573040,
+    "confidence": null
+  },
+  {
+    "text": "So this is a list of four different integers. You can access then items by a position.",
+    "startMs": 583120,
+    "endMs": 588640,
+    "timestampMs": 583120,
+    "confidence": null
+  },
+  {
+    "text": "So first item is at index 0. So if I print scores 0, it will print 85. So let's test it out.",
+    "startMs": 588640,
+    "endMs": 600320,
+    "timestampMs": 588640,
+    "confidence": null
+  },
+  {
+    "text": "So as I said, score 0 is 85. If I say 1, it will be 92, 2, it will be 78, 3, it will be 95.",
+    "startMs": 601280,
+    "endMs": 610000,
+    "timestampMs": 601280,
+    "confidence": null
+  },
+  {
+    "text": "And you can also slice. So what does slice mean? So if I copy and instead of one single number,",
+    "startMs": 610960,
+    "endMs": 618560,
+    "timestampMs": 610960,
+    "confidence": null
+  },
+  {
+    "text": "I write something like 1 colon 3. So what it will do is it will start from index 1 and it will go",
+    "startMs": 618560,
+    "endMs": 626160,
+    "timestampMs": 618560,
+    "confidence": null
+  },
+  {
+    "text": "until index 3 not including index 3. So if I print it, so you can see if it started from index 1",
+    "startMs": 627200,
+    "endMs": 634800,
+    "timestampMs": 627200,
+    "confidence": null
+  },
+  {
+    "text": "and then went to index 2, it did not include index 3 as it is mentioned in Python.",
+    "startMs": 634880,
+    "endMs": 641280,
+    "timestampMs": 634880,
+    "confidence": null
+  },
+  {
+    "text": "So Python slicing is exclusive on the end, which trips up everyone on their first week.",
+    "startMs": 641280,
+    "endMs": 648400,
+    "timestampMs": 641280,
+    "confidence": null
+  },
+  {
+    "text": "To add an item to a list, you use an append method. So if I write score start",
+    "startMs": 649040,
+    "endMs": 656640,
+    "timestampMs": 649040,
+    "confidence": null
+  },
+  {
+    "text": "append and then say 90 and print scores again.",
+    "startMs": 657280,
+    "endMs": 663920,
+    "timestampMs": 657280,
+    "confidence": null
+  },
+  {
+    "text": "So you can see 90 is added at the end. And to filter, you can use something called a list",
+    "startMs": 670400,
+    "endMs": 677840,
+    "timestampMs": 670400,
+    "confidence": null
+  },
+  {
+    "text": "comprehension or for loop. So we want to see if a number is greater than 85 in this list of",
+    "startMs": 677840,
+    "endMs": 686400,
+    "timestampMs": 677840,
+    "confidence": null
+  },
+  {
+    "text": "scores. So there are two ways to do it. First is normally using a for loop. So you can loop over",
+    "startMs": 686400,
+    "endMs": 694720,
+    "timestampMs": 686400,
+    "confidence": null
+  },
+  {
+    "text": "the list with a simple for loop. So for score in scores, if score is greater than 85,",
+    "startMs": 694720,
+    "endMs": 704560,
+    "timestampMs": 694720,
+    "confidence": null
+  },
+  {
+    "text": "we will print the score. If I run this, you can see 90 to 95 and 90 got printed.",
+    "startMs": 705520,
+    "endMs": 714560,
+    "timestampMs": 705520,
+    "confidence": null
+  },
+  {
+    "text": "There is a simpler way to do this. So and to store it in a variable directly as well.",
+    "startMs": 714640,
+    "endMs": 721040,
+    "timestampMs": 714640,
+    "confidence": null
+  },
+  {
+    "text": "So high scores equal to score for score in scores if score is greater than 85.",
+    "startMs": 721040,
+    "endMs": 733840,
+    "timestampMs": 721040,
+    "confidence": null
+  },
+  {
+    "text": "And if I print high scores now, you will get the same result, 92, 95 and 90.",
+    "startMs": 734800,
+    "endMs": 743120,
+    "timestampMs": 734800,
+    "confidence": null
+  },
+  {
+    "text": "The benefit of this is called list comprehension.",
+    "startMs": 743200,
+    "endMs": 746480,
+    "timestampMs": 743200,
+    "confidence": null
+  },
+  {
+    "text": "The benefit of list comprehension is that it is concise, readable and every data scientist uses",
+    "startMs": 750720,
+    "endMs": 756800,
+    "timestampMs": 750720,
+    "confidence": null
+  },
+  {
+    "text": "this pattern constantly. So there are a few other things about list that you should know,",
+    "startMs": 756800,
+    "endMs": 763520,
+    "timestampMs": 756800,
+    "confidence": null
+  },
+  {
+    "text": "which is there are negative indexes also allowed. So if I say write print,",
+    "startMs": 764800,
+    "endMs": 769920,
+    "timestampMs": 764800,
+    "confidence": null
+  },
+  {
+    "text": "scores say minus 1, right. What do you think it will do? So it will print 90, which is the last",
+    "startMs": 774080,
+    "endMs": 783920,
+    "timestampMs": 774080,
+    "confidence": null
+  },
+  {
+    "text": "element of our scores list and negative indexes, they start from the right to the left and they",
+    "startMs": 783920,
+    "endMs": 793280,
+    "timestampMs": 783920,
+    "confidence": null
+  },
+  {
+    "text": "start from minus 1. So minus 1 will be 90, minus 2 is 95, minus 3 is 78, minus 4 is 92,",
+    "startMs": 793280,
+    "endMs": 802160,
+    "timestampMs": 793280,
+    "confidence": null
+  },
+  {
+    "text": "list comprehension also gives you some other powerful things like you can do transformation",
+    "startMs": 802240,
+    "endMs": 807360,
+    "timestampMs": 802240,
+    "confidence": null
+  },
+  {
+    "text": "of data in one single line. So if we copy this and let us say we want to calculate",
+    "startMs": 807360,
+    "endMs": 816400,
+    "timestampMs": 807360,
+    "confidence": null
+  },
+  {
+    "text": "scores as percentages.",
+    "startMs": 820160,
+    "endMs": 825440,
+    "timestampMs": 820160,
+    "confidence": null
+  },
+  {
+    "text": "So simply if I divide this score by 100 and if I remove this filter and if I print this out,",
+    "startMs": 826000,
+    "endMs": 841440,
+    "timestampMs": 826000,
+    "confidence": null
+  },
+  {
+    "text": "you can see it is all in decimal but it does not look like a percentage, right.",
+    "startMs": 842640,
+    "endMs": 847120,
+    "timestampMs": 842640,
+    "confidence": null
+  },
+  {
+    "text": "So there is one more thing I can show you we can do with list comprehension.",
+    "startMs": 847120,
+    "endMs": 854400,
+    "timestampMs": 847120,
+    "confidence": null
+  },
+  {
+    "text": "So if you remember I taught you F strings last time around.",
+    "startMs": 855440,
+    "endMs": 873200,
+    "timestampMs": 855440,
+    "confidence": null
+  },
+  {
+    "text": "So if we now print this 100 will go inside.",
+    "startMs": 873760,
+    "endMs": 891680,
+    "timestampMs": 873760,
+    "confidence": null
+  },
+  {
+    "text": "So you can see 85 percent, 92 percent, 78 percent, quite neat, right.",
+    "startMs": 892400,
+    "endMs": 899360,
+    "timestampMs": 892400,
+    "confidence": null
+  },
+  {
+    "text": "So read comprehension left to right for in this case for score whatever transformation we are",
+    "startMs": 900240,
+    "endMs": 909120,
+    "timestampMs": 900240,
+    "confidence": null
+  },
+  {
+    "text": "doing in scores and if we take a look here and then it is the filter. So every data scientist",
+    "startMs": 909120,
+    "endMs": 918320,
+    "timestampMs": 909120,
+    "confidence": null
+  },
+  {
+    "text": "uses this pattern constantly. It replaces three line for loops as you can see here, right.",
+    "startMs": 918320,
+    "endMs": 923520,
+    "timestampMs": 918320,
+    "confidence": null
+  },
+  {
+    "text": "It was a three line for loop with one single readable expression.",
+    "startMs": 923520,
+    "endMs": 927600,
+    "timestampMs": 923520,
+    "confidence": null
+  },
+  {
+    "text": "Now we are going to talk about dictionaries. So how data science think or data scientists",
+    "startMs": 928400,
+    "endMs": 933920,
+    "timestampMs": 928400,
+    "confidence": null
+  },
+  {
+    "text": "think about records. So dictionary maps keys to values. You create one with curly braces as I",
+    "startMs": 933920,
+    "endMs": 939840,
+    "timestampMs": 933920,
+    "confidence": null
+  },
+  {
+    "text": "told you in last tutorial as well. So as you can see here I have a dictionary called person and",
+    "startMs": 939840,
+    "endMs": 947520,
+    "timestampMs": 939840,
+    "confidence": null
+  },
+  {
+    "text": "it has four values name age, role and salary and you can see the dictionary is defined inside",
+    "startMs": 947520,
+    "endMs": 959200,
+    "timestampMs": 947520,
+    "confidence": null
+  },
+  {
+    "text": "the curly braces with a coated key. So left side is called key and right side is called value",
+    "startMs": 959200,
+    "endMs": 966640,
+    "timestampMs": 959200,
+    "confidence": null
+  },
+  {
+    "text": "and they are separated by colon and every key value pair is separated by a comma. So it has",
+    "startMs": 966640,
+    "endMs": 972880,
+    "timestampMs": 966640,
+    "confidence": null
+  },
+  {
+    "text": "four keys name age, role and salary and they are all supposed to be in string format and then",
+    "startMs": 972880,
+    "endMs": 980400,
+    "timestampMs": 972880,
+    "confidence": null
+  },
+  {
+    "text": "their values can be any data type. So if we want to access any key or any data points value.",
+    "startMs": 980400,
+    "endMs": 988960,
+    "timestampMs": 980400,
+    "confidence": null
+  },
+  {
+    "text": "So for example if you want to check what is the person's name. So we can just go to the variable",
+    "startMs": 989600,
+    "endMs": 995520,
+    "timestampMs": 989600,
+    "confidence": null
+  },
+  {
+    "text": "and then in square brackets put in the key that we want to access. So to access name and age we do",
+    "startMs": 995520,
+    "endMs": 1002000,
+    "timestampMs": 995520,
+    "confidence": null
+  },
+  {
+    "text": "this and there is another way that we can get these key values which is dot get and it will try to",
+    "startMs": 1002080,
+    "endMs": 1012240,
+    "timestampMs": 1002080,
+    "confidence": null
+  },
+  {
+    "text": "get email and if email is not present it will return none and if it is set like this email",
+    "startMs": 1012240,
+    "endMs": 1020000,
+    "timestampMs": 1012240,
+    "confidence": null
+  },
+  {
+    "text": "common not set then it will return what is provided in the second value. So if we run this",
+    "startMs": 1020000,
+    "endMs": 1025760,
+    "timestampMs": 1020000,
+    "confidence": null
+  },
+  {
+    "text": "you can say for the line number 13 it printed Alex as expected and for line 14 it printed 28",
+    "startMs": 1026240,
+    "endMs": 1034400,
+    "timestampMs": 1026240,
+    "confidence": null
+  },
+  {
+    "text": "for line 17 it printed none and for line 18 it printed not set. So there is one caveat",
+    "startMs": 1034880,
+    "endMs": 1043040,
+    "timestampMs": 1034880,
+    "confidence": null
+  },
+  {
+    "text": "we should never use something like person and then key inside on your data because we do not",
+    "startMs": 1043920,
+    "endMs": 1053200,
+    "timestampMs": 1043920,
+    "confidence": null
+  },
+  {
+    "text": "control and if the key does not exist it will raise a key error. So let us say if I try to run",
+    "startMs": 1053200,
+    "endMs": 1059680,
+    "timestampMs": 1053200,
+    "confidence": null
+  },
+  {
+    "text": "this code right. So as you can see it threw me key error because there is no key that exists inside",
+    "startMs": 1059680,
+    "endMs": 1067440,
+    "timestampMs": 1059680,
+    "confidence": null
+  },
+  {
+    "text": "the person dictionary. So if we take a look at another dictionary or if you want to add something",
+    "startMs": 1067440,
+    "endMs": 1074960,
+    "timestampMs": 1067440,
+    "confidence": null
+  },
+  {
+    "text": "to this dictionary let us take a look at that first. So to update a value. So I want to update",
+    "startMs": 1074960,
+    "endMs": 1080320,
+    "timestampMs": 1074960,
+    "confidence": null
+  },
+  {
+    "text": "salary value to 90,000 instead of 85,000 and I want to add a new key called department and it",
+    "startMs": 1080320,
+    "endMs": 1086720,
+    "timestampMs": 1080320,
+    "confidence": null
+  },
+  {
+    "text": "will be analytics. So if I print person now as you can see it prints name Alex 828",
+    "startMs": 1087520,
+    "endMs": 1097040,
+    "timestampMs": 1087520,
+    "confidence": null
+  },
+  {
+    "text": "role analyst salary 90,000 in department analytics but here is the thing in data science you are",
+    "startMs": 1097040,
+    "endMs": 1103360,
+    "timestampMs": 1097040,
+    "confidence": null
+  },
+  {
+    "text": "almost never working with single dictionary. You are working with a list of dictionaries one",
+    "startMs": 1103360,
+    "endMs": 1108880,
+    "timestampMs": 1103360,
+    "confidence": null
+  },
+  {
+    "text": "dictionary per row. So let me walk you through an example of that as well.",
+    "startMs": 1108880,
+    "endMs": 1113920,
+    "timestampMs": 1108880,
+    "confidence": null
+  },
+  {
+    "text": "So here is this employees list it's a list as you can see with square brackets it's a list of",
+    "startMs": 1118160,
+    "endMs": 1124240,
+    "timestampMs": 1118160,
+    "confidence": null
+  },
+  {
+    "text": "dictionaries where every item in the list is a dictionary and if we want to sum",
+    "startMs": 1124240,
+    "endMs": 1129680,
+    "timestampMs": 1124240,
+    "confidence": null
+  },
+  {
+    "text": "for all salaries right we want to sum all the employees and their salaries. So we can use list",
+    "startMs": 1130560,
+    "endMs": 1140400,
+    "timestampMs": 1130560,
+    "confidence": null
+  },
+  {
+    "text": "comprehension. So here is list comprehension so we loop over employees the list and then we fetch",
+    "startMs": 1140400,
+    "endMs": 1148080,
+    "timestampMs": 1140400,
+    "confidence": null
+  },
+  {
+    "text": "the salary key for every employee and then we sum and if I comment this particular part out first",
+    "startMs": 1148080,
+    "endMs": 1154160,
+    "timestampMs": 1148080,
+    "confidence": null
+  },
+  {
+    "text": "and if we run this you can see it printed 350,000 as expected.",
+    "startMs": 1154160,
+    "endMs": 1161200,
+    "timestampMs": 1154160,
+    "confidence": null
+  },
+  {
+    "text": "Now we want to see for the people who are only analyst we don't want to take a look at other people.",
+    "startMs": 1162000,
+    "endMs": 1170240,
+    "timestampMs": 1162000,
+    "confidence": null
+  },
+  {
+    "text": "So simply we do list comprehension again and here we put a filter where role is equal to analyst",
+    "startMs": 1170240,
+    "endMs": 1176000,
+    "timestampMs": 1170240,
+    "confidence": null
+  },
+  {
+    "text": "and if we run this again you can see it printed out Alex and KZ.",
+    "startMs": 1176000,
+    "endMs": 1181840,
+    "timestampMs": 1176000,
+    "confidence": null
+  },
+  {
+    "text": "It did not print out Jamie and Morgan. So we want to now calculate average salary for analyst.",
+    "startMs": 1182720,
+    "endMs": 1190800,
+    "timestampMs": 1182720,
+    "confidence": null
+  },
+  {
+    "text": "So we already have analyst filter out. Now we are doing the list comprehension like earlier",
+    "startMs": 1190800,
+    "endMs": 1196960,
+    "timestampMs": 1190800,
+    "confidence": null
+  },
+  {
+    "text": "we are getting salary for every analyst and then dividing by the number of analyst and if we print",
+    "startMs": 1196960,
+    "endMs": 1202080,
+    "timestampMs": 1196960,
+    "confidence": null
+  },
+  {
+    "text": "now you can see 81,500 is the average salary for analyst. So this pattern list of dictionaries",
+    "startMs": 1202080,
+    "endMs": 1210480,
+    "timestampMs": 1202080,
+    "confidence": null
+  },
+  {
+    "text": "filter with comprehension aggregate with sum or length is exactly what Pandas does internally",
+    "startMs": 1210480,
+    "endMs": 1217600,
+    "timestampMs": 1210480,
+    "confidence": null
+  },
+  {
+    "text": "just at much larger scale. Understanding it here means you will understand Pandas intuitively",
+    "startMs": 1217600,
+    "endMs": 1224480,
+    "timestampMs": 1217600,
+    "confidence": null
+  },
+  {
+    "text": "instead of memorizing methods. So let's take a look at one more example in the same scenario.",
+    "startMs": 1224480,
+    "endMs": 1232320,
+    "timestampMs": 1224480,
+    "confidence": null
+  },
+  {
+    "text": "So we have a person Alex who is 28 role analyst. So if we want to get person name it will be Alex.",
+    "startMs": 1232800,
+    "endMs": 1246160,
+    "timestampMs": 1232800,
+    "confidence": null
+  },
+  {
+    "text": "If we want to get salary it will be not provided because we are using the get method.",
+    "startMs": 1246160,
+    "endMs": 1250880,
+    "timestampMs": 1246160,
+    "confidence": null
+  },
+  {
+    "text": "No crash here. So there is an employees list again. So if we want to total the employees salary.",
+    "startMs": 1250880,
+    "endMs": 1260000,
+    "timestampMs": 1250880,
+    "confidence": null
+  },
+  {
+    "text": "So we can use list comprehension but we want to now see for those employees who have 85,000",
+    "startMs": 1260000,
+    "endMs": 1267200,
+    "timestampMs": 1260000,
+    "confidence": null
+  },
+  {
+    "text": "above salary. So we use list comprehension again and only Jamie will come in this list.",
+    "startMs": 1267200,
+    "endMs": 1272400,
+    "timestampMs": 1267200,
+    "confidence": null
+  },
+  {
+    "text": "So now we will talk about functions which exactly mean that you are writing code that you can",
+    "startMs": 1274160,
+    "endMs": 1281840,
+    "timestampMs": 1274160,
+    "confidence": null
+  },
+  {
+    "text": "reuse. So here is now where it gets real. Functions are how you stop writing the same code over and",
+    "startMs": 1281840,
+    "endMs": 1288880,
+    "timestampMs": 1281840,
+    "confidence": null
+  },
+  {
+    "text": "sync it through your mind. A function is something that you stop that you use to stop writing",
+    "startMs": 1289760,
+    "endMs": 1296560,
+    "timestampMs": 1289760,
+    "confidence": null
+  },
+  {
+    "text": "the same code over and over. It is a named reusable block of logic. It is defined once and",
+    "startMs": 1296560,
+    "endMs": 1303120,
+    "timestampMs": 1296560,
+    "confidence": null
+  },
+  {
+    "text": "called everywhere. So let us define a function. This is just to calculate average of numbers.",
+    "startMs": 1303120,
+    "endMs": 1312480,
+    "timestampMs": 1303120,
+    "confidence": null
+  },
+  {
+    "text": "We define function with this DEF keyword and then the function name and if any parameters are",
+    "startMs": 1312960,
+    "endMs": 1322080,
+    "timestampMs": 1312960,
+    "confidence": null
+  },
+  {
+    "text": "expected inside that function. So here we are summing the numbers. So it is expecting a list",
+    "startMs": 1322080,
+    "endMs": 1329280,
+    "timestampMs": 1322080,
+    "confidence": null
+  },
+  {
+    "text": "and then we are dividing with the length of numbers to get an average. So if we have let us say",
+    "startMs": 1329280,
+    "endMs": 1334080,
+    "timestampMs": 1329280,
+    "confidence": null
+  },
+  {
+    "text": "scores of this list then if we calculate score it should print 87.6 and if we have any other list",
+    "startMs": 1334560,
+    "endMs": 1345760,
+    "timestampMs": 1334560,
+    "confidence": null
+  },
+  {
+    "text": "as well it will calculate the average. We can reuse this calculate average method or function",
+    "startMs": 1345760,
+    "endMs": 1352800,
+    "timestampMs": 1345760,
+    "confidence": null
+  },
+  {
+    "text": "again and again. So if in case you are confused method and function are the same thing I might be",
+    "startMs": 1352800,
+    "endMs": 1358480,
+    "timestampMs": 1352800,
+    "confidence": null
+  },
+  {
+    "text": "using them interchangeably. So wherever I reference method or function I am talking about the",
+    "startMs": 1358560,
+    "endMs": 1364000,
+    "timestampMs": 1358560,
+    "confidence": null
+  },
+  {
+    "text": "same thing. Functions they can get more powerful with default arguments which means that parameters",
+    "startMs": 1364000,
+    "endMs": 1370640,
+    "timestampMs": 1364000,
+    "confidence": null
+  },
+  {
+    "text": "inside the functions have fallback values that you can override. So let us take a look at exam",
+    "startMs": 1370640,
+    "endMs": 1375680,
+    "timestampMs": 1370640,
+    "confidence": null
+  },
+  {
+    "text": "example for that. So here in this method is outlier. We have three parameters value mean in threshold",
+    "startMs": 1375680,
+    "endMs": 1384880,
+    "timestampMs": 1375680,
+    "confidence": null
+  },
+  {
+    "text": "and we have defined a default parameter value of 2.0 for threshold. What it means is if",
+    "startMs": 1384880,
+    "endMs": 1390000,
+    "timestampMs": 1384880,
+    "confidence": null
+  },
+  {
+    "text": "particular value for threshold is provided then it will be used otherwise it will use the default",
+    "startMs": 1391760,
+    "endMs": 1396720,
+    "timestampMs": 1391760,
+    "confidence": null
+  },
+  {
+    "text": "value of 2. And the way it is calculating outlier in this method is calculating absolute value",
+    "startMs": 1396720,
+    "endMs": 1404480,
+    "timestampMs": 1396720,
+    "confidence": null
+  },
+  {
+    "text": "between the mean and value and then dividing it by mean which is relative distance from mean",
+    "startMs": 1405040,
+    "endMs": 1411200,
+    "timestampMs": 1405040,
+    "confidence": null
+  },
+  {
+    "text": "and if distance is greater than threshold divided by 10 we are normalizing it from",
+    "startMs": 1411200,
+    "endMs": 1416240,
+    "timestampMs": 1411200,
+    "confidence": null
+  },
+  {
+    "text": "to a useful scale then it returns as true or false. So if it is greater than then it will return true",
+    "startMs": 1417680,
+    "endMs": 1423680,
+    "timestampMs": 1417680,
+    "confidence": null
+  },
+  {
+    "text": "if it is not then it will return false. So you know 150 is far from mean of 87.6.",
+    "startMs": 1423680,
+    "endMs": 1430560,
+    "timestampMs": 1423680,
+    "confidence": null
+  },
+  {
+    "text": "In this case it should print true and in 95 mean is 87.6 threshold is 0.5 false because it is close",
+    "startMs": 1431280,
+    "endMs": 1439680,
+    "timestampMs": 1431280,
+    "confidence": null
+  },
+  {
+    "text": "enough. So and let me take back the scores list as well the calculate average number method",
+    "startMs": 1439680,
+    "endMs": 1451360,
+    "timestampMs": 1439680,
+    "confidence": null
+  },
+  {
+    "text": "because we are going to use it. So if I run this script now you can see it printed true.",
+    "startMs": 1452160,
+    "endMs": 1462720,
+    "timestampMs": 1452160,
+    "confidence": null
+  },
+  {
+    "text": "So if I increase the threshold so you can see the threshold was the problem the threshold was",
+    "startMs": 1462720,
+    "endMs": 1473120,
+    "timestampMs": 1462720,
+    "confidence": null
+  },
+  {
+    "text": "quite low for this to be false. So now you can see one more thing when it is applied to a data set",
+    "startMs": 1473120,
+    "endMs": 1479440,
+    "timestampMs": 1473120,
+    "confidence": null
+  },
+  {
+    "text": "so we have a list of scores and 150 is a bit suspicious in this list so we want to check if it",
+    "startMs": 1479440,
+    "endMs": 1485680,
+    "timestampMs": 1479440,
+    "confidence": null
+  },
+  {
+    "text": "is an outlier or not. So we calculate the average you mean using the calculate average method",
+    "startMs": 1485680,
+    "endMs": 1492240,
+    "timestampMs": 1485680,
+    "confidence": null
+  },
+  {
+    "text": "and then we check outliers by looping over or list comprehension over this scores list",
+    "startMs": 1492240,
+    "endMs": 1498160,
+    "timestampMs": 1492240,
+    "confidence": null
+  },
+  {
+    "text": "and passing every value and the mean to that method and then we print outliers. So in this case 78",
+    "startMs": 1498880,
+    "endMs": 1508720,
+    "timestampMs": 1498880,
+    "confidence": null
+  },
+  {
+    "text": "and 150 are outliers given threshold of 2. So if let us say I increase threshold to 10 for example",
+    "startMs": 1508720,
+    "endMs": 1517200,
+    "timestampMs": 1508720,
+    "confidence": null
+  },
+  {
+    "text": "right and rerun the script you can see it nothing is an outlier and if I reduce it to 5 say for",
+    "startMs": 1517200,
+    "endMs": 1527600,
+    "timestampMs": 1517200,
+    "confidence": null
+  },
+  {
+    "text": "example 150 is now the only outlier. These last three lines they do something real compute a mean",
+    "startMs": 1527600,
+    "endMs": 1534640,
+    "timestampMs": 1527600,
+    "confidence": null
+  },
+  {
+    "text": "flag outliers written only the suspicious values in pure Python no libraries that is the kind of",
+    "startMs": 1534640,
+    "endMs": 1541040,
+    "timestampMs": 1534640,
+    "confidence": null
+  },
+  {
+    "text": "code you will write before you even open pandas and just as a personal anecdote I remember hitting",
+    "startMs": 1541040,
+    "endMs": 1549600,
+    "timestampMs": 1541040,
+    "confidence": null
+  },
+  {
+    "text": "the same wall when building early analytics scripts for content and engagement tracking I had",
+    "startMs": 1549600,
+    "endMs": 1556320,
+    "timestampMs": 1549600,
+    "confidence": null
+  },
+  {
+    "text": "copied the same 12 line block across three different notebooks cleaning values calculating",
+    "startMs": 1556320,
+    "endMs": 1561440,
+    "timestampMs": 1556320,
+    "confidence": null
+  },
+  {
+    "text": "averages filtering rows and every tiny change meant hunting through duplicated code hoping I",
+    "startMs": 1561440,
+    "endMs": 1568080,
+    "timestampMs": 1561440,
+    "confidence": null
+  },
+  {
+    "text": "did not miss on one out of the three versions the moment I turned that block into a function the",
+    "startMs": 1568080,
+    "endMs": 1573920,
+    "timestampMs": 1568080,
+    "confidence": null
+  },
+  {
+    "text": "entire workflow changed fewer silent mistakes faster iteration and code I could actually trust",
+    "startMs": 1573920,
+    "endMs": 1580240,
+    "timestampMs": 1573920,
+    "confidence": null
+  },
+  {
+    "text": "six weeks later when I reopened the project. So why does all this matter type confusion causes",
+    "startMs": 1580240,
+    "endMs": 1589040,
+    "timestampMs": 1580240,
+    "confidence": null
+  },
+  {
+    "text": "silent bugs as I showed you you load data it arrives as strings you forget to convert and you get",
+    "startMs": 1589120,
+    "endMs": 1595440,
+    "timestampMs": 1589120,
+    "confidence": null
+  },
+  {
+    "text": "plausible looking wrong answers lists let you process sequences efficiently indexing slicing",
+    "startMs": 1595440,
+    "endMs": 1602560,
+    "timestampMs": 1595440,
+    "confidence": null
+  },
+  {
+    "text": "comprehensions these are the tools you will use thousands of times dictionaries let you think about",
+    "startMs": 1602560,
+    "endMs": 1608720,
+    "timestampMs": 1602560,
+    "confidence": null
+  },
+  {
+    "text": "the data the way data scientists actually think about it as records with named fields a list of",
+    "startMs": 1608720,
+    "endMs": 1615280,
+    "timestampMs": 1608720,
+    "confidence": null
+  },
+  {
+    "text": "dictionary is exactly how you model real world data before pandas functions make your code",
+    "startMs": 1615280,
+    "endMs": 1621840,
+    "timestampMs": 1615280,
+    "confidence": null
+  },
+  {
+    "text": "testable reusable and trustworthy no more copy paste bugs no more hunting through duplicated code",
+    "startMs": 1621840,
+    "endMs": 1628160,
+    "timestampMs": 1621840,
+    "confidence": null
+  },
+  {
+    "text": "in the next tutorial three I will bring numpy these structures scale to millions of rows",
+    "startMs": 1629040,
+    "endMs": 1634880,
+    "timestampMs": 1629040,
+    "confidence": null
+  },
+  {
+    "text": "but the mental model stays the same understand what type you are holding structure your data",
+    "startMs": 1635680,
+    "endMs": 1641440,
+    "timestampMs": 1635680,
+    "confidence": null
+  },
+  {
+    "text": "sensibly and write function write functions instead of repeating blocks so before I close of the video",
+    "startMs": 1641520,
+    "endMs": 1650640,
+    "timestampMs": 1641520,
+    "confidence": null
+  },
+  {
+    "text": "here is your assignment go back to tutorial once average calculation rewrite it as a function add",
+    "startMs": 1651440,
+    "endMs": 1658400,
+    "timestampMs": 1651440,
+    "confidence": null
+  },
+  {
+    "text": "a filter function that returns only scores above a threshold run both on the data you used before",
+    "startMs": 1658400,
+    "endMs": 1664400,
+    "timestampMs": 1658400,
+    "confidence": null
+  },
+  {
+    "text": "post what you've built or post the first type error you got that's where the learning happens",
+    "startMs": 1665360,
+    "endMs": 1670480,
+    "timestampMs": 1665360,
+    "confidence": null
+  },
+  {
+    "text": "when you mess up and trace the mistake back to the type when you hit type error or your",
+    "startMs": 1670480,
+    "endMs": 1675120,
+    "timestampMs": 1670480,
+    "confidence": null
+  },
+  {
+    "text": "comprehension returns unexpected results that's when type confusion becomes real next tutorial numpy",
+    "startMs": 1675120,
+    "endMs": 1681920,
+    "timestampMs": 1675120,
+    "confidence": null
+  },
+  {
+    "text": "brings arrays same mental model but scale to millions of rows and optimize for speed see you in tutorial",
+    "startMs": 1681920,
+    "endMs": 1688240,
+    "timestampMs": 1681920,
+    "confidence": null
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "data_science_tech": [
+    {
+      "title": "Free dataset: 3250 graded LLM runs on whether models trust in-context docs over the actual cod",
+      "url": "https://www.reddit.com/r/datascience/comments/1u7pv7p/free_dataset_3250_graded_llm_runs_on_whether/",
+      "subreddit": "datascience",
+      "published": "2026-06-16T20:54:15+00:00",
+      "score": 1.2482176965115501,
+      "keyword_matches": 2,
+      "recency_score": 0.64821769651155
+    },
+    {
+      "title": "Ideas for testing data science workflows on self hosted Linux based HPC cluster.",
+      "url": "https://www.reddit.com/r/datascience/comments/1u9xm29/ideas_for_testing_data_science_workflows_on_self/",
+      "subreddit": "datascience",
+      "published": "2026-06-19T09:47:04+00:00",
+      "score": 1.1332700150545998,
+      "keyword_matches": 1,
+      "recency_score": 0.8332700150545997
+    },
+    {
+      "title": "Data Directors - what\u2019s your next step?",
+      "url": "https://www.reddit.com/r/datascience/comments/1u8r8yi/data_directors_whats_your_next_step/",
+      "subreddit": "datascience",
+      "published": "2026-06-18T00:17:30+00:00",
+      "score": 1.0257459547335435,
+      "keyword_matches": 1,
+      "recency_score": 0.7257459547335435
+    },
+    {
+      "title": "VibeThinker-3B and the strength of post-training",
+      "url": "https://www.reddit.com/r/datascience/comments/1u8llmf/vibethinker3b_and_the_strength_of_posttraining/",
+      "subreddit": "datascience",
+      "published": "2026-06-17T20:27:03+00:00",
+      "score": 1.0143382512641155,
+      "keyword_matches": 1,
+      "recency_score": 0.7143382512641155
+    },
+    {
+      "title": "r/Jokes Subreddit Analysis",
+      "url": "https://www.reddit.com/r/datascience/comments/1u7xoh1/rjokes_subreddit_analysis/",
+      "subreddit": "datascience",
+      "published": "2026-06-17T02:28:49+00:00",
+      "score": 0.9633004465080086,
+      "keyword_matches": 1,
+      "recency_score": 0.6633004465080086
+    }
+  ],
+  "life_self_dev": [],
+  "poetry_quotes": []
+}

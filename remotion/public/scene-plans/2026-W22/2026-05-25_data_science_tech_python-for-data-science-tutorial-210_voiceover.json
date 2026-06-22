@@ -1,0 +1,673 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "your analysis is going to give you a wrong answer someday",
+    "niche": "ds",
+    "atSec": 0.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "Your analysis is going to give you a wrong answer someday \u2014 and the worst part, it won't crash.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ConceptExplainer",
+    "script": "Python will just sit there and hand you a number",
+    "niche": "ds",
+    "atSec": 10.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "The Silent Type Bug",
+      "cards": [
+        {
+          "term": "Load CSV",
+          "definition": "Column stored as text, not numbers",
+          "icon": "\ud83d\udcc2"
+        },
+        {
+          "term": "Call sum()",
+          "definition": "Python concatenates strings instead of adding",
+          "icon": "\u2795"
+        },
+        {
+          "term": "Get a result",
+          "definition": "Looks plausible \u2014 no error, no warning",
+          "icon": "\u26a0\ufe0f"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CounterReveal",
+    "script": "Python will give you something different, 2835 and 42",
+    "niche": "ds",
+    "atSec": 91.4,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 2835,
+      "label": "\"28\" + \"35\" + \"42\" \u2014 string concatenation, not math",
+      "suffix": ""
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "AtmosphericQuote",
+    "script": "no error message no warning just a wrong answer",
+    "niche": "ds",
+    "atSec": 105.9,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "No error message. No warning. Just a wrong answer sitting in your spreadsheet, looking completely legitimate.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-05",
+    "componentName": "ConceptExplainer",
+    "script": "Python is dynamically typed you just assign it a value",
+    "niche": "ds",
+    "atSec": 141.9,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Python Is Dynamically Typed",
+      "cards": [
+        {
+          "term": "No Declarations",
+          "definition": "Assign a value \u2014 Python figures out the type"
+        },
+        {
+          "term": "Feels Like a Feature",
+          "definition": "Until it lets you concatenate numbers like words"
+        },
+        {
+          "term": "The Risk",
+          "definition": "For data scientists, this causes expensive confusion"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-06",
+    "componentName": "NumberedTips",
+    "script": "here is what we are covering today four primitive types",
+    "niche": "ds",
+    "atSec": 185.3,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Tutorial 2: What You Will Build",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "4 Primitive Types",
+          "body": "int, float, str, bool"
+        },
+        {
+          "number": 2,
+          "headline": "Lists",
+          "body": "Ordered sequences"
+        },
+        {
+          "number": 3,
+          "headline": "Dictionaries",
+          "body": "Records with named fields"
+        },
+        {
+          "number": 4,
+          "headline": "Functions",
+          "body": "Reusable, testable logic"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-07",
+    "componentName": "CodeAnnotation",
+    "script": "Python has type to tell you the data type",
+    "niche": "ds",
+    "atSec": 228.2,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "type(28)      # <class 'int'>",
+        "type('28')    # <class 'str'>",
+        "type(1.5)     # <class 'float'>",
+        "type(True)    # <class 'bool'>"
+      ],
+      "language": "python",
+      "highlightLine": 0,
+      "annotationText": "type() reveals what Python actually sees"
+    }
+  },
+  {
+    "sceneId": "scene-08",
+    "componentName": "ConceptExplainer",
+    "script": "Python treats them completely different even when they look the same",
+    "niche": "ds",
+    "atSec": 312.6,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Same Look, Completely Different Type",
+      "cards": [
+        {
+          "term": "1",
+          "definition": "Integer \u2014 stored as binary whole number"
+        },
+        {
+          "term": "\"1\"",
+          "definition": "String \u2014 stored as text character"
+        },
+        {
+          "term": "1.0",
+          "definition": "Float \u2014 stored as decimal value"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-09",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "it should be 63, this will be 2835, not as expected",
+    "niche": "ds",
+    "atSec": 411.4,
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Split-screen comparison animating in two columns. Left panel: dark green background, shows '28 + 35 = 63' with integer type labels, a checkmark, and the word CORRECT. Right panel: dark red background, shows '\"28\" + \"35\" = \"2835\"' with string type labels, a warning icon, and the words SILENT BUG in bold. The right panel's result ('2835') counts up dramatically digit by digit to land the wrong-answer reveal."
+    }
+  },
+  {
+    "sceneId": "scene-10",
+    "componentName": "ToolComparison",
+    "script": "Python did not add those numbers it concatenated the text",
+    "niche": "ds",
+    "atSec": 447.4,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "leftSide": {
+        "label": "int + int",
+        "points": [
+          "28 + 35 = 63",
+          "Arithmetic addition",
+          "Type-safe",
+          "Expected result"
+        ]
+      },
+      "rightSide": {
+        "label": "str + str",
+        "points": [
+          "\"28\" + \"35\" = \"2835\"",
+          "String concatenation",
+          "No error thrown",
+          "Silent wrong answer"
+        ]
+      }
+    }
+  },
+  {
+    "sceneId": "scene-11",
+    "componentName": "NumberedTips",
+    "script": "four conversion functions that you should be aware of",
+    "niche": "ds",
+    "atSec": 496.5,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "title": "4 Type Conversion Functions",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "int()",
+          "body": "int(\"42\") \u2192 42"
+        },
+        {
+          "number": 2,
+          "headline": "float()",
+          "body": "float(\"42.5\") \u2192 42.5"
+        },
+        {
+          "number": 3,
+          "headline": "str()",
+          "body": "str(42) \u2192 \"42\""
+        },
+        {
+          "number": 4,
+          "headline": "bool()",
+          "body": "bool(0) \u2192 False"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-12",
+    "componentName": "AtmosphericQuote",
+    "script": "any data from a CSV API or user input arrives as a string",
+    "niche": "ds",
+    "atSec": 552.7,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "Any data from a CSV, API, or user input arrives as a string \u2014 until you convert it. This is where the silent bugs start.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-13",
+    "componentName": "ConceptExplainer",
+    "script": "a list is a sequence and ordered collection of items",
+    "niche": "ds",
+    "atSec": 573.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Lists: Ordered Sequences",
+      "cards": [
+        {
+          "term": "Create",
+          "definition": "scores = [85, 92, 78, 95]"
+        },
+        {
+          "term": "Access",
+          "definition": "scores[0] \u2192 85 (zero-indexed)"
+        },
+        {
+          "term": "Slice",
+          "definition": "scores[1:3] \u2192 [92, 78] (exclusive end)"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-14",
+    "componentName": "DataVizReveal",
+    "script": "score 0 is 85 if I say 1 it will be 92",
+    "niche": "ds",
+    "atSec": 601.3,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "List Index Access: scores[i]",
+      "data": [
+        {
+          "label": "index 0",
+          "value": 85
+        },
+        {
+          "label": "index 1",
+          "value": 92
+        },
+        {
+          "label": "index 2",
+          "value": 78
+        },
+        {
+          "label": "index 3",
+          "value": 95
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-15",
+    "componentName": "WordReveal",
+    "script": "Python slicing is exclusive on the end which trips up everyone",
+    "niche": "ds",
+    "atSec": 641.3,
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "words": [
+        "Python",
+        "slicing",
+        "is",
+        "exclusive",
+        "on",
+        "the",
+        "end"
+      ],
+      "emphasis": [
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-16",
+    "componentName": "CodeAnnotation",
+    "script": "high scores equal to score for score in scores if score greater than 85",
+    "niche": "ds",
+    "atSec": 721.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "# Old way: 3 lines",
+        "for score in scores:",
+        "    if score > 85:",
+        "        result.append(score)",
+        "",
+        "# List comprehension: 1 line",
+        "high = [s for s in scores if s > 85]"
+      ],
+      "language": "python",
+      "highlightLine": 6,
+      "annotationText": "Same output \u2014 one readable expression"
+    }
+  },
+  {
+    "sceneId": "scene-17",
+    "componentName": "AtmosphericQuote",
+    "script": "concise readable and every data scientist uses this pattern constantly",
+    "niche": "ds",
+    "atSec": 750.7,
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "Concise, readable \u2014 and every data scientist uses this pattern constantly.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-18",
+    "componentName": "TransformationArc",
+    "script": "list comprehension gives you transformation of data in one single line",
+    "niche": "ds",
+    "atSec": 807.4,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "beforeLabel": "3-Line For Loop",
+      "afterLabel": "1-Line Comprehension",
+      "beforePoints": [
+        "for score in scores:",
+        "    if score > 85:",
+        "        result.append(score)"
+      ],
+      "afterPoints": [
+        "[s for s in scores if s > 85]",
+        "Concise and readable",
+        "Identical output"
+      ],
+      "transformLabel": "Refactor"
+    }
+  },
+  {
+    "sceneId": "scene-19",
+    "componentName": "DataVizReveal",
+    "script": "you can see 85 percent 92 percent 78 percent quite neat",
+    "niche": "ds",
+    "atSec": 892.4,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Scores as Percentages (List Comprehension)",
+      "data": [
+        {
+          "label": "Score 1",
+          "value": 85
+        },
+        {
+          "label": "Score 2",
+          "value": 92
+        },
+        {
+          "label": "Score 3",
+          "value": 78
+        },
+        {
+          "label": "Score 4",
+          "value": 95
+        }
+      ],
+      "chartType": "bar"
+    }
+  },
+  {
+    "sceneId": "scene-20",
+    "componentName": "ConceptExplainer",
+    "script": "dictionary maps keys to values you create one with curly braces",
+    "niche": "ds",
+    "atSec": 933.9,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Dictionaries: Data as Records",
+      "cards": [
+        {
+          "term": "Key: Value",
+          "definition": "{ \"name\": \"Alex\", \"age\": 28, \"role\": \"analyst\" }"
+        },
+        {
+          "term": "Access",
+          "definition": "person[\"name\"] or person.get(\"email\", \"not set\")"
+        },
+        {
+          "term": "In Data Science",
+          "definition": "One dict per row \u2014 list of dicts = your dataset"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-21",
+    "componentName": "CodeAnnotation",
+    "script": "there is another way we can get key values which is dot get",
+    "niche": "ds",
+    "atSec": 1012.2,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "# Direct access \u2014 throws KeyError if missing",
+        "name = person[\"name\"]          # \"Alex\"",
+        "",
+        "# Safe access with default fallback",
+        "email = person.get(\"email\", \"not set\")"
+      ],
+      "language": "python",
+      "highlightLine": 4,
+      "annotationText": ".get() never crashes on missing keys"
+    }
+  },
+  {
+    "sceneId": "scene-22",
+    "componentName": "DataPipelineFlow",
+    "script": "employees list a list of dictionaries, sum all salaries with list comprehension",
+    "niche": "ds",
+    "atSec": 1118.2,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "niche": "ds",
+      "title": "List of Dicts \u2192 Aggregate",
+      "fields": [
+        "name",
+        "role",
+        "salary"
+      ],
+      "stages": [
+        "Load Records",
+        "Iterate",
+        "Filter Role",
+        "Sum Salaries"
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-23",
+    "componentName": "CounterReveal",
+    "script": "you can see it printed 350,000 as expected",
+    "niche": "ds",
+    "atSec": 1154.2,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 350000,
+      "label": "Total Employee Salaries",
+      "prefix": "$"
+    }
+  },
+  {
+    "sceneId": "scene-24",
+    "componentName": "CounterReveal",
+    "script": "you can see 81,500 is the average salary for analyst",
+    "niche": "ds",
+    "atSec": 1202.1,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 81500,
+      "label": "Average Analyst Salary",
+      "prefix": "$"
+    }
+  },
+  {
+    "sceneId": "scene-25",
+    "componentName": "AtmosphericQuote",
+    "script": "exactly what Pandas does internally just at much larger scale",
+    "niche": "ds",
+    "atSec": 1210.5,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "This pattern \u2014 list of dicts, filter with comprehension, aggregate with sum \u2014 is exactly what Pandas does internally. Just at much larger scale.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-26",
+    "componentName": "ConceptExplainer",
+    "script": "functions are how you stop writing the same code over and over",
+    "niche": "ds",
+    "atSec": 1288.9,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Functions: Reusable Logic",
+      "cards": [
+        {
+          "term": "Define Once",
+          "definition": "def calculate_average(numbers): ..."
+        },
+        {
+          "term": "Call Everywhere",
+          "definition": "No more copy-pasting the same 12-line block"
+        },
+        {
+          "term": "Trust Your Code",
+          "definition": "One fix propagates to every caller"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-27",
+    "componentName": "CounterReveal",
+    "script": "if we calculate score it should print 87.6",
+    "niche": "ds",
+    "atSec": 1334.6,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "value": 87.6,
+      "label": "calculate_average([85, 92, 78, 95, 88])",
+      "suffix": ""
+    }
+  },
+  {
+    "sceneId": "scene-28",
+    "componentName": "CodeAnnotation",
+    "script": "150 is a bit suspicious we want to check if it is an outlier",
+    "niche": "ds",
+    "atSec": 1479.4,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "code": [
+        "def is_outlier(value, mean, threshold=2.0):",
+        "    distance = abs(value - mean) / mean",
+        "    return distance > threshold / 10",
+        "",
+        "# 150 in a dataset averaging 87.6",
+        "is_outlier(150, mean)   # \u2192 True"
+      ],
+      "language": "python",
+      "highlightLine": 0,
+      "annotationText": "Default threshold = flexible without extra args"
+    }
+  },
+  {
+    "sceneId": "scene-29",
+    "componentName": "AtmosphericQuote",
+    "script": "the moment I turned that block into a function the entire workflow changed",
+    "niche": "ds",
+    "atSec": 1573.9,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "The moment I turned that block into a function, the entire workflow changed \u2014 fewer silent mistakes, faster iteration, and code I could actually trust six weeks later.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-30",
+    "componentName": "NumberedTips",
+    "script": "why does all this matter type confusion causes silent bugs",
+    "niche": "ds",
+    "atSec": 1589.1,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "title": "Why All This Matters",
+      "tips": [
+        {
+          "number": 1,
+          "headline": "Types",
+          "body": "Convert CSV data \u2014 never assume it's a number"
+        },
+        {
+          "number": 2,
+          "headline": "Lists",
+          "body": "Index, slice, comprehend \u2014 process sequences fast"
+        },
+        {
+          "number": 3,
+          "headline": "Dictionaries",
+          "body": "Model real data as records with named fields"
+        },
+        {
+          "number": 4,
+          "headline": "Functions",
+          "body": "Write once, reuse \u2014 no more copy-paste bugs"
+        }
+      ]
+    }
+  },
+  {
+    "sceneId": "scene-31",
+    "componentName": "AtmosphericQuote",
+    "script": "post what you've built or post the first type error you got",
+    "niche": "ds",
+    "atSec": 1665.4,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "Post what you've built \u2014 or post the first type error you got. That's where the learning happens.",
+      "attribution": ""
+    }
+  }
+]

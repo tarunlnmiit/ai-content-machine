@@ -1,0 +1,51 @@
+[
+  {
+    "text": "You use the type method or the function built in Python. So if you are reading from CSV,",
+    "startMs": 0,
+    "endMs": 7680,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "right? So let's take this one as an example again. So if you try, it came from a CSV, let's assume",
+    "startMs": 7680,
+    "endMs": 16080,
+    "timestampMs": 7680,
+    "confidence": null
+  },
+  {
+    "text": "this row H came from a CSV, it's a string. And then if you want to use it as a number, you convert",
+    "startMs": 16080,
+    "endMs": 22080,
+    "timestampMs": 16080,
+    "confidence": null
+  },
+  {
+    "text": "explicitly to an integer and then you add something to it. So if I run this script now,",
+    "startMs": 22400,
+    "endMs": 27600,
+    "timestampMs": 22400,
+    "confidence": null
+  },
+  {
+    "text": "you can see initially it was string, but at the end, it gave me 38 because I converted it into",
+    "startMs": 28720,
+    "endMs": 34560,
+    "timestampMs": 28720,
+    "confidence": null
+  },
+  {
+    "text": "number or an integer here exactly and then added 10. Now here are four conversion functions that",
+    "startMs": 34560,
+    "endMs": 42400,
+    "timestampMs": 34560,
+    "confidence": null
+  },
+  {
+    "text": "you should be aware of. So these conversion functions, they look something like this.",
+    "startMs": 42400,
+    "endMs": 48000,
+    "timestampMs": 42400,
+    "confidence": null
+  }
+]

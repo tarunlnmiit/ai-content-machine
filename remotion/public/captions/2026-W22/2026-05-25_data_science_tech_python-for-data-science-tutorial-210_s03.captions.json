@@ -1,0 +1,58 @@
+[
+  {
+    "text": "Now here is the silent book which every beginner has encountered or it bites every beginner.",
+    "startMs": 0,
+    "endMs": 7920,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "So if I write something like print 28 plus 35, and let me remove the rest of the code.",
+    "startMs": 8880,
+    "endMs": 19760,
+    "timestampMs": 8880,
+    "confidence": null
+  },
+  {
+    "text": "And if I print a float value as well in then a string. So if you as you can see, it should be 63,",
+    "startMs": 21360,
+    "endMs": 30880,
+    "timestampMs": 21360,
+    "confidence": null
+  },
+  {
+    "text": "it should be 63.0 and this will be 2835, not as expected as 63 or 63.0.",
+    "startMs": 30880,
+    "endMs": 37840,
+    "timestampMs": 30880,
+    "confidence": null
+  },
+  {
+    "text": "So if I run the script again,",
+    "startMs": 38400,
+    "endMs": 39840,
+    "timestampMs": 38400,
+    "confidence": null
+  },
+  {
+    "text": "you can see as expected. So Python did not add those numbers, it concatenated the text in the last",
+    "startMs": 50480,
+    "endMs": 57440,
+    "timestampMs": 50480,
+    "confidence": null
+  },
+  {
+    "text": "example. No error, no warning, just plain, wrong answer. So how do you check what you are holding?",
+    "startMs": 57440,
+    "endMs": 64080,
+    "timestampMs": 57440,
+    "confidence": null
+  },
+  {
+    "text": "You use the type method or the function built in Python. So if you are reading from CSV,",
+    "startMs": 64080,
+    "endMs": 71760,
+    "timestampMs": 64080,
+    "confidence": null
+  }
+]

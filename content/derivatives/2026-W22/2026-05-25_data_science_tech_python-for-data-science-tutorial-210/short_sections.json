@@ -1,0 +1,27 @@
+[
+  {
+    "startSec": 0.0,
+    "endSec": 39.76,
+    "angle": "Python will give you a wrong answer and never crash \u2014 here's the silent number-vs-string bug that fools every data scientist"
+  },
+  {
+    "startSec": 141.92,
+    "endSec": 185.2,
+    "angle": "Python's dynamic typing feels like a feature until it lets you add strings like numbers \u2014 and six months later you can't explain your own analysis"
+  },
+  {
+    "startSec": 390.0,
+    "endSec": 454.08,
+    "angle": "Live demo: print('28'+'35') gives '2835' not 63 \u2014 no error, no warning, just a plausible wrong answer in your spreadsheet"
+  },
+  {
+    "startSec": 454.08,
+    "endSec": 496.48,
+    "angle": "How to catch silent type bugs: use type() to inspect, then int() to explicitly convert before doing math on CSV data"
+  },
+  {
+    "startSec": 496.48,
+    "endSec": 559.6,
+    "angle": "The 4 Python type conversion functions every data scientist needs \u2014 and the one rule of thumb that prevents silent CSV bugs"
+  }
+]

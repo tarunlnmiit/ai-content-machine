@@ -48,3 +48,11 @@ Once a piece ships, add a row. Over time your own reels become the highest-prior
 | Date | Format (blog/YT/reel/carousel) | Hook archetype | Topic | Keyword | Likes | Shares | Saves | Notes |
 |---|---|---|---|---|---|---|---|---|
 | | | | | | | | | |
+
+
+## Auto-logged results (collect_analytics)
+- [2026-06-21] YT · Python Errors Are Feedback. Read Them Like This. — 135 views, 0 likes, 0 comments
+- [2026-06-20] YT · Your Code Ran. But Can You Recreate It? — 150 views, 0 likes, 0 comments
+- [2026-06-20] YT · One Line That Will Save Your Data Science Projects — 137 views, 1 likes, 0 comments
+- [2026-06-19] YT · Skip Hello World. Write This Instead. — 52 views, 0 likes, 0 comments
+- [2026-06-19] YT · You'll Write This Pattern 1,000 Times in Data Science — 47 views, 1 likes, 0 comments

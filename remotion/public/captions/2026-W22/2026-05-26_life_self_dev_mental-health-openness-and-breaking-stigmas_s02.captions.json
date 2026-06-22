@@ -1,0 +1,37 @@
+[
+  {
+    "text": "Nobody tells you to man up when you are in a caste, the doctor is covered, the recovery",
+    "startMs": 0,
+    "endMs": 5400,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "timeline is clear, people bring food, anxiety doesn't get that treat when you're",
+    "startMs": 5400,
+    "endMs": 10760,
+    "timestampMs": 5400,
+    "confidence": null
+  },
+  {
+    "text": "pregnant, neither does depression, neither does the slow grind of treading every Sunday",
+    "startMs": 10760,
+    "endMs": 16960,
+    "timestampMs": 10760,
+    "confidence": null
+  },
+  {
+    "text": "evening, because Monday means going back to a job that's quietly crushing you.",
+    "startMs": 16960,
+    "endMs": 23520,
+    "timestampMs": 16960,
+    "confidence": null
+  },
+  {
+    "text": "I remember sitting in my car after work one evening, engine still running, staring at",
+    "startMs": 23520,
+    "endMs": 28600,
+    "timestampMs": 23520,
+    "confidence": null
+  }
+]

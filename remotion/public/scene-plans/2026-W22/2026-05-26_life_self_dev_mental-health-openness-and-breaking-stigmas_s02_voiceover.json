@@ -1,0 +1,57 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "Nobody tells you to man up when you are in a cast",
+    "niche": "life",
+    "atSec": 0.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "Nobody tells you to man up when you're in a cast.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "ImageTextReveal",
+    "script": "neither does depression, neither does the slow grind of treading every Sunday evening",
+    "niche": "life",
+    "atSec": 10.8,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Neither does depression.",
+      "subtext": "invisible suffering has no casserole, no flowers, no timeline"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "because Monday means going back to a job that's quietly crushing you",
+    "niche": "life",
+    "atSec": 17.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "description": "A slow-burn typographic scene: the word MONDAY appears large and stark on a near-black background. Hairline cracks spread outward from its center in real time, each crack lit by a cold fluorescent-office glow from beneath. The cracks halt. Then, letter by letter under the fracture, the phrase 'quietly crushing you' dissolves up in a muted ash tone \u2014 no animation flourish, just weight. Hold on the cracked MONDAY in silence for 1.5s before the scene fades."
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "HandwrittenReveal",
+    "script": "I remember sitting in my car after work one evening, engine still running, staring at",
+    "niche": "life",
+    "atSec": 23.5,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "sitting in my car,",
+        "engine still running,",
+        "not ready to go in."
+      ],
+      "niche": "life"
+    }
+  }
+]

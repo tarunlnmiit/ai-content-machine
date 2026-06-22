@@ -1,91 +1,113 @@
 # Weekly Ideas Report
-Generated: 2026-06-20 06:13:27
+Generated: 2026-06-22 06:13:40
 
 ## Data Science Tech
 
-### 1. Accounting → Financial Data Analytics: Would you focus on pipeline integration first or move into SQL and analytics?
-- **Score:** 1.348
-- **Novelty score:** 0.963
-- **Category:** uncategorized
-- **Source:** reddit_2026-06-09
-- **URL:** https://www.reddit.com/r/analytics/comments/1tvmvgy/accounting_financial_data_analytics_would_you/
+### ⭐ Tool Reel (weekly): Claude + n8n nightly agent — the exact Claude prompt that powers the summary
+- **Type:** comment→DM give-a-tool reel (auto-baked from projects.json)
+- **DM keyword:** comment `FLOW` → auto-DM the deliverable
+- **Deliverable:** n8n workflow JSON (free import) + the Claude prompt pack, in a public repo
+- **Guardrail:** It drafts and summarizes on a schedule — you review the output. It is not autonomous and does not act without you. Never say 'fully automated' or 'runs your life'.
+- **Produce with:** `--project free_tool_ds` on the reel/derivative generators
 
-### 2. The first time i learn python and how it leads me to learn more about data
-- **Score:** 1.303
+### 1. The first time i learn python and how it leads me to learn more about data
+- **Score:** 1.382
 - **Novelty score:** 0.987
 - **Category:** uncategorized
 - **Source:** medium_data_science
 - **URL:** https://medium.com/@arielsitorus504/the-first-time-i-learn-python-and-how-it-leads-me-to-learn-more-about-data-b7a15c3aa3d6?source=rss------data_science-5
 
-### 3. Python Tutorial Day 7: Lists & Tuples Complete Guide for Beginners
-- **Score:** 1.262
-- **Novelty score:** 0.859
+### 2. Data Engineer Bootcamp (FREE 27+ Hour Course) - SQL, Python, Cloud, Bash, AI, Git & GitHub
+- **Score:** 1.274
+- **Novelty score:** 0.965
 - **Category:** uncategorized
-- **Source:** youtube_2026-06-15
-- **URL:** https://youtu.be/C_pTvmMkvN4
+- **Source:** youtube_2026-06-22
+- **URL:** https://youtu.be/ol9_NnC9-cc
 
-### 4. Free Job-Ready AI Course 2026: Beginner to Advanced Skills + Certificate + Project
+### 3. Accounting → Financial Data Analytics: Would you focus on pipeline integration first or move into SQL and analytics?
+- **Score:** 1.267
+- **Novelty score:** 0.960
+- **Category:** uncategorized
+- **Source:** reddit_2026-06-09
+- **URL:** https://www.reddit.com/r/analytics/comments/1tvmvgy/accounting_financial_data_analytics_would_you/
+
+### 4. data science life cycle
+- **Score:** 1.225
+- **Novelty score:** 0.988
+- **Category:** uncategorized
+- **Source:** suggest_2026-06-10_google
+- **URL:** 
+
+### 5. Free Job-Ready AI Course 2026: Beginner to Advanced Skills + Certificate + Project
 - **Score:** 1.216
 - **Novelty score:** 0.988
 - **Category:** uncategorized
-- **Source:** youtube_2026-06-05
+- **Source:** youtube_2026-06-07
 - **URL:** https://youtu.be/0z89XUuXNME
-
-### 5. data science life cycle
-- **Score:** 1.209
-- **Novelty score:** 0.975
-- **Category:** uncategorized
-- **Source:** suggest_2026-06-06_google
-- **URL:** 
 
 ## Life Self Dev
 
-### 1. How to Build a Productivity System That Actually Works in 2026 (Most People Are Doing This Wrong)
-- **Score:** 1.493
-- **Novelty score:** 0.951
-- **Category:** uncategorized
-- **Source:** medium_productivity
-- **URL:** https://oluwafemisunmola.medium.com/how-to-build-a-productivity-system-that-actually-works-in-2026-most-people-are-doing-this-wrong-f271990a3c65?source=rss------productivity-5
+### ⭐ Tool Reel (weekly): Claude + Notion: brain-dump -> weekly system — the exact Claude prompt (paste it on screen)
+- **Type:** comment→DM give-a-tool reel (auto-baked from projects.json)
+- **DM keyword:** comment `SYSTEM` → auto-DM the deliverable
+- **Deliverable:** duplicatable Notion template + the Claude brain-dump prompt (email-gated for list capture)
+- **Guardrail:** It structures what you give it into a system. It does not build the habit for you or track on its own. Never say it 'fixes your discipline' or 'changes your life'.
+- **Produce with:** `--project free_tool_life` on the reel/derivative generators
 
-### 2. how to become a data scientist
-- **Score:** 1.394
-- **Novelty score:** 0.988
-- **Category:** uncategorized
-- **Source:** suggest_2026-06-06_google
-- **URL:** 
+### 🎤 Raw Take batch (4×/week, batch-record) — Hinglish opinion Shorts
+- IG Reel (@mistakenlyhuman) + YouTube Short (Breath of Life). Open with the question verbatim.
+  1. "Someone asked me — Overthinking band kaise karun raat ko?"  _(theme: anxiety)_
+  2. "Someone asked me — Confidence fake karun ya wait karun real aane tak?"  _(theme: self-worth)_
+  3. "Someone asked me — Logon ko 'naa' kaise bolun bina dare?"  _(theme: boundaries)_
+  4. "Someone asked me — Burnout me hoon par ruk nahi sakta — kya karun?"  _(theme: discipline)_
+- See `docs/raw-take-format.md` for structure + guardrails.
 
-### 3. 7 Tiny Japanese Habits That Can Change Your Life in 30 Days !
-- **Score:** 1.376
-- **Novelty score:** 0.976
-- **Category:** uncategorized
-- **Source:** youtube_2026-06-07
-- **URL:** https://youtu.be/wrlbnYF3xro
-
-### 4. What Real Love Looks Like When a Man Truly Loves You
-- **Score:** 1.359
-- **Novelty score:** 0.912
+### 1. What Real Love Looks Like When a Man Truly Loves You
+- **Score:** 1.502
+- **Novelty score:** 0.910
 - **Category:** uncategorized
 - **Source:** medium_psychology
 - **URL:** https://medium.com/@edithtali/what-real-love-looks-like-when-a-man-truly-loves-you-5d90e295512d?source=rss------psychology-5
 
-### 5. how to become a pilot
-- **Score:** 1.330
+### 2. How to Build a Productivity System That Actually Works in 2026 (Most People Are Doing This Wrong)
+- **Score:** 1.416
+- **Novelty score:** 0.950
+- **Category:** uncategorized
+- **Source:** medium_productivity
+- **URL:** https://oluwafemisunmola.medium.com/how-to-build-a-productivity-system-that-actually-works-in-2026-most-people-are-doing-this-wrong-f271990a3c65?source=rss------productivity-5
+
+### 3. What's the smallest habit that actually improved your physical&mental health?
+- **Score:** 1.410
 - **Novelty score:** 1.000
 - **Category:** uncategorized
-- **Source:** suggest_2026-06-06_google
-- **URL:** 
+- **Source:** reddit_2026-06-07
+- **URL:** https://www.reddit.com/r/DecidingToBeBetter/comments/1tycq0z/whats_the_smallest_habit_that_actually_improved/
+
+### 4. # The Small Habit That Quietly Changed My Life
+- **Score:** 1.402
+- **Novelty score:** 0.994
+- **Category:** uncategorized
+- **Source:** medium_self_improvement
+- **URL:** https://medium.com/@signalprovider64/the-small-habit-that-quietly-changed-my-life-17d36155b9c5?source=rss------self_improvement-5
+
+### 5. 7 Tiny Japanese Habits That Can Change Your Life in 30 Days !
+- **Score:** 1.377
+- **Novelty score:** 0.977
+- **Category:** uncategorized
+- **Source:** youtube_2026-06-07
+- **URL:** https://youtu.be/wrlbnYF3xro
 
 ## Poetry Quotes
 
 ### 1. “You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.” ― William W. Purkey
-- **Score:** 1.410
+- **Score:** 1.490
 - **Novelty score:** 1.000
 - **Category:** uncategorized
 - **Source:** goodreads_inspirational
 - **URL:** https://www.goodreads.com/quotes/tag/inspirational
 
 ### 2. I Will Always Be Your Little Girl
-- **Score:** 1.310
+- **Score:** 1.389
 - **Novelty score:** 0.985
 - **Category:** uncategorized
 - **Source:** medium_poetry
@@ -98,16 +120,16 @@ Generated: 2026-06-20 06:13:27
 - **Source:** goodreads_inspirational
 - **URL:** https://www.goodreads.com/quotes/tag/inspirational
 
-### 4. “I have not failed. I've just found 10,000 ways that won't work.” ― Thomas A. Edison
-- **Score:** 1.242
-- **Novelty score:** 0.833
+### 4. What Seekest Thou?
+- **Score:** 1.271
+- **Novelty score:** 0.956
 - **Category:** uncategorized
-- **Source:** goodreads_inspirational
-- **URL:** https://www.goodreads.com/quotes/tag/inspirational
+- **Source:** medium_poetry
+- **URL:** https://medium.com/@jibrinosolomon7/what-seekest-thou-0a96044c2def?source=rss------poetry-5
 
-### 5. People Don't Know the Difference Between Writing a Book and Being a Writer...
-- **Score:** 1.229
-- **Novelty score:** 0.983
+### 5. Ursula K Le Guin's Secret to Amazing Stories
+- **Score:** 1.248
+- **Novelty score:** 0.885
 - **Category:** uncategorized
-- **Source:** youtube_2026-06-09
-- **URL:** https://youtu.be/5Wkl-W45yY8
+- **Source:** youtube_2026-06-15
+- **URL:** https://youtu.be/wRBc2KppbgE

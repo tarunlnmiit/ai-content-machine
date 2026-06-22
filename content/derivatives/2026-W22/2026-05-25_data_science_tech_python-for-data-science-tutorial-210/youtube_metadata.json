@@ -1,15 +1,21 @@
 {
-  "title": "Python Data Types, Lists & Functions Explained | Tutorial 2 of 10",
-  "description": "The type error that makes your analysis wrong without crashing — and the four Python structures that prevent it.\n\nIn Tutorial 1 we built our first script. In Tutorial 2 we go one layer deeper: what Python actually stores, how types behave differently, and the structures every data science pipeline depends on before pandas ever enters the picture.\n\nWhat you will learn: the four primitive types (int, float, str, bool) and the silent bugs each one hides, how to check and convert types before any calculation, lists and dicts and the difference that matters in real data work, list comprehensions as one-line filters and transforms, and functions — the habit that makes your code trustworthy.\n\n[TIMESTAMPS_PLACEHOLDER]\n\nThis is part of a 10-tutorial Python for Data Science series built for working professionals. Practical from the start, no fluff.\n\n📋 Free worksheet — Python For Data Science Tutorial 210:\nhttps://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210",
+  "title": "Python Gave Me a WRONG Answer With No Error (Here's Why) | Python for Data Science #2",
+  "description": "Python summed my column and gave me a number. No crash. No warning. Completely wrong answer — and I didn't catch it for days. This is the silent bug that kills real data science work, and it comes down to one thing: data types.\n\nIn this tutorial you will learn exactly how this happens and how to prevent it. We go through all four primitive types Python uses, why a number stored as a string will concatenate instead of add, how to check and convert types before any calculation, lists and list comprehensions (the one-liner that replaces 3-line for loops), dictionaries and the list-of-dicts pattern that mirrors how pandas stores data internally, and functions — the habit that turns messy notebooks into trustworthy code.\n\nBy the end you will understand what type every piece of your data is, how to catch type mistakes before they produce plausible-looking wrong answers, and why learning these structures first means you will understand pandas intuitively instead of memorizing methods.\n\n⏱️ TIMESTAMPS\n0:00 The silent bug — Python gave me the wrong answer with no error\n2:00 What this tutorial covers\n3:05 The 4 primitive types: int, float, str, bool\n6:30 Type checking and type conversion\n9:12 Rule of thumb: CSV data always arrives as strings\n9:25 Lists — how to store and access sequences\n10:41 Indexing, slicing, and negative indexes\n11:10 Append and list comprehension (one-liner that replaces 3 lines)\n14:52 F-string formatting inside list comprehensions\n15:28 Dictionaries — how data scientists think about records\n17:54 Adding and updating dictionary keys safely\n18:34 List of dictionaries — the real-world data pattern\n21:15 Functions — write once, reuse everywhere\n22:50 Default arguments and when to use them\n24:39 Building an outlier detector in pure Python\n26:20 Why all of this matters before you touch pandas\n\n📋 Free worksheet (practice problems + cheat sheet):\nhttps://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210\n\nThis is Tutorial 2 of a 10-part Python for Data Science series built for working professionals. Practical from day one, no fluff.\n\n▶ Tutorial 1: Your First Python Script for Data Science\n▶ Tutorial 3: NumPy Arrays — When Your Data Has a Million Rows",
   "tags": [
     "python for data science",
     "python data types tutorial",
+    "python silent bug",
     "python lists and dictionaries",
+    "python list comprehension",
     "python functions tutorial",
-    "learn python data science",
-    "python tutorial beginners",
-    "data science python basics",
-    "python programming 2026"
+    "learn python data science 2025",
+    "python type error",
+    "python beginner tutorial",
+    "data science python tutorial",
+    "python string vs int",
+    "python csv data types",
+    "python tutorial 2026",
+    "breathofdatascience"
   ],
   "thumbnail_concept": "Split screen: left side shows Python terminal with '283542' as the result of summing string ages — highlighted in red with no error visible; right side shows the corrected int() conversion producing 105 in green. Bold white text overlay on dark background: 'No error. Wrong answer.'",
   "end_screen_suggestion": "Tutorial 3: NumPy Arrays — When Your Data Has a Million Rows"

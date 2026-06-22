@@ -137,37 +137,88 @@ def dispatch_threads(post: dict):
         log.error(f"Threads post failed: {e}")
 
 
+COMMENT_FIRE_DELAY_S = 5 * 60  # fire comments 5 min after scheduled publish time
+
+
+def _fire_linkedin_comments(token: str, urn: str, post_urn: str, meta: dict,
+                             slug: str, result: dict):
+    """Post first_comment then second_comment in order. Skips unresolved placeholders."""
+    from post_linkedin import post_comment
+
+    for key, label in [("first_comment", "first"), ("second_comment", "second")]:
+        comment = (meta.get(key) or "").strip()
+        if not comment:
+            continue
+        if "[BLOG_LINK]" in comment:
+            result[f"{key}_skipped"] = "unresolved [BLOG_LINK] placeholder"
+            log.warning(f"LinkedIn {label} comment skipped for {slug}: placeholder not resolved")
+            continue
+        try:
+            cid = post_comment(token, urn, post_urn, comment)
+            result[f"{key}_id"] = cid
+            log.info(f"LinkedIn {label} comment posted: {cid}")
+        except Exception as ce:
+            result[f"{key}_error"] = str(ce)
+            log.warning(f"LinkedIn post OK but {label} comment failed: {ce}")
+
+
+def dispatch_linkedin_comments(post: dict):
+    """Fire pending comments for a li_native_scheduled post that has now gone live."""
+    sys.path.insert(0, str(REPO / "scripts"))
+    from post_linkedin import get_credentials
+
+    post_id = post["id"]
+    slug = post["slug"]
+    meta = _post_meta(post)
+    post_urn = meta.get("post_urn")
+
+    if not post_urn:
+        _mark_failed(post_id, "li_native_scheduled row has no post_urn in metadata")
+        log.error(f"LinkedIn comment phase skipped for {slug}: no post_urn stored")
+        return
+
+    log.info(f"Firing LinkedIn comments: slug={slug} post_urn={post_urn}")
+    try:
+        token, urn = get_credentials()
+        result = {"post_urn": post_urn, "slug": slug, "kind": meta.get("kind", "text")}
+        _fire_linkedin_comments(token, urn, post_urn, meta, slug, result)
+        _mark_posted(post_id, result)
+        log.info(f"LinkedIn comment phase complete: {slug}")
+    except Exception as e:
+        _mark_failed(post_id, str(e))
+        log.error(f"LinkedIn comment phase failed: {e}")
+
+
 def dispatch_linkedin(post: dict):
     sys.path.insert(0, str(REPO / "scripts"))
-    from post_linkedin import post_text, post_comment, get_credentials
+    from post_linkedin import post_text, post_document, get_credentials
 
     post_id = post["id"]
     slug = post["slug"]
     text = post["content_text"]
     media_path = post["media_path"]
     meta = _post_meta(post)
+    kind = meta.get("kind", "text")
 
-    image_path = (REPO / media_path) if media_path else None
-
-    log.info(f"Posting LinkedIn: slug={slug}")
+    log.info(f"Posting LinkedIn ({kind}): slug={slug}")
     try:
         token, urn = get_credentials()
-        post_urn = post_text(token, urn, text, image_path)
-        result = {"post_urn": post_urn, "slug": slug}
 
-        # Pinned first comment with the blog link — skip if the link is still an
-        # unresolved placeholder (blog not published yet).
-        comment = (meta.get("first_comment") or "").strip()
-        if comment and "[BLOG_LINK]" not in comment:
-            try:
-                result["comment_id"] = post_comment(token, urn, post_urn, comment)
-                log.info("LinkedIn first comment posted")
-            except Exception as ce:
-                result["comment_error"] = str(ce)
-                log.warning(f"LinkedIn post OK but comment failed: {ce}")
-        elif comment:
-            result["comment_skipped"] = "unresolved [BLOG_LINK] placeholder"
-            log.warning(f"LinkedIn comment skipped for {slug}: link not yet resolved")
+        if kind == "document":
+            doc_rel = meta.get("doc_path")
+            doc_title = meta.get("doc_title", "")
+            if not doc_rel:
+                raise ValueError("kind=document but no doc_path in metadata")
+            pdf_path = REPO / doc_rel
+            if not pdf_path.exists():
+                raise FileNotFoundError(f"PDF not found: {pdf_path}")
+            post_urn = post_document(token, urn, text, pdf_path, doc_title)
+        else:
+            image_path = (REPO / media_path) if media_path else None
+            post_urn = post_text(token, urn, text, image_path)
+
+        result = {"post_urn": post_urn, "slug": slug, "kind": kind}
+        _fire_linkedin_comments(token, urn, post_urn, meta, slug, result)
 
         _mark_posted(post_id, result)
         log.info(f"LinkedIn posted: {post_urn}")
@@ -177,7 +228,7 @@ def dispatch_linkedin(post: dict):
 
 
 DISPATCHERS = {
-    "linkedin": dispatch_linkedin,
+    "linkedin": dispatch_linkedin,           # immediate publish (fallback / manual override)
     "instagram": dispatch_instagram,
     "facebook": dispatch_facebook,
     "threads": dispatch_threads,
@@ -217,7 +268,7 @@ def poll_and_fire():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
 
-    # Only fire parent posts (thread_parent_id IS NULL) to avoid double-posting thread children
+    # Phase 1: pending posts due now (non-LinkedIn-native or immediate publish fallback).
     due = conn.execute(
         """SELECT * FROM posts
            WHERE status='pending'
@@ -226,12 +277,26 @@ def poll_and_fire():
            ORDER BY scheduled_at ASC""",
         (now,),
     ).fetchall()
+
+    # Phase 2: LinkedIn native-scheduled posts whose publish time has passed — fire comments.
+    # Use scheduled_at + COMMENT_FIRE_DELAY_S as the trigger window.
+    comment_due = conn.execute(
+        """SELECT * FROM posts
+           WHERE platform='linkedin'
+             AND status='li_native_scheduled'
+             AND datetime(scheduled_at, '+' || ? || ' seconds') <= ?
+           ORDER BY scheduled_at ASC""",
+        (COMMENT_FIRE_DELAY_S, now),
+    ).fetchall()
     conn.close()
 
-    if not due:
+    if not due and not comment_due:
         return
 
-    log.info(f"Found {len(due)} due post(s)")
+    if due:
+        log.info(f"Found {len(due)} due post(s)")
+    if comment_due:
+        log.info(f"Found {len(comment_due)} LinkedIn comment phase(s) due")
 
     for row in due:
         post = dict(row)
@@ -247,6 +312,13 @@ def poll_and_fire():
         except Exception as e:
             log.error(f"Dispatcher error for post {post['id']}: {e}")
             _mark_failed(post["id"], str(e))
+
+    for row in comment_due:
+        try:
+            dispatch_linkedin_comments(dict(row))
+        except Exception as e:
+            log.error(f"LinkedIn comment dispatch error for post {row['id']}: {e}")
+            _mark_failed(row["id"], str(e))
 
 
 # ── Main ──────────────────────────────────────────────────────────────────

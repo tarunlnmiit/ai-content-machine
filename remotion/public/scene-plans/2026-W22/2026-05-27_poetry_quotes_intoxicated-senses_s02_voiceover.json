@@ -1,0 +1,57 @@
+[
+  {
+    "sceneId": "scene-01",
+    "componentName": "AtmosphericQuote",
+    "script": "The hangover metaphor works because hangovers have an end point.",
+    "niche": "poetry",
+    "atSec": 0.0,
+    "durationSec": 5,
+    "layout": "fullscreen",
+    "props": {
+      "quote": "The hangover metaphor works because hangovers have an end point.",
+      "attribution": ""
+    }
+  },
+  {
+    "sceneId": "scene-02",
+    "componentName": "HandwrittenReveal",
+    "script": "twinkling eyes, an enlightening smile ebony hair",
+    "niche": "poetry",
+    "atSec": 12.0,
+    "durationSec": 7,
+    "layout": "fullscreen",
+    "props": {
+      "lines": [
+        "twinkling eyes,",
+        "an enlightening smile,",
+        "ebony hair."
+      ],
+      "niche": "poetry"
+    }
+  },
+  {
+    "sceneId": "scene-03",
+    "componentName": "ImageTextReveal",
+    "script": "vague longing forgettable, but a face, a real life, the particular features that stays",
+    "niche": "poetry",
+    "atSec": 27.0,
+    "durationSec": 6,
+    "layout": "fullscreen",
+    "props": {
+      "headline": "Vague longing is forgettable. A face is not.",
+      "subtext": "the poem stays specific"
+    }
+  },
+  {
+    "sceneId": "scene-04",
+    "componentName": "CUSTOM_SCENE_SLOT",
+    "script": "These particular things are stuck, and I can't unstick them.",
+    "niche": "poetry",
+    "atSec": 43.0,
+    "durationSec": 8,
+    "layout": "fullscreen",
+    "props": {
+      "description": "Against a near-black background, handwritten words drift in one at a time \u2014 'twinkling eyes', 'ebony hair', 'enlightening smile' \u2014 each glowing faintly amber, orbiting an invisible center as if held by gravity. They don't fall away. After 4 seconds, a single line fades in at the bottom in thin serif: 'Some people just stay.' Mood: haunted, intimate, irreversible. Niche: poetry."
+    }
+  }
+]

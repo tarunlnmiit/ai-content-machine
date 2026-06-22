@@ -97,3 +97,18 @@ establish a new connection: [Errno 61] Connection refused"))
 
 Summary:
 Summary unavailable — Ollama failed.
+───────────────────────────── Analytics Collector ──────────────────────────────
+  Ollama failed: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+  YouTube        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4/4 0:00:04
+  Twitter        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:04
+  Instagram      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:04
+  GitHub         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:05
+  Ollama summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 0:00:05
+
+✓ Saved: data/analytics/weekly_insights.md
+
+Summary:
+Summary unavailable — Ollama failed.

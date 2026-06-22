@@ -1,0 +1,22 @@
+{
+  "slug": "2026-05-27_poetry_quotes_intoxicated-senses_s01",
+  "niche": "poetry",
+  "kind": "voiceover",
+  "audioFile": "audio/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s01.m4a",
+  "durationSec": 66.0,
+  "silenceTrimStartSec": 0.0,
+  "silenceTrimEndSec": 66.0,
+  "brollCues": [],
+  "captionsFile": "captions/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s01.captions.json",
+  "showSubtitles": false,
+  "scenePlanFile": "scene-plans/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_s01_voiceover.json",
+  "colorGrading": {
+    "saturate": 1.16,
+    "hueRotate": -3,
+    "contrast": 1.03,
+    "brightness": 1.04,
+    "overlayColor": "rgba(255, 180, 120, 0.10)"
+  },
+  "look": "poetry",
+  "outputSize": "9x16"
+}

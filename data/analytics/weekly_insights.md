@@ -1,5 +1,5 @@
-# Weekly Analytics — 2026-W23
-*Generated: 2026-06-14 20:00*
+# Weekly Analytics — 2026-W24
+*Generated: 2026-06-21 20:00*
 
 ## Summary
 Summary unavailable — Ollama failed.
@@ -9,40 +9,40 @@ Summary unavailable — Ollama failed.
 ## YouTube
 
 ### Breath of Data Science
-- Subscribers: 159
-- Total views: 14,750
-- Videos: 14
+- Subscribers: 161
+- Total views: 15,185
+- Videos: 27
 
 Recent videos:
-  - [2026-06-13] I automated job hunting with AI (free + open source) || Shorts — 300 views, 6 likes
-  - [2026-06-12] Python for Data Science Beginners 2026 — Stop Setting Up Wrong (Tutorial 1/10) — 2 views, 0 likes
-  - [2023-07-21] How to Create a Smart Chatbot with Streamlit, Python, and ChatGPT in 80 lines of code — 766 views, 12 likes
-  - [2023-07-03] The Ultimate Guide to Pandas Series for Data Analysis Part 2 — 55 views, 2 likes
-  - [2023-07-03] The Ultimate Guide to Pandas Series for Data Analysis Part 1 — 78 views, 2 likes
+  - [2026-06-21] Python Errors Are Feedback. Read Them Like This. — 135 views, 0 likes
+  - [2026-06-20] Your Code Ran. But Can You Recreate It? — 150 views, 0 likes
+  - [2026-06-20] One Line That Will Save Your Data Science Projects — 137 views, 1 likes
+  - [2026-06-19] Skip Hello World. Write This Instead. — 52 views, 0 likes
+  - [2026-06-19] You'll Write This Pattern 1,000 Times in Data Science — 47 views, 1 likes
 
 ### Breath of Life
-- Subscribers: 38
-- Total views: 525
-- Videos: 19
+- Subscribers: 39
+- Total views: 898
+- Videos: 24
 
 Recent videos:
-  - [2026-06-10] How to Turn Your Habits Into a System That Actually Works — 22 views, 2 likes
-  - [2024-05-24] 8. Why Humans Need Closure to Move On? The Need For Closure — 16 views, 0 likes
-  - [2023-03-01] Why Humans Need Closure to Move On? The Need For Closure — 52 views, 0 likes
-  - [2024-05-24] 7. How Morning Rituals Made Me Appreciate Life | Have Positive Energy And Become Mentally Healthy — 11 views, 0 likes
-  - [2023-02-15] How Healthy Morning Routine Made Me Appreciate Life | Have Positive Energy & Become Mentally Healthy — 24 views, 0 likes
+  - [2026-06-18] A Good System Needs Less Willpower, Not More — 11 views, 0 likes
+  - [2026-06-17] The Sunday Question That Improves Your Whole Week — 0 views, 0 likes
+  - [2026-06-17] Three Habit Categories That Actually Work — 5 views, 0 likes
+  - [2026-06-16] Here's What Nobody Tells You About Discipline — 0 views, 0 likes
+  - [2026-06-16] My habits weren't helping — they were amplifying — 210 views, 1 likes
 
 ### Breath of Poetry
 - Subscribers: 8
-- Total views: 792
-- Videos: 23
+- Total views: 897
+- Videos: 30
 
 Recent videos:
-  - [2026-06-13] Safe and Alive: A Poetry Essay on Real Love — 0 views, 0 likes
-  - [2024-04-04] Whispers of the Deserted Mind || Routine || Spoken Word Poetry — 23 views, 0 likes
-  - [2024-09-29] 11. Whispers of the Deserted Mind || Routine — 12 views, 0 likes
-  - [2023-07-19] Hurts Like Inferno - A Heart-Wrenching Poem of Self-Realization || Spoken Word Poetry — 79 views, 1 likes
-  - [2024-09-29] 10. Hurts Like Inferno - A Heart-Wrenching Poem of Self-Realization — 27 views, 0 likes
+  - [2026-06-18] Safe Doesn't Mean Unchanged. Alive Doesn't Mean Reckless. — 4 views, 0 likes
+  - [2026-06-17] When Love Becomes Real in Your Family's Eyes — 9 views, 0 likes
+  - [2026-06-17] The Person Your Whole World Would Also Choose — 1 views, 0 likes
+  - [2026-06-16] Embarrassment Is the Key to Love — 3 views, 0 likes
+  - [2026-06-16] What Love Stories Get Wrong About Longing — 65 views, 1 likes
 
 ### Breath of Relaxing
 - Subscribers: 0
@@ -83,3 +83,8 @@ Top posts:
 
 Noth
   - 8 likes, 1 comments | Humans are natural addicts. We want to keep doing something that we enjoy irresp
+
+---
+
+## GitHub (project repos)
+- **tarunlnmiit/autopilot-jobhunt**: 82 ⭐ (no 7d baseline yet), 22 forks, 0 open issues

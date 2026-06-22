@@ -1,0 +1,19 @@
+You're burning tokens before you type a word.
+
+I spent a few hours going through GitHub and found 6 repos that cut 60–90% of wasted context in Claude Code — terminal output, file reads, verbose responses, all of it.
+
+Swipe for the full breakdown →
+
+The 6 repos:
+→ rtk-ai/rtk (Rust binary, compresses terminal output by 89%)
+→ mksglu/context-mode (sandboxes MCP outputs to SQLite, 98% reduction)
+→ tirth8205/code-review-graph (AST knowledge graph, 6.8x fewer tokens on reviews)
+→ Mibayy/token-savior (symbol-based navigation + persistent memory, 97% fewer chars)
+→ JuliusBrussee/caveman (compressed responses, 65–75% fewer output tokens)
+→ drona23/claude-token-efficient (one CLAUDE.md file, 63% output reduction)
+
+None of these change how you code. They just stop Claude from reading the entire internet every time you ask it a question.
+
+Save this for your next Claude Code session. 🔖
+
+#claudecode #AITools #DeveloperTools #OpenSource #DataScience #AIEngineering #Anthropic #devproductivity #Python #MachineLearning
