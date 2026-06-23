@@ -1,5 +1,5 @@
 // GET /get-worksheet?slug=<slug> — renders the email-capture page.
-import { resolve } from "./_lib/manifest.mjs";
+import { resolve, listSlugs } from "./_lib/manifest.mjs";
 
 function esc(s = "") {
   return String(s).replace(/[&<>"']/g, (c) => ({
@@ -16,6 +16,22 @@ const NICHE_LABEL = {
   life_self_dev: "Life & Self-Development",
   poetry_quotes: "Poetry",
 };
+
+function listingPage() {
+  const slugs = listSlugs();
+  const items = slugs.length
+    ? slugs.map((s) => `<li><a href="/get-worksheet/${esc(s)}">${esc(s)}</a></li>`).join("")
+    : "<li><em>No worksheets available yet.</em></li>";
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Worksheets — Tarun Gupta</title>${STYLE}</head>
+<body><main class="wrap"><section class="card" aria-labelledby="h">
+<p class="kicker">Free resources</p>
+<h1 id="h">Worksheets</h1>
+<p class="lede">Use the download link from the post — or pick one below.</p>
+<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.5rem">${items}</ul>
+</section></main></body></html>`;
+}
 
 function notFoundPage() {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -72,7 +88,15 @@ button[disabled]{opacity:.6;cursor:progress}
 </style>`;
 
 export default function handler(req, res) {
-  const slug = String(req.query?.slug ?? "");
+  const slug = String(req.query?.slug ?? "").trim();
+
+  if (!slug) {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.end(listingPage());
+    return;
+  }
+
   const ws = resolve(slug);
 
   if (!ws) {
