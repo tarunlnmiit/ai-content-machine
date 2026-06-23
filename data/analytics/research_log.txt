@@ -2492,3 +2492,92 @@ establish a new connection: [Errno 61] Connection refused"))
     3. “Darkness cannot drive out darkness: only light can do that. Hate (0.970)
     4. What Seekest Thou? (0.956)
     5. Ursula K Le Guin's Secret to Amazing Stories (0.885)
+───────────────────────────────── Idea Scorer ──────────────────────────────────
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+Ollama error: HTTPConnectionPool(host='localhost', port=11434): Max retries 
+exceeded with url: /api/generate (Caused by 
+NewConnectionError("HTTPConnection(host='localhost', port=11434): Failed to 
+establish a new connection: [Errno 61] Connection refused"))
+  Loaded 12336 ideas            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Filtered: 12336 → 12240 ideas ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  After dedup: 2578 ideas       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:12:39
+  Rank-normalized               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Archive has 10 titles         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Applying novelty penalty      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:02
+  Applying virality weight      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1   0:00:00
+  Classified uncategorized      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15/15 0:00:00
+
+✓ Saved to data/ideas/weekly_ideas.md
+  data_science_tech:
+    1. Data Engineer Bootcamp (FREE 27+ Hour Course) - SQL, Python, Clou (0.988)
+    2. Accounting → Financial Data Analytics: Would you focus on pipelin (0.963)
+    3. data science life cycle (0.988)
+    4. One-Tailed vs Two-Tailed Tests: Does It Actually Matter? (0.995)
+    5. data science using python (0.975)
+  life_self_dev:
+    1. What Real Love Looks Like When a Man Truly Loves You (0.980)
+    2. Nobody Talks About How Lonely It Is to Lose an Online Job (0.988)
+    3. The Frictionless Flow: Why Willpower Alone Isn’t Enough for Deep  (0.920)
+    4. How I Read The Bible 25 Times With These 2 Simple Habits (0.906)
+    5. The Quiet Strength of One More Time (0.952)
+  poetry_quotes:
+    1. “You've gotta dance like there's nobody watching, Love like you'l (1.000)
+    2. fact about someone that always wanna be near his crush. (0.941)
+    3. “Darkness cannot drive out darkness: only light can do that. Hate (0.970)
+    4. “I Don’t Want to Hurt You… I Just Want to Set You Free From Me” (0.887)
+    5. People Don't Know the Difference Between Writing a Book and Being (0.983)
