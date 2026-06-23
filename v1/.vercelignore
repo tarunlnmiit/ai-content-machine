@@ -10,7 +10,6 @@ content/
 data/
 docs/
 documentation/
-scripts/
 agents/
 prompts/
 node_modules/
