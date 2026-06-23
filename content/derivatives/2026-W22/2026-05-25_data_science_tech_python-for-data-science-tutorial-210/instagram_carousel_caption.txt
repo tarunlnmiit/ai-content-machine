@@ -1,0 +1,14 @@
+Your Python code gave you the wrong answer — and didn't tell you.
+
+That's what happens when you mix integers, floats, and strings without knowing what Python does under the hood.
+
+Tutorial 2 breaks down the 5 data types that decide how your code thinks — lists, tuples, dicts, and why type matters more than you think.
+
+Swipe through. Slide 4 alone will save you an hour of debugging.
+
+Comment WORKSHEET 👇 — the practice set I wish I had when I was learning. Free.
+
+.
+.
+.
+#Python #DataScience #LearnPython #PythonTips #PythonProgramming #DataScienceTips #PythonForBeginners #PythonLearning #CodeNewbie #ProgrammingTips #DataTypes #PythonCode #LearnToCode #TechEducation #SoftwareEngineering #PythonDeveloper #CodingLife #DataScienceEducation #MachineLearning #Analytics #PythonBasics #CodingCommunity #BreathOfDataScience
