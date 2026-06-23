@@ -1,0 +1,31 @@
+1
+00:00:00,020 --> 00:00:06,100
+The benefit of list comprehension is that it is concise, readable and every data scientist uses
+
+2
+00:00:06,100 --> 00:00:12,820
+this pattern constantly. So there are a few other things about list that you should know,
+
+3
+00:00:14,100 --> 00:00:19,220
+which is there are negative indexes also allowed. So if I say write print,
+
+4
+00:00:23,380 --> 00:00:33,220
+scores say minus 1, right. What do you think it will do? So it will print 90, which is the last
+
+5
+00:00:33,220 --> 00:00:42,580
+element of our scores list and negative indexes, they start from the right to the left and they
+
+6
+00:00:42,580 --> 00:00:51,460
+start from minus 1. So minus 1 will be 90, minus 2 is 95, minus 3 is 78, minus 4 is 92,
+
+7
+00:00:51,540 --> 00:00:56,660
+list comprehension also gives you some other powerful things like you can do transformation
+
+8
+00:00:56,660 --> 00:00:56,700
+of data in one single line. So if we copy this and let us say we want to calculate

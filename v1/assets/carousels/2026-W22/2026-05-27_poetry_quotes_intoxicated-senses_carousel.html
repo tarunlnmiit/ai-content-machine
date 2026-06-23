@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breath of Poetry — The Hangover That Won't Lift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #2A2620;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ─── IG FRAME ─────────────────────────────────────── */
+    .ig-frame {
+      width: 420px;
+      background: #ffffff;
+      border-radius: 4px;
+      box-shadow: 0 12px 60px rgba(0,0,0,0.55);
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* ─── IG HEADER ────────────────────────────────────── */
+    .ig-header {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      gap: 10px;
+      border-bottom: 1px solid #efefef;
+    }
+    .ig-avatar-ring {
+      padding: 2px;
+      background: linear-gradient(165deg, #8A6E30 0%, #B89850 50%, #D4BC7A 100%);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .ig-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #1E1B2E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: #D4BC7A;
+      font-size: 15px;
+      border: 2px solid #fff;
+    }
+    .ig-header-info { flex: 1; min-width: 0; }
+    .ig-username { font-size: 12.5px; font-weight: 600; color: #1a1a1a; line-height: 1; }
+    .ig-handle  { font-size: 10.5px; color: #8e8e8e; margin-top: 2px; }
+    .ig-follow-btn {
+      font-size: 12.5px; font-weight: 600; color: #0095f6;
+      background: none; border: none; cursor: pointer; padding: 0;
+    }
+    .ig-more { color: #262626; font-size: 20px; line-height: 1; cursor: pointer; padding-left: 4px; }
+
+    /* ─── CAROUSEL VIEWPORT ────────────────────────────── */
+    .carousel-viewport {
+      width: 420px;
+      height: 525px;
+      overflow: hidden;
+      position: relative;
+      cursor: grab;
+    }
+    .carousel-viewport.grabbing { cursor: grabbing; }
+
+    .carousel-track {
+      display: flex;
+      flex-direction: row;
+      height: 525px;
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    /* ─── SLIDES ───────────────────────────────────────── */
+    .slide {
+      width: 420px;
+      height: 525px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .slide.light    { background: #EDE8DC; }
+    .slide.dark     { background: #1E1B2E; }
+    .slide.gradient { background: linear-gradient(165deg, #8A6E30 0%, #B89850 50%, #D4BC7A 100%); }
+
+    /* subtle grain overlay */
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .slide.dark::after  { opacity: 0.04; }
+
+    /* ─── PROGRESS BAR ─────────────────────────────────── */
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      z-index: 20;
+    }
+    .slide.light    .progress-bar { background: rgba(138,110,48,0.15); }
+    .slide.dark     .progress-bar { background: rgba(255,255,255,0.12); }
+    .slide.gradient .progress-bar { background: rgba(255,255,255,0.2); }
+
+    .progress-fill {
+      height: 100%;
+      transition: width 0.38s ease;
+      border-radius: 0 2px 2px 0;
+    }
+    .slide.light    .progress-fill { background: #B89850; }
+    .slide.dark     .progress-fill { background: #D4BC7A; }
+    .slide.gradient .progress-fill { background: rgba(237,232,220,0.85); }
+
+    /* ─── SWIPE ARROW ──────────────────────────────────── */
+    .swipe-arrow {
+      position: absolute;
+      bottom: 16px;
+      right: 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 15;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .swipe-arrow:hover { transform: scale(1.12); }
+    .slide.light    .swipe-arrow { background: rgba(184,152,80,0.1); border: 1px solid rgba(184,152,80,0.4); }
+    .slide.dark     .swipe-arrow { background: rgba(212,188,122,0.1); border: 1px solid rgba(212,188,122,0.3); }
+    .slide.gradient .swipe-arrow { background: rgba(237,232,220,0.15); border: 1px solid rgba(237,232,220,0.45); }
+    .swipe-arrow svg { width: 15px; height: 15px; }
+    .slide.light    .swipe-arrow svg { stroke: #8A6E30; }
+    .slide.dark     .swipe-arrow svg { stroke: #D4BC7A; }
+    .slide.gradient .swipe-arrow svg { stroke: #EDE8DC; }
+
+    /* ─── TAG ──────────────────────────────────────────── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 8.5px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 20px;
+    }
+    .tag.lt { background: rgba(184,152,80,0.1); color: #8A6E30; border: 1px solid rgba(184,152,80,0.28); }
+    .tag.dk { background: rgba(212,188,122,0.1); color: #D4BC7A; border: 1px solid rgba(212,188,122,0.22); }
+    .tag.gr { background: rgba(237,232,220,0.15); color: rgba(237,232,220,0.9); border: 1px solid rgba(237,232,220,0.35); }
+
+    /* ─── LOGO LOCKUP ──────────────────────────────────── */
+    .logo-lockup { display: flex; align-items: center; gap: 7px; }
+    .logo-b {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700; font-size: 13px; flex-shrink: 0;
+    }
+    .logo-b.lg { background: linear-gradient(165deg, #8A6E30, #B89850, #D4BC7A); color: #EDE8DC; }
+    .logo-b.dk { background: rgba(237,232,220,0.12); border: 1px solid rgba(237,232,220,0.35); color: #EDE8DC; }
+    .logo-label { font-family: 'DM Sans', sans-serif; font-size: 9.5px; font-weight: 500; letter-spacing: 0.07em; }
+    .logo-label.lt { color: #8A6E30; }
+    .logo-label.gr { color: rgba(237,232,220,0.75); }
+
+    /* ─── DIVIDER ──────────────────────────────────────── */
+    .div-line { height: 1px; }
+    .div-line.lt { background: rgba(184,152,80,0.35); }
+    .div-line.dk { background: rgba(212,188,122,0.25); }
+    .div-line.gr { background: rgba(237,232,220,0.3); }
+
+    /* ─── ORNAMENTAL QUOTES ────────────────────────────── */
+    .orn {
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      pointer-events: none;
+      z-index: 0;
+      line-height: 1;
+      select: none;
+    }
+    .orn.lt { color: rgba(138,110,48,0.07); }
+    .orn.dk { color: rgba(212,188,122,0.07); }
+    .orn.gr { color: rgba(237,232,220,0.1); }
+
+    /* ─── FEATURE ROWS ─────────────────────────────────── */
+    .feat-list { display: flex; flex-direction: column; gap: 13px; }
+    .feat-row  { display: flex; align-items: flex-start; gap: 12px; }
+    .feat-icon {
+      width: 30px; height: 30px; border-radius: 7px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .feat-icon.lt { background: rgba(184,152,80,0.1); border: 1px solid rgba(184,152,80,0.2); }
+    .feat-body { flex: 1; }
+    .feat-title { font-family: 'Playfair Display', serif; font-style: italic; font-size: 12.5px; color: #3A3028; line-height: 1.45; }
+    .feat-sub   { font-family: 'DM Sans', sans-serif; font-size: 10.5px; color: #8A7A60; margin-top: 2px; line-height: 1.45; }
+
+    /* ─── NUMBERED STEPS ───────────────────────────────── */
+    .step-list { display: flex; flex-direction: column; gap: 14px; }
+    .step-row  { display: flex; align-items: flex-start; gap: 12px; }
+    .step-num  {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 11px; font-weight: 600;
+      background: linear-gradient(135deg, #B89850, #D4BC7A); color: #EDE8DC;
+      margin-top: 1px;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-family: 'Playfair Display', serif; font-style: italic; font-size: 12.5px; color: #3A3028; line-height: 1.45; }
+    .step-sub   { font-family: 'DM Sans', sans-serif; font-size: 10px; color: #8A7A60; margin-top: 2px; line-height: 1.45; }
+
+    /* ─── QUOTE BOX ────────────────────────────────────── */
+    .q-box {
+      border-left: 2px solid; padding: 10px 14px; border-radius: 0 6px 6px 0;
+    }
+    .q-box.dk { border-color: rgba(212,188,122,0.45); background: rgba(212,188,122,0.05); }
+
+    /* ─── POEM LINES ───────────────────────────────────── */
+    .poem-block { display: flex; flex-direction: column; gap: 1px; }
+    .poem-line  { font-family: 'Playfair Display', serif; font-style: italic; line-height: 1.75; }
+
+    /* ─── CTA BUTTON ───────────────────────────────────── */
+    .cta-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 26px; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 600;
+      letter-spacing: 0.02em; cursor: pointer; border: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cta-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .cta-btn.solid { background: #EDE8DC; color: #8A6E30; }
+
+    /* ─── IG FOOTER ────────────────────────────────────── */
+    .ig-dots {
+      display: flex; justify-content: center; gap: 4px;
+      padding: 8px 16px 6px;
+    }
+    .ig-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #dbdbdb;
+      transition: background 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+    .ig-dot.active { background: #0095f6; transform: scale(1.2); }
+
+    .ig-actions { display: flex; align-items: center; padding: 2px 14px 6px; }
+    .ig-actions-left { display: flex; gap: 14px; flex: 1; }
+    .ig-action-btn { background: none; border: none; cursor: pointer; padding: 4px; color: #262626; }
+    .ig-action-btn svg { width: 23px; height: 23px; }
+    .ig-bookmark { margin-left: auto; }
+
+    .ig-likes   { padding: 0 16px 4px; font-size: 12.5px; font-weight: 600; color: #262626; }
+    .ig-caption { padding: 0 16px 4px; font-size: 12.5px; color: #262626; line-height: 1.5; }
+    .ig-caption strong { font-weight: 600; }
+    .ig-more-cap { color: #8e8e8e; }
+    .ig-time    { padding: 0 16px 16px; font-size: 9.5px; color: #8e8e8e; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  </style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <!-- ── IG HEADER ───────────────────────────────────── -->
+  <div class="ig-header">
+    <div class="ig-avatar-ring">
+      <div class="ig-avatar">B</div>
+    </div>
+    <div class="ig-header-info">
+      <div class="ig-username">mistakenlyhuman</div>
+      <div class="ig-handle">Breath of Poetry</div>
+    </div>
+    <button class="ig-follow-btn">Follow</button>
+    <span class="ig-more">···</span>
+  </div>
+
+  <!-- ── CAROUSEL ─────────────────────────────────────── -->
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 1 — HERO — LIGHT_BG
+      ══════════════════════════════════════════════════ -->
+      <div class="slide light" data-index="0">
+
+        <!-- ornament -->
+        <div class="orn lt" style="font-size:200px; top:-30px; right:-12px;">"</div>
+
+        <!-- top bar -->
+        <div style="position:relative; z-index:5; display:flex; justify-content:space-between; align-items:center; padding: 24px 32px 0;">
+          <div class="logo-lockup">
+            <div class="logo-b lg">B</div>
+            <span class="logo-label lt">Breath of Poetry</span>
+          </div>
+          <span class="tag lt">Poetry</span>
+        </div>
+
+        <!-- content — bottom-anchored -->
+        <div style="position:relative; z-index:5; flex:1; display:flex; flex-direction:column; justify-content:flex-end; padding: 0 32px 56px;">
+          <div style="width:36px;" class="div-line lt" style="margin-bottom:0;"></div>
+          <div style="height:1px; width:36px; background:rgba(184,152,80,0.45); margin-bottom:16px; margin-top:0;"></div>
+          <div style="font-family:'Playfair Display',serif; font-size:37px; font-weight:600; color:#2E2416; line-height:1.12; letter-spacing:-0.01em; margin-bottom:14px;">The Hangover<br>That Won't Lift</div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:11px; font-style:italic; color:#8A7A60; line-height:1.65; letter-spacing:0.01em;">a poem about love that takes away all your senses<br>and refuses to give them back</div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:14.28%;"></div></div>
+        <div class="swipe-arrow" onclick="goToSlide(1)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 2 — PROBLEM — DARK_BG
+      ══════════════════════════════════════════════════ -->
+      <div class="slide dark" data-index="1">
+
+        <div class="orn dk" style="font-size:180px; bottom:-40px; left:-8px; transform:scaleX(-1);">"</div>
+
+        <!-- top bar -->
+        <div style="position:relative; z-index:5; padding: 24px 32px 0;">
+          <span class="tag dk">The Feeling</span>
+        </div>
+
+        <!-- content -->
+        <div style="position:relative; z-index:5; flex:1; display:flex; flex-direction:column; justify-content:center; padding: 0 32px 52px; gap:18px;">
+          <div style="font-family:'Playfair Display',serif; font-size:48px; font-weight:700; color:#B89850; line-height:0.85; margin-bottom:4px; opacity:0.9;">"</div>
+          <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:19px; color:#EDE8DC; line-height:1.65;">One day you're fine.<br>The next, someone's laugh<br>is living rent-free<br>in your head.</div>
+          <div style="height:1px; width:36px; background:rgba(212,188,122,0.3);"></div>
+          <div style="font-family:'DM Sans',sans-serif; font-size:11.5px; color:rgba(237,232,220,0.52); line-height:1.7;">The trouble isn't the feeling.<br>It's what comes after — when it refuses to lift.</div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:28.57%;"></div></div>
+        <div class="swipe-arrow" onclick="goToSlide(2)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 3 — THE POEM — GRADIENT
+      ══════════════════════════════════════════════════ -->
+      <div class="slide gradient" data-index="2">
+
+        <!-- top bar -->
+        <div style="position:relative; z-index:5; display:flex; justify-content:space-between; align-items:center; padding: 24px 32px 0;">
+          <span class="tag gr">The Poem</span>
+          <div class="logo-b dk" style="width:26px; height:26px; font-size:12px;">B</div>
+        </div>
+
+        <!-- poem content -->
+        <div style="position:relative; z-index:5; flex:1; display:flex; flex-direction:column; justify-content:center; padding: 0 32px 52px; gap:0;">
+          <div class="poem-block">
+            <div class="poem-line" style="font-size:14px; color:rgba(237,232,220,0.88);">love has taken away</div>
+            <div class="poem-line" style="font-size:14px; color:rgba(237,232,220,0.88);">all my senses</div>
+            <div class="poem-line" style="font-size:14px; color:rgba(237,232,220,0.88);">like that of alcohol</div>
+            <div style="height:16px;"></div>
+            <div class="poem-line" style="font-size:14px; color:rgba(237,232,220,0.88);">but your intoxication</div>
+            <div class="poem-line" style="font-size:14px; color:rgba(237,232,220,0.88);">doesn't want to go away</div>
+            <div style="height:16px;"></div>
+            <div class="poem-line" style="font-size:14px; color:rgba(237,232,220,0.88);">my heart keeps enjoying</div>
+            <div class="poem-line" style="font-size:18px; font-weight:600; font-style:normal; color:#EDE8DC; letter-spacing:-0.01em; font-family:'Playfair Display',serif; font-style:italic;">the hangover you created</div>
+            <div style="height:20px;"></div>
+            <div style="height:1px; width:30px; background:rgba(237,232,220,0.3);"></div>
+            <div style="height:12px;"></div>
+            <div class="poem-line" style="font-size:11.5px; color:rgba(237,232,220,0.5);">your twinkling eyes</div>
+            <div class="poem-line" style="font-size:11.5px; color:rgba(237,232,220,0.5);">your enlightening smile</div>
+            <div class="poem-line" style="font-size:11.5px; color:rgba(237,232,220,0.5);">your ebony hair</div>
+            <div style="height:12px;"></div>
+            <div class="poem-line" style="font-size:11.5px; color:rgba(237,232,220,0.5);">are stuck with me</div>
+            <div class="poem-line" style="font-size:11.5px; color:rgba(237,232,220,0.5);">like a newborn sticks to her mother</div>
+          </div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:42.86%;"></div></div>
+        <div class="swipe-arrow" onclick="goToSlide(3)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 4 — CONTENT — LIGHT_BG
+      ══════════════════════════════════════════════════ -->
+      <div class="slide light" data-index="3">
+
+        <div class="orn lt" style="font-size:220px; top:-50px; right:-20px; opacity:1;">∞</div>
+
+        <!-- top bar -->
+        <div style="position:relative; z-index:5; padding: 24px 32px 0;">
+          <span class="tag lt">Four Metaphors</span>
+        </div>
+
+        <!-- content -->
+        <div style="position:relative; z-index:5; flex:1; display:flex; flex-direction:column; justify-content:center; padding: 0 32px 52px; gap:0;">
+          <div style="font-family:'Playfair Display',serif; font-size:21px; font-weight:600; color:#2E2416; line-height:1.3; margin-bottom:6px;">When Love Becomes<br>Part of Your Physics</div>
+          <div style="height:1px; width:36px; background:rgba(184,152,80,0.4); margin-bottom:22px;"></div>
+
+          <div class="feat-list">
+            <div class="feat-row">
+              <div class="feat-icon lt">🦋</div>
+              <div class="feat-body">
+                <div class="feat-title">like a moth attracted to the flame</div>
+                <div class="feat-sub">pure pull — no deliberation, no weighing outcomes</div>
+              </div>
+            </div>
+            <div class="feat-row">
+              <div class="feat-icon lt">🌊</div>
+              <div class="feat-body">
+                <div class="feat-title">like waves to the shore</div>
+                <div class="feat-sub">returning, always returning — momentum not intention</div>
+              </div>
+            </div>
+            <div class="feat-row">
+              <div class="feat-icon lt">❄️</div>
+              <div class="feat-body">
+                <div class="feat-title">like cold to the winter</div>
+                <div class="feat-sub">inseparable by nature — not by decision</div>
+              </div>
+            </div>
+            <div class="feat-row">
+              <div class="feat-icon lt">🌈</div>
+              <div class="feat-body">
+                <div class="feat-title">like a rainbow after the rain</div>
+                <div class="feat-sub">inevitable — and always a little too late</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:57.14%;"></div></div>
+        <div class="swipe-arrow" onclick="goToSlide(4)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 5 — DETAILS — DARK_BG
+      ══════════════════════════════════════════════════ -->
+      <div class="slide dark" data-index="4">
+
+        <!-- top bar -->
+        <div style="position:relative; z-index:5; padding: 24px 32px 0;">
+          <span class="tag dk">The Collision</span>
+        </div>
+
+        <!-- content -->
+        <div style="position:relative; z-index:5; flex:1; display:flex; flex-direction:column; justify-content:center; padding: 0 32px 52px; gap:18px;">
+
+          <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:27px; font-weight:500; color:#EDE8DC; line-height:1.28;">their ecosystems<br>have collided</div>
+
+          <div style="border-left:2px solid rgba(212,188,122,0.4); padding: 10px 14px; border-radius: 0 6px 6px 0; background: rgba(212,188,122,0.04);">
+            <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:14px; color:rgba(237,232,220,0.88); line-height:1.75;">No ground to stand on.<br>No sky to cover my head with.</div>
+          </div>
+
+          <div style="font-family:'DM Sans',sans-serif; font-size:11px; color:rgba(237,232,220,0.46); line-height:1.75;">The tools you've always used to navigate<br>your own interior life no longer apply.<br>Not broken. Not weak.<br>Just — somewhere entirely new.</div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:71.43%;"></div></div>
+        <div class="swipe-arrow" onclick="goToSlide(5)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 6 — HOW-TO — LIGHT_BG
+      ══════════════════════════════════════════════════ -->
+      <div class="slide light" data-index="5">
+
+        <!-- top bar -->
+        <div style="position:relative; z-index:5; padding: 24px 32px 0;">
+          <span class="tag lt">The Takeaway</span>
+        </div>
+
+        <!-- content -->
+        <div style="position:relative; z-index:5; flex:1; display:flex; flex-direction:column; justify-content:center; padding: 0 32px 52px; gap:0;">
+
+          <div style="font-family:'Playfair Display',serif; font-size:20px; font-weight:600; color:#2E2416; line-height:1.35; margin-bottom:6px;">Some people become<br>part of your physics.</div>
+          <div style="height:1px; width:36px; background:rgba(184,152,80,0.4); margin-bottom:20px;"></div>
+
+          <div class="step-list">
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <div class="step-title">The pull exists before it's reasoned</div>
+                <div class="step-sub">moths don't choose flames — they're wired toward light</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <div class="step-title">You return without deciding to</div>
+                <div class="step-sub">like waves — pure momentum, not intention</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <div class="step-title">The fault line isn't a failure</div>
+                <div class="step-sub">it's evidence something actually matters enough to overturn the system</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <div class="step-title">The heart wants what the heart wants</div>
+                <div class="step-sub">not an excuse — a report from inside the collision</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:85.71%;"></div></div>
+        <div class="swipe-arrow" onclick="goToSlide(6)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 7 — CTA — GRADIENT
+      ══════════════════════════════════════════════════ -->
+      <div class="slide gradient" data-index="6">
+
+        <div class="orn gr" style="font-size:220px; top:-40px; right:-18px;">"</div>
+
+        <div style="position:relative; z-index:5; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 0 32px 52px; text-align:center; gap:18px;">
+
+          <div class="logo-lockup" style="justify-content:center;">
+            <div class="logo-b dk">B</div>
+            <span class="logo-label gr">Breath of Poetry</span>
+          </div>
+
+          <div style="height:1px; width:36px; background:rgba(237,232,220,0.3);"></div>
+
+          <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:21px; color:#EDE8DC; line-height:1.45; font-weight:400;">If this poem reached<br>something you've been<br>carrying quietly —</div>
+
+          <div style="font-family:'DM Sans',sans-serif; font-size:12px; color:rgba(237,232,220,0.72); line-height:1.8;">Share it with the one person it makes you think of.<br>Or leave a line in the comments.<br><em style="font-family:'Playfair Display',serif; font-style:italic; font-size:13px; color:rgba(237,232,220,0.85);">The one that stayed.</em></div>
+
+          <button class="cta-btn solid">Leave a line in comments</button>
+
+          <div style="font-family:'DM Sans',sans-serif; font-size:10px; color:rgba(237,232,220,0.45); letter-spacing:0.1em; margin-top:2px;">@mistakenlyhuman</div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;"></div></div>
+        <!-- No arrow on last slide -->
+      </div>
+
+    </div><!-- /carousel-track -->
+  </div><!-- /carousel-viewport -->
+
+  <!-- ── IG DOTS ─────────────────────────────────────── -->
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active" onclick="goToSlide(0)"></div>
+    <div class="ig-dot" onclick="goToSlide(1)"></div>
+    <div class="ig-dot" onclick="goToSlide(2)"></div>
+    <div class="ig-dot" onclick="goToSlide(3)"></div>
+    <div class="ig-dot" onclick="goToSlide(4)"></div>
+    <div class="ig-dot" onclick="goToSlide(5)"></div>
+    <div class="ig-dot" onclick="goToSlide(6)"></div>
+  </div>
+
+  <!-- ── IG ACTIONS ─────────────────────────────────── -->
+  <div class="ig-actions">
+    <div class="ig-actions-left">
+      <button class="ig-action-btn">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+        </svg>
+      </button>
+      <button class="ig-action-btn">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"/>
+        </svg>
+      </button>
+      <button class="ig-action-btn">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/>
+        </svg>
+      </button>
+    </div>
+    <button class="ig-action-btn ig-bookmark">
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="ig-likes">3,412 likes</div>
+  <div class="ig-caption">
+    <strong>mistakenlyhuman</strong> The hangover that won't lift. A poem about when love takes away all your senses and refuses to give them back. <span class="ig-more-cap">more</span>
+  </div>
+  <div class="ig-time">2 hours ago</div>
+
+</div><!-- /ig-frame -->
+
+<script>
+  let currentSlide = 0;
+  const TOTAL = 7;
+  const track   = document.getElementById('track');
+  const dotEls  = document.getElementById('dots').querySelectorAll('.ig-dot');
+
+  function goToSlide(n) {
+    n = Math.max(0, Math.min(TOTAL - 1, n));
+    currentSlide = n;
+    track.style.transform = `translateX(-${n * 420}px)`;
+    dotEls.forEach((d, i) => d.classList.toggle('active', i === n));
+  }
+
+  // ── pointer drag ──────────────────────────────────────
+  const vp = document.getElementById('viewport');
+  let startX = 0, isDragging = false, startTranslate = 0;
+
+  vp.addEventListener('pointerdown', e => {
+    startX        = e.clientX;
+    startTranslate = -currentSlide * 420;
+    isDragging    = true;
+    vp.classList.add('grabbing');
+    track.style.transition = 'none';
+    vp.setPointerCapture(e.pointerId);
+  });
+
+  vp.addEventListener('pointermove', e => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    track.style.transform = `translateX(${startTranslate + dx}px)`;
+  });
+
+  const endDrag = e => {
+    if (!isDragging) return;
+    isDragging = false;
+    vp.classList.remove('grabbing');
+    track.style.transition = 'transform 0.38s cubic-bezier(0.4, 0, 0.2, 1)';
+    const dx = e.clientX - startX;
+    if      (dx < -55) goToSlide(currentSlide + 1);
+    else if (dx >  55) goToSlide(currentSlide - 1);
+    else               goToSlide(currentSlide);
+  };
+
+  vp.addEventListener('pointerup',     endDrag);
+  vp.addEventListener('pointercancel', endDrag);
+
+  // ── keyboard ──────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+    if (e.key === 'ArrowLeft')  goToSlide(currentSlide - 1);
+  });
+</script>
+
+</body>
+</html>

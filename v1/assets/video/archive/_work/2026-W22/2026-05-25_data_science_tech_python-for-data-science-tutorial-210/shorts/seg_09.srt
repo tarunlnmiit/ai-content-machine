@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:00,040
+So you can see 90 is added at the end. And to filter, you can use something called a list
+
+2
+00:00:00,040 --> 00:00:08,600
+comprehension or for loop. So we want to see if a number is greater than 85 in this list of
+
+3
+00:00:08,600 --> 00:00:16,920
+scores. So there are two ways to do it. First is normally using a for loop. So you can loop over
+
+4
+00:00:16,920 --> 00:00:26,760
+the list with a simple for loop. So for score in scores, if score is greater than 85,
+
+5
+00:00:27,720 --> 00:00:36,760
+we will print the score. If I run this, you can see 90 to 95 and 90 got printed.
+
+6
+00:00:36,840 --> 00:00:43,240
+There is a simpler way to do this. So and to store it in a variable directly as well.
+
+7
+00:00:43,240 --> 00:00:56,040
+So high scores equal to score for score in scores if score is greater than 85.
+
+8
+00:00:57,000 --> 00:00:57,000
+And if I print high scores now, you will get the same result, 92, 95 and 90.

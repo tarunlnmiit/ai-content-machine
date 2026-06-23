@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5 Loops That Make Self-Improvement Self-Sustaining — @mistakenlyhuman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #1E1B2E; }
+
+.slide-nav {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  z-index: 100; display: flex; align-items: center; gap: 16px;
+  background: rgba(30,27,46,0.85); backdrop-filter: blur(10px);
+  padding: 12px 28px; border-radius: 60px;
+  border: 1px solid rgba(232,112,90,0.25);
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.slide-nav[data-visible] { opacity: 1; }
+.slide-nav button {
+  background: none; border: none; color: #EF9585; font-size: 22px;
+  cursor: pointer; padding: 4px 14px; border-radius: 6px;
+  transition: background 0.2s; font-family: inherit;
+}
+.slide-nav button:hover { background: rgba(232,112,90,0.2); }
+.slide-counter {
+  color: #EDE8DC; font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px; min-width: 64px; text-align: center; letter-spacing: 0.05em;
+}
+
+.slide-canvas {
+  position: fixed; width: 1920px; height: 1080px;
+  top: 50%; left: 50%; transform-origin: center center;
+}
+.slide-canvas > section {
+  position: absolute; inset: 0; opacity: 0; visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s; overflow: hidden;
+}
+.slide-canvas > section[data-active] { opacity: 1; visibility: visible; }
+
+.bokeh { position: absolute; border-radius: 50%; z-index: 1; pointer-events: none; }
+.curve  { position: absolute; z-index: 1; pointer-events: none; }
+.brand  {
+  position: absolute; bottom: 44px; right: 64px;
+  font-family: 'Nunito Sans', sans-serif; font-size: 22px; font-weight: 600;
+  color: rgba(239,149,133,0.30); letter-spacing: 0.05em; z-index: 20;
+}
+.eyebrow {
+  font-family: 'Nunito Sans', sans-serif; font-size: 20px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: #E8705A;
+  margin-bottom: 18px;
+}
+.badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 58px; height: 58px; background: #E8705A; border-radius: 50%;
+  font-family: 'Lora', serif; font-size: 28px; font-weight: 700;
+  color: #1E1B2E; flex-shrink: 0;
+}
+ul.bullets { list-style: none; }
+ul.bullets li {
+  font-family: 'Nunito Sans', sans-serif; font-size: 30px; font-weight: 400;
+  color: #EDE8DC; line-height: 1.55; padding: 15px 0 15px 52px;
+  position: relative; border-bottom: 1px solid rgba(237,232,220,0.07);
+}
+ul.bullets li:last-child { border-bottom: none; }
+ul.bullets li::before {
+  content: ''; position: absolute; left: 2px; top: 26px;
+  width: 16px; height: 16px; background: #E8705A; border-radius: 50%;
+}
+</style>
+</head>
+<body>
+
+<div class="slide-nav" id="nav">
+  <button id="prev-btn" aria-label="Previous">&larr;</button>
+  <span class="slide-counter" id="counter">1 / 8</span>
+  <button id="next-btn" aria-label="Next">&rarr;</button>
+</div>
+
+<div class="slide-canvas" id="canvas">
+
+<!-- SLIDE 1: TITLE -->
+<section>
+  <div style="position:absolute;inset:0;background:#1E1B2E;z-index:0;"></div>
+  <div class="bokeh" style="width:800px;height:800px;top:-280px;right:-200px;background:radial-gradient(circle,rgba(232,112,90,0.20) 0%,rgba(179,74,56,0.08) 40%,transparent 70%);"></div>
+  <div class="bokeh" style="width:500px;height:500px;bottom:-120px;left:80px;background:radial-gradient(circle,rgba(239,149,133,0.13) 0%,transparent 65%);"></div>
+  <div class="bokeh" style="width:260px;height:260px;top:260px;left:480px;background:radial-gradient(circle,rgba(232,112,90,0.09) 0%,transparent 70%);"></div>
+  <div class="curve" style="width:940px;height:940px;border-radius:62% 38% 68% 32% / 52% 64% 36% 48%;border:1.5px solid rgba(232,112,90,0.07);top:-320px;right:-360px;transform:rotate(12deg);"></div>
+  <div class="curve" style="width:620px;height:620px;border-radius:42% 58% 34% 66% / 60% 40% 60% 40%;border:1px solid rgba(239,149,133,0.05);bottom:-220px;left:-120px;transform:rotate(-8deg);"></div>
+  <div style="position:absolute;left:110px;top:50%;transform:translateY(-50%);width:5px;height:320px;background:linear-gradient(180deg,transparent 0%,#E8705A 45%,transparent 100%);border-radius:3px;z-index:10;"></div>
+  <div style="position:absolute;right:96px;top:50%;transform:translateY(-50%);font-family:'Lora',serif;font-size:420px;font-weight:700;color:#E8705A;opacity:0.04;line-height:1;z-index:2;user-select:none;">5</div>
+  <div style="position:absolute;left:160px;top:50%;transform:translateY(-50%);width:1120px;z-index:10;">
+    <div class="eyebrow" style="margin-bottom:26px;">Breath of Life</div>
+    <h1 style="font-family:'Lora',serif;font-size:86px;font-weight:700;color:#EDE8DC;line-height:1.08;margin-bottom:36px;">
+      5 Loops That Make<br>
+      <span style="color:#EF9585;">Self-Improvement</span><br>
+      Self-Sustaining
+    </h1>
+    <div style="width:88px;height:4px;background:#E8705A;border-radius:2px;margin-bottom:40px;"></div>
+    <ul class="bullets" style="max-width:920px;">
+      <li>Most improvement plateaus — not because the advice is wrong</li>
+      <li>Single-layer improvement has a structural ceiling</li>
+      <li>Recursive improvement fixes the process, not just the output</li>
+    </ul>
+  </div>
+  <div class="brand">@mistakenlyhuman</div>
+</section>
+
+<!-- SLIDE 2: THE TREADMILL PROBLEM -->
+<section>
+  <div style="position:absolute;inset:0;background:#1E1B2E;z-index:0;"></div>
+  <div class="bokeh" style="width:660px;height:660px;top:-160px;left:-140px;background:radial-gradient(circle,rgba(232,112,90,0.16) 0%,transparent 65%);"></div>
+  <div class="bokeh" style="width:440px;height:440px;bottom:60px;right:260px;background:radial-gradient(circle,rgba(239,149,133,0.10) 0%,transparent 65%);"></div>
+  <div class="curve" style="width:720px;height:720px;border-radius:56% 44% 64% 36% / 46% 54% 46% 54%;border:1px solid rgba(232,112,90,0.07);top:-280px;left:-240px;transform:rotate(22deg);"></div>
+  <div style="position:absolute;right:140px;top:50%;transform:translateY(-50%);width:560px;height:560px;z-index:5;">
+    <div style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(232,112,90,0.14);"></div>
+    <div style="position:absolute;top:64px;left:64px;right:64px;bottom:64px;border-radius:50%;border:2px solid rgba(232,112,90,0.09);"></div>
+    <div style="position:absolute;top:128px;left:128px;right:128px;bottom:128px;border-radius:50%;border:2px solid rgba(232,112,90,0.06);"></div>
+    <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:4px;height:70px;background:linear-gradient(180deg,#E8705A 0%,transparent 100%);border-radius:2px;"></div>
+    <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:4px;height:70px;background:linear-gradient(0deg,#E8705A 0%,transparent 100%);border-radius:2px;"></div>
+    <div style="position:absolute;top:50%;left:0;transform:translateY(-50%);width:70px;height:4px;background:linear-gradient(90deg,#E8705A 0%,transparent 100%);border-radius:2px;"></div>
+    <div style="position:absolute;top:50%;right:0;transform:translateY(-50%);width:70px;height:4px;background:linear-gradient(270deg,#E8705A 0%,transparent 100%);border-radius:2px;"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+      <div style="font-family:'Lora',serif;font-size:34px;color:rgba(239,149,133,0.35);line-height:1.4;">&#8635;<br><span style="font-size:22px;letter-spacing:0.04em;">repeat</span></div>
+    </div>
+  </div>
+  <div style="position:absolute;left:140px;top:50%;transform:translateY(-50%);width:1040px;z-index:10;">
+    <div class="eyebrow">The Problem</div>
+    <h2 style="font-family:'Lora',serif;font-size:64px;font-weight:700;color:#EDE8DC;line-height:1.15;margin-bottom:48px;">The Treadmill Problem</h2>
+    <ul class="bullets">
+      <li>Read the book &#8594; start the habit &#8594; fall off &#8594; repeat</li>
+      <li>Each new habit costs the same willpower as the last</li>
+      <li>The second-order move: improve how you improve</li>
+    </ul>
+  </div>
+  <div class="brand">@mistakenlyhuman</div>
+</section>
+
+<!-- SLIDE 3: LOOP 1 -->
+<section>
+  <div style="position:absolute;inset:0;background:#1E1B2E;z-index:0;"></div>
+  <div class="bokeh" style="width:820px;height:820px;top:-300px;right:-220px;background:radial-gradient(circle,rgba(232,112,90,0.17) 0%,rgba(179,74,56,0.06) 45%,transparent 70%);"></div>
+  <div class="bokeh" style="width:380px;height:380px;bottom:90px;left:120px;background:radial-gradient(circle,rgba(239,149,133,0.10) 0%,transparent 65%);"></div>
+  <div class="curve" style="width:860px;height:520px;border-radius:70% 30% 52% 48% / 42% 60% 40% 58%;border:1px solid rgba(232,112,90,0.06);bottom:-220px;right:-120px;transform:rotate(-14deg);"></div>
+  <div style="position:absolute;right:90px;top:50%;transform:translateY(-50%);font-family:'Lora',serif;font-size:400px;font-weight:700;color:#E8705A;opacity:0.05;line-height:1;z-index:2;user-select:none;">1</div>
+  <div style="position:absolute;left:140px;top:50%;transform:translateY(-50%);width:1120px;z-index:10;">
+    <div style="display:flex;align-items:center;gap:22px;margin-bottom:26px;">
+      <div class="badge">1</div>
+      <div class="eyebrow" style="margin-bottom:0;">Loop 1</div>
+    </div>
+    <h2 style="font-family:'Lora',serif;font-size:62px;font-weight:700;color:#EDE8DC;line-height:1.18;margin-bottom:48px;">Fix Your Information<br>Diet First</h2>
+    <ul class="bullets">
+      <li>Bad inputs make every habit built on top fragile</li>
+      <li>Switch from consuming content to consuming mental models</li>
+      <li>Test: does this change what I read next — or only feel like progress?</li>
+    </ul>
+  </div>
+  <div class="brand">@mistakenlyhuman</div>
+</section>
+
+<!-- SLIDE 4: LOOP 2 -->
+<section>
+  <div style="position:absolute;inset:0;background:#1E1B2E;z-index:0;"></div>
+  <div class="bokeh" style="width:720px;height:720px;bottom:-220px;right:-120px;background:radial-gradient(circle,rgba(232,112,90,0.19) 0%,transparent 65%);"></div>
+  <div class="bokeh" style="width:420px;height:420px;top:100px;left:180px;background:radial-gradient(circle,rgba(239,149,133,0.08) 0%,transparent 65%);"></div>
+  <div class="curve" style="width:920px;height:620px;border-radius:40% 60% 62% 38% / 58% 42% 58% 42%;border:1px solid rgba(239,149,133,0.06);top:-320px;right:-220px;transform:rotate(26deg);"></div>
+  <div style="position:absolute;right:160px;top:50%;transform:translateY(-50%);width:240px;display:flex;flex-direction:column;align-items:center;z-index:5;">
+    <div style="width:220px;padding:18px 0;background:rgba(232,112,90,0.28);border:1.5px solid rgba(232,112,90,0.50);border-radius:14px;text-align:center;font-family:'Nunito Sans',sans-serif;font-size:24px;font-weight:600;color:#EF9585;">Habit A</div>
+    <div style="width:3px;height:32px;background:linear-gradient(180deg,#E8705A,rgba(232,112,90,0.3));"></div>
+    <div style="width:220px;padding:18px 0;background:rgba(232,112,90,0.18);border:1.5px solid rgba(232,112,90,0.35);border-radius:14px;text-align:center;font-family:'Nunito Sans',sans-serif;font-size:24px;font-weight:600;color:rgba(239,149,133,0.80);">Habit B</div>
+    <div style="width:3px;height:32px;background:linear-gradient(180deg,rgba(232,112,90,0.4),rgba(232,112,90,0.15));"></div>
+    <div style="width:220px;padding:18px 0;background:rgba(232,112,90,0.09);border:1.5px solid rgba(232,112,90,0.20);border-radius:14px;text-align:center;font-family:'Nunito Sans',sans-serif;font-size:24px;font-weight:600;color:rgba(239,149,133,0.55);">Habit C</div>
+    <div style="margin-top:20px;font-family:'Nunito Sans',sans-serif;font-size:19px;color:rgba(237,232,220,0.30);letter-spacing:0.06em;text-transform:uppercase;">each link cheaper</div>
+  </div>
+  <div style="position:absolute;right:78px;top:50%;transform:translateY(-50%);font-family:'Lora',serif;font-size:400px;font-weight:700;color:#E8705A;opacity:0.04;line-height:1;z-index:2;user-select:none;">2</div>
+  <div style="position:absolute;left:140px;top:50%;transform:translateY(-50%);width:1050px;z-index:10;">
+    <div style="display:flex;align-items:center;gap:22px;margin-bottom:26px;">
+      <div class="badge">2</div>
+      <div class="eyebrow" style="margin-bottom:0;">Loop 2</div>
+    </div>
+    <h2 style="font-family:'Lora',serif;font-size:62px;font-weight:700;color:#EDE8DC;line-height:1.18;margin-bottom:48px;">Build Habit Stacks,<br>Not Habits</h2>
+    <ul class="bullets">
+      <li>A single habit maintains momentum — it doesn't generate it</li>
+      <li>When one behavior cues another, each link makes the next cheaper</li>
+      <li>Find the upstream keystone — usually something physical</li>
+    </ul>
+  </div>
+  <div class="brand">@mistakenlyhuman</div>
+</section>
+
+<!-- SLIDE 5: LOOP 3 -->
+<section>
+  <div style="position:absolute;inset:0;background:#1E1B2E;z-index:0;"></div>
+  <div class="bokeh" style="width:680px;height:680px;top:-180px;left:-160px;background:radial-gradient(circle,rgba(232,112,90,0.16) 0%,transparent 65%);"></div>
+  <div class="bokeh" style="width:520px;height:520px;bottom:-110px;right:220px;background:radial-gradient(circle,rgba(179,74,56,0.13) 0%,transparent 65%);"></div>
+  <div class="curve" style="width:740px;height:740px;border-radius:36% 64% 56% 44% / 64% 36% 64% 36%;border:1px solid rgba(232,112,90,0.07);bottom:-210px;left:-220px;transform:rotate(28deg);"></div>
+  <div style="position:absolute;right:160px;top:50%;transform:translateY(-50%);width:420px;height:500px;z-index:5;">
+    <div style="position:absolute;inset:0;border-radius:54% 46% 52% 48% / 44% 44% 56% 56%;border:2px solid rgba(232,112,90,0.22);background:rgba(232,112,90,0.03);"></div>
+    <div style="position:absolute;top:48px;left:40px;right:40px;bottom:48px;border-radius:50%;border:1.5px solid rgba(232,112,90,0.14);background:rgba(232,112,90,0.02);"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:280px;">
+      <div style="font-family:'Lora',serif;font-size:22px;font-style:italic;color:rgba(237,232,220,0.35);line-height:2.0;">journal<br><span style="color:rgba(232,112,90,0.45);font-size:18px;">&#8595;</span><br>review<br><span style="color:rgba(232,112,90,0.45);font-size:18px;">&#8595;</span><br>meta-review</div>
+    </div>
+    <div style="position:absolute;bottom:-30px;right:20px;font-family:'Lora',serif;font-size:80px;font-weight:700;color:rgba(232,112,90,0.12);">?</div>
+  </div>
+  <div style="position:absolute;right:80px;top:50%;transform:translateY(-50%);font-family:'Lora',serif;font-size:400px;font-weight:700;color:#E8705A;opacity:0.04;line-height:1;z-index:2;user-select:none;">3</div>
+  <div style="position:absolute;left:140px;top:50%;transform:translateY(-50%);width:1060px;z-index:10;">
+    <div style="display:flex;align-items:center;gap:22px;margin-bottom:26px;">
+      <div class="badge">3</div>
+      <div class="eyebrow" style="margin-bottom:0;">Loop 3</div>
+    </div>
+    <h2 style="font-family:'Lora',serif;font-size:59px;font-weight:700;color:#EDE8DC;line-height:1.18;margin-bottom:48px;">Build a Review System<br>That Reviews Itself</h2>
+    <ul class="bullets">
+      <li>Most journals record who you were — not who you're becoming</li>
+      <li>Once a quarter: review your reviews, find consistent blind spots</li>
+      <li>Meta-question: what am I not asking myself that I should be?</li>
+    </ul>
+  </div>
+  <div class="brand">@mistakenlyhuman</div>
+</section>
+
+<!-- SLIDE 6: LOOP 4 -->
+<section>
+  <div style="position:absolute;inset:0;background:#1E1B2E;z-index:0;"></div>
+  <div class="bokeh" style="width:780px;height:780px;top:-320px;right:-240px;background:radial-gradient(circle,rgba(232,112,90,0.15) 0%,transparent 65%);"></div>
+  <div class="bokeh" style="width:460px;height:460px;bottom:60px;left:160px;background:radial-gradient(circle,rgba(239,149,133,0.09) 0%,transparent 65%);"></div>
+  <div class="curve" style="width:640px;height:840px;border-radius:58% 42% 42% 58% / 40% 58% 42% 60%;border:1px solid rgba(232,112,90,0.07);right:-220px;top:-100px;transform:rotate(-18deg);"></div>
+  <div style="position:absolute;right:160px;top:50%;transform:translateY(-50%);width:520px;height:440px;z-index:6;">
+    <svg viewBox="0 0 520 440" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;">
+      <line x1="260" y1="220" x2="100" y2="80"  stroke="rgba(232,112,90,0.22)" stroke-width="2"/>
+      <line x1="260" y1="220" x2="420" y2="80"  stroke="rgba(232,112,90,0.22)" stroke-width="2"/>
+      <line x1="260" y1="220" x2="100" y2="360" stroke="rgba(232,112,90,0.22)" stroke-width="2"/>
+      <line x1="260" y1="220" x2="420" y2="360" stroke="rgba(232,112,90,0.22)" stroke-width="2"/>
+    </svg>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:132px;height:132px;border-radius:50%;background:rgba(232,112,90,0.28);border:2px solid #E8705A;display:flex;align-items:center;justify-content:center;text-align:center;">
+      <span style="font-family:'Nunito Sans',sans-serif;font-size:20px;font-weight:700;color:#EF9585;line-height:1.3;">Write<br>Clearly</span>
+    </div>
+    <div style="position:absolute;top:30px;left:40px;width:100px;height:100px;border-radius:50%;background:rgba(232,112,90,0.11);border:1.5px solid rgba(232,112,90,0.28);display:flex;align-items:center;justify-content:center;text-align:center;">
+      <span style="font-family:'Nunito Sans',sans-serif;font-size:16px;color:rgba(237,232,220,0.65);">Think<br>Clearly</span>
+    </div>
+    <div style="position:absolute;top:30px;right:30px;width:100px;height:100px;border-radius:50%;background:rgba(232,112,90,0.11);border:1.5px solid rgba(232,112,90,0.28);display:flex;align-items:center;justify-content:center;text-align:center;">
+      <span style="font-family:'Nunito Sans',sans-serif;font-size:16px;color:rgba(237,232,220,0.65);">Learn<br>Faster</span>
+    </div>
+    <div style="position:absolute;bottom:20px;left:40px;width:100px;height:100px;border-radius:50%;background:rgba(232,112,90,0.11);border:1.5px solid rgba(232,112,90,0.28);display:flex;align-items:center;justify-content:center;text-align:center;">
+      <span style="font-family:'Nunito Sans',sans-serif;font-size:16px;color:rgba(237,232,220,0.65);">Persuade<br>Others</span>
+    </div>
+    <div style="position:absolute;bottom:20px;right:30px;width:100px;height:100px;border-radius:50%;background:rgba(232,112,90,0.11);border:1.5px solid rgba(232,112,90,0.28);display:flex;align-items:center;justify-content:center;text-align:center;">
+      <span style="font-family:'Nunito Sans',sans-serif;font-size:16px;color:rgba(237,232,220,0.65);">Build<br>Insight</span>
+    </div>
+  </div>
+  <div style="position:absolute;right:80px;top:50%;transform:translateY(-50%);font-family:'Lora',serif;font-size:400px;font-weight:700;color:#E8705A;opacity:0.04;line-height:1;z-index:2;user-select:none;">4</div>
+  <div style="position:absolute;left:140px;top:50%;transform:translateY(-50%);width:1020px;z-index:10;">
+    <div style="display:flex;align-items:center;gap:22px;margin-bottom:26px;">
+      <div class="badge">4</div>
+      <div class="eyebrow" style="margin-bottom:0;">Loop 4</div>
+    </div>
+    <h2 style="font-family:'Lora',serif;font-size:62px;font-weight:700;color:#EDE8DC;line-height:1.18;margin-bottom:48px;">Find Skills That Unlock<br>Other Skills</h2>
+    <ul class="bullets">
+      <li>Skills exist in a network — some nodes have far more edges</li>
+      <li>Writing clearly &#8594; thinking clearly &#8594; faster learning in any domain</li>
+      <li>High-leverage skills look soft — that's why they're underinvested</li>
+    </ul>
+  </div>
+  <div class="brand">@mistakenlyhuman</div>
+</section>
+
+<!-- SLIDE 7: LOOP 5 -->
+<section>
+  <div style="position:absolute;inset:0;background:#1E1B2E;z-index:0;"></div>
+  <div class="bokeh" style="width:840px;height:840px;bottom:-320px;right:-240px;background:radial-gradient(circle,rgba(232,112,90,0.19) 0%,transparent 65%);"></div>
+  <div class="bokeh" style="width:520px;height:520px;top:50px;left:100px;background:radial-gradient(circle,rgba(239,149,133,0.10) 0%,transparent 65%);"></div>
+  <div class="curve" style="width:1040px;height:640px;border-radius:52% 48% 32% 68% / 60% 40% 60% 40%;border:1px solid rgba(232,112,90,0.06);bottom:-320px;right:-320px;transform:rotate(-8deg);"></div>
+  <div style="position:absolute;right:160px;top:50%;transform:translateY(-50%);width:460px;z-index:6;">
+    <div style="background:rgba(232,112,90,0.07);border:1.5px solid rgba(232,112,90,0.22);border-radius:20px;padding:40px 36px;border-left:5px solid #E8705A;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(232,112,90,0.12),transparent 70%);"></div>
+      <div style="font-family:'Lora',serif;font-size:22px;font-style:italic;color:rgba(239,149,133,0.55);margin-bottom:20px;">"I am someone who&#8230;"</div>
+      <ul style="list-style:none;font-family:'Nunito Sans',sans-serif;font-size:24px;font-weight:400;color:rgba(237,232,220,0.72);line-height:1.8;">
+        <li>&#8594; shows up daily</li>
+        <li>&#8594; learns from failure</li>
+        <li>&#8594; invests in growth</li>
+      </ul>
+      <div style="width:54px;height:2px;background:#E8705A;margin:24px 0;opacity:0.55;"></div>
+      <div style="font-family:'Nunito Sans',sans-serif;font-size:20px;color:rgba(232,112,90,0.70);font-weight:600;">behavior follows identity</div>
+    </div>
+  </div>
+  <div style="position:absolute;right:80px;top:50%;transform:translateY(-50%);font-family:'Lora',serif;font-size:400px;font-weight:700;color:#E8705A;opacity:0.04;line-height:1;z-index:2;user-select:none;">5</div>
+  <div style="position:absolute;left:140px;top:50%;transform:translateY(-50%);width:1060px;z-index:10;">
+    <div style="display:flex;align-items:center;gap:22px;margin-bottom:26px;">
+      <div class="badge">5</div>
+      <div class="eyebrow" style="margin-bottom:0;">Loop 5</div>
+    </div>
+    <h2 style="font-family:'Lora',serif;font-size:62px;font-weight:700;color:#EDE8DC;line-height:1.18;margin-bottom:48px;">Rewrite the Identity<br>Narrative First</h2>
+    <ul class="bullets">
+      <li>Behavior follows identity — the story you tell yourself sets your defaults</li>
+      <li>Write who you're becoming as if it's already true + one behavior as evidence</li>
+      <li>When identity updates, willpower becomes less relevant</li>
+    </ul>
+  </div>
+  <div class="brand">@mistakenlyhuman</div>
+</section>
+
+<!-- SLIDE 8: CLOSING / CTA -->
+<section>
+  <div style="position:absolute;inset:0;background:#1E1B2E;z-index:0;"></div>
+  <div class="bokeh" style="width:900px;height:900px;top:-350px;right:-280px;background:radial-gradient(circle,rgba(232,112,90,0.22) 0%,rgba(179,74,56,0.08) 45%,transparent 70%);"></div>
+  <div class="bokeh" style="width:600px;height:600px;bottom:-180px;left:-100px;background:radial-gradient(circle,rgba(239,149,133,0.13) 0%,transparent 65%);"></div>
+  <div class="bokeh" style="width:280px;height:280px;top:300px;left:600px;background:radial-gradient(circle,rgba(232,112,90,0.08) 0%,transparent 70%);"></div>
+  <div class="curve" style="width:1000px;height:1000px;border-radius:60% 40% 70% 30% / 50% 62% 38% 50%;border:1.5px solid rgba(232,112,90,0.07);top:-400px;right:-380px;transform:rotate(10deg);"></div>
+  <div class="curve" style="width:640px;height:640px;border-radius:44% 56% 36% 64% / 58% 42% 58% 42%;border:1px solid rgba(239,149,133,0.05);bottom:-240px;left:-140px;transform:rotate(-12deg);"></div>
+  <div style="position:absolute;left:110px;top:50%;transform:translateY(-50%);width:5px;height:340px;background:linear-gradient(180deg,transparent 0%,#E8705A 45%,transparent 100%);border-radius:3px;z-index:10;"></div>
+  <div style="position:absolute;left:160px;top:50%;transform:translateY(-50%);width:1260px;z-index:10;">
+    <div class="eyebrow" style="margin-bottom:30px;">Breath of Life</div>
+    <h2 style="font-family:'Lora',serif;font-size:76px;font-weight:700;color:#EDE8DC;line-height:1.1;margin-bottom:24px;">
+      The plateau isn't a you problem.<br>
+      <span style="color:#EF9585;">It's a level problem.</span>
+    </h2>
+    <div style="width:88px;height:4px;background:#E8705A;border-radius:2px;margin-bottom:40px;"></div>
+    <p style="font-family:'Nunito Sans',sans-serif;font-size:32px;color:rgba(237,232,220,0.70);line-height:1.6;max-width:960px;margin-bottom:56px;">
+      Start with the loop that's most broken for you right now.<br>
+      One level up changes everything beneath it.
+    </p>
+    <div style="display:inline-flex;align-items:center;gap:18px;background:rgba(232,112,90,0.12);border:1.5px solid rgba(232,112,90,0.35);border-radius:60px;padding:20px 40px;">
+      <div style="width:12px;height:12px;border-radius:50%;background:#E8705A;flex-shrink:0;"></div>
+      <span style="font-family:'Nunito Sans',sans-serif;font-size:28px;font-weight:600;color:#EF9585;letter-spacing:0.02em;">Save this for when you hit your next plateau</span>
+    </div>
+  </div>
+  <div class="brand">@mistakenlyhuman</div>
+</section>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var canvas  = document.getElementById('canvas');
+  var slides  = Array.prototype.slice.call(canvas.querySelectorAll('section'));
+  var counter = document.getElementById('counter');
+  var nav     = document.getElementById('nav');
+  var TOTAL   = slides.length;
+  var current = 0, navTimer;
+  function fit() {
+    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    canvas.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+  }
+  function show(n) {
+    n = Math.max(0, Math.min(TOTAL - 1, n));
+    slides[current].removeAttribute('data-active');
+    current = n; slides[current].setAttribute('data-active', '');
+    if (counter) counter.textContent = (current + 1) + ' / ' + TOTAL;
+    showNav();
+  }
+  function showNav() {
+    nav.setAttribute('data-visible', '');
+    clearTimeout(navTimer);
+    navTimer = setTimeout(function () { nav.removeAttribute('data-visible'); }, 2000);
+  }
+  slides[0].setAttribute('data-active', '');
+  fit();
+  window.addEventListener('resize', fit);
+  document.getElementById('prev-btn').addEventListener('click', function () { show(current - 1); });
+  document.getElementById('next-btn').addEventListener('click', function () { show(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); } else if (e.key === 'End') { show(TOTAL - 1); }
+  });
+  document.addEventListener('mousemove', showNav, { passive: true });
+  window.__exportFrames = slides.map(function (_, i) {
+    return { file: 'slide_' + (i + 1) + '.png', w: 1920, h: 1080 };
+  });
+  window.__showFrame = function (i) {
+    slides.forEach(function (s, j) { if (j === i) s.setAttribute('data-active', ''); else s.removeAttribute('data-active'); });
+    current = i; fit();
+  };
+})();
+</script>
+
+</body>
+</html>

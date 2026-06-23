@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:04,240
+At some point, your Python loop stops being fast enough.
+
+2
+00:00:04,240 --> 00:00:06,840
+Not theoretically, you will feel it.
+
+3
+00:00:06,840 --> 00:00:12,440
+You will run a calculation on 100,000 rows, and your laptop fan will spin up, and you
+
+4
+00:00:12,440 --> 00:00:16,200
+will sit there watching a cursor blink for 12 seconds.
+
+5
+00:00:16,200 --> 00:00:21,440
+Waiting for one number, a number you could have had in 0.08 seconds, if you would have
+
+6
+00:00:21,440 --> 00:00:23,840
+known one thing sooner.
+
+7
+00:00:23,840 --> 00:00:27,280
+Python loops are slow, numpy arrays are not.
+
+8
+00:00:27,280 --> 00:00:32,280
+So real two taught you to think in less than dictionaries, and that's real Python.
+
+9
+00:00:32,280 --> 00:00:37,800
+When data scientists say Python is fast, they don't mean the Python you have been writing.

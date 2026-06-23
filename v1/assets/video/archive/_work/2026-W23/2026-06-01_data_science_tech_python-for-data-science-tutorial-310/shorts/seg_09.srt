@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:06,960
+90 are returned, so arithmetic is fully vectorized, addition, subtraction, power, square roots,
+
+2
+00:00:06,960 --> 00:00:12,960
+all applied element wise with no loop inside, the one that matters most for real data work
+
+3
+00:00:12,960 --> 00:00:18,960
+is comparison as I showed you here, so this mask you get a boolean array where the condition
+
+4
+00:00:19,040 --> 00:00:24,640
+holds and falls where it does not, then use that boolean array as an index to filter your
+
+5
+00:00:24,640 --> 00:00:30,120
+original data like I did online number 17 here, this is the exact pattern pandas uses
+
+6
+00:00:30,120 --> 00:00:36,640
+for filtering data frames, so you will write something like this in pandas where df is
+
+7
+00:00:36,640 --> 00:00:43,640
+a data frame and column is a column in that data frame and you want to filter on that
+
+8
+00:00:43,640 --> 00:00:54,360
+value, so you will write this hundreds of times, understanding it now means it won't
+
+9
+00:00:54,360 --> 00:00:54,400
+feel like magic later, so let us take a look at another example which is a little more

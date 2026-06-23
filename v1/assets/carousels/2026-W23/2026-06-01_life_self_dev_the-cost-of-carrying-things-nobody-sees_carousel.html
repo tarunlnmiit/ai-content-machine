@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breath of Life — The Cost of Carrying Things Nobody Sees</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:#e8e4de;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding:48px 24px;
+  font-family:'Nunito Sans',sans-serif;
+}
+
+/* ── Instagram Frame ── */
+.ig-frame{
+  width:420px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 12px 48px rgba(0,0,0,.2);
+  overflow:hidden;
+  user-select:none;
+}
+
+.ig-status{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 16px 6px;
+  font-size:11px;
+  font-weight:700;
+  color:#111;
+}
+.ig-status-icons{display:flex;gap:6px;align-items:center}
+
+.ig-header{
+  display:flex;
+  align-items:center;
+  padding:8px 12px;
+  gap:10px;
+  border-bottom:1px solid #f0f0f0;
+}
+.ig-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(165deg,#B34A38,#EF9585);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Lora',serif;font-weight:700;font-size:15px;color:#fff;
+  flex-shrink:0;
+}
+.ig-user{flex:1}
+.ig-username{font-size:13px;font-weight:700;color:#111;line-height:1.2}
+.ig-subtag{font-size:11px;color:#999}
+.ig-more{font-size:18px;color:#111;cursor:pointer;padding:0 4px;letter-spacing:1.5px;line-height:1}
+
+/* ── Carousel ── */
+.carousel-viewport{
+  width:420px;height:525px;
+  overflow:hidden;position:relative;
+  cursor:grab;
+}
+.carousel-viewport.dragging{cursor:grabbing}
+
+.carousel-track{
+  display:flex;flex-direction:row;
+  height:525px;
+  width:calc(420px * 7);
+  transition:transform .38s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+.carousel-track.notrans{transition:none}
+
+/* ── Slides ── */
+.slide{
+  width:420px;height:525px;
+  flex-shrink:0;position:relative;
+  overflow:hidden;display:flex;flex-direction:column;
+}
+.slide.light{background:#EDE8DC}
+.slide.dark{background:#1E1B2E}
+.slide.grad{background:linear-gradient(165deg,#B34A38 0%,#E8705A 50%,#EF9585 100%)}
+
+/* Progress bar */
+.progress-bar{
+  position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:rgba(0,0,0,.1);z-index:10;
+}
+.slide.dark .progress-bar,.slide.grad .progress-bar{background:rgba(255,255,255,.18)}
+.progress-fill{height:100%;background:#E8705A;transition:width .38s ease}
+.slide.dark .progress-fill,.slide.grad .progress-fill{background:#fff}
+
+/* Swipe arrow */
+.swipe-arrow{
+  position:absolute;bottom:16px;right:16px;
+  width:34px;height:34px;border-radius:50%;
+  background:#E8705A;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10;
+  transition:transform .2s;
+  box-shadow:0 2px 10px rgba(0,0,0,.22);
+}
+.slide.dark .swipe-arrow,.slide.grad .swipe-arrow{
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);
+}
+.swipe-arrow:hover{transform:scale(1.1)}
+.swipe-arrow svg{width:15px;height:15px}
+
+/* ── IG bottom chrome ── */
+.ig-actions{display:flex;align-items:center;padding:10px 12px 6px;gap:14px}
+.ig-icon{width:24px;height:24px;cursor:pointer;opacity:.82}
+.ig-spacer{flex:1}
+.ig-dots{display:flex;justify-content:center;gap:4px;padding:2px 0 8px}
+.ig-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#ddd;transition:background .3s,transform .3s;
+}
+.ig-dot.active{background:#E8705A;transform:scale(1.2)}
+.ig-likes{font-size:13px;font-weight:700;color:#111;padding:2px 12px 4px}
+.ig-caption{padding:0 12px 16px}
+.ig-caption-text{font-size:13px;color:#111;line-height:1.5}
+.ig-cap-user{font-weight:700;margin-right:5px}
+
+/* ══════════ SLIDE COMPONENTS ══════════ */
+
+.slide-pad{
+  flex:1;display:flex;flex-direction:column;
+  padding:28px 36px 54px;gap:14px;
+}
+.slide-pad.center{justify-content:center}
+.slide-pad.spaced{justify-content:space-between;padding-top:32px}
+
+/* Logo */
+.logo-mark{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(165deg,#B34A38,#EF9585);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Lora',serif;font-weight:700;font-size:18px;color:#fff;
+  flex-shrink:0;
+}
+.logo-row{display:flex;align-items:center;gap:10px}
+.logo-name{font-family:'Lora',serif;font-size:13px;font-weight:600;color:#B34A38;letter-spacing:.03em}
+.logo-handle{font-size:10px;color:#a09580}
+.logo-name.inv{color:rgba(255,255,255,.85)}
+.logo-handle.inv{color:rgba(255,255,255,.55)}
+
+/* Tags */
+.tag{
+  display:inline-flex;align-items:center;
+  padding:4px 12px;border-radius:20px;
+  font-size:10.5px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.tag.solid{background:#E8705A;color:#fff}
+.tag.outline{border:1.5px solid #D6D0C4;color:#8a7f72}
+.tag.outline-dark{border:1.5px solid rgba(255,255,255,.22);color:rgba(255,255,255,.65)}
+.tag.glass{background:rgba(255,255,255,.18);color:#fff;backdrop-filter:blur(8px)}
+
+/* Headings */
+.h1{font-family:'Lora',serif;font-weight:700;line-height:1.22;color:#2a2418;font-size:28px}
+.h2{font-family:'Lora',serif;font-weight:700;line-height:1.25;color:#2a2418;font-size:22px}
+.h3{font-family:'Lora',serif;font-weight:700;line-height:1.28;color:#2a2418;font-size:19px}
+.h1.inv,.h2.inv,.h3.inv{color:#fff}
+
+/* Body */
+.body{font-size:14px;line-height:1.6;color:#5a5045}
+.body.inv{color:rgba(255,255,255,.78)}
+.body.sm{font-size:13px}
+.body em{font-style:italic;font-weight:600;color:#E8705A}
+.body.inv em{color:#fff;font-weight:700}
+
+/* Divider */
+.rule{height:1px;background:#D6D0C4}
+.rule.inv{background:rgba(255,255,255,.14)}
+
+/* Quote box */
+.qbox{
+  border-left:3px solid #E8705A;
+  padding:11px 14px;
+  background:rgba(232,112,90,.08);
+  border-radius:0 6px 6px 0;
+}
+.qbox.inv{border-left-color:rgba(255,255,255,.55);background:rgba(255,255,255,.1)}
+.qbox .qt{font-family:'Lora',serif;font-style:italic;font-size:14px;line-height:1.55;color:#5a5045}
+.qbox.inv .qt{color:rgba(255,255,255,.92)}
+
+/* Feature list */
+.flist{display:flex;flex-direction:column;gap:11px}
+.frow{display:flex;align-items:flex-start;gap:10px}
+.fdot{width:7px;height:7px;border-radius:50%;background:#E8705A;margin-top:6px;flex-shrink:0}
+.fdot.inv{background:#EF9585}
+.ftext{font-size:13.5px;line-height:1.5;color:#3a3028}
+.ftext.inv{color:rgba(255,255,255,.83)}
+.ftext strong{font-weight:700}
+
+/* Steps */
+.slist{display:flex;flex-direction:column;gap:12px}
+.srow{display:flex;align-items:flex-start;gap:11px}
+.snum{
+  width:27px;height:27px;border-radius:50%;
+  background:#E8705A;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Lora',serif;font-weight:700;font-size:12px;color:#fff;
+  flex-shrink:0;margin-top:1px;
+}
+.stitle{font-size:13.5px;font-weight:700;color:#2a2418;line-height:1.3}
+.sdesc{font-size:11.5px;color:#7a7060;line-height:1.4;margin-top:2px}
+
+/* CTA button */
+.cta{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 28px;background:#fff;color:#B34A38;
+  border-radius:40px;border:none;cursor:pointer;
+  font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:15px;
+  letter-spacing:.02em;
+  box-shadow:0 4px 20px rgba(0,0,0,.18);
+  transition:transform .2s,box-shadow .2s;
+  text-decoration:none;
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,0,0,.22)}
+
+/* Deco circles */
+.deco{
+  position:absolute;border-radius:50%;pointer-events:none;
+}
+
+/* Info card (dark panel) */
+.icard{
+  background:rgba(255,255,255,.1);
+  border-radius:10px;padding:14px 16px;
+  backdrop-filter:blur(6px);
+}
+.icard-text{font-size:13px;color:rgba(255,255,255,.92);line-height:1.55}
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <!-- Status bar -->
+  <div class="ig-status">
+    <span>9:41</span>
+    <div class="ig-status-icons">
+      <svg width="16" height="12" viewBox="0 0 16 12"><rect x="0" y="7.5" width="2.5" height="4.5" rx=".5" fill="#111"/><rect x="3.5" y="5" width="2.5" height="7" rx=".5" fill="#111"/><rect x="7" y="2.5" width="2.5" height="9.5" rx=".5" fill="#111"/><rect x="10.5" y="0" width="2.5" height="12" rx=".5" fill="#111" opacity=".3"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm0-3c1.73 0 3.29.7 4.43 1.82l1.07-1.07A7 7 0 0 0 8 4a7 7 0 0 0-5.5 2.25l1.07 1.07C4.71 6.2 6.27 5.5 8 5.5zm0-3c2.65 0 5.04 1.06 6.79 2.77l1.06-1.05A9 9 0 0 0 8 0a9 9 0 0 0-7.85 4.22l1.06 1.05C2.96 3.56 5.35 2.5 8 2.5z" fill="#111"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12"><rect x=".5" y=".5" width="20" height="11" rx="2.5" stroke="#111" stroke-opacity=".35"/><rect x="2" y="2" width="15" height="8" rx="1.5" fill="#111"/><path d="M21.5 4.5v3c.83-.33 1.5-1 1.5-1.5s-.67-1.17-1.5-1.5z" fill="#111" opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <!-- Post header -->
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div class="ig-user">
+      <div class="ig-username">mistakenlyhuman</div>
+      <div class="ig-subtag">Breath of Life · Tarun Gupta</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <!-- Carousel viewport -->
+  <div class="carousel-viewport" id="cv">
+    <div class="carousel-track" id="ct">
+
+
+      <!-- ══ SLIDE 1 — Hero (light) ══ -->
+      <div class="slide light">
+        <div class="deco" style="width:260px;height:260px;background:#E8705A;opacity:.07;top:-80px;right:-70px"></div>
+        <div class="deco" style="width:130px;height:130px;background:#B34A38;opacity:.07;bottom:50px;left:-40px"></div>
+
+        <div class="slide-pad spaced">
+
+          <div class="logo-row">
+            <div class="logo-mark" style="width:38px;height:38px;font-size:16px">B</div>
+            <div>
+              <div class="logo-name">Breath of Life</div>
+              <div class="logo-handle">@mistakenlyhuman</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:15px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#E8705A">On the weight we carry</div>
+            <div class="h1" style="font-size:30px;line-height:1.18">The Cost of<br>Carrying Things<br>Nobody Sees</div>
+            <div class="rule"></div>
+            <div class="body" style="font-style:italic;font-size:15px;color:#6a5f52">"There's a version of you that most people will never meet."</div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="tag solid">Life &amp; Self</div>
+            <div class="tag outline">4 min read</div>
+          </div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:calc(100%/7)"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+
+      <!-- ══ SLIDE 2 — Problem (dark) ══ -->
+      <div class="slide dark">
+        <div class="deco" style="width:220px;height:220px;background:#E8705A;opacity:.08;top:-60px;left:-70px"></div>
+
+        <div class="slide-pad" style="justify-content:flex-start">
+
+          <div class="tag outline-dark" style="align-self:flex-start">The Hidden Weight</div>
+
+          <div class="h2 inv" style="margin-top:2px">You're not burned out from doing too much.</div>
+
+          <div class="body inv">You're exhausted from <em>holding</em> too much.</div>
+
+          <div class="rule inv"></div>
+
+          <div class="flist">
+            <div class="frow"><div class="fdot inv"></div><div class="ftext inv">The grief that doesn't have a name</div></div>
+            <div class="frow"><div class="fdot inv"></div><div class="ftext inv">The smile held through dinner while something inside quietly broke</div></div>
+            <div class="frow"><div class="fdot inv"></div><div class="ftext inv">"I'm fine" — said so many times it became a country you stopped trying to leave</div></div>
+          </div>
+
+          <div class="qbox inv">
+            <div class="qt">This kind of exhaustion doesn't show up on a productivity tracker.</div>
+          </div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:calc(100%*2/7)"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+
+      <!-- ══ SLIDE 3 — Solution/Insight (gradient) ══ -->
+      <div class="slide grad">
+        <div class="deco" style="width:280px;height:280px;background:#fff;opacity:.07;top:-80px;right:-90px"></div>
+        <div class="deco" style="width:160px;height:160px;background:#1E1B2E;opacity:.15;bottom:-40px;left:10px"></div>
+
+        <div class="slide-pad" style="justify-content:flex-start">
+
+          <div class="tag glass" style="align-self:flex-start">The Science</div>
+
+          <div class="h2 inv" style="margin-top:2px">Your brain can't tell the difference.</div>
+
+          <div class="body inv">Emotional weight draws from the <em>same cognitive pool</em> as work. Your brain doesn't distinguish between a deadline and an unresolved argument.</div>
+
+          <div class="qbox inv">
+            <div class="qt">Unresolved things trigger the <strong style="color:#fff">Zeigarnik Effect</strong> — the mind loops on incomplete tasks, running them silently in the background.</div>
+          </div>
+
+          <div class="icard">
+            <div class="icard-text">Foggy days. Decisions heavier than they should be. Forty minutes gone, nothing done.<br><br><strong style="color:#fff">That's not laziness. You're running something heavy in the background.</strong></div>
+          </div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:calc(100%*3/7)"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+
+      <!-- ══ SLIDE 4 — Content (light) ══ -->
+      <div class="slide light">
+        <div class="deco" style="width:190px;height:190px;background:#E8705A;opacity:.07;bottom:-50px;right:-50px"></div>
+
+        <div class="slide-pad" style="justify-content:flex-start">
+
+          <div class="tag solid" style="align-self:flex-start">The Real Cost</div>
+
+          <div class="h3" style="margin-top:2px">What the invisible load is actually taking from you</div>
+
+          <div class="rule"></div>
+
+          <div class="flist" style="gap:13px">
+            <div class="frow"><div class="fdot"></div><div class="ftext"><strong>Cognitive fog</strong> — focus disappears and you can't name why</div></div>
+            <div class="frow"><div class="fdot"></div><div class="ftext"><strong>Decision fatigue</strong> — small choices feel disproportionately heavy</div></div>
+            <div class="frow"><div class="fdot"></div><div class="ftext"><strong>Relational distance</strong> — you're present, but people feel the glass between you</div></div>
+            <div class="frow"><div class="fdot"></div><div class="ftext"><strong>Static others sense</strong> but can't name — which creates its own quiet damage</div></div>
+          </div>
+
+          <div class="qbox" style="margin-top:2px">
+            <div class="qt" style="color:#5a5045">The performance of "fine" puts weight on every relationship. Invisibility doesn't remove the cost.</div>
+          </div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:calc(100%*4/7)"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+
+      <!-- ══ SLIDE 5 — Details (dark) ══ -->
+      <div class="slide dark">
+        <div class="deco" style="width:230px;height:230px;background:#EF9585;opacity:.08;top:-70px;right:-60px"></div>
+
+        <div class="slide-pad" style="justify-content:flex-start">
+
+          <div class="tag outline-dark" style="align-self:flex-start">Why You Keep Carrying</div>
+
+          <div class="h2 inv" style="margin-top:2px;font-size:21px">It's not fear. It's something deeper.</div>
+
+          <div class="body inv">Putting something down requires you to <em>look at it first</em>.</div>
+
+          <div class="body inv sm">The weight becomes familiar. After years, even the ache of it feels like home. And looking at it up close is terrifying in one specific way: <em>what if it's worse than I thought?</em></div>
+
+          <div class="rule inv"></div>
+
+          <div class="qbox inv">
+            <div class="qt">Carrying implies we still have it. Putting it down feels like letting go — and letting go feels like the loss becomes <em>final</em>.</div>
+          </div>
+
+          <div class="body inv sm" style="opacity:.6;margin-top:2px">This is not weakness. This is the mind doing exactly what it was designed to do.</div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:calc(100%*5/7)"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+
+      <!-- ══ SLIDE 6 — How-to (light) ══ -->
+      <div class="slide light">
+        <div class="deco" style="width:170px;height:170px;background:#B34A38;opacity:.07;top:-40px;left:-40px"></div>
+
+        <div class="slide-pad" style="justify-content:flex-start;gap:13px">
+
+          <div class="tag solid" style="align-self:flex-start">The First Move</div>
+
+          <div class="h3" style="font-size:18px;margin-top:2px">You don't have to resolve it. You have to stop pretending it's not there.</div>
+
+          <div class="rule"></div>
+
+          <div class="slist">
+            <div class="srow">
+              <div class="snum">1</div>
+              <div>
+                <div class="stitle">Name it accurately</div>
+                <div class="sdesc">Even just to yourself — plain language, not a story. Just the fact of it.</div>
+              </div>
+            </div>
+            <div class="srow">
+              <div class="snum">2</div>
+              <div>
+                <div class="stitle">Write it in full</div>
+                <div class="sdesc">No plan to share. The brain needs acknowledgment more than resolution.</div>
+              </div>
+            </div>
+            <div class="srow">
+              <div class="snum">3</div>
+              <div>
+                <div class="stitle">Tell one person one true thing</div>
+                <div class="sdesc">Not the whole story. One honest sentence about how you actually are.</div>
+              </div>
+            </div>
+            <div class="srow">
+              <div class="snum">4</div>
+              <div>
+                <div class="stitle">Stop calling it nothing</div>
+                <div class="sdesc">The cost is real. The first move is letting it be what it is.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:calc(100%*6/7)"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+
+      <!-- ══ SLIDE 7 — CTA (gradient) ══ -->
+      <div class="slide grad">
+        <div class="deco" style="width:300px;height:300px;background:#fff;opacity:.07;bottom:-90px;right:-90px"></div>
+        <div class="deco" style="width:150px;height:150px;background:#1E1B2E;opacity:.15;top:20px;left:-50px"></div>
+
+        <div class="slide-pad center" style="align-items:center;text-align:center;gap:18px">
+
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+            <div style="width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);font-family:'Lora',serif;font-weight:700;font-size:22px;color:#fff">B</div>
+            <div class="logo-name inv" style="font-size:14px">Breath of Life</div>
+          </div>
+
+          <div class="qbox inv" style="text-align:left;width:100%">
+            <div class="qt" style="color:#fff;font-size:15px;line-height:1.58">
+              "You are not as good at hiding it as you think.<br><br>And even if you were — you deserve to put it down."
+            </div>
+          </div>
+
+          <a class="cta" href="#">Follow for more →</a>
+
+          <div style="font-size:11.5px;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.04em">@mistakenlyhuman · Medium · Substack</div>
+
+        </div>
+
+        <!-- Full progress bar, no arrow -->
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      </div>
+
+
+    </div><!-- /carousel-track -->
+  </div><!-- /carousel-viewport -->
+
+  <!-- Action icons -->
+  <div class="ig-actions">
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none"><path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z" stroke="#111" stroke-width="1.5"/></svg>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="ig-spacer"></div>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Dots -->
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+  </div>
+
+  <div class="ig-likes">2,847 likes</div>
+  <div class="ig-caption">
+    <div class="ig-caption-text">
+      <span class="ig-cap-user">mistakenlyhuman</span>The invisible load is real. And it compounds. Save this for the next time someone asks "how are you?" and you say "fine."
+      <span style="color:#E8705A"> #BreathOfLife #MentalHealth #SelfAwareness #EmotionalIntelligence</span>
+    </div>
+  </div>
+
+</div><!-- /ig-frame -->
+
+<script>
+  const SLIDES = 7;
+  const W = 420;
+  const track = document.getElementById('ct');
+  const vp    = document.getElementById('cv');
+  const dots  = document.getElementById('dots').querySelectorAll('.ig-dot');
+
+  let cur = 0, startX = 0, dragging = false, drag = 0;
+
+  function goTo(n) {
+    cur = Math.max(0, Math.min(SLIDES - 1, n));
+    track.classList.remove('notrans');
+    track.style.transform = `translateX(${-cur * W}px)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+  window.goTo = goTo;
+
+  vp.addEventListener('pointerdown', e => {
+    dragging = true; startX = e.clientX; drag = 0;
+    vp.classList.add('dragging');
+    track.classList.add('notrans');
+    vp.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  vp.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    drag = e.clientX - startX;
+    track.style.transform = `translateX(${-cur * W + drag}px)`;
+  });
+  vp.addEventListener('pointerup', e => {
+    if (!dragging) return;
+    dragging = false;
+    vp.classList.remove('dragging');
+    if (drag < -60 && cur < SLIDES - 1) goTo(cur + 1);
+    else if (drag > 60 && cur > 0) goTo(cur - 1);
+    else goTo(cur);
+  });
+  vp.addEventListener('pointercancel', () => {
+    dragging = false;
+    vp.classList.remove('dragging');
+    goTo(cur);
+  });
+
+  document.querySelectorAll('.swipe-arrow').forEach((a, i) => {
+    a.addEventListener('click', e => { e.stopPropagation(); goTo(i + 1); });
+  });
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  goTo(0);
+</script>
+
+</body>
+</html>

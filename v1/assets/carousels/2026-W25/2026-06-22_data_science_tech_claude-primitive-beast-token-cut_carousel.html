@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Turned Claude Into a Primitive Beast — @breathofdatascience</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #c8c8c8;
+    display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh; font-family: 'Space Grotesk', sans-serif; padding: 32px 16px;
+  }
+  .ig-frame { width: 420px; background: #fff; border-radius: 14px; box-shadow: 0 24px 80px rgba(0,0,0,0.22); overflow: hidden; user-select: none; }
+  .ig-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; border-bottom: 1px solid #efefef; }
+  .ig-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .ig-account { flex: 1; }
+  .ig-account-name { font-size: 13px; font-weight: 600; color: #262626; }
+  .ig-account-sub  { font-size: 11px; color: #8e8e8e; }
+  .ig-more { color: #262626; font-size: 22px; cursor: pointer; line-height: 1; }
+
+  .carousel-viewport { width: 420px; height: 525px; overflow: hidden; position: relative; cursor: grab; }
+  .carousel-viewport:active { cursor: grabbing; }
+  .carousel-track { display: flex; height: 100%; transition: transform 0.36s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
+
+  .slide { width: 420px; height: 525px; flex-shrink: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .slide.light    { background: #EDE8DC; }
+  .slide.dark     { background: #1E1B2E; }
+  .slide.gradient { background: linear-gradient(160deg, #1a1828 0%, #2e4d63 60%, #3D5F75 100%); }
+
+  .progress-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(107,143,168,0.18); z-index: 10; }
+  .slide.dark .progress-bar     { background: rgba(150,186,208,0.18); }
+  .slide.gradient .progress-bar { background: rgba(255,255,255,0.15); }
+  .progress-fill { height: 100%; background: #6B8FA8; transition: width 0.36s ease; }
+  .slide.dark .progress-fill     { background: #96BAD0; }
+  .slide.gradient .progress-fill { background: rgba(255,255,255,0.85); }
+
+  .swipe-arrow { position: absolute; right: 16px; bottom: 14px; width: 30px; height: 30px; border-radius: 50%; background: rgba(107,143,168,0.14); border: 1.5px solid rgba(107,143,168,0.5); display: flex; align-items: center; justify-content: center; z-index: 10; cursor: pointer; }
+  .slide.dark .swipe-arrow     { background: rgba(150,186,208,0.12); border-color: rgba(150,186,208,0.45); }
+  .slide.gradient .swipe-arrow { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); }
+  .swipe-arrow svg { width: 13px; height: 13px; }
+
+  .slide-inner { display: flex; flex-direction: column; padding: 0 28px 52px; height: 100%; position: relative; z-index: 1; }
+
+  .logo-lockup { display: flex; align-items: center; gap: 8px; padding-top: 18px; margin-bottom: 10px; flex-shrink: 0; }
+  .logo-circle { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 11px; flex-shrink: 0; }
+  .slide.gradient .logo-circle { background: rgba(255,255,255,0.2); }
+  .logo-text { font-size: 9.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #6B8FA8; }
+  .slide.dark .logo-text     { color: #96BAD0; }
+  .slide.gradient .logo-text { color: rgba(255,255,255,0.7); }
+
+  .tag { display: inline-block; padding: 3px 9px; border-radius: 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; align-self: flex-start; }
+  .tag.on-light    { background: rgba(107,143,168,0.12); color: #3D5F75; border: 1px solid rgba(107,143,168,0.28); }
+  .tag.on-dark     { background: rgba(150,186,208,0.12); color: #96BAD0; border: 1px solid rgba(150,186,208,0.28); }
+  .tag.on-gradient { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.28); }
+
+  .headline { font-weight: 700; line-height: 1.14; letter-spacing: -0.022em; }
+  .slide.light .headline    { color: #1E1B2E; }
+  .slide.dark .headline     { color: #EDE8DC; }
+  .slide.gradient .headline { color: #fff; }
+  .accent { color: #6B8FA8; }
+  .slide.dark .accent     { color: #96BAD0; }
+  .slide.gradient .accent { color: rgba(255,255,255,0.85); }
+
+  .body-text { font-size: 12.5px; font-weight: 400; line-height: 1.52; }
+  .slide.light .body-text    { color: #4a4a5e; }
+  .slide.dark .body-text     { color: rgba(237,232,220,0.72); }
+  .slide.gradient .body-text { color: rgba(255,255,255,0.78); }
+
+  .divider { height: 1px; flex-shrink: 0; margin: 10px 0; }
+  .slide.light .divider    { background: #D6D0C4; }
+  .slide.dark .divider     { background: rgba(150,186,208,0.18); }
+  .slide.gradient .divider { background: rgba(255,255,255,0.18); }
+
+  /* Code block */
+  .code-block { font-family: 'Courier New', monospace; font-size: 11px; padding: 10px 14px; border-radius: 8px; line-height: 1.6; }
+  .slide.light .code-block    { background: #1E1B2E; color: #96BAD0; }
+  .slide.dark .code-block     { background: rgba(0,0,0,0.3); color: #96BAD0; }
+
+  /* Bullet rows */
+  .bullet-list { display: flex; flex-direction: column; gap: 7px; }
+  .bullet-row { display: flex; align-items: flex-start; gap: 9px; }
+  .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: #6B8FA8; flex-shrink: 0; margin-top: 5px; }
+  .slide.dark .bullet-dot     { background: #96BAD0; }
+  .slide.gradient .bullet-dot { background: rgba(255,255,255,0.7); }
+  .bullet-text { font-size: 11px; line-height: 1.5; }
+  .slide.light .bullet-text    { color: #4a4a5e; }
+  .slide.dark .bullet-text     { color: rgba(237,232,220,0.82); }
+
+  /* Stat cards */
+  .stat-row { display: flex; gap: 10px; margin-top: 10px; }
+  .stat-card { flex: 1; padding: 12px 10px; border-radius: 9px; text-align: center; }
+  .slide.light .stat-card  { background: rgba(107,143,168,0.1); border: 1px solid rgba(107,143,168,0.22); }
+  .slide.dark .stat-card   { background: rgba(150,186,208,0.1); border: 1px solid rgba(150,186,208,0.2); }
+  .stat-num  { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; }
+  .slide.light .stat-num   { color: #1E1B2E; }
+  .slide.dark .stat-num    { color: #EDE8DC; }
+  .stat-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
+  .slide.light .stat-label { color: #6B8FA8; }
+  .slide.dark .stat-label  { color: #96BAD0; }
+
+  /* Before/after */
+  .ba-block { border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
+  .ba-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .ba-content { font-size: 10.5px; line-height: 1.5; }
+
+  /* Step rows */
+  .step-list { display: flex; flex-direction: column; gap: 8px; }
+  .step-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 12px; border-radius: 8px; }
+  .slide.light .step-row { background: rgba(107,143,168,0.08); border: 1px solid rgba(107,143,168,0.18); }
+  .slide.dark .step-row  { background: rgba(150,186,208,0.07); border: 1px solid rgba(150,186,208,0.14); }
+  .check { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+  .slide.light .check { background: #6B8FA8; color: #fff; }
+  .slide.dark .check  { background: #96BAD0; color: #1E1B2E; }
+  .step-title { font-size: 11.5px; font-weight: 700; }
+  .step-desc  { font-size: 10px; margin-top: 2px; opacity: 0.7; }
+  .slide.light .step-title, .slide.light .step-desc { color: #1E1B2E; }
+  .slide.dark .step-title, .slide.dark .step-desc   { color: #EDE8DC; }
+
+  /* IG footer */
+  .ig-dots { display: flex; justify-content: center; gap: 5px; padding: 10px 0 6px; }
+  .ig-dot { width: 6px; height: 6px; border-radius: 50%; background: #dbdbdb; transition: all 0.3s ease; }
+  .ig-dot.active { background: #3897f0; width: 18px; border-radius: 3px; }
+  .ig-actions { display: flex; align-items: center; padding: 6px 16px; gap: 14px; }
+  .ig-icon { width: 24px; height: 24px; color: #262626; cursor: pointer; }
+  .ig-icon-right { margin-left: auto; }
+  .ig-meta { padding: 2px 16px 4px; font-size: 13px; font-weight: 600; color: #262626; }
+  .ig-caption { padding: 2px 16px 14px; font-size: 13px; color: #262626; line-height: 1.42; }
+  .ig-caption .hashtags { color: #00376b; }
+</style>
+</head>
+<body>
+<div class="ig-frame">
+
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div class="ig-account">
+      <div class="ig-account-name">breathofdatascience</div>
+      <div class="ig-account-sub">Data Science · AI · Build in Public</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- ═══ SLIDE 1 — COVER (LIGHT, CLICKBAIT) ═══ -->
+      <div class="slide light">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+            <div class="tag on-light">Claude · Token Efficiency</div>
+            <div class="headline" style="font-size:27px; color:#1E1B2E;">Claude was</div>
+            <div class="headline" style="font-size:27px; color:#1E1B2E;">writing novels.</div>
+            <div class="headline" style="font-size:27px; color:#6B8FA8; margin-top:2px;">I fixed it.</div>
+            <div class="divider" style="margin-top:14px; margin-bottom:14px;"></div>
+            <div style="font-size:46px; font-weight:800; color:#1E1B2E; letter-spacing:-0.04em; line-height:1;">~65%</div>
+            <div style="font-size:13px; font-weight:700; color:#6B8FA8; letter-spacing:0.05em; text-transform:uppercase; margin-top:2px; margin-bottom:12px;">fewer output tokens</div>
+            <div class="body-text" style="font-size:11.5px;">
+              One command. Code blocks untouched. Fluff: gone. Accuracy: intact. Longer sessions before you hit the context limit.
+            </div>
+            <div style="margin-top:14px; font-size:10.5px; color:#9090a0; font-weight:500;">Swipe to see the command →</div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:16.7%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(1)"><svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 2 — THE PROBLEM (DARK) ═══ -->
+      <div class="slide dark">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div class="tag on-dark">The Problem</div>
+          <div class="headline" style="font-size:21px; margin-bottom:10px;">
+            Claude's default mode is<br><span class="accent">a 5-paragraph essay</span><br>when you needed one line.
+          </div>
+          <div class="body-text" style="margin-bottom:12px; font-size:11.5px;">
+            Every extra word Claude writes burns tokens from your context window. In a long coding session, that adds up fast.
+          </div>
+          <div class="divider"></div>
+          <div class="bullet-list" style="margin-top:10px;">
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Claude restates your question before answering it</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">It adds "Here's what I did" summaries after every code block</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Explanations run 3× longer than the actual answer</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Sessions hit limits earlier — you lose context mid-task</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:33.3%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(2)"><svg viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 3 — THE COMMAND (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div class="tag on-light">The One Command</div>
+          <div class="headline" style="font-size:21px; margin-bottom:6px;">
+            One line in your<br><span class="accent">CLAUDE.md</span> changes everything.
+          </div>
+          <div class="body-text" style="font-size:11px; margin-bottom:10px;">Add this to your project's CLAUDE.md (or paste it as a system prompt):</div>
+          <div class="code-block">
+            Be terse. No preamble, no summaries,<br>
+            no restating the question. Output<br>
+            only what was asked. Preserve all<br>
+            code blocks exactly as written.
+          </div>
+          <div class="divider" style="margin-top:12px;"></div>
+          <div class="step-list" style="margin-top:8px;">
+            <div class="step-row">
+              <div class="check">✓</div>
+              <div>
+                <div class="step-title">Works in Claude Code and the API</div>
+                <div class="step-desc">Drop it in CLAUDE.md or pass as a system prompt</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="check">✓</div>
+              <div>
+                <div class="step-title">No code changes required</div>
+                <div class="step-desc">Pure instruction — zero impact on your codebase</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="check">✓</div>
+              <div>
+                <div class="step-title">Takes effect immediately</div>
+                <div class="step-desc">Save the file, next reply is already tighter</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(3)"><svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 4 — BEFORE / AFTER (DARK) ═══ -->
+      <div class="slide dark">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div class="tag on-dark">Before vs After</div>
+          <div class="headline" style="font-size:20px; margin-bottom:12px;">
+            Same question.<br><span class="accent">Very different reply.</span>
+          </div>
+          <!-- Before -->
+          <div class="ba-block" style="background:rgba(255,80,80,0.08); border:1px solid rgba(255,80,80,0.2);">
+            <div class="ba-label" style="color:#e07070;">❌ Before — 312 tokens</div>
+            <div class="ba-content" style="color:rgba(237,232,220,0.65);">
+              "Sure! I'd be happy to help you with that. To rename a variable, you'll want to first identify all the places where it appears. Here's how you can approach this systematically..."
+            </div>
+          </div>
+          <!-- After -->
+          <div class="ba-block" style="background:rgba(80,170,130,0.08); border:1px solid rgba(80,170,130,0.2);">
+            <div class="ba-label" style="color:#70c8a0;">✓ After — 18 tokens</div>
+            <div class="ba-content" style="color:rgba(237,232,220,0.85);">
+              "Use your editor's rename symbol (F2 in VS Code)."
+            </div>
+          </div>
+          <div class="divider" style="margin-top:6px;"></div>
+          <div style="margin-top:8px; font-size:11px; color:rgba(237,232,220,0.6); line-height:1.55;">
+            Code blocks, function output, and structured data are never compressed — only the surrounding prose gets cut.
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:66.7%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(4)"><svg viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 5 — THE NUMBERS (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div class="tag on-light">What 65% Less Actually Means</div>
+          <div class="headline" style="font-size:21px; margin-bottom:8px;">
+            Fewer output tokens =<br><span class="accent">longer, deeper sessions.</span>
+          </div>
+          <div class="stat-row">
+            <div class="stat-card">
+              <div class="stat-num">~65%</div>
+              <div class="stat-label">Fewer output tokens</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">3×</div>
+              <div class="stat-label">More turns before limit</div>
+            </div>
+          </div>
+          <div class="stat-row" style="margin-top:0; margin-bottom:10px;">
+            <div class="stat-card" style="flex:1;">
+              <div class="stat-num">0</div>
+              <div class="stat-label">Code blocks touched</div>
+            </div>
+            <div class="stat-card" style="flex:1;">
+              <div class="stat-num">1</div>
+              <div class="stat-label">Command to set it up</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="bullet-list" style="margin-top:10px;">
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Answers land faster — less scrolling through preamble</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Accuracy stays the same — Claude still thinks, just writes less</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Packaged as a reusable skill — drop it in any project</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(5)"><svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 6 — CTA (GRADIENT) ═══ -->
+      <div class="slide gradient">
+        <div class="slide-inner" style="justify-content:center; align-items:center; text-align:center;">
+          <div class="logo-lockup" style="justify-content:center; margin-bottom:40px;">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div style="font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(150,186,208,0.8); margin-bottom:16px;">C O M M E N T</div>
+          <div style="height:1px; width:60px; background:rgba(107,143,168,0.5); margin:0 auto 20px;"></div>
+          <div style="font-size:52px; font-weight:800; color:#fff; letter-spacing:-0.02em; line-height:1; margin-bottom:20px;">"Tokens"</div>
+          <div style="height:1px; width:60px; background:rgba(107,143,168,0.5); margin:0 auto 20px;"></div>
+          <div style="font-size:14px; color:rgba(200,220,235,0.9); line-height:1.6; font-weight:400;">
+            And I'll DM you the skill<br>
+            <span style="font-size:12px; color:rgba(160,190,210,0.7);">directly in your Instagram DMs.</span>
+          </div>
+          <div style="margin-top:32px; font-size:11.5px; font-weight:600; color:rgba(120,160,185,0.8); letter-spacing:0.02em;">Follow @breathofdatascience</div>
+          <div style="font-size:10.5px; color:rgba(100,140,165,0.7); margin-top:4px;">for daily DS · AI · Claude tips</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+  </div>
+
+  <div class="ig-actions">
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    <svg class="ig-icon ig-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+  </div>
+  <div class="ig-meta">25 likes</div>
+  <div class="ig-caption">
+    <strong>breathofdatascience</strong> Claude was writing novels. I fixed it. 🤖 One command cuts Claude's replies ~65% — and it never touches your code blocks. Fewer output tokens = longer sessions before you hit limits. Comment "Tokens" and I'll DM you the skill 👆<br>
+    <span class="hashtags">#claude #ai #datascience #python #aitools #claudecode #llm</span>
+  </div>
+
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const dots  = document.querySelectorAll('.ig-dot');
+  const total = dots.length;
+  let current = 0, startX = 0, isDragging = false;
+  function goTo(idx) {
+    if (idx < 0 || idx >= total) return;
+    current = idx;
+    track.style.transform = `translateX(-${current * 420}px)`;
+    dots.forEach((d,i) => d.classList.toggle('active', i === current));
+  }
+  window.goTo = goTo;
+  const vp = document.getElementById('viewport');
+  vp.addEventListener('mousedown',  e => { isDragging=true; startX=e.clientX; });
+  vp.addEventListener('touchstart', e => { isDragging=true; startX=e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('mouseup',  e => { if(!isDragging)return; isDragging=false; const dx=e.clientX-startX; if(dx<-40)goTo(current+1); else if(dx>40)goTo(current-1); });
+  vp.addEventListener('touchend', e => { if(!isDragging)return; isDragging=false; const dx=e.changedTouches[0].clientX-startX; if(dx<-40)goTo(current+1); else if(dx>40)goTo(current-1); });
+</script>
+</body>
+</html>

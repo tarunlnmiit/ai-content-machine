@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6 GitHub Repos That Slash Claude Code Tokens — @breathofdatascience</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #c8c8c8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    font-family: 'Space Grotesk', sans-serif;
+    padding: 32px 16px;
+  }
+
+  /* ─── Instagram Frame ─── */
+  .ig-frame {
+    width: 420px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.22);
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .ig-header {
+    display: flex; align-items: center;
+    padding: 12px 16px; gap: 10px;
+    border-bottom: 1px solid #efefef;
+  }
+  .ig-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;
+  }
+  .ig-account { flex: 1; }
+  .ig-account-name { font-size: 13px; font-weight: 600; color: #262626; }
+  .ig-account-sub  { font-size: 11px; color: #8e8e8e; }
+  .ig-more { color: #262626; font-size: 22px; cursor: pointer; line-height: 1; }
+
+  /* ─── Carousel ─── */
+  .carousel-viewport {
+    width: 420px; height: 525px;
+    overflow: hidden; position: relative; cursor: grab;
+  }
+  .carousel-viewport:active { cursor: grabbing; }
+  .carousel-track {
+    display: flex; height: 100%;
+    transition: transform 0.36s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+  }
+
+  /* ─── Slides ─── */
+  .slide {
+    width: 420px; height: 525px;
+    flex-shrink: 0; position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .slide.light    { background: #EDE8DC; }
+  .slide.dark     { background: #1E1B2E; }
+  .slide.gradient { background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%); }
+
+  /* ─── Progress Bar ─── */
+  .progress-bar {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: rgba(107,143,168,0.18); z-index: 10;
+  }
+  .slide.dark     .progress-bar { background: rgba(150,186,208,0.18); }
+  .slide.gradient .progress-bar { background: rgba(255,255,255,0.22); }
+  .progress-fill {
+    height: 100%; background: #6B8FA8;
+    transition: width 0.36s ease;
+  }
+  .slide.dark     .progress-fill { background: #96BAD0; }
+  .slide.gradient .progress-fill { background: rgba(255,255,255,0.9); }
+
+  /* ─── Swipe Arrow ─── */
+  .swipe-arrow {
+    position: absolute; right: 16px; bottom: 14px;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(107,143,168,0.14);
+    border: 1.5px solid rgba(107,143,168,0.5);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10; cursor: pointer;
+  }
+  .slide.dark     .swipe-arrow { background: rgba(150,186,208,0.12); border-color: rgba(150,186,208,0.45); }
+  .slide.gradient .swipe-arrow { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.55); }
+  .swipe-arrow svg { width: 13px; height: 13px; }
+
+  /* ─── Slide Inner ─── */
+  .slide-inner {
+    display: flex; flex-direction: column;
+    padding: 0 28px 52px;
+    height: 100%; position: relative; z-index: 1;
+  }
+
+  /* ─── Logo Lockup ─── */
+  .logo-lockup {
+    display: flex; align-items: center; gap: 8px;
+    padding-top: 18px; margin-bottom: 10px; flex-shrink: 0;
+  }
+  .logo-circle {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 11px; flex-shrink: 0;
+  }
+  .slide.gradient .logo-circle { background: rgba(255,255,255,0.22); }
+  .logo-text {
+    font-size: 9.5px; font-weight: 600;
+    letter-spacing: 0.07em; text-transform: uppercase; color: #6B8FA8;
+  }
+  .slide.dark     .logo-text { color: #96BAD0; }
+  .slide.gradient .logo-text { color: rgba(255,255,255,0.8); }
+
+  /* ─── Tag ─── */
+  .tag {
+    display: inline-block; padding: 3px 9px; border-radius: 4px;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 10px; align-self: flex-start;
+  }
+  .tag.on-light    { background: rgba(107,143,168,0.12); color: #3D5F75; border: 1px solid rgba(107,143,168,0.28); }
+  .tag.on-dark     { background: rgba(150,186,208,0.12); color: #96BAD0; border: 1px solid rgba(150,186,208,0.28); }
+  .tag.on-gradient { background: rgba(255,255,255,0.18); color: #fff; border: 1px solid rgba(255,255,255,0.35); }
+
+  /* ─── Typography ─── */
+  .headline {
+    font-weight: 700; line-height: 1.14; letter-spacing: -0.022em;
+  }
+  .slide.light    .headline { color: #1E1B2E; }
+  .slide.dark     .headline { color: #EDE8DC; }
+  .slide.gradient .headline { color: #fff; }
+  .accent { color: #6B8FA8; }
+  .slide.dark  .accent { color: #96BAD0; }
+  .slide.gradient .accent { color: rgba(255,255,255,0.85); }
+
+  .body-text {
+    font-size: 12.5px; font-weight: 400; line-height: 1.52;
+  }
+  .slide.light    .body-text { color: #4a4a5e; }
+  .slide.dark     .body-text { color: rgba(237,232,220,0.72); }
+  .slide.gradient .body-text { color: rgba(255,255,255,0.82); }
+
+  /* ─── Divider ─── */
+  .divider {
+    height: 1px; flex-shrink: 0;
+    background: #D6D0C4; margin: 10px 0;
+  }
+  .slide.dark     .divider { background: rgba(150,186,208,0.18); }
+  .slide.gradient .divider { background: rgba(255,255,255,0.22); }
+
+  /* ─── GitHub Repo Button ─── */
+  .repo-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 13px; border-radius: 7px; margin: 8px 0;
+    font-size: 11.5px; font-weight: 700; letter-spacing: 0.01em;
+    font-family: 'Space Grotesk', monospace;
+    align-self: flex-start; flex-shrink: 0;
+  }
+  .slide.light    .repo-btn { background: #1E1B2E; color: #EDE8DC; }
+  .slide.dark     .repo-btn { background: #EDE8DC; color: #1E1B2E; }
+  .slide.gradient .repo-btn { background: rgba(255,255,255,0.9); color: #3D5F75; }
+  .repo-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ─── Feature Card ─── */
+  .feature-card {
+    border-radius: 9px; padding: 11px 13px;
+    flex: 1; display: flex; flex-direction: column; gap: 6px;
+    margin-top: 4px;
+  }
+  .slide.light    .feature-card { background: rgba(30,27,46,0.88); }
+  .slide.dark     .feature-card { background: rgba(150,186,208,0.07); border: 1px solid rgba(150,186,208,0.14); }
+  .slide.gradient .feature-card { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); }
+
+  .card-label {
+    font-size: 8.5px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #96BAD0; margin-bottom: 3px;
+  }
+
+  .bullet-row {
+    display: flex; align-items: flex-start; gap: 7px;
+  }
+  .bullet-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #6B8FA8; flex-shrink: 0; margin-top: 4px;
+  }
+  .slide.dark     .bullet-dot { background: #96BAD0; }
+  .slide.gradient .bullet-dot { background: rgba(255,255,255,0.7); }
+  .bullet-text {
+    font-size: 10.5px; line-height: 1.42; color: rgba(237,232,220,0.85);
+  }
+  .slide.gradient .bullet-text { color: rgba(255,255,255,0.88); }
+
+  /* ─── Install Block ─── */
+  .install-block {
+    background: rgba(0,0,0,0.35); border-radius: 5px;
+    padding: 6px 10px; margin-top: 2px;
+    font-size: 9.5px; font-family: 'Space Grotesk', monospace;
+    color: #96BAD0; letter-spacing: 0.02em; line-height: 1.4;
+    border-left: 2px solid #6B8FA8;
+    flex-shrink: 0;
+  }
+  .slide.gradient .install-block { color: rgba(255,255,255,0.9); border-left-color: rgba(255,255,255,0.6); }
+
+  /* ─── Stats Row ─── */
+  .stats-row {
+    display: flex; align-items: center; gap: 10px;
+    flex-shrink: 0; margin-top: 3px;
+  }
+  .stat-item {
+    display: flex; align-items: center; gap: 4px;
+    font-size: 9.5px; color: rgba(237,232,220,0.55);
+  }
+  .stat-item svg { width: 10px; height: 10px; }
+  .lang-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #96BAD0; flex-shrink: 0;
+  }
+  .slide.gradient .stat-item { color: rgba(255,255,255,0.6); }
+
+  /* ─── Decorative BG text ─── */
+  .bg-deco {
+    position: absolute; pointer-events: none; z-index: 0;
+    font-size: 120px; font-weight: 900; line-height: 1;
+    letter-spacing: -0.05em;
+    color: rgba(107,143,168,0.05);
+  }
+  .slide.dark .bg-deco { color: rgba(150,186,208,0.06); }
+  .slide.gradient .bg-deco { color: rgba(255,255,255,0.06); }
+
+  /* ─── CTA Slide Specific ─── */
+  .cta-handle {
+    font-size: 22px; font-weight: 800;
+    letter-spacing: -0.02em; color: #fff;
+    margin-bottom: 4px;
+  }
+  .cta-sub {
+    font-size: 11px; color: rgba(255,255,255,0.65);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 20px;
+  }
+  .comment-box {
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.28);
+    border-radius: 10px; padding: 14px 18px;
+    width: 100%;
+  }
+  .comment-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.55);
+    margin-bottom: 6px;
+  }
+  .comment-keyword {
+    font-size: 28px; font-weight: 800; color: #fff;
+    letter-spacing: -0.02em; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .comment-desc {
+    font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.45;
+  }
+
+  /* ─── IG Footer ─── */
+  .ig-dots {
+    display: flex; justify-content: center; gap: 5px;
+    padding: 10px 0 6px;
+  }
+  .ig-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #dbdbdb; transition: all 0.3s ease;
+  }
+  .ig-dot.active { background: #3897f0; width: 18px; border-radius: 3px; }
+
+  .ig-actions {
+    display: flex; align-items: center;
+    padding: 6px 16px; gap: 14px;
+  }
+  .ig-icon { width: 24px; height: 24px; color: #262626; cursor: pointer; }
+  .ig-icon-right { margin-left: auto; }
+
+  .ig-meta {
+    padding: 2px 16px 4px;
+    font-size: 13px; font-weight: 600; color: #262626;
+  }
+  .ig-caption {
+    padding: 2px 16px 14px;
+    font-size: 13px; color: #262626; line-height: 1.42;
+  }
+  .ig-caption .hashtags { color: #00376b; }
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <!-- Header -->
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div class="ig-account">
+      <div class="ig-account-name">breathofdatascience</div>
+      <div class="ig-account-sub">Data Science · AI · Claude Code</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <!-- Carousel -->
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- ═══ SLIDE 1 — HERO (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="bg-deco" style="right:-14px; top:45%; transform:translateY(-50%);">₿</div>
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+            <div class="tag on-light">Claude Code · Token Tools</div>
+            <div class="headline" style="font-size:32px; color:#1E1B2E; line-height:1.1;">
+              Stop wasting<br>tokens before
+            </div>
+            <div class="headline" style="font-size:32px; color:#6B8FA8; line-height:1.1; margin-top:3px;">
+              you type<br>a word.
+            </div>
+            <div class="body-text" style="margin-top:14px;">
+              These <strong style="color:#3D5F75;">6 open-source repos</strong> cut 60–90% of wasted context in Claude Code — terminal output, file reads, verbose responses, all of it.
+            </div>
+            <div class="divider" style="margin-top:18px; margin-bottom:10px;"></div>
+            <div style="font-size:10.5px; color:#9090a0; font-weight:500;">Swipe through each repo →</div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:12.5%"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- ═══ SLIDE 2 — REPO 1: rtk-ai/rtk (DARK) ═══ -->
+      <div class="slide dark">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+
+          <div class="tag on-dark">01 / 06 · Token Tools</div>
+          <div class="headline" style="font-size:24px;">
+            <span class="accent">Rust</span> Token<br>Killer
+          </div>
+          <div class="body-text" style="font-size:11.5px; margin-top:5px; margin-bottom:4px;">
+            CLI proxy that filters every terminal output before it hits your context window
+          </div>
+
+          <div class="repo-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            rtk-ai / rtk
+          </div>
+
+          <div class="feature-card">
+            <div class="card-label">Why it matters</div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">60–90% reduction on git, cargo, pytest and 100+ commands — zero deps, single Rust binary</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Hook rewrites bash commands transparently — your agent's workflow never changes</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Works with Claude Code, Cursor, Gemini CLI, Codex and Windsurf out of the box</div>
+            </div>
+            <div class="install-block">curl -fsSL .../rtk/master/install.sh | sh</div>
+            <div class="stats-row">
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 4.517 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                37,300
+              </div>
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 5a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7 5v4a5 5 0 0 0 5 5h3"/></svg>
+                2,300
+              </div>
+              <div class="stat-item"><div class="lang-dot" style="background:#dea584;"></div> Rust</div>
+              <div class="stat-item">Apache 2.0</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- ═══ SLIDE 3 — REPO 2: mksglu/context-mode (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+
+          <div class="tag on-light">02 / 06 · Token Tools</div>
+          <div class="headline" style="font-size:24px;">
+            Context<br><span class="accent">Mode</span>
+          </div>
+          <div class="body-text" style="font-size:11.5px; margin-top:5px; margin-bottom:4px;">
+            Sandboxes every MCP tool output into SQLite so raw data never enters your context
+          </div>
+
+          <div class="repo-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            mksglu / context-mode
+          </div>
+
+          <div class="feature-card">
+            <div class="card-label">Why it matters</div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">98% context reduction — raw tool outputs go into SQLite with FTS5 search, model fetches only what it needs</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Session continuity survives context compaction — Claude picks up exactly where you stopped</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">MCP Plugin for Claude Code, Cursor, Gemini CLI, Windsurf and 10 more platforms</div>
+            </div>
+            <div class="install-block">/plugin marketplace add mksglu/context-mode</div>
+            <div class="stats-row">
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 4.517 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                10,800
+              </div>
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 5a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7 5v4a5 5 0 0 0 5 5h3"/></svg>
+                746
+              </div>
+              <div class="stat-item"><div class="lang-dot" style="background:#3178c6;"></div> TypeScript</div>
+              <div class="stat-item">MIT</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:37.5%"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- ═══ SLIDE 4 — REPO 3: tirth8205/code-review-graph (DARK) ═══ -->
+      <div class="slide dark">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+
+          <div class="tag on-dark">03 / 06 · Token Tools</div>
+          <div class="headline" style="font-size:24px;">
+            Code <span class="accent">Review</span><br>Graph
+          </div>
+          <div class="body-text" style="font-size:11.5px; margin-top:5px; margin-bottom:4px;">
+            Local knowledge graph using Tree-sitter so Claude reads only relevant files
+          </div>
+
+          <div class="repo-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            tirth8205 / code-review-graph
+          </div>
+
+          <div class="feature-card">
+            <div class="card-label">Why it matters</div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Parses your codebase into an AST graph — AI navigates by pointer, not by reading whole files. 6.8x avg token reduction, up to 49x on large monorepos</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">2,900-file project re-indexes in under 2 seconds with incremental hash-based updates</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Supports 23 languages — Python, TypeScript, Go, Rust, Jupyter notebooks</div>
+            </div>
+            <div class="install-block">pip install code-review-graph &amp;&amp; code-review-graph install</div>
+            <div class="stats-row">
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 4.517 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                12,000
+              </div>
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 5a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7 5v4a5 5 0 0 0 5 5h3"/></svg>
+                1,400
+              </div>
+              <div class="stat-item"><div class="lang-dot" style="background:#3572A5;"></div> Python</div>
+              <div class="stat-item">MIT</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- ═══ SLIDE 5 — REPO 4: Mibayy/token-savior (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+
+          <div class="tag on-light">04 / 06 · Token Tools</div>
+          <div class="headline" style="font-size:24px;">
+            Token<br><span class="accent">Savior</span>
+          </div>
+          <div class="body-text" style="font-size:11.5px; margin-top:5px; margin-bottom:4px;">
+            MCP server that navigates code by symbols and keeps memory across sessions
+          </div>
+
+          <div class="repo-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            Mibayy / token-savior
+          </div>
+
+          <div class="feature-card">
+            <div class="card-label">Why it matters</div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">97% fewer characters injected into context across 170 real sessions with persistent memory</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">100% benchmark score with 77% fewer active tokens than plain Claude Code</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Decisions stored in SQLite with Bayesian validity scoring — memory persists across sessions</div>
+            </div>
+            <div class="install-block">uvx token-savior-recall</div>
+            <div class="stats-row">
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 4.517 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                676
+              </div>
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 5a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7 5v4a5 5 0 0 0 5 5h3"/></svg>
+                54
+              </div>
+              <div class="stat-item"><div class="lang-dot" style="background:#3572A5;"></div> Python</div>
+              <div class="stat-item">MIT</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:62.5%"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- ═══ SLIDE 6 — REPO 5: JuliusBrussee/caveman (DARK) ═══ -->
+      <div class="slide dark">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+
+          <div class="tag on-dark">05 / 06 · Token Tools</div>
+          <div class="headline" style="font-size:24px;">
+            <span class="accent">Caveman</span><br>Mode
+          </div>
+          <div class="body-text" style="font-size:11.5px; margin-top:5px; margin-bottom:4px;">
+            Makes Claude respond in compressed caveman-speak — cuts 75% of output tokens
+          </div>
+
+          <div class="repo-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            JuliusBrussee / caveman
+          </div>
+
+          <div class="feature-card">
+            <div class="card-label">Why it matters</div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">65–75% fewer output tokens — code blocks and commands pass through unchanged, no accuracy loss</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Toggle with /caveman in chat — auto-activates via SessionStart hook on Claude Code</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Ships as Claude Code plugin, Codex plugin and Gemini CLI extension — covers 40 agents</div>
+            </div>
+            <div class="install-block">claude plugin marketplace add JuliusBrussee/caveman</div>
+            <div class="stats-row">
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 4.517 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                47,600
+              </div>
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 5a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7 5v4a5 5 0 0 0 5 5h3"/></svg>
+                2,500
+              </div>
+              <div class="stat-item"><div class="lang-dot" style="background:#3178c6;"></div> TypeScript</div>
+              <div class="stat-item">MIT</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- ═══ SLIDE 7 — REPO 6: drona23/claude-token-efficient (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+
+          <div class="tag on-light">06 / 06 · Token Tools</div>
+          <div class="headline" style="font-size:24px;">
+            Token<br><span class="accent">Efficient</span>
+          </div>
+          <div class="body-text" style="font-size:11.5px; margin-top:5px; margin-bottom:4px;">
+            One CLAUDE.md file that keeps every response terse — no code changes required
+          </div>
+
+          <div class="repo-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            drona23 / claude-token-efficient
+          </div>
+
+          <div class="feature-card">
+            <div class="card-label">Why it matters</div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">63% average output token reduction on coding tasks — drop one file, zero tool changes</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Fixes sycophancy, verbose output and ASCII formatting that silently inflate heavy sessions</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Best for output-heavy agent pipelines where response volume easily offsets the tiny file input cost</div>
+            </div>
+            <div class="install-block">cp profiles/CLAUDE.coding.md ./CLAUDE.md</div>
+            <div class="stats-row">
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 4.517 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                5,000
+              </div>
+              <div class="stat-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 5a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 14a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7 5v4a5 5 0 0 0 5 5h3"/></svg>
+                375
+              </div>
+              <div class="stat-item"><div class="lang-dot" style="background:#e44b23;"></div> Markdown</div>
+              <div class="stat-item">MIT</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:87.5%"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- ═══ SLIDE 8 — CTA (GRADIENT) ═══ -->
+      <div class="slide gradient">
+        <div class="bg-deco" style="right:-20px; bottom:-20px; font-size:160px; opacity:0.06;">B</div>
+        <div class="slide-inner" style="justify-content:center; align-items:center; text-align:center; padding-bottom:52px;">
+          <div class="logo-lockup" style="justify-content:center; margin-bottom:24px;">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+
+          <div class="cta-handle">@breathofdatascience</div>
+          <div class="cta-sub">Data Science · AI · Claude Code</div>
+
+          <div class="comment-box">
+            <div class="comment-label">Save this post</div>
+            <div style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.5;">
+              All 6 repos with install commands in one place. Share with the dev who's burning tokens on every Claude Code session.
+            </div>
+          </div>
+
+          <div style="margin-top:16px; width:100%;">
+            <div style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:8px; padding:10px 14px; text-align:left;">
+              <div style="font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:6px;">TL;DR — The 6 Repos</div>
+              <div style="font-size:10px; color:rgba(255,255,255,0.8); line-height:1.7; font-weight:500;">
+                rtk-ai/rtk · mksglu/context-mode<br>
+                tirth8205/code-review-graph<br>
+                Mibayy/token-savior<br>
+                JuliusBrussee/caveman<br>
+                drona23/claude-token-efficient
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      </div>
+
+    </div><!-- /track -->
+  </div><!-- /viewport -->
+
+  <!-- Dots -->
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+  </div>
+
+  <!-- Actions -->
+  <div class="ig-actions">
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    <svg class="ig-icon ig-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+  </div>
+  <div class="ig-meta">228 likes</div>
+  <div class="ig-caption">
+    <strong>breathofdatascience</strong> You're burning tokens before you type a word. These 6 repos cut 60–90% of wasted context in Claude Code — terminal output, file reads, verbose responses, all of it. Save this. 🔖<br>
+    <span class="hashtags">#claudecode #AITools #DeveloperTools #OpenSource #DataScience</span>
+  </div>
+
+</div><!-- /ig-frame -->
+
+<script>
+  const track   = document.getElementById('track');
+  const viewport= document.getElementById('viewport');
+  const dots    = document.querySelectorAll('.ig-dot');
+  const total   = dots.length;
+  let current   = 0;
+  let startX    = 0;
+  let isDragging= false;
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= total) return;
+    current = idx;
+    track.style.transform = `translateX(-${current * 420}px)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  // Arrow click
+  document.querySelectorAll('.swipe-arrow').forEach((btn, i) => {
+    btn.addEventListener('click', e => { e.stopPropagation(); goTo(i + 1); });
+  });
+
+  // Drag / swipe
+  viewport.addEventListener('mousedown',  e => { isDragging = true; startX = e.clientX; });
+  viewport.addEventListener('touchstart', e => { isDragging = true; startX = e.touches[0].clientX; }, { passive: true });
+
+  viewport.addEventListener('mouseup',  e => {
+    if (!isDragging) return; isDragging = false;
+    const dx = e.clientX - startX;
+    if (dx < -40) goTo(current + 1);
+    else if (dx > 40) goTo(current - 1);
+  });
+  viewport.addEventListener('touchend', e => {
+    if (!isDragging) return; isDragging = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (dx < -40) goTo(current + 1);
+    else if (dx > 40) goTo(current - 1);
+  });
+</script>
+</body>
+</html>

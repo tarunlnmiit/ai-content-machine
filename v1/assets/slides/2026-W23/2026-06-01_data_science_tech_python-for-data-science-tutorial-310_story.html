@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NumPy: Thinking in Arrays — IG Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #1C1C2E;
+  --black:  #0D0D17;
+  --panel:  #13131F;
+  --teal:   #00D4AA;
+  --violet: #7B61FF;
+  --cream:  #E8E0D5;
+  --steel:  #7C9CB0;
+  --ff: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'Fira Code', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--black); font-family: var(--ff); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+
+.stage { position: relative; width: 1080px; height: 1920px; background: var(--black); overflow: hidden; }
+
+.slide { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+
+/* photographic background slot + legibility gradient */
+.photo { position: absolute; inset: 0; z-index: 0; }
+image-slot, .img-slot {
+  display: block; width: 100%; height: 100%;
+  background: rgba(0,212,170,0.05);
+  border: 1px dashed rgba(124,156,176,0.28);
+}
+.img-slot-label {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  padding: 80px; font-family: var(--mono); font-size: 21px; line-height: 1.7; letter-spacing: 0.04em;
+  color: rgba(124,156,176,0.55); text-align: center; pointer-events: none;
+}
+.scrim { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.grain {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+.body { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; padding: 150px 96px; }
+
+/* type roles */
+.big { font-weight: 800; font-size: 78px; letter-spacing: -0.02em; line-height: 1.05; color: var(--cream); }
+.mega { font-weight: 900; font-size: 150px; letter-spacing: -0.01em; color: var(--teal); text-shadow: 0 0 40px rgba(0,212,170,0.4); }
+.sub { font-weight: 500; font-size: 36px; color: var(--steel); line-height: 1.4; margin-top: 28px; }
+.sub.cream { color: var(--cream); }
+.quote { font-weight: 700; font-style: italic; font-size: 64px; line-height: 1.28; color: var(--cream); }
+
+/* FRAME 1 */
+#slide-0 .scrim { background: linear-gradient(to top, rgba(13,13,23,0.95) 0%, rgba(13,13,23,0.4) 45%, transparent 100%); }
+#slide-0 .body { justify-content: flex-end; padding-bottom: 220px; }
+
+/* FRAME 2 */
+#slide-1 .scrim { background: linear-gradient(to bottom, rgba(13,13,23,0.85) 0%, transparent 38%, transparent 60%, rgba(13,13,23,0.6) 100%); }
+#slide-1 .body { justify-content: center; align-items: center; text-align: center; }
+
+/* FRAME 3 — grid illumination */
+#slide-2 { background: var(--navy); }
+.grid-cells { position: absolute; inset: 0; z-index: 1; display: grid; grid-template-columns: repeat(8, 1fr); grid-auto-rows: 1fr; gap: 18px; padding: 90px; }
+.grid-cells i { border-radius: 10px; background: rgba(0,212,170,0.16); border: 1px solid rgba(0,212,170,0.4); box-shadow: 0 0 22px rgba(0,212,170,0.18); }
+#slide-2 .body { justify-content: center; align-items: center; text-align: center; }
+#slide-2 .scrim { background: radial-gradient(ellipse 80% 50% at 50% 50%, rgba(13,13,23,0.82) 0%, rgba(13,13,23,0.5) 60%, transparent 100%); z-index: 2; }
+
+/* FRAME 4 — code expression */
+#slide-3 { background: var(--black); }
+#slide-3 .body { justify-content: center; align-items: center; text-align: center; gap: 60px; }
+.expr { font-family: var(--mono); font-weight: 500; font-size: 70px; white-space: nowrap; }
+.expr .v { color: var(--cream); } .expr .br { color: var(--violet); } .expr .op { color: var(--teal); } .expr .nm { color: var(--teal); }
+
+/* FRAME 5 */
+#slide-4 .scrim { background: linear-gradient(to bottom, rgba(13,13,23,0.6) 0%, rgba(13,13,23,0.2) 40%, rgba(13,13,23,0.55) 100%); }
+#slide-4 .body { justify-content: center; }
+
+/* FRAME 6 */
+#slide-5 .scrim { background: linear-gradient(to top, rgba(13,13,23,0.92) 0%, rgba(13,13,23,0.3) 50%, transparent 100%); }
+#slide-5 .body { justify-content: flex-end; padding-bottom: 240px; align-items: center; text-align: center; }
+
+/* FRAME 7 — closing typography */
+#slide-6 { background: var(--navy); }
+#slide-6 .body { justify-content: center; }
+.tut { font-family: var(--mono); font-size: 26px; letter-spacing: 0.1em; color: var(--steel); position: absolute; top: 150px; left: 96px; z-index: 3; }
+.prog { display: flex; flex-direction: column; gap: 44px; }
+.prog .l { font-weight: 800; font-size: 62px; letter-spacing: -0.01em; color: var(--steel); }
+.prog .l.peak { color: var(--cream); }
+.prog .l.peak b { color: var(--teal); font-weight: 800; }
+.foot { position: absolute; bottom: 130px; left: 96px; z-index: 3; }
+.foot .h { font-family: var(--mono); font-size: 26px; color: var(--steel); }
+.foot .n { font-family: var(--mono); font-size: 30px; color: var(--teal); margin-top: 14px; }
+.grid-tex { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5;
+  background-image: linear-gradient(rgba(124,156,176,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124,156,176,0.05) 1px, transparent 1px); background-size: 88px 88px; }
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- ══ FRAME 1 — your loop is the problem ══ -->
+  <div class="slide" id="slide-0">
+    <div class="photo">
+      <image-slot id="p1" src="photos/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_p1.jpg" shape="rect" placeholder="Extreme close-up of a laptop trackpad and lower keyboard edge · a terminal window slightly out of focus behind, a Python for-loop running, blinking cursor · warm tungsten desk-lamp glow upper-right · late-night deep-work mood · no human visible · low-key, film grain">
+        <div class="img-slot-label">PHOTO — laptop trackpad &amp; keyboard edge, terminal running a Python for-loop, warm desk-lamp glow, late night</div>
+      </image-slot>
+    </div>
+    <div class="scrim"></div>
+    <div class="body">
+      <h1 class="big">Your loop is<br>the problem.</h1>
+      <p class="sub">You just don't know it yet.</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ FRAME 2 — one line ══ -->
+  <div class="slide" id="slide-1">
+    <div class="photo">
+      <image-slot id="p2" src="photos/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_p2.jpg" shape="rect" placeholder="A laptop screen showing two side-by-side terminal windows · left: a Python for-loop, dimmed and receding · right: a single bright line `scores * 2` with output printed below, sharper and in focus · dark room, screen-lit · documentary framing">
+        <div class="img-slot-label">PHOTO — laptop with two terminals: dim for-loop (left), bright `scores * 2` with output (right)</div>
+      </image-slot>
+    </div>
+    <div class="scrim"></div>
+    <div class="body">
+      <div class="mega">ONE LINE.</div>
+      <p class="sub cream">Same result. Compiled C underneath.</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ FRAME 3 — describe it (grid) ══ -->
+  <div class="slide" id="slide-2">
+    <div class="grid-cells">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="scrim"></div>
+    <div class="body">
+      <h1 class="big">Describe it.</h1>
+      <p class="sub">Don't instruct it step by step.</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ FRAME 4 — code expression ══ -->
+  <div class="slide" id="slide-3">
+    <div class="body">
+      <div class="expr"><span class="v">scores</span><span class="br">[</span><span class="v">scores</span> <span class="op">&gt;</span> <span class="nm">90</span><span class="br">]</span></div>
+      <p class="sub" style="max-width:760px;text-align:center;">Filter without a loop.<br>This is also how Pandas works.</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ FRAME 5 — the embarrassing realization ══ -->
+  <div class="slide" id="slide-4">
+    <div class="photo">
+      <image-slot id="p5" src="photos/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_p5.jpg" shape="rect" placeholder="A data scientist shot from behind and slightly above, at a desk with two monitors showing nested-loop code · posture slightly slumped, chin on hand · warm amber desk-lamp light · shallow depth of field, monitors in focus · the look of having fought a problem too long">
+        <div class="img-slot-label">PHOTO — person from behind at two monitors of nested-loop code, slumped, chin on hand, warm lamp</div>
+      </image-slot>
+    </div>
+    <div class="scrim"></div>
+    <div class="body">
+      <p class="quote">"I spent an hour writing code NumPy had already solved in 2006."</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ FRAME 6 — think in arrays ══ -->
+  <div class="slide" id="slide-5">
+    <div class="photo">
+      <image-slot id="p6" src="photos/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_p6.jpg" shape="rect" placeholder="Same person, same desk — now upright, posture open · one monitor shows two clean lines of NumPy code, the other is dark · the stillness that follows a realization · same warm light, shallow depth of field">
+        <div class="img-slot-label">PHOTO — same person, now upright &amp; settled, one monitor with two clean NumPy lines, other dark</div>
+      </image-slot>
+    </div>
+    <div class="scrim"></div>
+    <div class="body">
+      <div class="mega" style="font-size:104px;">THINK IN<br>ARRAYS.</div>
+      <p class="sub cream">Not in steps.</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ FRAME 7 — closing ══ -->
+  <div class="slide" id="slide-6">
+    <div class="grid-tex"></div>
+    <span class="tut">Tutorial 3/10</span>
+    <div class="body">
+      <div class="prog">
+        <div class="l">Lists: sequence.</div>
+        <div class="l">Dicts: map.</div>
+        <div class="l peak">NumPy: <b>operate on<br>everything at once.</b></div>
+      </div>
+    </div>
+    <div class="foot">
+      <div class="h">@mistakenlyhuman</div>
+      <div class="n">Next: Pandas</div>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+</div><!-- /stage -->
+
+<script src="image-slot.js"></script>
+<script>
+/* Swallow opaque cross-origin "Script error." noise from the image-slot sidecar fetch. */
+window.addEventListener('error', function (e) {
+  if (!e.filename && !e.lineno && !e.colno) { e.preventDefault(); e.stopImmediatePropagation(); }
+}, true);
+window.addEventListener('unhandledrejection', function (e) { e.preventDefault(); });
+</script>
+<script>
+/* ─── Story timing (read by scripts/export_story_animation.py) ─── */
+window._storyMeta = {
+  TOTAL:  26.2,
+  STARTS: [0, 3.7, 7.4, 11.1, 14.8, 18.5, 22.2]
+};
+
+var _t = 0, _scrubMode = false;
+
+window._setStoryTime = function (t) {
+  _scrubMode = true; /* halt RAF autoplay when the export script scrubs */
+  _t = t;
+};
+
+window._storyRender = function () {
+  var starts = window._storyMeta.STARTS;
+  var total  = window._storyMeta.TOTAL;
+  var fadeIn = 0.5, fadeOut = 0.45;
+  var n = starts.length;
+  for (var i = 0; i < n; i++) {
+    var s0 = starts[i];
+    var s1 = (i + 1 < n) ? starts[i + 1] : total;
+    var el = document.getElementById('slide-' + i);
+    if (!el) continue;
+    var op = 0, ty = 14;
+    if (_t >= s0 && _t < s1) {
+      var elapsed = _t - s0;
+      var dur = s1 - s0;
+      if (elapsed < fadeIn) { op = elapsed / fadeIn; ty = 14 * (1 - op); }
+      else if (elapsed > dur - fadeOut) { op = (s1 - _t) / fadeOut; ty = 0; }
+      else { op = 1; ty = 0; }
+    }
+    el.style.opacity = op;
+    el.style.transform = ty > 0 ? 'translateY(' + ty.toFixed(2) + 'px)' : 'translateY(0)';
+  }
+};
+
+/* ─── Preview autoplay in browser ─── */
+(function () {
+  var RAF = window.requestAnimationFrame || function (cb) { setTimeout(cb, 1000 / 30); };
+  var start = null, playing = true;
+  function tick(now) {
+    if (!playing || _scrubMode) return;
+    if (!start) start = now;
+    var elapsed = (now - start) / 1000;
+    if (elapsed > window._storyMeta.TOTAL) start = now;
+    window._setStoryTime(elapsed % window._storyMeta.TOTAL);
+    window._storyRender();
+    RAF(tick);
+  }
+  RAF(tick);
+  document.getElementById('stage').addEventListener('click', function () {
+    playing = !playing; if (playing) { start = null; RAF(tick); }
+  });
+})();
+</script>
+</body>
+</html>

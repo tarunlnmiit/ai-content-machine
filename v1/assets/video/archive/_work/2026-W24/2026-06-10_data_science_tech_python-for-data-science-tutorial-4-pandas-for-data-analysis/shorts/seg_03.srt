@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:00,040
+Chipping away, never sure if you had found the actual data or just another layer of sediment.
+
+2
+00:00:00,040 --> 00:00:14,520
+Then I learned pandas properly, not just pandas.redcsv and df.head.
+
+3
+00:00:18,120 --> 00:00:21,640
+Don't worry if you don't know about these two, I will explain them in a bit.
+
+4
+00:00:21,640 --> 00:00:26,440
+The actual mental model, that a data frame is a structured, labeled,
+
+5
+00:00:26,440 --> 00:00:33,000
+queryable object that makes data interrogation feel like conversation instead of combat.
+
+6
+00:00:34,360 --> 00:00:39,480
+So today I am going to cover four things, loading and exploring, selecting and filtering,
+
+7
+00:00:40,120 --> 00:00:46,800
+cleaning messy data and aggregating. By the end, you will be able to take an unfamiliar data set

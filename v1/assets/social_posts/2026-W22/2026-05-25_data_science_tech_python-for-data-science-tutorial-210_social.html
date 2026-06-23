@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python for Data Science — Tutorial 2 Social Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1C1C2E;
+  --terminal: #0D0D1A;
+  --bone: #E8E0D5;
+  --steel: #7C9CB0;
+  --teal: #00D4AA;
+  --amber: #E8A84C;
+  --grain-op: 0.035;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #F0EEE9;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 120px 120px;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ─── Canvas layout ───────────────────────── */
+.canvas { padding: 64px 48px 120px; display: flex; flex-direction: column; gap: 80px; }
+
+.ds { display: flex; flex-direction: column; align-items: flex-start; }
+.ds-hd { margin-bottom: 18px; }
+.ds-hd h2 {
+  font-size: 20px; font-weight: 600; color: rgba(40,30,20,0.85);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin-bottom: 4px; letter-spacing: -0.01em;
+}
+.ds-hd p {
+  font-size: 13px; color: rgba(60,50,40,0.58);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.ds-lbl {
+  margin-bottom: 14px; font-size: 12.5px; color: rgba(60,50,40,0.65);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex; align-items: center; gap: 7px;
+}
+.ds-lbl::before { content: '⠿'; font-size: 11px; opacity: 0.45; }
+
+/* ─── Artboard scaling ────────────────────── */
+.wrap { position: relative; }
+.artboard {
+  position: absolute; top: 0; left: 0;
+  transform-origin: top left; overflow: hidden;
+  box-shadow: 0 4px 28px rgba(0,0,0,0.16), 0 1px 4px rgba(0,0,0,0.10);
+}
+
+/* ─── Grain overlay ───────────────────────── */
+.grain {
+  position: absolute; inset: 0; z-index: 25; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  opacity: var(--grain-op); mix-blend-mode: overlay;
+}
+
+/* ─── Terminal shared ─────────────────────── */
+.terminal {
+  background: var(--terminal);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.terminal-bar { padding: 16px 20px 0; display: flex; gap: 7px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.07); }
+.terminal-body { padding: 22px 30px 30px; }
+.code-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 400; line-height: 1.85; white-space: nowrap;
+}
+
+/* ─── Syntax tokens ───────────────────────── */
+.syn-prompt { color: #4E5D6E; user-select: none; }
+.syn-var { color: var(--bone); }
+.syn-op { color: #6B7D8E; }
+.syn-str { color: var(--amber); }
+.syn-fn { color: var(--teal); }
+.syn-output { color: var(--amber); }
+.syn-bracket { color: #6B7D8E; }
+
+/* ─── Handle shared ───────────────────────── */
+.handle {
+  position: absolute; bottom: 20px; right: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--steel); z-index: 30; opacity: 0.7;
+}
+
+/* ═══ VARIANT 1 — INSTAGRAM ═══════════════════════════════════ */
+.ig {
+  width: 1080px; height: 1080px;
+  background: radial-gradient(ellipse at 50% 18%, #23233a 0%, var(--bg) 56%);
+  display: flex; flex-direction: column; position: relative;
+}
+.ig-code-zone {
+  flex: 0 0 55%; display: flex; align-items: center; justify-content: center; padding: 48px;
+}
+.ig .terminal { width: 88%; }
+.ig .code-line { font-size: 22px; }
+.ig-text-zone {
+  flex: 0 0 45%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 0 48px 56px; gap: 20px; text-align: center;
+}
+.ig-headline {
+  font-family: 'Inter', sans-serif; font-weight: 700;
+  font-size: 28px; line-height: 1.44; color: var(--bone);
+  max-width: 92%; text-wrap: pretty;
+}
+.ig-supporting {
+  font-family: 'Inter', sans-serif; font-weight: 400;
+  font-size: 16px; color: var(--steel); line-height: 1.5;
+}
+.ig .handle { font-size: 13px; }
+
+/* ═══ VARIANT 2 — LINKEDIN ═══════════════════════════════════ */
+.li {
+  width: 1200px; height: 628px;
+  display: flex; position: relative; background: var(--bg);
+}
+.li-code-zone {
+  width: 48%; flex-shrink: 0;
+  background: var(--terminal);
+  display: flex; align-items: center; justify-content: center;
+  padding: 48px 36px; position: relative;
+}
+.li-code-zone::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(232,168,76,0.035) 0%, transparent 65%);
+  pointer-events: none;
+}
+.li .terminal {
+  border: none; border-radius: 0; background: transparent; width: 100%;
+}
+.li .terminal-bar { display: none; }
+.li .terminal-body { padding: 0; }
+.li .code-line { font-size: 19px; }
+.li-text-zone {
+  flex: 1; padding: 44px 52px;
+  display: flex; flex-direction: column; position: relative;
+}
+.li-series {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; color: var(--teal);
+  align-self: flex-end; letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.li-body {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; gap: 22px;
+}
+.li-headline {
+  font-family: 'Inter', sans-serif; font-weight: 700;
+  font-size: 30px; line-height: 1.32; color: var(--bone);
+  letter-spacing: -0.01em; text-wrap: pretty;
+}
+.li-rule { width: 64px; height: 1px; background: var(--teal); flex-shrink: 0; }
+.li-subline {
+  font-family: 'Inter', sans-serif; font-weight: 400;
+  font-size: 18px; line-height: 1.5; color: var(--steel);
+}
+.li .handle { font-size: 12px; }
+
+/* ═══ VARIANT 3 — TWITTER / X ════════════════════════════════ */
+.tw {
+  width: 1200px; height: 675px;
+  background: radial-gradient(ellipse at 50% 32%, #23233a 0%, var(--bg) 58%);
+  position: relative;
+}
+.tw-content {
+  position: absolute; inset: 0; z-index: 5;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 52px 80px; gap: 32px;
+}
+.tw-headline {
+  font-family: 'Inter', sans-serif; font-weight: 900;
+  font-size: 34px; line-height: 1.28; color: var(--bone);
+  text-align: center; letter-spacing: -0.025em; max-width: 88%;
+}
+.tw .terminal { width: 60%; }
+.tw .code-line { font-size: 20px; }
+.tw-subline {
+  font-family: 'Inter', sans-serif; font-weight: 400;
+  font-size: 16px; color: var(--steel); text-align: center;
+}
+.tw .handle { font-size: 12px; }
+
+/* ═══ VARIANT 4 — THREADS ════════════════════════════════════ */
+.th {
+  width: 1080px; height: 1080px;
+  background: radial-gradient(ellipse at 50% 18%, #23233a 0%, var(--bg) 56%);
+  display: flex; flex-direction: column; position: relative;
+}
+.th-code-zone {
+  flex: 0 0 55%; display: flex; align-items: center; justify-content: center; padding: 48px;
+}
+.th .terminal { width: 88%; }
+.th .code-line { font-size: 22px; }
+.th-text-zone {
+  flex: 0 0 45%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 0 48px 56px; text-align: center;
+}
+.th-headline {
+  font-family: 'Inter', sans-serif; font-weight: 400;
+  font-size: 26px; line-height: 1.5; color: var(--bone);
+  max-width: 90%; text-wrap: pretty;
+}
+.th .handle { font-size: 13px; }
+
+/* ═══ TWEAKS PANEL ═══════════════════════════════════════════ */
+.twk {
+  position: fixed; right: 16px; bottom: 16px; z-index: 9999; width: 238px;
+  background: rgba(250,249,247,0.85);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 0.5px solid rgba(255,255,255,0.65); border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset, 0 12px 40px rgba(0,0,0,0.18);
+  font: 11.5px/1.4 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden; color: #29261b;
+}
+.twk-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 10px 10px 14px; cursor: default; user-select: none;
+}
+.twk-hd b { font-size: 12px; font-weight: 600; letter-spacing: 0.01em; }
+.twk-close {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: none; background: rgba(0,0,0,0.09); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: rgba(0,0,0,0.45); line-height: 1; padding: 0;
+}
+.twk-close:hover { background: rgba(0,0,0,0.15); }
+.twk-body { padding: 2px 14px 14px; display: flex; flex-direction: column; gap: 11px; }
+.twk-sep {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(0,0,0,0.38); padding-top: 2px;
+}
+.twk-row { display: flex; flex-direction: column; gap: 5px; }
+.twk-row label { display: flex; justify-content: space-between; font-size: 11px; color: rgba(0,0,0,0.58); }
+.twk-row input[type="range"] { width: 100%; accent-color: #7C9CB0; cursor: pointer; }
+.swatches { display: flex; gap: 8px; }
+.swatch {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2.5px solid transparent; cursor: pointer; outline: none;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.swatch:hover { transform: scale(1.12); }
+.swatch.on { box-shadow: 0 0 0 2px white, 0 0 0 3.5px rgba(0,0,0,0.28); }
+</style>
+</head>
+<body>
+
+<main class="canvas">
+
+<!-- ═══ VARIANT 1 — INSTAGRAM ═══════════════════════════════════ -->
+<section class="ds" id="sec-ig">
+  <div class="ds-hd">
+    <h2>Instagram · 1080 × 1080</h2>
+    <p>Silent bug as anchor — terminal code is the image</p>
+  </div>
+  <div class="ds-lbl">Variant 1 — Instagram</div>
+  <div class="wrap" data-w="1080" data-h="1080">
+    <div class="artboard ig">
+      <div class="ig-code-zone">
+        <div class="terminal">
+          <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="terminal-body">
+            <div class="code-line" style="font-size:22px"><span class="syn-prompt">&gt;&gt;&gt; </span><span class="syn-var">ages</span> <span class="syn-op">=</span> <span class="syn-bracket">[</span><span class="syn-str">"28"</span><span class="syn-op">, </span><span class="syn-str">"35"</span><span class="syn-op">, </span><span class="syn-str">"42"</span><span class="syn-bracket">]</span></div>
+            <div class="code-line" style="font-size:22px"><span class="syn-prompt">&gt;&gt;&gt; </span><span class="syn-fn">sum</span><span class="syn-bracket">(</span><span class="syn-var">ages</span><span class="syn-bracket">)</span></div>
+            <div class="code-line" style="font-size:22px"><span class="syn-output">'283542'</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ig-text-zone">
+        <p class="ig-headline">Python didn't add 28 + 35 + 42. It concatenated them: '283542'. No error. No warning. Just a wrong number.</p>
+        <p class="ig-supporting">Tutorial 2 / 10 — Variables, Data Types &amp; the Structures That Actually Matter</p>
+      </div>
+      <span class="handle">@mistakenlyhuman</span>
+      <div class="grain"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VARIANT 2 — LINKEDIN ═══════════════════════════════════ -->
+<section class="ds" id="sec-li">
+  <div class="ds-hd">
+    <h2>LinkedIn · 1200 × 628</h2>
+    <p>Split column — code panel meets professional insight</p>
+  </div>
+  <div class="ds-lbl">Variant 2 — LinkedIn</div>
+  <div class="wrap" data-w="1200" data-h="628">
+    <div class="artboard li">
+      <div class="li-code-zone">
+        <div class="terminal">
+          <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="terminal-body">
+            <div class="code-line" style="font-size:19px"><span class="syn-prompt">&gt;&gt;&gt; </span><span class="syn-var">ages</span> <span class="syn-op">=</span> <span class="syn-bracket">[</span><span class="syn-str">"28"</span><span class="syn-op">, </span><span class="syn-str">"35"</span><span class="syn-op">, </span><span class="syn-str">"42"</span><span class="syn-bracket">]</span></div>
+            <div class="code-line" style="font-size:19px"><span class="syn-prompt">&gt;&gt;&gt; </span><span class="syn-fn">sum</span><span class="syn-bracket">(</span><span class="syn-var">ages</span><span class="syn-bracket">)</span></div>
+            <div class="code-line" style="font-size:19px"><span class="syn-output">'283542'</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="li-text-zone">
+        <span class="li-series">Tutorial 02 / 10</span>
+        <div class="li-body">
+          <h2 class="li-headline">Python will give you a wrong answer without telling you. Here's the type system that prevents it.</h2>
+          <div class="li-rule"></div>
+          <p class="li-subline">Variables, data types, and structures every data scientist needs before touching a library.</p>
+        </div>
+        <span class="handle" style="position:relative; bottom:auto; right:auto; align-self:flex-end;">@tarun-gupta-in</span>
+      </div>
+      <div class="grain"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VARIANT 3 — TWITTER / X ═══════════════════════════════ -->
+<section class="ds" id="sec-tw">
+  <div class="ds-hd">
+    <h2>Twitter / X · 1200 × 675</h2>
+    <p>Strong vertical hierarchy — headline, terminal, sub-line</p>
+  </div>
+  <div class="ds-lbl">Variant 3 — Twitter / X</div>
+  <div class="wrap" data-w="1200" data-h="675">
+    <div class="artboard tw">
+      <div class="tw-content">
+        <p class="tw-headline">No error. No crash. Just a wrong number.<br>Python types, explained.</p>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="terminal-body">
+            <div class="code-line" style="font-size:20px"><span class="syn-prompt">&gt;&gt;&gt; </span><span class="syn-str">"28"</span> <span class="syn-op">+</span> <span class="syn-str">"35"</span> <span class="syn-op">+</span> <span class="syn-str">"42"</span></div>
+            <div class="code-line" style="font-size:20px"><span class="syn-output">'283542'</span></div>
+          </div>
+        </div>
+        <p class="tw-subline">Tutorial 2 — Variables &amp; Data Types</p>
+      </div>
+      <span class="handle">@mistakenlyhuman</span>
+      <div class="grain"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VARIANT 4 — THREADS ═══════════════════════════════════ -->
+<section class="ds" id="sec-th">
+  <div class="ds-hd">
+    <h2>Threads · 1080 × 1080</h2>
+    <p>First-person, authentic — the headline carries it</p>
+  </div>
+  <div class="ds-lbl">Variant 4 — Threads</div>
+  <div class="wrap" data-w="1080" data-h="1080">
+    <div class="artboard th">
+      <div class="th-code-zone">
+        <div class="terminal">
+          <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="terminal-body">
+            <div class="code-line" style="font-size:22px"><span class="syn-prompt">&gt;&gt;&gt; </span><span class="syn-var">ages</span> <span class="syn-op">=</span> <span class="syn-bracket">[</span><span class="syn-str">"28"</span><span class="syn-op">, </span><span class="syn-str">"35"</span><span class="syn-op">, </span><span class="syn-str">"42"</span><span class="syn-bracket">]</span></div>
+            <div class="code-line" style="font-size:22px"><span class="syn-prompt">&gt;&gt;&gt; </span><span class="syn-fn">sum</span><span class="syn-bracket">(</span><span class="syn-var">ages</span><span class="syn-bracket">)</span></div>
+            <div class="code-line" style="font-size:22px"><span class="syn-output">'283542'</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="th-text-zone">
+        <p class="th-headline">I once shipped an analysis where ages were being concatenated, not summed. '283542'. Nobody caught it. This is why types matter.</p>
+      </div>
+      <span class="handle">@mistakenlyhuman</span>
+      <div class="grain"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ─── TWEAKS PANEL ───────────────────────────────────────────── -->
+<div class="twk" id="tweaks" style="display:none" role="complementary" aria-label="Tweaks">
+  <div class="twk-hd">
+    <b>Tweaks</b>
+    <button class="twk-close" id="twk-close" aria-label="Close tweaks">×</button>
+  </div>
+  <div class="twk-body">
+    <div class="twk-sep">Error highlight</div>
+    <div class="swatches" id="amber-swatches">
+      <button class="swatch on" data-c="#E8A84C" style="background:#E8A84C" aria-label="Warm Amber"></button>
+      <button class="swatch"    data-c="#D4A043" style="background:#D4A043" aria-label="Deep Gold"></button>
+      <button class="swatch"    data-c="#D97757" style="background:#D97757" aria-label="Hot Coral"></button>
+      <button class="swatch"    data-c="#C9A96E" style="background:#C9A96E" aria-label="Ochre"></button>
+    </div>
+    <div class="twk-sep">Texture</div>
+    <div class="twk-row">
+      <label>Film grain <span id="grain-val">3.5%</span></label>
+      <input type="range" id="grain-sl" min="0" max="8" step="0.5" value="3.5">
+    </div>
+  </div>
+</div>
+
+<script>
+/* ─── TWEAK STATE ─────────────────────────────────────────────── */
+var tweaks = { amber: '#E8A84C', grain: 3.5 };
+
+function applyTweaks() {
+  var d = document.documentElement;
+  d.style.setProperty('--amber', tweaks.amber);
+  d.style.setProperty('--grain-op', tweaks.grain / 100);
+  var gv = document.getElementById('grain-val');
+  if (gv) gv.textContent = tweaks.grain + '%';
+  var gs = document.getElementById('grain-sl');
+  if (gs) gs.value = tweaks.grain;
+  document.querySelectorAll('#amber-swatches .swatch').forEach(function(s) {
+    s.classList.toggle('on', s.dataset.c === tweaks.amber);
+  });
+}
+
+/* ─── SCALE ARTBOARDS ─────────────────────────────────────────── */
+function scaleArtboards() {
+  var maxW = Math.min(window.innerWidth - 96, 1400);
+  document.querySelectorAll('.wrap').forEach(function(wrap) {
+    var nw = parseInt(wrap.dataset.w);
+    var nh = parseInt(wrap.dataset.h);
+    var scale = Math.min(1, maxW / nw);
+    wrap.style.width  = Math.round(nw * scale) + 'px';
+    wrap.style.height = Math.round(nh * scale) + 'px';
+    var art = wrap.querySelector('.artboard');
+    if (!art) return;
+    art.style.width     = nw + 'px';
+    art.style.height    = nh + 'px';
+    art.style.transform = 'scale(' + scale + ')';
+  });
+}
+
+/* ─── HOST PROTOCOL ───────────────────────────────────────────── */
+window.addEventListener('message', function(e) {
+  if (!e.data || typeof e.data !== 'object') return;
+  var t = document.getElementById('tweaks');
+  if (e.data.type === '__activate_edit_mode')   { t.style.display = 'block'; }
+  if (e.data.type === '__deactivate_edit_mode') { t.style.display = 'none';  }
+});
+setTimeout(function() {
+  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e) {}
+}, 80);
+
+document.getElementById('twk-close').addEventListener('click', function() {
+  document.getElementById('tweaks').style.display = 'none';
+  try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch(e) {}
+});
+
+document.getElementById('grain-sl').addEventListener('input', function(e) {
+  tweaks.grain = parseFloat(e.target.value);
+  applyTweaks();
+  try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { grain: tweaks.grain } }, '*'); } catch(e2) {}
+});
+
+document.querySelectorAll('#amber-swatches .swatch').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    tweaks.amber = btn.dataset.c;
+    applyTweaks();
+    try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { amber: tweaks.amber } }, '*'); } catch(e2) {}
+  });
+});
+
+/* ─── INIT ────────────────────────────────────────────────────── */
+scaleArtboards();
+applyTweaks();
+window.addEventListener('resize', scaleArtboards);
+</script>
+</body>
+</html>

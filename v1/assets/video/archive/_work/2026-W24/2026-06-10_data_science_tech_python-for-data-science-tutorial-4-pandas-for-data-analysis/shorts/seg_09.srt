@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:00,020
+What we need to do here is, so now we are going to focus on selecting the right rows and columns.
+
+2
+00:00:00,020 --> 00:00:06,260
+And this is 60% of what you actually do in pandas. So two things here which I would like to explain
+
+3
+00:00:06,820 --> 00:00:16,500
+first. So let's take a look at this row first, this line. So first use of AND and R. So this is
+
+4
+00:00:16,500 --> 00:00:24,100
+AND Boolean operator, this one. And there could be a similar, the pipe symbol R in Boolean.
+
+5
+00:00:24,580 --> 00:00:30,420
+Not Python's AND or R, but those don't work on arrays. Condition in parenthesis. So we can see
+
+6
+00:00:30,500 --> 00:00:35,380
+here we have put our conditions in parenthesis. Don't worry, I'll explain the rest of the code
+
+7
+00:00:36,420 --> 00:00:40,500
+down the line. So you can see we have one condition and two conditions in parenthesis.
+
+8
+00:00:41,540 --> 00:00:51,620
+And this trips up everyone once. Now it won't trip you up. Second is this dot query on the next line.
+
+9
+00:00:52,980 --> 00:00:59,380
+Is underused for multi-condition filters, like where we are checking region is equal to north
+
+10
+00:00:59,460 --> 00:00:59,500
+and revenue greater than 5,000. It is dramatically more readable than stacked Boolean expressions.

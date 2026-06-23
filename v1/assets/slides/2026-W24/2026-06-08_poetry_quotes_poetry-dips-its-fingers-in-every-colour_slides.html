@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poetry Dips Its Fingers In Every Colour</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #1E1B2E;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: #EDE8DC;
+    }
+
+    .slide-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 12px 24px;
+      background: rgba(30, 27, 46, 0.85);
+      border: 1px solid rgba(184, 152, 80, 0.3);
+      border-radius: 4px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .slide-nav[data-visible] {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide-nav button {
+      background: none;
+      border: none;
+      color: #B89850;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: color 0.2s;
+    }
+
+    .slide-nav button:hover {
+      color: #D4BC7A;
+    }
+
+    .slide-counter {
+      font-size: 12px;
+      color: #B89850;
+      font-weight: 500;
+    }
+
+    .slide-canvas {
+      position: fixed;
+      width: 1920px;
+      height: 1080px;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center;
+    }
+
+    .slide-canvas > section {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px;
+      background: #1E1B2E;
+    }
+
+    .slide-canvas > section[data-active] {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Decorative poetry halos and ink-wash */
+    .slide-canvas > section::before {
+      content: '';
+      position: absolute;
+      inset: -200px;
+      background: radial-gradient(circle at 20% 50%, rgba(184, 152, 80, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 30%, rgba(212, 188, 122, 0.05) 0%, transparent 35%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    /* Title slide */
+    .slide-canvas > section:first-child {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .slide-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 96px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #EDE8DC;
+      margin-bottom: 40px;
+      letter-spacing: -1px;
+    }
+
+    .slide-subtitle {
+      font-size: 32px;
+      color: #D4BC7A;
+      font-weight: 400;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .slide-lede {
+      font-size: 20px;
+      color: #B89850;
+      font-weight: 400;
+      max-width: 800px;
+    }
+
+    /* Content slides */
+    .slide-canvas > section:not(:first-child) {
+      justify-content: flex-start;
+      padding-top: 120px;
+    }
+
+    .eyebrow {
+      font-size: 14px;
+      color: #B89850;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .slide-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 700;
+      color: #EDE8DC;
+      margin-bottom: 50px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    .slide-bullets {
+      list-style: none;
+    }
+
+    .slide-bullets li {
+      font-size: 30px;
+      color: #EDE8DC;
+      margin-bottom: 28px;
+      line-height: 1.5;
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .slide-bullets li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: #B89850;
+      font-size: 20px;
+    }
+
+    /* Brand bar */
+    .brand-bar {
+      position: absolute;
+      bottom: 30px;
+      right: 40px;
+      font-size: 12px;
+      color: rgba(184, 152, 80, 0.5);
+      z-index: 2;
+    }
+
+    /* Ink-wash accent for poetry */
+    .ink-wash {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-nav" id="nav">
+    <button id="prev-btn" aria-label="Previous">&larr;</button>
+    <span class="slide-counter" id="counter">1 / 8</span>
+    <button id="next-btn" aria-label="Next">&rarr;</button>
+  </div>
+
+  <div class="slide-canvas" id="canvas">
+    <!-- Slide 1: Title -->
+    <section>
+      <div class="slide-content">
+        <h1 class="slide-title">Poetry Dips Its Fingers In Every Colour</h1>
+        <p class="slide-subtitle">A data scientist's confession</p>
+        <p class="slide-lede">The curiosity that drives both numbers and metaphor. Where poetry actually finds you.</p>
+      </div>
+      <div class="brand-bar">@mistakenlyhuman</div>
+    </section>
+
+    <!-- Slide 2 -->
+    <section>
+      <div class="slide-content">
+        <div class="eyebrow">Niche</div>
+        <h2 class="slide-heading">Poetry Doesn't Stay in Its Lane</h2>
+        <ul class="slide-bullets">
+          <li>Not just literature classes and soft-cover journals</li>
+          <li>Human experience refuses to be sorted</li>
+          <li>The lyric form is the one that admits it</li>
+        </ul>
+      </div>
+      <div class="brand-bar">@mistakenlyhuman</div>
+    </section>
+
+    <!-- Slide 3 -->
+    <section>
+      <div class="slide-content">
+        <div class="eyebrow">Unexpected</div>
+        <h2 class="slide-heading">It Finds You in the Technical</h2>
+        <ul class="slide-bullets">
+          <li>Programmers call elegant code beautiful for a reason</li>
+          <li>The best commit messages carry something real</li>
+          <li>The boundary between technical and lyrical was always porous</li>
+        </ul>
+      </div>
+      <div class="brand-bar">@mistakenlyhuman</div>
+    </section>
+
+    <!-- Slide 4 -->
+    <section>
+      <div class="slide-content">
+        <div class="eyebrow">Ordinary</div>
+        <h2 class="slide-heading">It Finds You in the Ordinary</h2>
+        <ul class="slide-bullets">
+          <li>Monday, 7:14 AM — burnt toast scraped over the sink</li>
+          <li>Poetry is ordinary experience seen clearly for one second</li>
+          <li>The grey commute counts. The blue Tuesday counts.</li>
+        </ul>
+      </div>
+      <div class="brand-bar">@mistakenlyhuman</div>
+    </section>
+
+    <!-- Slide 5 -->
+    <section>
+      <div class="slide-content">
+        <div class="eyebrow">Grief</div>
+        <h2 class="slide-heading">It Finds You in Grief</h2>
+        <ul class="slide-bullets">
+          <li>You don't miss 'a person' — you miss how they said your name</li>
+          <li>Poetry holds specificity without resolving it</li>
+          <li>That is not a small mercy</li>
+        </ul>
+      </div>
+      <div class="brand-bar">@mistakenlyhuman</div>
+    </section>
+
+    <!-- Slide 6 -->
+    <section>
+      <div class="slide-content">
+        <div class="eyebrow">The Sideways Door</div>
+        <h2 class="slide-heading">It Finds You When You Stop Looking</h2>
+        <ul class="slide-bullets">
+          <li>Poetry comes sideways, not in elevated moments</li>
+          <li>A lyric heard forty times that suddenly means something different</li>
+          <li>The door doesn't need to be wide — a crack is enough</li>
+        </ul>
+      </div>
+      <div class="brand-bar">@mistakenlyhuman</div>
+    </section>
+
+    <!-- Slide 7 -->
+    <section>
+      <div class="slide-content">
+        <div class="eyebrow">The Real Work</div>
+        <h2 class="slide-heading">There's No Lesson. That's the Point.</h2>
+        <ul class="slide-bullets">
+          <li>Poetry doesn't sharpen your frameworks</li>
+          <li>It makes you someone who has stood inside a colour</li>
+          <li>The poem finds you — your only job is to not keep the door entirely shut</li>
+        </ul>
+      </div>
+      <div class="brand-bar">@mistakenlyhuman</div>
+    </section>
+
+    <!-- Slide 8: Closing -->
+    <section>
+      <div class="slide-content">
+        <h2 class="slide-heading" style="font-size: 56px; margin-bottom: 60px;">The Tools Were Different</h2>
+        <p style="font-size: 28px; line-height: 1.6; color: #D4BC7A; max-width: 900px;">
+          Poetry and data science are not opposites.<br>
+          The curiosity was always the same.<br>
+          <span style="color: #B89850; margin-top: 30px; display: block; font-size: 24px;">Pretending they were cost something real.</span>
+        </p>
+      </div>
+      <div class="brand-bar">@mistakenlyhuman</div>
+    </section>
+  </div>
+
+  <script>
+(function () {
+  'use strict';
+  var canvas  = document.getElementById('canvas');
+  var slides  = Array.prototype.slice.call(canvas.querySelectorAll('section'));
+  var counter = document.getElementById('counter');
+  var nav     = document.getElementById('nav');
+  var TOTAL   = slides.length;
+  var current = 0, navTimer;
+  function fit() {
+    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    canvas.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+  }
+  function show(n) {
+    n = Math.max(0, Math.min(TOTAL - 1, n));
+    slides[current].removeAttribute('data-active');
+    current = n; slides[current].setAttribute('data-active', '');
+    if (counter) counter.textContent = (current + 1) + ' / ' + TOTAL;
+    showNav();
+  }
+  function showNav() {
+    nav.setAttribute('data-visible', '');
+    clearTimeout(navTimer);
+    navTimer = setTimeout(function () { nav.removeAttribute('data-visible'); }, 2000);
+  }
+  slides[0].setAttribute('data-active', '');
+  fit();
+  window.addEventListener('resize', fit);
+  document.getElementById('prev-btn').addEventListener('click', function () { show(current - 1); });
+  document.getElementById('next-btn').addEventListener('click', function () { show(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); } else if (e.key === 'End') { show(TOTAL - 1); }
+  });
+  document.addEventListener('mousemove', showNav, { passive: true });
+  window.__exportFrames = slides.map(function (_, i) {
+    return { file: 'slide_' + (i + 1) + '.png', w: 1920, h: 1080 };
+  });
+  window.__showFrame = function (i) {
+    slides.forEach(function (s, j) { if (j === i) s.setAttribute('data-active', ''); else s.removeAttribute('data-active'); });
+    current = i; fit();
+  };
+})();
+  </script>
+</body>
+</html>

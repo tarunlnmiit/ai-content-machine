@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:00,000
+kind of null values and a literal dash as four separate attempts at missing data.
+
+2
+00:00:00,000 --> 00:00:06,240
+Revenue figures mixed with strings like approximate, so I spent two weeks on that data set
+
+3
+00:00:06,240 --> 00:00:12,800
+before a nano single analysis, two weeks of Python loops that felt like archaeology.
+
+4
+00:00:12,800 --> 00:00:19,840
+Chipping away, never sure if you had found the actual data or just another layer of sediment.
+
+5
+00:00:19,840 --> 00:00:34,320
+Then I learned pandas properly, not just pandas.redcsv and df.head.
+
+6
+00:00:37,920 --> 00:00:41,440
+Don't worry if you don't know about these two, I will explain them in a bit.
+
+7
+00:00:41,440 --> 00:00:46,240
+The actual mental model, that a data frame is a structured, labeled,
+
+8
+00:00:46,240 --> 00:00:52,800
+queryable object that makes data interrogation feel like conversation instead of combat.
+
+9
+00:00:54,160 --> 00:00:54,200
+So today I am going to cover four things, loading and exploring, selecting and filtering,

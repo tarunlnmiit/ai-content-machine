@@ -1,0 +1,31 @@
+1
+00:00:00,040 --> 00:00:07,800
+So you can see the first thing we printed was df.shaped. So which is how many rows? How many columns?
+
+2
+00:00:07,800 --> 00:00:14,520
+So 500 rows, 12 columns. And what are the columns and their data types? So these 12 columns and
+
+3
+00:00:14,520 --> 00:00:21,880
+their data types. Then df.had prints the first five rows of the data frame by default.
+
+4
+00:00:22,920 --> 00:00:30,120
+And then describe what it does is when you run df.describe and in 30 seconds,
+
+5
+00:00:30,840 --> 00:00:34,760
+you get to know whether there are negative values in a column that should be positive,
+
+6
+00:00:35,400 --> 00:00:41,080
+whether the max is suspiciously high, whether the mean is far from the median.
+
+7
+00:00:41,080 --> 00:00:45,560
+That's the first signal before you have written a single line of actual analysis.
+
+8
+00:00:46,200 --> 00:00:46,200
+So you can see in describe here, you get a few things. So count the mean of the data like age,

@@ -1,0 +1,31 @@
+1
+00:00:00,040 --> 00:00:10,120
+And this trips up everyone once. Now it won't trip you up. Second is this dot query on the next line.
+
+2
+00:00:11,480 --> 00:00:17,880
+Is underused for multi-condition filters, like where we are checking region is equal to north
+
+3
+00:00:17,960 --> 00:00:24,360
+and revenue greater than 5,000. It is dramatically more readable than stacked Boolean expressions.
+
+4
+00:00:25,400 --> 00:00:35,480
+And the last one dot is in instead of three equal to checks here where status equal to
+
+5
+00:00:35,480 --> 00:00:43,080
+active and status equal to trial. Instead you can just have one or symbol and just pass a list
+
+6
+00:00:43,720 --> 00:00:51,000
+there. Cleaner and scales to any list length. Data cleaning is where most tutorials lose the thread.
+
+7
+00:00:52,440 --> 00:00:58,920
+Because it feels like janitor work, it's not. Cleaning is analysis. You can't separate them.
+
+8
+00:00:59,800 --> 00:00:59,800
+So if we try and run this code, which let me do, you will see we are getting some errors like

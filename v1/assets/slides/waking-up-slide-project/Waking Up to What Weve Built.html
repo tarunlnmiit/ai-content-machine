@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waking Up to What We've Built — Tarun Gupta</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+
+/* ── Tokens ───────────────────────────────────────────────────────── */
+:root {
+  --indigo:       #1C1635;
+  --indigo-deep:  #120F25;
+  --indigo-soft:  #2A2347;
+  --charcoal:     #3D3D4F;
+  --gold:         #C9A96E;
+  --gold-l:       #E2CDA1;
+  --gold-deep:    #A88A52;
+  --cream:        #FAF3E0;
+  --cream-dim:    rgba(250,243,224,0.72);
+  --cream-soft:   rgba(250,243,224,0.46);
+  --cream-mute:   rgba(250,243,224,0.22);
+  --rose:         #D4A5A5;
+  --rose-deep:    #A87E7E;
+
+  --ff: 'Montserrat', ui-sans-serif, sans-serif;
+  --fs: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #08060F; }
+
+/* ── Slide canvas ─────────────────────────────────────────────────── */
+.slide-canvas {
+  position: fixed;
+  width: 1920px;
+  height: 1080px;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+}
+
+/* Cross-dissolve — slow, weighted */
+.slide-canvas > section {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.6s ease, visibility 1.6s;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: var(--ff);
+  color: var(--cream);
+}
+.slide-canvas > section[data-active] {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ── Slide nav ────────────────────────────────────────────────────── */
+.slide-nav {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(8,6,15,0.84);
+  border: 1px solid rgba(201,169,110,0.18);
+  border-radius: 999px;
+  padding: 7px 18px;
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+.slide-nav:hover, .slide-nav[data-visible] { opacity: 1; }
+.slide-nav button {
+  background: none; border: none; color: rgba(250,243,224,0.6);
+  font-family: var(--ff); font-size: 12px; cursor: pointer; padding: 4px 6px;
+  letter-spacing: 0.06em; transition: color 160ms ease;
+}
+.slide-nav button:hover { color: var(--cream); }
+.slide-counter {
+  color: rgba(201,169,110,0.78);
+  font-family: var(--ff); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
+
+/* ── Reusable type ────────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--ff); font-weight: 600; font-size: 15px;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold); line-height: 1;
+}
+.eyebrow-dark { color: var(--gold-deep); }
+
+.smallcaps {
+  font-family: var(--ff); font-weight: 500;
+  letter-spacing: 0.28em; text-transform: uppercase;
+}
+
+.heading-serif {
+  font-family: var(--fs); font-style: normal; font-weight: 400;
+  color: var(--cream); letter-spacing: 0.005em; line-height: 1.02;
+}
+
+.poem-line {
+  font-family: var(--fs); font-style: italic; font-weight: 400;
+  color: var(--cream); line-height: 1.55;
+}
+
+.essay-line {
+  font-family: var(--fs); font-style: normal; font-weight: 400;
+  color: var(--cream); line-height: 1.32;
+}
+
+/* hairline rule */
+.rule { display:block; width: 56px; height: 1px; background: var(--gold); opacity: 0.55; }
+.rule-cream { background: var(--cream); opacity: 0.30; }
+.rule-indigo { background: var(--indigo); opacity: 0.30; }
+
+/* ── Layer system ─────────────────────────────────────────────────── */
+.bg-fill  { position: absolute; inset: 0; z-index: 0; }
+.bg-image { position: absolute; inset: 0; z-index: 1; }
+.grad     { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.vignette {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 30%, rgba(8,6,15,0.72) 100%);
+}
+.vignette-cream {
+  background: radial-gradient(ellipse 110% 110% at 50% 50%, transparent 38%, rgba(60,46,30,0.16) 100%);
+}
+.grain {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0.055;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='220' height='220' filter='url(%23g)'/></svg>");
+  mix-blend-mode: overlay;
+}
+.content { position: absolute; inset: 0; z-index: 5; }
+
+/* Image slot — desaturated, near-monochrome */
+image-slot, .img-slot {
+  display: block;
+  background: rgba(60,46,30,0.45);
+  border: 1px dashed rgba(201,169,110,0.18);
+  border-radius: 1px;
+  position: relative;
+}
+
+/* Per-slide footer attribution (per output spec) */
+.footer-mark {
+  position: absolute; bottom: 36px; left: 64px; z-index: 7;
+  font-family: var(--ff); font-weight: 500;
+  font-size: 10px; letter-spacing: 0.30em; text-transform: uppercase;
+  color: var(--gold); opacity: 0.78;
+}
+.footer-mark.on-cream { color: var(--gold-deep); opacity: 0.88; }
+
+/* ── Tweaks panel ─────────────────────────────────────────────────── */
+#tweaks {
+  display: none; position: fixed; bottom: 56px; right: 28px; z-index: 9999;
+  width: 270px; background: rgba(18,15,37,0.96); border: 1px solid rgba(201,169,110,0.22);
+  border-radius: 12px; padding: 20px 22px 22px; color: var(--cream-dim);
+  font-family: var(--ff); backdrop-filter: blur(16px); box-shadow: 0 24px 64px rgba(8,6,18,0.60);
+}
+#tweaks.open { display: block; }
+#tweaks h3 {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;
+}
+#tweaks h3 button { background: none; border: none; color: var(--cream-soft); font-size: 16px; cursor: pointer; padding: 0; }
+.tweak-row { margin-bottom: 18px; }
+.tweak-label { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-soft); display: block; margin-bottom: 10px; }
+.tweak-radio { display: flex; gap: 6px; }
+.tweak-radio label { flex: 1; text-align: center; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; color: var(--cream-soft); background: rgba(250,243,224,0.05); border: 1px solid rgba(250,243,224,0.10); border-radius: 4px; padding: 8px 4px; cursor: pointer; transition: all 0.2s; }
+.tweak-radio input { display: none; }
+.tweak-radio input:checked + label { background: rgba(201,169,110,0.18); border-color: rgba(201,169,110,0.45); color: var(--gold-l); }
+
+</style>
+
+<script src="image-slot.js"></script>
+<script>
+(function() {
+  var is = customElements.get('image-slot');
+  if (!is) return;
+  Object.getOwnPropertyNames(is.prototype).forEach(function(n) {
+    if (n === 'constructor') return;
+    var d = Object.getOwnPropertyDescriptor(is.prototype, n);
+    if (!d || typeof d.value !== 'function') return;
+    var orig = d.value;
+    is.prototype[n] = function() { try { return orig.apply(this, arguments); } catch(e) {} };
+  });
+})();
+</script>
+</head>
+<body>
+
+<!-- Slide navigation -->
+<div class="slide-nav" id="nav">
+  <button id="prev-btn" aria-label="Previous">←</button>
+  <span class="slide-counter" id="counter">I / VI</span>
+  <button id="next-btn" aria-label="Next">→</button>
+</div>
+
+<!-- Tweaks panel -->
+<div id="tweaks">
+  <h3>Tweaks <button id="tweaks-close" aria-label="Close">×</button></h3>
+  <div class="tweak-row">
+    <span class="tweak-label">Dissolve</span>
+    <div class="tweak-radio">
+      <input type="radio" name="speed" id="sp-slow" value="2.6"><label for="sp-slow">Slow</label>
+      <input type="radio" name="speed" id="sp-mid"  value="1.6" checked><label for="sp-mid">Mid</label>
+      <input type="radio" name="speed" id="sp-fast" value="0.8"><label for="sp-fast">Fast</label>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <span class="tweak-label">Accent</span>
+    <div class="tweak-radio">
+      <input type="radio" name="accent" id="ac-gold" value="gold" checked><label for="ac-gold">Gold</label>
+      <input type="radio" name="accent" id="ac-rose" value="rose"><label for="ac-rose">Rose</label>
+      <input type="radio" name="accent" id="ac-bone" value="bone"><label for="ac-bone">Bone</label>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <span class="tweak-label">Grain</span>
+    <div class="tweak-radio">
+      <input type="radio" name="grain" id="gr-on"  value="on"  checked><label for="gr-on">On</label>
+      <input type="radio" name="grain" id="gr-off" value="off"><label for="gr-off">Off</label>
+    </div>
+  </div>
+</div>
+
+<!-- ── Slide canvas ──────────────────────────────────────────────── -->
+<div class="slide-canvas" id="canvas">
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     I — HERO: Waking Up to What We've Built
+     ══════════════════════════════════════════════════════════════════ -->
+<section data-label="I Hero" data-screen-label="I Hero"
+  style="background: #1A1830;">
+
+  <!-- Cracked porcelain mask, raking light, full-bleed -->
+  <div class="bg-image">
+    <image-slot id="s1-mask" shape="rect"
+      placeholder="Cracked white porcelain mask · face-up on cold grey concrete · single raking light from left · deep shadow in fracture line · the crack reveals only more white · soft vignette · desaturated cool grade · no hands · no face"
+      style="width:100%;height:100%;display:block;filter:grayscale(0.85) contrast(1.05) brightness(0.92);"></image-slot>
+  </div>
+
+  <!-- Indigo overlay — top half at 45%, bottom breathes -->
+  <div class="grad" style="background:
+    linear-gradient(to bottom,
+      rgba(28,22,53,0.78) 0%,
+      rgba(28,22,53,0.62) 28%,
+      rgba(28,22,53,0.34) 52%,
+      rgba(28,22,53,0.16) 72%,
+      rgba(28,22,53,0.42) 100%
+    );"></div>
+
+  <div class="vignette" style="background: radial-gradient(ellipse 110% 100% at 30% 40%, transparent 32%, rgba(8,6,15,0.74) 100%);"></div>
+  <div class="grain"></div>
+
+  <div class="content" style="display:flex;flex-direction:column;justify-content:space-between;padding:108px 120px 130px;">
+
+    <!-- TOP — title block -->
+    <div style="max-width:1180px;">
+      <span class="eyebrow" style="margin-bottom:46px;display:block;">The End of Being Fooled</span>
+
+      <h1 class="heading-serif" style="font-size:132px;line-height:1.02;letter-spacing:0.002em;color:var(--cream);max-width:1180px;text-wrap:balance;">
+        Waking Up<br>
+        to What We&rsquo;ve Built
+      </h1>
+
+      <div style="display:flex;align-items:center;gap:22px;margin-top:54px;">
+        <span class="rule"></span>
+        <span class="smallcaps" style="font-size:14px;color:var(--gold-l);">A poem about authenticity &nbsp;·&nbsp; and the world that punishes it</span>
+      </div>
+    </div>
+
+    <!-- BOTTOM — attribution -->
+    <div>
+      <span class="smallcaps" style="font-size:12px;color:var(--gold);opacity:0.92;">By &nbsp;Tarun Gupta</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     II — THE MOMENT IT CAME FROM
+     ══════════════════════════════════════════════════════════════════ -->
+<section data-label="II The Moment" data-screen-label="II The Moment It Came From"
+  style="background: var(--indigo-deep);">
+
+  <!-- Right 60% — blurred crowd, one face sharp -->
+  <div class="bg-image" style="left:40%;right:0;width:60%;">
+    <image-slot id="s2-crowd" shape="rect"
+      placeholder="Blurred crowd all facing one direction · one face sharp in center · looking directly at camera · expression unreadable · monochrome cool blue push · high contrast · top-left lighting"
+      style="width:100%;height:100%;display:block;filter:grayscale(0.92) contrast(1.12) brightness(0.86) hue-rotate(190deg) saturate(0.4);"></image-slot>
+  </div>
+
+  <!-- Left 40% — solid indigo panel, with seam fade -->
+  <div class="grad" style="background:
+    linear-gradient(to right,
+      var(--indigo) 0%,
+      var(--indigo) 38%,
+      rgba(28,22,53,0.70) 44%,
+      rgba(28,22,53,0.0) 52%
+    );"></div>
+
+  <div class="vignette"></div>
+  <div class="grain"></div>
+
+  <div class="content" style="display:flex;">
+    <!-- LEFT — text -->
+    <div style="flex:0 0 40%;display:flex;flex-direction:column;justify-content:center;padding:120px 84px 130px 120px;">
+
+      <span class="eyebrow" style="margin-bottom:40px;">I &nbsp;·&nbsp; Origin</span>
+
+      <h2 class="heading-serif" style="font-size:68px;line-height:1.04;margin-bottom:72px;color:var(--cream);max-width:560px;">
+        The Moment<br>It Came From
+      </h2>
+
+      <span class="rule" style="margin-bottom:56px;opacity:0.45;"></span>
+
+      <!-- Three staggered lines -->
+      <div style="display:flex;flex-direction:column;gap:32px;max-width:600px;">
+        <p class="essay-line" style="font-size:31px;color:var(--cream);">
+          Watching someone get torn apart for being real.
+        </p>
+        <p class="essay-line" style="font-size:31px;color:var(--cream-dim);padding-left:36px;">
+          Watching the hollow ones get praised.
+        </p>
+        <p class="essay-line" style="font-size:34px;color:var(--gold-l);font-style:italic;padding-left:72px;">
+          Not rage &mdash; clarity.
+        </p>
+      </div>
+    </div>
+    <div style="flex:0 0 60%;"></div>
+  </div>
+
+  <span class="footer-mark">Tarun Gupta &nbsp;·&nbsp; @breathofpoetry</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     III — THE POEM  (cream surface · the design IS the poem)
+     ══════════════════════════════════════════════════════════════════ -->
+<section data-label="III The Poem" data-screen-label="III The Poem"
+  style="background: var(--cream);">
+
+  <!-- Parchment paper grain on cream -->
+  <div class="bg-fill" style="background:
+    radial-gradient(ellipse 90% 80% at 50% 45%, rgba(250,243,224,1) 0%, rgba(243,233,212,1) 70%, rgba(232,220,196,1) 100%);"></div>
+
+  <!-- Subtle vertical raking light from left, like a page lit by a window -->
+  <div class="grad" style="background:
+    linear-gradient(105deg, rgba(255,250,232,0.45) 0%, rgba(255,250,232,0) 32%, rgba(60,46,30,0.05) 78%, rgba(60,46,30,0.12) 100%);"></div>
+
+  <div class="vignette vignette-cream"></div>
+
+  <!-- Paper grain (warmer, lower opacity) -->
+  <div class="grain" style="opacity:0.085;mix-blend-mode:multiply;
+    background-image: url(&quot;data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='240' height='240' filter='url(%23g)'/></svg>&quot;);"></div>
+
+  <div class="content" style="display:flex;flex-direction:column;padding:72px 160px 64px;">
+
+    <!-- Header strip -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+      <div style="display:flex;align-items:center;gap:22px;">
+        <span class="rule" style="background:var(--indigo);opacity:0.40;"></span>
+        <span class="smallcaps" style="font-size:12px;color:var(--indigo);opacity:0.62;">II &nbsp;·&nbsp; The Poem</span>
+      </div>
+      <span class="smallcaps" style="font-size:11px;color:var(--gold-deep);opacity:0.92;">MMXXVI</span>
+    </div>
+
+    <!-- The poem — italic indigo serif -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+      <div style="font-family:var(--fs);font-style:italic;font-weight:400;color:var(--indigo);font-size:30px;line-height:1.62;letter-spacing:0.005em;max-width:1100px;">
+        <div>Waking up to a realization</div>
+        <div>About how the world is changing</div>
+        <div>Thoughts driven by exteriority</div>
+        <div>No care about what lies within</div>
+        <div>People drooling over aesthetics</div>
+        <div>Shitting all over the hearts of the good ones</div>
+        <div>Praising the false gods</div>
+        <div>Demeaning deserving humans</div>
+        <div>Talking about love and life</div>
+        <div>Not knowing the true meaning</div>
+        <div>How our civilization has turned out</div>
+        <div>wearing layers of masks themselves</div>
+        <div>ready to tear down the true faces</div>
+        <div style="margin-top:4px;">Only to make themselves happy</div>
+        <!-- repetition with longer left indent — typographic breath -->
+        <div style="padding-left:140px;color:var(--charcoal);font-size:32px;margin-top:10px;">Only to make themselves happy.</div>
+      </div>
+    </div>
+
+    <!-- Attribution -->
+    <div style="margin-top:28px;display:flex;align-items:center;gap:22px;">
+      <span class="rule" style="background:var(--gold-deep);opacity:0.85;width:42px;"></span>
+      <span class="smallcaps" style="font-size:13px;color:var(--gold-deep);">Tarun Gupta</span>
+    </div>
+  </div>
+
+  <!-- No global footer-mark on this slide — the poem is the design (brief: "NO other visual elements") -->
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     IV — THE MASK PARADOX
+     ══════════════════════════════════════════════════════════════════ -->
+<section data-label="IV Mask Paradox" data-screen-label="IV The Mask Paradox"
+  style="background: var(--indigo);">
+
+  <!-- Left 55% — empty mirror, dusty rose cast -->
+  <div class="bg-image" style="left:0;right:45%;width:55%;">
+    <image-slot id="s4-mirror" shape="rect"
+      placeholder="Empty mirror in dim room · reflection shows standing figure · no one in the actual room · practical ambient light only · deep shadows · dusty rose cast from off-frame source · no fill"
+      style="width:100%;height:100%;display:block;filter:grayscale(0.78) contrast(1.08) brightness(0.78);"></image-slot>
+  </div>
+
+  <!-- Right 45% — indigo panel with seam -->
+  <div class="grad" style="background:
+    linear-gradient(to left,
+      var(--indigo) 0%,
+      var(--indigo) 41%,
+      rgba(28,22,53,0.78) 49%,
+      rgba(28,22,53,0.0) 58%
+    );"></div>
+
+  <div class="vignette"></div>
+  <div class="grain"></div>
+
+  <div class="content" style="display:flex;">
+    <div style="flex:0 0 55%;"></div>
+    <!-- RIGHT — text panel -->
+    <div style="flex:0 0 45%;display:flex;flex-direction:column;justify-content:center;padding:120px 110px 130px 70px;">
+
+      <span class="eyebrow" style="margin-bottom:38px;">II &nbsp;·&nbsp; The Mechanism</span>
+
+      <h2 class="heading-serif" style="font-size:64px;line-height:1.04;margin-bottom:70px;color:var(--cream);max-width:540px;">
+        The Mask<br>Paradox
+      </h2>
+
+      <span class="rule" style="margin-bottom:56px;opacity:0.45;"></span>
+
+      <!-- Three standalone sentences -->
+      <div style="display:flex;flex-direction:column;gap:38px;max-width:580px;">
+        <p class="essay-line" style="font-size:30px;color:var(--cream);">
+          The masked aren&rsquo;t confident &mdash; they&rsquo;re defended.
+        </p>
+        <p class="essay-line" style="font-size:30px;color:var(--cream-dim);">
+          Authenticity indicts performance.
+        </p>
+        <p class="essay-line" style="font-size:32px;color:var(--gold-l);font-style:italic;">
+          The mask needs the real face to disappear.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <span class="footer-mark">Tarun Gupta &nbsp;·&nbsp; @breathofpoetry</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     V — WHAT THIS DOES TO CREATORS
+     ══════════════════════════════════════════════════════════════════ -->
+<section data-label="V Creators" data-screen-label="V What This Does to Creators"
+  style="background: var(--indigo-deep);">
+
+  <!-- Full-bleed desk-at-night image -->
+  <div class="bg-image">
+    <image-slot id="s5-desk" shape="rect"
+      placeholder="Desk at night · single lamp · notebook open · pen down · no hands visible · warm amber from lamp · cool darkness elsewhere · shot from above at 30° · two-temperature tension · quiet but not peaceful"
+      style="width:100%;height:100%;display:block;filter:grayscale(0.62) contrast(1.04) brightness(0.78) saturate(0.6);"></image-slot>
+  </div>
+
+  <!-- Dark overlay 55% — full slide, with stronger bottom-left for text -->
+  <div class="grad" style="background:
+    linear-gradient(to top,
+      rgba(28,22,53,0.85) 0%,
+      rgba(28,22,53,0.62) 38%,
+      rgba(28,22,53,0.42) 70%,
+      rgba(28,22,53,0.32) 100%
+    );"></div>
+
+  <div class="vignette"></div>
+  <div class="grain"></div>
+
+  <div class="content" style="display:flex;flex-direction:column;justify-content:flex-end;padding:120px 140px 140px 120px;">
+
+    <span class="eyebrow" style="margin-bottom:38px;">III &nbsp;·&nbsp; Consequence</span>
+
+    <h2 class="heading-serif" style="font-size:62px;line-height:1.04;margin-bottom:64px;color:var(--cream);max-width:780px;">
+      What This Does<br>to Creators
+    </h2>
+
+    <span class="rule" style="margin-bottom:48px;opacity:0.42;"></span>
+
+    <!-- Four lines — last gets extra weight (the decision) -->
+    <div style="display:flex;flex-direction:column;gap:22px;max-width:1380px;">
+      <p class="essay-line" style="font-size:28px;color:var(--cream-dim);">
+        The internet says it wants authenticity.
+      </p>
+      <p class="essay-line" style="font-size:28px;color:var(--cream-dim);">
+        The numbers often tell a different story.
+      </p>
+      <p class="essay-line" style="font-size:28px;color:var(--cream-dim);">
+        The costume grows faster than the body of work.
+      </p>
+      <!-- THE DECISION — final line, large -->
+      <p style="font-family:var(--fs);font-style:italic;font-weight:400;font-size:60px;line-height:1.18;color:var(--gold-l);margin-top:24px;max-width:1320px;letter-spacing:0.003em;">
+        Every creator must choose which one to build.
+      </p>
+    </div>
+  </div>
+
+  <span class="footer-mark">Tarun Gupta &nbsp;·&nbsp; @breathofpoetry</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     VI — THE WAKING UP
+     ══════════════════════════════════════════════════════════════════ -->
+<section data-label="VI Waking Up" data-screen-label="VI The Waking Up"
+  style="background: var(--indigo-deep);">
+
+  <!-- Full-bleed figure at window -->
+  <div class="bg-image">
+    <image-slot id="s6-window" shape="rect"
+      placeholder="Person seated at large window · back to camera · pale grey light through · complete stillness · no implied motion · window two-thirds of frame · figure small · world outside overexposed white formless"
+      style="width:100%;height:100%;display:block;filter:grayscale(0.88) contrast(1.05) brightness(0.92);"></image-slot>
+  </div>
+
+  <!-- Dark vignette top + bottom; centre stays open -->
+  <div class="grad" style="background:
+    linear-gradient(to bottom,
+      rgba(8,6,15,0.78) 0%,
+      rgba(8,6,15,0.42) 18%,
+      rgba(8,6,15,0.12) 38%,
+      rgba(8,6,15,0.10) 62%,
+      rgba(8,6,15,0.52) 82%,
+      rgba(8,6,15,0.82) 100%
+    );"></div>
+
+  <div class="grain"></div>
+
+  <div class="content" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:90px 220px 100px;">
+
+    <span class="eyebrow" style="margin-bottom:46px;">IV &nbsp;·&nbsp; The End of Being Fooled</span>
+
+    <h2 class="heading-serif" style="font-size:76px;line-height:1.02;margin-bottom:62px;color:var(--cream);">
+      The Waking Up
+    </h2>
+
+    <span class="rule" style="margin-bottom:54px;opacity:0.55;"></span>
+
+    <!-- Three lines -->
+    <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:88px;">
+      <p class="essay-line" style="font-size:28px;color:var(--cream-dim);">
+        The poem doesn&rsquo;t offer a fix.
+      </p>
+      <p class="essay-line" style="font-size:28px;color:var(--cream-dim);">
+        It offers a name.
+      </p>
+      <p class="essay-line" style="font-size:28px;color:var(--cream);">
+        Naming ends the confusion.
+      </p>
+    </div>
+
+    <!-- The pullquote — large italic gold -->
+    <p style="font-family:var(--fs);font-style:italic;font-weight:400;font-size:54px;line-height:1.30;color:var(--gold-l);letter-spacing:0.003em;max-width:1340px;text-wrap:balance;">
+      &ldquo;The waking up in the first line<br>isn&rsquo;t despair. It&rsquo;s the end of being fooled.&rdquo;
+    </p>
+
+    <div style="margin-top:54px;display:flex;align-items:center;gap:18px;">
+      <span class="rule" style="width:36px;opacity:0.78;"></span>
+      <span class="smallcaps" style="font-size:11px;color:var(--gold);">Tarun Gupta</span>
+      <span class="rule" style="width:36px;opacity:0.78;"></span>
+    </div>
+  </div>
+
+  <span class="footer-mark" style="opacity:0.62;">Tarun Gupta &nbsp;·&nbsp; @breathofpoetry</span>
+</section>
+
+</div><!-- /.slide-canvas -->
+
+<script>
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "dissolveSpeed": 1.6,
+  "accent": "gold",
+  "grain": true
+}/*EDITMODE-END*/;
+
+(function() {
+  'use strict';
+  const canvas  = document.getElementById('canvas');
+  const slides  = Array.from(canvas.querySelectorAll('section'));
+  const counter = document.getElementById('counter');
+  const nav     = document.getElementById('nav');
+  const TOTAL   = slides.length;
+  const ROMAN   = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+  let current   = 0;
+  let navTimer;
+
+  function fit() {
+    const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    canvas.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+  }
+
+  function show(n) {
+    n = Math.max(0, Math.min(TOTAL - 1, n));
+    if (n === current) return;
+    slides[current].removeAttribute('data-active');
+    current = n;
+    slides[current].setAttribute('data-active', '');
+    if (counter) counter.textContent = ROMAN[current] + ' / ' + ROMAN[TOTAL - 1];
+    try { window.postMessage({ slideIndexChanged: current }, '*'); } catch(e) {}
+    try { history.replaceState(null, '', '#' + (current + 1)); } catch(e) {}
+    showNav();
+  }
+
+  function showNav() {
+    nav.setAttribute('data-visible', '');
+    clearTimeout(navTimer);
+    navTimer = setTimeout(function() { nav.removeAttribute('data-visible'); }, 2200);
+  }
+
+  const hash = parseInt(location.hash.replace('#', ''));
+  slides[current].setAttribute('data-active', '');
+  if (!isNaN(hash) && hash >= 1 && hash <= TOTAL) {
+    slides[current].removeAttribute('data-active');
+    current = hash - 1;
+    slides[current].setAttribute('data-active', '');
+  }
+  if (counter) counter.textContent = ROMAN[current] + ' / ' + ROMAN[TOTAL - 1];
+  fit();
+  window.addEventListener('resize', fit);
+
+  document.getElementById('prev-btn').addEventListener('click', function() { show(current - 1); });
+  document.getElementById('next-btn').addEventListener('click', function() { show(current + 1); });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); show(0); }
+    else if (e.key === 'End') { e.preventDefault(); show(TOTAL - 1); }
+  });
+
+  let tx = 0;
+  canvas.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, { passive: true });
+  canvas.addEventListener('touchend', function(e) {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 60) show(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  document.addEventListener('mousemove', showNav, { passive: true });
+
+  /* ── Tweaks ── */
+  const ACCENT_MAP = { gold: '#C9A96E', rose: '#D4A5A5', bone: '#E8E0D5' };
+  const ACCENT_L   = { gold: '#E2CDA1', rose: '#E8C5C5', bone: '#FAF3E0' };
+  const ACCENT_D   = { gold: '#A88A52', rose: '#A87E7E', bone: '#A8A095' };
+  const panel = document.getElementById('tweaks');
+
+  function applyTweaks(t) {
+    const s = t.dissolveSpeed !== undefined ? t.dissolveSpeed : TWEAK_DEFAULTS.dissolveSpeed;
+    slides.forEach(function(sl) { sl.style.transition = 'opacity ' + s + 's ease, visibility ' + s + 's'; });
+    if (t.accent) {
+      document.documentElement.style.setProperty('--gold', ACCENT_MAP[t.accent] || ACCENT_MAP.gold);
+      document.documentElement.style.setProperty('--gold-l', ACCENT_L[t.accent] || ACCENT_L.gold);
+      document.documentElement.style.setProperty('--gold-deep', ACCENT_D[t.accent] || ACCENT_D.gold);
+    }
+    const on = (t.grain === undefined) ? TWEAK_DEFAULTS.grain : (t.grain !== false && t.grain !== 'off');
+    document.querySelectorAll('.grain').forEach(function(el) { el.style.display = on ? '' : 'none'; });
+    document.querySelectorAll('[name="speed"]').forEach(function(r) { r.checked = parseFloat(r.value) === s; });
+    if (t.accent) document.querySelectorAll('[name="accent"]').forEach(function(r) { r.checked = r.value === t.accent; });
+    if (t.grain !== undefined) document.querySelectorAll('[name="grain"]').forEach(function(r) { r.checked = (r.value === 'on') === on; });
+  }
+  applyTweaks(TWEAK_DEFAULTS);
+
+  document.querySelectorAll('[name="speed"]').forEach(function(r) {
+    r.addEventListener('change', function() { var v = parseFloat(r.value); applyTweaks({ dissolveSpeed: v }); try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { dissolveSpeed: v } }, '*'); } catch(e) {} });
+  });
+  document.querySelectorAll('[name="accent"]').forEach(function(r) {
+    r.addEventListener('change', function() { applyTweaks({ accent: r.value }); try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { accent: r.value } }, '*'); } catch(e) {} });
+  });
+  document.querySelectorAll('[name="grain"]').forEach(function(r) {
+    r.addEventListener('change', function() { var on = r.value === 'on'; applyTweaks({ grain: on }); try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { grain: on } }, '*'); } catch(e) {} });
+  });
+  document.getElementById('tweaks-close').addEventListener('click', function() { panel.classList.remove('open'); try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch(e) {} });
+
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === '__activate_edit_mode')   panel.classList.add('open');
+    if (e.data && e.data.type === '__deactivate_edit_mode') panel.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 't' || e.key === 'T') {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+      panel.classList.toggle('open');
+    }
+  }, true);
+})();
+</script>
+
+</body>
+</html>

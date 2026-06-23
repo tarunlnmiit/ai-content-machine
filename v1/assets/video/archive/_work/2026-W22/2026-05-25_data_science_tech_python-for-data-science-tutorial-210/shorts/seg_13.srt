@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:00,020
+So read comprehension left to right for in this case for score whatever transformation we are
+
+2
+00:00:00,020 --> 00:00:09,220
+doing in scores and if we take a look here and then it is the filter. So every data scientist
+
+3
+00:00:09,220 --> 00:00:14,420
+uses this pattern constantly. It replaces three line for loops as you can see here, right.
+
+4
+00:00:14,420 --> 00:00:18,500
+It was a three line for loop with one single readable expression.
+
+5
+00:00:19,300 --> 00:00:24,820
+Now we are going to talk about dictionaries. So how data science think or data scientists
+
+6
+00:00:24,820 --> 00:00:30,740
+think about records. So dictionary maps keys to values. You create one with curly braces as I
+
+7
+00:00:30,740 --> 00:00:38,420
+told you in last tutorial as well. So as you can see here I have a dictionary called person and
+
+8
+00:00:38,420 --> 00:00:50,100
+it has four values name age, role and salary and you can see the dictionary is defined inside
+
+9
+00:00:50,100 --> 00:00:57,500
+the curly braces with a coated key. So left side is called key and right side is called value

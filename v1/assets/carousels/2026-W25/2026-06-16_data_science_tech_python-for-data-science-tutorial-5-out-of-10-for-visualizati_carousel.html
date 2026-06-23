@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python for Data Science #5 — Matplotlib & Seaborn | Breath of Data Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --brand-primary: #6B8FA8; --brand-light: #96BAD0; --brand-dark: #3D5F75;
+    --light-bg: #EDE8DC; --light-border: #D6D0C4; --dark-bg: #1E1B2E;
+    --gradient: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);
+    --slide-w: 420px; --slide-h: 525px; --font: 'Space Grotesk', sans-serif;
+  }
+  body { background: #111; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: var(--font); padding: 32px 16px; }
+  .ig-frame { width: var(--slide-w); background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,.6); user-select: none; }
+  .ig-header { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #efefef; }
+  .ig-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .ig-handle { font-size: 12px; font-weight: 600; color: #111; line-height: 1.2; }
+  .ig-sub { font-size: 10px; color: #888; }
+  .ig-more { margin-left: auto; font-size: 18px; color: #555; line-height: 1; }
+  .ig-dots { display: flex; justify-content: center; gap: 4px; padding: 6px 0; background: #fff; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #ddd; transition: background .25s, transform .25s; }
+  .dot.active { background: #3897f0; transform: scale(1.15); }
+  .ig-actions { display: flex; align-items: center; gap: 14px; padding: 8px 14px 4px; background: #fff; }
+  .ig-icon { font-size: 20px; color: #333; cursor: pointer; }
+  .ig-icon.bookmark { margin-left: auto; }
+  .ig-likes { font-size: 12px; font-weight: 600; color: #111; padding: 0 14px 4px; }
+  .ig-caption { font-size: 11px; color: #333; padding: 0 14px 10px; line-height: 1.5; }
+  .ig-caption strong { font-weight: 600; }
+  .carousel-viewport { width: var(--slide-w); height: var(--slide-h); overflow: hidden; position: relative; cursor: grab; }
+  .carousel-viewport:active { cursor: grabbing; }
+  .carousel-track { display: flex; flex-direction: row; height: 100%; width: calc(var(--slide-w) * 7); transition: transform .38s cubic-bezier(.4,0,.2,1); will-change: transform; }
+  .slide { width: var(--slide-w); height: var(--slide-h); flex-shrink: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; font-family: var(--font); }
+  .slide.light { background: var(--light-bg); }
+  .slide.dark { background: var(--dark-bg); }
+  .slide.grad { background: var(--gradient); }
+  .progress-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,.2); z-index: 10; }
+  .progress-fill { height: 100%; background: var(--brand-light); }
+  .slide.light .progress-bar { background: rgba(0,0,0,.08); }
+  .slide.light .progress-fill { background: var(--brand-dark); }
+  .swipe-arrow { position: absolute; right: 16px; bottom: 14px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.18); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 10; }
+  .swipe-arrow svg { width: 14px; height: 14px; }
+  .slide.light .swipe-arrow { background: rgba(61,95,117,.12); }
+  .logo-lockup { display: flex; align-items: center; gap: 8px; padding: 18px 22px 0; }
+  .logo-circle { width: 26px; height: 26px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .logo-name { font-size: 10px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .slide.light .logo-name { color: var(--brand-dark); }
+  .slide.dark .logo-name { color: var(--brand-light); }
+  .slide.grad .logo-name { color: rgba(255,255,255,.85); }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 9px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; }
+  .slide.light .tag { background: rgba(61,95,117,.1); color: var(--brand-dark); }
+  .slide.dark .tag { background: rgba(150,186,208,.15); color: var(--brand-light); }
+  .slide.grad .tag { background: rgba(255,255,255,.2); color: #fff; }
+  .slide-body { flex: 1; display: flex; flex-direction: column; padding: 0 28px; }
+  .slide-title { font-size: 22px; font-weight: 700; line-height: 1.15; letter-spacing: -.01em; margin-top: 10px; }
+  .slide.light .slide-title { color: #1a1a2e; }
+  .slide.dark .slide-title { color: #fff; }
+  .slide.grad .slide-title { color: #fff; }
+  .code-box { background: #0f0f1a; border-radius: 8px; padding: 12px 14px; margin-top: 10px; border-left: 3px solid var(--brand-primary); }
+  .slide.light .code-box { background: rgba(30,27,46,.9); }
+  .code-box code { font-family: 'Courier New', monospace; font-size: 9.5px; line-height: 1.65; color: #b8d4e8; display: block; white-space: pre; }
+  .code-box code .kw { color: #c792ea; }
+  .code-box code .fn { color: #82aaff; }
+  .code-box code .str { color: #c3e88d; }
+  .code-box code .cm { color: #546e7a; }
+  .code-box code .num { color: #f78c6c; }
+  .feature-list { margin-top: 12px; display: flex; flex-direction: column; gap: 7px; }
+  .feature-row { display: flex; align-items: flex-start; gap: 10px; }
+  .feat-icon { width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+  .feat-text { font-size: 11.5px; line-height: 1.45; }
+  .slide.light .feat-text { color: #2a2a3e; }
+  .slide.dark .feat-text { color: rgba(255,255,255,.85); }
+  .feat-text strong { font-weight: 600; }
+  .steps-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .step-row { display: flex; align-items: flex-start; gap: 10px; }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; background: var(--brand-primary); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; }
+  .slide.grad .step-num { background: rgba(255,255,255,.25); }
+  .step-text { font-size: 11.5px; line-height: 1.45; }
+  .slide.light .step-text { color: #2a2a3e; }
+  .slide.dark .step-text { color: rgba(255,255,255,.85); }
+  .slide.grad .step-text { color: rgba(255,255,255,.92); }
+  .step-text strong { font-weight: 600; }
+  .highlight-box { border-radius: 10px; padding: 12px 14px; margin-top: 10px; }
+  .slide.light .highlight-box { background: rgba(61,95,117,.08); border-left: 3px solid var(--brand-primary); }
+  .slide.dark .highlight-box { background: rgba(150,186,208,.08); border-left: 3px solid var(--brand-light); }
+  .highlight-box p { font-size: 12px; line-height: 1.55; font-style: italic; }
+  .slide.light .highlight-box p { color: var(--brand-dark); }
+  .slide.dark .highlight-box p { color: var(--brand-light); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .col-card { border-radius: 8px; padding: 10px 12px; }
+  .slide.dark .col-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); }
+  .col-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px; }
+  .slide.dark .col-label { color: var(--brand-light); }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .pill { padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 600; }
+  .deco-circle { position: absolute; border-radius: 50%; pointer-events: none; }
+  .s1-c1 { width: 160px; height: 160px; right: -50px; top: 60px; background: radial-gradient(circle, rgba(107,143,168,.18) 0%, transparent 70%); }
+  .s1-c2 { width: 80px; height: 80px; left: -20px; bottom: 80px; background: radial-gradient(circle, rgba(61,95,117,.12) 0%, transparent 70%); }
+  .s2-c1 { width: 200px; height: 200px; right: -70px; bottom: -60px; background: radial-gradient(circle, rgba(107,143,168,.12) 0%, transparent 70%); }
+  .s3-c1 { width: 180px; height: 180px; right: -60px; top: -40px; background: radial-gradient(circle, rgba(255,255,255,.1) 0%, transparent 70%); }
+  .s7-c1 { width: 220px; height: 220px; left: -80px; bottom: -80px; background: radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 70%); }
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">breathofdatascience</div>
+      <div class="ig-sub">Data Science · Python · AI</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 · HERO · LIGHT -->
+      <div class="slide light" id="slide-0">
+        <div class="deco-circle s1-c1"></div>
+        <div class="deco-circle s1-c2"></div>
+        <div class="logo-lockup">
+          <div class="logo-circle">B</div>
+          <span class="logo-name">Breath of Data Science</span>
+        </div>
+        <div class="slide-body" style="padding-top:12px;">
+          <span class="tag">Tutorial 5 / 10 · Python for DS</span>
+          <h1 style="font-size:29px;font-weight:700;line-height:1.1;letter-spacing:-.02em;color:#1a1a2e;margin-top:12px;">
+            Your charts get judged<br>
+            <span style="color:var(--brand-primary);">before</span> your<br>
+            model does.
+          </h1>
+          <p style="font-size:12.5px;line-height:1.55;margin-top:12px;color:#3a3a4a;opacity:.8;">
+            0.94 R². Six months of feature engineering. Then a gray matplotlib chart hits the slide deck — and the room decides you don't know what you're doing.
+          </p>
+          <p style="font-size:11.5px;line-height:1.55;margin-top:10px;color:#3a3a4a;opacity:.5;font-weight:500;">
+            matplotlib + seaborn → swipe to fix this ›
+          </p>
+        </div>
+        <div style="font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.5;color:var(--brand-dark);padding:0 28px 52px;">Python for Data Science Series · @breathofdatascience</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:14.28%;"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="var(--brand-dark)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 2 · PROBLEM · DARK -->
+      <div class="slide dark" id="slide-1">
+        <div class="deco-circle s2-c1"></div>
+        <div class="logo-lockup">
+          <div class="logo-circle">B</div>
+          <span class="logo-name">Breath of Data Science</span>
+        </div>
+        <div class="slide-body" style="padding-top:14px;">
+          <span class="tag">The Problem</span>
+          <h2 class="slide-title" style="font-size:21px;margin-top:10px;">Default matplotlib is<br>lying about your work</h2>
+          <div class="feature-list" style="margin-top:14px;gap:9px;">
+            <div class="feature-row">
+              <div class="feat-icon">🔲</div>
+              <div class="feat-text"><strong>Gray background</strong> — signals "rough draft" to every stakeholder</div>
+            </div>
+            <div class="feature-row">
+              <div class="feat-icon">🔡</div>
+              <div class="feat-text"><strong>Tiny fonts</strong> — designed for 800×600 monitors. Illegible in any deck</div>
+            </div>
+            <div class="feature-row">
+              <div class="feat-icon">📦</div>
+              <div class="feat-text"><strong>Cluttered box borders</strong> — top + right spines add zero information</div>
+            </div>
+            <div class="feature-row">
+              <div class="feat-icon">📊</div>
+              <div class="feat-text"><strong>No narrative</strong> — data without visual intent is just a number dump</div>
+            </div>
+          </div>
+          <div class="highlight-box" style="margin-top:12px;background:rgba(150,186,208,.08);border-left:3px solid var(--brand-light);">
+            <p style="color:rgba(255,255,255,.75);font-style:italic;">"The first comments weren't about the analysis. They were about how difficult the charts were to read."</p>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:28.57%;"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="rgba(255,255,255,.8)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 3 · SOLUTION · GRADIENT -->
+      <div class="slide grad" id="slide-2">
+        <div class="deco-circle s3-c1"></div>
+        <div class="logo-lockup">
+          <div class="logo-circle" style="background:rgba(255,255,255,.25);">B</div>
+          <span class="logo-name">Breath of Data Science</span>
+        </div>
+        <div class="slide-body" style="padding-top:14px;">
+          <span class="tag">The Mental Model</span>
+          <div style="margin-top:14px;">
+            <div style="font-size:38px;font-weight:700;color:#fff;line-height:1.05;letter-spacing:-.02em;">seaborn<br>+ matplotlib</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:6px;font-weight:500;">= 95% of what you'll ever need</div>
+          </div>
+          <div style="height:1px;background:rgba(255,255,255,.2);margin:16px 0;"></div>
+          <div class="steps-list" style="gap:10px;">
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>seaborn</strong> — high-level plots, beautiful defaults, 3–5 lines per chart</div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>matplotlib</strong> — low-level control for every pixel seaborn can't reach</div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>seaborn is built ON TOP of matplotlib</strong> — layers, not competitors</div>
+            </div>
+          </div>
+          <p style="font-size:11.5px;color:rgba(255,255,255,.6);margin-top:12px;font-style:italic;">Use seaborn for the 80%. matplotlib for the last 20%.</p>
+        </div>
+        <div class="progress-bar" style="background:rgba(255,255,255,.15);"><div class="progress-fill" style="width:42.86%;background:rgba(255,255,255,.85);"></div></div>
+        <div class="swipe-arrow" style="background:rgba(255,255,255,.2);"><svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 4 · CONTENT · LIGHT -->
+      <div class="slide light" id="slide-3">
+        <div class="logo-lockup">
+          <div class="logo-circle">B</div>
+          <span class="logo-name">Breath of Data Science</span>
+        </div>
+        <div class="slide-body" style="padding-top:14px;">
+          <span class="tag">Setup Block</span>
+          <h2 class="slide-title" style="font-size:18px;margin-top:8px;">Copy this to the top of every notebook. Run once.</h2>
+          <div class="code-box" style="margin-top:10px;">
+            <code><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">import</span> seaborn <span class="kw">as</span> sns
+
+<span class="cm"># Global style baseline</span>
+sns.<span class="fn">set_theme</span>(
+    style=<span class="str">"whitegrid"</span>,
+    palette=<span class="str">"muted"</span>,
+    font_scale=<span class="num">1.2</span>
+)
+plt.rcParams.<span class="fn">update</span>({
+    <span class="str">"figure.dpi"</span>: <span class="num">150</span>,
+    <span class="str">"axes.spines.top"</span>: <span class="num">False</span>,
+    <span class="str">"axes.spines.right"</span>: <span class="num">False</span>,
+})</code>
+          </div>
+          <div class="feature-list" style="margin-top:10px;gap:7px;">
+            <div class="feature-row">
+              <div class="feat-icon" style="font-size:9px;background:rgba(61,95,117,.15);">✓</div>
+              <div class="feat-text"><strong>whitegrid</strong> — white bg + light gridlines. Instant upgrade</div>
+            </div>
+            <div class="feature-row">
+              <div class="feat-icon" style="font-size:9px;background:rgba(61,95,117,.15);">✓</div>
+              <div class="feat-text"><strong>font_scale 1.2</strong> — readable in any slide deck or Medium image</div>
+            </div>
+            <div class="feature-row">
+              <div class="feat-icon" style="font-size:9px;background:rgba(61,95,117,.15);">✓</div>
+              <div class="feat-text"><strong>Remove spines</strong> — top/right borders carry zero data. Kill them</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:57.14%;"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="var(--brand-dark)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 5 · DETAILS · DARK -->
+      <div class="slide dark" id="slide-4">
+        <div class="logo-lockup">
+          <div class="logo-circle">B</div>
+          <span class="logo-name">Breath of Data Science</span>
+        </div>
+        <div class="slide-body" style="padding-top:14px;">
+          <span class="tag">5 Essential Plot Types</span>
+          <h2 class="slide-title" style="font-size:19px;margin-top:8px;">These 5 cover 90% of all EDA you'll ever do</h2>
+          <div class="two-col" style="margin-top:12px;">
+            <div class="col-card">
+              <div class="col-label">Distribution</div>
+              <div style="color:rgba(255,255,255,.8);font-size:10.5px;"><code style="font-size:9px;color:#82aaff;font-family:'Courier New',monospace;">sns.histplot</code><br><span style="color:rgba(255,255,255,.55);font-size:10px;">Shape + skew of any column</span></div>
+            </div>
+            <div class="col-card">
+              <div class="col-label">Relationship</div>
+              <div style="color:rgba(255,255,255,.8);font-size:10.5px;"><code style="font-size:9px;color:#82aaff;font-family:'Courier New',monospace;">sns.scatterplot</code><br><span style="color:rgba(255,255,255,.55);font-size:10px;">2 vars + hue = 3rd dim</span></div>
+            </div>
+            <div class="col-card">
+              <div class="col-label">Categories</div>
+              <div style="color:rgba(255,255,255,.8);font-size:10.5px;"><code style="font-size:9px;color:#82aaff;font-family:'Courier New',monospace;">sns.barplot</code><br><span style="color:rgba(255,255,255,.55);font-size:10px;">CI error bars automatic</span></div>
+            </div>
+            <div class="col-card">
+              <div class="col-label">Correlation</div>
+              <div style="color:rgba(255,255,255,.8);font-size:10.5px;"><code style="font-size:9px;color:#82aaff;font-family:'Courier New',monospace;">sns.heatmap</code><br><span style="color:rgba(255,255,255,.55);font-size:10px;">Full matrix, annotated</span></div>
+            </div>
+          </div>
+          <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;margin-top:8px;">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--brand-light);margin-bottom:4px;">Grouped Distribution</div>
+            <div style="color:rgba(255,255,255,.8);font-size:10.5px;"><code style="font-size:9px;color:#82aaff;font-family:'Courier New',monospace;">sns.boxplot</code> — spread + outliers across categories</div>
+          </div>
+          <div class="highlight-box" style="margin-top:10px;background:rgba(150,186,208,.07);border-left:3px solid var(--brand-light);">
+            <p style="color:var(--brand-light);font-size:11px;font-style:normal;font-weight:500;">Titanic: 1st class 63% survival · 3rd class &lt;25%. One barplot. The story lands instantly.</p>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:71.43%;"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="rgba(255,255,255,.8)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 6 · HOW-TO · LIGHT -->
+      <div class="slide light" id="slide-5">
+        <div class="logo-lockup">
+          <div class="logo-circle">B</div>
+          <span class="logo-name">Breath of Data Science</span>
+        </div>
+        <div class="slide-body" style="padding-top:14px;">
+          <span class="tag">4 Details That Separate Good Charts from Bad</span>
+          <div class="steps-list" style="margin-top:12px;gap:10px;">
+            <div class="step-row">
+              <div class="step-num" style="background:var(--brand-dark);">1</div>
+              <div class="step-text">
+                <strong>Units on every axis</strong><br>
+                <span style="font-size:10.5px;opacity:.65;">"Fare" → "Fare (£)" → "Fare in GBP, 1912"</span>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num" style="background:var(--brand-dark);">2</div>
+              <div class="step-text">
+                <strong>Explicit color assignment, never random</strong><br>
+                <code style="font-size:9px;background:rgba(61,95,117,.1);padding:2px 6px;border-radius:3px;font-family:'Courier New',monospace;">palette={0: "salmon", 1: "steelblue"}</code>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num" style="background:var(--brand-dark);">3</div>
+              <div class="step-text">
+                <strong>Zero-baseline on bar charts</strong><br>
+                <code style="font-size:9px;background:rgba(61,95,117,.1);padding:2px 6px;border-radius:3px;font-family:'Courier New',monospace;">plt.ylim(0, 1)</code><span style="font-size:10.5px;opacity:.65;"> — not enforced automatically</span>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num" style="background:var(--brand-dark);">4</div>
+              <div class="step-text">
+                <strong>Save at 300 DPI, not 72</strong><br>
+                <code style="font-size:9px;background:rgba(61,95,117,.1);padding:2px 6px;border-radius:3px;font-family:'Courier New',monospace;">fig.savefig("out.png", dpi=300, bbox_inches="tight")</code>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box" style="margin-top:10px;">
+            <p>These require zero design skill. Just intention. That's the entire gap.</p>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:85.71%;"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="var(--brand-dark)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <!-- SLIDE 7 · CTA · GRADIENT -->
+      <div class="slide grad" id="slide-6">
+        <div class="deco-circle s7-c1"></div>
+        <div class="logo-lockup">
+          <div class="logo-circle" style="background:rgba(255,255,255,.25);">B</div>
+          <span class="logo-name">Breath of Data Science</span>
+        </div>
+        <div class="slide-body" style="padding-top:16px;padding-bottom:52px;">
+          <span class="tag">Tutorial 5 / 10 — Complete</span>
+          <h2 class="slide-title" style="font-size:22px;margin-top:12px;color:#fff;line-height:1.15;">
+            Stop explaining<br>your charts.<br>
+            <span style="color:rgba(255,255,255,.6);">Make them obvious.</span>
+          </h2>
+          <p style="font-size:12px;color:rgba(255,255,255,.8);margin-top:12px;line-height:1.6;">
+            One notebook. Five plot types. The setup block from slide 4. Build it with a dataset you care about — ask: does someone who's never seen this data get the key insight in <strong style="color:#fff;">5 seconds</strong>?
+          </p>
+          <div style="height:1px;background:rgba(255,255,255,.2);margin:14px 0;"></div>
+          <div class="pill-row">
+            <span class="pill" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);">📌 Save this carousel</span>
+            <span class="pill" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);">🔁 Share with 1 learner</span>
+          </div>
+          <p style="font-size:11px;color:rgba(255,255,255,.7);margin-top:12px;line-height:1.55;">
+            Tutorial 6 next week: <strong style="color:#fff;">statistical testing with scipy</strong> — which test, when, and how to report results in plain English.
+          </p>
+          <p style="font-size:10.5px;color:rgba(255,255,255,.5);margin-top:8px;">
+            Follow <strong style="color:rgba(255,255,255,.9);">@breathofdatascience</strong> to catch it.
+          </p>
+        </div>
+        <div class="progress-bar" style="background:rgba(255,255,255,.15);"><div class="progress-fill" style="width:100%;background:rgba(255,255,255,.9);"></div></div>
+      </div>
+
+    </div><!-- /carousel-track -->
+  </div><!-- /carousel-viewport -->
+
+  <div class="ig-dots" id="dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+  <div class="ig-actions">
+    <span class="ig-icon">♡</span>
+    <span class="ig-icon">💬</span>
+    <span class="ig-icon">↗</span>
+    <span class="ig-icon bookmark">🔖</span>
+  </div>
+  <div class="ig-likes">1,247 likes</div>
+  <div class="ig-caption">
+    <strong>breathofdatascience</strong> Your charts get judged before your model does. Here's the matplotlib + seaborn setup that fixes that in one notebook. Tutorial 5 of 10 🐍📊<br>
+    <span style="color:#0095f6;">#Python #DataScience #matplotlib #seaborn #DataVisualization #PythonTutorial</span>
+  </div>
+</div><!-- /ig-frame -->
+
+<script>
+  const TOTAL = 7, SLIDE_W = 420;
+  let current = 0;
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('.dot');
+  function goTo(n) {
+    if (n < 0) n = 0; if (n >= TOTAL) n = TOTAL - 1;
+    current = n;
+    track.style.transform = `translateX(-${current * SLIDE_W}px)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+  let startX = 0, dragging = false;
+  const vp = document.getElementById('viewport');
+  vp.addEventListener('pointerdown', e => { startX = e.clientX; dragging = true; track.style.transition = 'none'; vp.setPointerCapture(e.pointerId); });
+  vp.addEventListener('pointermove', e => { if (!dragging) return; track.style.transform = `translateX(${-(current * SLIDE_W) + (e.clientX - startX)}px)`; });
+  vp.addEventListener('pointerup', e => {
+    if (!dragging) return; dragging = false;
+    track.style.transition = 'transform .38s cubic-bezier(.4,0,.2,1)';
+    const dx = e.clientX - startX;
+    if (dx < -40) goTo(current + 1); else if (dx > 40) goTo(current - 1); else goTo(current);
+  });
+  vp.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  vp.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - startX; if (dx < -40) goTo(current + 1); else if (dx > 40) goTo(current - 1); });
+  document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') goTo(current + 1); if (e.key === 'ArrowLeft') goTo(current - 1); });
+</script>
+</body>
+</html>

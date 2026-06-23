@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poetry Dips Its Fingers in Every Colour – Carousel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f5f5f5;
+      padding: 20px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .container {
+      max-width: 420px;
+    }
+
+    .ig-frame {
+      width: 420px;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Instagram Header */
+    .ig-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .ig-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ig-handle {
+      font-size: 13px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.5px;
+    }
+
+    .ig-badge {
+      width: 8px;
+      height: 8px;
+      background: #B89850;
+      border-radius: 50%;
+    }
+
+    .ig-actions {
+      display: flex;
+      gap: 12px;
+      color: #999;
+      font-size: 16px;
+    }
+
+    /* Carousel Container */
+    .carousel-viewport {
+      position: relative;
+      width: 420px;
+      height: 525px;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.4s ease-out;
+    }
+
+    .slide {
+      flex: 0 0 420px;
+      height: 525px;
+      display: flex;
+      flex-direction: column;
+      padding: 0 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.light {
+      background: #EDE8DC;
+    }
+
+    .slide.dark {
+      background: #1E1B2E;
+    }
+
+    .slide.gradient {
+      background: linear-gradient(165deg, #8A6E30 0%, #B89850 50%, #D4BC7A 100%);
+    }
+
+    /* Slide Content Alignment */
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .slide.light .slide-content {
+      color: #1E1B2E;
+    }
+
+    .slide.dark .slide-content,
+    .slide.gradient .slide-content {
+      color: #EDE8DC;
+    }
+
+    /* Typography */
+    .slide h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .slide h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    .slide p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0 0 16px 0;
+      font-weight: 400;
+    }
+
+    .slide-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      opacity: 0.95;
+    }
+
+    .slide-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.75;
+      margin-bottom: 8px;
+    }
+
+    /* Logo Lockup */
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .brand-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #B89850;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: #EDE8DC;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    /* Bottom Section (Progress + Arrow) */
+    .slide-footer {
+      padding: 0 0 52px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      flex: 1;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .slide.dark .progress-container,
+    .slide.gradient .progress-container {
+      background: rgba(237, 232, 220, 0.2);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #B89850;
+      width: 0%;
+      transition: width 0.4s ease-out;
+    }
+
+    /* Swipe Arrow */
+    .swipe-arrow {
+      font-size: 24px;
+      margin-left: 12px;
+      opacity: 0.6;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(4px);
+      }
+    }
+
+    /* CTA Button */
+    .cta-button {
+      margin-top: 24px;
+      padding: 12px 28px;
+      background: #EDE8DC;
+      color: #8A6E30;
+      border: none;
+      border-radius: 24px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Dots Navigation */
+    .ig-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 0;
+      border-top: 1px solid #f0f0f0;
+      background: white;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ddd;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .dot.active {
+      background: #B89850;
+      width: 20px;
+      border-radius: 3px;
+    }
+
+    /* Caption */
+    .ig-caption {
+      padding: 12px 16px;
+      border-top: 1px solid #f0f0f0;
+      background: white;
+      font-size: 13px;
+      color: #262626;
+      line-height: 1.4;
+    }
+
+    .ig-caption strong {
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="ig-frame">
+      <!-- Instagram Header -->
+      <div class="ig-header">
+        <div class="ig-header-left">
+          <span class="ig-handle">mistakenlyhuman</span>
+          <div class="ig-badge"></div>
+        </div>
+        <div class="ig-actions">
+          <span>•••</span>
+        </div>
+      </div>
+
+      <!-- Carousel Viewport -->
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carouselTrack">
+          <!-- Slide 1: Hero -->
+          <div class="slide light">
+            <div class="slide-content">
+              <div style="margin-bottom: 12px;">
+                <p style="font-size: 13px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7; margin-bottom: 20px;">On Poetry & Precision</p>
+                <h1>Poetry Rewards<br>Something Else<br>Entirely</h1>
+              </div>
+              <p style="font-size: 14px; opacity: 0.85; margin: 20px 0;">For years I treated data and poetry as separate worlds.</p>
+              <p style="font-size: 14px; opacity: 0.85; margin: 0;">Then something broke open.</p>
+              <div class="brand-lockup">
+                <div class="brand-circle">B</div>
+                <div class="brand-name">Breath of Poetry</div>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 14%;"></div>
+              </div>
+              <div class="swipe-arrow">→</div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Problem -->
+          <div class="slide dark">
+            <div class="slide-content">
+              <p class="slide-label">The Separation Myth</p>
+              <h2>Poetry Is Supposed<br>to Stay in Its Lane</h2>
+              <p style="margin-top: 24px; font-size: 14px; opacity: 0.9;">Literature classes. Journals. The corner for feelings you can't organize.</p>
+              <p style="font-size: 14px; opacity: 0.9;">But it doesn't stay there.</p>
+            </div>
+            <div class="slide-footer">
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 28%;"></div>
+              </div>
+              <div class="swipe-arrow">→</div>
+            </div>
+          </div>
+
+          <!-- Slide 3: Solution -->
+          <div class="slide gradient">
+            <div class="slide-content">
+              <h1 style="font-size: 42px;">Poetry Dips Its<br>Fingers in Every<br>Colour</h1>
+              <p style="margin-top: 20px; font-size: 14px; opacity: 0.95;">Not because poets are ambitious.</p>
+              <p style="font-size: 14px; opacity: 0.95;">Because human experience refuses to be sorted.</p>
+            </div>
+            <div class="slide-footer">
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 42%;"></div>
+              </div>
+              <div class="swipe-arrow">→</div>
+            </div>
+          </div>
+
+          <!-- Slide 4: Technical + Lyrical -->
+          <div class="slide light">
+            <div class="slide-content">
+              <p class="slide-label">It Finds You</p>
+              <h2>In the Technical</h2>
+              <div style="margin-top: 20px;">
+                <p style="font-size: 13px; font-style: italic; opacity: 0.8; margin-bottom: 16px;">"When elegant code reads like a volta"</p>
+                <p style="font-size: 14px; opacity: 0.85; margin: 12px 0;">The same curiosity drives both: to understand what people feel beneath what they say.</p>
+                <p style="font-size: 14px; opacity: 0.85; margin: 12px 0;">One pursuit used numbers. The other used metaphor.</p>
+              </div>
+            </div>
+            <div class="slide-footer">
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 57%;"></div>
+              </div>
+              <div class="swipe-arrow">→</div>
+            </div>
+          </div>
+
+          <!-- Slide 5: The Ordinary -->
+          <div class="slide dark">
+            <div class="slide-content">
+              <p class="slide-label">Monday Morning, 7:14 AM</p>
+              <h2>It Finds You<br>in the Ordinary</h2>
+              <p style="margin-top: 24px; font-size: 14px; opacity: 0.9;">Poetry is not elevated experience.</p>
+              <p style="font-size: 14px; opacity: 0.9;">It is ordinary experience,<br>seen clearly for a second.</p>
+              <p style="font-size: 13px; opacity: 0.75; margin-top: 16px; font-style: italic;">The grey of a commute. The brown of bad coffee. One Tuesday afternoon that feels, somehow, okay.</p>
+            </div>
+            <div class="slide-footer">
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 71%;"></div>
+              </div>
+              <div class="swipe-arrow">→</div>
+            </div>
+          </div>
+
+          <!-- Slide 6: How It Arrives -->
+          <div class="slide light">
+            <div class="slide-content">
+              <p class="slide-label">The Pattern</p>
+              <h2>It Finds You<br>When You Stop<br>Looking</h2>
+              <p style="margin-top: 24px; font-size: 14px; opacity: 0.85;">Poetry comes sideways.</p>
+              <p style="font-size: 14px; opacity: 0.85;">In a lyric heard forty times that suddenly means something different.</p>
+              <p style="font-size: 14px; opacity: 0.85; margin-top: 16px;">The door doesn't need to be wide.</p>
+              <p style="font-size: 14px; opacity: 0.85; font-weight: 700;">A crack is enough.</p>
+            </div>
+            <div class="slide-footer">
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 86%;"></div>
+              </div>
+              <div class="swipe-arrow">→</div>
+            </div>
+          </div>
+
+          <!-- Slide 7: CTA -->
+          <div class="slide gradient">
+            <div class="slide-content">
+              <h2 style="font-size: 32px; margin-bottom: 12px;">One Line<br>That Stayed</h2>
+              <p style="font-size: 14px; opacity: 0.95; margin: 20px 0;">If a line has lived in your chest — something read years ago that followed you home —</p>
+              <p style="font-size: 14px; opacity: 0.95; font-weight: 500;">I'd love to hear it.</p>
+              <button class="cta-button">Share</button>
+            </div>
+            <div class="slide-footer">
+              <div class="progress-container">
+                <div class="progress-fill" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dots Navigation -->
+      <div class="ig-dots">
+        <div class="dot active" onclick="goToSlide(0)"></div>
+        <div class="dot" onclick="goToSlide(1)"></div>
+        <div class="dot" onclick="goToSlide(2)"></div>
+        <div class="dot" onclick="goToSlide(3)"></div>
+        <div class="dot" onclick="goToSlide(4)"></div>
+        <div class="dot" onclick="goToSlide(5)"></div>
+        <div class="dot" onclick="goToSlide(6)"></div>
+      </div>
+
+      <!-- Caption -->
+      <div class="ig-caption">
+        <strong>mistakenlyhuman</strong> Poetry dips its fingers in every colour — not because poets are ambitious, but because human experience refuses to be sorted. 🌈
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 7;
+    const slideWidth = 420;
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
+
+    const track = document.getElementById('carouselTrack');
+
+    function updateCarousel() {
+      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+      document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    function goToSlide(index) {
+      currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+      updateCarousel();
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateCarousel();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateCarousel();
+      }
+    }
+
+    // Mouse drag support
+    track.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      currentX = currentSlide * slideWidth;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const delta = e.clientX - startX;
+      track.style.transition = 'none';
+      track.style.transform = `translateX(-${currentX - delta}px)`;
+    });
+
+    document.addEventListener('mouseup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const delta = e.clientX - startX;
+      track.style.transition = 'transform 0.4s ease-out';
+
+      if (Math.abs(delta) > 50) {
+        if (delta > 0) {
+          prevSlide();
+        } else {
+          nextSlide();
+        }
+      } else {
+        updateCarousel();
+      }
+    });
+
+    // Touch support
+    track.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      startX = e.touches[0].clientX;
+      currentX = currentSlide * slideWidth;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const delta = e.touches[0].clientX - startX;
+      track.style.transition = 'none';
+      track.style.transform = `translateX(-${currentX - delta}px)`;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const delta = e.changedTouches[0].clientX - startX;
+      track.style.transition = 'transform 0.4s ease-out';
+
+      if (Math.abs(delta) > 50) {
+        if (delta > 0) {
+          prevSlide();
+        } else {
+          nextSlide();
+        }
+      } else {
+        updateCarousel();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    });
+  </script>
+</body>
+</html>

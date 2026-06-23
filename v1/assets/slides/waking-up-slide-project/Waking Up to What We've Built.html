@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waking Up to What We've Built — Story</title>
+<script>
+// Suppress cross-origin "Script error." noise emitted before our scripts load.
+window.addEventListener('error', function(e){ if(!e.filename){ e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+window.addEventListener('unhandledrejection', function(e){ if(!e.reason||!e.reason.stack){ e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;1,400&display=swap">
+
+<style>
+:root {
+  --indigo:     #1C1635;
+  --indigo-deep:#13102A;
+  --indigo-edge:#08060F;
+  --gold:       #C9A96E;
+  --cream:      #FAF3E0;
+  --rose:       #D4A5A5;
+  --charcoal:   #3D3D4F;
+
+  --serif:      'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%;
+  background: #050409;
+  overflow: hidden;
+  font-family: var(--serif);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* ─────────── Stage ─────────── */
+#stage  { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+#canvas {
+  width: 1080px; height: 1920px;
+  position: relative; overflow: hidden;
+  transform-origin: center center;
+  background: var(--indigo);
+}
+
+/* ─────────── Playback bar ─────────── */
+#playbar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 44px;
+  background: rgba(8,6,15,0.92);
+  backdrop-filter: blur(12px);
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 16px; z-index: 1000;
+  font-family: var(--serif);
+}
+#play-btn, #restart-btn {
+  border: none; background: transparent;
+  color: rgba(250,243,224,0.55); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+#play-btn {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: rgba(250,243,224,0.08); color: var(--cream);
+}
+#play-btn:hover { background: rgba(250,243,224,0.14); }
+#restart-btn { width: 24px; height: 24px; font-size: 14px; }
+#restart-btn:hover { color: var(--cream); }
+#scrubber-wrap {
+  flex: 1; height: 22px; position: relative; cursor: pointer;
+  display: flex; align-items: center;
+}
+#scrubber-track {
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: rgba(250,243,224,0.10); border-radius: 2px;
+}
+#scrubber-fill {
+  position: absolute; left: 0; height: 2px;
+  background: rgba(201,169,110,0.85); border-radius: 2px; width: 0%;
+}
+#scrubber-thumb {
+  position: absolute; top: 50%; width: 9px; height: 9px;
+  background: var(--cream); border-radius: 50%;
+  transform: translate(-50%,-50%);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  left: 0%;
+}
+#time-label {
+  font-size: 12px; color: rgba(250,243,224,0.40);
+  letter-spacing: 0.08em; font-variant-numeric: tabular-nums;
+  flex-shrink: 0; min-width: 80px; text-align: left;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ─────────── Frames ─────────── */
+.frame {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden;
+  opacity: 0; pointer-events: none;
+  background: var(--indigo);
+}
+
+/* paper-grain texture overlay, lives on every frame */
+.grain {
+  position: absolute; inset: -2%;
+  pointer-events: none;
+  opacity: 0.10;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.98  0 0 0 0 0.95  0 0 0 0 0.88  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  z-index: 50;
+}
+
+/* dusty rose bleed at one edge */
+.rose-bleed {
+  position: absolute; pointer-events: none;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(212,165,165,0.16), transparent 70%);
+  filter: blur(40px);
+  z-index: 30;
+}
+
+/* cinematic vignette */
+.vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(8,6,15,0.55) 95%);
+  z-index: 40;
+}
+
+/* image-slot styling — transparent so CSS placeholders show through when empty */
+image-slot {
+  position: absolute;
+  background: transparent !important;
+}
+image-slot::part(empty) {
+  color: rgba(250,243,224,0.18);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  background: transparent;
+}
+
+/* duotone-ish filter applied to dropped photos via inner img */
+image-slot img {
+  filter: grayscale(0.6) contrast(1.05) brightness(0.88) saturate(0.6) hue-rotate(-8deg);
+}
+
+/* gradient scrim that sits on top of an image — for legibility */
+.scrim-top {
+  position: absolute; left: 0; right: 0; top: 0; height: 38%;
+  background: linear-gradient(to bottom, rgba(28,22,53,0.95), rgba(28,22,53,0));
+  pointer-events: none; z-index: 20;
+}
+.scrim-bottom {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+  background: linear-gradient(to top, rgba(28,22,53,0.92), rgba(28,22,53,0));
+  pointer-events: none; z-index: 20;
+}
+.scrim-center {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(28,22,53,0.30), rgba(28,22,53,0.78));
+  pointer-events: none; z-index: 20;
+}
+
+/* ─────────── Typography ─────────── */
+.line {
+  font-family: var(--serif);
+  color: var(--cream);
+  text-align: center;
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: 0.005em;
+  text-wrap: pretty;
+  position: relative; z-index: 25;
+}
+.italic { font-style: italic; font-weight: 400; }
+.gold   { color: var(--gold); }
+.rose-t { color: var(--rose); }
+
+/* fade-able text block */
+.anim {
+  opacity: 0;
+  will-change: opacity, transform;
+  transition: none;
+}
+
+/* attribution caps */
+.attr {
+  font-family: var(--serif);
+  color: var(--gold);
+  font-size: 22px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: center;
+  position: relative; z-index: 25;
+}
+
+/* ─────────── FRAME 1 — Notice. ─────────── */
+#f0 { background: linear-gradient(180deg, #1C1635 0%, #16112A 60%, #0E0B1F 100%); }
+#f0 .word {
+  font-size: 132px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ─────────── FRAME 2 — Thoughts driven by exteriority ─────────── */
+#f2-img {
+  inset: 0;
+  width: 100%; height: 100%;
+}
+.f2-stack {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 280px 110px 360px;
+  z-index: 25;
+}
+#f2 .upper { font-size: 78px; font-style: italic; line-height: 1.2; }
+#f2 .lower {
+  font-size: 38px; color: var(--gold);
+  font-style: italic; line-height: 1.5;
+  letter-spacing: 0.03em;
+}
+
+/* placeholder crowd vignette behind image-slot, only visible when slot is empty */
+.crowd-placeholder {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 35% 55% at 50% 55%, rgba(250,243,224,0.10), transparent 70%),
+    linear-gradient(180deg, #1C1635 0%, #2A2247 45%, #1C1635 100%);
+  overflow: hidden;
+}
+.crowd-placeholder::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 14% 38% at 18% 50%, rgba(8,6,15,0.55), transparent 60%),
+    radial-gradient(ellipse 12% 36% at 32% 52%, rgba(8,6,15,0.50), transparent 60%),
+    radial-gradient(ellipse 14% 40% at 68% 50%, rgba(8,6,15,0.55), transparent 60%),
+    radial-gradient(ellipse 13% 38% at 82% 52%, rgba(8,6,15,0.55), transparent 60%);
+  filter: blur(18px);
+}
+.crowd-placeholder::after {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  width: 240px; height: 520px; transform: translate(-50%,-46%);
+  background: radial-gradient(ellipse 50% 38% at 50% 28%, rgba(212,165,165,0.18), transparent 70%),
+              radial-gradient(ellipse 60% 70% at 50% 65%, rgba(8,6,15,0.55), transparent 75%);
+  filter: blur(2px);
+}
+
+/* ─────────── FRAME 3 — wearing layers of masks ─────────── */
+.mask-placeholder {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #2C2845 0%, #1C1635 55%, #0E0B1F 100%);
+}
+.mask-placeholder::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 35% 60%, rgba(212,165,165,0.16), transparent 65%),
+    radial-gradient(ellipse 80% 40% at 50% 60%, rgba(250,243,224,0.06), transparent 70%);
+}
+.mask-placeholder svg {
+  position: absolute; left: 50%; top: 56%;
+  transform: translate(-50%,-50%) rotate(-8deg);
+  width: 560px; height: auto;
+  opacity: 0.62;
+}
+#f3 .upper {
+  font-size: 70px; font-style: italic; line-height: 1.22;
+  padding: 0 80px;
+}
+#f3 .lower {
+  font-size: 42px; font-style: italic; line-height: 1.4;
+  color: var(--cream); opacity: 0.85;
+  padding: 0 100px;
+}
+#f3 .f3-stack {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 240px 0 340px;
+  z-index: 25;
+}
+
+/* ─────────── FRAME 4 — hand ─────────── */
+.hand-placeholder {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #16112A 0%, #1C1635 50%, #0E0B1F 100%);
+}
+.hand-placeholder::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 40% 30% at 50% 35%, rgba(250,243,224,0.18), transparent 65%);
+}
+#f4 .line-big {
+  font-size: 64px; font-style: italic; line-height: 1.28;
+  padding: 0 90px;
+}
+
+/* ─────────── FRAME 5 — only to make themselves happy ─────────── */
+.mirror-placeholder {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #0E0B1F 0%, #16112A 50%, #0E0B1F 100%);
+}
+.mirror-placeholder::after {
+  content: ''; position: absolute; right: -180px; top: 30%;
+  width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(212,165,165,0.28), transparent 70%);
+  filter: blur(40px);
+}
+.mirror-frame {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 460px; height: 720px;
+  border: 1.5px solid rgba(250,243,224,0.18);
+  border-radius: 230px 230px 230px 230px / 280px 280px 230px 230px;
+  background:
+    linear-gradient(180deg, rgba(28,22,53,0.55) 0%, rgba(20,15,40,0.85) 100%);
+  box-shadow:
+    inset 0 0 80px rgba(8,6,15,0.6),
+    0 0 120px rgba(8,6,15,0.5);
+  overflow: hidden;
+}
+.mirror-frame::after {
+  content: ''; position: absolute; left: 50%; bottom: 8%;
+  width: 110px; height: 280px; transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(8,6,15,0.85), rgba(8,6,15,0.4));
+  border-radius: 55px 55px 0 0;
+  filter: blur(8px);
+}
+#f5 .line-mid {
+  font-size: 56px; font-style: italic; line-height: 1.25;
+  position: absolute; left: 0; right: 0;
+}
+
+/* ─────────── FRAME 6 — the mask doesn't just hide ─────────── */
+.mirror-frame-empty {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 460px; height: 720px;
+  border: 1.5px solid rgba(250,243,224,0.14);
+  border-radius: 230px 230px 230px 230px / 280px 280px 230px 230px;
+  background: linear-gradient(180deg, rgba(20,15,40,0.92) 0%, rgba(8,6,15,0.96) 100%);
+  box-shadow:
+    inset 0 0 100px rgba(8,6,15,0.75),
+    0 0 120px rgba(8,6,15,0.5);
+}
+#f6 .line-gold {
+  position: absolute; left: 0; right: 0; bottom: 28%;
+  font-size: 44px; font-style: italic; color: var(--gold);
+  line-height: 1.35; letter-spacing: 0.01em;
+  padding: 0 130px;
+  z-index: 25;
+}
+
+/* ─────────── FRAME 7 — person at window ─────────── */
+.window-placeholder {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, #0E0B1F 0%, #16112A 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.window-rect {
+  position: absolute; left: 50%; top: 32%;
+  transform: translate(-50%, -50%);
+  width: 720px; height: 880px;
+  background: linear-gradient(180deg, #E8E2D2 0%, #FAF3E0 60%, #F0E8D2 100%);
+  box-shadow:
+    inset 0 0 140px rgba(212,165,165,0.18),
+    0 0 200px rgba(250,243,224,0.10);
+}
+.window-rect::after {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  width: 100%; height: 1.5px;
+  background: rgba(28,22,53,0.08);
+  transform: translate(-50%, -50%);
+}
+.window-rect::before {
+  content: ''; position: absolute; left: 50%; top: 0;
+  width: 1.5px; height: 100%;
+  background: rgba(28,22,53,0.08);
+  transform: translateX(-50%);
+}
+.figure {
+  position: absolute; left: 50%; bottom: 24%;
+  transform: translateX(-50%);
+  width: 110px; height: 280px;
+  background: linear-gradient(180deg, rgba(8,6,15,0.92), rgba(8,6,15,0.78));
+  border-radius: 55px 55px 8px 8px;
+  filter: blur(1.2px);
+  z-index: 5;
+}
+.figure::after {
+  content: ''; position: absolute; left: 50%; top: -32px;
+  width: 80px; height: 92px; transform: translateX(-50%);
+  background: rgba(8,6,15,0.95);
+  border-radius: 50%;
+  filter: blur(1.5px);
+}
+
+#f7 .closing {
+  position: absolute; left: 0; right: 0; bottom: 24%;
+  font-size: 58px; font-style: italic; line-height: 1.35;
+  padding: 0 100px;
+  z-index: 25;
+}
+#f7 .attribution {
+  position: absolute; left: 0; right: 0; bottom: 12%;
+  z-index: 25;
+}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="canvas">
+
+    <!-- ═══════════════ FRAME 1 — Notice. ═══════════════ -->
+    <div class="frame" id="f0">
+      <div class="grain"></div>
+      <div class="vignette"></div>
+      <div class="rose-bleed" style="right:-300px;bottom:-200px;"></div>
+      <div class="anim word line italic" data-enter="0.6">Notice.</div>
+    </div>
+
+    <!-- ═══════════════ FRAME 2 — Thoughts driven by exteriority ═══════════════ -->
+    <div class="frame" id="f2">
+      <div class="crowd-placeholder"></div>
+      <image-slot id="story-crowd" fit="cover"
+        style="position:absolute;inset:0;width:1080px;height:1920px"
+        shape="rect"
+        placeholder="Blurred crowd in motion · one figure center, sharp focus, face to camera"></image-slot>
+      <div class="scrim-top"></div>
+      <div class="scrim-bottom"></div>
+      <div class="vignette"></div>
+      <div class="grain"></div>
+      <div class="rose-bleed" style="right:-250px;top:-180px;"></div>
+
+      <div class="f2-stack">
+        <div class="anim line upper italic" data-enter="0.7">
+          Thoughts driven<br>by exteriority.
+        </div>
+        <div class="anim line lower italic" data-enter="1.4">
+          No care about what lies within.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ FRAME 3 — wearing layers of masks ═══════════════ -->
+    <div class="frame" id="f3">
+      <div class="mask-placeholder">
+        <!-- ornate ceramic mask suggestion -->
+        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="mg" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#FAF3E0" stop-opacity="0.95"/>
+              <stop offset="55%" stop-color="#E8D8C2" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#3D3D4F" stop-opacity="0.75"/>
+            </radialGradient>
+            <linearGradient id="rake" x1="0" y1="0" x2="1" y2="0.4">
+              <stop offset="0%" stop-color="#FAF3E0" stop-opacity="0.55"/>
+              <stop offset="60%" stop-color="#FAF3E0" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- mask body (oval) -->
+          <ellipse cx="200" cy="130" rx="135" ry="118" fill="url(#mg)"/>
+          <ellipse cx="200" cy="130" rx="135" ry="118" fill="url(#rake)"/>
+          <!-- eye openings -->
+          <ellipse cx="153" cy="115" rx="22" ry="11" fill="#08060F" opacity="0.85"/>
+          <ellipse cx="247" cy="115" rx="22" ry="11" fill="#08060F" opacity="0.85"/>
+          <!-- mouth -->
+          <path d="M 175 178 Q 200 188 225 178" stroke="#3D3D4F" stroke-width="2" fill="none" opacity="0.6"/>
+          <!-- ornate brow detail -->
+          <path d="M 130 88 Q 155 78 180 86" stroke="#C9A96E" stroke-width="1.2" fill="none" opacity="0.55"/>
+          <path d="M 220 86 Q 245 78 270 88" stroke="#C9A96E" stroke-width="1.2" fill="none" opacity="0.55"/>
+          <!-- the crack -->
+          <path d="M 200 18 L 196 60 L 204 95 L 198 130 L 206 168 L 200 210 L 198 240"
+                stroke="#08060F" stroke-width="2.4" fill="none" opacity="0.85"/>
+          <path d="M 200 18 L 196 60 L 204 95 L 198 130 L 206 168 L 200 210 L 198 240"
+                stroke="#D4A5A5" stroke-width="0.6" fill="none" opacity="0.4"/>
+          <!-- shadow on right side of crack -->
+          <path d="M 200 18 L 196 60 L 204 95 L 198 130 L 206 168 L 200 210 L 198 240 L 220 240 L 220 18 Z"
+                fill="#08060F" opacity="0.18"/>
+        </svg>
+      </div>
+      <image-slot id="story-mask" fit="cover"
+        style="position:absolute;inset:0;width:1080px;height:1920px;background:transparent;"
+        shape="rect"
+        placeholder=""></image-slot>
+      <div class="scrim-center"></div>
+      <div class="vignette"></div>
+      <div class="grain"></div>
+      <div class="rose-bleed" style="left:-280px;top:35%;"></div>
+
+      <div class="f3-stack">
+        <div class="anim line upper italic" data-enter="0.7">
+          wearing layers<br>of masks themselves
+        </div>
+        <div class="anim line lower italic" data-enter="1.6">
+          ready to tear down<br>the true faces
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ FRAME 4 — shitting all over the hearts ═══════════════ -->
+    <div class="frame" id="f4">
+      <div class="hand-placeholder">
+        <!-- faint hand silhouette (palm-up) that fades over the frame -->
+        <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg"
+             style="position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);width:520px;height:520px;opacity:0.55;"
+             id="f4-hand">
+          <defs>
+            <radialGradient id="hg" cx="50%" cy="45%" r="55%">
+              <stop offset="0%"  stop-color="#FAF3E0" stop-opacity="0.55"/>
+              <stop offset="55%" stop-color="#D4A5A5" stop-opacity="0.20"/>
+              <stop offset="100%" stop-color="#1C1635" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- palm -->
+          <path d="M 230 380
+                   Q 200 320 220 240
+                   Q 230 180 280 170
+                   Q 305 168 320 200
+                   Q 330 180 355 178
+                   Q 380 178 388 210
+                   Q 396 192 415 196
+                   Q 438 200 438 232
+                   Q 445 220 462 226
+                   Q 478 232 472 268
+                   Q 466 320 432 360
+                   Q 400 400 340 410
+                   Q 270 415 230 380 Z"
+                fill="url(#hg)"/>
+        </svg>
+      </div>
+      <image-slot id="story-hand" fit="cover"
+        style="position:absolute;inset:0;width:1080px;height:1920px;background:transparent;"
+        shape="rect"
+        placeholder=""></image-slot>
+      <div class="scrim-bottom" style="height:55%;"></div>
+      <div class="vignette"></div>
+      <div class="grain"></div>
+      <div class="rose-bleed" style="right:-280px;bottom:-180px;"></div>
+
+      <div style="position:absolute;left:0;right:0;bottom:30%;z-index:25;">
+        <div class="anim line line-big italic" data-enter="2.2">
+          shitting all over<br>the hearts of<br>the good ones
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ FRAME 5 — only to make themselves happy ═══════════════ -->
+    <div class="frame" id="f5">
+      <div class="mirror-placeholder">
+        <div class="mirror-frame"></div>
+      </div>
+      <image-slot id="story-mirror-fig" fit="cover"
+        style="position:absolute;inset:0;width:1080px;height:1920px;background:transparent;"
+        shape="rect"
+        placeholder=""></image-slot>
+      <div class="scrim-center"></div>
+      <div class="vignette"></div>
+      <div class="grain"></div>
+
+      <!-- beat 1: text low -->
+      <div class="anim line line-mid italic" data-enter="0.7" data-exit="2.4"
+           style="bottom:24%;font-size:54px;">
+        Only to make<br>themselves happy.
+      </div>
+      <!-- beat 2: shifted right, larger, after a pause -->
+      <div class="anim line line-mid italic" data-enter="3.6"
+           style="bottom:24%;font-size:64px;transform:translateX(40px);">
+        Only to make<br>themselves happy.
+      </div>
+    </div>
+
+    <!-- ═══════════════ FRAME 6 — the mask doesn't just hide ═══════════════ -->
+    <div class="frame" id="f6">
+      <div class="mirror-placeholder">
+        <div class="mirror-frame-empty"></div>
+      </div>
+      <image-slot id="story-mirror-empty" fit="cover"
+        style="position:absolute;inset:0;width:1080px;height:1920px;background:transparent;"
+        shape="rect"
+        placeholder=""></image-slot>
+      <div class="scrim-bottom" style="height:48%;"></div>
+      <div class="vignette"></div>
+      <div class="grain"></div>
+
+      <div class="anim line-gold italic line" data-enter="1.1">
+        The mask doesn't just hide —<br>it needs to.
+      </div>
+    </div>
+
+    <!-- ═══════════════ FRAME 7 — the waking up isn't despair ═══════════════ -->
+    <div class="frame" id="f7">
+      <div class="window-placeholder">
+        <div class="window-rect"></div>
+        <div class="figure"></div>
+      </div>
+      <image-slot id="story-window" fit="cover"
+        style="position:absolute;inset:0;width:1080px;height:1920px;background:transparent;"
+        shape="rect"
+        placeholder=""></image-slot>
+      <div class="scrim-bottom" style="height:55%;"></div>
+      <div class="vignette"></div>
+      <div class="grain"></div>
+
+      <div class="anim line closing italic" data-enter="1.1">
+        The waking up isn't despair.<br>It's the end of being fooled.
+      </div>
+      <div class="anim attribution attr" data-enter="2.6">
+        Tarun Gupta · @breathofpoetry
+      </div>
+    </div>
+
+  </div><!-- /canvas -->
+</div><!-- /stage -->
+
+<!-- ─────────── Playback bar ─────────── -->
+<div id="playbar">
+  <button id="play-btn" title="Play / Pause">&#9646;&#9646;</button>
+  <div id="scrubber-wrap">
+    <div id="scrubber-track"></div>
+    <div id="scrubber-fill"></div>
+    <div id="scrubber-thumb"></div>
+  </div>
+  <div id="time-label">0:00 / 0:00</div>
+  <button id="restart-btn" title="Restart">&#8635;</button>
+</div>
+
+<script src="image-slot.js"></script>
+<script>
+(function () {
+  // ── Per-frame timeline (in seconds) ──────────────────────
+  // Each frame: hold = the time it occupies before cross-dissolve out.
+  // Cross-dissolve duration: 0.7s. Frames overlap by that amount.
+  const DISSOLVE = 0.7;
+
+  // Hold times tuned for Tarkovsky-slow pacing
+  const FRAMES = [
+    { id: 'f0', hold: 3.6 },  // Notice.
+    { id: 'f2', hold: 4.8 },  // Thoughts driven by exteriority
+    { id: 'f3', hold: 5.2 },  // wearing layers of masks
+    { id: 'f4', hold: 5.6 },  // hand
+    { id: 'f5', hold: 6.6 },  // only to make themselves happy (×2)
+    { id: 'f6', hold: 4.8 },  // mask doesn't just hide
+    { id: 'f7', hold: 6.4 }   // waking up isn't despair
+  ];
+
+  // compute start times — each frame starts (prev.hold - DISSOLVE) after previous start
+  let acc = 0;
+  FRAMES.forEach((f, i) => {
+    f.start = acc;
+    acc += f.hold - (i < FRAMES.length - 1 ? DISSOLVE : 0);
+  });
+  const TOTAL = FRAMES[FRAMES.length - 1].start + FRAMES[FRAMES.length - 1].hold;
+
+  // ── State ────────────────────────────────────────────────
+  let time = 0;
+  let playing = true;
+  let lastTs = null;
+  let dragging = false;
+
+  try { const v = parseFloat(localStorage.getItem('wakingup-t')); if (isFinite(v)) time = Math.min(v, TOTAL); } catch(e){}
+
+  // ── DOM refs ─────────────────────────────────────────────
+  const canvas    = document.getElementById('canvas');
+  const frameEls  = FRAMES.map(f => document.getElementById(f.id));
+  const scrFill   = document.getElementById('scrubber-fill');
+  const scrThumb  = document.getElementById('scrubber-thumb');
+  const timeLabel = document.getElementById('time-label');
+  const playBtn   = document.getElementById('play-btn');
+  const scrubWrap = document.getElementById('scrubber-wrap');
+  const f4Hand    = document.getElementById('f4-hand');
+
+  // animated elements per frame
+  const frameAnims = frameEls.map(fr => {
+    return Array.from(fr.querySelectorAll('.anim')).map(el => ({
+      el,
+      enter: parseFloat(el.dataset.enter || '0'),
+      exit:  el.dataset.exit ? parseFloat(el.dataset.exit) : null
+    }));
+  });
+
+  // ── Easing ───────────────────────────────────────────────
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2; }
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  // ── Canvas scaling ───────────────────────────────────────
+  function scaleCanvas() {
+    const barH = 44;
+    const s = Math.min(window.innerWidth / 1080, (window.innerHeight - barH) / 1920);
+    canvas.style.transform = 'scale(' + s + ')';
+    canvas.style.marginBottom = (barH / 2) + 'px';
+  }
+  scaleCanvas();
+  window.addEventListener('resize', scaleCanvas);
+
+  // ── Render ────────────────────────────────────────────────
+  const TEXT_FADE = 0.6; // text fade-in duration (brief: 600ms)
+
+  function frameOpacity(f, t) {
+    // 0 before start, fades in over DISSOLVE, holds at 1, fades out over DISSOLVE at end
+    if (t < f.start) return 0;
+    if (t > f.start + f.hold) return 0;
+    const local = t - f.start;
+    // fade in (only meaningful for first frame; for others, prior frame is fading out)
+    let opIn = easeInOut(clamp(local / DISSOLVE, 0, 1));
+    // fade out over last DISSOLVE seconds
+    let opOut = 1 - easeInOut(clamp((local - (f.hold - DISSOLVE)) / DISSOLVE, 0, 1));
+    return Math.min(opIn, opOut);
+  }
+
+  function render() {
+    // Frames
+    FRAMES.forEach((f, i) => {
+      const op = frameOpacity(f, time);
+      const el = frameEls[i];
+      el.style.opacity = op;
+      el.style.pointerEvents = op > 0.01 ? 'auto' : 'none';
+
+      // text fade-in (no Y translate per brief: "no motion, no slide-in")
+      if (op > 0) {
+        const local = time - f.start;
+        frameAnims[i].forEach(({ el, enter, exit }) => {
+          let a = easeOutCubic(clamp((local - enter) / TEXT_FADE, 0, 1));
+          if (exit !== null) {
+            a *= (1 - easeOutCubic(clamp((local - exit) / TEXT_FADE, 0, 1)));
+          }
+          el.style.opacity = a;
+        });
+      }
+    });
+
+    // Frame 4: hand fades out slowly (1.4s -> 2.2s), text appears at 2.2s
+    if (f4Hand) {
+      const f4 = FRAMES[3]; // index of f4 entry
+      const local = time - f4.start;
+      let handOp = 0.55;
+      if (local > 1.0 && local < 2.4) {
+        handOp = 0.55 * (1 - easeOutCubic(clamp((local - 1.0) / 1.4, 0, 1)));
+      } else if (local >= 2.4) {
+        handOp = 0;
+      }
+      f4Hand.style.opacity = handOp;
+    }
+
+    // Scrubber + label
+    const pct = (time / TOTAL) * 100;
+    scrFill.style.width = pct + '%';
+    scrThumb.style.left = pct + '%';
+    const cur = Math.floor(time);
+    const tot = Math.ceil(TOTAL);
+    timeLabel.textContent = fmt(cur) + ' / ' + fmt(tot);
+  }
+
+  function fmt(s) { return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+
+  // ── RAF loop ─────────────────────────────────────────────
+  function tick(ts) {
+    if (playing && !dragging) {
+      if (lastTs !== null) {
+        const dt = (ts - lastTs) / 1000;
+        time = Math.min(time + dt, TOTAL);
+        if (time >= TOTAL) { playing = false; playBtn.innerHTML = '&#9654;'; }
+      }
+      lastTs = ts;
+    } else {
+      lastTs = null;
+    }
+    render();
+    try { localStorage.setItem('wakingup-t', time); } catch(e) {}
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // ── Controls ─────────────────────────────────────────────
+  function togglePlay() {
+    if (time >= TOTAL) time = 0;
+    playing = !playing;
+    lastTs = null;
+    playBtn.innerHTML = playing ? '&#9646;&#9646;' : '&#9654;';
+  }
+  playBtn.addEventListener('click', togglePlay);
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
+  });
+  document.getElementById('restart-btn').addEventListener('click', () => {
+    time = 0; playing = true; lastTs = null;
+    playBtn.innerHTML = '&#9646;&#9646;';
+  });
+  function scrubTo(e) {
+    const rect = scrubWrap.getBoundingClientRect();
+    const x = clamp((e.clientX - rect.left) / rect.width, 0, 1);
+    time = x * TOTAL;
+    lastTs = null;
+  }
+  scrubWrap.addEventListener('mousedown', e => { dragging = true; scrubTo(e); playing = false; playBtn.innerHTML = '&#9654;'; });
+  window.addEventListener('mousemove', e => { if (dragging) scrubTo(e); });
+  window.addEventListener('mouseup',   ()  => { if (dragging) { dragging = false; playing = true; lastTs = null; playBtn.innerHTML = '&#9646;&#9646;'; } });
+
+  playBtn.innerHTML = '&#9646;&#9646;';
+  render();
+
+  // exposed for verification harness — pause and seek to time t (seconds)
+  window.__seek = function(t) { time = Math.max(0, Math.min(t, TOTAL)); playing = false; lastTs = null; playBtn.innerHTML = '&#9654;'; render(); };
+  window.__total = TOTAL;
+  window.__frames = FRAMES;
+})();
+</script>
+</body>
+</html>

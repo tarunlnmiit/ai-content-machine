@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:03,520
+Not Python's AND or R, but those don't work on arrays. Condition in parenthesis. So we can see
+
+2
+00:00:03,600 --> 00:00:08,480
+here we have put our conditions in parenthesis. Don't worry, I'll explain the rest of the code
+
+3
+00:00:09,520 --> 00:00:13,600
+down the line. So you can see we have one condition and two conditions in parenthesis.
+
+4
+00:00:14,640 --> 00:00:24,720
+And this trips up everyone once. Now it won't trip you up. Second is this dot query on the next line.
+
+5
+00:00:26,080 --> 00:00:32,480
+Is underused for multi-condition filters, like where we are checking region is equal to north
+
+6
+00:00:32,560 --> 00:00:38,960
+and revenue greater than 5,000. It is dramatically more readable than stacked Boolean expressions.
+
+7
+00:00:40,000 --> 00:00:50,080
+And the last one dot is in instead of three equal to checks here where status equal to
+
+8
+00:00:50,080 --> 00:00:57,680
+active and status equal to trial. Instead you can just have one or symbol and just pass a list

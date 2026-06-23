@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:07,920
+Now here is the silent book which every beginner has encountered or it bites every beginner.
+
+2
+00:00:08,880 --> 00:00:19,760
+So if I write something like print 28 plus 35, and let me remove the rest of the code.
+
+3
+00:00:21,360 --> 00:00:30,880
+And if I print a float value as well in then a string. So if you as you can see, it should be 63,
+
+4
+00:00:30,880 --> 00:00:37,840
+it should be 63.0 and this will be 2835, not as expected as 63 or 63.0.
+
+5
+00:00:38,400 --> 00:00:39,840
+So if I run the script again,
+
+6
+00:00:50,480 --> 00:00:57,400
+you can see as expected. So Python did not add those numbers, it concatenated the text in the last

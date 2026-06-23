@@ -1,0 +1,380 @@
+1
+00:00:00,000 --> 00:00:05,000
+There is a specific kind of madness that does not announce itself.
+
+2
+00:00:05,000 --> 00:00:10,000
+One day you are fine, the next someone's laugh is living rent-free in your head.
+
+3
+00:00:10,000 --> 00:00:18,000
+Your morning coffee tastes different and the part of your brain that's supposed to run the show has quietly handed over the keys.
+
+4
+00:00:18,000 --> 00:00:22,000
+The trouble isn't the feeling, it's what comes after.
+
+5
+00:00:22,000 --> 00:00:29,000
+When you realize you have been running on a hangover that you did not consent to and it refuses to live.
+
+6
+00:00:29,000 --> 00:00:38,000
+Love has taken away all my senses, like that of alcohol, effects of booze reside for a short period.
+
+7
+00:00:38,000 --> 00:00:42,000
+But your intoxication doesn't want to go away.
+
+8
+00:00:42,000 --> 00:00:52,000
+My heart keeps enjoying the hangover you created, your twinkling eyes, your enlightening smile, your ebony hair,
+
+9
+00:00:52,000 --> 00:00:57,000
+has stuck with me, like a newborn sticks to her mother.
+
+10
+00:00:57,000 --> 00:01:05,000
+My mind finds no way to get around you and it keeps coming back, like a moth attracted to the flame,
+
+11
+00:01:05,000 --> 00:01:11,000
+like waves to the shore, like coal to the winter, like a rainbow after the rain.
+
+12
+00:01:11,000 --> 00:01:18,000
+I know this isn't going to do any good to me, but the heart wants what the heart wants.
+
+13
+00:01:18,000 --> 00:01:27,000
+Earlier, my mind and heart worked in sync, but it seems like their ecosystems have collided,
+
+14
+00:01:27,000 --> 00:01:35,000
+deciding not to comply with each other, leaving me without a ground to stand on, or a sky to cover my head with.
+
+15
+00:01:35,000 --> 00:01:47,000
+I want to read that again, love has taken away all my senses, like that of alcohol, effects of booze reside for a short period.
+
+16
+00:01:47,000 --> 00:01:51,000
+But your intoxication doesn't want to go away.
+
+17
+00:01:51,000 --> 00:02:01,000
+My heart keeps enjoying the hangover you created, your twinkling eyes, your enlightening smile, your ebony hair, has stuck with me,
+
+18
+00:02:01,000 --> 00:02:04,000
+like a newborn sticks to her mother.
+
+19
+00:02:04,000 --> 00:02:08,000
+My mind finds no way to get around you.
+
+20
+00:02:08,000 --> 00:02:12,000
+It keeps coming back, like a moth attracted to the flame,
+
+21
+00:02:12,000 --> 00:02:17,000
+like waves to the shore, like coal to the winter, like a rainbow after the rain.
+
+22
+00:02:17,000 --> 00:02:23,000
+I know this isn't going to do any good to me, but the heart wants what the heart wants.
+
+23
+00:02:23,000 --> 00:02:30,000
+Earlier, my mind and heart worked in sync, but it seems like their ecosystems have collided,
+
+24
+00:02:30,000 --> 00:02:37,000
+deciding not to comply with each other, leaving me without a ground to stand on, or a sky to cover my head with.
+
+25
+00:02:37,000 --> 00:02:42,000
+The hangover metaphor works because hangovers have an end point.
+
+26
+00:02:42,000 --> 00:02:45,000
+You sleep it off, you hydrate, you move on.
+
+27
+00:02:45,000 --> 00:02:49,000
+This one doesn't schedule a time out.
+
+28
+00:02:49,000 --> 00:02:58,000
+And what keeps it alive isn't a vague ache, it's detail, twinkling eyes, an enlightening smile ebony hair.
+
+29
+00:02:58,000 --> 00:03:04,000
+The poem doesn't soften into abstraction, it stays specific, that's what makes it land,
+
+30
+00:03:04,000 --> 00:03:09,000
+vague longing forgettable, but a face, a real life, the particular features that stays,
+
+31
+00:03:09,000 --> 00:03:15,000
+that's a person and the poem makes no attempt to unite it into something specific,
+
+32
+00:03:15,000 --> 00:03:20,000
+and the poem makes no attempt to universalize it into something prettier.
+
+33
+00:03:20,000 --> 00:03:24,000
+These particular things are stuck, and I can't unstick them.
+
+34
+00:03:24,000 --> 00:03:28,000
+Then the moth to flame arrives, and it's not romantic.
+
+35
+00:03:28,000 --> 00:03:32,000
+Moths don't choose the flame, they are wired to the light.
+
+36
+00:03:32,000 --> 00:03:38,000
+No deliberation, no weighing of outcomes, just pull pure and indifferent to consequence.
+
+37
+00:03:38,000 --> 00:03:44,000
+When love starts feeling like physics instead of a decision, you are somewhere in you.
+
+38
+00:03:44,000 --> 00:03:50,000
+And the unsettling part isn't losing control, and discovering that you are not entirely unhappy about it.
+
+39
+00:03:50,000 --> 00:03:55,000
+There was one night while training and debugging a model pipeline for me.
+
+40
+00:03:55,000 --> 00:04:00,000
+Four terminals open, Databricks logs scrolling endlessly, coffee cold for an hour,
+
+41
+00:04:00,000 --> 00:04:04,000
+when our voice cut through the noise without warning.
+
+42
+00:04:04,000 --> 00:04:09,000
+Not the serious conversation, not the emotional moment, just the way she laughed,
+
+43
+00:04:09,000 --> 00:04:13,000
+after interrupting herself mid-sentence, days earlier.
+
+44
+00:04:13,000 --> 00:04:20,000
+And suddenly the entire debugging session disappeared behind that one tiny memory.
+
+45
+00:04:20,000 --> 00:04:23,000
+That's the unsettling thing about attachment.
+
+46
+00:04:23,000 --> 00:04:26,000
+The brain doesn't archive what matters logically.
+
+47
+00:04:26,000 --> 00:04:30,000
+It preserves texture, tone, timing.
+
+48
+00:04:30,000 --> 00:04:35,000
+The microscopic human details you never consciously choose to keep.
+
+49
+00:04:35,000 --> 00:04:39,000
+The point's real subject arrives near the end.
+
+50
+00:04:39,000 --> 00:04:41,000
+Their ecosystems have collided.
+
+51
+00:04:41,000 --> 00:04:45,000
+Earlier, mind and heart worked in sync.
+
+52
+00:04:45,000 --> 00:04:48,000
+That's the quiet operating system most of us rely on.
+
+53
+00:04:48,000 --> 00:04:57,000
+Desire checked by reason, want to wait against what makes sense orderly, predictable, safe.
+
+54
+00:04:57,000 --> 00:05:03,000
+Then someone walks in, and the whole architecture resets.
+
+55
+00:05:03,000 --> 00:05:08,000
+No ground to stand on, no sky to cover my head with.
+
+56
+00:05:08,000 --> 00:05:11,000
+That's not chaos, it's not obsession.
+
+57
+00:05:11,000 --> 00:05:14,000
+It's the sudden disorienting absence of coordinates.
+
+58
+00:05:14,000 --> 00:05:18,000
+The tools you've always used to navigate your own interior.
+
+59
+00:05:18,000 --> 00:05:20,000
+They no longer apply.
+
+60
+00:05:20,000 --> 00:05:21,000
+You're not broken.
+
+61
+00:05:21,000 --> 00:05:26,000
+You're standing at a false line where two tectonic plates have met.
+
+62
+00:05:26,000 --> 00:05:31,000
+And the ground that was always beneath you has dissolved mid-step.
+
+63
+00:05:31,000 --> 00:05:37,000
+I have had nights where one side of me was building airtight arguments for distance.
+
+64
+00:05:38,000 --> 00:05:46,000
+Rationalizing, analyzing patterns, trying to reduce emotion into something solvable like bad code.
+
+65
+00:05:46,000 --> 00:05:50,000
+And then another part of me would still reopen old messages.
+
+66
+00:05:50,000 --> 00:05:52,000
+Still search for meaning in silence.
+
+67
+00:05:52,000 --> 00:05:54,000
+Still stand emotionally in places.
+
+68
+00:05:54,000 --> 00:05:58,000
+My logic has already left hours earlier.
+
+69
+00:05:58,000 --> 00:06:01,000
+That's the collision the poem talks about.
+
+70
+00:06:01,000 --> 00:06:03,000
+Not heartbreak exactly.
+
+71
+00:06:03,000 --> 00:06:08,000
+People like realizing the mind and heart operate on completely different programming languages
+
+72
+00:06:08,000 --> 00:06:12,000
+when something or someone matters enough.
+
+73
+00:06:12,000 --> 00:06:14,000
+The poem doesn't resolve this.
+
+74
+00:06:14,000 --> 00:06:17,000
+It doesn't offer a path back to equilibrium.
+
+75
+00:06:17,000 --> 00:06:19,000
+It just tells the truth.
+
+76
+00:06:19,000 --> 00:06:24,000
+This is where you are now suspended, recalibrating without asking to.
+
+77
+00:06:24,000 --> 00:06:26,000
+The heart wants what the heart wants.
+
+78
+00:06:26,000 --> 00:06:28,000
+We say it like a disclaimer.
+
+79
+00:06:28,000 --> 00:06:31,000
+Half surrender, half of apology.
+
+80
+00:06:31,000 --> 00:06:33,000
+This poem says it differently.
+
+81
+00:06:33,000 --> 00:06:35,000
+Not as an excuse.
+
+82
+00:06:35,000 --> 00:06:41,000
+As a report from inside the collision, maybe when the mind and heart stop cooperating,
+
+83
+00:06:41,000 --> 00:06:45,000
+when you are left without ground or sky, that's not a malfunction.
+
+84
+00:06:45,000 --> 00:06:46,000
+That's a signal.
+
+85
+00:06:46,000 --> 00:06:53,000
+The only honest one you'll get that something actually matters enough to overturn the whole system.
+
+86
+00:06:53,000 --> 00:06:55,000
+No coordinates, no stability.
+
+87
+00:06:55,000 --> 00:07:01,000
+Just a full unfiltered weight of being alive enough to feel it.
+
+88
+00:07:01,000 --> 00:07:03,000
+That's not a problem to solve.
+
+89
+00:07:03,000 --> 00:07:05,000
+That's the experience itself.
+
+90
+00:07:05,000 --> 00:07:07,000
+This is breath of poetry.
+
+91
+00:07:07,000 --> 00:07:11,000
+If this poem reads something that you have been carrying quietly,
+
+92
+00:07:11,000 --> 00:07:14,000
+share it with the one person it makes you think of.
+
+93
+00:07:14,000 --> 00:07:17,000
+Or leave a line from it in the comments.
+
+94
+00:07:17,000 --> 00:07:19,000
+The one that stayed with you.
+
+95
+00:07:19,000 --> 00:07:21,000
+I will see you in the next one.
+

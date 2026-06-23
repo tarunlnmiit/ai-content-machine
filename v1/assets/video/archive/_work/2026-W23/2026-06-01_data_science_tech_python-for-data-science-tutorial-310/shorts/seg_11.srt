@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:00,040
+numpy array, if you want to take a look at mean we can just call salaries.mean, the difference
+
+2
+00:00:00,040 --> 00:00:06,320
+here is if you were to call something like let us say sum, then you would have done
+
+3
+00:00:06,360 --> 00:00:21,360
+in python something like sum and then salaries, so in python python you call the method and then
+
+4
+00:00:21,360 --> 00:00:29,240
+you pass variable, here you call the method on the variable like this you see here, standard
+
+5
+00:00:29,240 --> 00:00:34,320
+deviation you can also calculate directly mean and mean and max as well and you can also
+
+6
+00:00:34,320 --> 00:00:44,320
+calculate first 25th and 75th percentile like this, here in this case it is called as numpy.percentile
+
+7
+00:00:44,320 --> 00:00:51,880
+and you can get your interquantile range just like this and then you can get your 1.5 ceiling
+
+8
+00:00:51,880 --> 00:00:58,900
+low and high clearly and then you can filter the salaries which are greater than low and less

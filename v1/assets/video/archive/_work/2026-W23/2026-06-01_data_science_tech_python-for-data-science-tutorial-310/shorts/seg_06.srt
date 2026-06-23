@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:05,460
+So there are a few other methods in numpy which you should be aware of, which is to get
+
+2
+00:00:05,460 --> 00:00:12,620
+the shape dimension and the size, so if we take a look at them, so shape tells you what
+
+3
+00:00:12,660 --> 00:00:19,160
+shape of the array is, numpy supports multi-dimensional arrays as python list does, so it will tell you
+
+4
+00:00:19,160 --> 00:00:26,160
+the shape, it will tell you number of dimensions and what is the size, so if I print it, you can
+
+5
+00:00:26,160 --> 00:00:34,160
+see that scores is an array of one dimensional of 7 elements, so 7 is the that dimension,
+
+6
+00:00:34,160 --> 00:00:40,000
+then number of dimension is 1 and size is 7, the number of elements, so if we take a look
+
+7
+00:00:40,000 --> 00:00:40,000
+as comparison, so if I replace this entire code to show you python loop versus numpy vectorized

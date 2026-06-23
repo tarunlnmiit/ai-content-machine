@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:00,000
+standard deviation, the mean and max as well as the interquantile range low and high range
+
+2
+00:00:00,000 --> 00:00:06,960
+salaries, so everything so far has been one dimensional but real datasets have rows and columns,
+
+3
+00:00:06,960 --> 00:00:11,920
+so now let us take a look at 2D arrays, so you can create them by passing a list of lists
+
+4
+00:00:11,920 --> 00:00:18,840
+to numpy array and the shapes come back as two elements, so if you remember, so this is
+
+5
+00:00:18,840 --> 00:00:27,880
+a list of lists, so we have one list here starting here and then we have 3 internal lists,
+
+6
+00:00:27,880 --> 00:00:37,320
+so grades is a 2D array, so if we take a look at grade.ship it will be written 3.4 and to
+
+7
+00:00:37,320 --> 00:00:44,520
+access a single element you use 2 indices separated by a comma, so row first and then column,
+
+8
+00:00:44,520 --> 00:00:53,000
+so here it starts with 0 as well again, so row 0, row 1, row 2, then you are trying to
+
+9
+00:00:53,000 --> 00:00:53,000
+get 1 comma 2 which is row 1 and 0 1 2, so 95 is the element that will be written and to get an

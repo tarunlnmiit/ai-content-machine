@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hangover That Won't Lift — Social Set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ── Palette (brief-specified) ── */
+  --indigo:   #1C1635;   /* dominant background */
+  --gold:     #C9A96E;   /* antique gold — highlights, flame glow, rules */
+  --cream:    #FAF3E0;   /* primary text */
+  --charcoal: #3D3D4F;   /* secondary text */
+  --void-1:   #0d0a1f;   /* deep edge */
+  --void-2:   #060410;   /* darkest edge */
+
+  --serif: 'Cormorant Garamond', 'Instrument Serif', Georgia, serif;
+
+  --grain-op: 0.07;
+  --glow: 1;          /* flame glow multiplier */
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #100c20;
+  background-image:
+    radial-gradient(circle at 50% 0%, #1a1530 0%, #0c0918 60%, #08060f 100%);
+  min-height: 100vh;
+  font-family: var(--serif);
+}
+
+/* ── Canvas of artboards ── */
+.canvas { padding: 72px 48px 140px; display: flex; flex-direction: column; gap: 92px; }
+
+.ds { display: flex; flex-direction: column; align-items: flex-start; }
+.ds-lbl {
+  margin-bottom: 16px; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(201,169,110,0.62); display: flex; align-items: center; gap: 9px;
+}
+.ds-lbl span { color: rgba(250,243,224,0.4); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
+.ds-lbl::before { content:''; width: 22px; height: 1px; background: rgba(201,169,110,0.4); }
+
+.wrap { position: relative; }
+.artboard {
+  position: absolute; top: 0; left: 0;
+  transform-origin: top left; overflow: hidden;
+  box-shadow: 0 30px 80px -30px rgba(0,0,0,0.85), 0 2px 8px rgba(0,0,0,0.5);
+  background: var(--indigo);
+}
+
+/* ── Film grain overlay ── */
+.grain {
+  position: absolute; inset: 0; z-index: 40; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+  opacity: var(--grain-op);
+  mix-blend-mode: overlay;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   THE CANDLE FLAME — shared macro element
+   Place a .candle inside any scene; position via --fx / --fy / --fs.
+   The field around it fades indigo → void, so darkness bleeds outward.
+════════════════════════════════════════════════════════════════ */
+.candle-field {
+  position: absolute; inset: 0; overflow: hidden;
+  background:
+    radial-gradient(120% 90% at var(--fx,50%) var(--fy,80%),
+      #241b46 0%, #1a1433 26%, var(--void-1) 62%, var(--void-2) 100%);
+}
+/* ambient amber breath of light around the flame */
+.candle-field::before {
+  content:''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(34% 30% at var(--fx,50%) calc(var(--fy,80%) - 1%),
+      rgba(201,169,110,calc(0.34 * var(--glow))) 0%,
+      rgba(201,169,110,calc(0.12 * var(--glow))) 30%,
+      rgba(28,22,53,0) 60%);
+  mix-blend-mode: screen;
+}
+
+.candle {
+  position: absolute;
+  left: var(--fx, 50%); top: var(--fy, 80%);
+  transform: translate(-50%, -50%) scale(var(--fs, 1));
+  width: 150px; height: 320px;
+  pointer-events: none;
+}
+/* tight inner halo */
+.candle .halo {
+  position: absolute; left: 50%; top: 56%; transform: translate(-50%,-50%);
+  width: 360px; height: 420px;
+  background: radial-gradient(46% 46% at 50% 50%,
+    rgba(255,206,128,calc(0.30 * var(--glow))) 0%,
+    rgba(201,140,60,calc(0.13 * var(--glow))) 36%,
+    transparent 68%);
+  filter: blur(8px); mix-blend-mode: screen;
+}
+/* outer body of flame */
+.candle .body {
+  position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%);
+  width: 88px; height: 240px;
+  background:
+    radial-gradient(56% 54% at 50% 60%, #ffe2a0 0%, #f0b25c 30%, #d07f33 54%, rgba(150,68,24,0.4) 74%, transparent 88%);
+  border-radius: 50% 50% 46% 46% / 64% 64% 36% 36%;
+  filter: blur(5px);
+  transform-origin: 50% 94%;
+  animation: flicker 4.2s ease-in-out infinite;
+}
+/* white-hot core — a tall tongue that tapers to the tip */
+.candle .core {
+  position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+  width: 34px; height: 168px;
+  background: radial-gradient(46% 50% at 50% 52%, #fffaf0 0%, #ffe6b0 44%, rgba(255,206,140,0.3) 74%, transparent 90%);
+  border-radius: 50% 50% 44% 44% / 76% 76% 24% 24%;
+  filter: blur(2.5px);
+  transform-origin: 50% 92%;
+  animation: flicker 3.1s ease-in-out infinite;
+}
+/* cool blue base where wick meets flame */
+.candle .base {
+  position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%);
+  width: 40px; height: 56px;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(120,156,200,0.55) 0%, rgba(90,120,170,0.18) 50%, transparent 75%);
+  filter: blur(3px); mix-blend-mode: screen;
+}
+/* the wick — a tiny dark thread */
+.candle .wick {
+  position: absolute; left: 50%; bottom: 44px; transform: translateX(-50%);
+  width: 2.5px; height: 20px; border-radius: 2px;
+  background: linear-gradient(to top, #1a1208 0%, #4a3418 60%, #2a1d0c 100%);
+}
+
+@keyframes flicker {
+  0%, 100% { transform: translateX(-50%) scaleY(1)    scaleX(1)    skewX(0deg);   opacity: 1;    }
+  20%      { transform: translateX(-51%) scaleY(1.045) scaleX(0.98) skewX(-1.2deg); opacity: 0.93; }
+  44%      { transform: translateX(-49%) scaleY(0.975) scaleX(1.02) skewX(0.8deg);  opacity: 1;    }
+  68%      { transform: translateX(-50.5%) scaleY(1.03) scaleX(0.99) skewX(-0.6deg); opacity: 0.95; }
+  84%      { transform: translateX(-49.5%) scaleY(0.99) scaleX(1.01) skewX(0.5deg);  opacity: 0.98; }
+}
+
+/* thin antique-gold rule */
+.rule { background: var(--gold); height: 1px; opacity: 0.5; }
+.rule-v { background: var(--gold); width: 1px; opacity: 0.5; }
+
+/* ── shared type roles ── */
+.poem {
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  color: var(--cream); letter-spacing: 0.012em; line-height: 1.18;
+}
+.poem .lead { display: block; white-space: nowrap; }
+.attrib {
+  font-family: var(--serif); font-weight: 500; font-style: normal;
+  color: var(--gold); font-variant-caps: small-caps; letter-spacing: 0.18em;
+  white-space: nowrap;
+}
+.subline {
+  font-family: var(--serif); font-weight: 400; font-style: normal;
+  color: var(--gold); line-height: 1.4;
+}
+.handle {
+  font-family: var(--serif); font-weight: 500; font-style: normal;
+  font-variant-caps: small-caps; letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+
+/* ══════════ VARIANT 1 — INSTAGRAM 1080×1080 ══════════ */
+.ig { width: 1080px; height: 1080px; }
+.ig .candle-field { --fx: 58%; --fy: 81%; }
+.ig-text {
+  position: absolute; z-index: 10; left: 0; right: 0; top: 0; height: 55%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0 70px; text-align: center;
+}
+.ig-quote-mark {
+  font-family: var(--serif); font-style: italic; color: var(--gold);
+  font-size: 92px; line-height: 0.5; opacity: 0.38; margin-bottom: 30px;
+}
+.ig-headline { font-size: 72px; }
+.ig-attrib { margin-top: 44px; font-size: 26px; }
+.ig-rule { position: absolute; z-index: 10; left: 22%; right: 22%; top: 55%; }
+.ig-handle {
+  position: absolute; z-index: 30; right: 56px; bottom: 48px;
+  font-size: 21px; color: var(--cream); opacity: 0.45;
+}
+
+/* ══════════ VARIANT 2 — LINKEDIN 1200×628 ══════════ */
+.li { width: 1200px; height: 628px; }
+.li-panel {
+  position: absolute; z-index: 10; left: 0; top: 0; bottom: 0; width: 50%;
+  background: var(--indigo);
+  padding: 0 64px 0 84px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.li-panel { width: 52%; padding: 0 48px 0 76px; }
+.li-headline { font-size: 46px; }
+.li-sub { margin-top: 26px; font-size: 23px; max-width: 96%; }
+.li-field { position: absolute; inset: 0; }
+.li-field .candle-field { --fx: 68%; --fy: 56%; clip-path: inset(0 0 0 52%); }
+.li-rule-v { position: absolute; z-index: 20; left: 52%; top: 15%; height: 70%; }
+.li-handle {
+  position: absolute; z-index: 30; right: 44px; bottom: 36px;
+  font-size: 17px; color: var(--cream); opacity: 0.5;
+}
+
+/* ══════════ VARIANT 3 — TWITTER / X 1200×675 ══════════ */
+.tw { width: 1200px; height: 675px; }
+.tw .candle-field { --fx: 50%; --fy: 52%; }
+/* dark indigo overlay so the flame shows only dimly beneath the text */
+.tw-overlay {
+  position: absolute; inset: 0; z-index: 15; pointer-events: none;
+  background: rgba(28,22,53,0.65);
+}
+.tw-content {
+  position: absolute; inset: 0; z-index: 20;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 0 120px;
+}
+.tw-headline { font-size: 70px; font-style: normal; font-weight: 500; }
+.tw-sub { margin-top: 28px; font-style: italic; font-weight: 500; font-size: 34px; white-space: nowrap; }
+.tw-handle {
+  position: absolute; z-index: 30; right: 52px; bottom: 40px;
+  font-size: 18px; color: var(--cream); opacity: 0.4;
+}
+
+/* ══════════ VARIANT 4 — THREADS 1080×1080 ══════════ */
+.th { width: 1080px; height: 1080px; }
+.th .candle-field { --fx: 50%; --fy: 99%; }
+.th-text {
+  position: absolute; z-index: 10; left: 0; right: 0; top: 0; height: 66%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 96px; text-align: center;
+}
+.th-headline { font-size: 62px; }
+.th-handle {
+  position: absolute; z-index: 30; right: 54px; bottom: 46px;
+  font-size: 20px; color: var(--gold); opacity: 0.55;
+}
+</style>
+</head>
+<body>
+
+<main class="canvas">
+
+  <!-- ═══ VARIANT 1 — INSTAGRAM ═══ -->
+  <section class="ds">
+    <div class="ds-lbl">Instagram <span>· 1080 × 1080</span></div>
+    <div class="wrap" data-w="1080" data-h="1080">
+      <div class="artboard ig" data-screen-label="Instagram">
+        <div class="candle-field">
+          <div class="candle"><div class="halo"></div><div class="base"></div><div class="body"></div><div class="core"></div><div class="wick"></div></div>
+        </div>
+        <div class="ig-text">
+          <div class="ig-quote-mark">&ldquo;</div>
+          <h1 class="poem ig-headline">
+            <span class="lead">my heart keeps enjoying</span>
+            <span class="lead">the hangover you created</span>
+          </h1>
+          <p class="attrib ig-attrib">The Hangover That Won't Lift</p>
+        </div>
+        <div class="rule ig-rule"></div>
+        <span class="handle ig-handle">mistakenlyhuman</span>
+        <div class="grain"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VARIANT 2 — LINKEDIN ═══ -->
+  <section class="ds">
+    <div class="ds-lbl">LinkedIn <span>· 1200 × 628</span></div>
+    <div class="wrap" data-w="1200" data-h="628">
+      <div class="artboard li" data-screen-label="LinkedIn">
+        <div class="li-field">
+          <div class="candle-field">
+            <div class="candle"><div class="halo"></div><div class="base"></div><div class="body"></div><div class="core"></div><div class="wick"></div></div>
+          </div>
+        </div>
+        <div class="li-panel">
+          <h1 class="poem li-headline">
+            <span class="lead">my heart keeps enjoying</span>
+            <span class="lead">the hangover you created</span>
+          </h1>
+          <p class="subline li-sub">A poem about when the mind and heart stop agreeing</p>
+        </div>
+        <div class="rule-v li-rule-v"></div>
+        <span class="handle li-handle">tarun-gupta-in</span>
+        <div class="grain"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VARIANT 3 — TWITTER / X ═══ -->
+  <section class="ds">
+    <div class="ds-lbl">Twitter / X <span>· 1200 × 675</span></div>
+    <div class="wrap" data-w="1200" data-h="675">
+      <div class="artboard tw" data-screen-label="Twitter X">
+        <div class="candle-field">
+          <div class="candle"><div class="halo"></div><div class="base"></div><div class="body"></div><div class="core"></div><div class="wick"></div></div>
+        </div>
+        <div class="tw-overlay"></div>
+        <div class="tw-content">
+          <h1 class="poem tw-headline">
+            <span class="lead">Some people just become</span>
+            <span class="lead">part of your physics.</span>
+          </h1>
+          <p class="subline tw-sub">The Hangover That Won't Lift</p>
+        </div>
+        <span class="handle tw-handle">mistakenlyhuman</span>
+        <div class="grain"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VARIANT 4 — THREADS ═══ -->
+  <section class="ds">
+    <div class="ds-lbl">Threads <span>· 1080 × 1080</span></div>
+    <div class="wrap" data-w="1080" data-h="1080">
+      <div class="artboard th" data-screen-label="Threads">
+        <div class="candle-field">
+          <div class="candle"><div class="halo"></div><div class="base"></div><div class="body"></div><div class="core"></div><div class="wick"></div></div>
+        </div>
+        <div class="th-text">
+          <h1 class="poem th-headline">
+            <span class="lead">No ground to stand on.</span>
+            <span class="lead">No sky to cover my head with.</span>
+          </h1>
+        </div>
+        <span class="handle th-handle">mistakenlyhuman</span>
+        <div class="grain"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── TWEAKS PANEL ─── -->
+<div class="twk" id="tweaks" style="display:none" role="complementary" aria-label="Tweaks">
+  <div class="twk-hd"><b>Tweaks</b><button class="twk-close" id="twk-close" aria-label="Close">×</button></div>
+  <div class="twk-body">
+    <div class="twk-sep">Atmosphere</div>
+    <div class="twk-row">
+      <label>Film grain <span id="grain-val">7%</span></label>
+      <input type="range" id="grain-sl" min="0" max="16" step="1" value="7">
+    </div>
+    <div class="twk-row">
+      <label>Flame glow <span id="glow-val">100%</span></label>
+      <input type="range" id="glow-sl" min="40" max="160" step="5" value="100">
+    </div>
+    <div class="twk-sep">Typeface</div>
+    <div class="twk-seg" id="font-seg">
+      <button data-f="'Cormorant Garamond', Georgia, serif" class="on">Cormorant</button>
+      <button data-f="'Instrument Serif', Georgia, serif">Instrument</button>
+    </div>
+    <div class="twk-sep">Flame</div>
+    <div class="twk-seg" id="flick-seg">
+      <button data-v="run" class="on">Flicker</button>
+      <button data-v="still">Still</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.twk {
+  position: fixed; right: 16px; bottom: 16px; z-index: 9999; width: 232px;
+  background: rgba(20,16,36,0.82); backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border: 0.5px solid rgba(201,169,110,0.28); border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(250,243,224,0.08) inset, 0 16px 48px rgba(0,0,0,0.55);
+  font: 11.5px/1.4 ui-sans-serif, system-ui, -apple-system, sans-serif; color: #faf3e0;
+  overflow: hidden;
+}
+.twk-hd { display: flex; align-items: center; justify-content: space-between; padding: 11px 11px 9px 15px; }
+.twk-hd b { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
+.twk-close {
+  width: 22px; height: 22px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(250,243,224,0.1); color: rgba(250,243,224,0.6);
+  font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+}
+.twk-close:hover { background: rgba(250,243,224,0.18); }
+.twk-body { padding: 2px 15px 16px; display: flex; flex-direction: column; gap: 12px; }
+.twk-sep { font-size: 9.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(201,169,110,0.7); padding-top: 3px; }
+.twk-row { display: flex; flex-direction: column; gap: 6px; }
+.twk-row label { display: flex; justify-content: space-between; color: rgba(250,243,224,0.62); }
+.twk-row input[type="range"] { width: 100%; accent-color: var(--gold); cursor: pointer; }
+.twk-seg { display: flex; gap: 6px; }
+.twk-seg button {
+  flex: 1; padding: 7px 4px; border-radius: 7px; cursor: pointer;
+  border: 0.5px solid rgba(201,169,110,0.22); background: rgba(250,243,224,0.04);
+  color: rgba(250,243,224,0.55); font: inherit; font-size: 11px; transition: all 0.14s;
+}
+.twk-seg button:hover { color: rgba(250,243,224,0.85); }
+.twk-seg button.on { background: rgba(201,169,110,0.18); border-color: rgba(201,169,110,0.5); color: var(--gold); }
+</style>
+
+<script>
+var tweaks = /*EDITMODE-BEGIN*/{"grain":7,"glow":100,"font":"'Cormorant Garamond', Georgia, serif","flicker":"run"}/*EDITMODE-END*/;
+
+function applyTweaks() {
+  var d = document.documentElement;
+  d.style.setProperty('--grain-op', tweaks.grain / 100);
+  d.style.setProperty('--glow', tweaks.glow / 100);
+  d.style.setProperty('--serif', tweaks.font);
+  document.querySelectorAll('.candle .body, .candle .core').forEach(function(el){
+    el.style.animationPlayState = (tweaks.flicker === 'still') ? 'paused' : 'running';
+  });
+  var gv = document.getElementById('grain-val'); if (gv) gv.textContent = tweaks.grain + '%';
+  var gs = document.getElementById('grain-sl'); if (gs) gs.value = tweaks.grain;
+  var lv = document.getElementById('glow-val');  if (lv) lv.textContent = tweaks.glow + '%';
+  var ls = document.getElementById('glow-sl');   if (ls) ls.value = tweaks.glow;
+  document.querySelectorAll('#font-seg button').forEach(function(b){ b.classList.toggle('on', b.dataset.f === tweaks.font); });
+  document.querySelectorAll('#flick-seg button').forEach(function(b){ b.classList.toggle('on', b.dataset.v === tweaks.flicker); });
+}
+
+function scaleArtboards() {
+  var maxW = Math.min(window.innerWidth - 96, 1320);
+  document.querySelectorAll('.wrap').forEach(function(wrap) {
+    var nw = parseInt(wrap.dataset.w), nh = parseInt(wrap.dataset.h);
+    var scale = Math.min(1, maxW / nw);
+    wrap.style.width = Math.round(nw * scale) + 'px';
+    wrap.style.height = Math.round(nh * scale) + 'px';
+    var art = wrap.querySelector('.artboard');
+    if (!art) return;
+    art.style.width = nw + 'px'; art.style.height = nh + 'px';
+    art.style.transform = 'scale(' + scale + ')';
+  });
+}
+
+window.addEventListener('message', function(e) {
+  if (!e.data || typeof e.data !== 'object') return;
+  var t = document.getElementById('tweaks');
+  if (e.data.type === '__activate_edit_mode')   t.style.display = 'block';
+  if (e.data.type === '__deactivate_edit_mode') t.style.display = 'none';
+});
+setTimeout(function(){ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e){} }, 80);
+
+document.getElementById('twk-close').addEventListener('click', function() {
+  document.getElementById('tweaks').style.display = 'none';
+  try { window.parent.postMessage({type:'__edit_mode_dismissed'}, '*'); } catch(e){}
+});
+function pushKeys(o){ try { window.parent.postMessage({type:'__edit_mode_set_keys', edits:o}, '*'); } catch(e){} }
+
+document.getElementById('grain-sl').addEventListener('input', function(e){ tweaks.grain = parseInt(e.target.value); applyTweaks(); pushKeys({grain:tweaks.grain}); });
+document.getElementById('glow-sl').addEventListener('input', function(e){ tweaks.glow = parseInt(e.target.value); applyTweaks(); pushKeys({glow:tweaks.glow}); });
+document.querySelectorAll('#font-seg button').forEach(function(b){ b.addEventListener('click', function(){ tweaks.font = b.dataset.f; applyTweaks(); pushKeys({font:tweaks.font}); }); });
+document.querySelectorAll('#flick-seg button').forEach(function(b){ b.addEventListener('click', function(){ tweaks.flicker = b.dataset.v; applyTweaks(); pushKeys({flicker:tweaks.flicker}); }); });
+
+scaleArtboards();
+applyTweaks();
+window.addEventListener('resize', scaleArtboards);
+</script>
+</body>
+</html>

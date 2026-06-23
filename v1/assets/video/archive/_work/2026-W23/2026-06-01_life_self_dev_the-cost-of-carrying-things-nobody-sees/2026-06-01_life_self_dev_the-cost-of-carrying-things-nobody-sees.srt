@@ -1,0 +1,456 @@
+1
+00:00:00,000 --> 00:00:05,040
+There's a version of you that most people will never meet, the one who replays a conversation
+
+2
+00:00:05,040 --> 00:00:10,400
+from three years ago at two in the morning, the one who smiled through a family dinner
+
+3
+00:00:10,400 --> 00:00:13,200
+while something inside quietly came apart.
+
+4
+00:00:13,200 --> 00:00:19,280
+The one who said, I'm fine so many times, it stopped being a centen, and started being
+
+5
+00:00:19,280 --> 00:00:21,720
+a place that you live.
+
+6
+00:00:21,720 --> 00:00:27,040
+We talk a lot about burnout, overwork, too many responsibilities, but there is another
+
+7
+00:00:27,040 --> 00:00:31,120
+kind of exhaustion, and it doesn't come from doing too much.
+
+8
+00:00:31,120 --> 00:00:37,040
+It comes from holding too much, it never shows up on a productivity tracker or a performance
+
+9
+00:00:37,040 --> 00:00:38,040
+review.
+
+10
+00:00:38,040 --> 00:00:43,160
+Nobody can see it, that's why I want to sit with this today, that weight and what it's
+
+11
+00:00:43,160 --> 00:00:46,320
+actually costing you to carry it.
+
+12
+00:00:46,320 --> 00:00:50,360
+You should know that you are measuring the wrong things.
+
+13
+00:00:50,360 --> 00:00:55,480
+Here is something that I have noticed in ten years of working in data.
+
+14
+00:00:55,480 --> 00:01:02,040
+We are extremely good at measuring what's visible, output, revenue, churn, sleep hours,
+
+15
+00:01:02,040 --> 00:01:03,040
+steps.
+
+16
+00:01:03,040 --> 00:01:08,440
+We have built entire industries around quantifying being human, but we have almost no
+
+17
+00:01:08,440 --> 00:01:15,600
+language for what happens in the space between people, the grief with no name, the disappointment
+
+18
+00:01:15,600 --> 00:01:21,360
+you swallowed, the version of an event that nobody else witnessed, there is no metric
+
+19
+00:01:21,360 --> 00:01:27,840
+for the energy it takes to keep a composed face while something inside you is breaking
+
+20
+00:01:27,840 --> 00:01:28,840
+apart.
+
+21
+00:01:28,840 --> 00:01:34,960
+The American Psychological Association has strict stress in US for nearly two decades,
+
+22
+00:01:34,960 --> 00:01:37,400
+and the findings repeat every year.
+
+23
+00:01:37,400 --> 00:01:44,480
+We are more stressed than we report consistently that gap between what we feel and what we say
+
+24
+00:01:44,480 --> 00:01:47,680
+we feel isn't random, it's structured.
+
+25
+00:01:47,680 --> 00:01:53,160
+Something invisible things is one of the most normalized behaviors we have, and almost
+
+26
+00:01:53,160 --> 00:01:56,400
+nobody asks what it's doing to us over time.
+
+27
+00:01:56,400 --> 00:02:01,120
+Then it leads you to the text that you are paying without a receipt.
+
+28
+00:02:01,120 --> 00:02:07,000
+There is a concept in psychology called cognitive load, the total mental resources you are using
+
+29
+00:02:07,000 --> 00:02:08,520
+at any moment.
+
+30
+00:02:08,520 --> 00:02:13,720
+Most people think of it as tasks, writing a report, managing a project, but your brain
+
+31
+00:02:13,720 --> 00:02:18,320
+doesn't separate a work problem from an emotional one.
+
+32
+00:02:18,320 --> 00:02:24,400
+It's all drawing from the same finite pool, so when you are carrying something unresolved,
+
+33
+00:02:24,400 --> 00:02:30,000
+an argument that ended without closure, a loss you never grieved, a resentment you have
+
+34
+00:02:30,000 --> 00:02:35,320
+held for years, your brain keeps returning to it, not because you are weak, because of
+
+35
+00:02:35,320 --> 00:02:41,680
+something called the zeitgarnic effect, the mind holds onto incomplete things.
+
+36
+00:02:41,680 --> 00:02:45,240
+That's the same reason you remember the show you did not finish, better than the one
+
+37
+00:02:45,240 --> 00:02:46,760
+you did.
+
+38
+00:02:46,760 --> 00:02:51,800
+The difference is emotional loops don't close with a click, they run in the background,
+
+39
+00:02:51,800 --> 00:02:57,240
+below awareness, eating the processing power, you were planning to use somewhere else.
+
+40
+00:02:57,240 --> 00:03:02,720
+A few years ago, there was a stretch where I was publishing articles, recording videos,
+
+41
+00:03:02,720 --> 00:03:07,160
+building projects, and showing up to client meetings exactly as expected, from the outside
+
+42
+00:03:07,160 --> 00:03:08,640
+nothing looked wrong.
+
+43
+00:03:08,640 --> 00:03:13,040
+The work was still getting done, the deadlines were still being met.
+
+44
+00:03:13,040 --> 00:03:19,280
+What nobody could see was how much mental bandwidth was being consumed by a relationship that
+
+45
+00:03:19,280 --> 00:03:22,040
+was unraveling in a slow motion.
+
+46
+00:03:22,040 --> 00:03:26,600
+I would sit down to write and find myself rereading the same paragraph three times.
+
+47
+00:03:26,600 --> 00:03:31,600
+I would open my laptop with a clear plan and somehow end up staring at the screen, lost
+
+48
+00:03:31,600 --> 00:03:34,440
+in conversations that had happened days earlier.
+
+49
+00:03:34,440 --> 00:03:40,240
+The strange part was that I was still functioning well enough that nobody questioned it.
+
+50
+00:03:40,240 --> 00:03:45,840
+The visible version of me looked productive, the internal version was exhausted from carrying
+
+51
+00:03:45,840 --> 00:03:52,680
+an argument that never really ended in the future that suddenly felt uncertain.
+
+52
+00:03:52,680 --> 00:03:56,960
+Looking back, I wasn't struggling because I lacked discipline, I was paying attention
+
+53
+00:03:56,960 --> 00:04:02,680
+to two realities at once, the work in front of me, and the emotional weight that I was
+
+54
+00:04:02,680 --> 00:04:05,120
+pretending wasn't there.
+
+55
+00:04:05,120 --> 00:04:10,320
+That's why on the day something is quietly wrong, you feel foggy, you forget small things,
+
+56
+00:04:10,320 --> 00:04:15,800
+40 minutes past at your desk with nothing to show, you're not lazy, you're running something
+
+57
+00:04:15,800 --> 00:04:21,040
+heavy in the background, and the research is consistent, suppressing an emotion doesn't
+
+58
+00:04:21,040 --> 00:04:28,120
+delete it, it relocates it into the body, into attention lapses, into a low grade irritability
+
+59
+00:04:28,120 --> 00:04:32,120
+everyone around you can feel and nobody can name.
+
+60
+00:04:32,120 --> 00:04:38,000
+It doesn't stay invisible, it leaks, here's the harder part to admit, the things you carry
+
+61
+00:04:38,000 --> 00:04:44,440
+in silence don't only land on you, they leak, usually not dramatically, in the half second
+
+62
+00:04:44,440 --> 00:04:49,920
+before you respond warmly in the patience that runs out a little faster than it should,
+
+63
+00:04:49,920 --> 00:04:55,040
+in the distance you keep from people trying to get close, not because you don't want
+
+64
+00:04:55,040 --> 00:05:01,880
+connection, but because connection feels dangerous when you're already at capacity.
+
+65
+00:05:01,880 --> 00:05:06,200
+Someone carries something heavy, long enough, and they start to seem adjacent to their own
+
+66
+00:05:06,200 --> 00:05:11,760
+life, present, but not quite there, like there is a class between you.
+
+67
+00:05:11,760 --> 00:05:16,800
+Kids feel it first, they don't have words for, my parent is carrying and process grief,
+
+68
+00:05:16,800 --> 00:05:19,080
+but they know when someone is somewhere else.
+
+69
+00:05:19,080 --> 00:05:23,240
+I remember a conversation with someone close to me who said, you're here, but you're
+
+70
+00:05:23,240 --> 00:05:25,200
+not really here anymore.
+
+71
+00:05:25,200 --> 00:05:31,080
+It wasn't said during a fight, it wasn't dramatic, in fact that's what made it hit so hard,
+
+72
+00:05:31,080 --> 00:05:37,240
+up until that moment I thought I was doing a good job containing everything, I thought
+
+73
+00:05:37,240 --> 00:05:43,880
+carrying it silently was protecting the relationship from additional stress, what I did not realize
+
+74
+00:05:43,880 --> 00:05:50,040
+was that silence has a texture people can feel, the distance I believed was invisible had
+
+75
+00:05:50,040 --> 00:05:54,720
+already become visible to someone who cared about me.
+
+76
+00:05:54,720 --> 00:06:00,480
+That conversation forced me to confront something really uncomfortable, the energy required
+
+77
+00:06:00,480 --> 00:06:05,720
+to keep pretending I was okay, had become something greater, then the energy required
+
+78
+00:06:05,720 --> 00:06:08,520
+to admit that I wasn't.
+
+79
+00:06:08,520 --> 00:06:13,920
+The people who love you can handle more than you think, what they cannot handle is the
+
+80
+00:06:13,920 --> 00:06:20,480
+static, the unnamed things between you that neither of you has language for.
+
+81
+00:06:20,480 --> 00:06:22,720
+Why we don't put it down?
+
+82
+00:06:22,720 --> 00:06:29,600
+The common assumption is fear, fear of judgment of being a burden, sometimes that's true,
+
+83
+00:06:29,600 --> 00:06:34,520
+but underneath there is something else, putting something down requires you to look at it
+
+84
+00:06:34,520 --> 00:06:40,440
+first, and when you have carried a loss for months or years it becomes part of the landscape,
+
+85
+00:06:40,440 --> 00:06:45,360
+familiar, even the way it is familiar, the idea of feeling it instead of carrying it is
+
+86
+00:06:45,360 --> 00:06:51,840
+terrifying in a specific way, what if it is worse than I thought, once I look I cannot
+
+87
+00:06:51,840 --> 00:06:58,320
+function, so not looking becomes productive, at first when it calcifies, the thing that
+
+88
+00:06:58,320 --> 00:07:02,800
+kept you functional becomes a thing, making you less functional, and some things don't
+
+89
+00:07:02,800 --> 00:07:08,120
+have clean endings anyway, the person isn't coming back, the apology isn't coming,
+
+90
+00:07:08,120 --> 00:07:12,120
+carrying at least means you still have it, putting it down can feel like letting the
+
+91
+00:07:12,120 --> 00:07:18,880
+loss become final, the work is quieter than you think, I'm not going to hand you a
+
+92
+00:07:18,880 --> 00:07:24,320
+five step framework here, if it were that simple you would have done it, the real work
+
+93
+00:07:24,320 --> 00:07:30,280
+is dramatic, it looks like telling one person one true thing about how you are, it looks
+
+94
+00:07:30,280 --> 00:07:36,040
+like admitting to yourself in plain language what happened and how it felt, there is a
+
+95
+00:07:36,040 --> 00:07:42,800
+term in trauma research, titration, approaching something painful in small doses like diluting
+
+96
+00:07:42,800 --> 00:07:47,800
+a solution, you don't have to process it all at once, you don't have to say it publicly
+
+97
+00:07:47,800 --> 00:07:53,640
+or ever, you just have to stop pretending it's not there, because something shifts when
+
+98
+00:07:53,640 --> 00:07:59,720
+you name a thing accurately, even alone, the background process quits, not because it's
+
+99
+00:07:59,720 --> 00:08:06,880
+resolved, but because the zi-carnic loop doesn't need resolution, it needs attention, the
+
+100
+00:08:06,880 --> 00:08:12,560
+cost of carrying things nobody sees is real, and it compounds, the longer you avoid looking,
+
+101
+00:08:12,560 --> 00:08:17,920
+the heavier it gets, not because the thing grew, but because the effort of not looking
+
+102
+00:08:17,920 --> 00:08:23,760
+did, you're not as good at hiding it as you think, and even if you were, you deserve
+
+103
+00:08:23,760 --> 00:08:31,440
+to put it down, here is what I keep coming back to, we have made a virtue out of containment,
+
+104
+00:08:31,440 --> 00:08:38,440
+out of handling it, needing nothing, showing nothing, moving forward regardless, and sometimes
+
+105
+00:08:38,440 --> 00:08:45,120
+that discipline is necessary, even beautiful, but somewhere along the way a lot of us stop
+
+106
+00:08:45,200 --> 00:08:52,080
+treating it as a temporary skill, and started treating it as an identity, I'm someone who
+
+107
+00:08:52,080 --> 00:08:58,600
+handles things, then the things accumulated, and the handling became the whole self, the
+
+108
+00:08:58,600 --> 00:09:05,960
+invisible load is real, the toll is real, and the first move, not the last, and only the
+
+109
+00:09:05,960 --> 00:09:11,200
+first is to stop calling it nothing, you don't have to share it, you don't have to resolve
+
+110
+00:09:11,200 --> 00:09:18,200
+it today, you just have to let it be what it is, something you are carrying that has
+
+111
+00:09:18,200 --> 00:09:26,200
+weight, that deserves to be seen at minimum by you, this is breath of life, if something
+
+112
+00:09:26,200 --> 00:09:32,480
+here landed, send it to one person who needs it, not as a conversation starter, just quietly,
+
+113
+00:09:32,480 --> 00:09:37,360
+the way you would leave a book on someone's desk, the people carrying invisible things
+
+114
+00:09:37,360 --> 00:09:44,360
+rarely said out loud, but sometimes they notice when you notice.
+

@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:00,040
+feel like magic later, so let us take a look at another example which is a little more
+
+2
+00:00:00,040 --> 00:00:12,000
+advance, so for actual data analysis you will be computing some stats over and over,
+
+3
+00:00:12,000 --> 00:00:18,120
+like mean standard deviation minimum maximum percentile, so numpy has all of them available
+
+4
+00:00:18,120 --> 00:00:24,200
+as one method calls, where it gets genuinely useful is percentile based outlier detection,
+
+5
+00:00:24,200 --> 00:00:30,720
+so you can compute the 25th and 75th percentiles, find the interquant quartile range and set
+
+6
+00:00:30,720 --> 00:00:37,080
+a fence at 1.5 times the IQ are above and below, then use boolean indexing to pull out
+
+7
+00:00:37,080 --> 00:00:43,760
+what falls outside it, that is a proper statistical outlier check in six lines of code, no loop
+
+8
+00:00:43,760 --> 00:00:43,800
+no library beyond numpy, so this is what I am talking about here, so we have the salaries

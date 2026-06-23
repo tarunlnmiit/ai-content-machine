@@ -1,0 +1,848 @@
+1
+00:00:00,000 --> 00:00:06,480
+Your analysis is going to give you a wrong answer someday and the worst part, it won't crash.
+
+2
+00:00:06,480 --> 00:00:10,000
+It won't throw an error. Python will just sit there and hand you a number.
+
+3
+00:00:10,000 --> 00:00:15,680
+So plausible that you will believe it. Here is how this happens. Your CSV comes in
+
+4
+00:00:16,320 --> 00:00:22,880
+with a column called H. You load it. You sum the values. Python reports a total and you move on.
+
+5
+00:00:22,880 --> 00:00:28,800
+Except that column was stored as text or string. Not numbers. So when Python added them,
+
+6
+00:00:28,800 --> 00:00:39,760
+it did not calculate, for example, 28 plus 35 plus 42. Rather, it smashed the strings together,
+
+7
+00:00:40,480 --> 00:00:52,960
+essentially what it did. So let me create a file first.
+
+8
+00:00:59,760 --> 00:01:01,680
+Okay, so what I'm trying to say here is
+
+9
+00:01:09,680 --> 00:01:11,280
+you were expecting something like
+
+10
+00:01:14,720 --> 00:01:21,120
+equal to some number. But since your numbers were stored as strings
+
+11
+00:01:21,760 --> 00:01:31,360
+in the CSV, Python will give you something different. So Python will give you some string
+
+12
+00:01:31,360 --> 00:01:41,760
+in this case and it will become 2835 and 42.
+
+13
+00:01:45,920 --> 00:01:50,560
+So this is not what you actually want. No error message. No warning. Just a wrong answer
+
+14
+00:01:50,560 --> 00:01:57,280
+sitting in your spreadsheet, looking completely legitimate. And this is what this second tutorial
+
+15
+00:01:57,280 --> 00:02:02,880
+is about. It's about the difference between data that looks like a number and data Python actually
+
+16
+00:02:02,880 --> 00:02:09,120
+treats as a number. It's about the structures that let you build analysis that does not lie to you
+
+17
+00:02:09,120 --> 00:02:15,600
+by accident. So in tutorial one, you build the first script you used lists, dictionaries, you
+
+18
+00:02:15,680 --> 00:02:21,280
+look through them, calculated an average, you handled several data types without ever naming them.
+
+19
+00:02:21,920 --> 00:02:27,360
+Integer, string, floats, maybe a Boolean. Python is dynamically typed. That means you don't
+
+20
+00:02:27,360 --> 00:02:34,000
+declare what type something is. You just assign it a value and Python figures it out. This feels
+
+21
+00:02:34,000 --> 00:02:40,480
+like a feature and it is right up until the moment. It lets you concatenate numbers like their words
+
+22
+00:02:40,560 --> 00:02:46,720
+and call set a sum. For beginners, this complexity causes confusion. For data scientist,
+
+23
+00:02:46,720 --> 00:02:53,520
+it causes expensive confusion. The kind where your analysis runs fine, your numbers look reasonable
+
+24
+00:02:53,520 --> 00:02:59,120
+and then six months later someone asks, wait, how did you get that? And you can't trace it back
+
+25
+00:02:59,120 --> 00:03:05,200
+because the bug was never in your logic. It was in your data types all along. Here is what we are
+
+26
+00:03:05,280 --> 00:03:11,920
+covering today. Four primitive types that Python uses. Integers, floats, strings and Booleans.
+
+27
+00:03:12,720 --> 00:03:18,960
+Lists which are sequences, dictionaries which are how data scientists think about records
+
+28
+00:03:18,960 --> 00:03:25,840
+and functions which turn code you copy paste into code you actually reuse. By the end, you will
+
+29
+00:03:25,840 --> 00:03:34,400
+understand what type every piece of your data is, why that matters and how to catch type mistakes
+
+30
+00:03:34,400 --> 00:03:40,000
+before they become silent bugs. I will tell you something here. So let's me assign
+
+31
+00:03:41,520 --> 00:03:48,240
+with four primitives. Integer, floats, string and Boolean. But before that, I want to tell you about
+
+32
+00:03:48,240 --> 00:03:57,680
+something Python has which is type to tell you the data type. So if I type in type 28 and if I
+
+33
+00:03:58,640 --> 00:04:10,000
+print it and if I copy and remove these codes around it and run this file. So if you remember,
+
+34
+00:04:10,000 --> 00:04:14,960
+we created a virtual environment last time around. So let me activate it first again.
+
+35
+00:04:16,080 --> 00:04:23,120
+Once that is activated, I will run this script. So you can see, first is string and second is
+
+36
+00:04:24,080 --> 00:04:28,080
+integer. So now coming back to our four primitives, integer, float, string and Boolean.
+
+37
+00:04:28,080 --> 00:04:35,760
+An integer is a whole number. So if I assign a variable x is equal to 1, it is an integer.
+
+38
+00:04:36,880 --> 00:04:47,280
+So if I assign any number which are decimal, let's say y equal to 1.5, it is a float.
+
+39
+00:04:48,000 --> 00:05:02,800
+And if I let's say write z equal to 3, this is a string and if I say write a equal to true,
+
+40
+00:05:04,480 --> 00:05:12,640
+then this is a Boolean. So and it is a critical part because Python treats them completely different
+
+41
+00:05:12,640 --> 00:05:19,760
+even when they look the same. So if I let's say write it as 1, it looks completely same,
+
+42
+00:05:19,760 --> 00:05:26,960
+the 3 of them x, y and z, but they are entirely different in terms of Python. So here is what
+
+43
+00:05:26,960 --> 00:05:29,920
+each primitive will look like. Let me give you a few more examples.
+
+44
+00:05:30,560 --> 00:05:38,720
+So as you can see, these are a few examples.
+
+45
+00:05:39,680 --> 00:05:50,720
+Age is 28, year is 2024. If I print the type of age, it should be integer. Let me type for
+
+46
+00:05:50,800 --> 00:05:58,800
+year as well, then for accuracy, and then for role as well,
+
+47
+00:06:02,800 --> 00:06:11,440
+and then for has missing as well. So now when I run it, you should see a similar kind of a result.
+
+48
+00:06:12,640 --> 00:06:16,080
+So you can see first two are integers because they do not have any decimal,
+
+49
+00:06:16,800 --> 00:06:22,480
+second two are floats, third and fourth variables because they have decimal values.
+
+50
+00:06:23,200 --> 00:06:28,480
+Then in quotes, it's a string and if it is false or true, then it's a Boolean.
+
+51
+00:06:30,000 --> 00:06:37,920
+Now here is the silent book which every beginner has encountered or it bites every beginner.
+
+52
+00:06:38,880 --> 00:06:49,760
+So if I write something like print 28 plus 35, and let me remove the rest of the code.
+
+53
+00:06:51,360 --> 00:07:00,880
+And if I print a float value as well in then a string. So if you as you can see, it should be 63,
+
+54
+00:07:00,880 --> 00:07:07,840
+it should be 63.0 and this will be 2835, not as expected as 63 or 63.0.
+
+55
+00:07:08,400 --> 00:07:09,840
+So if I run the script again,
+
+56
+00:07:20,480 --> 00:07:27,440
+you can see as expected. So Python did not add those numbers, it concatenated the text in the last
+
+57
+00:07:27,440 --> 00:07:34,080
+example. No error, no warning, just plain, wrong answer. So how do you check what you are holding?
+
+58
+00:07:34,080 --> 00:07:41,760
+You use the type method or the function built in Python. So if you are reading from CSV,
+
+59
+00:07:41,760 --> 00:07:50,160
+right? So let's take this one as an example again. So if you try, it came from a CSV, let's assume
+
+60
+00:07:50,160 --> 00:07:56,160
+this row H came from a CSV, it's a string. And then if you want to use it as a number, you convert
+
+61
+00:07:56,480 --> 00:08:01,680
+explicitly to an integer and then you add something to it. So if I run this script now,
+
+62
+00:08:02,800 --> 00:08:08,640
+you can see initially it was string, but at the end, it gave me 38 because I converted it into
+
+63
+00:08:08,640 --> 00:08:16,480
+number or an integer here exactly and then added 10. Now here are four conversion functions that
+
+64
+00:08:16,480 --> 00:08:22,080
+you should be aware of. So these conversion functions, they look something like this.
+
+65
+00:08:22,080 --> 00:08:30,240
+Integer, I just showed you. So integer of 42 will give me 42, float of 42.5 as string,
+
+66
+00:08:30,240 --> 00:08:46,720
+give me 42.5, string 42 will give me string and bool 0 will give me false. So let me just print them.
+
+67
+00:08:53,040 --> 00:09:12,720
+So if I run, you can see as expected in the outputs. So a rule of thumb here, any data from a CSV,
+
+68
+00:09:12,720 --> 00:09:19,600
+API or user input arrives as a string until you convert it. This is where the silent bugs start.
+
+69
+00:09:19,680 --> 00:09:25,840
+You load your CSV, summer column, get a result that looks plausible and never realize it was
+
+70
+00:09:25,840 --> 00:09:33,040
+concatenation instead of addition. So now let's talk about lists. A list is a sequence and ordered
+
+71
+00:09:33,040 --> 00:09:38,720
+collection of items. You create one with square brackets. So for example, this is a list.
+
+72
+00:09:43,120 --> 00:09:48,640
+So this is a list of four different integers. You can access then items by a position.
+
+73
+00:09:48,640 --> 00:10:00,320
+So first item is at index 0. So if I print scores 0, it will print 85. So let's test it out.
+
+74
+00:10:01,280 --> 00:10:10,000
+So as I said, score 0 is 85. If I say 1, it will be 92, 2, it will be 78, 3, it will be 95.
+
+75
+00:10:10,960 --> 00:10:18,560
+And you can also slice. So what does slice mean? So if I copy and instead of one single number,
+
+76
+00:10:18,560 --> 00:10:26,160
+I write something like 1 colon 3. So what it will do is it will start from index 1 and it will go
+
+77
+00:10:27,200 --> 00:10:34,800
+until index 3 not including index 3. So if I print it, so you can see if it started from index 1
+
+78
+00:10:34,880 --> 00:10:41,280
+and then went to index 2, it did not include index 3 as it is mentioned in Python.
+
+79
+00:10:41,280 --> 00:10:48,400
+So Python slicing is exclusive on the end, which trips up everyone on their first week.
+
+80
+00:10:49,040 --> 00:10:56,640
+To add an item to a list, you use an append method. So if I write score start
+
+81
+00:10:57,280 --> 00:11:03,920
+append and then say 90 and print scores again.
+
+82
+00:11:10,400 --> 00:11:17,840
+So you can see 90 is added at the end. And to filter, you can use something called a list
+
+83
+00:11:17,840 --> 00:11:26,400
+comprehension or for loop. So we want to see if a number is greater than 85 in this list of
+
+84
+00:11:26,400 --> 00:11:34,720
+scores. So there are two ways to do it. First is normally using a for loop. So you can loop over
+
+85
+00:11:34,720 --> 00:11:44,560
+the list with a simple for loop. So for score in scores, if score is greater than 85,
+
+86
+00:11:45,520 --> 00:11:54,560
+we will print the score. If I run this, you can see 90 to 95 and 90 got printed.
+
+87
+00:11:54,640 --> 00:12:01,040
+There is a simpler way to do this. So and to store it in a variable directly as well.
+
+88
+00:12:01,040 --> 00:12:13,840
+So high scores equal to score for score in scores if score is greater than 85.
+
+89
+00:12:14,800 --> 00:12:23,120
+And if I print high scores now, you will get the same result, 92, 95 and 90.
+
+90
+00:12:23,200 --> 00:12:26,480
+The benefit of this is called list comprehension.
+
+91
+00:12:30,720 --> 00:12:36,800
+The benefit of list comprehension is that it is concise, readable and every data scientist uses
+
+92
+00:12:36,800 --> 00:12:43,520
+this pattern constantly. So there are a few other things about list that you should know,
+
+93
+00:12:44,800 --> 00:12:49,920
+which is there are negative indexes also allowed. So if I say write print,
+
+94
+00:12:54,080 --> 00:13:03,920
+scores say minus 1, right. What do you think it will do? So it will print 90, which is the last
+
+95
+00:13:03,920 --> 00:13:13,280
+element of our scores list and negative indexes, they start from the right to the left and they
+
+96
+00:13:13,280 --> 00:13:22,160
+start from minus 1. So minus 1 will be 90, minus 2 is 95, minus 3 is 78, minus 4 is 92,
+
+97
+00:13:22,240 --> 00:13:27,360
+list comprehension also gives you some other powerful things like you can do transformation
+
+98
+00:13:27,360 --> 00:13:36,400
+of data in one single line. So if we copy this and let us say we want to calculate
+
+99
+00:13:40,160 --> 00:13:45,440
+scores as percentages.
+
+100
+00:13:46,000 --> 00:14:01,440
+So simply if I divide this score by 100 and if I remove this filter and if I print this out,
+
+101
+00:14:02,640 --> 00:14:07,120
+you can see it is all in decimal but it does not look like a percentage, right.
+
+102
+00:14:07,120 --> 00:14:14,400
+So there is one more thing I can show you we can do with list comprehension.
+
+103
+00:14:15,440 --> 00:14:33,200
+So if you remember I taught you F strings last time around.
+
+104
+00:14:33,760 --> 00:14:51,680
+So if we now print this 100 will go inside.
+
+105
+00:14:52,400 --> 00:14:59,360
+So you can see 85 percent, 92 percent, 78 percent, quite neat, right.
+
+106
+00:15:00,240 --> 00:15:09,120
+So read comprehension left to right for in this case for score whatever transformation we are
+
+107
+00:15:09,120 --> 00:15:18,320
+doing in scores and if we take a look here and then it is the filter. So every data scientist
+
+108
+00:15:18,320 --> 00:15:23,520
+uses this pattern constantly. It replaces three line for loops as you can see here, right.
+
+109
+00:15:23,520 --> 00:15:27,600
+It was a three line for loop with one single readable expression.
+
+110
+00:15:28,400 --> 00:15:33,920
+Now we are going to talk about dictionaries. So how data science think or data scientists
+
+111
+00:15:33,920 --> 00:15:39,840
+think about records. So dictionary maps keys to values. You create one with curly braces as I
+
+112
+00:15:39,840 --> 00:15:47,520
+told you in last tutorial as well. So as you can see here I have a dictionary called person and
+
+113
+00:15:47,520 --> 00:15:59,200
+it has four values name age, role and salary and you can see the dictionary is defined inside
+
+114
+00:15:59,200 --> 00:16:06,640
+the curly braces with a coated key. So left side is called key and right side is called value
+
+115
+00:16:06,640 --> 00:16:12,880
+and they are separated by colon and every key value pair is separated by a comma. So it has
+
+116
+00:16:12,880 --> 00:16:20,400
+four keys name age, role and salary and they are all supposed to be in string format and then
+
+117
+00:16:20,400 --> 00:16:28,960
+their values can be any data type. So if we want to access any key or any data points value.
+
+118
+00:16:29,600 --> 00:16:35,520
+So for example if you want to check what is the person's name. So we can just go to the variable
+
+119
+00:16:35,520 --> 00:16:42,000
+and then in square brackets put in the key that we want to access. So to access name and age we do
+
+120
+00:16:42,080 --> 00:16:52,240
+this and there is another way that we can get these key values which is dot get and it will try to
+
+121
+00:16:52,240 --> 00:17:00,000
+get email and if email is not present it will return none and if it is set like this email
+
+122
+00:17:00,000 --> 00:17:05,760
+common not set then it will return what is provided in the second value. So if we run this
+
+123
+00:17:06,240 --> 00:17:14,400
+you can say for the line number 13 it printed Alex as expected and for line 14 it printed 28
+
+124
+00:17:14,880 --> 00:17:23,040
+for line 17 it printed none and for line 18 it printed not set. So there is one caveat
+
+125
+00:17:23,920 --> 00:17:33,200
+we should never use something like person and then key inside on your data because we do not
+
+126
+00:17:33,200 --> 00:17:39,680
+control and if the key does not exist it will raise a key error. So let us say if I try to run
+
+127
+00:17:39,680 --> 00:17:47,440
+this code right. So as you can see it threw me key error because there is no key that exists inside
+
+128
+00:17:47,440 --> 00:17:54,960
+the person dictionary. So if we take a look at another dictionary or if you want to add something
+
+129
+00:17:54,960 --> 00:18:00,320
+to this dictionary let us take a look at that first. So to update a value. So I want to update
+
+130
+00:18:00,320 --> 00:18:06,720
+salary value to 90,000 instead of 85,000 and I want to add a new key called department and it
+
+131
+00:18:07,520 --> 00:18:17,040
+will be analytics. So if I print person now as you can see it prints name Alex 828
+
+132
+00:18:17,040 --> 00:18:23,360
+role analyst salary 90,000 in department analytics but here is the thing in data science you are
+
+133
+00:18:23,360 --> 00:18:28,880
+almost never working with single dictionary. You are working with a list of dictionaries one
+
+134
+00:18:28,880 --> 00:18:33,920
+dictionary per row. So let me walk you through an example of that as well.
+
+135
+00:18:38,160 --> 00:18:44,240
+So here is this employees list it's a list as you can see with square brackets it's a list of
+
+136
+00:18:44,240 --> 00:18:49,680
+dictionaries where every item in the list is a dictionary and if we want to sum
+
+137
+00:18:50,560 --> 00:19:00,400
+for all salaries right we want to sum all the employees and their salaries. So we can use list
+
+138
+00:19:00,400 --> 00:19:08,080
+comprehension. So here is list comprehension so we loop over employees the list and then we fetch
+
+139
+00:19:08,080 --> 00:19:14,160
+the salary key for every employee and then we sum and if I comment this particular part out first
+
+140
+00:19:14,160 --> 00:19:21,200
+and if we run this you can see it printed 350,000 as expected.
+
+141
+00:19:22,000 --> 00:19:30,240
+Now we want to see for the people who are only analyst we don't want to take a look at other people.
+
+142
+00:19:30,240 --> 00:19:36,000
+So simply we do list comprehension again and here we put a filter where role is equal to analyst
+
+143
+00:19:36,000 --> 00:19:41,840
+and if we run this again you can see it printed out Alex and KZ.
+
+144
+00:19:42,720 --> 00:19:50,800
+It did not print out Jamie and Morgan. So we want to now calculate average salary for analyst.
+
+145
+00:19:50,800 --> 00:19:56,960
+So we already have analyst filter out. Now we are doing the list comprehension like earlier
+
+146
+00:19:56,960 --> 00:20:02,080
+we are getting salary for every analyst and then dividing by the number of analyst and if we print
+
+147
+00:20:02,080 --> 00:20:10,480
+now you can see 81,500 is the average salary for analyst. So this pattern list of dictionaries
+
+148
+00:20:10,480 --> 00:20:17,600
+filter with comprehension aggregate with sum or length is exactly what Pandas does internally
+
+149
+00:20:17,600 --> 00:20:24,480
+just at much larger scale. Understanding it here means you will understand Pandas intuitively
+
+150
+00:20:24,480 --> 00:20:32,320
+instead of memorizing methods. So let's take a look at one more example in the same scenario.
+
+151
+00:20:32,800 --> 00:20:46,160
+So we have a person Alex who is 28 role analyst. So if we want to get person name it will be Alex.
+
+152
+00:20:46,160 --> 00:20:50,880
+If we want to get salary it will be not provided because we are using the get method.
+
+153
+00:20:50,880 --> 00:21:00,000
+No crash here. So there is an employees list again. So if we want to total the employees salary.
+
+154
+00:21:00,000 --> 00:21:07,200
+So we can use list comprehension but we want to now see for those employees who have 85,000
+
+155
+00:21:07,200 --> 00:21:12,400
+above salary. So we use list comprehension again and only Jamie will come in this list.
+
+156
+00:21:14,160 --> 00:21:21,840
+So now we will talk about functions which exactly mean that you are writing code that you can
+
+157
+00:21:21,840 --> 00:21:28,880
+reuse. So here is now where it gets real. Functions are how you stop writing the same code over and
+
+158
+00:21:29,760 --> 00:21:36,560
+sync it through your mind. A function is something that you stop that you use to stop writing
+
+159
+00:21:36,560 --> 00:21:43,120
+the same code over and over. It is a named reusable block of logic. It is defined once and
+
+160
+00:21:43,120 --> 00:21:52,480
+called everywhere. So let us define a function. This is just to calculate average of numbers.
+
+161
+00:21:52,960 --> 00:22:02,080
+We define function with this DEF keyword and then the function name and if any parameters are
+
+162
+00:22:02,080 --> 00:22:09,280
+expected inside that function. So here we are summing the numbers. So it is expecting a list
+
+163
+00:22:09,280 --> 00:22:14,080
+and then we are dividing with the length of numbers to get an average. So if we have let us say
+
+164
+00:22:14,560 --> 00:22:25,760
+scores of this list then if we calculate score it should print 87.6 and if we have any other list
+
+165
+00:22:25,760 --> 00:22:32,800
+as well it will calculate the average. We can reuse this calculate average method or function
+
+166
+00:22:32,800 --> 00:22:38,480
+again and again. So if in case you are confused method and function are the same thing I might be
+
+167
+00:22:38,560 --> 00:22:44,000
+using them interchangeably. So wherever I reference method or function I am talking about the
+
+168
+00:22:44,000 --> 00:22:50,640
+same thing. Functions they can get more powerful with default arguments which means that parameters
+
+169
+00:22:50,640 --> 00:22:55,680
+inside the functions have fallback values that you can override. So let us take a look at exam
+
+170
+00:22:55,680 --> 00:23:04,880
+example for that. So here in this method is outlier. We have three parameters value mean in threshold
+
+171
+00:23:04,880 --> 00:23:10,000
+and we have defined a default parameter value of 2.0 for threshold. What it means is if
+
+172
+00:23:11,760 --> 00:23:16,720
+particular value for threshold is provided then it will be used otherwise it will use the default
+
+173
+00:23:16,720 --> 00:23:24,480
+value of 2. And the way it is calculating outlier in this method is calculating absolute value
+
+174
+00:23:25,040 --> 00:23:31,200
+between the mean and value and then dividing it by mean which is relative distance from mean
+
+175
+00:23:31,200 --> 00:23:36,240
+and if distance is greater than threshold divided by 10 we are normalizing it from
+
+176
+00:23:37,680 --> 00:23:43,680
+to a useful scale then it returns as true or false. So if it is greater than then it will return true
+
+177
+00:23:43,680 --> 00:23:50,560
+if it is not then it will return false. So you know 150 is far from mean of 87.6.
+
+178
+00:23:51,280 --> 00:23:59,680
+In this case it should print true and in 95 mean is 87.6 threshold is 0.5 false because it is close
+
+179
+00:23:59,680 --> 00:24:11,360
+enough. So and let me take back the scores list as well the calculate average number method
+
+180
+00:24:12,160 --> 00:24:22,720
+because we are going to use it. So if I run this script now you can see it printed true.
+
+181
+00:24:22,720 --> 00:24:33,120
+So if I increase the threshold so you can see the threshold was the problem the threshold was
+
+182
+00:24:33,120 --> 00:24:39,440
+quite low for this to be false. So now you can see one more thing when it is applied to a data set
+
+183
+00:24:39,440 --> 00:24:45,680
+so we have a list of scores and 150 is a bit suspicious in this list so we want to check if it
+
+184
+00:24:45,680 --> 00:24:52,240
+is an outlier or not. So we calculate the average you mean using the calculate average method
+
+185
+00:24:52,240 --> 00:24:58,160
+and then we check outliers by looping over or list comprehension over this scores list
+
+186
+00:24:58,880 --> 00:25:08,720
+and passing every value and the mean to that method and then we print outliers. So in this case 78
+
+187
+00:25:08,720 --> 00:25:17,200
+and 150 are outliers given threshold of 2. So if let us say I increase threshold to 10 for example
+
+188
+00:25:17,200 --> 00:25:27,600
+right and rerun the script you can see it nothing is an outlier and if I reduce it to 5 say for
+
+189
+00:25:27,600 --> 00:25:34,640
+example 150 is now the only outlier. These last three lines they do something real compute a mean
+
+190
+00:25:34,640 --> 00:25:41,040
+flag outliers written only the suspicious values in pure Python no libraries that is the kind of
+
+191
+00:25:41,040 --> 00:25:49,600
+code you will write before you even open pandas and just as a personal anecdote I remember hitting
+
+192
+00:25:49,600 --> 00:25:56,320
+the same wall when building early analytics scripts for content and engagement tracking I had
+
+193
+00:25:56,320 --> 00:26:01,440
+copied the same 12 line block across three different notebooks cleaning values calculating
+
+194
+00:26:01,440 --> 00:26:08,080
+averages filtering rows and every tiny change meant hunting through duplicated code hoping I
+
+195
+00:26:08,080 --> 00:26:13,920
+did not miss on one out of the three versions the moment I turned that block into a function the
+
+196
+00:26:13,920 --> 00:26:20,240
+entire workflow changed fewer silent mistakes faster iteration and code I could actually trust
+
+197
+00:26:20,240 --> 00:26:29,040
+six weeks later when I reopened the project. So why does all this matter type confusion causes
+
+198
+00:26:29,120 --> 00:26:35,440
+silent bugs as I showed you you load data it arrives as strings you forget to convert and you get
+
+199
+00:26:35,440 --> 00:26:42,560
+plausible looking wrong answers lists let you process sequences efficiently indexing slicing
+
+200
+00:26:42,560 --> 00:26:48,720
+comprehensions these are the tools you will use thousands of times dictionaries let you think about
+
+201
+00:26:48,720 --> 00:26:55,280
+the data the way data scientists actually think about it as records with named fields a list of
+
+202
+00:26:55,280 --> 00:27:01,840
+dictionary is exactly how you model real world data before pandas functions make your code
+
+203
+00:27:01,840 --> 00:27:08,160
+testable reusable and trustworthy no more copy paste bugs no more hunting through duplicated code
+
+204
+00:27:09,040 --> 00:27:14,880
+in the next tutorial three I will bring numpy these structures scale to millions of rows
+
+205
+00:27:15,680 --> 00:27:21,440
+but the mental model stays the same understand what type you are holding structure your data
+
+206
+00:27:21,520 --> 00:27:30,640
+sensibly and write function write functions instead of repeating blocks so before I close of the video
+
+207
+00:27:31,440 --> 00:27:38,400
+here is your assignment go back to tutorial once average calculation rewrite it as a function add
+
+208
+00:27:38,400 --> 00:27:44,400
+a filter function that returns only scores above a threshold run both on the data you used before
+
+209
+00:27:45,360 --> 00:27:50,480
+post what you've built or post the first type error you got that's where the learning happens
+
+210
+00:27:50,480 --> 00:27:55,120
+when you mess up and trace the mistake back to the type when you hit type error or your
+
+211
+00:27:55,120 --> 00:28:01,920
+comprehension returns unexpected results that's when type confusion becomes real next tutorial numpy
+
+212
+00:28:01,920 --> 00:28:08,240
+brings arrays same mental model but scale to millions of rows and optimize for speed see you in tutorial
+

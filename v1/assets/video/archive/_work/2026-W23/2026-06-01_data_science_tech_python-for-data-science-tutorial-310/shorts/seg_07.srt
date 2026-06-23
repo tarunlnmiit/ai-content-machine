@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:00,000
+then number of dimension is 1 and size is 7, the number of elements, so if we take a look
+
+2
+00:00:00,000 --> 00:00:07,000
+as comparison, so if I replace this entire code to show you python loop versus numpy vectorized
+
+3
+00:00:08,800 --> 00:00:15,800
+operation, so you can see we have this course array, then for python loop we double it for
+
+4
+00:00:21,280 --> 00:00:28,280
+every element and then for numpy we just multiply by 2 and boolean indexing is also called
+
+5
+00:00:30,260 --> 00:00:37,260
+nice in python, in numpy as compared to python, so if I clear this all up and if I run it,
+
+6
+00:00:37,260 --> 00:00:44,260
+let me print it, so what it does is in list comprehension if you remember I told you that
+
+7
+00:00:52,740 --> 00:00:58,740
+there is a filter possibility, so it is something similar to that, you create a mask which
+
+8
+00:00:59,460 --> 00:00:59,500
+is nothing but for every element filter scores above 90, so it goes through every element

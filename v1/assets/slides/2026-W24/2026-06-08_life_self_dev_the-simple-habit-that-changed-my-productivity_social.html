@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breath of Life - Social Content</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Nunito+Sans:wght@400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; }
+    .frame { display: none; position: relative; overflow: hidden; background: #1E1B2E; }
+    .frame.ig, .frame.th { width: 1080px; height: 1080px; }
+    .frame.li { width: 1200px; height: 628px; }
+    .frame.tw { width: 1200px; height: 675px; }
+
+    /* Left accent bar */
+    .frame::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 6px;
+      height: 100%;
+      background: #E8705A;
+      z-index: 15;
+    }
+
+    /* Decorative background - Life niche organic bokeh */
+    .bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .bokeh { position: absolute; border-radius: 50%; filter: blur(80px); }
+    .bokeh1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(239,149,133,0.35) 0%, transparent 70%); bottom: -150px; right: -100px; }
+    .bokeh2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(232,112,90,0.25) 0%, transparent 70%); top: -100px; left: -50px; filter: blur(100px); }
+    .bokeh3 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(239,149,133,0.2) 0%, transparent 70%); right: -200px; top: 50%; transform: translateY(-50%); }
+
+    /* Content layer */
+    .content {
+      position: absolute;
+      z-index: 10;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .frame.ig .content, .frame.th .content {
+      inset: 0;
+      align-items: center;
+      text-align: center;
+      padding: 80px 60px;
+    }
+
+    .frame.li .content, .frame.tw .content {
+      left: 0;
+      top: 0;
+      width: 55%;
+      height: 100%;
+      padding: 50px 60px;
+      justify-content: center;
+    }
+
+    .hook_text {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      color: rgba(255,255,255,0.95);
+      line-height: 1.2;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .frame.ig .hook_text, .frame.th .hook_text {
+      font-size: 70px;
+      max-width: 960px;
+    }
+
+    .frame.li .hook_text, .frame.tw .hook_text {
+      font-size: 56px;
+      max-width: 600px;
+    }
+
+    .sub_text {
+      font-family: 'Nunito Sans', sans-serif;
+      font-weight: 400;
+      color: #EF9585;
+      line-height: 1.4;
+      overflow: hidden;
+    }
+
+    .frame.ig .sub_text, .frame.th .sub_text {
+      font-size: 22px;
+      max-width: 900px;
+    }
+
+    .frame.li .sub_text, .frame.tw .sub_text {
+      font-size: 20px;
+      max-width: 500px;
+    }
+
+    /* Brand bar */
+    .brand_bar {
+      position: absolute;
+      bottom: 20px;
+      left: 26px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      z-index: 12;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame ig">
+    <div class="bg">
+      <div class="bokeh bokeh1"></div>
+      <div class="bokeh bokeh2"></div>
+    </div>
+    <div class="content">
+      <div class="hook_text">Productivity systems fail because they ask you to maintain a perfect structure across an imperfect life.</div>
+      <div class="sub_text">The most productive people I know don't have complicated systems.</div>
+    </div>
+    <div class="brand_bar">
+      <span>@mistakenlyhuman</span>
+      <span>Breath of Life</span>
+    </div>
+  </div>
+
+  <div class="frame li">
+    <div class="bg">
+      <div class="bokeh bokeh1"></div>
+      <div class="bokeh bokeh2"></div>
+      <div class="bokeh bokeh3"></div>
+    </div>
+    <div class="content">
+      <div class="hook_text">Productivity systems fail because they ask you to maintain a perfect structure across an imperfect life.</div>
+      <div class="sub_text">The most productive people I know don't have complicated systems.</div>
+    </div>
+    <div class="brand_bar">
+      <span>@mistakenlyhuman</span>
+      <span>Breath of Life</span>
+    </div>
+  </div>
+
+  <div class="frame th">
+    <div class="bg">
+      <div class="bokeh bokeh1"></div>
+      <div class="bokeh bokeh2"></div>
+    </div>
+    <div class="content">
+      <div class="hook_text">Productivity systems fail because they ask you to maintain a perfect structure across an imperfect life.</div>
+      <div class="sub_text">The most productive people I know don't have complicated systems.</div>
+    </div>
+    <div class="brand_bar">
+      <span>@mistakenlyhuman</span>
+      <span>Breath of Life</span>
+    </div>
+  </div>
+
+  <div class="frame tw">
+    <div class="bg">
+      <div class="bokeh bokeh1"></div>
+      <div class="bokeh bokeh2"></div>
+      <div class="bokeh bokeh3"></div>
+    </div>
+    <div class="content">
+      <div class="hook_text">Productivity systems fail because they ask you to maintain a perfect structure across an imperfect life.</div>
+      <div class="sub_text">The most productive people I know don't have complicated systems.</div>
+    </div>
+    <div class="brand_bar">
+      <span>@mistakenlyhuman</span>
+      <span>Breath of Life</span>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('.frame.ig').style.display = 'block';
+  </script>
+</body>
+</html>

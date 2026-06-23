@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:00,020
+So you can see equally spaced 5 points between 0 and 1.
+
+2
+00:00:00,020 --> 00:00:06,260
+Now the big conceptual shift, the single most important thing, numpy changes about how
+
+3
+00:00:06,340 --> 00:00:13,380
+you write code, you stop looping, you start describing operations, take a simple example,
+
+4
+00:00:13,380 --> 00:00:19,780
+you have an array which is a test scores and you want to double each one, in plain python
+
+5
+00:00:19,780 --> 00:00:24,700
+you would write a loop up and to a new list and you would have your answer eventually or
+
+6
+00:00:24,700 --> 00:00:30,420
+you could use a list comprehension as well, in numpy you can directly write scores into
+
+7
+00:00:30,420 --> 00:00:31,420
+2.
+
+8
+00:00:31,420 --> 00:00:38,420
+So let us take this course for example, so if I just here, if I do this and let me comment
+
+9
+00:00:48,100 --> 00:00:55,100
+out the rest of the things, so you can see all the elements inside the numpy array got
+
+10
+00:00:55,860 --> 00:00:55,900
+doubled, that is it, numpy applies the same multiplication to every element in optimized

@@ -1,0 +1,47 @@
+1
+00:00:00,000 --> 00:00:00,020
+what is held in memory, integers 64 by default for integers, float 64 for decimals.
+
+2
+00:00:00,020 --> 00:00:04,620
+Beyond converting existing data, there are three utility constructors you will reach
+
+3
+00:00:04,620 --> 00:00:06,100
+for constantly.
+
+4
+00:00:06,100 --> 00:00:14,900
+So these constructors are np.0, so what it does is it creates a numpy array of zeros,
+
+5
+00:00:14,900 --> 00:00:20,940
+whatever you provide in the parenthesis is the number of item in the numpy array, np.1
+
+6
+00:00:20,940 --> 00:00:28,560
+has a function to create numpy array of ones and then np.arrange works like python built
+
+7
+00:00:28,560 --> 00:00:35,640
+in range but outputs and array and it handles floats cleanly for a fixed number of evenly
+
+8
+00:00:35,640 --> 00:00:37,220
+spaced points.
+
+9
+00:00:37,220 --> 00:00:43,820
+np.lin space is cleaner, you give it a start, then you give it a stop and how many points
+
+10
+00:00:43,820 --> 00:00:46,420
+you want and it handles the spacing.
+
+11
+00:00:46,420 --> 00:00:51,780
+These are how you create access values for plots and percentile scales before you even
+
+12
+00:00:51,780 --> 00:00:51,800
+load a data set or rather you can see the output here but in case you want to see I can

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NumPy: The Art of Thinking in Arrays — Slide Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #1C1C2E;
+  --panel:  #13131F;
+  --teal:   #00D4AA;
+  --violet: #7B61FF;
+  --cream:  #E8E0D5;
+  --steel:  #7C9CB0;
+  --amber:  #C9A96E;
+  --dim:    rgba(232,224,213,0.55);
+  --ff: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'Fira Code', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #0D0D17; }
+
+.slide-canvas { position: fixed; width: 1920px; height: 1080px; top: 50%; left: 50%; transform-origin: center center; }
+.slide-canvas > section {
+  position: absolute; inset: 0; opacity: 0; visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+  background: var(--navy); font-family: var(--ff); color: var(--cream); overflow: hidden;
+}
+.slide-canvas > section[data-active] { opacity: 1; visibility: visible; }
+
+/* faint structural grid */
+.grid-tex {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(124,156,176,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,156,176,0.04) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+.glow { position: absolute; z-index: 0; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0,212,170,0.14) 0%, transparent 100%); filter: blur(10px); }
+.pad { position: absolute; inset: 0; z-index: 2; padding: 88px 96px; display: flex; flex-direction: column; }
+
+/* shared type */
+.eyebrow { font-family: var(--mono); font-weight: 500; font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
+.s-head { font-weight: 800; font-size: 64px; letter-spacing: -0.02em; line-height: 1.02; color: var(--cream); margin-top: 20px; }
+.bullets { list-style: none; margin-top: 56px; display: flex; flex-direction: column; gap: 30px; }
+.bullets li { font-weight: 500; font-size: 30px; line-height: 1.35; color: var(--dim); padding-left: 40px; position: relative; max-width: 1180px; }
+.bullets li::before { content: ''; position: absolute; left: 0; top: 16px; width: 16px; height: 2px; background: var(--teal); }
+.bullets li b { color: var(--cream); font-weight: 700; }
+.bullets li .t { color: var(--teal); font-weight: 600; }
+
+/* code panel */
+.code-panel { position: relative; background: var(--panel); border: 1px solid rgba(124,156,176,0.14); border-radius: 14px;
+  box-shadow: 0 30px 70px -30px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.03); padding: 56px 56px 50px; }
+.code-panel::before { content: ''; position: absolute; left: 0; top: 26px; bottom: 26px; width: 3px;
+  background: var(--teal); border-radius: 0 3px 3px 0; box-shadow: 0 0 18px rgba(0,212,170,0.5); }
+pre.code { font-family: var(--mono); font-weight: 500; color: var(--cream); line-height: 1.5; white-space: pre; }
+pre.code .k  { color: var(--violet); }   /* keyword */
+pre.code .np { color: var(--violet); }   /* numpy / builtin call */
+pre.code .s  { color: var(--amber); }    /* string */
+pre.code .c  { color: var(--steel); }    /* comment text */
+pre.code .o  { color: var(--teal); }     /* output value */
+
+/* nav (hidden during export via opacity) */
+.slide-nav { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 9999;
+  display: flex; align-items: center; gap: 16px; background: rgba(13,13,23,0.85); border-radius: 999px;
+  padding: 6px 16px; opacity: 0; transition: opacity 220ms ease; }
+.slide-nav:hover, .slide-nav[data-visible] { opacity: 1; }
+.slide-nav button { background: none; border: none; color: var(--steel); font-family: var(--mono); font-size: 13px; cursor: pointer; padding: 4px 6px; }
+.slide-counter { color: var(--steel); font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em; }
+
+.handle { position: absolute; right: 96px; bottom: 56px; z-index: 6; font-family: var(--mono); font-size: 20px; color: var(--steel); letter-spacing: 0.04em; }
+.sidebar { position: absolute; right: 0; top: 0; bottom: 0; width: 360px; z-index: 3; padding: 0 96px 0 40px;
+  display: flex; align-items: center; }
+.sidebar p { font-weight: 600; font-size: 28px; line-height: 1.4; color: var(--cream); }
+.sidebar p .t { color: var(--teal); }
+.callout { font-family: var(--mono); font-size: 22px; color: var(--teal); }
+
+/* ── Slide 1 hero ── */
+.hero { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+.hero .label { font-family: var(--mono); font-size: 24px; color: var(--steel); letter-spacing: 0.1em; }
+.hero h1 { font-weight: 900; font-size: 84px; letter-spacing: -0.03em; line-height: 1.0; margin: 26px 0 0; }
+.hero .mega { font-weight: 900; font-size: 96px; letter-spacing: -0.02em; text-transform: uppercase; line-height: 0.98; margin-top: 54px; }
+.hero .mega .t { color: var(--teal); }
+.hero .lede { font-weight: 500; font-size: 32px; color: var(--dim); margin-top: 40px; max-width: 1180px; line-height: 1.35; }
+.hero-split { position: absolute; right: 96px; top: 50%; transform: translateY(-50%); z-index: 1;
+  display: flex; align-items: center; gap: 44px; }
+.hero-old { font-family: var(--mono); font-size: 26px; color: rgba(124,156,176,0.40); filter: blur(0.6px); line-height: 1.7; text-align: right; }
+.hero-div { width: 1px; height: 240px; background: rgba(124,156,176,0.4); }
+.hero-new { font-family: var(--mono); font-weight: 700; font-size: 40px; color: var(--teal); text-shadow: 0 0 24px rgba(0,212,170,0.45); }
+
+/* ── perf panels (slide 2) ── */
+.perf { display: flex; gap: 40px; margin-top: 64px; align-items: stretch; }
+.perf .col { flex: 1; background: var(--panel); border: 1px solid rgba(124,156,176,0.14); border-radius: 14px; padding: 48px;
+  display: flex; flex-direction: column; gap: 24px; box-shadow: 0 24px 60px -34px rgba(0,0,0,0.9); }
+.perf .col .name { font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; color: var(--steel); }
+.perf .timer { font-weight: 800; font-size: 110px; letter-spacing: -0.03em; line-height: 1; }
+.perf .slow .timer { color: #D4756B; }
+.perf .fast .timer { color: var(--teal); }
+.perf .col .meta { font-size: 22px; color: var(--dim); }
+.perf-same { text-align: center; font-family: var(--mono); font-size: 22px; color: var(--steel); margin-top: 36px; letter-spacing: 0.1em; }
+
+/* ── memory diagram (slide 3) ── */
+.memrow { display: flex; gap: 64px; margin-top: 60px; }
+.memcol { flex: 1; }
+.memcol .cap { font-family: var(--mono); font-size: 22px; color: var(--steel); margin-bottom: 24px; letter-spacing: 0.06em; }
+.cells { display: flex; gap: 14px; flex-wrap: wrap; }
+.cell { width: 116px; height: 92px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 18px; }
+.scatter .cell { background: rgba(124,156,176,0.08); border: 1px dashed rgba(124,156,176,0.3); color: var(--steel); position: relative; }
+.scatter .cell:nth-child(2) { transform: translateY(26px); }
+.scatter .cell:nth-child(4) { transform: translateY(18px); }
+.contig .cell { background: rgba(0,212,170,0.10); border: 1px solid rgba(0,212,170,0.5); color: var(--teal); }
+.mem-note { margin-top: 50px; font-weight: 600; font-size: 26px; color: var(--cream); }
+
+/* ── axis mnemonic (slide 8) ── */
+.axis-side { position: absolute; right: 0; top: 0; bottom: 0; width: 420px; z-index: 3; padding: 0 96px 0 32px;
+  display: flex; flex-direction: column; justify-content: center; gap: 48px; }
+.axis-side .ax { font-family: var(--mono); font-size: 24px; color: var(--teal); display: flex; align-items: center; gap: 18px; }
+.axis-side .ax .ar { font-size: 40px; }
+
+/* ── takeaway (slide 9) ── */
+.takeaway { justify-content: center; align-items: flex-start; }
+.takeaway .line { font-weight: 800; font-size: 60px; letter-spacing: -0.02em; line-height: 1.25; color: var(--dim); }
+.takeaway .line.peak { color: var(--cream); }
+.takeaway .line.peak .t { color: var(--teal); }
+.takeaway .next { font-size: 28px; color: var(--steel); margin-top: 64px; max-width: 1240px; line-height: 1.45; }
+</style>
+</head>
+<body>
+
+<div class="slide-nav" id="nav">
+  <button id="prev-btn" aria-label="Previous">←</button>
+  <span class="slide-counter" id="counter">1 / 9</span>
+  <button id="next-btn" aria-label="Next">→</button>
+</div>
+
+<div class="slide-canvas" id="canvas">
+
+<!-- 01 — HERO -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="glow" style="width:720px;height:720px;left:-200px;bottom:-220px;"></div>
+  <div class="pad hero">
+    <span class="label">Tutorial 3/10 — Python for Data Science</span>
+    <h1>NumPy: The Art of<br>Thinking in Arrays</h1>
+    <div class="mega">Stop looping.<br><span class="t">Start describing.</span></div>
+    <p class="lede">The mental shift that makes your Python actually fast — and makes Pandas make sense.</p>
+  </div>
+  <div class="hero-split">
+    <div class="hero-old">for s in scores:<br>&nbsp;&nbsp;&nbsp;&nbsp;result.append(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s * 2)</div>
+    <div class="hero-div"></div>
+    <div class="hero-new">scores * 2</div>
+  </div>
+</section>
+
+<!-- 02 — PERFORMANCE PROBLEM -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="pad">
+    <span class="eyebrow">The Performance Problem</span>
+    <h2 class="s-head">Why Python Loops Aren't Enough</h2>
+    <div class="perf">
+      <div class="col slow">
+        <span class="name">PYTHON LOOP</span>
+        <div class="timer">12.0s</div>
+        <span class="meta">1,000,000 numbers · flexible, interpreted, slow</span>
+      </div>
+      <div class="col fast">
+        <span class="name">NUMPY</span>
+        <div class="timer">0.08s</div>
+        <span class="meta">Same result · compiled, contiguous, vectorized</span>
+      </div>
+    </div>
+    <p class="perf-same">SAME RESULT · 50–200× FASTER — STRUCTURAL, NOT MARGINAL</p>
+  </div>
+</section>
+
+<!-- 03 — WHAT NDARRAY IS -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="pad">
+    <span class="eyebrow">ndarray: The Different Tradeoff</span>
+    <h2 class="s-head">What NumPy Arrays Actually Are</h2>
+    <div class="memrow">
+      <div class="memcol">
+        <div class="cap">Python list — pointer-chasing</div>
+        <div class="cells scatter">
+          <div class="cell">int</div><div class="cell">str</div><div class="cell">float</div><div class="cell">bool</div>
+        </div>
+      </div>
+      <div class="memcol">
+        <div class="cap">NumPy ndarray — contiguous memory</div>
+        <div class="cells contig">
+          <div class="cell">int64</div><div class="cell">int64</div><div class="cell">int64</div><div class="cell">int64</div>
+        </div>
+      </div>
+    </div>
+    <p class="mem-note">Same type, packed tight → operations run in compiled <span style="color:var(--teal)">C and Fortran</span>.<br>Foundation of Pandas · scikit-learn · TensorFlow · PyTorch.</p>
+  </div>
+</section>
+
+<!-- 04 — CREATING ARRAYS -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="pad" style="padding-right:420px;">
+    <span class="eyebrow">CODE · Creating Arrays</span>
+    <h2 class="s-head" style="font-size:52px;">3 Ways to Create Arrays</h2>
+    <div class="code-panel" style="margin-top:40px;">
+<pre class="code"><span class="k">import</span> numpy <span class="k">as</span> np
+
+<span class="c"># From a Python list — most common starting point</span>
+scores = np.<span class="np">array</span>([85, 92, 78, 95, 88])
+<span class="np">print</span>(scores)         <span class="c"># </span><span class="o">[85 92 78 95 88]</span>
+<span class="np">print</span>(<span class="np">type</span>(scores))   <span class="c"># &lt;class 'numpy.ndarray'&gt;</span>
+<span class="np">print</span>(scores.dtype)   <span class="c"># </span><span class="o">int64</span><span class="c"> — all elements are 64-bit integers</span>
+
+<span class="c"># From scratch — utility constructors</span>
+zeros  = np.<span class="np">zeros</span>(5)           <span class="c"># </span><span class="o">[0. 0. 0. 0. 0.]</span>
+ones   = np.<span class="np">ones</span>(5)            <span class="c"># </span><span class="o">[1. 1. 1. 1. 1.]</span>
+rng    = np.<span class="np">arange</span>(0, 10, 2)   <span class="c"># </span><span class="o">[0 2 4 6 8]</span>
+grid   = np.<span class="np">linspace</span>(0, 1, 6)  <span class="c"># </span><span class="o">[0.  0.2 0.4 0.6 0.8 1.0]</span></pre>
+    </div>
+  </div>
+  <div class="sidebar"><p><span class="t">dtype</span> tells you exactly what's in memory. No commas in output = NumPy, not a list.</p></div>
+</section>
+
+<!-- 05 — VECTORIZED OPERATIONS -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="pad">
+    <span class="eyebrow">CODE · Vectorized Operations</span>
+    <h2 class="s-head" style="font-size:52px;">Stop Looping. Start Describing.</h2>
+    <div class="code-panel" style="margin-top:36px;">
+<pre class="code"><span class="k">import</span> numpy <span class="k">as</span> np
+scores = np.<span class="np">array</span>([85, 92, 78, 95, 88])
+
+<span class="c"># Python loop — don't do this</span>
+<span style="opacity:0.55;">doubled_slow = []
+<span class="k">for</span> s <span class="k">in</span> scores:
+    doubled_slow.append(s * 2)   <span class="c"># 5 iterations, Python overhead</span></span>
+
+<span class="c"># NumPy vectorized — do this instead</span>
+doubled_fast = scores * 2
+<span class="np">print</span>(doubled_fast)  <span class="c"># </span><span class="o">[170 184 156 190 176]</span>
+
+<span class="c"># All of these run in compiled C — no Python loop required</span>
+<span class="np">print</span>(scores + 5)                  <span class="c"># </span><span class="o">[90 97 83 100 93]</span>
+<span class="np">print</span>(scores - scores.mean())      <span class="c"># deviations from mean</span>
+<span class="np">print</span>(scores ** 2)                 <span class="c"># </span><span class="o">[7225 8464 6084 9025 7744]</span>
+<span class="np">print</span>(np.<span class="np">sqrt</span>(scores))             <span class="c"># </span><span class="o">[9.22 9.59 8.83 9.75 9.38]</span></pre>
+    </div>
+    <p class="callout" style="margin-top:30px;">One line. Entire array. Compiled execution.</p>
+  </div>
+</section>
+
+<!-- 06 — BOOLEAN INDEXING -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="pad">
+    <span class="eyebrow">CODE · Boolean Indexing</span>
+    <h2 class="s-head" style="font-size:52px;">Filter Without a Loop</h2>
+    <div class="code-panel" style="margin-top:40px;">
+<pre class="code"><span class="k">import</span> numpy <span class="k">as</span> np
+scores = np.<span class="np">array</span>([85, 92, 78, 95, 88])
+
+above_90 = scores &gt; 90
+<span class="np">print</span>(above_90)         <span class="c"># </span><span class="o">[False  True False  True False]</span>
+
+high_scores = scores[above_90]
+<span class="np">print</span>(high_scores)      <span class="c"># </span><span class="o">[92 95]</span>
+
+<span class="c"># Same thing — one line</span>
+<span class="np">print</span>(scores[scores &gt; 90])  <span class="c"># </span><span class="o">[92 95]</span></pre>
+    </div>
+    <p class="callout" style="margin-top:34px;"><span style="font-style:italic;">df[df["column"] &gt; value]</span> &nbsp;<span style="color:var(--steel);">— this is Pandas filtering. You already know how it works.</span></p>
+  </div>
+</section>
+
+<!-- 07 — AGGREGATIONS + IQR -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="pad" style="padding-top:64px;">
+    <span class="eyebrow">CODE · Aggregations &amp; IQR Outlier Detection</span>
+    <h2 class="s-head" style="font-size:48px;">Stats in One Method Call → Then Outliers</h2>
+    <div class="code-panel" style="margin-top:30px;padding:40px 56px;">
+<pre class="code" style="font-size:25px;"><span class="k">import</span> numpy <span class="k">as</span> np
+salaries = np.<span class="np">array</span>([85000, 92000, 78000, 95000, 88000, 110000, 74000])
+
+<span class="c"># Descriptive statistics</span>
+<span class="np">print</span>(salaries.mean())          <span class="c"># </span><span class="o">88857.14</span>
+<span class="np">print</span>(salaries.std())           <span class="c"># </span><span class="o">11580.51</span>
+<span class="np">print</span>(salaries.min(), salaries.max())  <span class="c"># </span><span class="o">74000  110000</span>
+
+<span class="c"># Percentiles — IQR outlier detection</span>
+q25 = np.<span class="np">percentile</span>(salaries, 25)   <span class="c"># </span><span class="o">83000.0</span>
+q75 = np.<span class="np">percentile</span>(salaries, 75)   <span class="c"># </span><span class="o">93500.0</span>
+iqr = q75 - q25                     <span class="c"># </span><span class="o">10500.0</span>
+upper_fence = q75 + 1.5 * iqr       <span class="c"># </span><span class="o">109250.0</span>
+lower_fence = q25 - 1.5 * iqr       <span class="c"># </span><span class="o">67250.0</span>
+
+outliers = salaries[(salaries &gt; upper_fence) | (salaries &lt; lower_fence)]
+<span class="np">print</span>(outliers)  <span class="c"># </span><span class="o">[110000]</span>  <span class="c">← flagged, automatically</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- 08 — 2D ARRAYS AND AXIS -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="pad" style="padding-right:440px;">
+    <span class="eyebrow">CODE · 2D Arrays and Axis</span>
+    <h2 class="s-head" style="font-size:50px;">Rows, Columns, and the Axis Rule</h2>
+    <div class="code-panel" style="margin-top:34px;padding:44px 56px;">
+<pre class="code" style="font-size:25px;"><span class="k">import</span> numpy <span class="k">as</span> np
+data = np.<span class="np">array</span>([
+    [85, 92, 78, 95],   <span class="c"># student 1</span>
+    [70, 88, 91, 84],   <span class="c"># student 2</span>
+    [93, 76, 89, 77]    <span class="c"># student 3</span>
+])
+
+<span class="np">print</span>(data.shape)   <span class="c"># </span><span class="o">(3, 4)</span><span class="c"> — 3 rows, 4 columns</span>
+<span class="np">print</span>(data[0, 2])   <span class="c"># </span><span class="o">78</span><span class="c"> — row 0, column 2</span>
+<span class="np">print</span>(data[:, 2])   <span class="c"># </span><span class="o">[78 91 89]</span><span class="c"> — all rows, column 2</span>
+
+column_means = data.mean(axis=0)  <span class="c"># </span><span class="o">[82.67 85.33 86.   85.33]</span>
+row_means    = data.mean(axis=1)  <span class="c"># </span><span class="o">[87.5  83.25 83.75]</span></pre>
+    </div>
+  </div>
+  <div class="axis-side">
+    <div class="ax"><span class="ar">↓</span> axis=0 — collapses rows</div>
+    <div class="ax"><span class="ar">→</span> axis=1 — collapses columns</div>
+    <p style="font-family:var(--mono);font-size:19px;color:var(--steel);line-height:1.5;">axis=0 down · axis=1 across.<br>Repeat until automatic.</p>
+  </div>
+</section>
+
+<!-- 09 — TAKEAWAY -->
+<section>
+  <div class="grid-tex"></div>
+  <div class="glow" style="width:680px;height:680px;right:-200px;top:-180px;"></div>
+  <div class="pad takeaway">
+    <span class="eyebrow" style="margin-bottom:48px;">The Mental Shift</span>
+    <div class="line">Lists taught you to sequence.</div>
+    <div class="line">Dicts taught you to map.</div>
+    <div class="line peak">NumPy teaches you to operate<br>on <span class="t">the whole thing at once.</span></div>
+    <p class="next">Next: Pandas wraps this in column names and row labels. Everything you learned here carries forward directly.</p>
+  </div>
+  <span class="handle">@breathofdatascience</span>
+</section>
+
+</div><!-- /.slide-canvas -->
+
+<script>
+(function () {
+  'use strict';
+  var canvas  = document.getElementById('canvas');
+  var slides  = Array.prototype.slice.call(canvas.querySelectorAll('section'));
+  var counter = document.getElementById('counter');
+  var nav     = document.getElementById('nav');
+  var TOTAL   = slides.length;
+  var current = 0, navTimer;
+
+  function fit() {
+    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    canvas.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+  }
+  function show(n) {
+    n = Math.max(0, Math.min(TOTAL - 1, n));
+    slides[current].removeAttribute('data-active');
+    current = n;
+    slides[current].setAttribute('data-active', '');
+    if (counter) counter.textContent = (current + 1) + ' / ' + TOTAL;
+    showNav();
+  }
+  function showNav() {
+    nav.setAttribute('data-visible', '');
+    clearTimeout(navTimer);
+    navTimer = setTimeout(function () { nav.removeAttribute('data-visible'); }, 2000);
+  }
+
+  slides[0].setAttribute('data-active', '');
+  fit();
+  window.addEventListener('resize', fit);
+
+  document.getElementById('prev-btn').addEventListener('click', function () { show(current - 1); });
+  document.getElementById('next-btn').addEventListener('click', function () { show(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') { show(0); } else if (e.key === 'End') { show(TOTAL - 1); }
+  });
+  document.addEventListener('mousemove', showNav, { passive: true });
+
+  /* ── Export contract for scripts/export_html_deck.py ── */
+  var SLUG = '2026-06-01_data_science_tech_python-for-data-science-tutorial-310';
+  window.__exportFrames = slides.map(function (_, i) {
+    return { file: 'slide_' + (i + 1) + '.png', w: 1920, h: 1080 };
+  });
+  window.__showFrame = function (i) {
+    slides.forEach(function (s, j) {
+      if (j === i) s.setAttribute('data-active', '');
+      else s.removeAttribute('data-active');
+    });
+    current = i;
+    fit();
+  };
+})();
+</script>
+</body>
+</html>

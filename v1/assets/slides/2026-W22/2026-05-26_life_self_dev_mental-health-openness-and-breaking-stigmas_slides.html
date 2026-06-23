@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lie We Inherited About Strength</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-Black.ttf') format('truetype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-ExtraBold.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-Italic.ttf') format('truetype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('fonts/Montserrat-LightItalic.ttf') format('truetype'); font-weight: 300; font-style: italic; font-display: swap; }
+
+:root {
+  /* ── Palette ───────────────────────────────── */
+  --base:          #F5F0E8;
+  --amber:         #C9A96E;
+  --brown:         #8B6F5E;
+  --offwhite:      #FFFBF0;
+  --darkbg:        #1A1A1A;
+  --ink:           #1A1A1A;
+
+  --offwhite-dim:  rgba(255,251,240,0.62);
+  --offwhite-mute: rgba(255,251,240,0.36);
+  --amber-rule:    rgba(201,169,110,0.55);
+  --brown-rule:    rgba(139,111,94,0.38);
+
+  /* ── Type scale at 1920×1080 ───────────────── */
+  --t-mega:     154px;
+  --t-display:   96px;
+  --t-body:      32px;
+  --t-small:     26px;
+  --t-caption:   22px;
+  --t-micro:     18px;
+
+  /* ── Layout ────────────────────────────────── */
+  --px:  120px;
+  --pt:   92px;
+  --pb:   76px;
+
+  --ff: 'Montserrat', ui-sans-serif, sans-serif;
+  --fs: 'Instrument Serif', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a0a; font-family: var(--ff); }
+deck-stage section { font-family: var(--ff); overflow: hidden; }
+
+/* ── Ambient overlay layers ──────────────────── */
+.grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23g)'/></svg>");
+  opacity: 0.04; pointer-events: none; z-index: 4;
+}
+.grain.light { opacity: 0.022; }
+.vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 36%, rgba(8,8,8,0.68) 100%);
+  pointer-events: none; z-index: 3;
+}
+.content { position: absolute; inset: 0; z-index: 5; }
+
+/* ── Shared type pieces ──────────────────────── */
+.eyebrow {
+  display: block;
+  font-weight: 500;
+  font-size: var(--t-caption);
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--amber);
+  line-height: 1;
+}
+.eyebrow.on-light { color: var(--brown); opacity: 0.78; }
+
+.rule {
+  display: block;
+  height: 1px;
+  background: var(--amber);
+  opacity: 0.55;
+}
+.rule.on-light { background: var(--brown); opacity: 0.40; }
+
+/* Pull quote — amber rule above + below, Instrument Serif italic */
+.pull-quote { display: flex; flex-direction: column; gap: 18px; }
+.pq-rule { display: block; height: 1px; width: 52px; background: var(--amber); opacity: 0.55; }
+.pq-rule.on-light { background: var(--brown); opacity: 0.38; }
+.pq-text {
+  font-family: var(--fs);
+  font-style: italic;
+  font-size: var(--t-small);
+  color: var(--amber);
+  line-height: 1.52;
+}
+.pq-text.on-light { color: var(--brown); }
+
+/* Slide number — amber, bottom-left */
+.slide-num {
+  position: absolute;
+  bottom: 42px;
+  left: var(--px);
+  font-weight: 500;
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  color: var(--amber);
+  opacity: 0.60;
+  z-index: 6;
+}
+.slide-num.on-light { color: var(--brown); opacity: 0.50; }
+
+/* ── Entry animations ────────────────────────── */
+@keyframes imgFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes textSettle {
+  0%   { opacity: 0;    transform: translateY(7px); }
+  52%  { opacity: 0.70; transform: translateY(2px); }
+  100% { opacity: 1;    transform: translateY(0); }
+}
+
+.anim-img  { animation: imgFade    0.85s cubic-bezier(.2,.6,.2,1) both; }
+.anim-text { animation: textSettle 0.85s cubic-bezier(.2,.6,.2,1) backwards; animation-delay: 0.38s; }
+.anim-text.d1 { animation-delay: 0.52s; }
+.anim-text.d2 { animation-delay: 0.66s; }
+.anim-text.d3 { animation-delay: 0.80s; }
+.anim-text.d4 { animation-delay: 0.94s; }
+.anim-text.d5 { animation-delay: 1.08s; }
+</style>
+<style>deck-stage:not(:defined){visibility:hidden}</style>
+<script>
+(function () {
+  var _err = console.error.bind(console);
+  console.error = function () {
+    var s = Array.prototype.slice.call(arguments).join(' ');
+    if (s === 'Script error.' || s.indexOf('Script error.') === 0 && s.indexOf(':0:0') !== -1) return;
+    _err.apply(console, arguments);
+  };
+  window.onerror = function (msg, src) {
+    if (msg === 'Script error.' && !src) return true;
+  };
+  window.addEventListener('unhandledrejection', function (e) {
+    var r = e && e.reason;
+    if (r && String(r).indexOf('Script error') !== -1) { e.preventDefault(); }
+  });
+}());
+</script>
+<script src="deck-stage.js"></script>
+<script src="image-slot.js"></script>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 01 — HERO
+     Split-tone dark. No slide number.
+     ══════════════════════════════════════════════════════════════ -->
+<section data-label="01 Hero"
+  style="background:
+    radial-gradient(ellipse 62% 90% at 22% 52%, rgba(201,169,110,0.20) 0%, transparent 58%),
+    radial-gradient(ellipse 40% 55% at 6%  20%, rgba(155,105,34,0.14) 0%, transparent 52%),
+    linear-gradient(108deg, rgba(90,56,18,0.38) 0%, rgba(26,26,26,0) 52%),
+    #1A1A1A;">
+
+  <div class="grain"></div>
+  <div class="vignette" style="opacity: 0.50;"></div>
+
+  <!-- Warm left-half atmosphere -->
+  <div style="position:absolute; left:0; top:0; width:46%; height:100%;
+              background: linear-gradient(to right, rgba(201,169,110,0.07) 0%, transparent 100%);
+              z-index:2; pointer-events:none;"></div>
+
+  <!-- Soft vertical amber divide at split point -->
+  <div style="position:absolute; left:44%; top:0; width:2px; height:100%;
+              background: linear-gradient(to bottom, transparent 8%, rgba(201,169,110,0.18) 40%, rgba(201,169,110,0.22) 60%, transparent 92%);
+              z-index:2; pointer-events:none;"></div>
+
+  <div class="content" style="display:flex; flex-direction:column; justify-content:center; padding: var(--pt) 152px var(--pb);">
+
+    <span class="anim-text" style="display:block; font-weight:500; font-size:var(--t-caption);
+          letter-spacing:0.20em; text-transform:uppercase;
+          color:rgba(201,169,110,0.58); line-height:1; margin-bottom:52px;">
+      The Lie We Inherited About Strength
+    </span>
+
+    <div class="anim-text d1">
+      <p style="font-weight:900; font-size:var(--t-mega); color:var(--offwhite);
+                letter-spacing:-0.042em; line-height:0.88;">BREAK A BONE.</p>
+      <p style="font-weight:900; font-size:var(--t-mega); color:var(--offwhite);
+                letter-spacing:-0.042em; line-height:0.92; margin-top:0;">PEOPLE SHOW UP.</p>
+    </div>
+
+    <!-- Amber horizontal rule separating headline from subtitle -->
+    <div class="anim-text d2" style="margin: 58px 0 54px;">
+      <div class="rule" style="width: 500px;"></div>
+    </div>
+
+    <p class="anim-text d3" style="font-family:var(--fs); font-style:italic;
+       font-size:46px; line-height:1.34; color:var(--offwhite); opacity:0.74; max-width:680px;">
+      "Say you're drowning.<br>The room goes quiet."
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 02 — THE NUMBERS DON'T LIE
+     Dark. Ghost "40%" behind bullets. Amber thin rule above heading.
+     ══════════════════════════════════════════════════════════════ -->
+<section data-label="02 The Numbers Don't Lie"
+  style="background:
+    radial-gradient(ellipse 55% 65% at 94% 82%, rgba(155,108,36,0.14) 0%, transparent 52%),
+    radial-gradient(ellipse 38% 48% at 6%  10%, rgba(100,68,22,0.12) 0%, transparent 50%),
+    #1A1A1A;">
+
+  <div class="grain"></div>
+  <div class="vignette" style="opacity:0.38;"></div>
+
+  <!-- Ghost "40%" at massive scale -->
+  <div style="position:absolute; right:80px; top:50%; transform:translateY(-52%);
+              font-family:var(--ff); font-weight:900; font-size:420px;
+              color:var(--offwhite); opacity:0.038;
+              letter-spacing:-0.06em; line-height:1;
+              z-index:2; pointer-events:none; user-select:none;">40%</div>
+
+  <div class="content" style="display:flex; flex-direction:column; justify-content:center; padding: var(--pt) var(--px) var(--pb);">
+
+    <div class="anim-text" style="margin-bottom:40px;">
+      <div class="rule" style="width:52px; margin-bottom:30px;"></div>
+      <span style="display:block; font-weight:600; font-size:34px;
+                  letter-spacing:0.02em; color:var(--amber); line-height:1;">
+        The numbers don't lie
+      </span>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:34px; max-width:960px;">
+
+      <div class="anim-text d1" style="display:flex; align-items:baseline; gap:26px;">
+        <span style="color:var(--amber); font-weight:700; font-size:var(--t-body); flex-shrink:0; line-height:1;">—</span>
+        <p style="font-weight:300; font-size:var(--t-body); line-height:1.40; color:var(--offwhite);">
+          40% of men won't talk about their mental health —<br>not to friends, not to family, not to anyone.
+        </p>
+      </div>
+
+      <div class="anim-text d2" style="display:flex; align-items:baseline; gap:26px;">
+        <span style="color:var(--amber); font-weight:700; font-size:var(--t-body); flex-shrink:0; line-height:1;">—</span>
+        <p style="font-weight:300; font-size:var(--t-body); line-height:1.40; color:var(--offwhite-dim);">
+          Globally, men die by suicide at significantly<br>higher rates than women.
+        </p>
+      </div>
+
+      <div class="anim-text d3" style="display:flex; align-items:baseline; gap:26px;">
+        <span style="color:var(--amber); font-weight:700; font-size:var(--t-body); flex-shrink:0; line-height:1;">—</span>
+        <p style="font-weight:500; font-size:var(--t-body); line-height:1.40; color:var(--offwhite);">
+          This isn't weakness. It's a systemic failure<br>to give people permission to struggle out loud.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <span class="slide-num anim-text">02</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 03 — THE STIGMA IS INHERITED, NOT CHOSEN
+     Light beige. Draped-room photo right. Italic quotes indented.
+     ══════════════════════════════════════════════════════════════ -->
+<section data-label="03 The Stigma Is Inherited"
+  style="background:
+    radial-gradient(ellipse 48% 62% at 78% 44%, rgba(201,169,110,0.10) 0%, transparent 58%),
+    radial-gradient(ellipse 32% 42% at 12% 82%, rgba(139,111,94,0.07) 0%, transparent 52%),
+    #F5F0E8;">
+
+  <div class="grain light"></div>
+
+  <div class="content" style="display:flex; align-items:stretch;">
+
+    <!-- Left: text column -->
+    <div style="flex:0 0 54%; display:flex; flex-direction:column; justify-content:center;
+                padding: var(--pt) 72px var(--pb) var(--px);">
+
+      <div class="anim-text" style="margin-bottom:42px;">
+        <div class="rule on-light" style="width:48px; margin-bottom:26px;"></div>
+        <span class="eyebrow on-light">Inherited, not chosen</span>
+      </div>
+
+      <h2 class="anim-text d1" style="font-weight:800; font-size:var(--t-display); line-height:1.04;
+             letter-spacing:-0.026em; color:var(--ink); margin-bottom:52px; text-wrap:pretty;">
+        The stigma is<br>inherited, not chosen
+      </h2>
+
+      <div style="display:flex; flex-direction:column; gap:28px; max-width:660px;">
+
+        <div class="anim-text d2" style="display:flex; align-items:baseline; gap:20px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0; line-height:1;">—</span>
+          <p style="font-family:var(--fs); font-style:italic; font-size:var(--t-body);
+                   line-height:1.42; color:var(--ink); opacity:0.72; padding-left:6px;">
+            "Real men don't cry."
+          </p>
+        </div>
+
+        <div class="anim-text d3" style="display:flex; align-items:baseline; gap:20px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0; line-height:1;">—</span>
+          <p style="font-family:var(--fs); font-style:italic; font-size:var(--t-body);
+                   line-height:1.42; color:var(--ink); opacity:0.72; padding-left:6px;">
+            "Therapy is for people who can't handle life."
+          </p>
+        </div>
+
+        <div class="anim-text d4" style="display:flex; align-items:baseline; gap:20px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0; line-height:1;">—</span>
+          <p style="font-weight:300; font-size:var(--t-body); line-height:1.42; color:var(--ink); opacity:0.78;">
+            These scripts ran so long they became wallpaper —<br>nobody notices them, but they're still running.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right: photo -->
+    <div class="anim-img" style="flex:0 0 46%; padding: 52px 60px 52px 28px;">
+      <image-slot id="s3-photo" shape="rect"
+        placeholder="Dusty room · draped furniture · warm afternoon light · inherited things"
+        style="width:100%; height:100%; display:block;" src="photos/mental-health/s3-photo.jpg"></image-slot>
+    </div>
+
+  </div>
+
+  <span class="slide-num on-light anim-text">03</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 04 — WE CONFUSE SUPPORT WITH PROBLEM-SOLVING
+     Light. Photo bleeds left edge. Pull quote with amber rules.
+     ══════════════════════════════════════════════════════════════ -->
+<section data-label="04 We Confuse Support"
+  style="background:
+    radial-gradient(ellipse 38% 52% at 2% 52%, rgba(201,169,110,0.08) 0%, transparent 58%),
+    #F5F0E8;">
+
+  <div class="grain light"></div>
+
+  <div class="content" style="display:flex; align-items:stretch;">
+
+    <!-- Left: photo bleeds to left edge -->
+    <div class="anim-img" style="flex:0 0 36%;">
+      <image-slot id="s4-photo" shape="rect"
+        placeholder="Two people · table · laptop open · one looking away · warm indoor light"
+        style="width:100%; height:100%; display:block; border-radius:0;" src="photos/mental-health/s4-photo.jpg"></image-slot>
+    </div>
+
+    <!-- Right: text -->
+    <div style="flex:0 0 64%; display:flex; flex-direction:column; justify-content:center;
+                padding: var(--pt) var(--px) var(--pb) 72px;">
+
+      <div class="anim-text" style="margin-bottom:42px;">
+        <div class="rule on-light" style="width:48px; margin-bottom:26px;"></div>
+        <span class="eyebrow on-light">Where we go wrong</span>
+      </div>
+
+      <h2 class="anim-text d1" style="font-weight:800; font-size:var(--t-display); line-height:1.04;
+             letter-spacing:-0.026em; color:var(--ink); margin-bottom:48px;">
+        We confuse support<br>with problem-solving
+      </h2>
+
+      <div style="display:flex; flex-direction:column; gap:24px; max-width:740px; margin-bottom:50px;">
+
+        <div class="anim-text d2" style="display:flex; align-items:baseline; gap:22px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+          <p style="font-weight:300; font-size:var(--t-body); line-height:1.42; color:var(--ink); opacity:0.78;">
+            Someone calls because they need to be heard.
+          </p>
+        </div>
+
+        <div class="anim-text d3" style="display:flex; align-items:baseline; gap:22px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+          <p style="font-weight:300; font-size:var(--t-body); line-height:1.42; color:var(--ink); opacity:0.78;">
+            We reach for budgeting tools, action plans, and logic.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Pull quote with amber rules above + below -->
+      <div class="pull-quote anim-text d4">
+        <div class="pq-rule"></div>
+        <p class="pq-text">Some moments don't need a mechanic.<br>They need a witness.</p>
+        <div class="pq-rule"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <span class="slide-num on-light anim-text">04</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 05 — THE PERSONAL TRAINER DOUBLE STANDARD
+     Light. Text column left. Split image panels right.
+     ══════════════════════════════════════════════════════════════ -->
+<section data-label="05 The Personal Trainer Double Standard"
+  style="background: #F5F0E8;">
+
+  <div class="grain light"></div>
+
+  <div class="content" style="display:flex; align-items:stretch;">
+
+    <!-- Left: text column -->
+    <div style="flex:0 0 40%; display:flex; flex-direction:column; justify-content:center;
+                padding: var(--pt) 64px var(--pb) var(--px);">
+
+      <div class="anim-text" style="margin-bottom:40px;">
+        <div class="rule on-light" style="width:48px; margin-bottom:26px;"></div>
+        <span class="eyebrow on-light">The double standard</span>
+      </div>
+
+      <h2 class="anim-text d1" style="font-weight:800; font-size:var(--t-display); line-height:1.04;
+             letter-spacing:-0.026em; color:var(--ink); margin-bottom:50px;">
+        The personal trainer<br>double standard
+      </h2>
+
+      <div style="display:flex; flex-direction:column; gap:26px;">
+
+        <div class="anim-text d2" style="display:flex; align-items:baseline; gap:22px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+          <p style="font-weight:300; font-size:var(--t-body); line-height:1.42; color:var(--ink); opacity:0.78;">
+            No stigma: hiring a personal trainer<br>to get physically stronger.
+          </p>
+        </div>
+
+        <div class="anim-text d3" style="display:flex; align-items:baseline; gap:22px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+          <p style="font-weight:300; font-size:var(--t-body); line-height:1.42; color:var(--ink); opacity:0.78;">
+            Automatic stigma: hiring a therapist<br>to get emotionally stronger.
+          </p>
+        </div>
+
+        <!-- Final bullet — amber, heavier weight -->
+        <div class="anim-text d4" style="display:flex; align-items:baseline; gap:22px; margin-top:8px;">
+          <span style="color:var(--amber); font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+          <p style="font-weight:700; font-size:34px; line-height:1.34; color:var(--amber);">
+            Same logic. Completely different<br>social response.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right: vertical split panels -->
+    <div style="flex:0 0 60%; display:flex; overflow:hidden;">
+
+      <!-- Panel A: open gym door -->
+      <div class="anim-img" style="flex:1; position:relative; overflow:hidden;">
+        <image-slot id="s5-gym" shape="rect"
+          placeholder="Gym · open door · warm inviting light spilling out"
+          style="width:100%; height:100%; display:block; border-radius:0;" src="photos/mental-health/s5-gym.jpg"></image-slot>
+        <div style="position:absolute; inset:0; background:rgba(139,111,94,0.20); pointer-events:none;"></div>
+      </div>
+
+      <!-- Thin amber vertical rule between panels -->
+      <div style="width:1px; flex-shrink:0; background:rgba(201,169,110,0.30); z-index:2;"></div>
+
+      <!-- Panel B: closed door -->
+      <div class="anim-img d1" style="flex:1; position:relative; overflow:hidden;">
+        <image-slot id="s5-door" shape="rect"
+          placeholder="Closed door · frosted glass · same framing · door shut"
+          style="width:100%; height:100%; display:block; border-radius:0;" src="photos/mental-health/s5-door.jpg"></image-slot>
+        <div style="position:absolute; inset:0; background:rgba(139,111,94,0.20); pointer-events:none;"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <span class="slide-num on-light anim-text">05</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 06 — TWO KINDS OF STRENGTH  (emotional peak)
+     Full-bleed dark. Abstract SVG forms. Standalone pull quote.
+     ══════════════════════════════════════════════════════════════ -->
+<section data-label="06 Two Kinds of Strength"
+  style="background:
+    radial-gradient(ellipse 55% 45% at 50%  -5%, rgba(201,169,110,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 55% at 98% 100%, rgba(140,100,32,0.10) 0%, transparent 50%),
+    #1A1A1A;">
+
+  <div class="grain"></div>
+  <div class="vignette" style="opacity:0.45;"></div>
+
+  <!-- Abstract material forms — SVG, bottom-right -->
+  <div class="anim-img" style="position:absolute; right:100px; bottom:48px; display:flex; gap:120px; align-items:flex-end; z-index:2; pointer-events:none;">
+
+    <!-- Angular fractured form — rigidity breaking under pressure -->
+    <svg width="240" height="280" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M 75 12 L 165 12 L 162 148 L 78 148 Z" stroke="#C9A96E" stroke-width="2" opacity="0.68"/>
+      <path d="M 72 155 L 160 155 L 167 268 L 65 268 Z" stroke="#C9A96E" stroke-width="2" opacity="0.68"/>
+      <path d="M 120 12 L 138 78 L 108 118 L 130 148" stroke="#C9A96E" stroke-width="1.5" opacity="0.52" stroke-dasharray="6 3"/>
+      <path d="M 118 155 L 132 200 L 112 240 L 124 268" stroke="#C9A96E" stroke-width="1.5" opacity="0.42" stroke-dasharray="6 3"/>
+      <line x1="138" y1="78"  x2="162" y2="92"  stroke="#C9A96E" stroke-width="1" opacity="0.30"/>
+      <line x1="108" y1="118" x2="80"  y2="130" stroke="#C9A96E" stroke-width="1" opacity="0.28"/>
+      <line x1="120" y1="0"  x2="120" y2="12" stroke="#C9A96E" stroke-width="2" opacity="0.55"/>
+      <polygon points="120,12 113,3 127,3" fill="#C9A96E" opacity="0.48"/>
+    </svg>
+
+    <!-- Curved flexed form — bowed under pressure but intact -->
+    <svg width="240" height="280" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M 18 268 C 18 268 28 52 120 22 C 212 52 222 268 222 268" stroke="#C9A96E" stroke-width="2" opacity="0.68"/>
+      <path d="M 46 268 C 46 268 56 85 120 58 C 184 85 194 268 194 268" stroke="#C9A96E" stroke-width="2" opacity="0.44"/>
+      <line x1="18"  y1="268" x2="4"   y2="268" stroke="#C9A96E" stroke-width="2" opacity="0.42"/>
+      <line x1="222" y1="268" x2="236" y2="268" stroke="#C9A96E" stroke-width="2" opacity="0.42"/>
+      <line x1="120" y1="6"  x2="120" y2="22" stroke="#C9A96E" stroke-width="2" opacity="0.60"/>
+      <polygon points="120,22 113,10 127,10" fill="#C9A96E" opacity="0.52"/>
+    </svg>
+
+  </div>
+
+  <div class="content" style="display:flex; flex-direction:column; justify-content:center; padding: var(--pt) var(--px) 80px; max-width:1200px;">
+
+    <div class="anim-text" style="margin-bottom:40px;">
+      <div class="rule" style="width:48px; margin-bottom:26px;"></div>
+      <span class="eyebrow">What strength actually is</span>
+    </div>
+
+    <h2 class="anim-text d1" style="font-weight:800; font-size:var(--t-display); line-height:1.04;
+           letter-spacing:-0.026em; color:var(--offwhite); margin-bottom:48px;">
+      Two kinds of strength
+    </h2>
+
+    <div style="display:flex; flex-direction:column; gap:24px; max-width:880px; margin-bottom:60px;">
+
+      <div class="anim-text d2" style="display:flex; align-items:baseline; gap:26px;">
+        <span style="color:var(--amber); font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+        <p style="font-weight:300; font-size:var(--t-body); line-height:1.40; color:var(--offwhite-dim);">
+          Strength built on suppression looks solid —<br>until the right pressure hits.
+        </p>
+      </div>
+
+      <div class="anim-text d3" style="display:flex; align-items:baseline; gap:26px;">
+        <span style="color:var(--amber); font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+        <p style="font-weight:300; font-size:var(--t-body); line-height:1.40; color:var(--offwhite-dim);">
+          Strength built on honesty bends — but doesn't break.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Standalone pull quote — Instrument Serif italic, generous space -->
+    <div class="pull-quote anim-text d4" style="max-width:860px;">
+      <div class="pq-rule"></div>
+      <p style="font-family:var(--fs); font-style:italic; font-size:42px;
+               color:var(--offwhite); line-height:1.48;">
+        Vulnerability isn't the opposite of strength.<br>It's proof of it.
+      </p>
+      <div class="pq-rule"></div>
+    </div>
+
+  </div>
+
+  <span class="slide-num anim-text">06</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 07 — WHAT BREAKING SILENCE ACTUALLY LOOKS LIKE
+     Light. Candid conversation photo left. Quiet actionable text right.
+     ══════════════════════════════════════════════════════════════ -->
+<section data-label="07 What Breaking Silence Looks Like"
+  style="background:
+    radial-gradient(ellipse 42% 55% at 4% 52%, rgba(201,169,110,0.07) 0%, transparent 56%),
+    #F5F0E8;">
+
+  <div class="grain light"></div>
+
+  <div class="content" style="display:flex; align-items:stretch;">
+
+    <!-- Left: photo bleeds to left edge -->
+    <div class="anim-img" style="flex:0 0 42%;">
+      <image-slot id="s7-photo" shape="rect"
+        placeholder="Two people · genuine conversation · one leaning in · face open · warm lamp light"
+        style="width:100%; height:100%; display:block; border-radius:0;" src="photos/mental-health/s7-photo.jpg"></image-slot>
+    </div>
+
+    <!-- Right: text — quiet, calm after emotional peak of slide 6 -->
+    <div style="flex:0 0 58%; display:flex; flex-direction:column; justify-content:center;
+                padding: var(--pt) var(--px) var(--pb) 80px;">
+
+      <div class="anim-text" style="margin-bottom:38px;">
+        <div class="rule on-light" style="width:48px; margin-bottom:26px;"></div>
+        <span class="eyebrow on-light">The practice</span>
+      </div>
+
+      <h2 class="anim-text d1" style="font-weight:800; font-size:62px; line-height:1.06;
+             letter-spacing:-0.022em; color:var(--ink); margin-bottom:50px;">
+        What breaking silence<br>actually looks like
+      </h2>
+
+      <div style="display:flex; flex-direction:column; gap:26px; max-width:700px;">
+
+        <div class="anim-text d2" style="display:flex; align-items:baseline; gap:22px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+          <p style="font-weight:300; font-size:var(--t-body); line-height:1.42; color:var(--ink); opacity:0.78;">
+            Ask how someone is —<br>and actually wait for the real answer.
+          </p>
+        </div>
+
+        <div class="anim-text d3" style="display:flex; align-items:baseline; gap:22px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+          <p style="font-weight:300; font-size:var(--t-body); line-height:1.42; color:var(--ink); opacity:0.78;">
+            Listen without immediately pivoting to solutions.
+          </p>
+        </div>
+
+        <div class="anim-text d4" style="display:flex; align-items:baseline; gap:22px;">
+          <span style="color:var(--brown); opacity:0.60; font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+          <p style="font-weight:300; font-size:var(--t-body); line-height:1.42; color:var(--ink); opacity:0.78;">
+            Mention therapy without treating it like<br>a last resort or a verdict.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <span class="slide-num on-light anim-text">07</span>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SLIDE 08 — THE WALL CRACKS (closing)
+     Full-bleed dark. SVG crack center-right. "Start there." quiet.
+     ══════════════════════════════════════════════════════════════ -->
+<section data-label="08 The Wall Cracks"
+  style="background:
+    radial-gradient(ellipse 48% 62% at 72% 50%, rgba(201,169,110,0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 36% 48% at 30% 50%, rgba(85,54,20,0.20) 0%, transparent 52%),
+    #1A1A1A;">
+
+  <div class="grain"></div>
+
+  <!-- Concrete wall crack — single fissure, amber light bleeding through -->
+  <svg class="anim-img" style="position:absolute; inset:0; width:100%; height:100%;
+              z-index:2; pointer-events:none;" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="crackglow" x="-60%" y="-10%" width="220%" height="120%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="gb"/>
+        <feColorMatrix in="gb" type="matrix"
+          values="0 0 0 0 0.788  0 0 0 0 0.663  0 0 0 0 0.431  0 0 0 0.55 0" result="tinted"/>
+        <feComposite in="SourceGraphic" in2="tinted" operator="over"/>
+      </filter>
+      <filter id="cracktight" x="-10%" y="-5%" width="120%" height="110%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="gb2"/>
+        <feComposite in="SourceGraphic" in2="gb2" operator="over"/>
+      </filter>
+    </defs>
+
+    <!-- Amber glow behind crack -->
+    <path d="M 1340 95 L 1318 270 L 1336 432 L 1312 598 L 1326 760 L 1308 958"
+      stroke="#C9A96E" stroke-width="28" fill="none" opacity="0.10"
+      filter="url(#crackglow)" stroke-linecap="round"/>
+
+    <!-- Main crack line — subtle, not dramatic -->
+    <path d="M 1340 95 L 1318 270 L 1336 432 L 1312 598 L 1326 760 L 1308 958"
+      stroke="#C9A96E" stroke-width="2" fill="none" opacity="0.62"
+      stroke-linecap="round" filter="url(#cracktight)"/>
+
+    <!-- Small branching hairlines -->
+    <line x1="1318" y1="270" x2="1285" y2="302" stroke="#C9A96E" stroke-width="1" fill="none" opacity="0.30"/>
+    <line x1="1336" y1="432" x2="1366" y2="464" stroke="#C9A96E" stroke-width="1" fill="none" opacity="0.26"/>
+    <line x1="1312" y1="598" x2="1280" y2="626" stroke="#C9A96E" stroke-width="1" fill="none" opacity="0.24"/>
+    <line x1="1326" y1="760" x2="1354" y2="790" stroke="#C9A96E" stroke-width="1" fill="none" opacity="0.22"/>
+  </svg>
+
+  <div class="content" style="display:flex; flex-direction:column; justify-content:center; padding: var(--pt) var(--px) var(--pb); max-width:960px;">
+
+    <div class="anim-text" style="margin-bottom:40px;">
+      <div class="rule" style="width:48px; margin-bottom:26px;"></div>
+      <span class="eyebrow">A final word</span>
+    </div>
+
+    <h2 class="anim-text d1" style="font-weight:800; font-size:var(--t-display); line-height:1.04;
+           letter-spacing:-0.026em; color:var(--offwhite); margin-bottom:52px;">
+      The wall cracks one<br>conversation at a time
+    </h2>
+
+    <div style="display:flex; flex-direction:column; gap:24px; margin-bottom:50px;">
+
+      <div class="anim-text d2" style="display:flex; align-items:baseline; gap:26px;">
+        <span style="color:var(--amber); font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+        <p style="font-weight:300; font-size:var(--t-body); line-height:1.40; color:var(--offwhite-dim);">
+          You don't have to carry your struggle alone.
+        </p>
+      </div>
+
+      <div class="anim-text d3" style="display:flex; align-items:baseline; gap:26px;">
+        <span style="color:var(--amber); font-weight:700; font-size:var(--t-body); flex-shrink:0;">—</span>
+        <p style="font-weight:300; font-size:var(--t-body); line-height:1.40; color:var(--offwhite-dim);">
+          Neither does the person sitting next to you.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- "Start there." — alone, smaller, spoken quietly -->
+    <p class="anim-text d4" style="font-weight:300; font-size:var(--t-small); line-height:1.50; color:var(--offwhite); opacity:0.82; padding-left:52px;">
+      Start there.
+    </p>
+
+  </div>
+
+  <!-- Substack handle — amber, very small, bottom-right -->
+  <p class="anim-text d5" style="position:absolute; bottom:42px; right:var(--px);
+     font-weight:400; font-size:var(--t-micro); letter-spacing:0.12em;
+     color:var(--amber); opacity:0.58; z-index:6;">
+    thisisbreathoflife.substack.com
+  </p>
+
+  <span class="slide-num anim-text">08</span>
+</section>
+
+
+</deck-stage>
+
+
+<script>
+// Restart entry animations each time a slide becomes active
+(function () {
+  function init() {
+    var stage = document.querySelector('deck-stage');
+    if (!stage) return;
+    stage.addEventListener('slidechange', function (e) {
+      if (!e || !e.detail || !e.detail.slide) return;
+      try {
+        var els = e.detail.slide.querySelectorAll('.anim-img, .anim-text');
+        els.forEach(function (el) {
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation = '';
+        });
+      } catch (_) {}
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+}());
+</script>
+
+</body>
+</html>

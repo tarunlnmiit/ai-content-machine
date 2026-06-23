@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:00,020
+without a single Python loop.
+
+2
+00:00:00,020 --> 00:00:06,900
+The speed difference isn't marginal, for operations on a million numbers, numpy is typically
+
+3
+00:00:06,900 --> 00:00:12,540
+50 to 200 times faster than a Python loop, that's the difference between watching your
+
+4
+00:00:12,540 --> 00:00:16,740
+script run, and it being done before you look up.
+
+5
+00:00:16,740 --> 00:00:23,900
+Every major data science library, pandas, scikit-learn, TensorFlow, PyTorch, stores its data
+
+6
+00:00:23,900 --> 00:00:29,340
+in numpy arrays underneath, this isn't a detour, it's the foundation.
+
+7
+00:00:29,340 --> 00:00:34,500
+So let's start with the how you actually create arrays, the most common starting point
+
+8
+00:00:34,500 --> 00:00:36,900
+is converting a Python list.
+
+9
+00:00:36,900 --> 00:00:36,900
+So how you do that is, so we have already imported numpy, so you call np.array method on a list

@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:05,000
+of this dimension, you will write that syntax constantly, so now when you aggregate a 2D array you
+
+2
+00:00:05,000 --> 00:00:12,440
+have to specify an access, access 0 collapses down across rows, so you get 1 result per column
+
+3
+00:00:13,400 --> 00:00:19,320
+and access 1 collapses across columns, 1 result per row, so average score per student is
+
+4
+00:00:19,880 --> 00:00:25,400
+access 1, so this is student 0, student 1 and student 2, if we want an average of
+
+5
+00:00:26,120 --> 00:00:36,760
+1 student and their marks and their grades, that will be across access 1 and if you want it
+
+6
+00:00:37,320 --> 00:00:44,360
+for this, let us say this is subject 1, subject 2, subject 3 and subject 4, you want subject 1 average,
+
+7
+00:00:44,360 --> 00:00:52,360
+then you do it across access 0, so if I show you the example, the working example for that,

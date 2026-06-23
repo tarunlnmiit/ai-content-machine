@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Tutorial 2 — Variables, Data Types & Structures</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', sans-serif;
+  padding: 24px;
+}
+
+/* ─── IG Frame ─── */
+.ig-frame {
+  width: 420px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  user-select: none;
+}
+
+.ig-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid #efefef;
+}
+.ig-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 14px;
+  flex-shrink: 0;
+  border: 2px solid transparent;
+  outline: 2px solid #6B8FA8;
+  outline-offset: 1px;
+}
+.ig-username { font-size: 13px; font-weight: 600; color: #1a1a1a; line-height: 1; }
+.ig-subtitle { font-size: 11px; color: #8e8e8e; margin-top: 2px; }
+.ig-more { margin-left: auto; font-size: 18px; color: #8e8e8e; cursor: pointer; letter-spacing: 2px; line-height: 1; }
+
+/* ─── Carousel ─── */
+.carousel-viewport {
+  width: 420px;
+  height: 525px;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+}
+.carousel-viewport.dragging { cursor: grabbing; }
+
+.carousel-track {
+  display: flex;
+  flex-direction: row;
+  width: calc(420px * 7);
+  height: 525px;
+  transition: transform 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.carousel-track.no-transition { transition: none; }
+
+/* ─── Slides ─── */
+.slide {
+  width: 420px;
+  height: 525px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.slide.light { background: #EDE8DC; }
+.slide.dark  { background: #1E1B2E; }
+.slide.grad  { background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%); }
+
+/* ─── Progress bar ─── */
+.progress-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 20;
+}
+.slide.light .progress-bar { background: rgba(61,95,117,0.12); }
+.slide.dark  .progress-bar { background: rgba(255,255,255,0.1); }
+.slide.grad  .progress-bar { background: rgba(255,255,255,0.2); }
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.36s ease;
+  border-radius: 0 2px 2px 0;
+}
+.slide.light .progress-fill { background: #3D5F75; }
+.slide.dark  .progress-fill { background: #96BAD0; }
+.slide.grad  .progress-fill { background: rgba(255,255,255,0.9); }
+
+/* ─── Swipe arrow ─── */
+.swipe-arrow {
+  position: absolute;
+  bottom: 20px; right: 22px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+.slide.light .swipe-arrow { background: rgba(61,95,117,0.13); color: #3D5F75; }
+.slide.dark  .swipe-arrow { background: rgba(150,186,208,0.18); color: #96BAD0; }
+.slide.grad  .swipe-arrow { background: rgba(255,255,255,0.22); color: #fff; }
+.swipe-arrow svg { width: 15px; height: 15px; }
+.swipe-arrow svg path { stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+
+/* ─── Slide inner ─── */
+.slide-inner {
+  padding: 0 36px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Tag ─── */
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.09em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px;
+}
+.slide.light .tag { background: rgba(61,95,117,0.1); color: #3D5F75; }
+.slide.dark  .tag { background: rgba(150,186,208,0.14); color: #96BAD0; }
+.slide.grad  .tag { background: rgba(255,255,255,0.2); color: #fff; }
+.tag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.7; }
+
+.slide-num {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
+}
+.slide.light .slide-num { color: rgba(61,95,117,0.45); }
+.slide.dark  .slide-num { color: rgba(150,186,208,0.4); }
+.slide.grad  .slide-num { color: rgba(255,255,255,0.55); }
+
+/* ─── Typography ─── */
+h1.hero-headline {
+  font-size: 27px; font-weight: 700;
+  line-height: 1.14; letter-spacing: -0.025em;
+}
+.slide.light h1.hero-headline { color: #1E1B2E; }
+.slide.dark  h1.hero-headline { color: #EDE8DC; }
+.slide.grad  h1.hero-headline { color: #fff; }
+
+h2.slide-headline {
+  font-size: 20px; font-weight: 700;
+  line-height: 1.22; letter-spacing: -0.02em;
+}
+.slide.light h2.slide-headline { color: #1E1B2E; }
+.slide.dark  h2.slide-headline { color: #EDE8DC; }
+.slide.grad  h2.slide-headline { color: #fff; }
+
+.slide-body {
+  font-size: 12.5px; line-height: 1.65; font-weight: 400;
+}
+.slide.light .slide-body { color: #4a6a80; }
+.slide.dark  .slide-body { color: #7aafc8; }
+.slide.grad  .slide-body { color: rgba(255,255,255,0.82); }
+
+/* ─── Code block ─── */
+.code-block {
+  border-radius: 8px; padding: 11px 13px;
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 11px; line-height: 1.75;
+}
+.slide.light .code-block { background: rgba(61,95,117,0.07); border: 1px solid rgba(61,95,117,0.14); color: #3D5F75; }
+.slide.dark  .code-block { background: rgba(0,0,0,0.38); border: 1px solid rgba(150,186,208,0.13); color: #96BAD0; }
+.slide.grad  .code-block { background: rgba(0,0,0,0.22); border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.92); }
+.code-comment { opacity: 0.42; font-style: italic; }
+.kw { color: #D0EEFF; font-weight: 600; }
+.slide.light .kw { color: #3D5F75; font-weight: 700; }
+
+/* ─── Type rows (slide 4) ─── */
+.type-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0;
+}
+.type-row + .type-row { border-top: 1px solid rgba(61,95,117,0.08); }
+
+.type-badge {
+  font-family: 'SF Mono', monospace; font-size: 11px; font-weight: 700;
+  padding: 3px 9px; border-radius: 4px; min-width: 44px; text-align: center;
+  background: rgba(61,95,117,0.11); color: #3D5F75;
+}
+.type-arrow { font-size: 11px; color: #3D5F75; opacity: 0.3; }
+.type-name { font-size: 11.5px; font-weight: 600; color: #1E1B2E; line-height: 1.2; }
+.type-example { font-family: 'SF Mono', monospace; font-size: 10px; color: #6B8FA8; margin-top: 1px; }
+
+/* ─── Step rows (slide 6) ─── */
+.step-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 0;
+}
+.step-row + .step-row { border-top: 1px solid rgba(61,95,117,0.08); }
+.step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  flex-shrink: 0; margin-top: 1px;
+  background: #3D5F75; color: #EDE8DC;
+}
+.step-label { font-size: 12px; font-weight: 600; color: #1E1B2E; line-height: 1.3; }
+.step-sub { font-family: 'SF Mono', monospace; font-size: 10px; color: #6B8FA8; margin-top: 2px; line-height: 1.4; }
+
+/* ─── Bug box (slide 2) ─── */
+.bug-box {
+  border-radius: 10px; padding: 14px 16px; text-align: center;
+  background: rgba(0,0,0,0.3); border: 1px solid rgba(150,186,208,0.14);
+}
+.bug-equation { font-family: 'SF Mono', monospace; font-size: 13.5px; font-weight: 600; color: #96BAD0; letter-spacing: 0.02em; }
+.bug-result  { font-family: 'SF Mono', monospace; font-size: 21px; font-weight: 700; color: #ff6450; margin: 4px 0; }
+.bug-label   { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(150,186,208,0.42); margin-top: 4px; }
+
+.warning-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 4px;
+  background: rgba(255, 100, 80, 0.14); color: #ff6450;
+}
+
+/* ─── Logo lockup ─── */
+.logo-lockup { display: flex; align-items: center; gap: 8px; }
+.logo-circle {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; flex-shrink: 0;
+}
+.slide.light .logo-circle { background: linear-gradient(165deg, #3D5F75, #96BAD0); color: #fff; }
+.slide.dark  .logo-circle { background: rgba(150,186,208,0.12); color: #96BAD0; border: 1px solid rgba(150,186,208,0.25); }
+.slide.grad  .logo-circle { background: rgba(255,255,255,0.2); color: #fff; }
+.logo-label { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+.slide.light .logo-label { color: #3D5F75; }
+.slide.dark  .logo-label { color: #96BAD0; }
+.slide.grad  .logo-label { color: rgba(255,255,255,0.88); }
+
+/* ─── Accent line ─── */
+.accent-line { width: 30px; height: 3px; border-radius: 2px; }
+.slide.light .accent-line { background: #3D5F75; }
+.slide.dark  .accent-line { background: #6B8FA8; }
+.slide.grad  .accent-line { background: rgba(255,255,255,0.55); }
+
+/* ─── Divider ─── */
+.divider { height: 1px; }
+.slide.light .divider { background: rgba(61,95,117,0.13); }
+.slide.dark  .divider { background: rgba(150,186,208,0.13); }
+.slide.grad  .divider { background: rgba(255,255,255,0.18); }
+
+/* ─── CTA button ─── */
+.cta-button {
+  display: block; width: 100%;
+  padding: 13px 28px; border-radius: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+  text-align: center; cursor: pointer; border: none;
+}
+.slide.grad .cta-button { background: rgba(255,255,255,0.95); color: #3D5F75; }
+
+/* ─── Spacers ─── */
+.spacer { flex: 1; }
+.sp-4  { height: 4px; }
+.sp-8  { height: 8px; }
+.sp-12 { height: 12px; }
+.sp-16 { height: 16px; }
+.sp-20 { height: 20px; }
+.sp-24 { height: 24px; }
+
+/* ─── IG footer chrome ─── */
+.ig-actions {
+  display: flex; align-items: center;
+  padding: 9px 14px 2px; gap: 14px;
+}
+.ig-action-icon { width: 24px; height: 24px; opacity: 0.8; cursor: pointer; }
+.ig-bookmark { margin-left: auto; }
+.ig-dots { display: flex; justify-content: center; gap: 5px; padding: 5px 14px; }
+.ig-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #dbdbdb; transition: background 0.3s, transform 0.3s;
+}
+.ig-dot.active { background: #3897f0; transform: scale(1.3); }
+.ig-likes { padding: 2px 14px; font-size: 12px; font-weight: 600; color: #1a1a1a; }
+.ig-caption {
+  padding: 3px 14px 14px;
+  font-size: 12px; color: #1a1a1a; line-height: 1.5;
+}
+.ig-caption .uname { font-weight: 700; }
+.ig-caption .ig-comments { color: #8e8e8e; display: block; margin-top: 3px; font-size: 11px; }
+
+/* ─── Worksheet CTA footer ─── */
+.worksheet-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 7px 16px 9px;
+  background: #eef4f8;
+  border-top: 1px solid rgba(61,95,117,0.15);
+}
+.wf-line1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #3D5F75;
+  line-height: 1.4;
+  display: block;
+}
+.wf-line2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #5a7d94;
+  font-style: italic;
+  line-height: 1.4;
+  display: block;
+  margin-top: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <!-- IG Header -->
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-username">mistakenlyhuman</div>
+      <div class="ig-subtitle">Breath of Data Science</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <!-- Carousel Viewport -->
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- ══════════════════════════════════════
+           SLIDE 1 — Hero (LIGHT_BG)
+      ══════════════════════════════════════ -->
+      <div class="slide light">
+        <div class="slide-inner" style="padding-top:30px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="tag"><span class="tag-dot"></span>Tutorial 2 · 10</div>
+            <span class="slide-num">01 / 07</span>
+          </div>
+          <div class="sp-20"></div>
+          <div class="accent-line"></div>
+          <div class="sp-16"></div>
+          <h1 class="hero-headline">Your analysis will give you a wrong answer someday.</h1>
+          <div class="sp-12"></div>
+          <p class="slide-body">Not an error. Not a crash. A perfectly confident wrong number — and Python won't warn you.</p>
+          <div class="sp-12"></div>
+          <div style="background:rgba(61,95,117,0.08);border-radius:8px;padding:13px 15px;border-left:3px solid #3D5F75;">
+            <div style="font-family:'SF Mono','Courier New',monospace;font-size:12.5px;color:#3D5F75;line-height:1.7;">
+              <span style="opacity:0.5;font-style:italic;"># loaded as strings — sum fails silently</span><br>
+              "28" + "35" + "42"<br>
+              <span style="font-weight:700;">→ "283542" &nbsp;<span style="font-size:10px;opacity:0.55;font-weight:400;">← no error, wrong answer</span></span>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <div class="divider" style="margin-bottom:12px;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:22px;">
+            <div class="logo-lockup">
+              <div class="logo-circle">B</div>
+              <span class="logo-label">Breath of Data Science</span>
+            </div>
+            <span style="font-size:10px;color:#6B8FA8;font-weight:500;letter-spacing:0.04em;">VARIABLES &amp; TYPES</span>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5l3.5 3.5L9 11.5"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 2 — Problem (DARK_BG)
+      ══════════════════════════════════════ -->
+      <div class="slide dark">
+        <div class="slide-inner" style="padding-top:30px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="tag"><span class="tag-dot"></span>The Silent Bug</div>
+            <span class="slide-num">02 / 07</span>
+          </div>
+          <div class="sp-20"></div>
+          <h2 class="slide-headline">Python has no idea you wanted a number.</h2>
+          <div class="sp-16"></div>
+          <div class="bug-box">
+            <div class="bug-label">Your CSV "age" column — loaded as strings</div>
+            <div class="sp-8"></div>
+            <div class="bug-equation">"28" + "35" + "42"</div>
+            <div style="font-size:16px;color:rgba(150,186,208,0.35);margin:5px 0;">↓ concatenates, not adds</div>
+            <div class="bug-result">"283542"</div>
+            <div class="sp-8"></div>
+            <span class="warning-badge">⚠ No error · No warning · Wrong answer</span>
+          </div>
+          <div class="sp-16"></div>
+          <p class="slide-body">A number plausible enough to fool you — and anyone reading your report. The bug only surfaces when someone questions your numbers, or when data changes six months later.</p>
+          <div class="spacer"></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5l3.5 3.5L9 11.5"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 3 — Solution (gradient)
+      ══════════════════════════════════════ -->
+      <div class="slide grad">
+        <div class="slide-inner" style="padding-top:30px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="tag"><span class="tag-dot"></span>The Fix</div>
+            <span class="slide-num">03 / 07</span>
+          </div>
+          <div class="sp-20"></div>
+          <h2 class="slide-headline">Types encode intention. Check what Python is actually holding.</h2>
+          <div class="sp-16"></div>
+          <div class="code-block">
+            <span class="code-comment"># Step 1 — inspect the type</span><br>
+            type(column[0]) &nbsp;<span class="code-comment"># &lt;class 'str'&gt;</span><br>
+            <br>
+            <span class="code-comment"># Step 2 — convert explicitly</span><br>
+            ages = [<span class="kw">int</span>(x) <span class="kw">for</span> x <span class="kw">in</span> column]<br>
+            <br>
+            <span class="code-comment"># Step 3 — now sum is correct</span><br>
+            sum(ages) &nbsp;<span class="code-comment"># → 105, not "283542"</span>
+          </div>
+          <div class="sp-16"></div>
+          <p class="slide-body">Python is <strong>dynamically typed</strong> — it infers types from values. You need to verify the inference matches your intent. Four types cover 90% of what you'll hold in a variable.</p>
+          <div class="spacer"></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5l3.5 3.5L9 11.5"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 4 — Content (LIGHT_BG) — 4 Primitives
+      ══════════════════════════════════════ -->
+      <div class="slide light">
+        <div class="slide-inner" style="padding-top:28px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="tag"><span class="tag-dot"></span>4 Primitives</div>
+            <span class="slide-num">04 / 07</span>
+          </div>
+          <div class="sp-12"></div>
+          <h2 class="slide-headline">What Python stores in every variable</h2>
+          <div class="sp-12"></div>
+          <div class="divider"></div>
+          <div class="type-row">
+            <div class="type-badge">int</div>
+            <div class="type-arrow">→</div>
+            <div>
+              <div class="type-name">Whole numbers</div>
+              <div class="type-example">age = 42 &nbsp;·&nbsp; count = 1_000</div>
+            </div>
+          </div>
+          <div class="type-row">
+            <div class="type-badge">float</div>
+            <div class="type-arrow">→</div>
+            <div>
+              <div class="type-name">Decimal numbers</div>
+              <div class="type-example">avg = 85.7 &nbsp;·&nbsp; ratio = 0.42</div>
+            </div>
+          </div>
+          <div class="type-row">
+            <div class="type-badge">str</div>
+            <div class="type-arrow">→</div>
+            <div>
+              <div class="type-name">Text</div>
+              <div class="type-example">col = "age" &nbsp;·&nbsp; label = "Alice"</div>
+            </div>
+          </div>
+          <div class="type-row">
+            <div class="type-badge">bool</div>
+            <div class="type-arrow">→</div>
+            <div>
+              <div class="type-name">True / False</div>
+              <div class="type-example">is_outlier = True &nbsp;·&nbsp; active = False</div>
+            </div>
+          </div>
+          <div class="divider" style="margin-top:2px;"></div>
+          <div class="sp-10" style="height:10px;"></div>
+          <div class="code-block" style="font-size:10.5px;">
+            type("42") <span class="code-comment"># str</span> &nbsp;&nbsp;
+            int("42") <span class="code-comment"># 42</span> &nbsp;&nbsp;
+            float("3.14") <span class="code-comment"># 3.14</span>
+          </div>
+          <div class="spacer"></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5l3.5 3.5L9 11.5"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 5 — Details (DARK_BG) — Lists & Dicts
+      ══════════════════════════════════════ -->
+      <div class="slide dark">
+        <div class="slide-inner" style="padding-top:28px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="tag"><span class="tag-dot"></span>Lists &amp; Dicts</div>
+            <span class="slide-num">05 / 07</span>
+          </div>
+          <div class="sp-12"></div>
+          <h2 class="slide-headline">Sequences and records</h2>
+          <div class="sp-8"></div>
+          <p class="slide-body" style="font-size:12px;">Lists = ordered sequences. Dicts = labeled records. Together they model every dataset.</p>
+          <div class="sp-12"></div>
+          <div class="code-block" style="font-size:10.5px;">
+            <span class="code-comment"># List — filter via comprehension</span><br>
+            scores = [72, 88, 91, 65, 95]<br>
+            high = [s <span class="kw">for</span> s <span class="kw">in</span> scores <span class="kw">if</span> s > 85]<br>
+            <span class="code-comment"># → [88, 91, 95]</span><br>
+            <br>
+            <span class="code-comment"># Dict — safe key access</span><br>
+            row = {"name": "Alice", "salary": 95000}<br>
+            row.get("dept", "Unknown") <span class="code-comment"># no KeyError</span><br>
+            <br>
+            <span class="code-comment"># Aggregate across list-of-dicts</span><br>
+            total = sum(e["salary"] <span class="kw">for</span> e <span class="kw">in</span> employees)
+          </div>
+          <div class="spacer"></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5l3.5 3.5L9 11.5"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 6 — How-to (LIGHT_BG) — Functions
+      ══════════════════════════════════════ -->
+      <div class="slide light">
+        <div class="slide-inner" style="padding-top:28px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="tag"><span class="tag-dot"></span>Functions</div>
+            <span class="slide-num">06 / 07</span>
+          </div>
+          <div class="sp-12"></div>
+          <h2 class="slide-headline">Stop copy-pasting. Write it once.</h2>
+          <div class="sp-12"></div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div>
+              <div class="step-label">Name it clearly</div>
+              <div class="step-sub">def calculate_average(values):</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div>
+              <div class="step-label">Return a value</div>
+              <div class="step-sub">return sum(values) / len(values)</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div>
+              <div class="step-label">Add defaults for optional params</div>
+              <div class="step-sub">def is_outlier(v, threshold=2.0):</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">4</div>
+            <div>
+              <div class="step-label">Reuse across every dataset</div>
+              <div class="step-sub">calculate_average(scores) · calculate_average(salaries)</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">5</div>
+            <div>
+              <div class="step-label">Fix once — all callers get the fix</div>
+              <div class="step-sub">No more hunting through 12-line duplicate blocks</div>
+            </div>
+          </div>
+          <div class="spacer"></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5l3.5 3.5L9 11.5"/></svg>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           SLIDE 7 — CTA (gradient) — no arrow
+      ══════════════════════════════════════ -->
+      <div class="slide grad">
+        <div class="slide-inner" style="padding-top:32px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="tag"><span class="tag-dot"></span>Your Turn</div>
+            <span class="slide-num">07 / 07</span>
+          </div>
+          <div class="sp-20"></div>
+          <div class="logo-lockup" style="margin-bottom:16px;">
+            <div class="logo-circle">B</div>
+            <span class="logo-label">@breathofdatascience</span>
+          </div>
+          <div class="accent-line"></div>
+          <div class="sp-12"></div>
+          <h2 class="slide-headline" style="font-size:24px;line-height:1.2;">Rewrite Tutorial 1's average calculation as a function. Add a filter.</h2>
+          <div class="sp-12"></div>
+          <p class="slide-body">Reply with what you built — or the first type error you caught. Tutorial 3 brings NumPy. These structures scale to millions of rows.</p>
+          <div class="spacer"></div>
+          <div style="padding-bottom:26px;text-align:center;">
+            <div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.55);text-align:center;margin-bottom:10px;">Python for Data Science · 10-part series</div>
+            <span class="wf-line1" style="color:#fff;">Comment WORKSHEET 👇</span>
+            <span class="wf-line2" style="color:rgba(255,255,255,0.85);">— the practice set I wish I had when I was learning. Free.</span>
+          </div>
+        </div>
+        <!-- Full progress bar — last slide -->
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;border-radius:0;"></div></div>
+        <!-- No swipe arrow -->
+      </div>
+
+    </div><!-- /carousel-track -->
+
+    <!-- Worksheet CTA — overlays all slides -->
+    <div class="worksheet-footer">
+      <span class="wf-line1">Comment WORKSHEET 👇</span>
+      <span class="wf-line2">— the practice set I wish I had when I was learning. Free.</span>
+    </div>
+  </div><!-- /carousel-viewport -->
+
+  <!-- IG Actions -->
+  <div class="ig-actions">
+    <svg class="ig-action-icon" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    <svg class="ig-action-icon" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <svg class="ig-action-icon" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    <svg class="ig-action-icon ig-bookmark" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+  </div>
+
+  <!-- Dots -->
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+  </div>
+
+  <div class="ig-likes">1,847 likes</div>
+  <div class="ig-caption">
+    <span class="uname">mistakenlyhuman</span> Your analysis will give you a wrong answer someday — not an error, a confident wrong number. Tutorial 2: types, lists, dicts &amp; functions 🐍 #DataScience #Python #LearnPython
+    <span class="ig-comments">View all 112 comments</span>
+  </div>
+
+</div><!-- /ig-frame -->
+
+<script>
+  const TOTAL = 7;
+  const W = 420;
+
+  // Fill widths per slide index (1-indexed progress)
+  const FILLS = [
+    14.28, 28.57, 42.86, 57.14, 71.43, 85.71, 100
+  ];
+
+  let current = 0;
+
+  const track  = document.getElementById('track');
+  const dots   = document.querySelectorAll('.ig-dot');
+  const fills  = document.querySelectorAll('.progress-fill');
+
+  function goTo(n) {
+    n = Math.max(0, Math.min(TOTAL - 1, n));
+    current = n;
+    track.style.transform = `translateX(-${n * W}px)`;
+    dots.forEach((d, i)  => d.classList.toggle('active', i === n));
+    fills.forEach((f, i) => { f.style.width = i === n ? FILLS[n] + '%' : FILLS[i] + '%'; });
+  }
+
+  // Initialise fills
+  fills.forEach((f, i) => { f.style.width = FILLS[i] + '%'; });
+
+  // ── Drag / swipe ──
+  let startX = 0, isDragging = false, startTranslate = 0;
+  const getX = e => e.touches ? e.touches[0].clientX : e.clientX;
+  const vp   = document.getElementById('viewport');
+
+  vp.addEventListener('mousedown', e => {
+    isDragging = true;
+    startX = getX(e);
+    startTranslate = -current * W;
+    track.classList.add('no-transition');
+    vp.classList.add('dragging');
+    e.preventDefault();
+  });
+
+  vp.addEventListener('touchstart', e => {
+    startX = getX(e);
+    startTranslate = -current * W;
+    track.classList.add('no-transition');
+  }, { passive: true });
+
+  const onMove = e => {
+    if (!isDragging && !e.touches) return;
+    const dx  = getX(e) - startX;
+    const raw = startTranslate + dx;
+    const clamped = Math.max(-(TOTAL - 1) * W, Math.min(0, raw));
+    track.style.transform = `translateX(${clamped}px)`;
+  };
+
+  const onEnd = e => {
+    track.classList.remove('no-transition');
+    vp.classList.remove('dragging');
+    isDragging = false;
+    const endX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    const dx = endX - startX;
+    if      (dx < -40) goTo(current + 1);
+    else if (dx >  40) goTo(current - 1);
+    else goTo(current);
+  };
+
+  vp.addEventListener('mousemove',  onMove);
+  vp.addEventListener('mouseup',    onEnd);
+  vp.addEventListener('mouseleave', e => { if (isDragging) onEnd(e); });
+  vp.addEventListener('touchmove',  onMove, { passive: true });
+  vp.addEventListener('touchend',   onEnd);
+
+  // Expose for Playwright export
+  window.goTo = goTo;
+</script>
+</body>
+</html>

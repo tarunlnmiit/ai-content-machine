@@ -1,0 +1,31 @@
+1
+00:00:00,000 --> 00:00:08,140
+then this is a Boolean. So and it is a critical part because Python treats them completely different
+
+2
+00:00:08,140 --> 00:00:15,260
+even when they look the same. So if I let's say write it as 1, it looks completely same,
+
+3
+00:00:15,260 --> 00:00:22,460
+the 3 of them x, y and z, but they are entirely different in terms of Python. So here is what
+
+4
+00:00:22,460 --> 00:00:25,420
+each primitive will look like. Let me give you a few more examples.
+
+5
+00:00:26,060 --> 00:00:34,220
+So as you can see, these are a few examples.
+
+6
+00:00:35,180 --> 00:00:46,220
+Age is 28, year is 2024. If I print the type of age, it should be integer. Let me type for
+
+7
+00:00:46,300 --> 00:00:54,300
+year as well, then for accuracy, and then for role as well,
+
+8
+00:00:58,300 --> 00:00:58,300
+and then for has missing as well. So now when I run it, you should see a similar kind of a result.

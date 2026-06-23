@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Automated Job Hunting — @breathofdatascience</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #c8c8c8;
+    display: flex; justify-content: center; align-items: flex-start;
+    min-height: 100vh; font-family: 'Space Grotesk', sans-serif; padding: 32px 16px;
+  }
+  .ig-frame { width: 420px; background: #fff; border-radius: 14px; box-shadow: 0 24px 80px rgba(0,0,0,0.22); overflow: hidden; user-select: none; }
+  .ig-header { display: flex; align-items: center; padding: 12px 16px; gap: 10px; border-bottom: 1px solid #efefef; }
+  .ig-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .ig-account { flex: 1; }
+  .ig-account-name { font-size: 13px; font-weight: 600; color: #262626; }
+  .ig-account-sub  { font-size: 11px; color: #8e8e8e; }
+  .ig-more { color: #262626; font-size: 22px; cursor: pointer; line-height: 1; }
+
+  .carousel-viewport { width: 420px; height: 525px; overflow: hidden; position: relative; cursor: grab; }
+  .carousel-viewport:active { cursor: grabbing; }
+  .carousel-track { display: flex; height: 100%; transition: transform 0.36s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
+
+  .slide { width: 420px; height: 525px; flex-shrink: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .slide.light    { background: #EDE8DC; }
+  .slide.dark     { background: #1E1B2E; }
+  .slide.gradient { background: linear-gradient(160deg, #1a1828 0%, #2e4d63 60%, #3D5F75 100%); }
+
+  .progress-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(107,143,168,0.18); z-index: 10; }
+  .slide.dark .progress-bar     { background: rgba(150,186,208,0.18); }
+  .slide.gradient .progress-bar { background: rgba(255,255,255,0.15); }
+  .progress-fill { height: 100%; background: #6B8FA8; transition: width 0.36s ease; }
+  .slide.dark .progress-fill     { background: #96BAD0; }
+  .slide.gradient .progress-fill { background: rgba(255,255,255,0.85); }
+
+  .swipe-arrow { position: absolute; right: 16px; bottom: 14px; width: 30px; height: 30px; border-radius: 50%; background: rgba(107,143,168,0.14); border: 1.5px solid rgba(107,143,168,0.5); display: flex; align-items: center; justify-content: center; z-index: 10; cursor: pointer; }
+  .slide.dark .swipe-arrow     { background: rgba(150,186,208,0.12); border-color: rgba(150,186,208,0.45); }
+  .slide.gradient .swipe-arrow { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); }
+  .swipe-arrow svg { width: 13px; height: 13px; }
+
+  .slide-inner { display: flex; flex-direction: column; padding: 0 28px 52px; height: 100%; position: relative; z-index: 1; }
+
+  .logo-lockup { display: flex; align-items: center; gap: 8px; padding-top: 18px; margin-bottom: 10px; flex-shrink: 0; }
+  .logo-circle { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 11px; flex-shrink: 0; }
+  .slide.gradient .logo-circle { background: rgba(255,255,255,0.2); }
+  .logo-text { font-size: 9.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #6B8FA8; }
+  .slide.dark .logo-text     { color: #96BAD0; }
+  .slide.gradient .logo-text { color: rgba(255,255,255,0.7); }
+
+  .tag { display: inline-block; padding: 3px 9px; border-radius: 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; align-self: flex-start; }
+  .tag.on-light    { background: rgba(107,143,168,0.12); color: #3D5F75; border: 1px solid rgba(107,143,168,0.28); }
+  .tag.on-dark     { background: rgba(150,186,208,0.12); color: #96BAD0; border: 1px solid rgba(150,186,208,0.28); }
+  .tag.on-gradient { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.28); }
+
+  .headline { font-weight: 700; line-height: 1.14; letter-spacing: -0.022em; }
+  .slide.light .headline    { color: #1E1B2E; }
+  .slide.dark .headline     { color: #EDE8DC; }
+  .slide.gradient .headline { color: #fff; }
+  .accent { color: #6B8FA8; }
+  .slide.dark .accent     { color: #96BAD0; }
+  .slide.gradient .accent { color: rgba(255,255,255,0.85); }
+
+  .body-text { font-size: 12.5px; font-weight: 400; line-height: 1.52; }
+  .slide.light .body-text    { color: #4a4a5e; }
+  .slide.dark .body-text     { color: rgba(237,232,220,0.72); }
+  .slide.gradient .body-text { color: rgba(255,255,255,0.78); }
+
+  .divider { height: 1px; flex-shrink: 0; background: #D6D0C4; margin: 10px 0; }
+  .slide.dark .divider     { background: rgba(150,186,208,0.18); }
+  .slide.gradient .divider { background: rgba(255,255,255,0.18); }
+
+  /* Step rows */
+  .step-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .step-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: 8px; }
+  .slide.light .step-row    { background: rgba(107,143,168,0.08); border: 1px solid rgba(107,143,168,0.18); }
+  .slide.dark .step-row     { background: rgba(150,186,208,0.07); border: 1px solid rgba(150,186,208,0.14); }
+  .slide.gradient .step-row { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); }
+  .step-num { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .slide.light .step-num    { background: #6B8FA8; color: #fff; }
+  .slide.dark .step-num     { background: #96BAD0; color: #1E1B2E; }
+  .slide.gradient .step-num { background: rgba(255,255,255,0.85); color: #3D5F75; }
+  .step-title { font-size: 12px; font-weight: 700; }
+  .step-desc  { font-size: 10.5px; opacity: 0.7; margin-top: 2px; }
+  .slide.light .step-title, .slide.light .step-desc    { color: #1E1B2E; }
+  .slide.dark .step-title, .slide.dark .step-desc      { color: #EDE8DC; }
+  .slide.gradient .step-title, .slide.gradient .step-desc { color: #fff; }
+
+  /* Bullet rows */
+  .bullet-list { display: flex; flex-direction: column; gap: 7px; margin-top: 8px; }
+  .bullet-row { display: flex; align-items: flex-start; gap: 9px; }
+  .bullet-dot { width: 6px; height: 6px; border-radius: 50%; background: #6B8FA8; flex-shrink: 0; margin-top: 5px; }
+  .slide.dark .bullet-dot     { background: #96BAD0; }
+  .slide.gradient .bullet-dot { background: rgba(255,255,255,0.7); }
+  .bullet-text { font-size: 11px; line-height: 1.5; }
+  .slide.light .bullet-text    { color: #4a4a5e; }
+  .slide.dark .bullet-text     { color: rgba(237,232,220,0.82); }
+  .slide.gradient .bullet-text { color: rgba(255,255,255,0.85); }
+
+  /* Stat badge row */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .badge { padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
+  .badge-blue   { background: rgba(107,143,168,0.18); color: #3D5F75; border: 1px solid rgba(107,143,168,0.35); }
+  .badge-dark   { background: rgba(150,186,208,0.15); color: #96BAD0; border: 1px solid rgba(150,186,208,0.3); }
+  .badge-green  { background: rgba(80,160,120,0.15); color: #3a9e72; border: 1px solid rgba(80,160,120,0.3); }
+  .badge-green-d{ background: rgba(80,160,120,0.15); color: #6fcca0; border: 1px solid rgba(80,160,120,0.3); }
+
+  /* Big stat */
+  .big-stat { font-size: 52px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+  .slide.light .big-stat    { color: #1E1B2E; }
+  .slide.dark .big-stat     { color: #EDE8DC; }
+
+  /* IG footer */
+  .ig-dots { display: flex; justify-content: center; gap: 5px; padding: 10px 0 6px; }
+  .ig-dot { width: 6px; height: 6px; border-radius: 50%; background: #dbdbdb; transition: all 0.3s ease; }
+  .ig-dot.active { background: #3897f0; width: 18px; border-radius: 3px; }
+  .ig-actions { display: flex; align-items: center; padding: 6px 16px; gap: 14px; }
+  .ig-icon { width: 24px; height: 24px; color: #262626; cursor: pointer; }
+  .ig-icon-right { margin-left: auto; }
+  .ig-meta { padding: 2px 16px 4px; font-size: 13px; font-weight: 600; color: #262626; }
+  .ig-caption { padding: 2px 16px 14px; font-size: 13px; color: #262626; line-height: 1.42; }
+  .ig-caption .hashtags { color: #00376b; }
+
+  /* BG deco */
+  .bg-deco { position: absolute; pointer-events: none; z-index: 0; font-size: 130px; font-weight: 900; line-height: 1; letter-spacing: -0.05em; color: rgba(107,143,168,0.05); }
+  .slide.dark .bg-deco { color: rgba(150,186,208,0.05); }
+</style>
+</head>
+<body>
+<div class="ig-frame">
+
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div class="ig-account">
+      <div class="ig-account-name">breathofdatascience</div>
+      <div class="ig-account-sub">Data Science · AI · Build in Public</div>
+    </div>
+    <div class="ig-more">···</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- ═══ SLIDE 1 — COVER (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="bg-deco" style="right:-10px; top:38%; transform:translateY(-50%); font-size:160px;">🤖</div>
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+            <div class="tag on-light">The Unfair Advantage</div>
+            <div class="headline" style="font-size:26px; color:#1E1B2E; margin-top:4px;">I stopped</div>
+            <div class="headline" style="font-size:26px; color:#1E1B2E;">checking</div>
+            <div class="headline" style="font-size:26px; color:#6B8FA8; margin-top:2px;">job boards.</div>
+            <div class="divider" style="margin-top:14px; margin-bottom:14px;"></div>
+            <div style="font-size:42px; font-weight:800; color:#1E1B2E; letter-spacing:-0.04em; line-height:1;">130+</div>
+            <div style="font-size:12px; font-weight:700; color:#6B8FA8; letter-spacing:0.06em; text-transform:uppercase; margin-top:2px; margin-bottom:10px;">Company career pages checked every night</div>
+            <div class="body-text" style="font-size:11.5px;">
+              My script scores every role 0–100 against my resume and texts me only my top matches. By morning I have a curated shortlist.
+            </div>
+            <div style="margin-top:12px;">
+              <div class="badge-row">
+                <span class="badge badge-blue">FREE</span>
+                <span class="badge badge-green">OPEN SOURCE</span>
+                <span class="badge badge-blue">AUTO-RUNS</span>
+                <span class="badge badge-green">AI-SCORED</span>
+              </div>
+            </div>
+            <div style="margin-top:12px; font-size:10.5px; color:#9090a0; font-weight:500;">Swipe to see how it works →</div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:16.7%"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 2 — THE PROBLEM (DARK) ═══ -->
+      <div class="slide dark">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div class="tag on-dark">The Pain Point</div>
+          <div class="headline" style="font-size:22px; margin-bottom:10px;">
+            Checking career pages<br>manually is a <span class="accent">part-time job</span><br>you didn't sign up for.
+          </div>
+          <div class="body-text" style="margin-bottom:12px;">
+            By the time you spot a great role, 200 people have already applied. The best companies don't advertise on LinkedIn — they post to their own career page and wait.
+          </div>
+          <div class="divider"></div>
+          <div class="bullet-list">
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">You read 40 job descriptions to find 3 worth applying to</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Manual tracking means you miss roles at companies you actually want</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">The good roles disappear before you even see them</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:33.3%"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 3 — HOW IT WORKS (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div class="tag on-light">How It Works</div>
+          <div class="headline" style="font-size:22px; margin-bottom:5px;">
+            Runs at midnight.<br><span class="accent">Done by morning.</span>
+          </div>
+          <div class="body-text" style="margin-bottom:10px; font-size:11.5px;">Every night, while you sleep, the script does three things:</div>
+          <div class="step-list">
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div>
+                <div class="step-title">Scrapes 130+ career pages</div>
+                <div class="step-desc">Finds every new role posted since the last run</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div>
+                <div class="step-title">Scores each role 0–100</div>
+                <div class="step-desc">LLM reads your resume + JD and scores fit — skills, seniority, tech stack</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">3</div>
+              <div>
+                <div class="step-title">Texts you your top matches</div>
+                <div class="step-desc">Only roles above your threshold land in Telegram. No noise.</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:10px; padding:8px 12px; border-radius:7px; background:rgba(107,143,168,0.09); border:1px solid rgba(107,143,168,0.2);">
+            <div style="font-size:10.5px; color:#4a4a5e; font-weight:500;">No manual work. No missed opportunities. No job board doomscrolling.</div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 4 — AI SCORING (DARK) ═══ -->
+      <div class="slide dark">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div class="tag on-dark">AI Scoring · 0 to 100</div>
+          <div style="display:flex; align-items:flex-end; gap:8px; margin-bottom:6px;">
+            <div class="big-stat">0–100</div>
+          </div>
+          <div class="headline" style="font-size:18px; margin-bottom:10px; color:#EDE8DC;">
+            Every role is scored before<br>it ever reaches you.
+          </div>
+          <div class="body-text" style="margin-bottom:10px; font-size:11.5px;">
+            You set a minimum score threshold. Anything below it is filtered out silently.
+          </div>
+          <div class="divider"></div>
+          <div class="bullet-list">
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">LLM reads your resume + the job description side by side</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Scores on skills match, seniority fit, role type, and required tech stack</div>
+            </div>
+            <div class="bullet-row">
+              <div class="bullet-dot"></div>
+              <div class="bullet-text">Only your top-scoring matches get texted — one Telegram message per morning</div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:66.7%"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 5 — WHY IT'S DIFFERENT (LIGHT) ═══ -->
+      <div class="slide light">
+        <div class="slide-inner">
+          <div class="logo-lockup">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div class="tag on-light">100% Free · Open Source</div>
+          <div class="headline" style="font-size:21px; margin-bottom:6px;">
+            No SaaS. No subscription.<br><span class="accent">Your machine. Your data.</span>
+          </div>
+          <div class="body-text" style="margin-bottom:10px; font-size:11.5px;">This isn't a product. It's code you run yourself.</div>
+          <div class="step-list">
+            <div class="step-row">
+              <div class="step-num" style="font-size:14px;">🔒</div>
+              <div>
+                <div class="step-title">Resume never leaves your machine</div>
+                <div class="step-desc">No third-party data sharing. You own your data.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num" style="font-size:14px;">⚙️</div>
+              <div>
+                <div class="step-title">Runs via cron job — fully local</div>
+                <div class="step-desc">Mac/Linux cron or launchd. No cloud account needed.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num" style="font-size:14px;">💰</div>
+              <div>
+                <div class="step-title">Near-zero cost to run</div>
+                <div class="step-desc">Fractions of a cent per night in LLM API calls.</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num" style="font-size:14px;">🔓</div>
+              <div>
+                <div class="step-title">100% open source — fork it</div>
+                <div class="step-desc">Add companies, change the scoring, make it yours.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#6B8FA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+
+      <!-- ═══ SLIDE 6 — CTA (DARK GRADIENT) ═══ -->
+      <div class="slide gradient">
+        <div class="slide-inner" style="justify-content:center; align-items:center; text-align:center;">
+          <div class="logo-lockup" style="justify-content:center; margin-bottom:40px;">
+            <div class="logo-circle">B</div>
+            <span class="logo-text">Breath of Data Science</span>
+          </div>
+          <div style="font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(150,186,208,0.8); margin-bottom:16px;">C O M M E N T</div>
+          <div style="height:1px; width:60px; background:rgba(107,143,168,0.5); margin:0 auto 20px;"></div>
+          <div style="font-size:52px; font-weight:800; color:#fff; letter-spacing:-0.02em; line-height:1; margin-bottom:20px;">"Jobs"</div>
+          <div style="height:1px; width:60px; background:rgba(107,143,168,0.5); margin:0 auto 20px;"></div>
+          <div style="font-size:14px; color:rgba(200,220,235,0.9); line-height:1.6; font-weight:400;">
+            And I'll DM you the GitHub repo<br>
+            <span style="font-size:12px; color:rgba(160,190,210,0.7);">directly in your Instagram DMs.</span>
+          </div>
+          <div style="margin-top:32px; font-size:11.5px; font-weight:600; color:rgba(120,160,185,0.8); letter-spacing:0.02em;">Follow @breathofdatascience</div>
+          <div style="font-size:10.5px; color:rgba(100,140,165,0.7); margin-top:4px;">for daily DS · AI · Build in Public</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+    <div class="ig-dot"></div>
+  </div>
+
+  <div class="ig-actions">
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <svg class="ig-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    <svg class="ig-icon ig-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+  </div>
+  <div class="ig-meta">685 likes</div>
+  <div class="ig-caption">
+    <strong>breathofdatascience</strong> I automated the worst part of job hunting 🤖 My script scans 130+ company career pages every night, scores every role 0–100 against my resume, and texts me only my top matches on Telegram. Free. Open source. Comment "Jobs" and I'll DM you the repo 👇<br>
+    <span class="hashtags">#buildinpublic #jobsearch #ai #opentowork #aitools #python #automation</span>
+  </div>
+
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const dots  = document.querySelectorAll('.ig-dot');
+  const total = dots.length;
+  let current = 0, startX = 0, isDragging = false;
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= total) return;
+    current = idx;
+    track.style.transform = `translateX(-${current * 420}px)`;
+    dots.forEach((d,i) => d.classList.toggle('active', i === current));
+  }
+  document.querySelectorAll('.swipe-arrow').forEach((btn, i) => {
+    btn.addEventListener('click', e => { e.stopPropagation(); goTo(i + 1); });
+  });
+  const vp = document.getElementById('viewport');
+  vp.addEventListener('mousedown',  e => { isDragging = true; startX = e.clientX; });
+  vp.addEventListener('touchstart', e => { isDragging = true; startX = e.touches[0].clientX; }, { passive: true });
+  vp.addEventListener('mouseup',  e => { if (!isDragging) return; isDragging=false; const dx=e.clientX-startX; if(dx<-40) goTo(current+1); else if(dx>40) goTo(current-1); });
+  vp.addEventListener('touchend', e => { if (!isDragging) return; isDragging=false; const dx=e.changedTouches[0].clientX-startX; if(dx<-40) goTo(current+1); else if(dx>40) goTo(current-1); });
+</script>
+</body>
+</html>

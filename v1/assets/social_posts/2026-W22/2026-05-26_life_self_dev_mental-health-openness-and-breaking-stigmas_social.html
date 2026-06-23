@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lie We Inherited About Strength — Social Graphics</title>
+<style>
+
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-Regular.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-Italic.ttf') format('truetype'); font-weight:400; font-style:italic; font-display:swap; }
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-BoldItalic.ttf') format('truetype'); font-weight:700; font-style:italic; font-display:swap; }
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-ExtraBold.ttf') format('truetype'); font-weight:800; font-style:normal; font-display:swap; }
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-ExtraBoldItalic.ttf') format('truetype'); font-weight:800; font-style:italic; font-display:swap; }
+
+:root {
+  --beige: #F5F0E8;
+  --ink:   #1A1A1A;
+  --amber: #C9A96E;
+  --offwhite: #FFFBF0;
+  --brown: #8B6F5E;
+  --grain: 0.15;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #E8E2D9;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.042) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.042) 1px, transparent 1px);
+  background-size: 110px 110px;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+.canvas {
+  padding: 60px 48px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 84px;
+}
+
+.sec-label { margin-bottom: 18px; }
+.sec-label h2 {
+  font-size: 15px; font-weight: 600;
+  color: rgba(26,26,26,0.64);
+  font-family: system-ui, -apple-system, sans-serif;
+  margin-bottom: 4px;
+}
+.sec-label p {
+  font-size: 11.5px;
+  color: rgba(26,26,26,0.38);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Artboard scaffold */
+.wrap { position: relative; }
+.artboard {
+  position: absolute; top:0; left:0;
+  transform-origin: top left;
+  overflow: hidden;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.22), 0 1px 5px rgba(0,0,0,0.10);
+}
+
+/* Film grain overlay — 15% over every artboard */
+.grain {
+  position: absolute; inset: 0; z-index: 60;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: var(--grain);
+  mix-blend-mode: overlay;
+}
+
+/* Shared wall SVG sizing */
+.wall {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* ╔══════════════════════════════════════════════╗
+   ║  V1 — INSTAGRAM  1080 × 1080                ║
+   ╚══════════════════════════════════════════════╝ */
+.ig { width:1080px; height:1080px; position:relative; background:var(--ink); }
+
+.ig-overlay {
+  position: absolute; top:0; right:0;
+  width: 57%; height: 100%;
+  background: rgba(20,14,9,0.57);
+  z-index: 20;
+}
+
+.ig-copy {
+  position: absolute; top:0; right:0;
+  width: 57%; height: 100%;
+  z-index: 30;
+  padding: 244px 74px 60px 58px;
+  display: flex; flex-direction: column;
+}
+
+.ig-headline {
+  font-weight: 800; font-size: 38px;
+  line-height: 1.1; color: var(--offwhite);
+  letter-spacing: 0.015em;
+}
+.ig-pull {
+  margin-top: 18px;
+  font-weight: 800; font-style: italic;
+  font-size: 28px; line-height: 1.15;
+  color: var(--amber); letter-spacing: 0.015em;
+}
+.ig-rule {
+  width: 84%; height: 1px;
+  background: var(--amber); opacity: 0.62;
+  margin-top: 28px; margin-bottom: 20px;
+}
+.ig-support {
+  font-weight: 400; font-size: 15px;
+  line-height: 1.6; color: var(--brown);
+  letter-spacing: 0.004em;
+}
+.ig-handle {
+  position: absolute; bottom: 44px; right: 68px;
+  font-size: 13px; font-weight: 400;
+  color: var(--brown); letter-spacing: 0.008em;
+  z-index: 30;
+}
+
+/* ╔══════════════════════════════════════════════╗
+   ║  V2 — LINKEDIN  1200 × 628                  ║
+   ╚══════════════════════════════════════════════╝ */
+.li { width:1200px; height:628px; position:relative; display:flex; }
+
+.li-wall {
+  width: 45%; height: 100%;
+  flex-shrink: 0; overflow: hidden; position: relative;
+}
+
+.li-panel {
+  flex: 1; height: 100%;
+  background: var(--beige);
+  padding: 56px 68px 50px 60px;
+  display: flex; flex-direction: column;
+  justify-content: center; position: relative;
+}
+
+.li-divider {
+  position: absolute; left: 0; top: 10%; bottom: 10%;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent, var(--amber) 30%, var(--amber) 70%, transparent);
+  z-index: 5;
+}
+
+.li-headline {
+  font-weight: 800; font-size: 44px;
+  line-height: 1.1; color: var(--ink);
+  letter-spacing: 0.015em;
+}
+.li-rule {
+  width: 72%; height: 1px;
+  background: var(--amber); opacity: 0.60;
+  margin-top: 26px; margin-bottom: 20px;
+}
+.li-sub {
+  font-weight: 400; font-size: 17px;
+  line-height: 1.62; color: var(--brown);
+  max-width: 93%;
+}
+.li-handle {
+  position: absolute; bottom: 34px; right: 52px;
+  font-size: 12px; font-weight: 400;
+  color: var(--amber); letter-spacing: 0.008em;
+}
+
+/* ╔══════════════════════════════════════════════╗
+   ║  V3 — TWITTER / X  1200 × 675               ║
+   ╚══════════════════════════════════════════════╝ */
+.tw { width:1200px; height:675px; position:relative; background:var(--ink); }
+
+.tw-overlay {
+  position: absolute; inset: 0;
+  background: rgba(20,14,9,0.65); z-index: 20;
+}
+
+.tw-copy {
+  position: absolute; inset: 0; z-index: 30;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 140px;
+}
+
+.tw-headline {
+  font-weight: 800; font-size: 50px;
+  line-height: 1.1; color: var(--offwhite);
+  letter-spacing: 0.015em; text-align: center;
+}
+.tw-rule {
+  width: 52px; height: 1px;
+  background: var(--amber); opacity: 0.70;
+  margin-top: 28px; margin-bottom: 22px;
+}
+.tw-sub {
+  font-weight: 400; font-style: italic;
+  font-size: 26px; line-height: 1.3;
+  color: var(--amber); letter-spacing: 0.015em;
+  text-align: center;
+}
+.tw-handle {
+  position: absolute; bottom: 34px; right: 52px;
+  font-size: 13px; font-weight: 400;
+  color: rgba(255,251,240,0.30); letter-spacing: 0.008em;
+  z-index: 30;
+}
+
+/* ╔══════════════════════════════════════════════╗
+   ║  V4 — THREADS  1080 × 1080                  ║
+   ╚══════════════════════════════════════════════╝ */
+.th { width:1080px; height:1080px; position:relative; background:var(--beige); }
+
+.th-wall {
+  position: absolute; top:0; left:0;
+  width: 44%; height: 100%;
+  overflow: hidden;
+}
+
+.th-copy {
+  position: absolute; top:0; right:0;
+  width: 56%; height: 100%;
+  z-index: 20;
+  padding: 0 80px 0 52px;
+  display: flex; flex-direction: column;
+  justify-content: center;
+}
+
+.th-rule {
+  width: 100%; height: 1px;
+  background: var(--amber); opacity: 0.60;
+  margin-bottom: 30px;
+}
+.th-headline {
+  font-weight: 800; font-size: 42px;
+  line-height: 1.1; color: var(--ink);
+  letter-spacing: 0.015em;
+}
+
+/* ════════════════════════════════════════
+   TWEAKS PANEL
+════════════════════════════════════════ */
+.twk {
+  position: fixed; right:16px; bottom:16px; z-index:9999;
+  width: 232px;
+  background: rgba(248,245,240,0.90);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(255,255,255,0.65);
+  border-radius: 12px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset,
+              0 10px 36px rgba(0,0,0,0.16);
+  font: 11.5px/1.4 system-ui, -apple-system, sans-serif;
+  overflow: hidden; color: #2a2620; display: none;
+}
+.twk-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 10px 10px 14px;
+  border-bottom: 0.5px solid rgba(0,0,0,0.07);
+  user-select: none;
+}
+.twk-hd b { font-size: 12px; font-weight: 600; }
+.twk-close {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: none; background: rgba(0,0,0,0.09);
+  cursor: pointer; display: flex; align-items: center;
+  justify-content: center; font-size: 14px;
+  color: rgba(0,0,0,0.45); line-height: 1; padding: 0;
+}
+.twk-close:hover { background: rgba(0,0,0,0.16); }
+.twk-body { padding: 8px 14px 14px; display: flex; flex-direction: column; gap: 10px; }
+.twk-sect {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(0,0,0,0.35); padding-top: 2px;
+}
+.twk-row { display: flex; flex-direction: column; gap: 4px; }
+.twk-row label {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: rgba(0,0,0,0.54);
+}
+.twk-row input[type="range"] {
+  width: 100%; accent-color: var(--amber); cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Shared SVG filter defs — referenced by all wall SVGs -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <!-- Wide diffuse amber glow -->
+    <filter id="glow-a" x="-500%" y="-8%" width="1100%" height="116%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <!-- Medium amber glow -->
+    <filter id="glow-b" x="-400%" y="-5%" width="900%" height="110%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <!-- Tight core glow -->
+    <filter id="glow-c" x="-400%" y="-3%" width="900%" height="106%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+</svg>
+
+<main class="canvas">
+
+  <!-- ══════════════════════════════════════════════
+       VARIANT 1 — INSTAGRAM  1080 × 1080
+       ══════════════════════════════════════════════ -->
+  <section>
+    <div class="sec-label">
+      <h2>Instagram · 1080 × 1080</h2>
+      <p>Full-bleed wall · right-half overlay · recognition pull-quote</p>
+    </div>
+    <div class="wrap" data-w="1080" data-h="1080">
+      <div class="artboard ig">
+
+        <svg class="wall" viewBox="0 0 1080 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <!-- Concrete base: warm gray-brown -->
+          <rect width="1080" height="1080" fill="#8E8178"/>
+          <!-- Formwork register lines — barely visible, concrete realism -->
+          <g stroke="rgba(20,12,6,0.055)" stroke-width="1" fill="none">
+            <line x1="0" y1="108" x2="1080" y2="110"/>
+            <line x1="0" y1="216" x2="1080" y2="214"/>
+            <line x1="0" y1="324" x2="1080" y2="326"/>
+            <line x1="0" y1="432" x2="1080" y2="430"/>
+            <line x1="0" y1="540" x2="1080" y2="542"/>
+            <line x1="0" y1="648" x2="1080" y2="646"/>
+            <line x1="0" y1="756" x2="1080" y2="758"/>
+            <line x1="0" y1="864" x2="1080" y2="862"/>
+            <line x1="0" y1="972" x2="1080" y2="974"/>
+          </g>
+          <!-- Tonal lift near crack, darken edges -->
+          <radialGradient id="ig-tone" cx="43%" cy="50%" r="54%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.07"/>
+            <stop offset="55%"  stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#000000" stop-opacity="0.28"/>
+          </radialGradient>
+          <rect width="1080" height="1080" fill="url(#ig-tone)"/>
+          <!-- Ambient amber warm light near crack -->
+          <ellipse cx="472" cy="540" rx="96" ry="440" fill="rgba(180,108,18,0.14)"/>
+          <!-- Glow A: wide diffuse -->
+          <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                stroke="#8C4A10" stroke-width="86" fill="none" filter="url(#glow-a)" opacity="0.26"/>
+          <!-- Glow B: medium -->
+          <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                stroke="#C87C26" stroke-width="26" fill="none" filter="url(#glow-b)" opacity="0.52"/>
+          <!-- Glow C: core bright -->
+          <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                stroke="#E6B63C" stroke-width="6" fill="none" filter="url(#glow-c)" opacity="0.68"/>
+          <!-- The crack line -->
+          <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                stroke="#141010" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <!-- Micro-crack branches -->
+          <path d="M 469 462 C 482 476 496 471 504 484" stroke="#141010" stroke-width="1.0" stroke-linecap="round" fill="none" opacity="0.74"/>
+          <path d="M 468 790 C 457 803 448 801 442 814" stroke="#141010" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.62"/>
+          <!-- Edge vignette -->
+          <radialGradient id="ig-vign" cx="43%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="transparent"/>
+            <stop offset="100%" stop-color="rgba(12,8,5,0.54)"/>
+          </radialGradient>
+          <rect width="1080" height="1080" fill="url(#ig-vign)"/>
+        </svg>
+
+        <!-- Right half dark overlay -->
+        <div class="ig-overlay"></div>
+
+        <!-- Text block -->
+        <div class="ig-copy">
+          <p class="ig-headline">Vulnerability isn't<br>the opposite of strength.</p>
+          <p class="ig-pull">It's proof of it.</p>
+          <div class="ig-rule"></div>
+          <p class="ig-support">The definition of strength<br>we inherited is broken.</p>
+        </div>
+        <span class="ig-handle">@mistakenlyhuman</span>
+
+        <div class="grain"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════
+       VARIANT 2 — LINKEDIN  1200 × 628
+       ══════════════════════════════════════════════ -->
+  <section>
+    <div class="sec-label">
+      <h2>LinkedIn · 1200 × 628</h2>
+      <p>Split column · wall crop · authority sub-line</p>
+    </div>
+    <div class="wrap" data-w="1200" data-h="628">
+      <div class="artboard li">
+
+        <!-- Left: wall -->
+        <div class="li-wall">
+          <svg class="wall" viewBox="0 0 1080 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1080" height="1080" fill="#8C7E74"/>
+            <g stroke="rgba(20,12,6,0.05)" stroke-width="1" fill="none">
+              <line x1="0" y1="108" x2="1080" y2="110"/>
+              <line x1="0" y1="216" x2="1080" y2="214"/>
+              <line x1="0" y1="324" x2="1080" y2="326"/>
+              <line x1="0" y1="432" x2="1080" y2="430"/>
+              <line x1="0" y1="540" x2="1080" y2="542"/>
+              <line x1="0" y1="648" x2="1080" y2="646"/>
+              <line x1="0" y1="756" x2="1080" y2="758"/>
+              <line x1="0" y1="864" x2="1080" y2="862"/>
+              <line x1="0" y1="972" x2="1080" y2="974"/>
+            </g>
+            <radialGradient id="li-tone" cx="43%" cy="50%" r="54%" gradientUnits="objectBoundingBox">
+              <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.07"/>
+              <stop offset="55%"  stop-color="#ffffff" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0.28"/>
+            </radialGradient>
+            <rect width="1080" height="1080" fill="url(#li-tone)"/>
+            <ellipse cx="472" cy="540" rx="96" ry="440" fill="rgba(180,108,18,0.14)"/>
+            <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                  stroke="#8C4A10" stroke-width="86" fill="none" filter="url(#glow-a)" opacity="0.26"/>
+            <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                  stroke="#C87C26" stroke-width="26" fill="none" filter="url(#glow-b)" opacity="0.52"/>
+            <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                  stroke="#E6B63C" stroke-width="6" fill="none" filter="url(#glow-c)" opacity="0.68"/>
+            <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                  stroke="#141010" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <path d="M 469 462 C 482 476 496 471 504 484" stroke="#141010" stroke-width="1.0" stroke-linecap="round" fill="none" opacity="0.74"/>
+            <path d="M 468 790 C 457 803 448 801 442 814" stroke="#141010" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.62"/>
+            <radialGradient id="li-vign" cx="43%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
+              <stop offset="0%"   stop-color="transparent"/>
+              <stop offset="100%" stop-color="rgba(12,8,5,0.50)"/>
+            </radialGradient>
+            <rect width="1080" height="1080" fill="url(#li-vign)"/>
+            <!-- Fade right edge into panel -->
+            <linearGradient id="li-edge" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="60%" stop-color="transparent"/>
+              <stop offset="100%" stop-color="rgba(10,7,4,0.68)"/>
+            </linearGradient>
+            <rect width="1080" height="1080" fill="url(#li-edge)"/>
+          </svg>
+        </div>
+
+        <!-- Right: text panel -->
+        <div class="li-panel">
+          <div class="li-divider"></div>
+          <p class="li-headline">Vulnerability isn't the opposite of strength. It's proof of it.</p>
+          <div class="li-rule"></div>
+          <p class="li-sub">Hiring a therapist and hiring a personal trainer are the same logic. The social response shouldn't be different.</p>
+          <span class="li-handle">@tarun-gupta-in</span>
+        </div>
+
+        <div class="grain"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════
+       VARIANT 3 — TWITTER / X  1200 × 675
+       ══════════════════════════════════════════════ -->
+  <section>
+    <div class="sec-label">
+      <h2>Twitter / X · 1200 × 675</h2>
+      <p>Full-bleed · heavy overlay · maximum contrast, minimal read time</p>
+    </div>
+    <div class="wrap" data-w="1200" data-h="675">
+      <div class="artboard tw">
+
+        <svg class="wall" viewBox="0 0 1080 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <rect width="1080" height="1080" fill="#8A7C72"/>
+          <g stroke="rgba(20,12,6,0.052)" stroke-width="1" fill="none">
+            <line x1="0" y1="108" x2="1080" y2="110"/>
+            <line x1="0" y1="216" x2="1080" y2="214"/>
+            <line x1="0" y1="324" x2="1080" y2="326"/>
+            <line x1="0" y1="432" x2="1080" y2="430"/>
+            <line x1="0" y1="540" x2="1080" y2="542"/>
+            <line x1="0" y1="648" x2="1080" y2="646"/>
+            <line x1="0" y1="756" x2="1080" y2="758"/>
+            <line x1="0" y1="864" x2="1080" y2="862"/>
+            <line x1="0" y1="972" x2="1080" y2="974"/>
+          </g>
+          <radialGradient id="tw-tone" cx="43%" cy="50%" r="54%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.07"/>
+            <stop offset="55%"  stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#000000" stop-opacity="0.28"/>
+          </radialGradient>
+          <rect width="1080" height="1080" fill="url(#tw-tone)"/>
+          <ellipse cx="472" cy="540" rx="96" ry="440" fill="rgba(180,108,18,0.14)"/>
+          <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                stroke="#8C4A10" stroke-width="86" fill="none" filter="url(#glow-a)" opacity="0.26"/>
+          <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                stroke="#C87C26" stroke-width="26" fill="none" filter="url(#glow-b)" opacity="0.52"/>
+          <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                stroke="#E6B63C" stroke-width="6" fill="none" filter="url(#glow-c)" opacity="0.68"/>
+          <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                stroke="#141010" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M 469 462 C 482 476 496 471 504 484" stroke="#141010" stroke-width="1.0" stroke-linecap="round" fill="none" opacity="0.74"/>
+          <path d="M 468 790 C 457 803 448 801 442 814" stroke="#141010" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.62"/>
+          <radialGradient id="tw-vign" cx="43%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="transparent"/>
+            <stop offset="100%" stop-color="rgba(12,8,5,0.54)"/>
+          </radialGradient>
+          <rect width="1080" height="1080" fill="url(#tw-vign)"/>
+        </svg>
+
+        <div class="tw-overlay"></div>
+
+        <div class="tw-copy">
+          <p class="tw-headline">Strength that requires silence<br>is just brittleness<br>waiting for the right pressure.</p>
+          <div class="tw-rule"></div>
+          <p class="tw-sub">We inherited the wrong definition.</p>
+        </div>
+        <span class="tw-handle">@mistakenlyhuman</span>
+
+        <div class="grain"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════
+       VARIANT 4 — THREADS  1080 × 1080
+       ══════════════════════════════════════════════ -->
+  <section>
+    <div class="sec-label">
+      <h2>Threads · 1080 × 1080</h2>
+      <p>Beige-dominant · wall inset · personal, less produced</p>
+    </div>
+    <div class="wrap" data-w="1080" data-h="1080">
+      <div class="artboard th">
+
+        <!-- Left wall inset -->
+        <div class="th-wall">
+          <svg class="wall" viewBox="0 0 1080 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1080" height="1080" fill="#908278"/>
+            <g stroke="rgba(20,12,6,0.052)" stroke-width="1" fill="none">
+              <line x1="0" y1="108" x2="1080" y2="110"/>
+              <line x1="0" y1="216" x2="1080" y2="214"/>
+              <line x1="0" y1="324" x2="1080" y2="326"/>
+              <line x1="0" y1="432" x2="1080" y2="430"/>
+              <line x1="0" y1="540" x2="1080" y2="542"/>
+              <line x1="0" y1="648" x2="1080" y2="646"/>
+              <line x1="0" y1="756" x2="1080" y2="758"/>
+              <line x1="0" y1="864" x2="1080" y2="862"/>
+              <line x1="0" y1="972" x2="1080" y2="974"/>
+            </g>
+            <radialGradient id="th-tone" cx="43%" cy="50%" r="54%" gradientUnits="objectBoundingBox">
+              <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.07"/>
+              <stop offset="55%"  stop-color="#ffffff" stop-opacity="0"/>
+              <stop offset="100%" stop-color="#000000" stop-opacity="0.28"/>
+            </radialGradient>
+            <rect width="1080" height="1080" fill="url(#th-tone)"/>
+            <ellipse cx="472" cy="540" rx="96" ry="440" fill="rgba(180,108,18,0.14)"/>
+            <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                  stroke="#8C4A10" stroke-width="86" fill="none" filter="url(#glow-a)" opacity="0.26"/>
+            <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                  stroke="#C87C26" stroke-width="26" fill="none" filter="url(#glow-b)" opacity="0.52"/>
+            <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                  stroke="#E6B63C" stroke-width="6" fill="none" filter="url(#glow-c)" opacity="0.68"/>
+            <path d="M 472 -10 C 468 90 475 160 470 250 C 465 328 474 378 469 462 C 464 536 473 586 468 668 C 463 738 472 790 468 872 C 463 938 472 988 468 1092"
+                  stroke="#141010" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <path d="M 469 462 C 482 476 496 471 504 484" stroke="#141010" stroke-width="1.0" stroke-linecap="round" fill="none" opacity="0.74"/>
+            <path d="M 468 790 C 457 803 448 801 442 814" stroke="#141010" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.62"/>
+            <radialGradient id="th-vign" cx="43%" cy="50%" r="70%" gradientUnits="objectBoundingBox">
+              <stop offset="0%"   stop-color="transparent"/>
+              <stop offset="100%" stop-color="rgba(12,8,5,0.50)"/>
+            </radialGradient>
+            <rect width="1080" height="1080" fill="url(#th-vign)"/>
+            <!-- Gentle fade toward beige on right edge -->
+            <linearGradient id="th-fade" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="55%" stop-color="transparent"/>
+              <stop offset="100%" stop-color="#F5F0E8"/>
+            </linearGradient>
+            <rect width="1080" height="1080" fill="url(#th-fade)"/>
+          </svg>
+        </div>
+
+        <!-- Right text area — clean beige, quote only -->
+        <div class="th-copy">
+          <div class="th-rule"></div>
+          <p class="th-headline">Vulnerability isn't the opposite of strength. It's proof of it.</p>
+        </div>
+
+        <div class="grain"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ── TWEAKS PANEL ──────────────────────────────────────────── -->
+<div class="twk" id="tweaks">
+  <div class="twk-hd">
+    <b>Tweaks</b>
+    <button class="twk-close" id="twk-close" aria-label="Close tweaks">×</button>
+  </div>
+  <div class="twk-body">
+    <div class="twk-sect">Texture</div>
+    <div class="twk-row">
+      <label>Film grain <span id="grain-val">15%</span></label>
+      <input type="range" id="grain-sl" min="0" max="25" step="1" value="15">
+    </div>
+    <div class="twk-sect">Overlay depth</div>
+    <div class="twk-row">
+      <label>Instagram <span id="ig-ov-val">57%</span></label>
+      <input type="range" id="ig-ov-sl" min="30" max="82" step="1" value="57">
+    </div>
+    <div class="twk-row">
+      <label>Twitter / X <span id="tw-ov-val">65%</span></label>
+      <input type="range" id="tw-ov-sl" min="40" max="88" step="1" value="65">
+    </div>
+    <div class="twk-sect">Glow intensity</div>
+    <div class="twk-row">
+      <label>Amber glow <span id="glow-val">100%</span></label>
+      <input type="range" id="glow-sl" min="20" max="160" step="5" value="100">
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ── TWEAK STATE ───────────────────────────────────────────
+var T = { grain:15, igOv:57, twOv:65, glow:100 };
+
+function el(id) { return document.getElementById(id); }
+function setText(id, val) { var n = el(id); if (n) n.textContent = val; }
+function setVal(id, val)  { var n = el(id); if (n) n.value = val; }
+
+function applyT() {
+  document.documentElement.style.setProperty('--grain', (T.grain / 100).toFixed(3));
+
+  var igo = document.querySelector('.ig-overlay');
+  if (igo) igo.style.background = 'rgba(20,14,9,' + (T.igOv / 100).toFixed(2) + ')';
+  var two = document.querySelector('.tw-overlay');
+  if (two) two.style.background = 'rgba(20,14,9,' + (T.twOv / 100).toFixed(2) + ')';
+
+  setText('grain-val',  T.grain + '%');
+  setText('ig-ov-val',  T.igOv  + '%');
+  setText('tw-ov-val',  T.twOv  + '%');
+  setText('glow-val',   T.glow  + '%');
+  setVal('grain-sl',  T.grain);
+  setVal('ig-ov-sl',  T.igOv);
+  setVal('tw-ov-sl',  T.twOv);
+  setVal('glow-sl',   T.glow);
+}
+
+// ── SCALE ARTBOARDS ──────────────────────────────────────
+function scaleAll() {
+  var maxW = Math.min(window.innerWidth - 96, 1440);
+  document.querySelectorAll('.wrap').forEach(function(w) {
+    var nw = parseInt(w.dataset.w, 10);
+    var nh = parseInt(w.dataset.h, 10);
+    var s  = Math.min(1, maxW / nw);
+    w.style.width  = Math.round(nw * s) + 'px';
+    w.style.height = Math.round(nh * s) + 'px';
+    var a = w.querySelector('.artboard');
+    if (!a) return;
+    a.style.width     = nw + 'px';
+    a.style.height    = nh + 'px';
+    a.style.transform = 'scale(' + s + ')';
+  });
+}
+
+// ── TWEAKS HOST PROTOCOL ─────────────────────────────────
+window.addEventListener('message', function(e) {
+  try {
+    if (!e.data || typeof e.data !== 'object') return;
+    var tw = el('tweaks');
+    if (!tw) return;
+    if (e.data.type === '__activate_edit_mode')   { tw.style.display = 'block'; }
+    if (e.data.type === '__deactivate_edit_mode') { tw.style.display = 'none';  }
+  } catch(err) {}
+});
+
+function notifyParent(type) {
+  try { window.parent.postMessage({ type: type }, '*'); } catch(e) {}
+}
+setTimeout(function() { notifyParent('__edit_mode_available'); }, 100);
+
+var closeBtn = el('twk-close');
+if (closeBtn) {
+  closeBtn.addEventListener('click', function() {
+    var tw = el('tweaks');
+    if (tw) tw.style.display = 'none';
+    notifyParent('__edit_mode_dismissed');
+  });
+}
+
+['grain-sl','ig-ov-sl','tw-ov-sl','glow-sl'].forEach(function(id) {
+  var inp = el(id);
+  if (!inp) return;
+  inp.addEventListener('input', function() {
+    var v = parseInt(this.value, 10);
+    if (id === 'grain-sl') T.grain = v;
+    if (id === 'ig-ov-sl') T.igOv  = v;
+    if (id === 'tw-ov-sl') T.twOv  = v;
+    if (id === 'glow-sl')  T.glow  = v;
+    applyT();
+  });
+});
+
+// ── INIT ─────────────────────────────────────────────────
+scaleAll();
+applyT();
+window.addEventListener('resize', scaleAll);
+</script>
+</body>
+</html>

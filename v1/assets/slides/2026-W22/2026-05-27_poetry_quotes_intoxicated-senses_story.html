@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hangover That Won't Lift — IG Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --indigo:   #1C1635;
+  --gold:     #C9A96E;
+  --cream:    #FAF3E0;
+  --charcoal: #3D3D4F;
+  --void-1:   #0d0a1f;
+  --void-2:   #060410;
+  --serif: 'Cormorant Garamond', 'Instrument Serif', Georgia, serif;
+  --grain-op: 0.07;
+  --glow: 1;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #100c20;
+  font-family: var(--serif);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ── Stage: single 1080×1920 artboard ── */
+.stage {
+  position: relative;
+  width: 1080px;
+  height: 1920px;
+  background: var(--void-2);
+  overflow: hidden;
+}
+
+/* ── Shared candle field ── */
+.candle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at var(--fx,50%) var(--fy,80%),
+      #241b46 0%, #1a1433 26%, var(--void-1) 62%, var(--void-2) 100%);
+}
+.candle-field::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(34% 30% at var(--fx,50%) calc(var(--fy,80%) - 1%),
+      rgba(201,169,110,calc(0.34 * var(--glow))) 0%,
+      rgba(201,169,110,calc(0.12 * var(--glow))) 30%,
+      rgba(28,22,53,0) 60%);
+  mix-blend-mode: screen;
+}
+
+.candle {
+  position: absolute;
+  left: var(--fx, 50%);
+  top: var(--fy, 80%);
+  transform: translate(-50%, -50%) scale(var(--fs, 1));
+  width: 150px;
+  height: 320px;
+  pointer-events: none;
+}
+.candle .halo {
+  position: absolute; left: 50%; top: 56%; transform: translate(-50%,-50%);
+  width: 360px; height: 420px;
+  background: radial-gradient(46% 46% at 50% 50%,
+    rgba(255,206,128,calc(0.30 * var(--glow))) 0%,
+    rgba(201,140,60,calc(0.13 * var(--glow))) 36%,
+    transparent 68%);
+  filter: blur(8px);
+  mix-blend-mode: screen;
+}
+.candle .body {
+  position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%);
+  width: 88px; height: 240px;
+  background:
+    radial-gradient(56% 54% at 50% 60%, #ffe2a0 0%, #f0b25c 30%, #d07f33 54%, rgba(150,68,24,0.4) 74%, transparent 88%);
+  border-radius: 50% 50% 46% 46% / 64% 64% 36% 36%;
+  filter: blur(5px);
+  transform-origin: 50% 94%;
+  animation: flicker 4.2s ease-in-out infinite;
+}
+.candle .core {
+  position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%);
+  width: 34px; height: 168px;
+  background: radial-gradient(46% 50% at 50% 52%, #fffaf0 0%, #ffe6b0 44%, rgba(255,206,140,0.3) 74%, transparent 90%);
+  border-radius: 50% 50% 44% 44% / 76% 76% 24% 24%;
+  filter: blur(2.5px);
+  transform-origin: 50% 92%;
+  animation: flicker 3.1s ease-in-out infinite;
+}
+.candle .base {
+  position: absolute; left: 50%; bottom: 58px; transform: translateX(-50%);
+  width: 40px; height: 56px;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(120,156,200,0.55) 0%, rgba(90,120,170,0.18) 50%, transparent 75%);
+  filter: blur(3px);
+  mix-blend-mode: screen;
+}
+.candle .wick {
+  position: absolute; left: 50%; bottom: 44px; transform: translateX(-50%);
+  width: 2.5px; height: 20px; border-radius: 2px;
+  background: linear-gradient(to top, #1a1208 0%, #4a3418 60%, #2a1d0c 100%);
+}
+
+@keyframes flicker {
+  0%, 100% { transform: translateX(-50%) scaleY(1)    scaleX(1)    skewX(0deg);    opacity: 1;    }
+  20%       { transform: translateX(-51%) scaleY(1.045) scaleX(0.98) skewX(-1.2deg); opacity: 0.93; }
+  44%       { transform: translateX(-49%) scaleY(0.975) scaleX(1.02) skewX(0.8deg);  opacity: 1;    }
+  68%       { transform: translateX(-50.5%) scaleY(1.03) scaleX(0.99) skewX(-0.6deg); opacity: 0.95; }
+  84%       { transform: translateX(-49.5%) scaleY(0.99) scaleX(1.01) skewX(0.5deg);  opacity: 0.98; }
+}
+
+/* ── Film grain ── */
+.grain {
+  position: absolute; inset: 0; z-index: 40; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+  opacity: var(--grain-op);
+  mix-blend-mode: overlay;
+}
+
+/* ── Horizontal rule ── */
+.rule { background: var(--gold); height: 1px; opacity: 0.45; }
+
+/* ── Slide layers — all stacked, opacity controlled by JS ── */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* ── Typography ── */
+.poem-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.012em;
+  line-height: 1.22;
+}
+.poem-text .line { display: block; }
+.poem-text .em { font-style: normal; color: var(--gold); }
+
+.label {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-style: normal;
+  color: var(--gold);
+  font-variant-caps: small-caps;
+  letter-spacing: 0.18em;
+}
+
+.handle {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-style: normal;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.16em;
+  color: var(--cream);
+  opacity: 0.45;
+}
+
+/* ─────────────────────────────────────────
+   SLIDE 0 — TITLE CARD
+───────────────────────────────────────── */
+#slide-0 .candle-field { --fx: 50%; --fy: 68%; --fs: 1.3; }
+.s0-body {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 100px;
+  gap: 0;
+}
+.s0-overline {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 22px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.75;
+  margin-bottom: 48px;
+}
+.s0-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 96px;
+  line-height: 1.06;
+  color: var(--cream);
+  margin-bottom: 56px;
+}
+.s0-rule {
+  width: 120px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+  margin-bottom: 48px;
+}
+.s0-sub {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 30px;
+  color: var(--cream);
+  opacity: 0.55;
+  line-height: 1.4;
+  max-width: 660px;
+}
+.s0-handle {
+  position: absolute;
+  z-index: 20;
+  bottom: 88px;
+  right: 72px;
+  font-size: 24px;
+}
+
+/* ─────────────────────────────────────────
+   SLIDE 1 — "Love has taken away / all my senses"
+───────────────────────────────────────── */
+#slide-1 .candle-field { --fx: 42%; --fy: 75%; --fs: 1.1; }
+.s1-body {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 96px;
+  gap: 0;
+}
+.s1-num {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--gold);
+  opacity: 0.55;
+  letter-spacing: 0.12em;
+  margin-bottom: 40px;
+}
+.s1-poem {
+  font-size: 80px;
+  margin-bottom: 52px;
+}
+.s1-rule {
+  width: 80px;
+  margin-bottom: 40px;
+}
+.s1-coda {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 28px;
+  color: var(--cream);
+  opacity: 0.48;
+  line-height: 1.45;
+  max-width: 580px;
+}
+
+/* ─────────────────────────────────────────
+   SLIDE 2 — "effects of booze reside / but your intoxication"
+───────────────────────────────────────── */
+#slide-2 .candle-field { --fx: 60%; --fy: 30%; --fs: 0.85; }
+.s2-body {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  padding: 0 80px 200px;
+}
+.s2-poem {
+  font-size: 68px;
+  line-height: 1.28;
+}
+.s2-rule {
+  width: 60px;
+  margin: 52px auto 0;
+}
+
+/* ─────────────────────────────────────────
+   SLIDE 3 — SIGNATURE LINE (hero slide)
+───────────────────────────────────────── */
+#slide-3 .candle-field { --fx: 50%; --fy: 60%; --fs: 1.4; }
+.s3-body {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 80px;
+}
+.s3-oquote {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 140px;
+  line-height: 0.4;
+  opacity: 0.32;
+  margin-bottom: 52px;
+}
+.s3-poem {
+  font-size: 88px;
+  line-height: 1.12;
+}
+.s3-handle {
+  position: absolute;
+  bottom: 80px;
+  right: 72px;
+  font-size: 24px;
+  z-index: 20;
+}
+
+/* ─────────────────────────────────────────
+   SLIDE 4 — "it keeps coming back / like a moth"
+───────────────────────────────────────── */
+#slide-4 .candle-field { --fx: 50%; --fy: 85%; --fs: 1.0; }
+.s4-body {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 96px;
+}
+.s4-intro {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 26px;
+  color: var(--cream);
+  opacity: 0.45;
+  letter-spacing: 0.04em;
+  margin-bottom: 44px;
+}
+.s4-poem {
+  font-size: 72px;
+  line-height: 1.22;
+  margin-bottom: 56px;
+}
+.s4-moth {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 34px;
+  color: var(--gold);
+  opacity: 0.72;
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+/* ─────────────────────────────────────────
+   SLIDE 5 — "ecosystems have collided"
+───────────────────────────────────────── */
+#slide-5 .candle-field { --fx: 38%; --fy: 50%; --fs: 0.9; }
+.s5-body {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+  padding: 0 88px;
+}
+.s5-label {
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  margin-bottom: 44px;
+}
+.s5-poem {
+  font-size: 74px;
+  line-height: 1.2;
+  margin-bottom: 52px;
+}
+.s5-rule {
+  width: 80px;
+  margin-left: auto;
+  margin-bottom: 40px;
+}
+.s5-coda {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 30px;
+  color: var(--cream);
+  opacity: 0.5;
+  line-height: 1.45;
+  max-width: 560px;
+}
+
+/* ─────────────────────────────────────────
+   SLIDE 6 — CLOSING
+───────────────────────────────────────── */
+#slide-6 .candle-field { --fx: 50%; --fy: 72%; --fs: 1.15; }
+.s6-body {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 88px;
+  gap: 0;
+}
+.s6-rule-top {
+  width: 100px;
+  margin-bottom: 56px;
+}
+.s6-poem {
+  font-size: 76px;
+  line-height: 1.2;
+  margin-bottom: 60px;
+}
+.s6-rule-bot {
+  width: 100px;
+  margin-bottom: 56px;
+}
+.s6-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 24px;
+  color: var(--gold);
+  letter-spacing: 0.18em;
+  font-variant-caps: small-caps;
+  opacity: 0.8;
+}
+.s6-handle {
+  position: absolute;
+  bottom: 80px;
+  right: 72px;
+  font-size: 24px;
+  z-index: 20;
+}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- ══ SLIDE 0 — Title ══ -->
+  <div class="slide" id="slide-0">
+    <div class="candle-field">
+      <div class="candle">
+        <div class="halo"></div><div class="base"></div>
+        <div class="body"></div><div class="core"></div><div class="wick"></div>
+      </div>
+    </div>
+    <div class="s0-body">
+      <p class="s0-overline">a poem</p>
+      <h1 class="s0-title">The Hangover<br>That Won't Lift</h1>
+      <div class="s0-rule"></div>
+      <p class="s0-sub">about the kind of love<br>your mind can't metabolise</p>
+    </div>
+    <span class="handle s0-handle">mistakenlyhuman</span>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ SLIDE 1 — Love has taken away ══ -->
+  <div class="slide" id="slide-1">
+    <div class="candle-field">
+      <div class="candle">
+        <div class="halo"></div><div class="base"></div>
+        <div class="body"></div><div class="core"></div><div class="wick"></div>
+      </div>
+    </div>
+    <div class="s1-body">
+      <p class="s1-num">i.</p>
+      <div class="poem-text s1-poem">
+        <span class="line">Love has taken away</span>
+        <span class="line">all my senses</span>
+        <span class="line em">like that of alcohol</span>
+      </div>
+      <div class="rule s1-rule"></div>
+      <p class="s1-coda">it happened quietly,<br>then completely.</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ SLIDE 2 — But your intoxication ══ -->
+  <div class="slide" id="slide-2">
+    <div class="candle-field">
+      <div class="candle">
+        <div class="halo"></div><div class="base"></div>
+        <div class="body"></div><div class="core"></div><div class="wick"></div>
+      </div>
+    </div>
+    <div class="s2-body">
+      <div class="poem-text s2-poem">
+        <span class="line">effects of booze reside</span>
+        <span class="line">for a short period —</span>
+        <span class="line">but <span class="em">your</span> intoxication</span>
+        <span class="line">doesn't want to go away</span>
+      </div>
+      <div class="rule s2-rule"></div>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ SLIDE 3 — HERO: my heart keeps enjoying ══ -->
+  <div class="slide" id="slide-3">
+    <div class="candle-field">
+      <div class="candle">
+        <div class="halo"></div><div class="base"></div>
+        <div class="body"></div><div class="core"></div><div class="wick"></div>
+      </div>
+    </div>
+    <div class="s3-body">
+      <div class="s3-oquote">&ldquo;</div>
+      <div class="poem-text s3-poem">
+        <span class="line">my heart keeps enjoying</span>
+        <span class="line em">the hangover you created</span>
+      </div>
+    </div>
+    <span class="handle s3-handle">mistakenlyhuman</span>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ SLIDE 4 — like a moth ══ -->
+  <div class="slide" id="slide-4">
+    <div class="candle-field">
+      <div class="candle">
+        <div class="halo"></div><div class="base"></div>
+        <div class="body"></div><div class="core"></div><div class="wick"></div>
+      </div>
+    </div>
+    <div class="s4-body">
+      <p class="s4-intro">it keeps coming back —</p>
+      <div class="poem-text s4-poem">
+        <span class="line">like a <span class="em">moth</span> attracted</span>
+        <span class="line">to the flame</span>
+        <span class="line">like waves to the shore</span>
+        <span class="line">like cold to the winter</span>
+      </div>
+      <p class="s4-moth">I know this isn't going<br>to do any good to me.</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ SLIDE 5 — ecosystems have collided ══ -->
+  <div class="slide" id="slide-5">
+    <div class="candle-field">
+      <div class="candle">
+        <div class="halo"></div><div class="base"></div>
+        <div class="body"></div><div class="core"></div><div class="wick"></div>
+      </div>
+    </div>
+    <div class="s5-body">
+      <p class="label s5-label">ii.</p>
+      <div class="poem-text s5-poem">
+        <span class="line">earlier,</span>
+        <span class="line">my mind and heart</span>
+        <span class="line">worked in sync —</span>
+        <span class="line em">their ecosystems</span>
+        <span class="line em">have collided</span>
+      </div>
+      <div class="rule s5-rule"></div>
+      <p class="s5-coda">deciding not to comply<br>with each other</p>
+    </div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ══ SLIDE 6 — Closing ══ -->
+  <div class="slide" id="slide-6">
+    <div class="candle-field">
+      <div class="candle">
+        <div class="halo"></div><div class="base"></div>
+        <div class="body"></div><div class="core"></div><div class="wick"></div>
+      </div>
+    </div>
+    <div class="s6-body">
+      <div class="rule s6-rule-top"></div>
+      <div class="poem-text s6-poem">
+        <span class="line">leaving me</span>
+        <span class="line">without a ground</span>
+        <span class="line">to stand on</span>
+        <span class="line em">or a sky</span>
+        <span class="line em">to cover my head with</span>
+      </div>
+      <div class="rule s6-rule-bot"></div>
+      <p class="s6-title">The Hangover That Won't Lift</p>
+    </div>
+    <span class="handle s6-handle">mistakenlyhuman</span>
+    <div class="grain"></div>
+  </div>
+
+</div><!-- /stage -->
+
+<script>
+/* ─── Story timing ─── */
+window._storyMeta = {
+  TOTAL:  26.2,
+  STARTS: [0, 3.7, 7.4, 11.1, 14.8, 18.5, 22.2]
+};
+
+var _t = 0;
+
+var _scrubMode = false;
+
+window._setStoryTime = function(t) {
+  _scrubMode = true; /* stop RAF autoplay when export script scrubs */
+  _t = t;
+};
+
+window._storyRender = function() {
+  var starts = window._storyMeta.STARTS;
+  var total  = window._storyMeta.TOTAL;
+  var fadeIn  = 0.5;
+  var fadeOut = 0.45;
+  var n = starts.length;
+
+  for (var i = 0; i < n; i++) {
+    var s0 = starts[i];
+    var s1 = (i + 1 < n) ? starts[i + 1] : total;
+    var el = document.getElementById('slide-' + i);
+    if (!el) continue;
+
+    var op = 0, ty = 14;
+
+    if (_t >= s0 && _t < s1) {
+      var elapsed = _t - s0;
+      var dur = s1 - s0;
+      if (elapsed < fadeIn) {
+        op = elapsed / fadeIn;
+        ty = 14 * (1 - op);
+      } else if (elapsed > dur - fadeOut) {
+        op = (s1 - _t) / fadeOut;
+        ty = 0;
+      } else {
+        op = 1;
+        ty = 0;
+      }
+    }
+
+    el.style.opacity = op;
+    el.style.transform = ty > 0 ? 'translateY(' + ty.toFixed(2) + 'px)' : 'translateY(0)';
+  }
+};
+
+/* ─── Preview autoplay in browser ─── */
+(function() {
+  var RAF = window.requestAnimationFrame || function(cb){ setTimeout(cb, 1000/30); };
+  var start = null;
+  var playing = true;
+
+  function tick(now) {
+    if (!playing || _scrubMode) return;
+    if (!start) start = now;
+    var elapsed = (now - start) / 1000;
+    if (elapsed > window._storyMeta.TOTAL) {
+      start = now; // loop
+    }
+    window._setStoryTime(elapsed % window._storyMeta.TOTAL);
+    window._storyRender();
+    RAF(tick);
+  }
+
+  RAF(tick);
+
+  /* Pause/resume on click */
+  document.getElementById('stage').addEventListener('click', function() {
+    playing = !playing;
+    if (playing) { start = null; RAF(tick); }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+1
+00:00:00,020 --> 00:00:04,660
+So this is not what you actually want. No error message. No warning. Just a wrong answer
+
+2
+00:00:04,660 --> 00:00:11,380
+sitting in your spreadsheet, looking completely legitimate. And this is what this second tutorial
+
+3
+00:00:11,380 --> 00:00:16,980
+is about. It's about the difference between data that looks like a number and data Python actually
+
+4
+00:00:16,980 --> 00:00:23,220
+treats as a number. It's about the structures that let you build analysis that does not lie to you
+
+5
+00:00:23,220 --> 00:00:29,700
+by accident. So in tutorial one, you build the first script you used lists, dictionaries, you
+
+6
+00:00:29,780 --> 00:00:35,380
+look through them, calculated an average, you handled several data types without ever naming them.
+
+7
+00:00:36,020 --> 00:00:41,460
+Integer, string, floats, maybe a Boolean. Python is dynamically typed. That means you don't
+
+8
+00:00:41,460 --> 00:00:41,500
+declare what type something is. You just assign it a value and Python figures it out. This feels

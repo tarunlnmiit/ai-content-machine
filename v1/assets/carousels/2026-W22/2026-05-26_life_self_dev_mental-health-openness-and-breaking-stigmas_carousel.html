@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Lie We Inherited About Strength — Breath of Life</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #e8e4da;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Nunito Sans', sans-serif;
+    }
+
+    :root {
+      --brand-primary: #E8705A;
+      --brand-light:   #EF9585;
+      --brand-dark:    #B34A38;
+      --light-bg:      #EDE8DC;
+      --light-border:  #D6D0C4;
+      --dark-bg:       #1E1B2E;
+      --grad: linear-gradient(165deg, #B34A38 0%, #E8705A 50%, #EF9585 100%);
+    }
+
+    /* ── IG Frame ── */
+    .ig-frame {
+      width: 420px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .ig-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .ig-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-family: 'Lora', serif;
+      font-size: 14px; font-weight: 700; flex-shrink: 0;
+    }
+    .ig-handle { font-size: 13px; font-weight: 700; color: #111; line-height: 1.2; }
+    .ig-sub    { font-size: 11px; color: #999; }
+    .ig-more   { margin-left: auto; font-size: 20px; color: #666; cursor: pointer; }
+
+    /* ── Carousel ── */
+    .carousel-viewport {
+      width: 420px; height: 525px;
+      overflow: hidden; position: relative; cursor: grab;
+    }
+    .carousel-viewport.dragging { cursor: grabbing; }
+
+    .carousel-track {
+      display: flex; flex-direction: row;
+      width: calc(420px * 7); height: 525px;
+      transition: transform 0.38s cubic-bezier(0.42, 0, 0.18, 1);
+      will-change: transform;
+    }
+
+    /* ── Slide ── */
+    .slide {
+      width: 420px; height: 525px; flex-shrink: 0;
+      position: relative; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .slide.light    { background: var(--light-bg); }
+    .slide.dark     { background: var(--dark-bg); }
+    .slide.gradient { background: var(--grad); }
+
+    /* ── Progress bar ── */
+    .progress-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; z-index: 20;
+    }
+    .slide.light    .progress-bar { background: rgba(30,27,46,0.1); }
+    .slide.dark     .progress-bar { background: rgba(255,255,255,0.1); }
+    .slide.gradient .progress-bar { background: rgba(255,255,255,0.2); }
+    .progress-fill {
+      height: 100%; border-radius: 2px;
+      transition: width 0.38s ease;
+    }
+    .slide.light    .progress-fill { background: var(--brand-primary); }
+    .slide.dark     .progress-fill { background: var(--brand-light); }
+    .slide.gradient .progress-fill { background: rgba(255,255,255,0.85); }
+
+    /* ── Swipe arrow ── */
+    .swipe-arrow {
+      position: absolute; right: 20px; bottom: 16px;
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 15;
+      transition: transform 0.15s;
+    }
+    .swipe-arrow:hover { transform: scale(1.1); }
+    .slide.light    .swipe-arrow { background: var(--brand-primary); box-shadow: 0 3px 12px rgba(232,112,90,0.4); }
+    .slide.dark     .swipe-arrow { background: rgba(239,149,133,0.18); border: 1.5px solid rgba(239,149,133,0.35); }
+    .slide.gradient .swipe-arrow { background: rgba(255,255,255,0.2); border: 1.5px solid rgba(255,255,255,0.45); }
+
+    /* ── Slide inner ── */
+    .slide-inner {
+      flex: 1; display: flex; flex-direction: column;
+      padding: 28px 36px 52px;
+    }
+
+    /* ── Logo lockup ── */
+    .logo-lockup { display: flex; align-items: center; gap: 8px; }
+    .logo-circle {
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Lora', serif; font-weight: 700; font-size: 12px; flex-shrink: 0;
+    }
+    .on-light .logo-circle { background: var(--brand-primary); color: #fff; }
+    .on-dark  .logo-circle { background: rgba(239,149,133,0.15); color: #EF9585; border: 1.5px solid rgba(239,149,133,0.3); }
+    .on-grad  .logo-circle { background: rgba(255,255,255,0.18); color: #fff; border: 1.5px solid rgba(255,255,255,0.38); }
+    .logo-wordmark {
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 0.07em; text-transform: uppercase;
+    }
+    .on-light .logo-wordmark { color: var(--brand-dark); }
+    .on-dark  .logo-wordmark { color: rgba(255,255,255,0.55); }
+    .on-grad  .logo-wordmark { color: rgba(255,255,255,0.75); }
+
+    /* ── Tag ── */
+    .tag {
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 11px; border-radius: 20px;
+    }
+    .on-light .tag { background: rgba(232,112,90,0.12); color: var(--brand-dark); }
+    .on-dark  .tag { background: rgba(239,149,133,0.14); color: #EF9585; }
+    .on-grad  .tag { background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.9); }
+
+    /* ── Typography ── */
+    .hero-title {
+      font-family: 'Lora', serif; font-size: 31px; font-weight: 700; line-height: 1.2; color: #1E1B2E;
+    }
+    .hero-title em { color: var(--brand-primary); font-style: italic; }
+
+    .slide-title { font-family: 'Lora', serif; font-size: 20px; font-weight: 700; line-height: 1.3; }
+    .on-light .slide-title { color: #1E1B2E; }
+    .on-dark  .slide-title { color: #fff; }
+    .on-grad  .slide-title { color: #fff; }
+
+    .body-text { font-size: 13.5px; line-height: 1.65; }
+    .on-light .body-text { color: #3d3830; }
+    .on-dark  .body-text { color: rgba(255,255,255,0.72); }
+    .on-grad  .body-text { color: rgba(255,255,255,0.88); }
+
+    .caption-text { font-size: 11.5px; line-height: 1.5; font-style: italic; }
+    .on-light .caption-text { color: rgba(61,56,48,0.55); }
+    .on-dark  .caption-text { color: rgba(255,255,255,0.4); }
+    .on-grad  .caption-text { color: rgba(255,255,255,0.6); }
+
+    .divider { height: 1.5px; border-radius: 1px; width: 100%; }
+    .on-light .divider { background: var(--light-border); }
+    .on-dark  .divider { background: rgba(255,255,255,0.1); }
+    .on-grad  .divider { background: rgba(255,255,255,0.25); }
+
+    /* ── Stat block ── */
+    .stat-block { border-radius: 12px; padding: 14px 16px; }
+    .on-dark  .stat-block { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09); }
+    .on-light .stat-block { background: rgba(232,112,90,0.07); border: 1px solid rgba(232,112,90,0.14); }
+    .stat-number {
+      font-family: 'Lora', serif; font-size: 38px; font-weight: 700;
+      line-height: 1; display: block; margin-bottom: 6px;
+    }
+    .on-dark  .stat-number { color: #EF9585; }
+    .on-light .stat-number { color: var(--brand-primary); }
+    .stat-label { font-size: 13px; line-height: 1.5; }
+    .on-dark  .stat-label { color: rgba(255,255,255,0.72); }
+    .on-light .stat-label { color: #3d3830; }
+
+    /* ── Quote box ── */
+    .quote-box { border-radius: 10px; padding: 14px 16px; }
+    .on-dark  .quote-box { background: rgba(255,255,255,0.05); border-left: 3px solid #EF9585; }
+    .on-light .quote-box { background: rgba(232,112,90,0.06); border-left: 3px solid var(--brand-primary); }
+    .on-grad  .quote-box { background: rgba(255,255,255,0.14); border-left: 3px solid rgba(255,255,255,0.55); }
+    .quote-text { font-family: 'Lora', serif; font-size: 14px; font-style: italic; line-height: 1.62; }
+    .on-dark  .quote-text { color: rgba(255,255,255,0.85); }
+    .on-light .quote-text { color: #2a2520; }
+    .on-grad  .quote-text { color: rgba(255,255,255,0.95); }
+
+    /* ── Feature list ── */
+    .feature-list { display: flex; flex-direction: column; gap: 11px; }
+    .feature-row  { display: flex; align-items: flex-start; gap: 12px; }
+    .feature-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .on-light .feature-dot { background: var(--brand-primary); }
+    .on-dark  .feature-dot { background: #EF9585; }
+    .feature-text { font-size: 13px; line-height: 1.55; }
+    .on-light .feature-text { color: #3d3830; }
+    .on-dark  .feature-text { color: rgba(255,255,255,0.75); }
+
+    /* ── Compare blocks ── */
+    .compare-block { border-radius: 10px; padding: 12px 14px; }
+    .compare-label {
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px;
+    }
+    .compare-desc { font-size: 13px; line-height: 1.52; }
+    .on-dark .compare-block.muted  { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+    .on-dark .compare-block.accent { background: rgba(239,149,133,0.1);  border: 1px solid rgba(239,149,133,0.25); }
+    .on-dark .compare-block.muted  .compare-label { color: rgba(255,255,255,0.4); }
+    .on-dark .compare-block.accent .compare-label { color: #EF9585; }
+
+    /* ── Steps ── */
+    .steps-list { display: flex; flex-direction: column; gap: 13px; }
+    .step-row   { display: flex; align-items: flex-start; gap: 13px; }
+    .step-num   {
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Lora', serif; font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+    .on-light .step-num { background: var(--brand-primary); color: #fff; }
+    .on-dark  .step-num { background: rgba(239,149,133,0.18); color: #EF9585; border: 1.5px solid rgba(239,149,133,0.28); }
+    .step-title { font-size: 13px; font-weight: 700; line-height: 1.3; margin-bottom: 2px; }
+    .on-light .step-title { color: #1E1B2E; }
+    .on-dark  .step-title { color: #fff; }
+    .step-desc { font-size: 12px; line-height: 1.5; }
+    .on-light .step-desc { color: #5a544d; }
+    .on-dark  .step-desc { color: rgba(255,255,255,0.58); }
+
+    /* ── CTA button ── */
+    .cta-btn {
+      display: block; width: 100%;
+      background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.55); color: #fff;
+      font-size: 13px; font-weight: 800; letter-spacing: 0.04em;
+      padding: 13px 20px; border-radius: 32px; cursor: pointer; text-align: center;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: rgba(255,255,255,0.3); }
+
+    /* ── Deco rings ── */
+    .ring { position: absolute; border-radius: 50%; border: 1.5px solid; pointer-events: none; }
+
+    /* ── IG bottom ── */
+    .ig-bottom { padding: 10px 14px; border-top: 1px solid #f0f0f0; }
+    .ig-actions { display: flex; align-items: center; margin-bottom: 8px; gap: 14px; }
+    .ig-icon { width: 22px; height: 22px; opacity: 0.72; cursor: pointer; flex-shrink: 0; }
+    .ig-dots { display: flex; gap: 4px; align-items: center; margin-left: auto; margin-right: auto; }
+    .ig-dot { width: 5px; height: 5px; border-radius: 50%; background: #ccc; cursor: pointer; transition: background 0.25s, transform 0.25s; }
+    .ig-dot.active { background: var(--brand-primary); transform: scale(1.3); }
+    .ig-bookmark { margin-left: auto; }
+    .ig-likes   { font-size: 12px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .ig-caption { font-size: 12px; color: #333; line-height: 1.5; }
+    .ig-caption .handle  { font-weight: 700; }
+    .ig-caption .hashtag { color: var(--brand-primary); }
+
+    /* ── Worksheet CTA footer ── */
+    .worksheet-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 7px 16px 9px;
+      background: #fdf2ef;
+      border-top: 1px solid rgba(232,112,90,0.15);
+    }
+    .wf-line1 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #E8705A;
+      line-height: 1.4;
+      display: block;
+    }
+    .wf-line2 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: #7a4a3a;
+      font-style: italic;
+      line-height: 1.4;
+      display: block;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">mistakenlyhuman</div>
+      <div class="ig-sub">Breath of Life</div>
+    </div>
+    <div class="ig-more">•••</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HERO (light) -->
+      <div class="slide light on-light">
+        <div class="ring" style="width:210px;height:210px;top:-70px;right:-70px;border-color:rgba(232,112,90,0.13);"></div>
+        <div class="ring" style="width:120px;height:120px;top:-28px;right:-28px;border-color:rgba(232,112,90,0.09);"></div>
+
+        <div class="slide-inner" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="logo-lockup"><div class="logo-circle">B</div><div class="logo-wordmark">Breath of Life</div></div>
+            <div class="tag">Mental Health</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <h1 class="hero-title">The Lie We Inherited<br><em>About Strength</em></h1>
+            <div class="divider"></div>
+            <p class="body-text" style="font-size:14px;">Break a bone — people sign your cast, hold the door, say "take it easy." Tell someone you haven't slept in three weeks because your chest feels like it's caving in — the room goes quiet.</p>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:28px;height:2px;background:var(--brand-primary);border-radius:1px;"></div>
+            <span style="font-size:11px;font-weight:600;color:rgba(30,27,46,0.45);">Swipe to read</span>
+          </div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:14.3%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(1)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM (dark) -->
+      <div class="slide dark on-dark">
+        <div class="ring" style="width:190px;height:190px;bottom:-55px;left:-55px;border-color:rgba(239,149,133,0.07);"></div>
+
+        <div class="slide-inner" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="logo-lockup"><div class="logo-circle">B</div><div class="logo-wordmark">Breath of Life</div></div>
+            <div class="tag">The Problem</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <h2 class="slide-title">The stigma isn't fringe.<br>It's <em style="color:#EF9585;">structural.</em></h2>
+
+            <div class="stat-block">
+              <span class="stat-number">40%</span>
+              <div class="stat-label">of men won't talk about their mental health — not to friends, not to family, not to anyone.</div>
+            </div>
+
+            <div class="quote-box">
+              <p class="quote-text">"Real men don't cry." "Therapy is for people who can't handle life." Scripts ran on repeat until they became wallpaper nobody notices anymore.</p>
+            </div>
+          </div>
+
+          <p class="caption-text">Source: Priory Group &bull; Men's global suicide rate significantly higher than women's</p>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:28.6%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(2)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="#EF9585" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 — SOLUTION (gradient) -->
+      <div class="slide gradient on-grad">
+        <div class="ring" style="width:250px;height:250px;top:-85px;right:-85px;border-color:rgba(255,255,255,0.09);"></div>
+        <div class="ring" style="width:150px;height:150px;top:-45px;right:-45px;border-color:rgba(255,255,255,0.07);"></div>
+
+        <div class="slide-inner" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="logo-lockup"><div class="logo-circle">B</div><div class="logo-wordmark">Breath of Life</div></div>
+            <div class="tag">Reframe</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <h2 class="slide-title" style="font-size:22px;">Nobody mocks you for hiring a personal trainer.</h2>
+
+            <div class="quote-box">
+              <p class="quote-text">No stigma improving your fitness with expert help. Automatic stigma hiring a therapist. Same exact logic — completely different social response.</p>
+            </div>
+
+            <p class="body-text">Therapy isn't evidence you've failed. It's evidence you're taking your life seriously enough to want to do better at it.</p>
+            <div class="divider"></div>
+          </div>
+
+          <p class="caption-text" style="text-align:center;">The people who get better aren't the ones who figured it out alone.</p>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:42.9%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(3)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="rgba(255,255,255,0.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 — CONTENT (light) -->
+      <div class="slide light on-light">
+        <div class="ring" style="width:160px;height:160px;bottom:-40px;right:-40px;border-color:rgba(232,112,90,0.11);"></div>
+
+        <div class="slide-inner" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="logo-lockup"><div class="logo-circle">B</div><div class="logo-wordmark">Breath of Life</div></div>
+            <div class="tag">Signals</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <h2 class="slide-title" style="font-size:19px;">What "fine" actually looks like</h2>
+            <div class="divider"></div>
+            <div class="feature-list">
+              <div class="feature-row">
+                <div class="feature-dot"></div>
+                <div class="feature-text"><strong style="font-weight:700;">Smiling half a second too late.</strong> Present in form, gone in feeling.</div>
+              </div>
+              <div class="feature-row">
+                <div class="feature-dot"></div>
+                <div class="feature-text"><strong style="font-weight:700;">Knee bouncing, arms crossed.</strong> Body saying what words won't.</div>
+              </div>
+              <div class="feature-row">
+                <div class="feature-dot"></div>
+                <div class="feature-text"><strong style="font-weight:700;">Mechanically functional answers.</strong> Everything sounds processed, not felt.</div>
+              </div>
+              <div class="feature-row">
+                <div class="feature-dot"></div>
+                <div class="feature-text"><strong style="font-weight:700;">Snapping at people who don't deserve it.</strong> Not cruel — just invisible weight.</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="caption-text">We've trained people to become unbelievably good at disguising collapse.</p>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:57.1%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(4)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 — DETAILS (dark) -->
+      <div class="slide dark on-dark">
+        <div class="ring" style="width:200px;height:200px;top:-65px;left:-65px;border-color:rgba(239,149,133,0.07);"></div>
+
+        <div class="slide-inner" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="logo-lockup"><div class="logo-circle">B</div><div class="logo-wordmark">Breath of Life</div></div>
+            <div class="tag">Two Kinds</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <h2 class="slide-title">Two kinds of strength.</h2>
+
+            <div class="compare-block muted">
+              <div class="compare-label">Suppression</div>
+              <div class="compare-desc" style="color:rgba(255,255,255,0.72);">Looks solid. Shatters under the right pressure. Reroutes into anger, withdrawal, relationships that erode from the inside out.</div>
+            </div>
+
+            <div class="compare-block accent">
+              <div class="compare-label">Honesty</div>
+              <div class="compare-desc" style="color:rgba(255,255,255,0.72);">Bends. Doesn't break. The men who did the work carry themselves differently — less armored, less brittle, more present.</div>
+            </div>
+
+            <div class="quote-box">
+              <p class="quote-text">Vulnerability isn't the opposite of strength. It's proof of it.</p>
+            </div>
+          </div>
+
+          <p class="caption-text">Strength built on suppression is just brittleness waiting for the right pressure.</p>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:71.4%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(5)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="#EF9585" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- SLIDE 6 — HOW-TO (light) -->
+      <div class="slide light on-light">
+        <div class="ring" style="width:170px;height:170px;bottom:-50px;left:-50px;border-color:rgba(232,112,90,0.1);"></div>
+
+        <div class="slide-inner" style="justify-content:space-between;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div class="logo-lockup"><div class="logo-circle">B</div><div class="logo-wordmark">Breath of Life</div></div>
+            <div class="tag">How to Start</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <h2 class="slide-title" style="font-size:19px;">Breaking the silence — one act at a time</h2>
+
+            <div class="steps-list">
+              <div class="step-row">
+                <div class="step-num">1</div>
+                <div><div class="step-title">Check in and mean it</div><div class="step-desc">Ask "how are you?" and actually wait for the real answer.</div></div>
+              </div>
+              <div class="step-row">
+                <div class="step-num">2</div>
+                <div><div class="step-title">Listen without fixing</div><div class="step-desc">Some moments don't need a mechanic. They need a witness.</div></div>
+              </div>
+              <div class="step-row">
+                <div class="step-num">3</div>
+                <div><div class="step-title">Name the door, don't push</div><div class="step-desc">Mention a therapist as an option worth considering — not a verdict.</div></div>
+              </div>
+              <div class="step-row">
+                <div class="step-num">4</div>
+                <div><div class="step-title">Share your story first</div><div class="step-desc">Not to perform — to give someone else permission to be human.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div></div>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:85.7%"></div></div>
+        <div class="swipe-arrow" onclick="goTo(6)">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- SLIDE 7 — CTA (gradient) — NO ARROW -->
+      <div class="slide gradient on-grad">
+        <div class="ring" style="width:270px;height:270px;top:-90px;right:-90px;border-color:rgba(255,255,255,0.08);"></div>
+        <div class="ring" style="width:160px;height:160px;bottom:-55px;left:-55px;border-color:rgba(255,255,255,0.06);"></div>
+
+        <div class="slide-inner" style="justify-content:space-between;align-items:stretch;">
+          <div style="display:flex;align-items:center;justify-content:center;">
+            <div class="logo-lockup"><div class="logo-circle">B</div><div class="logo-wordmark">Breath of Life</div></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center;">
+            <h2 class="slide-title" style="font-size:22px;text-align:center;">The wall doesn't fall at once.</h2>
+            <p class="body-text" style="text-align:center;">It gets chipped at — every time one person chooses honesty over the performance of being fine.</p>
+            <div class="quote-box" style="text-align:left;width:100%;">
+              <p class="quote-text">You don't have to carry it alone. Neither does the person sitting next to you.</p>
+            </div>
+            <div style="text-align:center;">
+              <span class="wf-line1" style="color:#fff;">Comment WORKSHEET 👇</span>
+              <span class="wf-line2" style="color:rgba(255,255,255,0.85);">— the questions I ask myself when I'm carrying something heavy. Free.</span>
+            </div>
+          </div>
+
+          <p class="caption-text" style="text-align:center;">Follow @mistakenlyhuman for more honest writing on self-development &amp; mental health</p>
+        </div>
+
+        <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      </div>
+
+    </div>
+
+    <!-- Worksheet CTA — overlays all slides -->
+    <div class="worksheet-footer">
+      <span class="wf-line1">Comment WORKSHEET 👇</span>
+      <span class="wf-line2">— the questions I ask myself when I'm carrying something heavy. Free.</span>
+    </div>
+  </div>
+
+  <!-- IG BOTTOM -->
+  <div class="ig-bottom">
+    <div class="ig-actions">
+      <svg class="ig-icon" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="ig-icon" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="ig-icon" viewBox="0 0 24 24" fill="none"><line x1="22" y1="2" x2="11" y2="13" stroke="#333" stroke-width="1.5" stroke-linecap="round"/><polygon points="22 2 15 22 11 13 2 9 22 2" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+      <div class="ig-dots" id="igDots">
+        <div class="ig-dot active" onclick="goTo(0)"></div>
+        <div class="ig-dot" onclick="goTo(1)"></div>
+        <div class="ig-dot" onclick="goTo(2)"></div>
+        <div class="ig-dot" onclick="goTo(3)"></div>
+        <div class="ig-dot" onclick="goTo(4)"></div>
+        <div class="ig-dot" onclick="goTo(5)"></div>
+        <div class="ig-dot" onclick="goTo(6)"></div>
+      </div>
+
+      <svg class="ig-icon ig-bookmark" viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div class="ig-likes">3,241 likes</div>
+    <div class="ig-caption">
+      <span class="handle">mistakenlyhuman</span> The lie we inherited about strength — and what it's actually costing us. Drop a 🤍 if this landed somewhere.
+      <span class="hashtag">#MentalHealth #BreakTheStigma #BreathOfLife #Strength #SelfDevelopment</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let current = 0;
+  const TOTAL = 7, SLIDE_W = 420;
+  const track = document.getElementById('track');
+  const dots  = document.querySelectorAll('.ig-dot');
+  const vp    = document.getElementById('viewport');
+
+  function goTo(n) {
+    if (n < 0) n = 0;
+    if (n >= TOTAL) n = TOTAL - 1;
+    current = n;
+    track.style.transform = `translateX(-${current * SLIDE_W}px)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  let startX = 0, dragging = false;
+
+  vp.addEventListener('mousedown', e => {
+    startX = e.clientX; dragging = true;
+    vp.classList.add('dragging');
+    track.style.transition = 'none';
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    track.style.transform = `translateX(${-current * SLIDE_W + (e.clientX - startX)}px)`;
+  });
+  window.addEventListener('mouseup', e => {
+    if (!dragging) return;
+    dragging = false; vp.classList.remove('dragging'); track.style.transition = '';
+    const diff = startX - e.clientX;
+    if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
+    else goTo(current);
+  });
+
+  vp.addEventListener('touchstart', e => { startX = e.touches[0].clientX; track.style.transition = 'none'; }, { passive: true });
+  vp.addEventListener('touchmove',  e => { track.style.transform = `translateX(${-current * SLIDE_W + (e.touches[0].clientX - startX)}px)`; }, { passive: true });
+  vp.addEventListener('touchend',   e => {
+    track.style.transition = '';
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
+    else goTo(current);
+  }, { passive: true });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+  });
+</script>
+
+</body>
+</html>

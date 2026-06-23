@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Data Visualization Carousel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .ig-frame {
+            width: 420px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Instagram Header */
+        .ig-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .ig-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ig-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .ig-handle {
+            font-size: 13px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .ig-icons {
+            display: flex;
+            gap: 12px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Carousel Viewport */
+        .carousel-viewport {
+            width: 100%;
+            height: 525px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-out;
+        }
+
+        .slide {
+            flex: 0 0 420px;
+            height: 525px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0 36px;
+            position: relative;
+        }
+
+        .slide.light {
+            background-color: #EDE8DC;
+            color: #1E1B2E;
+        }
+
+        .slide.dark {
+            background-color: #1E1B2E;
+            color: #EDE8DC;
+        }
+
+        .slide.gradient {
+            background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);
+            color: #EDE8DC;
+        }
+
+        /* Slide Content */
+        .slide-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: calc(525px - 65px);
+            width: 100%;
+            text-align: center;
+        }
+
+        .slide-headline {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-subheading {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.5;
+            opacity: 0.85;
+            margin-bottom: 20px;
+        }
+
+        .slide-body {
+            font-size: 13px;
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 16px;
+        }
+
+        .slide-list {
+            text-align: left;
+            display: inline-block;
+            margin: 12px 0;
+        }
+
+        .slide-list li {
+            font-size: 12px;
+            line-height: 1.8;
+            opacity: 0.85;
+            margin-bottom: 8px;
+        }
+
+        .slide-list li strong {
+            font-weight: 600;
+        }
+
+        .logo-lockup {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .logo-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #EDE8DC;
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .logo-text {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            position: absolute;
+            bottom: 52px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            width: 14.28%;
+            transition: width 0.5s ease-out;
+        }
+
+        .slide.dark .progress-bar-container {
+            background: rgba(237, 232, 220, 0.2);
+        }
+
+        .slide.dark .progress-bar-fill {
+            background: rgba(237, 232, 220, 0.9);
+        }
+
+        /* Swipe Arrow */
+        .swipe-arrow {
+            position: absolute;
+            bottom: 60px;
+            right: 16px;
+            font-size: 24px;
+            opacity: 0.6;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(0); opacity: 0.6; }
+            50% { transform: translateX(4px); opacity: 1; }
+        }
+
+        /* Last Slide CTA */
+        .cta-button {
+            position: absolute;
+            bottom: 60px;
+            left: 36px;
+            right: 36px;
+            padding: 12px 20px;
+            background: rgba(237, 232, 220, 0.9);
+            color: #3D5F75;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: rgba(237, 232, 220, 1);
+        }
+
+        /* Instagram Footer (dots + actions) */
+        .ig-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            border-top: 1px solid #ddd;
+            height: 48px;
+        }
+
+        .dots-container {
+            display: flex;
+            gap: 4px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ccc;
+            transition: background 0.3s, width 0.3s;
+        }
+
+        .dot.active {
+            background: #333;
+            width: 16px;
+            border-radius: 3px;
+        }
+
+        .footer-icons {
+            display: flex;
+            gap: 12px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Caption area */
+        .ig-caption {
+            padding: 8px 16px;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #eee;
+            max-height: 60px;
+            overflow: hidden;
+        }
+
+        .caption-handle {
+            font-weight: 600;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="ig-frame">
+        <!-- Instagram Header -->
+        <div class="ig-header">
+            <div class="ig-header-left">
+                <div class="ig-avatar">B</div>
+                <span class="ig-handle">@mistakenlyhuman</span>
+            </div>
+            <div class="ig-icons">
+                <span>⋮</span>
+            </div>
+        </div>
+
+        <!-- Carousel Viewport -->
+        <div class="carousel-viewport">
+            <div class="carousel-track">
+
+                <!-- SLIDE 1: Hero -->
+                <div class="slide light">
+                    <div class="slide-content">
+                        <div class="logo-lockup">
+                            <div class="logo-circle">B</div>
+                            <div class="logo-text">Breath of Data Science</div>
+                        </div>
+                        <h2 class="slide-headline">Raw Data Doesn't Persuade</h2>
+                        <p class="slide-subheading"><strong>Stories Do</strong></p>
+                        <p class="slide-body">You spent three weeks cleaning the data. Found something real. Sent the dashboard. Silence.</p>
+                        <p class="slide-body">The problem? Your analysis isn't clear until someone <em>sees</em> it.</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+                    <div class="swipe-arrow">→</div>
+                </div>
+
+                <!-- SLIDE 2: Problem -->
+                <div class="slide dark">
+                    <div class="slide-content">
+                        <h2 class="slide-headline">80% on Cleaning</h2>
+                        <p class="slide-subheading">Visualization? Friday afternoon stuff.</p>
+                        <p class="slide-body">This is backwards.</p>
+                        <ul class="slide-list">
+                            <li><strong>Bad data</strong> breaks everything — yes.</li>
+                            <li><strong>Bad visualization</strong> buries the truth.</li>
+                            <li><strong>Clear plots</strong> change minds in seconds.</li>
+                        </ul>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+                    <div class="swipe-arrow">→</div>
+                </div>
+
+                <!-- SLIDE 3: Solution -->
+                <div class="slide gradient">
+                    <div class="slide-content">
+                        <h2 class="slide-headline">Matplotlib + Seaborn</h2>
+                        <p class="slide-subheading">Core tools. Not decoration.</p>
+                        <ul class="slide-list">
+                            <li><strong>Matplotlib:</strong> The canvas. You control everything.</li>
+                            <li><strong>Seaborn:</strong> The paintbrush. Beautiful defaults + stats.</li>
+                        </ul>
+                        <p class="slide-body" style="margin-top: 16px; font-size: 12px;">Learn to frame your data. Make it impossible to miss.</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+                    <div class="swipe-arrow">→</div>
+                </div>
+
+                <!-- SLIDE 4: Content - Narrative Choice -->
+                <div class="slide light">
+                    <div class="slide-content">
+                        <h2 class="slide-headline">The Narrative Choice</h2>
+                        <p class="slide-subheading">Same data. Three different stories.</p>
+                        <ul class="slide-list">
+                            <li><strong>Line chart:</strong> Implies trend or sequence</li>
+                            <li><strong>Bar chart:</strong> Emphasizes rankings</li>
+                            <li><strong>Scatter:</strong> Reveals relationships</li>
+                        </ul>
+                        <p class="slide-body" style="margin-top: 12px; font-size: 12px;">Choose the plot that matches your finding.</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+                    <div class="swipe-arrow">→</div>
+                </div>
+
+                <!-- SLIDE 5: Details - Common Mistakes -->
+                <div class="slide dark">
+                    <div class="slide-content">
+                        <h2 class="slide-headline">Mistakes That Tank Trust</h2>
+                        <ul class="slide-list">
+                            <li><strong>Too many colors:</strong> Humans can't distinguish them</li>
+                            <li><strong>Dual y-axes:</strong> Let you lie about correlation</li>
+                            <li><strong>3D plots:</strong> Impossible to read accurately</li>
+                            <li><strong>No context:</strong> Add labels. State your claim.</li>
+                        </ul>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+                    <div class="swipe-arrow">→</div>
+                </div>
+
+                <!-- SLIDE 6: How-to - The Structure -->
+                <div class="slide light">
+                    <div class="slide-content">
+                        <h2 class="slide-headline">The Winning Formula</h2>
+                        <ul class="slide-list" style="text-align: center; display: block;">
+                            <li><strong>1. Create:</strong> fig, ax = plt.subplots()</li>
+                            <li><strong>2. Plot:</strong> ax.plot() or sns.scatter()</li>
+                            <li><strong>3. Label:</strong> axes, title, legend</li>
+                            <li><strong>4. Save:</strong> dpi=300, bbox_inches='tight'</li>
+                        </ul>
+                        <p class="slide-body" style="margin-top: 12px; font-size: 12px;">Precision in every step. That's how you earn credibility.</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+                    <div class="swipe-arrow">→</div>
+                </div>
+
+                <!-- SLIDE 7: CTA -->
+                <div class="slide gradient">
+                    <div class="slide-content">
+                        <h2 class="slide-headline">Your Insight Doesn't Matter</h2>
+                        <p class="slide-subheading">Until someone sees it.</p>
+                        <p class="slide-body" style="margin: 20px 0;">Spend as much time on the plot as you spent on the code.</p>
+                        <p class="slide-body" style="font-size: 12px; opacity: 0.8;">Remove the junk. Add context. Make it impossible to miss.</p>
+                    </div>
+                    <button class="cta-button">Read Full Tutorial</button>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Instagram Footer -->
+        <div class="ig-footer">
+            <div class="dots-container">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="footer-icons">
+                <span>♡</span>
+                <span>💬</span>
+                <span>⬈</span>
+                <span>🔖</span>
+            </div>
+        </div>
+
+        <!-- Caption -->
+        <div class="ig-caption">
+            <span class="caption-handle">@mistakenlyhuman</span> Your analysis isn't clear until someone sees it. Visualization + Python: the complete guide. Tutorial link in bio. 🎨📊
+        </div>
+    </div>
+
+    <script>
+        const track = document.querySelector('.carousel-track');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const progressBars = document.querySelectorAll('.progress-bar-fill');
+        let currentSlide = 0;
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+
+        function updateSlide(index) {
+            currentSlide = Math.max(0, Math.min(index, slides.length - 1));
+            const offset = currentSlide * 420;
+            track.style.transform = `translateX(-${offset}px)`;
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+
+            progressBars.forEach((bar, i) => {
+                const progress = ((currentSlide + 1) / slides.length) * 100;
+                bar.style.width = i === currentSlide ? `${progress}%` : '14.28%';
+            });
+        }
+
+        // Touch and mouse support
+        track.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            currentX = startX;
+        });
+
+        track.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX;
+        });
+
+        track.addEventListener('pointerup', () => {
+            isDragging = false;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                updateSlide(currentSlide + (diff > 0 ? 1 : -1));
+            }
+        });
+
+        track.addEventListener('pointerleave', () => {
+            isDragging = false;
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') updateSlide(currentSlide + 1);
+            if (e.key === 'ArrowLeft') updateSlide(currentSlide - 1);
+        });
+
+        updateSlide(0);
+    </script>
+</body>
+</html>

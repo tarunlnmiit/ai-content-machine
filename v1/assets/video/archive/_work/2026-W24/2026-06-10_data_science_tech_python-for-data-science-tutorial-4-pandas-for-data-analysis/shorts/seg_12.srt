@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:06,380
+Is underused for multi-condition filters, like where we are checking region is equal to north
+
+2
+00:00:06,460 --> 00:00:12,860
+and revenue greater than 5,000. It is dramatically more readable than stacked Boolean expressions.
+
+3
+00:00:13,900 --> 00:00:23,980
+And the last one dot is in instead of three equal to checks here where status equal to
+
+4
+00:00:23,980 --> 00:00:31,580
+active and status equal to trial. Instead you can just have one or symbol and just pass a list
+
+5
+00:00:32,220 --> 00:00:39,500
+there. Cleaner and scales to any list length. Data cleaning is where most tutorials lose the thread.
+
+6
+00:00:40,940 --> 00:00:47,420
+Because it feels like janitor work, it's not. Cleaning is analysis. You can't separate them.
+
+7
+00:00:48,300 --> 00:00:48,300
+So if we try and run this code, which let me do, you will see we are getting some errors like

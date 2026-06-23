@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:07,100
+So Python slicing is exclusive on the end, which trips up everyone on their first week.
+
+2
+00:00:07,740 --> 00:00:15,340
+To add an item to a list, you use an append method. So if I write score start
+
+3
+00:00:15,980 --> 00:00:22,620
+append and then say 90 and print scores again.
+
+4
+00:00:29,100 --> 00:00:36,540
+So you can see 90 is added at the end. And to filter, you can use something called a list
+
+5
+00:00:36,540 --> 00:00:45,100
+comprehension or for loop. So we want to see if a number is greater than 85 in this list of
+
+6
+00:00:45,100 --> 00:00:53,400
+scores. So there are two ways to do it. First is normally using a for loop. So you can loop over

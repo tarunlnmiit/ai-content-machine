@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breath of Life — Social Frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; padding:0; background:#000; position:relative; }
+  .frame { display:none; position:relative; overflow:hidden; }
+  .frame.ig { width:1080px; height:1080px; }
+  .frame.th { width:1080px; height:1080px; }
+  .frame.li { width:1200px; height:628px; }
+  .frame.tw { width:1200px; height:675px; }
+
+  /* ── SQUARE BASE (ig + th) ── */
+  .sq-bg {
+    position:absolute; inset:0; background:#1E1B2E;
+    z-index:0;
+  }
+  .sq-bg::before {
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 420px 420px at 78% 22%, rgba(232,112,90,0.13) 0%, transparent 70%),
+      radial-gradient(ellipse 340px 280px at 20% 80%, rgba(179,74,56,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 200px 200px at 60% 60%, rgba(239,149,133,0.07) 0%, transparent 60%);
+  }
+  /* ink-wash halo rings */
+  .sq-ring {
+    position:absolute;
+    border-radius:50%;
+    border:1px solid rgba(232,112,90,0.12);
+    z-index:1;
+  }
+  .sq-ring.r1 { width:520px; height:520px; top:50%; left:50%; transform:translate(-50%,-50%); }
+  .sq-ring.r2 { width:720px; height:720px; top:50%; left:50%; transform:translate(-50%,-50%); border-color:rgba(232,112,90,0.07); }
+  .sq-ring.r3 { width:920px; height:920px; top:50%; left:50%; transform:translate(-50%,-50%); border-color:rgba(232,112,90,0.04); }
+  /* horizontal breath lines */
+  .sq-lines {
+    position:absolute; inset:0; z-index:1;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(239,149,133,0.04) 60px);
+  }
+  /* accent bar left */
+  .accent-bar {
+    position:absolute; left:0; top:0; bottom:0;
+    width:6px; background:#E8705A; z-index:20;
+  }
+  /* content zone squares */
+  .sq-content {
+    position:absolute;
+    left:80px; right:80px;
+    top:0; bottom:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    z-index:10;
+  }
+  .sq-eyebrow {
+    font-family:'Nunito Sans', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#E8705A;
+    margin-bottom:32px;
+    opacity:0.9;
+  }
+  .sq-hook {
+    font-family:'Lora', serif;
+    font-weight:700;
+    font-size:74px;
+    line-height:1.12;
+    color:#F0EAE0;
+    margin:0 0 36px 0;
+    overflow:hidden;
+  }
+  .sq-sub {
+    font-family:'Nunito Sans', sans-serif;
+    font-weight:300;
+    font-size:22px;
+    line-height:1.6;
+    color:#EF9585;
+    max-width:860px;
+    overflow:hidden;
+  }
+  /* divider */
+  .sq-divider {
+    width:56px; height:2px;
+    background:#E8705A;
+    margin:36px 0;
+    opacity:0.7;
+  }
+  /* brand bar squares */
+  .sq-brand {
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:64px;
+    background:rgba(179,74,56,0.18);
+    border-top:1px solid rgba(232,112,90,0.2);
+    display:flex;
+    align-items:center;
+    padding:0 80px 0 86px;
+    justify-content:space-between;
+    z-index:20;
+  }
+  .sq-brand span {
+    font-family:'Nunito Sans', sans-serif;
+    font-size:15px;
+    color:rgba(240,234,224,0.45);
+    letter-spacing:1px;
+  }
+
+  /* ── LANDSCAPE BASE (li + tw) ── */
+  .ls-bg {
+    position:absolute; inset:0; background:#1E1B2E; z-index:0;
+  }
+  .ls-bg::before {
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 500px 400px at 85% 50%, rgba(232,112,90,0.15) 0%, transparent 65%),
+      radial-gradient(ellipse 300px 300px at 10% 80%, rgba(179,74,56,0.14) 0%, transparent 60%);
+  }
+  .ls-accent-bar {
+    position:absolute; left:0; top:0; bottom:0;
+    width:6px; background:#E8705A; z-index:20;
+  }
+  /* right decorative zone */
+  .ls-deco {
+    position:absolute; right:0; top:0; bottom:0;
+    width:45%; z-index:2;
+    overflow:hidden;
+  }
+  .ls-deco::before {
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(135deg, transparent 0%, rgba(232,112,90,0.07) 50%, rgba(179,74,56,0.14) 100%);
+  }
+  /* spiral halos in deco zone */
+  .ls-halo {
+    position:absolute;
+    border-radius:50%;
+    border:1px solid rgba(232,112,90,0.15);
+  }
+  /* left text zone */
+  .ls-content {
+    position:absolute;
+    left:80px; right:45%;
+    top:0; bottom:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding-right:40px;
+    z-index:10;
+  }
+  .ls-eyebrow {
+    font-family:'Nunito Sans', sans-serif;
+    font-weight:600;
+    font-size:12px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:#E8705A;
+    margin-bottom:20px;
+    opacity:0.9;
+  }
+  .ls-hook {
+    font-family:'Lora', serif;
+    font-weight:700;
+    color:#F0EAE0;
+    line-height:1.15;
+    margin:0 0 22px 0;
+    overflow:hidden;
+  }
+  .ls-sub {
+    font-family:'Nunito Sans', sans-serif;
+    font-weight:300;
+    color:#EF9585;
+    line-height:1.55;
+    overflow:hidden;
+  }
+  .ls-divider {
+    width:42px; height:2px;
+    background:#E8705A;
+    margin:20px 0;
+    opacity:0.7;
+  }
+  .ls-brand {
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:52px;
+    background:rgba(179,74,56,0.14);
+    border-top:1px solid rgba(232,112,90,0.18);
+    display:flex;
+    align-items:center;
+    padding:0 60px 0 86px;
+    justify-content:space-between;
+    z-index:20;
+  }
+  .ls-brand span {
+    font-family:'Nunito Sans', sans-serif;
+    font-size:13px;
+    color:rgba(240,234,224,0.4);
+    letter-spacing:1px;
+  }
+  /* shared vertical center mark */
+  .ls-vmark {
+    position:absolute; top:10%; bottom:10%; left:55%;
+    width:1px; background:rgba(232,112,90,0.15);
+    z-index:3;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     IG  1080×1080
+════════════════════════════════════════════ -->
+<div class="frame ig">
+  <div class="sq-bg"></div>
+  <div class="sq-ring r1"></div>
+  <div class="sq-ring r2"></div>
+  <div class="sq-ring r3"></div>
+  <div class="sq-lines"></div>
+  <div class="accent-bar"></div>
+
+  <div class="sq-content">
+    <div class="sq-eyebrow">Second-order thinking</div>
+    <div class="sq-hook">When your improvement process improves itself, you stop needing willpower to sustain it.</div>
+    <div class="sq-divider"></div>
+    <div class="sq-sub">Most self-improvement has a ceiling. Here's the second-order move that breaks through it.</div>
+  </div>
+
+  <div class="sq-brand">
+    <span>@mistakenlyhuman</span>
+    <span>Breath of Life</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     LI  1200×628
+════════════════════════════════════════════ -->
+<div class="frame li">
+  <div class="ls-bg"></div>
+  <div class="ls-vmark"></div>
+  <div class="ls-accent-bar"></div>
+
+  <!-- right decorative zone -->
+  <div class="ls-deco">
+    <!-- halo rings anchored to deco zone center -->
+    <div class="ls-halo" style="width:380px;height:380px;top:50%;left:50%;margin-top:-190px;margin-left:-190px;"></div>
+    <div class="ls-halo" style="width:260px;height:260px;top:50%;left:50%;margin-top:-130px;margin-left:-130px;border-color:rgba(232,112,90,0.22);"></div>
+    <div class="ls-halo" style="width:140px;height:140px;top:50%;left:50%;margin-top:-70px;margin-left:-70px;border-color:rgba(232,112,90,0.32);"></div>
+    <!-- inner glow -->
+    <div style="position:absolute;width:60px;height:60px;top:50%;left:50%;margin-top:-30px;margin-left:-30px;border-radius:50%;background:rgba(232,112,90,0.18);box-shadow:0 0 40px 20px rgba(232,112,90,0.10);"></div>
+    <!-- floating lines -->
+    <div style="position:absolute;top:20%;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(232,112,90,0.2),transparent);"></div>
+    <div style="position:absolute;top:80%;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(232,112,90,0.12),transparent);"></div>
+  </div>
+
+  <div class="ls-content">
+    <div class="ls-eyebrow">Second-order thinking</div>
+    <div class="ls-hook" style="font-size:52px;">When your improvement process improves itself, you stop needing willpower to sustain it.</div>
+    <div class="ls-divider"></div>
+    <div class="ls-sub" style="font-size:19px;">Most self-improvement has a ceiling. Here's the second-order move that breaks through it.</div>
+  </div>
+
+  <div class="ls-brand">
+    <span>@mistakenlyhuman</span>
+    <span>Breath of Life</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TH  1080×1080
+════════════════════════════════════════════ -->
+<div class="frame th">
+  <div class="sq-bg"></div>
+  <div class="sq-ring r1"></div>
+  <div class="sq-ring r2"></div>
+  <div class="sq-ring r3"></div>
+  <div class="sq-lines"></div>
+  <div class="accent-bar"></div>
+
+  <!-- subtle inner glow spot -->
+  <div style="position:absolute;width:320px;height:320px;top:50%;left:50%;margin-top:-160px;margin-left:-160px;border-radius:50%;background:radial-gradient(circle,rgba(232,112,90,0.09) 0%,transparent 70%);z-index:2;"></div>
+
+  <div class="sq-content">
+    <div class="sq-eyebrow">Breath of Life · insight</div>
+    <div class="sq-hook">When your improvement process improves itself, you stop needing willpower to sustain it.</div>
+    <div class="sq-divider"></div>
+    <div class="sq-sub">Most self-improvement has a ceiling. Here's the second-order move that breaks through it.</div>
+  </div>
+
+  <div class="sq-brand">
+    <span>@mistakenlyhuman</span>
+    <span>Breath of Life</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TW  1200×675
+════════════════════════════════════════════ -->
+<div class="frame tw">
+  <div class="ls-bg"></div>
+  <div class="ls-vmark"></div>
+  <div class="ls-accent-bar"></div>
+
+  <!-- right decorative zone -->
+  <div class="ls-deco">
+    <div class="ls-halo" style="width:420px;height:420px;top:50%;left:50%;margin-top:-210px;margin-left:-210px;"></div>
+    <div class="ls-halo" style="width:280px;height:280px;top:50%;left:50%;margin-top:-140px;margin-left:-140px;border-color:rgba(232,112,90,0.22);"></div>
+    <div class="ls-halo" style="width:150px;height:150px;top:50%;left:50%;margin-top:-75px;margin-left:-75px;border-color:rgba(232,112,90,0.32);"></div>
+    <div style="position:absolute;width:64px;height:64px;top:50%;left:50%;margin-top:-32px;margin-left:-32px;border-radius:50%;background:rgba(232,112,90,0.16);box-shadow:0 0 48px 24px rgba(232,112,90,0.09);"></div>
+    <div style="position:absolute;top:18%;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(232,112,90,0.18),transparent);"></div>
+    <div style="position:absolute;top:82%;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(232,112,90,0.11),transparent);"></div>
+    <!-- vertical faint line in deco -->
+    <div style="position:absolute;left:50%;top:12%;bottom:12%;width:1px;background:linear-gradient(180deg,transparent,rgba(232,112,90,0.12),transparent);"></div>
+  </div>
+
+  <div class="ls-content">
+    <div class="ls-eyebrow">Second-order thinking</div>
+    <div class="ls-hook" style="font-size:56px;">When your improvement process improves itself, you stop needing willpower to sustain it.</div>
+    <div class="ls-divider"></div>
+    <div class="ls-sub" style="font-size:20px;">Most self-improvement has a ceiling. Here's the second-order move that breaks through it.</div>
+  </div>
+
+  <div class="ls-brand">
+    <span>@mistakenlyhuman</span>
+    <span>Breath of Life</span>
+  </div>
+</div>
+
+<script>
+  document.querySelector('.frame.ig').style.display = 'block';
+</script>
+</body>
+</html>

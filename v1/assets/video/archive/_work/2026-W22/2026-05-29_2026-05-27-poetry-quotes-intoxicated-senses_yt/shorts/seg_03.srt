@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:00,000
+These particular things are stuck, and I can't unstick them.
+
+2
+00:00:00,000 --> 00:00:04,000
+Then the moth to flame arrives, and it's not romantic.
+
+3
+00:00:04,000 --> 00:00:08,000
+Moths don't choose the flame, they are wired to the light.
+
+4
+00:00:08,000 --> 00:00:14,000
+No deliberation, no weighing of outcomes, just pull pure and indifferent to consequence.
+
+5
+00:00:14,000 --> 00:00:20,000
+When love starts feeling like physics instead of a decision, you are somewhere in you.
+
+6
+00:00:20,000 --> 00:00:26,000
+And the unsettling part isn't losing control, and discovering that you are not entirely unhappy about it.
+
+7
+00:00:26,000 --> 00:00:31,000
+There was one night while training and debugging a model pipeline for me.
+
+8
+00:00:31,000 --> 00:00:36,000
+Four terminals open, Databricks logs scrolling endlessly, coffee cold for an hour,
+
+9
+00:00:36,000 --> 00:00:40,000
+when our voice cut through the noise without warning.
+
+10
+00:00:40,000 --> 00:00:41,000
+Not the serious conversation, not the emotional moment, just the way she laughed,

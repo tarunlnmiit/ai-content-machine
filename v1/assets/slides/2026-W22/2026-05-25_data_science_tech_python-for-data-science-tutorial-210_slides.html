@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python for Data Science — Tutorial 2 of 10</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" crossorigin="anonymous">
+  <script src="deck-stage.js"></script>
+
+  <style>
+    :root {
+      --ink:   #1C1C2E;
+      --bone:  #E8E0D5;
+      --sky:   #7C9CB0;
+      --teal:  #00D4AA;
+      --purp:  #7B61FF;
+      --amber: #F5A623;
+      --term:  #0D0D1A;
+
+      --t07: rgba(0,212,170,.07);
+      --t12: rgba(0,212,170,.12);
+      --t22: rgba(0,212,170,.22);
+      --p15: rgba(123,97,255,.15);
+      --s08: rgba(124,156,176,.08);
+      --s18: rgba(124,156,176,.18);
+      --b05: rgba(232,224,213,.05);
+
+      --fd: 'Montserrat', sans-serif;
+      --fc: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--ink);
+      font-family: var(--fd);
+      color: var(--bone);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    section {
+      background: var(--ink);
+      width: 100%; height: 100%;
+      padding: 72px 88px 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ey {
+      font-family: var(--fc);
+      font-size: 14px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 10px;
+      position: relative; z-index: 1;
+    }
+    .tt {
+      font-size: 44px; font-weight: 900;
+      color: var(--bone); line-height: 1.05;
+      letter-spacing: -.02em; margin-bottom: 28px;
+      position: relative; z-index: 1;
+    }
+
+    .ac { color: var(--teal); }
+    .mu { color: var(--sky); }
+
+    .bl { display: flex; flex-direction: column; gap: 14px; list-style: none; }
+    .bl li { display: flex; align-items: flex-start; gap: 12px; font-size: 18px; line-height: 1.45; }
+    .bl li::before { content: '—'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+
+    .tw {
+      background: var(--term); border: 1px solid var(--s18);
+      border-radius: 8px; overflow: hidden;
+    }
+    .tbar {
+      background: #12121E; border-bottom: 1px solid var(--s08);
+      padding: 8px 14px; display: flex; align-items: center; gap: 7px;
+    }
+    .td { width: 10px; height: 10px; border-radius: 50%; }
+    .td.r { background: #FF5F57; }
+    .td.y { background: #FFBD2E; }
+    .td.g { background: #28CA41; }
+    .tf { font-family: var(--fc); font-size: 11px; color: var(--sky); margin-left: 8px; }
+    .tc {
+      padding: 16px 20px; font-family: var(--fc);
+      font-size: 14px; line-height: 1.6;
+      white-space: pre; overflow: hidden;
+    }
+
+    .kw { color: var(--purp); }
+    .st { color: var(--teal); }
+    .cm { color: #4A5E72; }
+    .nm { color: var(--bone); }
+    .fn { color: #C0B6F2; }
+    .op { color: var(--bone); opacity: .7; }
+    .out-ok { color: var(--teal); }
+    .out-bad { color: var(--amber); background: rgba(245,166,35,.12); padding: 1px 5px; border-radius: 3px; }
+    .hl-teal { background: rgba(0,212,170,.08); border-left: 3px solid var(--teal); margin-left: -20px; padding-left: 17px; display: block; }
+
+    .card { background: var(--b05); border: 1px solid var(--s08); border-radius: 8px; }
+    .card-t { background: var(--t07); border-color: var(--t22); }
+
+    .bg-glow { position: absolute; border-radius: 50%; pointer-events: none; }
+    .bg-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--b05) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--b05) 1px, transparent 1px);
+      background-size: 80px 80px; pointer-events: none;
+    }
+
+    .sn {
+      position: absolute; bottom: 28px; right: 88px;
+      font-family: var(--fc); font-size: 12px; color: var(--sky); z-index: 2;
+    }
+
+    code { font-family: var(--fc); }
+  </style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+
+<!-- ═══ HERO ═══ -->
+<section data-screen-label="Hero" style="justify-content:center;align-items:center;padding:0;">
+  <div class="bg-grid" style="opacity:.45;"></div>
+  <div class="bg-glow" style="width:900px;height:900px;background:radial-gradient(circle,rgba(245,166,35,.04) 0%,transparent 65%);left:50%;top:50%;transform:translate(-50%,-50%);"></div>
+
+  <div style="position:absolute;top:44px;left:88px;font-family:var(--fc);font-size:14px;color:var(--teal);letter-spacing:.1em;z-index:2;">Tutorial 02 / 10</div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;z-index:1;text-align:center;width:100%;padding:0 120px;">
+    <div style="font-size:16px;font-weight:600;color:var(--sky);letter-spacing:.06em;margin-bottom:28px;">Python for Data Science — Tutorial 2 / 10</div>
+
+    <div class="tw" style="width:520px;margin-bottom:40px;box-shadow:0 0 80px -20px rgba(245,166,35,.12);">
+      <div class="tbar">
+        <span class="td r"></span><span class="td y"></span><span class="td g"></span>
+        <span class="tf">python3</span>
+      </div>
+      <div class="tc" style="font-size:16px;line-height:1.65;padding:18px 24px;">
+<span class="cm">>>> ages = ["28", "35", "42"]</span>
+<span class="cm">>>> </span>result = ages[0] + ages[1] + ages[2]
+<span class="cm">>>> </span><span class="fn">print</span>(result)
+<span class="out-bad" style="font-size:18px;font-weight:700;">"283542"</span>
+<span class="cm"># no error. just wrong.</span></div>
+    </div>
+
+    <h1 style="font-size:52px;font-weight:900;color:var(--bone);line-height:.95;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:24px;">
+      Your Analysis Can Be Wrong<br>Without Crashing
+    </h1>
+    <div style="width:48px;height:3px;background:var(--teal);border-radius:2px;margin-bottom:20px;"></div>
+    <p style="font-size:20px;font-weight:400;color:var(--sky);line-height:1.5;">Types encode intention. Python needs to know what you're holding.</p>
+  </div>
+</section>
+
+
+<!-- ═══ 01 THE SILENT BUG ═══ -->
+<section data-screen-label="01 The Silent Bug">
+  <div class="ey">The silent bug</div>
+  <h2 class="tt">Python Will Give You a Wrong Answer<br>Without Telling You</h2>
+
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;flex:1;width:100%;">
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);">Imported CSV</div>
+      <div class="tw">
+        <div class="tbar"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="tf">ages.csv</span></div>
+        <table style="width:100%;border-collapse:collapse;font-family:var(--fc);font-size:15px;">
+          <thead><tr style="border-bottom:1px solid var(--s18);">
+            <th style="padding:10px 20px;text-align:left;color:var(--sky);font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;">name</th>
+            <th style="padding:10px 20px;text-align:left;color:var(--sky);font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;">age</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--s08);"><td style="padding:9px 20px;">Tarun</td><td style="padding:9px 20px;color:var(--amber);font-weight:700;">"28"</td></tr>
+            <tr style="border-bottom:1px solid var(--s08);"><td style="padding:9px 20px;">Priya</td><td style="padding:9px 20px;color:var(--amber);font-weight:700;">"35"</td></tr>
+            <tr><td style="padding:9px 20px;">Carlos</td><td style="padding:9px 20px;color:var(--amber);font-weight:700;">"42"</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:13px;color:var(--sky);font-family:var(--fc);font-style:italic;">Looks like numbers. They're strings.</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);">Terminal Output</div>
+      <div class="tw" style="box-shadow:0 0 60px -20px rgba(245,166,35,.1);">
+        <div class="tbar"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="tf">python3</span></div>
+        <div class="tc" style="font-size:16px;line-height:1.7;padding:18px 22px;">
+<span class="cm">>>> </span>result = <span class="st">"28"</span> + <span class="st">"35"</span> + <span class="st">"42"</span>
+<span class="cm">>>> </span><span class="fn">print</span>(result)
+<span class="out-bad" style="font-size:18px;font-weight:700;">"283542"</span>
+<span class="cm"># No error. No warning.</span></div>
+      </div>
+      <div style="border-bottom:2px solid var(--amber);padding-bottom:8px;">
+        <div style="font-size:17px;color:var(--sky);">No warning. No crash. <span style="color:var(--amber);font-weight:700;">Just a wrong number.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:auto;padding-top:20px;border-top:1px solid var(--s08);width:100%;">
+    <ul class="bl">
+      <li><span>Summing a string column doesn't error — it concatenates</span></li>
+      <li><span><code style="color:var(--amber);">"28" + "35" + "42"</code> = <code style="color:var(--amber);">"283542"</code> in Python</span></li>
+      <li><span>Types encode intention. Python needs to know what you mean.</span></li>
+    </ul>
+  </div>
+  <span class="sn">01</span>
+</section>
+
+
+<!-- ═══ 02 THE 4 PRIMITIVE TYPES ═══ -->
+<section data-screen-label="02 The 4 Primitive Types">
+  <div class="ey">Know what you're holding</div>
+  <h2 class="tt">The 4 Primitive Types</h2>
+
+  <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:48px;flex:1;width:100%;">
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="card" style="padding:14px 18px;display:flex;align-items:center;gap:14px;">
+        <code style="font-size:14px;font-weight:700;color:var(--teal);background:var(--t12);padding:3px 10px;border-radius:4px;">int</code>
+        <span style="font-size:17px;">Whole numbers</span>
+        <span style="font-size:13px;color:var(--sky);margin-left:auto;font-family:var(--fc);">28, 100, -5</span>
+      </div>
+      <div class="card" style="padding:14px 18px;display:flex;align-items:center;gap:14px;">
+        <code style="font-size:14px;font-weight:700;color:var(--teal);background:var(--t12);padding:3px 10px;border-radius:4px;">float</code>
+        <span style="font-size:17px;">Decimals</span>
+        <span style="font-size:13px;color:var(--sky);margin-left:auto;font-family:var(--fc);">3.14, 0.5</span>
+      </div>
+      <div class="card" style="padding:14px 18px;display:flex;align-items:center;gap:14px;">
+        <code style="font-size:14px;font-weight:700;color:var(--purp);background:var(--p15);padding:3px 10px;border-radius:4px;">str</code>
+        <span style="font-size:17px;">Text</span>
+        <span style="font-size:13px;color:var(--sky);margin-left:auto;font-family:var(--fc);">"42" ≠ 42</span>
+      </div>
+      <div class="card" style="padding:14px 18px;display:flex;align-items:center;gap:14px;">
+        <code style="font-size:14px;font-weight:700;color:var(--teal);background:var(--t12);padding:3px 10px;border-radius:4px;">bool</code>
+        <span style="font-size:17px;">True / False only</span>
+      </div>
+    </div>
+
+    <div class="tw">
+      <div class="tbar"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="tf">types.py</span></div>
+      <div class="tc">
+age <span class="op">=</span> <span class="nm">28</span>          <span class="cm"># int</span>
+salary <span class="op">=</span> <span class="nm">95000.50</span> <span class="cm"># float</span>
+name <span class="op">=</span> <span class="st">"Tarun"</span>    <span class="cm"># str</span>
+is_active <span class="op">=</span> <span class="kw">True</span>  <span class="cm"># bool</span>
+
+<span class="cm"># The silent bug</span>
+ages_str <span class="op">=</span> [<span class="st">"28"</span>, <span class="st">"35"</span>, <span class="st">"42"</span>]
+<span class="fn">print</span>(<span class="st">"28"</span> <span class="op">+</span> <span class="st">"35"</span> <span class="op">+</span> <span class="st">"42"</span>)  <span class="cm"># <span class="out-bad">"283542"</span></span>
+
+<span class="cm"># Correct</span>
+<span class="hl-teal">ages_int <span class="op">=</span> [<span class="nm">28</span>, <span class="nm">35</span>, <span class="nm">42</span>]</span>
+<span class="hl-teal"><span class="fn">print</span>(<span class="fn">sum</span>(ages_int))     <span class="cm"># <span class="out-ok">105</span></span></span></div>
+    </div>
+  </div>
+  <span class="sn">02</span>
+</section>
+
+
+<!-- ═══ 03 CHECK AND CONVERT TYPES ═══ -->
+<section data-screen-label="03 Check and Convert Types">
+  <div class="ey">Diagnose before you calculate</div>
+  <h2 class="tt">Check and Convert Types</h2>
+
+  <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:48px;flex:1;width:100%;">
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <ul class="bl">
+        <li><span><code class="ac">type(x)</code> tells you what Python thinks</span></li>
+        <li><span><code class="ac">int()</code>, <code class="ac">float()</code>, <code class="ac">str()</code> convert types</span></li>
+        <li><span>Always check before calculating</span></li>
+      </ul>
+      <div class="card card-t" style="padding:16px 18px;margin-top:auto;">
+        <div style="font-family:var(--fc);font-size:13px;color:var(--teal);font-weight:700;margin-bottom:5px;">First diagnostic habit.</div>
+        <div style="font-size:17px;color:var(--sky);line-height:1.45;">Run <code style="color:var(--teal);">type()</code> on every column before you touch the data.</div>
+      </div>
+    </div>
+
+    <div class="tw">
+      <div class="tbar"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="tf">type_check.py</span></div>
+      <div class="tc">
+x <span class="op">=</span> <span class="st">"42"</span>
+<span class="hl-teal"><span class="fn">print</span>(<span class="fn">type</span>(x))        <span class="cm"># &lt;class 'str'&gt;</span></span>
+
+x_int <span class="op">=</span> <span class="fn">int</span>(x)
+<span class="fn">print</span>(<span class="fn">type</span>(x_int))    <span class="cm"># &lt;class 'int'&gt;</span>
+<span class="fn">print</span>(x_int <span class="op">+</span> <span class="nm">1</span>)      <span class="cm"># <span class="out-ok">43</span></span>
+
+<span class="cm"># Diagnose before you calculate</span>
+ages <span class="op">=</span> [<span class="st">"28"</span>, <span class="st">"35"</span>, <span class="st">"42"</span>]
+<span class="fn">print</span>(<span class="fn">type</span>(ages[<span class="nm">0</span>]))  <span class="cm"># &lt;class 'str'&gt;</span>
+
+ages_clean <span class="op">=</span> [<span class="fn">int</span>(a) <span class="kw">for</span> a <span class="kw">in</span> ages]
+<span class="fn">print</span>(<span class="fn">sum</span>(ages_clean)) <span class="cm"># <span class="out-ok">105</span></span></div>
+    </div>
+  </div>
+  <span class="sn">03</span>
+</section>
+
+
+<!-- ═══ 04 LISTS ═══ -->
+<section data-screen-label="04 Lists">
+  <div class="ey">The fundamental collection</div>
+  <h2 class="tt">Lists: Ordered Sequences</h2>
+
+  <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:48px;flex:1;width:100%;">
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <ul class="bl">
+        <li><span>Index from <code class="ac">0</code>, slice with <code class="ac">[start:end]</code></span></li>
+        <li><span><code class="ac">append()</code> adds to the end</span></li>
+        <li><span>Comprehensions: filter in one line</span></li>
+      </ul>
+      <div style="margin-top:auto;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;">Same result, two ways</div>
+        <div class="card" style="padding:10px 14px;margin-bottom:6px;">
+          <div style="font-family:var(--fc);font-size:12px;color:var(--sky);line-height:1.5;">high = []<br><span class="kw">for</span> s <span class="kw">in</span> scores:<br>&nbsp;&nbsp;<span class="kw">if</span> s > 85: high.append(s)</div>
+        </div>
+        <div style="text-align:center;color:var(--teal);font-size:16px;">↓</div>
+        <div class="card card-t" style="padding:10px 14px;margin-top:6px;">
+          <div style="font-family:var(--fc);font-size:12px;color:var(--teal);line-height:1.5;font-weight:500;">high = [s <span class="kw">for</span> s <span class="kw">in</span> scores <span class="kw">if</span> s > 85]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tw">
+      <div class="tbar"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="tf">lists.py</span></div>
+      <div class="tc">
+scores <span class="op">=</span> [<span class="nm">72</span>, <span class="nm">88</span>, <span class="nm">91</span>, <span class="nm">64</span>, <span class="nm">95</span>, <span class="nm">83</span>]
+
+<span class="cm"># Indexing</span>
+<span class="fn">print</span>(scores[<span class="nm">0</span>])      <span class="cm"># <span class="out-ok">72</span></span>
+<span class="fn">print</span>(scores[<span class="nm">-1</span>])     <span class="cm"># <span class="out-ok">83</span></span>
+
+<span class="cm"># Slicing (end excluded)</span>
+<span class="fn">print</span>(scores[<span class="nm">1</span>:<span class="nm">4</span>])    <span class="cm"># <span class="out-ok">[88, 91, 64]</span></span>
+
+<span class="cm"># List comprehension</span>
+<span class="hl-teal">high <span class="op">=</span> [s <span class="kw">for</span> s <span class="kw">in</span> scores <span class="kw">if</span> s <span class="op">></span> <span class="nm">85</span>]</span>
+<span class="fn">print</span>(high)           <span class="cm"># <span class="out-ok">[88, 91, 95]</span></span></div>
+    </div>
+  </div>
+  <span class="sn">04</span>
+</section>
+
+
+<!-- ═══ 05 DICTIONARIES ═══ -->
+<section data-screen-label="05 Dictionaries">
+  <div class="ey">The natural shape of a dataset</div>
+  <h2 class="tt">Dictionaries: Named Records</h2>
+
+  <div style="display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:48px;flex:1;width:100%;">
+
+    <div class="tw">
+      <div class="tbar"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="tf">dicts.py</span></div>
+      <div class="tc">
+employee <span class="op">=</span> {<span class="st">"name"</span>: <span class="st">"Tarun"</span>, <span class="st">"age"</span>: <span class="nm">28</span>}
+
+<span class="cm"># Safe access — no KeyError</span>
+dept <span class="op">=</span> employee.get(<span class="st">"dept"</span>, <span class="st">"Unknown"</span>)
+
+<span class="cm"># List of dicts — dataset shape</span>
+employees <span class="op">=</span> [
+    {<span class="st">"name"</span>: <span class="st">"Tarun"</span>,  <span class="st">"salary"</span>: <span class="nm">95000</span>},
+    {<span class="st">"name"</span>: <span class="st">"Priya"</span>,  <span class="st">"salary"</span>: <span class="nm">87000</span>},
+    {<span class="st">"name"</span>: <span class="st">"Carlos"</span>, <span class="st">"salary"</span>: <span class="nm">102000</span>},
+]
+
+total <span class="op">=</span> <span class="fn">sum</span>(e[<span class="st">"salary"</span>] <span class="kw">for</span> e <span class="kw">in</span> employees)
+<span class="fn">print</span>(total)  <span class="cm"># <span class="out-ok">284000</span></span></div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <ul class="bl">
+        <li><span>Key-value pairs — one record per dict</span></li>
+        <li><span><code class="ac">.get()</code> for safe access</span></li>
+        <li><span>List of dicts = natural dataset shape</span></li>
+      </ul>
+      <div style="margin-top:auto;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:12px;">How CSVs map to Python</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-family:var(--fc);font-size:11px;color:var(--sky);width:40px;">Row 0</span>
+            <span style="color:var(--teal);">→</span>
+            <div style="font-family:var(--fc);font-size:12px;color:var(--bone);background:var(--t07);border:1px solid var(--t22);border-radius:4px;padding:5px 10px;flex:1;overflow:hidden;">{<span class="st">"Tarun"</span>, <span class="nm">95k</span>}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-family:var(--fc);font-size:11px;color:var(--sky);width:40px;">Row 1</span>
+            <span style="color:var(--teal);">→</span>
+            <div style="font-family:var(--fc);font-size:12px;color:var(--bone);background:var(--t07);border:1px solid var(--t22);border-radius:4px;padding:5px 10px;flex:1;overflow:hidden;">{<span class="st">"Priya"</span>, <span class="nm">87k</span>}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-family:var(--fc);font-size:11px;color:var(--sky);width:40px;">Row 2</span>
+            <span style="color:var(--teal);">→</span>
+            <div style="font-family:var(--fc);font-size:12px;color:var(--bone);background:var(--t07);border:1px solid var(--t22);border-radius:4px;padding:5px 10px;flex:1;overflow:hidden;">{<span class="st">"Carlos"</span>, <span class="nm">102k</span>}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="sn">05</span>
+</section>
+
+
+<!-- ═══ 06 FUNCTIONS ═══ -->
+<section data-screen-label="06 Functions">
+  <div class="ey">Reusable, testable, single-source-of-truth</div>
+  <h2 class="tt">Functions: Write Once, Trust Forever</h2>
+
+  <div style="display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:48px;flex:1;width:100%;">
+
+    <div class="tw">
+      <div class="tbar"><span class="td r"></span><span class="td y"></span><span class="td g"></span><span class="tf">functions.py</span></div>
+      <div class="tc">
+<span class="kw">def</span> <span class="fn">calculate_average</span>(values):
+    <span class="kw">if</span> <span class="kw">not</span> values:
+        <span class="kw">return</span> <span class="nm">0</span>
+    <span class="kw">return</span> <span class="fn">sum</span>(values) / <span class="fn">len</span>(values)
+
+scores <span class="op">=</span> [<span class="nm">72</span>, <span class="nm">88</span>, <span class="nm">91</span>, <span class="nm">64</span>, <span class="nm">95</span>]
+<span class="fn">print</span>(<span class="fn">calculate_average</span>(scores))  <span class="cm"># <span class="out-ok">82.0</span></span>
+
+<span class="kw">import</span> statistics
+
+<span class="kw">def</span> <span class="fn">is_outlier</span>(val, data, threshold<span class="op">=</span><span class="nm">2.0</span>):
+    mean <span class="op">=</span> <span class="fn">calculate_average</span>(data)
+    std  <span class="op">=</span> statistics.stdev(data)
+    <span class="kw">return</span> <span class="fn">abs</span>(val <span class="op">-</span> mean) <span class="op">></span> threshold <span class="op">*</span> std
+
+<span class="fn">print</span>(<span class="fn">is_outlier</span>(<span class="nm">150</span>, scores))  <span class="cm"># <span class="out-ok">True</span></span>
+<span class="fn">print</span>(<span class="fn">is_outlier</span>(<span class="nm">88</span>, scores))   <span class="cm"># <span class="out-ok">False</span></span></div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <ul class="bl">
+        <li><span><code class="ac">def</code> — reusable, testable</span></li>
+        <li><span>Default args: <code class="ac">threshold=2.0</code></span></li>
+        <li><span>One function replaces 3 notebook copies</span></li>
+      </ul>
+      <div style="margin-top:auto;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px;">One function. Three fixed.</div>
+        <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px;">
+          <div style="background:var(--s08);border:1px solid var(--s18);border-radius:4px;padding:7px 10px;font-family:var(--fc);font-size:11px;color:var(--sky);opacity:.5;">total / len(data)</div>
+          <div style="background:var(--s08);border:1px solid var(--s18);border-radius:4px;padding:7px 10px;font-family:var(--fc);font-size:11px;color:var(--sky);opacity:.35;">total / len(data)</div>
+          <div style="background:var(--s08);border:1px solid var(--s18);border-radius:4px;padding:7px 10px;font-family:var(--fc);font-size:11px;color:var(--sky);opacity:.2;">total / len(data)</div>
+        </div>
+        <div style="text-align:center;color:var(--teal);font-size:16px;margin-bottom:8px;">↓</div>
+        <div class="card card-t" style="padding:10px 14px;">
+          <div style="font-family:var(--fc);font-size:11px;color:var(--teal);font-weight:700;">def calculate_average(values):</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="sn">06</span>
+</section>
+
+
+<!-- ═══ 07 WHAT'S NEXT ═══ -->
+<section data-screen-label="07 What's Next" style="justify-content:center;align-items:flex-start;">
+  <div class="bg-glow" style="width:800px;height:800px;background:radial-gradient(circle,rgba(0,212,170,.06) 0%,transparent 65%);left:50%;top:50%;transform:translate(-50%,-50%);"></div>
+
+  <div class="ey" style="z-index:1;">What comes next</div>
+  <h2 class="tt" style="z-index:1;margin-bottom:36px;">What's Next: Tutorial 3 — NumPy</h2>
+
+  <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:8px;z-index:1;margin-bottom:44px;">
+    <div style="border:1.5px solid var(--sky);border-radius:6px;padding:10px 18px;">
+      <span style="font-family:var(--fc);font-size:13px;color:var(--sky);">Raw CSV</span>
+    </div>
+    <span style="color:var(--teal);font-size:20px;">→</span>
+    <div style="border:1.5px solid var(--teal);border-radius:6px;padding:10px 18px;">
+      <span style="font-family:var(--fc);font-size:13px;color:var(--teal);">Type Check</span>
+    </div>
+    <span style="color:var(--teal);font-size:20px;">→</span>
+    <div style="border:1.5px solid var(--teal);border-radius:6px;padding:10px 18px;">
+      <span style="font-family:var(--fc);font-size:13px;color:var(--teal);">Transform</span>
+    </div>
+    <span style="color:var(--teal);font-size:20px;">→</span>
+    <div style="border:1.5px solid var(--teal);border-radius:6px;padding:10px 18px;">
+      <span style="font-family:var(--fc);font-size:13px;color:var(--teal);">Aggregate</span>
+    </div>
+    <span style="color:var(--teal);font-size:20px;">→</span>
+    <div style="border:1.5px solid var(--sky);border-radius:6px;padding:10px 18px;">
+      <span style="font-family:var(--fc);font-size:13px;color:var(--sky);">Output</span>
+    </div>
+  </div>
+
+  <ul class="bl" style="z-index:1;margin-bottom:36px;">
+    <li><span>These structures scale to millions of rows with NumPy</span></li>
+    <li><span>Arrays replace lists for numerical work</span></li>
+    <li><span>Everything from Tutorial 2 underpins Tutorial 3</span></li>
+  </ul>
+
+  <div class="card card-t" style="padding:18px 24px;z-index:1;max-width:700px;">
+    <div style="font-size:22px;font-weight:700;color:var(--teal);line-height:1.4;">Tutorial 3: NumPy arrays. Same logic, ten thousand times faster.</div>
+  </div>
+
+  <div style="position:absolute;bottom:32px;right:88px;display:flex;gap:7px;align-items:center;z-index:2;">
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+    <span style="width:9px;height:9px;border-radius:50%;background:var(--teal);"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--sky);opacity:.3;"></span>
+  </div>
+  <span class="sn">07</span>
+</section>
+
+
+</deck-stage>
+</body>
+</html>
