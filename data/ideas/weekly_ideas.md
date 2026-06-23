@@ -1,5 +1,5 @@
 # Weekly Ideas Report
-Generated: 2026-06-22 06:13:40
+Generated: 2026-06-23 06:13:18
 
 ## Data Science Tech
 
@@ -10,40 +10,40 @@ Generated: 2026-06-22 06:13:40
 - **Guardrail:** It drafts and summarizes on a schedule — you review the output. It is not autonomous and does not act without you. Never say 'fully automated' or 'runs your life'.
 - **Produce with:** `--project free_tool_ds` on the reel/derivative generators
 
-### 1. The first time i learn python and how it leads me to learn more about data
-- **Score:** 1.382
-- **Novelty score:** 0.987
-- **Category:** uncategorized
-- **Source:** medium_data_science
-- **URL:** https://medium.com/@arielsitorus504/the-first-time-i-learn-python-and-how-it-leads-me-to-learn-more-about-data-b7a15c3aa3d6?source=rss------data_science-5
-
-### 2. Data Engineer Bootcamp (FREE 27+ Hour Course) - SQL, Python, Cloud, Bash, AI, Git & GitHub
-- **Score:** 1.274
-- **Novelty score:** 0.965
+### 1. Data Engineer Bootcamp (FREE 27+ Hour Course) - SQL, Python, Cloud, Bash, AI, Git & GitHub
+- **Score:** 1.304
+- **Novelty score:** 0.988
 - **Category:** uncategorized
 - **Source:** youtube_2026-06-22
 - **URL:** https://youtu.be/ol9_NnC9-cc
 
-### 3. Accounting → Financial Data Analytics: Would you focus on pipeline integration first or move into SQL and analytics?
-- **Score:** 1.267
-- **Novelty score:** 0.960
+### 2. Accounting → Financial Data Analytics: Would you focus on pipeline integration first or move into SQL and analytics?
+- **Score:** 1.271
+- **Novelty score:** 0.963
 - **Category:** uncategorized
 - **Source:** reddit_2026-06-09
 - **URL:** https://www.reddit.com/r/analytics/comments/1tvmvgy/accounting_financial_data_analytics_would_you/
 
-### 4. data science life cycle
+### 3. data science life cycle
 - **Score:** 1.225
 - **Novelty score:** 0.988
 - **Category:** uncategorized
 - **Source:** suggest_2026-06-10_google
 - **URL:** 
 
-### 5. Free Job-Ready AI Course 2026: Beginner to Advanced Skills + Certificate + Project
-- **Score:** 1.216
-- **Novelty score:** 0.988
+### 4. One-Tailed vs Two-Tailed Tests: Does It Actually Matter?
+- **Score:** 1.224
+- **Novelty score:** 0.995
 - **Category:** uncategorized
-- **Source:** youtube_2026-06-07
-- **URL:** https://youtu.be/0z89XUuXNME
+- **Source:** medium_data_science
+- **URL:** https://medium.com/@atticusli/one-tailed-vs-two-tailed-tests-does-it-actually-matter-922fcda7b06a?source=rss------data_science-5
+
+### 5. data science using python
+- **Score:** 1.209
+- **Novelty score:** 0.975
+- **Category:** uncategorized
+- **Source:** suggest_2026-06-10_google
+- **URL:** 
 
 ## Life Self Dev
 
@@ -63,39 +63,39 @@ Generated: 2026-06-22 06:13:40
 - See `docs/raw-take-format.md` for structure + guardrails.
 
 ### 1. What Real Love Looks Like When a Man Truly Loves You
-- **Score:** 1.502
-- **Novelty score:** 0.910
+- **Score:** 1.617
+- **Novelty score:** 0.980
 - **Category:** uncategorized
 - **Source:** medium_psychology
 - **URL:** https://medium.com/@edithtali/what-real-love-looks-like-when-a-man-truly-loves-you-5d90e295512d?source=rss------psychology-5
 
-### 2. How to Build a Productivity System That Actually Works in 2026 (Most People Are Doing This Wrong)
-- **Score:** 1.416
-- **Novelty score:** 0.950
-- **Category:** uncategorized
-- **Source:** medium_productivity
-- **URL:** https://oluwafemisunmola.medium.com/how-to-build-a-productivity-system-that-actually-works-in-2026-most-people-are-doing-this-wrong-f271990a3c65?source=rss------productivity-5
-
-### 3. What's the smallest habit that actually improved your physical&mental health?
-- **Score:** 1.410
-- **Novelty score:** 1.000
-- **Category:** uncategorized
-- **Source:** reddit_2026-06-07
-- **URL:** https://www.reddit.com/r/DecidingToBeBetter/comments/1tycq0z/whats_the_smallest_habit_that_actually_improved/
-
-### 4. # The Small Habit That Quietly Changed My Life
-- **Score:** 1.402
-- **Novelty score:** 0.994
+### 2. Nobody Talks About How Lonely It Is to Lose an Online Job
+- **Score:** 1.393
+- **Novelty score:** 0.988
 - **Category:** uncategorized
 - **Source:** medium_self_improvement
-- **URL:** https://medium.com/@signalprovider64/the-small-habit-that-quietly-changed-my-life-17d36155b9c5?source=rss------self_improvement-5
+- **URL:** https://medium.com/@tuanrjlyn/nobody-talks-about-how-lonely-it-is-to-lose-an-online-job-bc96a43f027d?source=rss------self_improvement-5
 
-### 5. 7 Tiny Japanese Habits That Can Change Your Life in 30 Days !
-- **Score:** 1.377
-- **Novelty score:** 0.977
+### 3. The Frictionless Flow: Why Willpower Alone Isn’t Enough for Deep Focus
+- **Score:** 1.371
+- **Novelty score:** 0.920
 - **Category:** uncategorized
-- **Source:** youtube_2026-06-07
-- **URL:** https://youtu.be/wrlbnYF3xro
+- **Source:** medium_self_improvement
+- **URL:** https://medium.com/@PrimeLifestyleHub/the-frictionless-flow-why-willpower-alone-isnt-enough-for-deep-focus-c907a8185b73?source=rss------self_improvement-5
+
+### 4. How I Read The Bible 25 Times With These 2 Simple Habits
+- **Score:** 1.350
+- **Novelty score:** 0.906
+- **Category:** uncategorized
+- **Source:** youtube_2026-06-22
+- **URL:** https://youtu.be/0xZGHM7qbdo
+
+### 5. The Quiet Strength of One More Time
+- **Score:** 1.342
+- **Novelty score:** 0.952
+- **Category:** uncategorized
+- **Source:** medium_productivity
+- **URL:** https://anasanaa.medium.com/the-quiet-strength-of-one-more-time-6a9dc87c1014?source=rss------productivity-5
 
 ## Poetry Quotes
 
@@ -106,12 +106,12 @@ Generated: 2026-06-22 06:13:40
 - **Source:** goodreads_inspirational
 - **URL:** https://www.goodreads.com/quotes/tag/inspirational
 
-### 2. I Will Always Be Your Little Girl
-- **Score:** 1.389
-- **Novelty score:** 0.985
+### 2. fact about someone that always wanna be near his crush.
+- **Score:** 1.327
+- **Novelty score:** 0.941
 - **Category:** uncategorized
-- **Source:** medium_poetry
-- **URL:** https://medium.com/sparklecity-creative-works/i-will-always-be-your-little-girl-7175f374cf00?source=rss------poetry-5
+- **Source:** medium_quotes
+- **URL:** https://medium.com/@nadyasafwa233/fact-about-someone-that-always-wanna-be-near-his-crush-0f6015f0b1d9?source=rss------quotes-5
 
 ### 3. “Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.” ― Martin Luther King Jr., A Testament of Hope: The Essential Writings and Speeches
 - **Score:** 1.290
@@ -120,16 +120,16 @@ Generated: 2026-06-22 06:13:40
 - **Source:** goodreads_inspirational
 - **URL:** https://www.goodreads.com/quotes/tag/inspirational
 
-### 4. What Seekest Thou?
-- **Score:** 1.271
-- **Novelty score:** 0.956
+### 4. “I Don’t Want to Hurt You… I Just Want to Set You Free From Me”
+- **Score:** 1.250
+- **Novelty score:** 0.887
 - **Category:** uncategorized
 - **Source:** medium_poetry
-- **URL:** https://medium.com/@jibrinosolomon7/what-seekest-thou-0a96044c2def?source=rss------poetry-5
+- **URL:** https://medium.com/grief-book-club/i-dont-want-to-hurt-you-i-just-want-to-set-you-free-from-me-70182c2e5e75?source=rss------poetry-5
 
-### 5. Ursula K Le Guin's Secret to Amazing Stories
-- **Score:** 1.248
-- **Novelty score:** 0.885
+### 5. People Don't Know the Difference Between Writing a Book and Being a Writer...
+- **Score:** 1.229
+- **Novelty score:** 0.983
 - **Category:** uncategorized
-- **Source:** youtube_2026-06-15
-- **URL:** https://youtu.be/wRBc2KppbgE
+- **Source:** youtube_2026-06-09
+- **URL:** https://youtu.be/5Wkl-W45yY8

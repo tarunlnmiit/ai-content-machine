@@ -1,0 +1,51 @@
+{
+  "data_science_tech": [
+    {
+      "title": "I built a full ML pipeline on a Kaggle dataset and proved it has zero predictive signal \u2014 and shipped the null result instead of faking accuracy",
+      "url": "https://www.reddit.com/r/datascience/comments/1ucz6zl/i_built_a_full_ml_pipeline_on_a_kaggle_dataset/",
+      "subreddit": "datascience",
+      "published": "2026-06-22T22:29:42+00:00",
+      "score": 1.569511535678874,
+      "keyword_matches": 2,
+      "recency_score": 0.9695115356788739
+    },
+    {
+      "title": "Are all data science jobs just Gen AI now?",
+      "url": "https://www.reddit.com/r/datascience/comments/1ubilfx/are_all_data_science_jobs_just_gen_ai_now/",
+      "subreddit": "datascience",
+      "published": "2026-06-21T06:22:58+00:00",
+      "score": 1.4216622779520898,
+      "keyword_matches": 2,
+      "recency_score": 0.8216622779520897
+    },
+    {
+      "title": "Free dataset: 3250 graded LLM runs on whether models trust in-context docs over the actual cod",
+      "url": "https://www.reddit.com/r/datascience/comments/1u7pv7p/free_dataset_3250_graded_llm_runs_on_whether/",
+      "subreddit": "datascience",
+      "published": "2026-06-16T20:54:15+00:00",
+      "score": 1.1317801677768515,
+      "keyword_matches": 2,
+      "recency_score": 0.5317801677768517
+    },
+    {
+      "title": "Ideas for testing data science workflows on self hosted Linux based HPC cluster.",
+      "url": "https://www.reddit.com/r/datascience/comments/1u9xm29/ideas_for_testing_data_science_workflows_on_self/",
+      "subreddit": "datascience",
+      "published": "2026-06-19T09:47:04+00:00",
+      "score": 0.9835920567799743,
+      "keyword_matches": 1,
+      "recency_score": 0.6835920567799744
+    },
+    {
+      "title": "Weekly Entering & Transitioning - Thread 22 Jun, 2026 - 29 Jun, 2026",
+      "url": "https://www.reddit.com/r/datascience/comments/1uca6dg/weekly_entering_transitioning_thread_22_jun_2026/",
+      "subreddit": "datascience",
+      "published": "2026-06-22T04:01:15+00:00",
+      "score": 0.898373975846523,
+      "keyword_matches": 0,
+      "recency_score": 0.898373975846523
+    }
+  ],
+  "life_self_dev": [],
+  "poetry_quotes": []
+}
