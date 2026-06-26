@@ -109,12 +109,16 @@ def _parse_questions(raw: str) -> tuple[str, list[str]]:
 # Interactive Q&A — one at a time, edit/skip, never crash on empty input
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _read_answer(prompt_label: str) -> str:
-    """Read a possibly multi-line answer. Blank line (or EOF) ends it.
+_DONE_SENTINEL = "&&"
 
+
+def _read_answer(prompt_label: str) -> str:
+    """Read a possibly multi-line answer. Type '&&' on its own line to finish.
+
+    Blank lines are kept as paragraph breaks — only '&&' ends input.
     `skip` (alone, first line) marks the question skipped. Empty -> skipped.
     """
-    console.print(f"  [dim](type your answer; blank line to finish · 'skip' to skip)[/dim]")
+    console.print(f"  [dim](type your answer; type '&&' on a new line to finish · 'skip' to skip)[/dim]")
     lines: list[str] = []
     while True:
         try:
@@ -123,7 +127,7 @@ def _read_answer(prompt_label: str) -> str:
             break
         if line.strip().lower() == "skip" and not lines:
             return _SKIPPED
-        if line == "":
+        if line.strip() == _DONE_SENTINEL:
             break
         lines.append(line)
     answer = "\n".join(lines).strip()
