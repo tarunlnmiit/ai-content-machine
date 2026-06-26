@@ -1,0 +1,41 @@
+Create a reflective worksheet PDF (A4, portrait) for "Design Your Wake-Up Ritual: A 4-Step Audit for Real Life"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 4 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Map Your Real Constraints
+   - What do your evenings need to protect — socialising, decompressing, time with a partner, something else? Write it down without apologising for it.
+   - What time do you naturally want to wake up when life isn't forcing an answer? Not the aspirational time — the honest one.
+   - Who else lives inside your mornings? A partner, kids, a shared space? How does your ideal ritual fit around that reality, not against it?
+   - When you've tried a morning routine before and it collapsed, what actually killed it — was it the time, the activity, the duration, or the energy cost later in the day?
+
+2. Find Your One Load-Bearing Habit
+   - If you only had 12 minutes before the day claimed you, what single practice would set the clearest boundary between yesterday and today?
+   - The blog frames meditation as the foundation — the thing that makes everything else sharper. What serves that function for you: silence, movement, writing, something else?
+   - Think of a morning when you felt genuinely ready before 9am. What happened in the first hour? What was present, and what was absent?
+   - What does 'carrying yesterday forward' look like for you — anxiety, unfinished thoughts, physical tension? What interrupts that pattern most reliably?
+
+3. Build Your Sequence
+   - The blog's ritual runs in a fixed order: reset → clarity → anchor. Draft your own 3-step sequence using that same logic — what resets you, what creates clarity, what anchors the calm?
+   - What's the minimum duration your ritual needs to feel real, not rushed? Write a range: the shortest version that still works, and the version you'd do on an unhurried morning.
+   - What has to happen before your ritual — and what needs to stay out of it entirely (phone, news, other people's agendas)?
+   - Write out your sequence in one sentence: 'I do X, then Y, then Z, starting at [time], for [duration].' Read it back. Does it sound like your life, or someone else's?
+
+4. Decide What to Drop
+   - What's one habit you've kept in your morning because it sounds disciplined, not because it actually works for you? Morning exercise, cold showers, journaling — be specific.
+   - The blog distinguishes between habits that are load-bearing and habits that just create friction. For the thing you named above: does it compound over time, or does it cost more than it earns?
+   - When your ritual breaks down — travel, bad night, disrupted environment — what does returning to it look like? What's the minimum you can do to mark the boundary between yesterday and today?
+   - Streaks are not the goal. Returning is the goal. Write one sentence you can read on a disrupted morning to remind yourself of this.
+
+
+Footer: "Reply with your answers — your reflections help others find their entry point."
+
+Optional: Soft watercolor accent in corner.
