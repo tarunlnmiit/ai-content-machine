@@ -216,10 +216,10 @@ def build_ffmpeg_composite(
     #
     # Strength: crop a SHIFT_CROP_W-wide window and rescale to full width. A narrower
     # window = stronger pan (the speaker moves further from the panel) at the cost of
-    # more horizontal stretch. 1600 moves a centred speaker from x≈960 to x≈768,
-    # clearing the panel-right left edge (x≈980) with margin. (panel zones: right
-    # 980–1880, left 40–940.)
-    SHIFT_CROP_W = 1600
+    # more horizontal stretch. 1440 moves a centred speaker from x≈960 to x≈640 — into
+    # the left third, well clear of the panel-right left edge (x≈980). (panel zones:
+    # right 980–1880, left 40–940.) Widen toward 1600/1680 for a gentler shift.
+    SHIFT_CROP_W = 1440
     panel_beats = [
         (beat, render_path)
         for beat, render_path in alpha_beats

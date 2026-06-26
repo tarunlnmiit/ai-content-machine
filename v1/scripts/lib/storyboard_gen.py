@@ -332,6 +332,12 @@ Produce a storyboard as a JSON object with this exact schema:
 
 8. **Every overlay_block must be paired with an overlay_content** describing exactly what to render.
    "Data chart showing X" is acceptable. Leave nothing ambiguous for the beat builder.
+   **A stat or number must carry a LABEL of what it measures — never a bare value.**
+   The viewer reads the overlay before you explain it aloud, so "0.08s — not 12s" is
+   cryptic; "NumPy: 0.08s vs 12s loop" or "50–200× faster" is self-explanatory. This is
+   non-negotiable for any opening / cold-open hook overlay (a beat that starts at
+   start_sec ≈ 0, before the talking_head): it must stand alone with full context
+   (subject + number), because there is no spoken setup yet.
 
 9. **broll_keywords**: include 3–5 search keywords only for talking_head beats in voiceover videos.
    For non-voiceover (talking head with camera), set to null.

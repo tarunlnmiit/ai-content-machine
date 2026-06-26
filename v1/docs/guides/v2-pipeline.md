@@ -188,8 +188,9 @@ hyperframes render ./hf_beats/beat_00_block_type \
   base video is panned the opposite way during that window so the speaker sits CLEAR
   of the panel: `panel-right` → crop a `SHIFT_CROP_W`-wide window panned right (speaker
   moves left), `panel-left` → window panned left (speaker moves right), each rescaled
-  to 1920×1080. `SHIFT_CROP_W=1600` moves a centred speaker from x≈960 to x≈768,
-  clearing the panel-right left edge (x≈980); narrow it for a stronger shift. The shift
+  to 1920×1080. `SHIFT_CROP_W=1440` moves a centred speaker from x≈960 to x≈640 (into
+  the left third), well clear of the panel-right left edge (x≈980); widen it toward
+  1600/1680 for a gentler shift. The shift
   is injected as a time-gated overlay **before** the panel's alpha beat composites on
   top. The ONLY case left unshifted is a DS video whose base is a screen recording —
   set `"has_screen_recording": true` in the manifest, and DS panels then sit beside the
