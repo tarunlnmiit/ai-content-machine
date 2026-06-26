@@ -214,12 +214,18 @@ def build_ffmpeg_composite(
     # Applies to all niches EXCEPT a DS video whose base is a screen recording
     # (has_screen_recording) — there the panel is meant to sit beside the code.
     #
-    # Strength: crop a SHIFT_CROP_W-wide window and rescale to full width. A narrower
-    # window = stronger pan (the speaker moves further from the panel) at the cost of
-    # more horizontal stretch. 1440 moves a centred speaker from x≈960 to x≈640 — into
-    # the left third, well clear of the panel-right left edge (x≈980). (panel zones:
-    # right 980–1880, left 40–940.) Widen toward 1600/1680 for a gentler shift.
-    SHIFT_CROP_W = 1440
+    # Strength: crop an aspect-PRESERVING 16:9 window (SHIFT_CROP_W × SHIFT_CROP_W*9/16),
+    # pan it toward the panel side, and rescale to full 1920×1080. Because the crop keeps
+    # 16:9, this is a clean punch-in + pan (a reframe) — NOT an anamorphic stretch. Faces
+    # keep their proportions; the subject genuinely moves to the opposite side. The only
+    # cost is a small uniform zoom (top/bottom trimmed by (1080-H)/2). A pure zero-zoom
+    # translate is not possible without exposing an empty strip the panel can't fully
+    # cover. 1500 moves a centred speaker from x≈960 to x≈691 (clear of the panel-right
+    # edge x≈980); narrow toward 1440 for a stronger pan, widen toward 1600 for a gentler
+    # one. (panel zones: right 980–1880, left 40–940.)
+    SHIFT_CROP_W = 1500
+    SHIFT_CROP_H = round(SHIFT_CROP_W * 9 / 16)        # 16:9 → no horizontal stretch
+    SHIFT_CROP_Y = (1080 - SHIFT_CROP_H) // 2          # vertical-centre the window
     panel_beats = [
         (beat, render_path)
         for beat, render_path in alpha_beats
@@ -231,14 +237,15 @@ def build_ffmpeg_composite(
         has_panel_right = any(b.layout == "panel-right" for b, _ in panel_beats)
         has_panel_left  = any(b.layout == "panel-left"  for b, _ in panel_beats)
         right_off = 1920 - SHIFT_CROP_W  # pan window fully right → speaker moves left
+        _crop = f"crop={SHIFT_CROP_W}:{SHIFT_CROP_H}:{{x}}:{SHIFT_CROP_Y},scale=1920:1080"
         # Only declare variants that are actually consumed — FFmpeg errors on unconnected pads
         if has_panel_right:
             filter_parts.append(
-                f"[base_scaled]crop={SHIFT_CROP_W}:1080:{right_off}:0,scale=1920:1080[base_shift_left]"
+                f"[base_scaled]{_crop.format(x=right_off)}[base_shift_left]"
             )
         if has_panel_left:
             filter_parts.append(
-                f"[base_scaled]crop={SHIFT_CROP_W}:1080:0:0,scale=1920:1080[base_shift_right]"
+                f"[base_scaled]{_crop.format(x=0)}[base_shift_right]"
             )
 
     current = "[base_scaled]"

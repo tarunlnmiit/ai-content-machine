@@ -106,8 +106,8 @@ def _find_or_render_panel(beat: B.BeatSpec, niche: str, wd: Path, out: Path) -> 
 def _panel_frame(base: Path, panel: Path, base_t: float, panel_t: float,
                  shift: bool, dst: Path) -> None:
     """One frame of panel overlaid on base, optionally with the pan-shift applied."""
-    if shift:  # mirrors hyperframes_pipeline: SHIFT_CROP_W=1440, window panned right
-        base_chain = "[0:v]scale=1920:1080,crop=1440:1080:480:0,scale=1920:1080[b]"
+    if shift:  # mirrors hyperframes_pipeline: aspect-preserving 16:9 pan, no stretch
+        base_chain = "[0:v]scale=1920:1080,crop=1500:844:420:118,scale=1920:1080[b]"
     else:
         base_chain = "[0:v]scale=1920:1080[b]"
     fc = f"{base_chain};[1:v]format=rgba[p];[b][p]overlay=0:0[v]"

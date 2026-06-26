@@ -186,11 +186,14 @@ hyperframes render ./hf_beats/beat_00_block_type \
 - **Panel pan/crop shift (all niches; opt-out for screen recordings).** When a
   `panel-right` / `panel-left` beat is active, the panel hides half the frame, so the
   base video is panned the opposite way during that window so the speaker sits CLEAR
-  of the panel: `panel-right` → crop a `SHIFT_CROP_W`-wide window panned right (speaker
-  moves left), `panel-left` → window panned left (speaker moves right), each rescaled
-  to 1920×1080. `SHIFT_CROP_W=1440` moves a centred speaker from x≈960 to x≈640 (into
-  the left third), well clear of the panel-right left edge (x≈980); widen it toward
-  1600/1680 for a gentler shift. The shift
+  of the panel: `panel-right` → crop an aspect-preserving 16:9 window panned right
+  (speaker moves left), `panel-left` → window panned left (speaker moves right), each
+  rescaled to 1920×1080. The crop keeps 16:9 (`SHIFT_CROP_W × SHIFT_CROP_W*9/16`,
+  vertically centred) so it is a clean punch-in + pan — **not** an anamorphic stretch;
+  faces keep their proportions. `SHIFT_CROP_W=1500` moves a centred speaker from x≈960
+  to x≈691, clear of the panel-right edge (x≈980); narrow toward 1440 for a stronger
+  pan, widen toward 1600 for a gentler one. A pure zero-zoom translate is not used —
+  it would expose an empty strip the panel can't fully cover. The shift
   is injected as a time-gated overlay **before** the panel's alpha beat composites on
   top. The ONLY case left unshifted is a DS video whose base is a screen recording —
   set `"has_screen_recording": true` in the manifest, and DS panels then sit beside the
