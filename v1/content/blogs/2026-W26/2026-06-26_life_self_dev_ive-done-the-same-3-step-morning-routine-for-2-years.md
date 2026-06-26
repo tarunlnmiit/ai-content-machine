@@ -8,6 +8,9 @@ Not coffee. Not my phone. Not a gratitude journal I bought in January and abando
 
 I wake up at 7am. I have for years. And I'm going to tell you why that number matters less than you think, and what I've learned about building a morning that holds up against a real life — one with a wife I love spending time with, evenings worth protecting, and work days I don't control.
 
+![Stillness before the day begins](/content/blogs/2026-W26/2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years_images/01_hook_peaceful-morning-sunrise-with-journal-and-coffee.jpg)
+*Stillness before the day begins — Photo by [Bedia](https://www.pexels.com/photo/open-notebook-with-coffee-by-window-33350433/) on Pexels*
+
 ---
 
 ## The 5am Experiment (and Why It Ended)
@@ -47,6 +50,9 @@ Journaling is where structure emerges. It's not reflective writing in the precio
 Meditation is the anchor. I'll come back to why in a moment.
 
 The whole sequence runs thirty to forty-five minutes. Sometimes longer, if I'm meditating deeper into it. What matters isn't the duration — it's the order, and the fact that it happens before work, before my phone, before anyone else's agenda enters the room.
+
+![The two habits that anchor everything](/content/blogs/2026-W26/2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years_images/02_section2_person-journaling-and-meditating-in-morning-light.jpg)
+*The two habits that anchor everything — Photo by [Julio Lopez](https://www.pexels.com/photo/person-writing-in-notebook-with-pen-in-sunlight-29553289/) on Pexels*
 
 ---
 
@@ -96,7 +102,7 @@ That's it.
 
 ---
 
-*If you want to build a wake-up ritual that fits your actual life — not the aspirational version — I've put together a free worksheet that walks through the exact questions I used to design mine. You can get it [here](#).*
+*If you want to build a wake-up ritual that fits your actual life — not the aspirational version — I've put together a free worksheet that walks through the exact questions I used to design mine. You can get it [here](https://worksheets-thebreathnetwork.vercel.app/get-worksheet/ive-done-the-same-3-step-morning-routine-for-2-years).*
 
 ---
 
