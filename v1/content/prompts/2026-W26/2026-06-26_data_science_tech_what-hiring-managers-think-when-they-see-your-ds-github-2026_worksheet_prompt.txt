@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "GitHub Audit & AI Fluency Drills for DS Job Seekers"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Notebook-to-Codebase Conversion Audit
+   Open your GitHub profile right now. Count how many repositories are purely .ipynb files with no package structure, no CLI entrypoint, and no README beyond a title. For each one, write a one-line note on what it would take to convert it into a deployable codebase — proper src/ layout, requirements.txt, and a README that explains how to run it. Pick the strongest project and write that conversion plan in full detail.
+
+2. Business Translation Exercise
+   Take one model you have built — EDA, classification, regression, anything — and write two versions of a two-paragraph summary: the first using the technical framing you currently have (metrics, architecture, methodology), the second translated into business impact language a non-technical stakeholder could act on. Focus on what the model means for decisions, risk, or outcomes — not how it works. Compare the two versions and note what you had to drop or reframe.
+
+3. AI Direction Drill — Plan Before Prompt
+   Pick one data science task you would normally start coding immediately (e.g., building a feature engineering pipeline, scraping and cleaning a dataset, writing an evaluation harness). Before opening any AI tool, write the full architecture in plain text: components, inputs/outputs for each, what 'done' looks like, and what failure modes to watch for. Then use that written plan as the prompt context. Document where the AI went off-course versus where it nailed it, and what in your plan made the difference.
+
+4. Senior-Signal GitHub Rewrite
+   Look at the README for your best GitHub project. Rewrite the first three sections to answer exactly what a hiring manager scanning for 30 seconds needs to know: what problem this solves, what a senior would find technically interesting about your approach, and how to run it end-to-end in under five minutes. Remove all DSA-flex content unless the algorithm choice is the actual point of the project.
+
+5. 90-Day Practitioner Project Scope
+   Using the approach described in the blog — plan first, then build iteratively with AI as collaborator — scope a project you can ship in 90 days. Write: the problem statement in one sentence, the three to five components you would build, which AI tools you would use at each step (and what you would review before moving forward), and what 'done' looks like as a GitHub codebase (not a notebook). Keep this doc as your actual working brief.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"

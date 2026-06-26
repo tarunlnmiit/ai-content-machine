@@ -1,0 +1,31 @@
+{
+  "type": "practice_guide",
+  "niche": "data_science_tech",
+  "title": "GitHub Audit & AI Fluency Drills for DS Job Seekers",
+  "sections": [
+    {
+      "title": "Notebook-to-Codebase Conversion Audit",
+      "prompt": "Open your GitHub profile right now. Count how many repositories are purely .ipynb files with no package structure, no CLI entrypoint, and no README beyond a title. For each one, write a one-line note on what it would take to convert it into a deployable codebase — proper src/ layout, requirements.txt, and a README that explains how to run it. Pick the strongest project and write that conversion plan in full detail."
+    },
+    {
+      "title": "Business Translation Exercise",
+      "prompt": "Take one model you have built — EDA, classification, regression, anything — and write two versions of a two-paragraph summary: the first using the technical framing you currently have (metrics, architecture, methodology), the second translated into business impact language a non-technical stakeholder could act on. Focus on what the model means for decisions, risk, or outcomes — not how it works. Compare the two versions and note what you had to drop or reframe."
+    },
+    {
+      "title": "AI Direction Drill — Plan Before Prompt",
+      "prompt": "Pick one data science task you would normally start coding immediately (e.g., building a feature engineering pipeline, scraping and cleaning a dataset, writing an evaluation harness). Before opening any AI tool, write the full architecture in plain text: components, inputs/outputs for each, what 'done' looks like, and what failure modes to watch for. Then use that written plan as the prompt context. Document where the AI went off-course versus where it nailed it, and what in your plan made the difference."
+    },
+    {
+      "title": "Senior-Signal GitHub Rewrite",
+      "prompt": "Look at the README for your best GitHub project. Rewrite the first three sections to answer exactly what a hiring manager scanning for 30 seconds needs to know: what problem this solves, what a senior would find technically interesting about your approach, and how to run it end-to-end in under five minutes. Remove all DSA-flex content unless the algorithm choice is the actual point of the project."
+    },
+    {
+      "title": "90-Day Practitioner Project Scope",
+      "prompt": "Using the approach described in the blog — plan first, then build iteratively with AI as collaborator — scope a project you can ship in 90 days. Write: the problem statement in one sentence, the three to five components you would build, which AI tools you would use at each step (and what you would review before moving forward), and what 'done' looks like as a GitHub codebase (not a notebook). Keep this doc as your actual working brief."
+    }
+  ],
+  "cta": "Post your business translation paragraph from Section 2 in the comments — the technical version and the stakeholder version side by side — so we can see what the reframe looks like in practice.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-W26/2026-06-26_data_science_tech_what-hiring-managers-think-when-they-see-your-ds-github-2026.md",
+  "slug": "2026-06-26_data_science_tech_what-hiring-managers-think-when-they-see-your-ds-github-2026"
+}

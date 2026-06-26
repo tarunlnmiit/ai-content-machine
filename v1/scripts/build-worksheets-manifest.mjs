@@ -6,10 +6,9 @@
 //
 // Runs at Vercel build (buildCommand) AND locally. No npm deps.
 
-import { globSync } from "node:fs";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, statSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { dirname, join, relative } from "node:path";
+import { dirname, join, relative, basename } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO = join(__dirname, "..");
@@ -37,15 +36,29 @@ function loadConfigTitles() {
   }
 }
 
+function walkPdfs(dir, root, results = []) {
+  let entries;
+  try { entries = readdirSync(dir); } catch { return results; }
+  for (const entry of entries) {
+    const full = join(dir, entry);
+    if (statSync(full).isDirectory()) {
+      walkPdfs(full, root, results);
+    } else if (entry.endsWith(".pdf")) {
+      results.push(relative(root, full));
+    }
+  }
+  return results;
+}
+
 function main() {
   const configWorksheets = loadConfigTitles();
-  const pdfs = globSync("output/worksheets/**/*.pdf", { cwd: REPO });
+  const pdfs = walkPdfs(join(REPO, "output", "worksheets"), REPO);
 
   const bySlug = new Map(); // slug -> { date, niche, pdfPath, title }
   const warnings = [];
 
   for (const rel of pdfs.sort()) {
-    const file = rel.split("/").pop();
+    const file = basename(rel);
     const m = file.match(PDF_RE);
     if (!m) {
       warnings.push(`skip (unparseable name): ${rel}`);
