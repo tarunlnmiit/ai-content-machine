@@ -42,7 +42,7 @@ CAPTION_FORMULA = {
 # (the formula's thumbnail rule applies to a slide cover the same way it does to a thumbnail).
 _FORMULA_TYPES = {
     "shorts_caption", "shorts_meta", "social_image", "instagram_caption", "scene_plan_overlay",
-    "slide_deck",
+    "slide_deck", "carousel",
 }
 
 # Short hook key per canonical niche (matches twitter_hook_patterns use_for).

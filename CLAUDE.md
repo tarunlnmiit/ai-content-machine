@@ -68,6 +68,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   (`scripts/idea_scorer.py:weekly_raw_take_batch`) auto-surfaces the week's 4 under Life in
   `weekly_ideas.md`, rotating by ISO week. Spec/guardrails: `docs/raw-take-format.md`. Does NOT
   replace the weekly blog / long-form / 9 reels — it's a separate low-cost lane.
+- **V2 VIDEO PIPELINE (2026-06-24):** `python3 v1/scripts/run_video_pipeline.py --raw <file> --manifest <manifest.json>` runs the entire production: trim → storyboard (Opus) → HyperFrames compositions per beat (Haiku) → FFmpeg composite → final MP4. No DaVinci, no manual stops. For reels, first run `v1/scripts/prepare_reel_script.py` to generate the 5-beat script and manifest. Canonical doc: `v1/docs/v2-pipeline.md`. Beat look bibles: `v1/data/kb/design/{ds,life,poetry}_design.md` (each has a `## SHORT-FORM OVERRIDES` section for reels). All Claude calls use `claude -p` CLI subprocess — no API key.
 - **VOICEOVER-FIRST LANE (additive, 2026-06-21):** Record an **audio-only voiceover** (no face)
   and `scripts/run_voiceover_week.py` builds a full-screen **B-roll-montage** long-form (landscape)
   + auto-detected **portrait shorts**, with Remotion overlay scenes and **captions burned by
@@ -118,6 +119,8 @@ content/
     2026-Wnn/     # ISO-week grouped blog posts and image directories
   derivatives/
     2026-Wnn/     # ISO-week grouped slug directories (schedule.json, metadata)
+  reels/
+    2026-Wnn/     # Viral reel briefs — recording plans for standalone reels (generate_viral_reel_brief.py)
   buffer/         # Pre-scheduling staging (week-1/, week-2/, week-3/ relative structure)
   archive/        # Retired or completed content
 data/
@@ -168,6 +171,7 @@ content/      # Written content organized by stage
   scripts/    # Video scripts or prompt inputs
   blogs/      # Long-form blog posts (grouped by week in 2026-Wnn/ subfolders)
   derivatives/ # Repurposed content with schedule.json (grouped by week)
+  reels/      # Viral reel briefs — recording plans for standalone reels (generate_viral_reel_brief.py)
   buffer/     # Pre-scheduling staging (week-1/, 2/, 3/ relative numbering)
   archive/    # Retired or completed content
 data/

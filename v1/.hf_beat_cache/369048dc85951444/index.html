@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="201" data-composition-variables='{"caption_text": {"type": "string", "default": "thoughts driven by exteriority no care about what lies within people drooling over aesthetics"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Fullscreen layout === */
+    #panel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (fullscreen) === */
+    #caption-layer {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1860px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="6.700" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;background:radial-gradient(ellipse 1400px 900px at 30% 25%, rgba(124,58,237,0.10), transparent 60%), radial-gradient(ellipse 1100px 1100px at 78% 80%, rgba(80,60,120,0.12), transparent 55%), radial-gradient(circle at 50% 50%, #0f0f12 0%, #080808 75%);">
+        <div class="fog" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(circle at 50% 45%, rgba(80,60,120,0.06), transparent 70%);"></div>
+        <div class="grain" style="position:absolute;left:-10%;top:-10%;width:120%;height:120%;opacity:0.04;background-image:repeating-linear-gradient(0deg, rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 1px, transparent 1px, transparent 3px);mix-blend-mode:overlay;"></div>
+        <div class="lines" style="position:absolute;left:130px;top:0;width:1660px;height:1080px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:34px;">
+          <div class="l1" style="font-family:'Cormorant Garamond','Garamond','Georgia',serif;font-weight:400;font-size:74px;line-height:1.8;letter-spacing:0.05em;color:#f5f0eb;max-width:1620px;word-wrap:break-word;overflow-wrap:break-word;text-shadow:0 0 36px rgba(124,58,237,0.18);">Thoughts driven by exteriority</div>
+          <div class="l2" style="font-family:'Cormorant Garamond','Garamond','Georgia',serif;font-weight:400;font-size:74px;line-height:1.8;letter-spacing:0.05em;color:#f5f0eb;max-width:1620px;word-wrap:break-word;overflow-wrap:break-word;text-shadow:0 0 36px rgba(124,58,237,0.18);">no care about what lies within</div>
+        </div>
+        <div class="rule" style="position:absolute;left:130px;top:540px;width:3px;height:120px;background:linear-gradient(180deg, transparent, #7c3aed, transparent);opacity:0;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      var l1 = root.querySelector('.l1');
+      var l2 = root.querySelector('.l2');
+      var fog = root.querySelector('.fog');
+      var rule = root.querySelector('.rule');
+      
+      gsap.set(l1, { opacity: 0, y: 24, filter: 'blur(8px)', fontWeight: 400 });
+      gsap.set(l2, { opacity: 0, y: 24, filter: 'blur(8px)', fontWeight: 400 });
+      gsap.set(rule, { opacity: 0, scaleY: 0.4, transformOrigin: '50% 50%' });
+      gsap.set(fog, { opacity: 0.5 });
+      
+      // line 1 breathes in
+      tl.to(l1, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0, ease: 'cubic-bezier(0.0,0.0,0.58,1.0)' }, 0.1);
+      tl.to(rule, { opacity: 0.6, scaleY: 1, duration: 1.0, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 0.2);
+      
+      // hold, then weight shift: line 1 dims + thins, line 2 enters with emphasis
+      tl.to(l1, { opacity: 0.32, fontWeight: 400, filter: 'blur(1.5px)', duration: 0.8, ease: 'cubic-bezier(0.4,0,1,1)' }, 1.8);
+      tl.to(l2, { opacity: 1, y: 0, filter: 'blur(0px)', fontWeight: 600, duration: 1.0, ease: 'cubic-bezier(0.0,0.0,0.58,1.0)' }, 1.9);
+      tl.to(rule, { y: 90, duration: 1.0, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 1.9);
+      
+      // slow atmospheric fog drift
+      tl.to(fog, { opacity: 1, duration: 4.0, ease: 'none' }, 0);
+      
+      // gentle settle hold to end
+      tl.to(l2, { textShadow: '0 0 48px rgba(124,58,237,0.30)', duration: 1.6, ease: 'none' }, 4.0);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

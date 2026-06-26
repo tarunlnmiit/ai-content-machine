@@ -246,6 +246,18 @@ def _mark_posted(post_id: int, meta: dict):
     conn.commit()
     conn.close()
 
+    # Sync "Published" status back to the annual tracker (CLAUDE.md requirement).
+    # The slug in meta may have a "#slides" suffix for document posts — strip it.
+    slug = (meta.get("slug") or "").split("#")[0]
+    if slug:
+        try:
+            from lib.tracker import mark_published as _tracker_mark
+            n = _tracker_mark(slug, status="Published")
+            if n:
+                log.debug(f"Tracker: marked {n} row(s) Published for slug {slug}")
+        except Exception as e:
+            log.debug(f"Tracker write-back skipped: {e}")
+
 
 def _mark_failed(post_id: int, error: str):
     conn = sqlite3.connect(DB_PATH)

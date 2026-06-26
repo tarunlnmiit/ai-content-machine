@@ -8,6 +8,7 @@
       "repo_url": "https://github.com/tarunlnmiit/autopilot-jobhunt",
       "pitch": "Free AI job agent: scans 130+ careers pages nightly, scores roles vs your resume with an LLM, Telegram-pings top matches, drafts tailored applications.",
       "honesty_guardrail": "Scans, scores, notifies, drafts. Does NOT auto-apply. Never say 'auto-applies'.",
+      "niches": ["ds"],
       "hashtag_niche": "autopilot",
       "utm_campaign": "autopilot-jobhunt",
       "dm_keyword": "jobs",

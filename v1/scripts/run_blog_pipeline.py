@@ -134,20 +134,24 @@ def main() -> None:
     if not skip("text derivatives", (ddir / "linkedin_post.txt").exists()):
         run(["python3", SCRIPTS / "repurpose_blog.py", "--input", str(blog)] + proj_flag, dry)
 
-    # ── 2. Social images + carousel ────────────────────────────────
-    step("[2/7] Social images + carousel")
+    # ── 2. Social images (PNG) ─────────────────────────────────────
+    # Carousel HTML is produced inside Phase 2 of repurpose_blog.py (step 1/7 above).
+    step("[2/7] Social images (Instagram/LinkedIn/Threads PNGs)")
     social_png = REPO / "assets" / "social_posts" / week / f"{slug}_instagram.png"
     if not skip("social images", social_png.exists()):
         run(["python3", SCRIPTS / "generate_social_images.py", "--slug", slug] + force_flag + proj_flag, dry)
 
-    # ── 3. Slide deck (poetry self-skips per its own policy) ───────
-    step("[3/7] Slide deck")
+    # ── 3. Slide deck ─────────────────────────────────────────────
+    # Note: Phase 2 of repurpose_blog.py (step 1/7) already runs this.
+    # This step is a safety net — it skips immediately if the HTML exists.
+    step("[3/7] Slide deck (Phase-2-redundant; skips if exists)")
     slides_html = REPO / "assets" / "slides" / week / f"{slug}_slides.html"
     if not skip("slide deck", slides_html.exists()):
         run(["python3", SCRIPTS / "generate_slide_deck.py", "--slug", slug] + force_flag + proj_flag, dry)
 
     # ── 4. IG reel brief ───────────────────────────────────────────
-    step("[4/7] IG reel brief")
+    # Phase 2 of repurpose_blog.py also runs this. Skips if ig_reel_brief.md exists.
+    step("[4/7] IG reel brief (Phase-2-redundant; skips if exists)")
     if not skip("ig reel brief", (ddir / "ig_reel_brief.md").exists()):
         run(["python3", SCRIPTS / "generate_ig_reel_brief.py", "--slug", slug, "--week", week] + proj_flag, dry)
 
@@ -163,7 +167,8 @@ def main() -> None:
             run(["python3", SCRIPTS / "generate_thumbnail.py", "--blog", str(blog), "--export", "--skip-remotion"], dry)
 
     # ── 6. Worksheet outline (DS/Life only) ────────────────────────
-    step("[6/7] Worksheet outline (DS/Life only)")
+    # Phase 2 of repurpose_blog.py also runs this. Skips if _worksheet.json exists.
+    step("[6/7] Worksheet outline — DS/Life only (Phase-2-redundant; skips if exists)")
     if niche == "poetry":
         print("  [skip] worksheet — poetry niche has no worksheet")
     else:

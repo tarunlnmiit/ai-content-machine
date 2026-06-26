@@ -1,125 +1,59 @@
 {
-  "generated_from": "data/analytics/instagram_posts.json",
-  "total_posts_analysed": 90,
-  "format_breakdown": {
-    "reel": 60,
-    "single-image": 15,
-    "carousel": 15
-  },
-  "best_format_overall": "carousel",
-  "best_format_rationale": "Highest save-weighted engagement score (50.9439) vs reel: 28.0688, single-image: 7.8165",
-  "reel_avg_watch_time_seconds": 6.5,
-  "format_stats": {
-    "reel": {
-      "post_count": 60,
-      "avg_reach": 7.8,
-      "avg_saves": 4.38,
-      "avg_likes": 94.1,
-      "avg_shares": 0.0,
-      "avg_comments": 19.28,
-      "avg_engagement_score": 28.0688,
-      "top_posts": [
-        {
-          "permalink": "https://www.instagram.com/reel/CLBm-wcqVeC/",
-          "saves": 4,
-          "likes": 123,
-          "reach": 1,
-          "engagement_score": 145.0
-        },
-        {
-          "permalink": "https://www.instagram.com/reel/CK3VEZ8KpwL/",
-          "saves": 9,
-          "likes": 103,
-          "reach": 1,
-          "engagement_score": 144.0
-        },
-        {
-          "permalink": "https://www.instagram.com/reel/CKgLorrKts6/",
-          "saves": 10,
-          "likes": 213,
-          "reach": 2,
-          "engagement_score": 125.5
-        }
-      ]
-    },
-    "single-image": {
-      "post_count": 15,
-      "avg_reach": 9.7,
-      "avg_saves": 3.27,
-      "avg_likes": 51.9,
-      "avg_shares": 0.0,
-      "avg_comments": 6.87,
-      "avg_engagement_score": 7.8165,
-      "top_posts": [
-        {
-          "permalink": "https://www.instagram.com/p/CLrbTSTlWUX/",
-          "saves": 7,
-          "likes": 99,
-          "reach": 7,
-          "engagement_score": 20.2857
-        },
-        {
-          "permalink": "https://www.instagram.com/p/CLjmlV5FByU/",
-          "saves": 5,
-          "likes": 87,
-          "reach": 8,
-          "engagement_score": 15.5
-        },
-        {
-          "permalink": "https://www.instagram.com/p/CLhDrTAFULT/",
-          "saves": 5,
-          "likes": 95,
-          "reach": 11,
-          "engagement_score": 12.3636
-        }
-      ]
-    },
-    "carousel": {
-      "post_count": 15,
-      "avg_reach": 9.1,
-      "avg_saves": 6.47,
-      "avg_likes": 217.1,
-      "avg_shares": 0.0,
-      "avg_comments": 95.47,
-      "avg_engagement_score": 50.9439,
-      "top_posts": [
-        {
-          "permalink": "https://www.instagram.com/p/CPlBdfgoNDc/",
-          "saves": 2,
-          "likes": 308,
-          "reach": 7,
-          "engagement_score": 82.5714
-        },
-        {
-          "permalink": "https://www.instagram.com/p/CPx4CwSlxp9/",
-          "saves": 4,
-          "likes": 302,
-          "reach": 10,
-          "engagement_score": 81.2
-        },
-        {
-          "permalink": "https://www.instagram.com/p/CPauPS2I8E9/",
-          "saves": 9,
-          "likes": 231,
-          "reach": 7,
-          "engagement_score": 78.2857
-        }
-      ]
-    }
-  },
-  "niche_recommendations": {
+  "_version": "June 2026 — competition-intelligence-based (replaces Tarun's 2021 self-analytics which were tiny and misleading)",
+  "_last_updated": "2026-06-23",
+  "_source": "Competitor account analysis: mavgpt (933K), cindie.zhu, katecore.ai, tenfoldmarc, ankurwarikoo (~9M), christi.steyn (~100K+), joeykidney (~500K). Data from master_brief.md June 2026 audit.",
+
+  "dominant_format_june_2026": "reel",
+  "dominant_engagement_model": "comment→DM CTA: comment count exceeds like count on top posts. mavgpt: 15.4K comments vs 19.1K likes (Claude+Higgsfield MCP). tenfoldmarc: 243% comment-to-like ratio ('Spy on competitors with Claude'). The CTA is working harder than the content itself.",
+
+  "niche_format_guidance": {
     "data_science_tech": {
-      "primary": "carousel",
-      "secondary": "reel"
+      "primary": "reel",
+      "secondary": "carousel",
+      "reel_formula": "Revelation hook ('You can now connect Claude to [tool]') → 3-step setup → specific outcome → comment→DM CTA. mavgpt hit 19.1K likes / 15.4K comments with this exact structure. NOT tutorial voice — tool reveal voice.",
+      "carousel_formula": "Free AI tool / resource carousel drives saves: katecore.ai free tools carousel = 1.1K saves. cindie.zhu 'Claude as creator studio' = 17.7K likes. Numbered slides, each slide = one tool or one step. Cover slide = the outcome/collection claim.",
+      "caption_model": "Caption IS the product — full value verbatim. Line 1: 'Comment KEYWORD and I'll send you [deliverable] 👆'. Then: one specific claim → the FULL steps/prompts/tools as a numbered list. Not a teaser. Readers should be able to act from the caption alone. Honesty guardrail: claim only what's shown.",
+      "dm_keyword_pattern": "Tool name or outcome (e.g. FLOW, CLAUDE, PROMPTS, SETUP)",
+      "hot_angles_june_2026": [
+        "Claude MCP integrations — connecting Claude to other tools",
+        "Spy on competitors with Claude — high comment-to-like ratio",
+        "Free AI tools resource carousel — drives massive saves",
+        "Creator workflow automation with Claude"
+      ],
+      "format_decision_rule": "Reel for engagement (comment→DM CTA model). Carousel for saves (free tool / resource format). Tutorial blog → carousel. News/opinion blog → reel."
     },
     "life_self_dev": {
-      "primary": "carousel",
-      "secondary": "reel"
+      "primary": "reel",
+      "secondary": "carousel",
+      "reel_formula": "Text-wall thumbnail (the claim itself, declarative, bright bg, 1–3 bold lines, NOT a face thumbnail) → contrarian hook stated as fact → mechanism teaching (name WHY this keeps happening, one precise sentence) → flat instructional close (no motivational crescendo). @ankurwarikoo formula.",
+      "carousel_formula": "Same text-wall claim on cover slide → each slide = one mechanism/step with a named principle → final slide = the one action. Education-first, not inspiration.",
+      "caption_model": "Mode C (mechanism line extracted verbatim — the single most precise insight as a quote card). OR Mode B (narrative hook + mechanism, 3–5 sentences) for setup content. Mode A (essay+vulnerability, 5 short prose paragraphs) for heavy emotional topics only. Product never in caption — first pinned comment or DM keyword instead.",
+      "dm_keyword_pattern": "Topic keyword (e.g. BOOK, SYSTEM, DATA, FRAMEWORK)",
+      "community_cta_rule": "Community ask ONLY for weighty topics: grief, loss, loneliness, friendship fade. NEVER on productivity or tips content.",
+      "hot_angles_june_2026": [
+        "Ancient wisdom modernized (Bhagavad Gita on X)",
+        "Contrarian on conventional wisdom (Stop following your passion)",
+        "Failure autopsy (Why most X fail — names the mechanism)",
+        "Mirror moment (If you're still doing X at 30)"
+      ],
+      "format_decision_rule": "Reel (text-wall hook, mechanism teaching) for reach. Carousel for educational series. Heavy emotional topics → essay-as-caption reel with community CTA."
     },
     "poetry_quotes": {
       "primary": "reel",
-      "secondary": "single-image"
+      "secondary": "single-image",
+      "reel_formula": "Face-to-camera, warm golden-hour or soft indoor light, close-up. Poem spoken as original audio. Caption = full poem verbatim (save trigger — what people screenshot and send to a partner). Zero hashtags. No explanation. @christi.steyn formula — 370K reel.",
+      "single_image_formula": "One devastating line + emoji as entire caption. B&W or cinematic photograph. No explanation. People project their own story. @christi.steyn 'your home, is my arms' = 63.9K views, 8.2% like rate.",
+      "forwarding_mechanic": "For relational/seasonal content: simple statement (5 words) people forward to a specific person. Timed to relational calendar (Mother's Day, Valentine's, friendship anniversaries). @joeykidney 'I am proud you are my mother' = 209K likes.",
+      "caption_model": "Full poem verbatim (save trigger) OR single devastating line + emoji OR enticing hook line only. NEVER explain the poem. Author credit, nothing else. Permission close outperforms sad close.",
+      "hot_angles_june_2026": [
+        "Projective surface poems (reader sees their own story)",
+        "Forwarding mechanic (relational calendar timing)",
+        "Non-announcing poem (formatted as prose, avoids poetry-niche algorithm penalty)",
+        "Bilingual emotional depth — English precision carrying an Indian emotional register"
+      ],
+      "format_decision_rule": "Reel for reach (face-to-camera, poem spoken, full poem in caption). Single-image for a single devastating line. Never explain the poem."
     }
   },
-  "repurposing_agent_instruction": "Default to 'carousel' format unless niche-specific override applies. See niche_recommendations for per-niche guidance. Carousels perform best for educational/step-by-step content. Single-image suits quote/poetry posts. Reels suit narrative or transformation arc content."
+
+  "repurposing_agent_instruction": "Use niche_format_guidance for ALL format and caption decisions. Reel is the dominant primary format for all three niches in June 2026. Do NOT default to carousel as primary. The comment→DM CTA model drives comment counts above like counts. DS: caption IS the product (full verbatim value, not a teaser). Life: mechanism line is the caption (Mode C). Poetry: full poem in caption = save trigger. For carousels (DS secondary): free tool / step-by-step format drives saves."
 }

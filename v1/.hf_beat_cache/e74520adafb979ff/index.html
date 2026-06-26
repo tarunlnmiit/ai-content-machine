@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="180" data-composition-variables='{"caption_text": {"type": "string", "default": "you less functional and some things don't have clean endings anyway the person isn't coming back"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Python-owned panel geometry === */
+    #panel {
+      position: absolute;
+      left: 980px; top: 60px;
+      width: 900px; height: 960px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: rgba(17,24,39,0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    /* Specular highlight at panel top edge */
+    #panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.14), transparent);
+      z-index: 100;
+    }
+    /* Claude's content is scoped here. (0,0) = panel top-left. */
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (sibling of #panel, never clipped) === */
+    #caption-layer {
+      position: absolute;
+      left: 0px; width: 1920px;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 840px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="6.000" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute;top:0;left:0;width:900px;height:960px;background:linear-gradient(160deg,#1a1208 0%,#231a0e 100%);overflow:hidden;">
+        <div class="orb" style="position:absolute;top:-120px;left:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(245,158,11,0.16),transparent 70%);filter:blur(20px);"></div>
+        <div class="orb2" style="position:absolute;bottom:-140px;right:-100px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(134,239,172,0.10),transparent 70%);filter:blur(24px);"></div>
+        <div class="rule" style="position:absolute;top:380px;left:80px;width:120px;height:3px;background:#f59e0b;transform-origin:left center;border-radius:2px;"></div>
+        <div style="position:absolute;top:300px;left:80px;width:740px;max-width:740px;">
+          <div class="l1" style="font-family:'Cormorant Garamond','Georgia',serif;font-weight:600;font-size:74px;line-height:1.18;letter-spacing:-0.01em;color:#fdf8f0;word-wrap:break-word;overflow-wrap:break-word;text-shadow:0 0 32px rgba(245,158,11,0.28);">What kept you <span style="color:#f59e0b;">functional</span></div>
+          <div class="l2" style="font-family:'Cormorant Garamond','Georgia',serif;font-weight:600;font-size:74px;line-height:1.18;letter-spacing:-0.01em;color:#fdf8f0;word-wrap:break-word;overflow-wrap:break-word;margin-top:24px;text-shadow:0 0 32px rgba(239,68,68,0.30);">eventually makes you <span style="color:#ef4444;">less functional.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="caption-layer"><div id="caption-pill"><span class="w">you</span><span class="w">less</span><span class="w">functional</span><span class="w">and</span><span class="w">some</span><span class="w">things</span><span class="w">don&#x27;t</span><span class="w">have</span><span class="w">clean</span><span class="w">endings</span><span class="w">anyway</span><span class="w">the</span><span class="w">person</span><span class="w">isn&#x27;t</span><span class="w">coming</span><span class="w">back</span></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      gsap.set(root.querySelector('.l1'), { opacity: 0, y: 20, scale: 0.96 });
+      gsap.set(root.querySelector('.l2'), { opacity: 0, y: 20, scale: 0.96 });
+      gsap.set(root.querySelector('.rule'), { scaleX: 0, opacity: 0 });
+      gsap.set(root.querySelector('.orb'), { scale: 0.85, opacity: 0 });
+      gsap.set(root.querySelector('.orb2'), { scale: 0.85, opacity: 0 });
+      
+      tl.to(root.querySelector('.orb'), { opacity: 1, scale: 1, duration: 1.2, ease: 'cubic-bezier(0.0,0.0,0.2,1)' }, 0);
+      tl.to(root.querySelector('.orb2'), { opacity: 1, scale: 1, duration: 1.4, ease: 'cubic-bezier(0.0,0.0,0.2,1)' }, 0);
+      
+      tl.to(root.querySelector('.rule'), { scaleX: 1, opacity: 1, duration: 0.6, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 0.1);
+      tl.to(root.querySelector('.l1'), { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 0.1);
+      
+      tl.to(root.querySelector('.l1'), { opacity: 0.32, duration: 0.5, ease: 'cubic-bezier(0.4,0,1,1)' }, 1.8);
+      tl.to(root.querySelector('.l2'), { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 1.8);
+      
+      tl.to([root.querySelector('.orb'), root.querySelector('.orb2')], { scale: 1.08, duration: 3.0, ease: 'cubic-bezier(0.25,0.46,0.45,0.94)' }, 1.8);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+          var cw = document.querySelectorAll('#caption-pill .w');
+          gsap.set(cw, { opacity: 0, y: 8 });
+          tl.to(cw, { opacity: 1, y: 0, duration: 0.25, stagger: 0.1, ease: 'power2.out' }, 0.2);
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

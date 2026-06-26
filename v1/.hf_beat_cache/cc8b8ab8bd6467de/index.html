@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="342" data-composition-variables='{"caption_text": {"type": "string", "default": "is this mask paradox here is what cuts deepest the ones staring down the true faces are themselves masked they are not conscious they are not conscious they are not conscious they are not conscious confident they're"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Fullscreen layout === */
+    #panel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (fullscreen) === */
+    #caption-layer {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1860px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="11.400" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:rgba(10,8,5,0.55);overflow:hidden;font-family:'Cormorant Garamond','Garamond','Georgia',serif;">
+        <div class="fog" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(circle at 28% 32%, rgba(124,58,237,0.10), transparent 46%), radial-gradient(circle at 74% 70%, rgba(80,60,120,0.12), transparent 50%), radial-gradient(circle at 50% 50%, rgba(15,15,18,0.55), rgba(8,8,8,0.85) 80%);"></div>
+        <div class="veins" style="position:absolute;left:0;top:0;width:1920px;height:1080px;opacity:0.18;background:repeating-linear-gradient(118deg, rgba(200,200,212,0.0) 0px, rgba(200,200,212,0.0) 38px, rgba(200,200,212,0.22) 40px, rgba(124,58,237,0.10) 44px, rgba(200,200,212,0.0) 70px), repeating-linear-gradient(54deg, rgba(245,240,235,0.0) 0px, rgba(245,240,235,0.0) 90px, rgba(245,240,235,0.10) 93px, rgba(245,240,235,0.0) 150px);"></div>
+        <div class="stack" style="position:absolute;left:130px;top:330px;width:1660px;text-align:center;">
+          <div class="l1" style="font-weight:700;font-size:188px;line-height:1.0;letter-spacing:-0.01em;background:linear-gradient(135deg,#f5f0eb 0%,#c8c8d4 30%,#9890a8 50%,#f5f0eb 68%,#7c3aed 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;text-shadow:0 0 38px rgba(124,58,237,0.30);">THE MASK</div>
+          <div class="l2" style="margin-top:6px;font-weight:700;font-size:200px;line-height:1.0;letter-spacing:-0.01em;background:linear-gradient(135deg,#7c3aed 0%,#c8c8d4 28%,#f5f0eb 52%,#9890a8 72%,#f5f0eb 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;text-shadow:0 0 48px rgba(124,58,237,0.38);">PARADOX</div>
+        </div>
+        <div class="vig" style="position:absolute;left:0;top:0;width:1920px;height:1080px;box-shadow:inset 0 0 320px 90px rgba(0,0,0,0.78);"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      gsap.set(root.querySelector('.fog'), {opacity:0});
+      gsap.set(root.querySelector('.veins'), {opacity:0, scale:1.08, transformOrigin:'50% 50%'});
+      gsap.set(root.querySelector('.l1'), {opacity:0, y:24, scale:0.94, filter:'blur(14px)'});
+      gsap.set(root.querySelector('.l2'), {opacity:0, y:28, scale:0.94, filter:'blur(16px)'});
+      gsap.set(root.querySelector('.vig'), {opacity:0.5});
+      
+      tl.to(root.querySelector('.fog'), {opacity:1, duration:2.0, ease:'cubic-bezier(0.16,1,0.3,1)'}, 0);
+      tl.to(root.querySelector('.veins'), {opacity:0.18, scale:1.0, duration:3.0, ease:'cubic-bezier(0,0,1,1)'}, 0);
+      
+      tl.to(root.querySelector('.l1'), {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:1.0, ease:'cubic-bezier(0.34,1.56,0.64,1)'}, 0.4);
+      
+      tl.to(root.querySelector('.l1'), {opacity:0.32, scale:0.97, filter:'blur(2px)', duration:0.8, ease:'cubic-bezier(0.0,0.0,0.58,1.0)'}, 2.1);
+      tl.to(root.querySelector('.l2'), {opacity:1, y:0, scale:1, filter:'blur(0px)', duration:1.0, ease:'cubic-bezier(0.34,1.56,0.64,1)'}, 2.1);
+      
+      tl.to(root.querySelector('.veins'), {opacity:0.10, duration:2.0, ease:'cubic-bezier(0,0,1,1)'}, 5.0);
+      
+      tl.to([root.querySelector('.l1'), root.querySelector('.l2')], {opacity:0, y:-22, filter:'blur(10px)', duration:0.8, ease:'cubic-bezier(0.4,0,1,1)'}, 10.4);
+      tl.to([root.querySelector('.fog'), root.querySelector('.vig')], {opacity:0, duration:0.8, ease:'cubic-bezier(0.4,0,1,1)'}, 10.5);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

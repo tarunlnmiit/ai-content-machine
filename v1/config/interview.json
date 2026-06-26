@@ -1,0 +1,22 @@
+{
+  "_comment": "Config for the --interview two-call Medium flow in scripts/produce_blog.py. Edit freely; values fill the {{PLACEHOLDERS}} in prompts/question_generator.md and prompts/article_writer.md. Env vars override any field: INTERVIEW_NICHE, INTERVIEW_AUDIENCE, INTERVIEW_AUTHOR_VOICE, INTERVIEW_EMAIL_CTA_TARGET (apply to whichever niche is being produced).",
+  "defaults": {
+    "AUTHOR_VOICE": "Analytical but warm. Personal examples. Direct, no fluff, no jargon without context. Banned words: 'In conclusion', 'Dive into', 'Leverage', 'Game-changer', 'Synergy'.",
+    "EMAIL_CTA_TARGET": "the email list / free worksheet at the end of the post"
+  },
+  "ds": {
+    "NICHE": "applied AI / data science",
+    "AUDIENCE": "working data scientists, analysts, and ML engineers who want practical, build-it-now value",
+    "EMAIL_CTA_TARGET": "the free companion worksheet + email list (data science)"
+  },
+  "life": {
+    "NICHE": "life, self-development & craft",
+    "AUDIENCE": "thoughtful people working on focus, discipline, and personal growth who are tired of recycled productivity advice",
+    "EMAIL_CTA_TARGET": "the free companion worksheet + email list (life & self-development)"
+  },
+  "poetry": {
+    "NICHE": "poetry & reflective writing",
+    "AUDIENCE": "readers who come to Medium for poems and short, honest reflections on life, grief, and growth",
+    "EMAIL_CTA_TARGET": "the email list for new poems and reflections"
+  }
+}

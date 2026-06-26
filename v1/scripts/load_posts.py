@@ -156,13 +156,27 @@ def insert_linkedin_document(conn: sqlite3.Connection, slug: str, slot_index: in
         "doc_path": str(pdf_path.relative_to(REPO)),
         "doc_title": doc_title,
     }
+    # Comments: 1st = Worksheet link, 2nd = YT link (strategy: same as regular LI post order)
+    doc1_file = slug_dir / "linkedin_document_first_comment.txt"
+    if doc1_file.exists():
+        c = doc1_file.read_text(encoding="utf-8").strip()
+        if c:
+            meta["first_comment"] = c
+    doc2_file = slug_dir / "linkedin_document_second_comment.txt"
+    if doc2_file.exists():
+        c = doc2_file.read_text(encoding="utf-8").strip()
+        if c:
+            meta["second_comment"] = c
+
     conn.execute(
         """INSERT INTO posts (platform, content_text, scheduled_at, status,
            metadata_json, slug)
            VALUES (?,?,?,?,?,?)""",
         ("linkedin", caption, scheduled_at, "pending", json.dumps(meta), doc_slug),
     )
-    print(f"  [queued] linkedin-doc/{doc_slug} — at {scheduled_at} ({pdf_path.name})")
+    n_comments = sum(1 for k in ("first_comment", "second_comment") if meta.get(k))
+    extras = f" + {n_comments} comment(s)" if n_comments else ""
+    print(f"  [queued] linkedin-doc/{doc_slug} — at {scheduled_at} ({pdf_path.name}){extras}")
 
 
 def insert_threads(conn: sqlite3.Connection, slug: str, txt_path: Path, slot_index: int):
@@ -383,6 +397,16 @@ def main():
             insert_linkedin(conn, slug, linkedin_file, i)
 
         insert_linkedin_document(conn, slug, i)
+
+        # Mark this slug as "Scheduled" in the annual tracker (staged → will publish).
+        # The scheduler daemon flips it to "Published" after the post goes live via
+        # mark_published() called in scheduler.py. If tracker integration is unavailable,
+        # this is a silent no-op.
+        try:
+            from lib.tracker import mark_published as _mark_tracker
+            _mark_tracker(slug, status="Scheduled")
+        except Exception:
+            pass
 
         threads_file = slug_dir / "threads_post.txt"
         if threads_file.exists():

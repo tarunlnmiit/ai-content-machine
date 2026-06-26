@@ -1,0 +1,901 @@
+> ⚠️ **PIPELINE UPDATED 2026-06-20 — canonical model: [`docs/pipeline-2026.md`](pipeline-2026.md).**
+> Twitter **dropped**. Instagram / Threads **auto-publish** via the Meta Graph API (`scripts/scheduler.py`); Facebook mirrors Instagram; LinkedIn **active** (employer cleared) with the blog link in the **pinned first comment**. Reels → **Instagram Reels + YouTube Shorts only**, ≈9 **distinct** reels/week (not ~56). 3 long-form (1/niche). Poetry short = **poem only**; poetry Medium = poem + 150–350w essay. Worksheet email CTA (DS/Life) is the owned channel (Substack retired). Run `python3 scripts/weekly_winners.py` before producing. Only manual steps left: record · ~10-min approve · reply to comments/DMs.
+>
+> Where any step below disagrees with this banner or the canonical doc, the canonical doc wins.
+
+# Weekly Operating Guide
+
+Last updated: 2026-06-18
+
+## ⛔ CTR Mandates — enforced every week
+
+These are the findings from the June 2026 audit. All three channels had 0.3–1.1% CTR (target: 5%+). Root cause: thumbnails with no face. These rules are non-negotiable blocking gates before any upload.
+
+| Rule | Where enforced | Why |
+|------|---------------|-----|
+| **Every thumbnail must have a face** | ../setup/daily/../setup/daily/../setup/daily/../setup/daily/../setup/daily/thursday.md Step 3 | Face thumbnails get 5–8% CTR; text-only get 0.3–1.1% |
+| **Hook text: 3–5 words, specific result or mistake** | ../setup/daily/../setup/daily/../setup/daily/../setup/daily/../setup/daily/thursday.md Step 3, tuesday.md Step 2d | Generic titles fail; specific hooks drive clicks |
+| **No series numbers in titles or thumbnails** | ../setup/daily/../setup/daily/../setup/daily/../setup/daily/../setup/daily/thursday.md Step 4, tuesday.md Step 2d | "Tutorial 1/10" signals commitment — kills cold clicks |
+| **Video opening: specific incident within 5 seconds** | tuesday.md Step 2c Check 1 | AVD of 0:32 means the opening is losing people immediately |
+| **Shorts produced alongside every long-form** | ../setup/daily/../setup/daily/../setup/daily/../setup/daily/../setup/daily/thursday.md Step 5–6 | Shorts are outperforming long-form across all 3 channels |
+
+**Status (audit date 2026-06-18):**
+- @breathofdatascience: CTR 0.3–0.7% → thumbnail replacement backlog in `docs/archive/thumbnail-replacement-backlog.md`
+- @breathoflife_: CTR 1.1% → branded text thumbnails need replacing
+- @breathofpoetry: 0 views on most recent video → Shorts-first until long-form CTR improves
+
+---
+
+## Production Workflow (task-batched)
+
+| Day | Task | Niches | Guide |
+|-----|------|--------|-------|
+| [Monday](../setup/daily/monday.md) | Generate all blogs + repurpose → derivatives | DS (TUTORIAL) + Life + Poetry | ~45 min |
+| [Tuesday](../setup/daily/tuesday.md) | Worksheets (first) + video scripts + scene plans + social visual assets | DS + Life + Poetry | ~45 min |
+| [Wednesday](../setup/daily/wednesday.md) | Publish blogs (Medium) + shoot videos + generate captions + build edit plans + **generate overlay manifest** | DS + Life + Poetry | ~3 hrs |
+| [Thursday](../setup/daily/thursday.md) | DS NEWS/OPINION blog · Render (Remotion) + optional HyperFrames + upload + Notion sync + verify | DS (NEWS) + all niches | ~3 hrs |
+| [Friday](../setup/daily/friday.md) | Schedule social (THIS week → posts NEXT week) + buffer check + refresh tracker | DS + Life + Poetry | ~45 min |
+| [Saturday](saturday.md) | **Free** — catchup only if something slipped | — | — |
+| [Sunday](sunday.md) | Read analytics + KB + sync ideas (~15 min) | — | ~15 min |
+
+> **DS 2-blog cadence (added 2026-06-23):** DS publishes **2 blogs/week** — one TUTORIAL (Monday, code-first, runnable Python) and one NEWS/OPINION (Thursday, editorial, no code). Use `--type tutorial` / `--type news` flags on `produce_blog.py`. See `docs/setup/daily/monday-ds.md` for full command reference.
+
+**Audit tool:**
+```bash
+python3 scripts/list_week_content.py 2026-W{nn}         # content + asset status
+python3 scripts/list_week_content.py 2026-W{nn} --plan  # Mon-Fri production checklist
+```
+
+---
+
+## Render Pipeline Overview
+
+```
+Raw footage (assets/raw/{week}/)
+    │
+    ▼ [Wednesday] generate_captions.py → Whisper (--format remotion_json)
+remotion/public/captions/{week}/{slug}.captions.json
+    │
+    ▼ [Wednesday] prepare_remotion_edit.py
+remotion/public/edit-plans/{week}/{slug}.json
+    │
+    ▼ [Thursday] render_week.py → npx remotion render CourseLesson
+output/animations/{week}/{slug}.mp4          ← PRIMARY output
+    │
+    ├── [Thursday, optional] hyperframes_render.py
+    │   assets/hyperframes/{date}_{slug}-aug.mp4  ← HyperFrames augmented
+    │
+    ├── [Thursday] render_shorts_batch.py
+    │   output/animations/{week}/{slug}_s{slot:02d}.mp4  ← up to 14 shorts/niche
+    │
+    ├── [Thursday] upload_youtube.py → YouTube (long-form)
+    │   @breathofdatascience / @breathoflife_ / @breathofpoetry
+    │
+    ├── [Thursday] produce_podcast.py → Spotify for Podcasters (Life + Poetry only)
+    │   assets/audio/{week}/{slug}_podcast.mp3  ← voice + BGM mixed
+    │   Auto-uploads to Breath of Life + Breath of Poetry shows
+    │
+    └── [Friday] upload_youtube_shorts_batch.py → YouTube Shorts (scheduled)
+        python3 scripts/upload_youtube_shorts_batch.py \
+            --slug SLUG --publish-week YYYY-Wnn [--dry-run] [--pin-comment]
+```
+
+**Podcast publishing schedule:**
+- Breath of Life → Thursday (same day as @breathoflife_ YouTube upload)
+- Breath of Poetry → Thursday (same day as @breathofpoetry YouTube upload)
+- DS niche: no podcast
+
+**Podcast virality rules (Spotify growth is driven by completion rate, not follower count):**
+
+| Signal | Weight | Target |
+|--------|--------|--------|
+| Episode completion rate | Highest — Spotify stops recommending below 65% | > 65% per episode |
+| Listener → follower conversion | Medium — driven by the first episode a new listener hears | Improve your most-shared episode |
+| Saves to library | Medium — quality signal | Any saves = strong |
+
+**Episode title formula** (Spotify title determines whether someone taps play):
+- ✅ Specific incident: "I Called My Parents When I Was Drowning. They Gave Me a Budget."
+- ✅ Counter-intuitive observation: "The More I 'Worked on Myself', the More I Lost Myself"
+- ✅ Named emotional experience: "The Quiet Dread That Stays After the Deadline Passes"
+- ❌ Vague topic labels: "Mental Health", "About Anxiety"
+- ❌ Episode numbers alone: "Episode 14"
+
+**Episode description formula** (auto-generated by `produce_podcast.py` from YouTube description):
+```
+[Hook — same as or adapted from episode title, one sentence]
+
+[What the listener will feel or realise by the end — 1–2 sentences]
+
+Full piece: medium.com/@tarun-gupta/{slug}
+
+Follow Breath of [Life/Poetry] for new episodes every week.
+```
+Spotify shows only the first 1–2 sentences in search previews. Hook must land cold — no "In this episode…" or "Welcome back."
+
+**What kills completion rate:**
+- More than 60 seconds before the actual content starts
+- No "reason to stay" planted in the first 90 seconds
+- Flat pacing throughout — vary pace: slower for emotional beats, faster for energy beats
+
+**Cross-promo CTAs (podcast grows from YouTube + Instagram, not from within Spotify):**
+- YouTube description: "🎙️ Podcast version: [Spotify show link]"
+- Instagram reel caption: "Also a podcast on Spotify — follow Breath of [Life/Poetry]"
+- Medium post footer: "Prefer listening? Available as a podcast on Spotify."
+- Once/month: post 30-sec audiogram clip (AudiogramFeed Remotion composition) as dedicated Instagram post
+
+**Full virality reference:** `prompts/podcast_virality_prompt.md`
+
+---
+
+## Virality (automatic, all niches)
+
+- `scripts/lib/virality.py` injects a compact virality block (hook + ONE CTA + specificity +
+  guardrail) into every generator and both shorts pipelines. Routed by niche: **poetry/life** use
+  the emotional Voice KB (`data/kb/voice/`); **DS / `--project`** use the build/teach reel KB
+  (`data/kb/reels/`). Edit those KB files to change behavior — read at runtime.
+- **Per-niche caption/thumbnail formula** (caption content types only — IG caption, shorts caption/meta,
+  social image, overlay scene plan): the `## Engine digest (compact)` section of each niche's formula
+  file is injected — DS → `data/kb/reels/06_mavgpt_caption_formula.md` (@mavgpt: caption-IS-product,
+  comment→DM CTA, full value verbatim, outcome thumbnail, pt1/pt2 serialization); Life →
+  `data/kb/voice/life_formula.md` (text-wall claim thumbnail, mechanism-line caption, first-comment/DM
+  CTA, no motivational crescendo); Poetry → `data/kb/voice/poetry_formula.md` (poem verbatim / single
+  line, concrete nouns, permission close, zero hashtags). Edit the `## Engine digest` section to change
+  behavior; the long body stays human reference. Consumed by `repurpose_blog.py`,
+  `generate_ig_reel_brief.py`, `shorts_captions.py`, `generate_shorts_meta.py`, `generate_thumbnail.py`.
+- **Topic selection is virality-weighted:** `idea_scorer.py` adds `virality_adjusted_score`
+  (niche-aware hook signal + past-performer overlap from `weekly_insights.md`).
+- **Build-in-public:** add `--project <key>` (keys in `data/kb/projects.json`) to any generator to
+  layer a project's pitch/angle/DM keyword. With no project, the pipeline still runs fully; only the
+  build sub-tier sleeps. Comment→DM tool: **SuperProfile** or **CreatorFlow** (ManyChat replacements).
+- **Feedback loop:** `collect_analytics.py` appends recent YouTube performance to the matching swipe
+  file (`voice/03` or `reels/03`) so the libraries re-rank by your own numbers.
+- Prompt changes shift cache keys — run `python3 scripts/lib/claude_cli.py --bust` after editing KB.
+
+---
+
+## Performance & caching
+
+- **Claude CLI cache + retry** — `scripts/lib/claude_cli.py` caches every `claude -p`
+  result (30-day TTL) and retries transient failures 3× with backoff. Re-running a
+  generator after a crash/timeout is instant. Force fresh output:
+  `python3 scripts/lib/claude_cli.py --bust` (or `--stats`).
+- **Buffer generation is parallel** — `generate_buffer.py` produces the YT script,
+  Substack post, and social copy concurrently (3 workers). It now **exits non-zero**
+  and lists failures instead of silently skipping them.
+- **Render concurrency** — `render_week.py` defaults to `--concurrency 2`. Raise to 3
+  only with CPU/RAM headroom; drop to 1 if it thrashes.
+- **Analytics cache** — `fetch_youtube_analytics.py` caches raw API data for 6h
+  (`--cache-ttl-hours N`), so a same-day re-run skips the API. Force fresh: `--refresh`.
+- **Model routing** — per-task model defaults live in `scripts/lib/niche_config.py`
+  (`MODEL_BY_TASK` / `model_for`): Opus 4.8 for hero blogs, Sonnet 4.6 for assets/
+  repurposing/scene plans, Haiku 4.5 for metadata. Per-niche model is in
+  `data/brand/brand_kit.yaml`.
+
+---
+
+## Posting Times at a Glance (IST)
+
+> Full year tracker: `output/trackers/annual-tracker-2026.xlsx` (May–Dec, 12 monthly sheets).
+> Regenerate after adding new content weeks: `python3 scripts/generate_posting_tracker.py --year 2026`
+
+### Long-form (Medium + YouTube)
+
+| Day | Time | Niche | Platform |
+|-----|------|-------|----------|
+| Mon | — | All | Medium — publish article |
+| Mon | — | All | YouTube — publish video |
+
+### FB/IG (daily reels + weekly posts)
+
+| Day/Freq | Time IST | Niche | Format |
+|----------|----------|-------|--------|
+| Mon | 4:00 PM | 🔵 DS | Carousel |
+| Tue | 8:30 PM | 🟣 Poetry | Post |
+| Wed | 6:00 AM | 🟣 Poetry | Carousel |
+| Thu | 10:00 AM | 🟢 Life | Carousel |
+| Fri | 10:00 AM | 🟢 Life | Post |
+| Sat | 2:00 PM | 🔵 DS | Post |
+| Daily | 7:00 AM | 🟢 Life | Clip Short Reel |
+| Daily | 9:00 AM | 🔵 DS | Remotion Reel |
+| Daily | 10:00 AM | 🟣 Poetry | Remotion Reel |
+| Daily | 1:00 PM | 🔵 DS | Clip Short Reel |
+| Daily | 3:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 9:00 PM | 🔵 DS | Clip Short Reel |
+| Daily | 9:00 PM | 🟢 Life | Remotion Reel |
+| Daily | 10:00 PM | 🟣 Poetry | Clip Short Reel |
+
+### LinkedIn (daily reels + weekly posts/polls/slides)
+
+| Day/Freq | Time IST | Niche | Format |
+|----------|----------|-------|--------|
+| Mon | 8:00 AM | 🔵 DS | Post |
+| Mon | 6:00 PM | 🔵 DS | Poll |
+| Tue | 8:00 AM | 🟢 Life | Post |
+| Tue | 6:00 PM | 🟢 Life | Poll |
+| Wed | 6:00 AM | 🔵 DS | Slide Deck |
+| Wed | 8:00 AM | 🟣 Poetry | Post |
+| Wed | 6:00 PM | 🟣 Poetry | Poll |
+| Thu | 8:00 AM | 🟢 Life | Slide Deck |
+| Fri | 8:00 AM | 🟣 Poetry | Slide Deck |
+| Daily | 7:00 AM | 🟢 Life | Clip Short Reel |
+| Daily | 9:00 AM | 🟣 Poetry | Clip Short Reel |
+| Daily | 10:00 AM | 🔵 DS | Clip Short Reel |
+| Daily | 2:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 4:00 PM | 🔵 DS | Clip Short Reel |
+| Daily | 6:00 PM | 🟢 Life | Remotion Reel |
+| Daily | 7:00 PM | 🟣 Poetry | Remotion Reel |
+| Daily | 8:00 PM | 🔵 DS | Remotion Reel |
+
+### Twitter/X (daily reels + weekly posts/polls/threads)
+
+| Day/Freq | Time IST | Niche | Format |
+|----------|----------|-------|--------|
+| Mon | 12:00 PM | 🔵 DS | Post |
+| Tue | 12:00 PM | 🔵 DS | Poll *(manual)* |
+| Tue | 9:00 PM | 🔵 DS | Twitter Thread |
+| Wed | 12:00 PM | 🟢 Life | Post |
+| Thu | 12:00 PM | 🟢 Life | Poll *(manual)* |
+| Thu | 9:00 PM | 🟢 Life | Twitter Thread |
+| Fri | 12:00 PM | 🟣 Poetry | Post |
+| Sat | 12:00 PM | 🟣 Poetry | Poll *(manual)* |
+| Sat | 9:00 PM | 🟣 Poetry | Twitter Thread |
+| Daily | 11:00 AM | 🔵 DS | Clip Short Reel |
+| Daily | 1:00 PM | 🟢 Life | Clip Short Reel |
+| Daily | 2:00 PM | 🟣 Poetry | Clip Short Reel |
+| Daily | 3:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 5:00 PM | 🔵 DS | Clip Short Reel |
+| Daily | 7:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 8:00 PM | 🟢 Life | Remotion Reel |
+| Daily | 9:00 PM | 🟣 Poetry | Remotion Reel |
+
+### Meta Threads (auto + native)
+
+FB/IG posts auto-cross-post to Meta Threads. Additional native text posts:
+
+| Day | Time IST | Niche |
+|-----|----------|-------|
+| Mon | 7:00 PM | 🟢 Life |
+| Wed | 8:00 PM | 🔵 DS |
+| Thu | 7:00 PM | 🟣 Poetry |
+
+### YouTube Shorts (daily reels — separate channels per niche)
+
+DS: 2 Clip Short + 2 Remotion per day (14 each/week). Life + Poetry: 1 of each per day (7 each/week).
+
+| Daily | Time IST | Niche | Format |
+|-------|----------|-------|--------|
+| Daily | 8:00 AM | 🔵 DS | Remotion Reel |
+| Daily | 10:00 AM | 🟢 Life | Clip Short Reel |
+| Daily | 10:00 AM | 🟣 Poetry | Remotion Reel |
+| Daily | 11:00 AM | 🔵 DS | Clip Short Reel |
+| Daily | 2:00 PM | 🔵 DS | Remotion Reel |
+| Daily | 7:00 PM | 🟢 Life | Remotion Reel |
+| Daily | 8:00 PM | 🔵 DS | Clip Short Reel |
+| Daily | 9:00 PM | 🟣 Poetry | Clip Short Reel |
+
+**Batch upload command (schedule all shorts for a slug in one run):**
+```bash
+# Dry run first — verify files, titles, publish times
+python3 scripts/upload_youtube_shorts_batch.py \
+    --slug SLUG --publish-week YYYY-Wnn --dry-run
+
+# Upload all slots (prompts for confirmation)
+python3 scripts/upload_youtube_shorts_batch.py \
+    --slug SLUG --publish-week YYYY-Wnn [--pin-comment]
+
+# Upload specific slots only
+python3 scripts/upload_youtube_shorts_batch.py \
+    --slug SLUG --publish-week YYYY-Wnn --slots 0,1,2
+```
+- `--publish-week` overrides stale `schedule.json` timestamps (use when shorts go out a different week than content week)
+- `--pin-comment` posts long-form URL as comment — pin manually in YouTube Studio
+- Long-form URL auto-injected into description from `youtube_shorts_metadata.json`
+
+#### Phase reference (tease → post-long-form per niche)
+
+| Slot | Day | Notes |
+|------|-----|-------|
+| short_00–01 | Mon | All tease |
+| short_02–03 | Tue | All tease · **Life ★** Thu 8PM |
+| short_04–06 | Wed–Thu AM | Life post-long-form · DS/Poetry tease |
+| short_07 | Thu 9 PM | **DS ★** post-long-form |
+| short_08–09 | Fri | DS post-long-form · **Poetry ★** Fri 8PM |
+| short_10–13 | Sat–Sun | All post-long-form |
+
+★ = first slot after that niche's long-form goes live. Add live video URL to descriptions from ★ onward.
+
+---
+
+### Same-Week Derivatives Rule
+
+**All derivatives from any content piece — including ALL shorts (up to 14 per niche) — must publish in the same Mon–Sun week as the long-form video. No content carries over to the following week.**
+
+#### Shorts cadence: 2 per day per channel × 7 days = 14 max
+
+Each channel has two daily short slots: **10 AM IST** and **8 PM IST**.  
+Upload whichever slots have shorts available; leave empty slots unfilled.
+
+Standard slot assignment per niche (short_00 → slot 0, short_01 → slot 1, etc.):
+
+| Slot | Day | Time IST | Notes |
+|------|-----|----------|-------|
+| 0 | Mon | 10 AM | Tease (long-form not yet live) |
+| 1 | Mon | 8 PM | Tease |
+| 2 | Tue | 10 AM | Tease |
+| 3 | Tue | 8 PM | Tease |
+| 4 | Wed | 10 AM | Tease |
+| 5 | Wed | 8 PM | Tease |
+| 6 | Thu | 10 AM | Tease (Life: post-long-form) |
+| 7 | Thu | 9 PM | Post-long-form (DS: same evening) |
+| 8 | Fri | 10 AM | Post-long-form |
+| 9 | Fri | 8 PM | Post-long-form |
+| 10 | Sat | 10 AM | Post-long-form |
+| 11 | Sat | 8 PM | Post-long-form |
+| 12 | Sun | 10 AM | Post-long-form |
+| 13 | Sun | 8 PM | Post-long-form |
+
+Shorts before the long-form are standalone teasers — no parent-video link required by YouTube. Shorts posted after the long-form should have the video URL in their description (update retroactively if needed).
+
+#### Per-niche publishing order (enforce every week)
+
+1. **Social first** (LinkedIn + Twitter) — prior day or same morning. Drives anticipation, no link needed.
+2. **IG carousel** — 1 day before the long-form (8 AM slot). Teaser visual, no link needed.
+3. **Long-form video + Blog** — simultaneous publish (Substack → Medium canonical).
+   Medium tags (max 5, use `--tags` flag):
+   - Life/Self-dev: `self-improvement,personal-development,habits,productivity,mindset`
+   - Data Science:  `python,data-science,machine-learning,tutorial,programming`
+   - Poetry/Quotes: `poetry,love,writing,quotes,literature`
+4. **Shorts** — 2/day, Mon–Sun, all within same calendar week.
+
+Niche windows:
+- **Life** → Mon social · Tue IG + long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
+- **DS** → Wed social · Wed IG + Thu long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
+- **Poetry** → Fri social + long-form + blog + newsletter · Mon–Sun shorts (slots 0–13)
+
+---
+
+## Cross-Post Distribution (manual — no Metricool/Publer)
+
+Distribution is **manual**. There is no CSV bridge — `derivatives_to_metricool.py` was removed.
+For each piece, post the per-platform derivative file by hand in the niche's engagement window:
+
+- **Instagram / Facebook** → `instagram_caption.txt` (+ social image / carousel slides)
+- **Threads** → `threads_post.txt`
+- **Twitter/X** → `twitter_thread.md` (threads can't be scheduled — post manually)
+- **LinkedIn** → `linkedin_post.txt` — can be staged into `scheduling.db` via
+  `scripts/load_posts.py` for the `scheduler.py` API path, but **held manual until employer
+  clearance** (daemon stays off until then).
+
+- **Excluded channels:** Hacker News, Reddit (blocked).
+- Full per-step posting flow: `docs/setup/daily/friday.md` and `docs/weekly-runner.md` Step 22.
+
+## Build-in-Public Projects (weekly cadence)
+
+Projects like **autopilot-jobhunt** are produced + distributed on a recurring cadence. Source of
+truth: `data/kb/projects.json`. Formula: `data/kb/viral_reel_formula.md`.
+
+Weekly per active project:
+1. Pick the next angle from `cadence.angle_rotation` (don't repeat last week's).
+2. Produce one reel via the 5-beat formula + existing Remotion scenes.
+3. Generate derivatives (`prompts/repurposing_agent.md`) → post manually (above).
+4. UTM-tag the repo link (`scripts/lib/utm.py`); arm the comment→DM keyword.
+5. Star attribution lands automatically in the Sunday `collect_analytics.py` run
+   (GitHub stars + 7-day delta in `weekly_insights.md`).
+
+> Hands-on daily version + weekly rotation log: [`daily/tuesday.md` → Step 2b — Weekly combo reel](../setup/daily/tuesday.md).
+> Idea bank: `data/kb/reels/working_combos.md`.
+
+---
+
+## Idea Machine (`idea_scorer.py`)
+
+Runs automatically at 6am daily via `daily_ideas.sh`. Manual invocation:
+
+```bash
+# Score this week's ideas (reads suggest_/youtube_/reddit_/external_{date}.json for current ISO week)
+python3 scripts/idea_scorer.py
+
+# Specific week
+python3 scripts/idea_scorer.py --week W26
+
+# Change how many top ideas per niche appear in the table
+python3 scripts/idea_scorer.py --top 5
+
+# Preview without writing weekly_ideas.md
+python3 scripts/idea_scorer.py --dry-run
+
+# Force regenerate even if weekly_ideas.md exists
+python3 scripts/idea_scorer.py --force
+```
+
+**What it outputs** → `data/ideas/weekly_ideas.md`:
+- Per-niche virality-scored idea table (Score · Idea · Hook · Format)
+- Mandatory tool reel block for DS and Life (project angle rotated by ISO week, `--project` flag included)
+- Raw take batch: 4 questions from `data/kb/raw_take_questions.json` rotated across 7-week cycle
+
+**Niche blocklist** prevents irrelevant angles (poetry: no AI/tech; life: no AI/crypto/docker). Novelty penalty
+halves the score for ideas similar to content published in the last 90 days.
+
+---
+
+## Viral Reel Briefs (`generate_viral_reel_brief.py`)
+
+Recording plans for **standalone reels** — reels recorded without an existing blog. Separate from
+`generate_ig_reel_brief.py` (which clips from a finished recording).
+
+**Weekly workflow** — run after `idea_scorer.py`:
+```bash
+# Generate all this week's reel briefs in one command:
+# - DS tool reel + Life tool reel (from weekly tool reel blocks)
+# - Top 1 scored reel idea for DS, Life, AND Poetry
+python3 scripts/generate_viral_reel_brief.py --from-weekly
+
+# More scored ideas per niche (e.g. top 2 each)
+python3 scripts/generate_viral_reel_brief.py --from-weekly --top-ideas 2
+
+# Force overwrite existing briefs
+python3 scripts/generate_viral_reel_brief.py --from-weekly --force
+```
+
+**Single brief** for a specific idea:
+```bash
+python3 scripts/generate_viral_reel_brief.py \
+  --idea "The one Python trick that saved me 3 hours last week" \
+  --niche ds --week W26
+
+# With build-in-public project overlay
+python3 scripts/generate_viral_reel_brief.py \
+  --idea "I automated my job hunt with Claude" \
+  --niche ds --project free_tool_ds --type tool
+```
+
+**Output** → `content/reels/{week}/{slug}_viral_reel_brief.md` — contains:
+5 hook variants to record, 5-beat shot plan (0–45s), full Instagram caption, DM keyword, B-roll ideas,
+recording checklist with honesty guardrail.
+
+> **Poetry** has no tool reel, but `--from-weekly` still generates a brief for the top scored poetry reel idea.
+> Use `--top-ideas 0` to skip scored ideas and process tool reels only.
+
+---
+
+## Content Buffer
+
+A rolling 4-week buffer of ready-to-publish content protects output during travel, illness, or low-energy weeks.
+
+**Buffer structure:**
+```
+content/buffer/
+  week-1/
+    data_science_tech/   ← youtube_script + substack_post + social_copy + meta
+    life_self_dev/
+    poetry_quotes/
+  week-2/ … week-4/
+
+data/buffer/topics.yaml  ← source of truth: all 12 topic slots + angles
+```
+
+**Buffer depth check (run any time):**
+```bash
+for niche in data_science_tech life_self_dev poetry_quotes; do
+  count=$(ls content/buffer/week-*/${niche}/*_meta.md 2>/dev/null | wc -l | tr -d ' ')
+  echo "$niche: $count weeks buffered"
+done
+```
+**MINIMUM: 4 weeks per niche at all times (12 total).** Replenish on Friday (end of production week) before it ever drops to 3.
+
+**Replenish buffer (Friday Step 6):**
+```bash
+# 1. Open data/buffer/topics.yaml — fill empty week slots with topic + angle
+#    (check Notion Published items first to avoid repeat angles)
+# 2. Generate content for new slots:
+conda run -n content_engine_env python3 scripts/generate_buffer.py
+# Targeted:
+conda run -n content_engine_env python3 scripts/generate_buffer.py --week 4
+conda run -n content_engine_env python3 scripts/generate_buffer.py --niche ds
+```
+
+Generation uses **AutoTune temps** (DS=0.4, Life=0.85, Poetry=1.15) + **STM normalization** (strips filler/hedges) automatically.
+Models: DS → `claude-opus-4-7` · Life + Poetry → `claude-sonnet-4-6` (set in `data/brand/brand_kit.yaml`).
+
+**Push produced content into buffer (after a live production week):**
+```bash
+# Preview what will be copied
+python3 scripts/push_to_buffer.py --niche ds --week 2 --dry-run
+
+# Push all 3 niches into week-2 slot (use --date YYYY-MM-DD to target specific production date)
+python3 scripts/push_to_buffer.py --niche ds     --week 2 --date 2026-05-21
+python3 scripts/push_to_buffer.py --niche life   --week 2 --date 2026-05-21
+python3 scripts/push_to_buffer.py --niche poetry --week 2 --date 2026-05-21
+# Copies: blog → substack_post · YT script → youtube_script · derivatives → social_copy
+```
+
+**Consume from buffer (when skipping live production):**
+- Open `content/buffer/week-1/{niche}/` → use `_substack_post.md`, `_youtube_script.md`, `_social_copy.md`
+- After publishing: delete that week's niche folder → shift remaining weeks down → add new week-4 slot
+- Log consumed items in Notion: status `Script` → `Published`
+
+**Shift buffer after consuming:**
+```bash
+bash scripts/shift_buffer.sh --dry-run   # verify week-4 has content
+bash scripts/shift_buffer.sh             # rotate: week-2→1, week-3→2, week-4→3
+# Then fill week-4 in data/buffer/topics.yaml and regenerate:
+conda run -n content_engine_env python3 scripts/generate_buffer.py --week 4
+```
+
+**Buffer vs. live production:**
+- Normal week: produce fresh content via daily guides → buffer untouched
+- Busy/travel week: pull from buffer → no production required
+- **Rule: buffer is the floor. Never post from week-1 without immediately scheduling week-4 generation.**
+
+---
+
+## Alternative: Sunday Batch Mode
+
+Free Sunday? Skip daily grind. Use **[Sunday Batch Playbook](../archive/sunday-batch.md)** — produce full week's content in one 3–4 hour sitting, then hands-off Mon–Sat.
+
+- Use when: full Sunday available + energy high
+- Skip when: busy, tired, traveling — daily guides above still work
+- Saturday = sabbath day (no content work) when batch done
+- Partial batch fallback (2 hours, 1 niche) inside the playbook
+
+---
+
+## Setup (one-time)
+
+### Core dependencies
+
+```bash
+# Python packages
+pip install openai-whisper nltk anthropic python-dotenv
+
+# Teasers from existing published pieces (scripts/teaser_from_published.py)
+pip install youtube-transcript-api requests beautifulsoup4
+
+# ffmpeg (required for Whisper + caption generation)
+brew install ffmpeg
+
+# Whisper
+pip install openai-whisper
+```
+
+### Teasers + backlinks from existing published content
+
+`scripts/teaser_from_published.py` turns an already-published YouTube/Medium URL into short
+per-platform teasers + a UTM backlink (manual posting — files only). See
+`docs/medium-repurposing-guide.md` → "Quick Teaser + Backlink". Quick start:
+
+```bash
+python3 scripts/teaser_from_published.py --url <youtube-or-medium-url> --dry-run   # preview
+python3 scripts/teaser_from_published.py --urls urls.txt                            # batch write
+python3 scripts/teaser_from_published.py --inject-link content/derivatives/<week>/<slug> --url <url>
+```
+
+### Remotion (video rendering)
+
+```bash
+# Install
+cd remotion && npm install
+
+# Start Remotion Studio (visual preview):
+cd remotion && npm run dev
+# → http://localhost:3000
+
+# Compositions available:
+# CourseLesson    — long-form talking head (1920×1080)
+# ShortClip       — portrait crop of long-form (1080×1920)
+# DSMotionShort   — pure DS motion short (1080×1920)
+# LifeMotionShort — pure Life motion short (1080×1920)
+# PoetryMotionShort — pure Poetry motion short (1080×1920)
+# Thumbnail       — YouTube thumbnail still export (1280×720)
+# AudiogramFeed   — podcast audiogram 1080×1080
+# AudiogramStory  — podcast audiogram 1080×1920
+# SocialCard1x1   — animated social card 1080×1080
+# SocialCard9x16  — animated social card 1080×1920
+# AbstractDS/Life/Poetry — b-roll loops (render once, reuse)
+
+# Render a single composition:
+cd remotion
+npx remotion render CourseLesson output/animations/{week}/{slug}.mp4 \
+  --props='{"editPlanFile":"edit-plans/{week}/{slug}.json"}'
+
+# Render still (thumbnail):
+npx remotion still Thumbnail output/visuals/{week}/{slug}_thumb.png \
+  --props='{"titleText":"Title","niche":"ds","variant":"a","bgType":"dark"}'
+```
+
+### HyperFrames (optional visual overlay system)
+
+```bash
+# Install HyperFrames dependencies (one-time):
+pip install -r scripts/hyperframes_requirements.txt
+
+# Verify:
+python3 scripts/hyperframes_render.py --help
+
+# Usage (run AFTER Remotion render, same day — Thursday):
+python3 scripts/hyperframes_render.py output/animations/{week}/{slug}.mp4 \
+  --slug {slug}-aug
+# → assets/hyperframes/{date}_{slug}-aug.mp4
+```
+
+HyperFrames applies Claude-powered glass card, code callout, stat card, and flow arrow overlays on top of any MP4. Primarily useful for DS content. Run Thursday after render, before upload. See `docs/video-production-guide.md` → HyperFrames section.
+
+### Remotion source structure
+
+```
+remotion/
+  src/
+    styles/
+      chronixel.ts          # design tokens: colors (#0a0a0f bg), fonts (Poppins ExtraBold), niche palettes
+      niche.ts              # per-niche accent: DS #f97316, Life #f59e0b, Poetry #a78bfa
+    compositions/
+      TitleCard.tsx          # Chronixel title card (inject at frame 0)
+      LowerThird.tsx         # Lower-third nameplate
+      OutroCard.tsx          # Subscribe outro with niche CTA
+      CaptionPage.tsx        # TikTok-style captions with word pop
+      TalkingHeadEdit.tsx    # Main long-form assembly (wire-in all above)
+      ShortClip.tsx          # 9:16 portrait crop + big captions
+      DSMotionShort.tsx      # Pure DS motion short (loads scene-plan JSON)
+      LifeMotionShort.tsx    # Pure Life motion short
+      PoetryMotionShort.tsx  # Pure Poetry motion short
+      Audiogram.tsx          # Podcast waveform + quote
+      SocialCard.tsx         # Animated social card
+      Thumbnail.tsx          # Programmatic YouTube thumbnail
+      AbstractDS.tsx         # DS b-roll loop (particle network, data stream)
+      AbstractLife.tsx       # Life b-roll loop (bokeh, organic)
+      AbstractPoetry.tsx     # Poetry b-roll loop (ink-water, aurora)
+      scenes/
+        WordReveal.tsx
+        AtmosphericQuote.tsx
+        NumberedTips.tsx
+        DataVizReveal.tsx
+        CodeAnnotation.tsx
+        ConceptExplainer.tsx
+        ToolComparison.tsx
+        TransformationArc.tsx
+        HabitLoop.tsx
+        LineReveal.tsx
+    types.ts                 # EditPlan, ScenePlan, AudiogramPlan types
+    Root.tsx                 # All compositions registered here
+  public/
+    edit-plans/
+      {week}/                # *.json EditPlan files per slug
+    captions/
+      {week}/                # *.json Caption[] per slug (from Whisper)
+    scene-plans/
+      {week}/                # *.json ScenePlan[] for motion shorts
+    broll/
+      {week}/                # B-roll clips per week
+    videos/
+      {week}/                # Source videos (moved here from assets/raw)
+    audio/
+      {week}/                # Audio clips for audiograms
+```
+
+### Scheduler daemon
+
+```bash
+# Start (survives shell close):
+nohup python3 scripts/scheduler.py > data/analytics/scheduler.log 2>&1 &
+
+# Or via launchd (preferred — survives reboots):
+launchctl load ~/Library/LaunchAgents/com.contentmachine.scheduler.plist
+launchctl list | grep contentmachine
+
+# Check activity:
+tail -20 data/analytics/scheduler.log
+sqlite3 data/scheduling.db "SELECT COUNT(*) FROM posts WHERE status='pending'"
+```
+
+LinkedIn tokens expire every 60 days. Refresh: `python3 scripts/auth_linkedin.py --refresh`
+
+---
+
+## Build Status
+
+| Day | Focus | Status |
+|-----|-------|--------|
+| Day 1 | Foundation — folder, CLAUDE.md, MCPs | ✅ Done |
+| Day 2 | Research + KB pipeline | ✅ Done |
+| Day 3 | Writing + Repurposing agents | ✅ Done |
+| Day 3b | Ghostwriter agent | ✅ Done (`ghostwrite.py` + `ghostwriter_agent.md`) |
+| Day 4 | Claude Design pipeline | ✅ Done — `generate_design_prompts.py` + `claude_design_agent.md` |
+| Day 5 | Distribution automation | ⚠️ Scripts done — scheduler not running, DB empty |
+| Day 6 | First full production run | ⚠️ Blogs + derivatives exist, no posts loaded, no videos |
+| Day 7 | SOP + analytics | ⚠️ `collect_analytics.py` done — Streamlit dashboard not built |
+| Day 8 | Remotion video pipeline | ✅ Done — 25 compositions + 13 scene components + render scripts + generate_custom_scene.py |
+| Virality Layer | Two-tier engine (Voice KB + Reels KB) across all 9 generators + both shorts pipelines; virality-weighted topic selection in idea_scorer.py; feedback loop appends YouTube results to swipe files | ✅ Done |
+
+**Remaining before fully automated:**
+- Load current blogs: `python3 scripts/load_posts.py`
+- Start APScheduler: `launchctl load ~/Library/LaunchAgents/com.contentmachine.scheduler.plist`
+- Build Streamlit dashboard: `dashboard/app.py` (not yet created)
+- Get Twitter archive → build `data/kb/twitter_hook_patterns.json`
+
+---
+
+## What runs automatically
+
+| Time | What |
+|------|------|
+| Every day 6am | `scripts/daily_ideas.sh` chains Reddit + YouTube + external feeds + Google/YouTube suggest + idea scorer → `data/ideas/weekly_ideas.md`. Install: see [launchd-daily-ideas.md](../setup/launchd-daily-ideas.md) |
+| Sunday 8pm | `collect_analytics.py` → `data/analytics/weekly_insights.md` + appends YouTube results to matching swipe file (`data/kb/voice/03_swipe_file.md` or `data/kb/reels/03_swipe_file.md`) — closes virality feedback loop |
+| Sunday 10pm | `build_knowledge_base.py` → `data/kb/master_brief.md` (`com.contentmachine.buildkb` installed) |
+| Continuous | `scripts/scheduler.py` → fires pending posts from `data/scheduling.db` every 60s. Managed by launchd (`com.contentmachine.scheduler`, KeepAlive + RunAtLoad). |
+
+> Check scheduler: `launchctl list | grep contentmachine` and `tail -20 data/analytics/scheduler.log`
+
+---
+
+## Notion sync
+
+Push top ideas → Notion Contents DB as `Idea` rows. Full flow + write-back loop: [README.md → Notion Integration Flow](../README.md#notion-integration-flow).
+
+```bash
+python3 scripts/sync_ideas_to_notion.py --dry-run   # preview
+python3 scripts/sync_ideas_to_notion.py             # real sync (dedup by title)
+```
+
+After publishing any content, close the loop:
+```bash
+python3 scripts/update_notion_status.py --title "<substring>" --status Published --url <url>
+```
+
+Config: `NOTION_CONTENTS_DB_ID` + `NOTION_INTEGRATION_SECRET` in `.env`.
+
+---
+
+## Git hooks (optional)
+
+Pre-commit graphify update — keeps knowledge graph fresh on every commit:
+
+```bash
+cp docs/pre-commit-graphify.sh .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+# Skip on any commit: git commit --no-verify
+# Uninstall:         rm .git/hooks/pre-commit
+```
+
+---
+
+## File Naming Conventions
+
+All scripts auto-name files. Know these patterns to find content manually.
+
+**Slug** = topic title lowercased, spaces → hyphens, truncated ~50 chars.
+**Week** = ISO week string: `YYYY-Wnn` (e.g., `2026-W24`). Get it:
+```bash
+python3 -c "from scripts.lib.schedule_calc import get_iso_week; print(get_iso_week('2026-06-10'))"
+```
+**Niche keys:** `data_science_tech` · `life_self_dev` · `poetry_quotes`
+
+| File type | Pattern | Example |
+|-----------|---------|---------|
+| Blog | `content/blogs/{week}/YYYY-MM-DD_{niche}_{slug}.md` | `content/blogs/2026-W24/2026-06-10_data_science_tech_python-for-ml.md` |
+| YT script | `content/scripts/{week}/YYYY-MM-DD_{niche-dashes}-{slug}_yt.md` | `2026-W24/2026-06-10_data-science-tech-python-for-ml_yt.md` |
+| Derivatives dir | `content/derivatives/{week}/YYYY-MM-DD_{niche-dashes}_{slug-50}/` | `content/derivatives/2026-W24/2026-06-10_data_science_tech_python-for-ml/` |
+| Social images | `assets/social_posts/{week}/{slug}_instagram.png` | `assets/social_posts/2026-W24/{slug}_instagram.png` |
+| Edited video | `output/animations/{week}/{slug}.mp4` | `output/animations/2026-W24/{slug}.mp4` |
+| Short clip | `output/animations/{week}/{slug}_s{slot:02d}.mp4` | `output/animations/2026-W24/{slug}_s00.mp4` |
+| Thumbnail | `output/visuals/{week}/{slug}_thumb_a.png` | `output/visuals/2026-W24/{slug}_thumb_a.png` |
+| HyperFrames output | `assets/hyperframes/{date}_{slug}-aug.mp4` | `assets/hyperframes/2026-06-10_{slug}-aug.mp4` |
+| Edit plan | `remotion/public/edit-plans/{week}/{slug}.json` | `remotion/public/edit-plans/2026-W24/{slug}.json` |
+| Captions | `remotion/public/captions/{week}/{slug}.json` | `remotion/public/captions/2026-W24/{slug}.json` |
+| Scene plan | `remotion/public/scene-plans/{week}/{slug}_s{slot}.json` | `remotion/public/scene-plans/2026-W24/{slug}_s01.json` |
+| Shorts manifest | `content/derivatives/{week}/{slug}/shorts_manifest.json` | — |
+| Buffer blog | `content/buffer/week-N/{niche}/{slug}_substack_post.md` | `content/buffer/week-2/data_science_tech/python-for-ml_substack_post.md` |
+| Buffer script | `content/buffer/week-N/{niche}/{slug}_youtube_script.md` | same dir, `_youtube_script.md` |
+| Shorts upload script | `output/scheduled/upload_shorts.sh` | (distribution is manual — no Metricool/Publer CSV) |
+
+**After producing content, run:**
+```bash
+python3 scripts/push_to_buffer.py --auto              # checks all 3 niches, auto-decides
+python3 scripts/push_to_buffer.py --auto --niche ds   # single niche
+python3 scripts/push_to_buffer.py --auto --dry-run    # preview first
+```
+If buffer < 4 weeks → copies into next empty slot. If buffer full → prints "stays live".
+
+---
+
+## Key Files
+
+```
+data/brand/brand_kit.yaml          ← brand colors, fonts, tones, AutoTune temps + models
+data/buffer/topics.yaml            ← 4-week buffer topic slots (fill + generate Sunday)
+data/ideas/weekly_ideas.md         ← Monday topic picking
+data/kb/master_brief.md            ← read before every writing session
+data/poems/                        ← POETRY: one poem per file ({slug}.txt)
+data/scheduling.db                 ← post queue (LinkedIn auto-post via scheduler.py)
+data/analytics/scheduler.log      ← APScheduler activity
+data/content_tracker.csv          ← content pipeline status (run scripts/sync_tracker.py to refresh)
+
+output/trackers/annual-tracker-{YEAR}.xlsx  ← annual posting calendar (May–Dec, monthly sheets, filterable)
+                                               regenerate: python3 scripts/generate_posting_tracker.py --year 2026
+
+content/blogs/{week}/              ← finished blogs (grouped by ISO week)
+content/scripts/{week}/            ← YT scripts + production guides
+content/derivatives/{week}/        ← 10 derivative files per slug + schedule.json
+content/reels/{week}/              ← viral reel briefs (generate_viral_reel_brief.py output)
+content/buffer/                    ← 4-week rolling content buffer
+
+remotion/src/styles/chronixel.ts   ← Chronixel design system tokens
+remotion/src/Root.tsx              ← all Remotion compositions registered here
+remotion/public/edit-plans/{week}/ ← EditPlan JSONs driving CourseLesson renders
+remotion/public/captions/{week}/   ← Whisper caption JSONs
+remotion/public/scene-plans/{week}/← ScenePlan JSONs for motion shorts
+
+output/animations/{week}/          ← rendered MP4s (long-form + shorts)
+output/visuals/{week}/             ← thumbnails + cover images
+output/scheduled/
+  upload_shorts.sh                 ← pre-filled YouTube Shorts upload commands
+                                     (no Metricool/Publer CSV — IG/FB/Threads posted manually)
+
+scripts/archive_week.py            ← move completed week off SSD to /Volumes/Archive (run Friday Step 7)
+/Volumes/Archive/content-archive/{year}/W{nn}/  ← archive destination (manifest.txt + archive.log per week)
+
+assets/raw/{week}/                 ← original camera recordings + screen recordings
+assets/hyperframes/                ← HyperFrames augmented MP4s
+assets/social_posts/{week}/        ← platform-specific social images
+assets/slides/{week}/              ← slide decks + PDFs + per-slide PNG exports
+assets/carousels/{week}/           ← Instagram carousel HTML + slide PNGs
+```
+
+---
+
+## Load posts: LinkedIn staging only
+
+`load_posts.py` now does one job (no Metricool/Publer CSV):
+1. Reads each slug's `linkedin_post.txt` and inserts it into `data/scheduling.db` for the
+   `scheduler.py` API path — **held manual until employer clearance** (daemon stays off).
+2. Emits `output/scheduled/upload_shorts.sh` — pre-filled YouTube Shorts upload commands.
+3. Idempotent — re-running skips slugs already in the DB (`status` in `pending`/`posted`).
+
+Blog URLs and images are no longer baked into a CSV — paste the Medium URL inline and attach
+the image by hand when you post IG/FB/Threads manually (see `docs/setup/daily/friday.md`).
+
+---
+
+## Fallback: Canva path (if Claude Design unavailable)
+
+```bash
+python3 scripts/generate_canva_prompts_legacy.py   # Canva AI 2.0 prompts
+python3 scripts/generate_slides.py                  # → output/scheduled/{slug}_slides.csv
+python3 scripts/generate_quote_cards.py             # → output/scheduled/quote_cards.csv
+python3 scripts/generate_canva_prompts.py           # → output/scheduled/canva_prompts.md (thumbnails)
+```
+
+---
+
+## Schedule embedded in content
+
+**Each generated piece of content carries its own schedule.json.**
+
+When you run `produce_blog.py`, `repurpose_blog.py`, or generate shorts metadata, the scripts automatically compute and write `content/derivatives/{slug}/schedule.json` — no manual timestamp management needed.
+
+### Inspecting schedules
+
+```bash
+# See full schedule for a slug
+python3 -m json.tool content/derivatives/{week}/{slug}/schedule.json
+
+# Extract just publish times
+jq '.social, .long_form.publish_at' content/derivatives/{week}/{slug}/schedule.json
+```
+
+### Auto-generating the weekly checklist
+
+```bash
+python3 scripts/generate_checklist.py --week 2026-06-09
+# → docs/week-2026-06-09-publishing-checklist.md
+```
+
+---
+
+## Still to build
+
+| Item | What's needed |
+|------|--------------|
+| Streamlit dashboard | `dashboard/app.py` — not yet created |
+| Twitter hook patterns | Request Twitter archive → extract → `data/kb/twitter_hook_patterns.json` |
+| LinkedIn OAuth refresh | Tokens expire 60 days — rerun `scripts/auth_linkedin.py --refresh` when needed |
+| Worksheet automation | `scripts/auto_worksheet_workflow.py` — worksheet gen + Claude Design prompt in one call |

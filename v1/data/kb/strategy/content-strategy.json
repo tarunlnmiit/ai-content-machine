@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "title": "Updated & Sustainable Content Strategy",
+    "source": "v2/Content-2026-06-23-16-52.pdf",
+    "last_updated": "2026-06-23",
+    "author": "Tarun Gupta"
+  },
+
+  "pillars": [
+    {
+      "niche": "Data Science",
+      "slug": "ds",
+      "emoji": "📊",
+      "blog_days": ["Mon", "Thu"],
+      "blogs_per_week": 2
+    },
+    {
+      "niche": "Life",
+      "slug": "life",
+      "emoji": "🌱",
+      "blog_days": ["Tue", "Fri"],
+      "blogs_per_week": 2
+    },
+    {
+      "niche": "Poetry",
+      "slug": "poetry",
+      "emoji": "✦",
+      "blog_days": ["Wed", "Sat"],
+      "blogs_per_week": 2
+    }
+  ],
+
+  "weekly_schedule": {
+    "Mon":  { "blog": "ds",     "viral_reel": "life" },
+    "Tue":  { "blog": "life",   "viral_reel": "ds" },
+    "Wed":  { "blog": "poetry", "viral_reel": null },
+    "Thu":  { "blog": "ds",     "viral_reel": "life" },
+    "Fri":  { "blog": "life",   "viral_reel": "ds" },
+    "Sat":  { "blog": "poetry", "viral_reel": null },
+    "Sun":  { "blog": null,     "viral_reel": null }
+  },
+
+  "derivatives": {
+    "ds_and_life": [
+      {
+        "id": "ig_carousel",
+        "name": "IG Carousel",
+        "platform": "Instagram",
+        "method": "CC",
+        "frequency": { "niches": 2, "days": 2, "label": "2n × 2d", "per_week": 4 },
+        "cta": "Comment CTA",
+        "pinned_comments": [],
+        "notes": "Worksheet DM on comment"
+      },
+      {
+        "id": "ig_reel",
+        "name": "IG Reel",
+        "platform": "Instagram",
+        "method": "Record",
+        "frequency": { "niches": 2, "days": 2, "label": "2n × 2d", "per_week": 4 },
+        "cta": "Comment CTA",
+        "pinned_comments": [],
+        "notes": "Worksheet DM on comment"
+      },
+      {
+        "id": "linkedin_post",
+        "name": "LinkedIn Post",
+        "platform": "LinkedIn",
+        "method": "CC",
+        "frequency": { "niches": 2, "days": 2, "label": "2n × 2d", "per_week": 4 },
+        "cta": null,
+        "pinned_comments": [
+          { "order": 1, "content": "Worksheet link" },
+          { "order": 2, "content": "Blog link" }
+        ],
+        "notes": "Links in comments, not body"
+      },
+      {
+        "id": "linkedin_slide_deck",
+        "name": "LinkedIn Slide Deck",
+        "platform": "LinkedIn",
+        "method": "CC",
+        "frequency": { "niches": 2, "days": 2, "label": "2n × 2d", "per_week": 4 },
+        "cta": null,
+        "pinned_comments": [
+          { "order": 1, "content": "Worksheet link" },
+          { "order": 2, "content": "YouTube link" }
+        ],
+        "notes": "Links in comments, not body"
+      },
+      {
+        "id": "yt_longform",
+        "name": "YT Longform",
+        "platform": "YouTube",
+        "method": "Record",
+        "production": ["Remotion", "Hyperframes"],
+        "frequency": { "niches": 2, "days": 2, "label": "2n × 2d", "per_week": 4 },
+        "format_rotation": ["Talking Head", "B-roll"],
+        "rotation_cadence": "alternating_weeks",
+        "notes": "Also repurposed as Podcast"
+      }
+    ],
+
+    "poetry": [
+      {
+        "id": "poetry_ig_reel_yt_short",
+        "name": "IG Reel / YT Short",
+        "platform": ["Instagram", "YouTube"],
+        "method": "Record",
+        "format": "Talking Head",
+        "frequency": { "niches": 1, "days": 2, "label": "1n × 2d", "per_week": 2 }
+      },
+      {
+        "id": "poetry_ig_carousel",
+        "name": "IG Carousel",
+        "platform": "Instagram",
+        "method": "CC",
+        "frequency": { "niches": 1, "days": 2, "label": "1n × 2d", "per_week": 2 }
+      },
+      {
+        "id": "poetry_yt_longform",
+        "name": "YT Longform",
+        "platform": "YouTube",
+        "method": "Record",
+        "format": "B-roll",
+        "frequency": { "niches": 1, "days": 2, "label": "1n × 2d", "per_week": 2 }
+      },
+      {
+        "id": "poetry_ig_post_carousel",
+        "name": "IG Post / Carousel",
+        "platform": "Instagram",
+        "method": "CC",
+        "frequency": { "niches": 1, "days": 2, "label": "1n × 2d", "per_week": 2 }
+      }
+    ]
+  },
+
+  "viral_reel_pipeline": {
+    "description": "Standalone viral reel lane — separate from blog derivatives",
+    "schedule": {
+      "ds": ["Tue", "Fri"],
+      "life": ["Mon", "Thu"]
+    },
+    "note": "Days are flipped vs blog publishing schedule",
+    "output_platforms": ["Instagram Reels", "YouTube Shorts"],
+    "types": [
+      {
+        "id": "recreate_viral",
+        "name": "Recreate viral reel + CTA",
+        "method": "Record",
+        "frequency": { "niches": 2, "days": 2, "label": "2n × 2d", "per_week": 4 }
+      },
+      {
+        "id": "tool_hack_reel",
+        "name": "Tool / life hack reel + CTA",
+        "method": "Record",
+        "frequency": { "niches": 2, "days": 2, "label": "2n × 2d", "per_week": 4 }
+      }
+    ]
+  },
+
+  "podcast": {
+    "strategy": "Repurpose YT Longform audio — zero extra recording",
+    "source": "yt_longform",
+    "pieces_per_week": 4
+  },
+
+  "method_legend": {
+    "CC": "Claude-generated copy — no recording needed",
+    "Record": "Must be recorded (video or audio)",
+    "Remotion": "Edited via Remotion automation pipeline",
+    "Hyperframes": "Processed through Hyperframes rendering pipeline"
+  },
+
+  "weekly_output_summary": {
+    "blogs": 6,
+    "ig_carousels_ds_life": 4,
+    "ig_reels_ds_life": 4,
+    "linkedin_posts": 4,
+    "linkedin_slide_decks": 4,
+    "yt_longforms_ds_life": 4,
+    "poetry_ig_reel_yt_short": 2,
+    "poetry_ig_carousels": 2,
+    "poetry_yt_longforms": 2,
+    "poetry_ig_posts": 2,
+    "viral_reels_recreate": 4,
+    "viral_reels_tool_hack": 4,
+    "podcast_uploads": 4,
+    "total": 46
+  }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="270" data-composition-variables='{"caption_text": {"type": "string", "default": "then np arrange works like python's built in range but outputs an array and it handles floats cleanly for a fixed number of"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Python-owned panel geometry === */
+    #panel {
+      position: absolute;
+      left: 980px; top: 60px;
+      width: 900px; height: 960px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: rgba(17,24,39,0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    /* Specular highlight at panel top edge */
+    #panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.14), transparent);
+      z-index: 100;
+    }
+    /* Claude's content is scoped here. (0,0) = panel top-left. */
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (sibling of #panel, never clipped) === */
+    #caption-layer {
+      position: absolute;
+      left: 0px; width: 1920px;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 840px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="9.000" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute;left:0;top:0;width:900px;height:960px;">
+        <div style="position:absolute;left:30px;top:30px;width:840px;font-family:Inter,'SF Pro Display',sans-serif;font-weight:800;font-size:34px;letter-spacing:-0.02em;color:#64748b;">
+          <span style="background:linear-gradient(135deg,#3b82f6,#8b5cf6,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">NumPy array constructors</span>
+        </div>
+      
+        <div class="tile" style="position:absolute;left:30px;top:110px;width:390px;height:380px;border-radius:18px;background:rgba(17,24,39,0.85);border:1px solid rgba(59,130,246,0.2);box-shadow:0 0 40px rgba(59,130,246,0.12) inset;">
+          <div style="position:absolute;left:28px;top:28px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:34px;color:#3b82f6;text-shadow:0 0 30px rgba(59,130,246,0.7);">np.zeros</div>
+          <div style="position:absolute;left:28px;top:90px;width:334px;font-family:Inter,sans-serif;font-weight:500;font-size:30px;line-height:1.4;color:#f0f4ff;">fill an array with <span style="color:#06b6d4;">0.0</span></div>
+          <div style="position:absolute;left:28px;bottom:28px;font-family:'JetBrains Mono',monospace;font-size:22px;color:#64748b;">→ [0. 0. 0.]</div>
+        </div>
+      
+        <div class="tile" style="position:absolute;left:480px;top:110px;width:390px;height:380px;border-radius:18px;background:rgba(17,24,39,0.85);border:1px solid rgba(139,92,246,0.25);box-shadow:0 0 40px rgba(139,92,246,0.12) inset;">
+          <div style="position:absolute;left:28px;top:28px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:34px;color:#8b5cf6;text-shadow:0 0 30px rgba(139,92,246,0.7);">np.ones</div>
+          <div style="position:absolute;left:28px;top:90px;width:334px;font-family:Inter,sans-serif;font-weight:500;font-size:30px;line-height:1.4;color:#f0f4ff;">fill an array with <span style="color:#06b6d4;">1.0</span></div>
+          <div style="position:absolute;left:28px;bottom:28px;font-family:'JetBrains Mono',monospace;font-size:22px;color:#64748b;">→ [1. 1. 1.]</div>
+        </div>
+      
+        <div class="tile" style="position:absolute;left:30px;top:540px;width:390px;height:380px;border-radius:18px;background:rgba(17,24,39,0.85);border:1px solid rgba(6,182,212,0.25);box-shadow:0 0 40px rgba(6,182,212,0.12) inset;">
+          <div style="position:absolute;left:28px;top:28px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:34px;color:#06b6d4;text-shadow:0 0 30px rgba(6,182,212,0.7);">np.arange</div>
+          <div style="position:absolute;left:28px;top:90px;width:334px;font-family:Inter,sans-serif;font-weight:500;font-size:30px;line-height:1.4;color:#f0f4ff;">step from start to stop</div>
+          <div style="position:absolute;left:28px;bottom:28px;font-family:'JetBrains Mono',monospace;font-size:22px;color:#64748b;">→ [0 2 4 6]</div>
+        </div>
+      
+        <div class="tile" style="position:absolute;left:480px;top:540px;width:390px;height:380px;border-radius:18px;background:rgba(17,24,39,0.85);border:1px solid rgba(34,197,94,0.25);box-shadow:0 0 40px rgba(34,197,94,0.12) inset;">
+          <div style="position:absolute;left:28px;top:28px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:34px;color:#22c55e;text-shadow:0 0 30px rgba(34,197,94,0.7);">np.linspace</div>
+          <div style="position:absolute;left:28px;top:90px;width:334px;font-family:Inter,sans-serif;font-weight:500;font-size:30px;line-height:1.4;color:#f0f4ff;"><span style="color:#06b6d4;">N</span> evenly spaced points</div>
+          <div style="position:absolute;left:28px;bottom:28px;font-family:'JetBrains Mono',monospace;font-size:22px;color:#64748b;">→ [0. 0.5 1.]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="caption-layer"><div id="caption-pill"><span class="w">then</span><span class="w">np</span><span class="w">arrange</span><span class="w">works</span><span class="w">like</span><span class="w">python&#x27;s</span><span class="w">built</span><span class="w">in</span><span class="w">range</span><span class="w">but</span><span class="w">outputs</span><span class="w">an</span><span class="w">array</span><span class="w">and</span><span class="w">it</span><span class="w">handles</span><span class="w">floats</span><span class="w">cleanly</span><span class="w">for</span><span class="w">a</span><span class="w">fixed</span><span class="w">number</span><span class="w">of</span></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      const title = root.querySelector('div > div');
+      const tiles = root.querySelectorAll('.tile');
+      
+      gsap.set(title, { opacity: 0, y: -20 });
+      gsap.set(tiles, { opacity: 0, scale: 0.92, y: 24 });
+      
+      tl.to(title, {
+        opacity: 1, y: 0, duration: 0.5,
+        ease: "cubic-bezier(0.16,1,0.3,1)"
+      }, 0.0);
+      
+      tl.to(tiles, {
+        opacity: 1, scale: 1, y: 0, duration: 0.55,
+        stagger: 0.18,
+        ease: "cubic-bezier(0.34,1.56,0.64,1)"
+      }, 0.3);
+      
+      // subtle accent breathe on borders to keep grid alive
+      tl.to(tiles, {
+        filter: "brightness(1.12)", duration: 0.9,
+        stagger: 0.18, yoyo: true, repeat: 1,
+        ease: "cubic-bezier(0.4,0,1,1)"
+      }, 1.4);
+      
+      // gentle hold, soft exit settle
+      tl.to(tiles, {
+        scale: 0.99, duration: 0.4,
+        ease: "cubic-bezier(0.4,0,1,1)"
+      }, 8.4);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+          var cw = document.querySelectorAll('#caption-pill .w');
+          gsap.set(cw, { opacity: 0, y: 8 });
+          tl.to(cw, { opacity: 1, y: 0, duration: 0.25, stagger: 0.1, ease: 'power2.out' }, 0.2);
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

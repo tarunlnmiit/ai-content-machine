@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="270" data-composition-variables='{"caption_text": {"type": "string", "default": "so in python python"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Python-owned panel geometry === */
+    #panel {
+      position: absolute;
+      left: 60px; top: 40px;
+      width: 1800px; height: 480px;
+      overflow: hidden;
+      border-radius: 0 0 20px 20px;
+      background: rgba(17,24,39,0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    /* Specular highlight at panel top edge */
+    #panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.14), transparent);
+      z-index: 100;
+    }
+    /* Claude's content is scoped here. (0,0) = panel top-left. */
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (sibling of #panel, never clipped) === */
+    #caption-layer {
+      position: absolute;
+      left: 0px; width: 1920px;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1740px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="9.000" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute;left:0;top:0;width:1800px;height:480px;font-family:'Inter','SF Pro Display',Arial,sans-serif;overflow:hidden;">
+        <div class="label" style="position:absolute;left:60px;top:70px;font-size:34px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#64748b;">summary stats</div>
+        <div class="hero" style="position:absolute;left:60px;top:118px;font-size:88px;font-weight:900;letter-spacing:-0.02em;background:linear-gradient(135deg,#3b82f6,#8b5cf6,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 0 30px rgba(59,130,246,0.55));">salaries</div>
+      
+        <div class="chip" style="position:absolute;left:60px;top:300px;padding:22px 36px;border:1px solid rgba(59,130,246,0.2);border-radius:14px;background:rgba(17,24,39,0.85);font-size:40px;font-weight:700;color:#f0f4ff;">mean<span style="color:#64748b;font-weight:500;">  μ</span></div>
+        <div class="chip" style="position:absolute;left:330px;top:300px;padding:22px 36px;border:1px solid rgba(59,130,246,0.2);border-radius:14px;background:rgba(17,24,39,0.85);font-size:40px;font-weight:700;color:#3b82f6;">std<span style="color:#64748b;font-weight:500;">  σ</span></div>
+        <div class="chip" style="position:absolute;left:560px;top:300px;padding:22px 36px;border:1px solid rgba(59,130,246,0.2);border-radius:14px;background:rgba(17,24,39,0.85);font-size:40px;font-weight:700;color:#06b6d4;">min</div>
+        <div class="chip" style="position:absolute;left:740px;top:300px;padding:22px 36px;border:1px solid rgba(59,130,246,0.2);border-radius:14px;background:rgba(17,24,39,0.85);font-size:40px;font-weight:700;color:#8b5cf6;">max</div>
+        <div class="chip" style="position:absolute;left:920px;top:300px;padding:22px 36px;border:1px solid rgba(239,68,68,0.35);border-radius:14px;background:rgba(17,24,39,0.85);font-size:40px;font-weight:700;color:#f0f4ff;">IQR fence <span style="color:#ef4444;font-weight:800;">1.5×</span></div>
+      
+        <div class="rule" style="position:absolute;left:60px;top:268px;width:1680px;height:2px;background:linear-gradient(90deg,#3b82f6,#8b5cf6,#06b6d4,rgba(59,130,246,0));transform-origin:left center;"></div>
+      </div>
+    </div>
+  </div>
+  <div id="caption-layer"><div id="caption-pill"><span class="w">so</span><span class="w">in</span><span class="w">python</span><span class="w">python</span></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      gsap.set(root.querySelector('.label'), {opacity:0, y:14});
+      gsap.set(root.querySelector('.hero'), {opacity:0, y:20, scale:0.92});
+      gsap.set(root.querySelector('.rule'), {scaleX:0, opacity:0});
+      gsap.set(root.querySelectorAll('.chip'), {opacity:0, y:24, scale:0.9});
+      
+      tl.to(root.querySelector('.label'), {opacity:1, y:0, duration:0.4, ease:"cubic-bezier(0.16,1,0.3,1)"}, 0.1);
+      tl.to(root.querySelector('.hero'), {opacity:1, y:0, scale:1, duration:0.5, ease:"cubic-bezier(0.34,1.56,0.64,1)"}, 0.25);
+      tl.to(root.querySelector('.rule'), {scaleX:1, opacity:1, duration:0.8, ease:"cubic-bezier(0,0,1,1)"}, 0.5);
+      tl.to(root.querySelectorAll('.chip'), {opacity:1, y:0, scale:1, duration:0.5, stagger:0.13, ease:"cubic-bezier(0.34,1.56,0.64,1)"}, 0.9);
+      
+      tl.to(root.querySelector('.chip:last-of-type'), {scale:1.06, duration:0.3, yoyo:true, repeat:1, ease:"cubic-bezier(0.34,1.56,0.64,1)"}, 2.0);
+      tl.to({}, {duration:0.5}, 8.5);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+          var cw = document.querySelectorAll('#caption-pill .w');
+          gsap.set(cw, { opacity: 0, y: 8 });
+          tl.to(cw, { opacity: 1, y: 0, duration: 0.25, stagger: 0.1, ease: 'power2.out' }, 0.2);
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

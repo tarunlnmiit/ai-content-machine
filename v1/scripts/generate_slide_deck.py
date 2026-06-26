@@ -9,7 +9,7 @@ then renders each slide to a PNG and assembles a {slug}_slides.pdf.
 Outputs:
   assets/slides/{week}/{slug}_slides.html          (HTML source)
   assets/slides/{week}/{slug}/slide_N.png          (one PNG per slide)
-  assets/slides/{week}/{slug}/{slug}_slides.pdf     (assembled deck)
+  assets/slides/{week}/{slug}_slides.pdf           (assembled deck — lifted to flat week dir)
 
 Usage:
   python3 scripts/generate_slide_deck.py --week 2026-W24
@@ -190,7 +190,8 @@ def _slides_block(slides: list[dict]) -> str:
 
 
 def build_prompt(brand: dict, outline: dict, brief: dict | None,
-                 niche_key: str = "life_self_dev", project_key: str | None = None) -> str:
+                 niche_key: str = "life_self_dev", project_key: str | None = None,
+                 master_brief: str | None = None) -> str:
     slides = outline.get("slides", []) or []
     tone_hint = ""
     if brief:
@@ -204,7 +205,13 @@ def build_prompt(brand: dict, outline: dict, brief: dict | None,
         total_sections=len(slides) + 1,
     )
     virality = virality_block("slide_deck", niche_key, project_key)
-    return f"{system}\n\n---\n\n## Virality Directives\n\n{virality}\n"
+    parts = [system, f"## Virality Directives\n\n{virality}"]
+    if master_brief:
+        parts.append(
+            "## Master Brief (creator voice, competition intelligence, what's working)\n\n"
+            + master_brief
+        )
+    return "\n\n---\n\n".join(parts)
 
 
 def _extract_html(raw: str) -> str:
@@ -233,8 +240,9 @@ def _extract_html(raw: str) -> str:
 
 
 def generate_html(brand: dict, outline: dict, brief: dict | None,
-                  niche_key: str = "life_self_dev", project_key: str | None = None) -> str:
-    prompt = build_prompt(brand, outline, brief, niche_key, project_key)
+                  niche_key: str = "life_self_dev", project_key: str | None = None,
+                  master_brief: str | None = None) -> str:
+    prompt = build_prompt(brand, outline, brief, niche_key, project_key, master_brief)
     for attempt in range(3):
         html = call_claude(
             prompt,
@@ -303,7 +311,10 @@ def process_slug(slug: str, export: bool, force: bool, project: str | None = Non
         except json.JSONDecodeError:
             pass
 
-    html_content = generate_html(brand, outline, brief, niche_key, project)
+    master_brief_path = REPO / "data" / "kb" / "master_brief.md"
+    master_brief = master_brief_path.read_text(encoding="utf-8") if master_brief_path.exists() else None
+
+    html_content = generate_html(brand, outline, brief, niche_key, project, master_brief)
     html_out.write_text(html_content, encoding="utf-8")
     console.print(f"  [green]✓[/green] HTML → {html_out.relative_to(REPO)}")
 
@@ -344,7 +355,7 @@ def main() -> None:
             ok += 1
 
     console.print(f"\n[bold]Done[/bold] — {ok}/{len(slugs)} slugs processed")
-    console.print("Decks → assets/slides/{week}/{slug}_slides.html + {slug}/{slug}_slides.pdf")
+    console.print("Decks → assets/slides/{week}/{slug}_slides.html + assets/slides/{week}/{slug}_slides.pdf")
 
 
 if __name__ == "__main__":

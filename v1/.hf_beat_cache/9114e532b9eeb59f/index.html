@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="270" data-composition-variables='{"caption_text": {"type": "string", "default": "and the ability to apply math to an entire array without a single python loop the speed difference isn't"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Python-owned panel geometry === */
+    #panel {
+      position: absolute;
+      left: 980px; top: 60px;
+      width: 900px; height: 960px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: rgba(17,24,39,0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    /* Specular highlight at panel top edge */
+    #panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.14), transparent);
+      z-index: 100;
+    }
+    /* Claude's content is scoped here. (0,0) = panel top-left. */
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (sibling of #panel, never clipped) === */
+    #caption-layer {
+      position: absolute;
+      left: 0px; width: 1920px;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 840px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="9.000" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute; top:0; left:0; width:900px; height:960px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
+        <div class="label" style="position:absolute; top:300px; left:0; width:900px; text-align:center; font-family:'Inter','SF Pro Display',sans-serif; font-weight:600; font-size:34px; letter-spacing:-0.02em; color:#64748b; text-transform:uppercase;">throughput gain</div>
+      
+        <div class="kpiwrap" style="position:absolute; top:380px; left:0; width:900px; display:flex; align-items:baseline; justify-content:center; gap:8px;">
+          <span class="num1" style="font-family:'Inter','SF Pro Display',sans-serif; font-weight:900; font-size:150px; line-height:1; letter-spacing:-0.04em; background:linear-gradient(135deg,#3b82f6,#8b5cf6,#06b6d4); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 30px rgba(59,130,246,0.7));">0</span>
+          <span class="dash" style="font-family:'Inter','SF Pro Display',sans-serif; font-weight:900; font-size:110px; line-height:1; color:#64748b; opacity:0.6;">–</span>
+          <span class="num2" style="font-family:'Inter','SF Pro Display',sans-serif; font-weight:900; font-size:150px; line-height:1; letter-spacing:-0.04em; background:linear-gradient(135deg,#06b6d4,#8b5cf6,#3b82f6); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 30px rgba(6,182,212,0.7));">0</span>
+          <span class="times" style="font-family:'Inter','SF Pro Display',sans-serif; font-weight:900; font-size:120px; line-height:1; color:#06b6d4; filter:drop-shadow(0 0 24px rgba(6,182,212,0.6));">×</span>
+        </div>
+      
+        <div class="word" style="position:absolute; top:580px; left:0; width:900px; text-align:center; font-family:'Inter','SF Pro Display',sans-serif; font-weight:800; font-size:80px; letter-spacing:-0.02em; color:#f0f4ff; text-shadow:0 0 30px rgba(59,130,246,0.5);">faster</div>
+      
+        <div class="rule" style="position:absolute; top:540px; left:300px; width:300px; height:4px; border-radius:2px; background:linear-gradient(90deg,#3b82f6,#8b5cf6,#06b6d4); transform-origin:left center;"></div>
+      </div>
+    </div>
+  </div>
+  <div id="caption-layer"><div id="caption-pill"><span class="w">and</span><span class="w">the</span><span class="w">ability</span><span class="w">to</span><span class="w">apply</span><span class="w">math</span><span class="w">to</span><span class="w">an</span><span class="w">entire</span><span class="w">array</span><span class="w">without</span><span class="w">a</span><span class="w">single</span><span class="w">python</span><span class="w">loop</span><span class="w">the</span><span class="w">speed</span><span class="w">difference</span><span class="w">isn&#x27;t</span></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      const num1 = root.querySelector('.num1');
+      const num2 = root.querySelector('.num2');
+      const c1 = { v: 0 };
+      const c2 = { v: 0 };
+      
+      gsap.set(root.querySelector('.label'), { opacity: 0, y: 20 });
+      gsap.set(root.querySelector('.kpiwrap'), { opacity: 0, scale: 0.92, y: 20 });
+      gsap.set(root.querySelector('.dash'), { opacity: 0 });
+      gsap.set(root.querySelector('.times'), { opacity: 0, scale: 0.6 });
+      gsap.set(root.querySelector('.word'), { opacity: 0, y: 24 });
+      gsap.set(root.querySelector('.rule'), { scaleX: 0, opacity: 0 });
+      
+      tl.to(root.querySelector('.label'), { opacity: 1, y: 0, duration: 0.4, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 0.1);
+      tl.to(root.querySelector('.kpiwrap'), { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 0.3);
+      
+      tl.to(c1, {
+        v: 50, duration: 1.2, ease: 'cubic-bezier(0.34,1.56,0.64,1)',
+        onUpdate: () => { num1.textContent = Math.round(c1.v); }
+      }, 0.5);
+      tl.to(root.querySelector('.dash'), { opacity: 0.6, duration: 0.3 }, 1.4);
+      tl.to(c2, {
+        v: 200, duration: 1.2, ease: 'cubic-bezier(0.34,1.56,0.64,1)',
+        onUpdate: () => { num2.textContent = Math.round(c2.v); }
+      }, 1.5);
+      tl.to(root.querySelector('.times'), { opacity: 1, scale: 1, duration: 0.5, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 2.5);
+      
+      tl.to(root.querySelector('.rule'), { scaleX: 1, opacity: 1, duration: 0.8, ease: 'cubic-bezier(0,0,1,1)' }, 2.8);
+      tl.to(root.querySelector('.word'), { opacity: 1, y: 0, duration: 0.5, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 3.1);
+      
+      tl.to(root.querySelector('.kpiwrap'), { scale: 1.04, duration: 0.4, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 4.0);
+      tl.to(root.querySelector('.kpiwrap'), { scale: 1.0, duration: 0.5, ease: 'cubic-bezier(0.4,0,1,1)' }, 4.4);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+          var cw = document.querySelectorAll('#caption-pill .w');
+          gsap.set(cw, { opacity: 0, y: 8 });
+          tl.to(cw, { opacity: 1, y: 0, duration: 0.25, stagger: 0.1, ease: 'power2.out' }, 0.2);
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

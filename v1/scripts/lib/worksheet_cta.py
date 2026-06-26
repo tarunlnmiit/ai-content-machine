@@ -243,4 +243,16 @@ def inject_worksheet_ctas_to_dir(out_dir: Path, worksheet_slug: str, niche: str)
         except (json.JSONDecodeError, KeyError):
             pass
 
+    # LinkedIn regular-post 1st comment: worksheet URL (only if missing)
+    li1_file = out_dir / "linkedin_first_comment.txt"
+    if not li1_file.exists():
+        li1_file.write_text(f"🎯 {title or 'Free worksheet'}: {url}\n", encoding="utf-8")
+        modified.append(str(li1_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
+
+    # LinkedIn document-post 1st comment: worksheet URL (only if missing)
+    doc1_file = out_dir / "linkedin_document_first_comment.txt"
+    if not doc1_file.exists():
+        doc1_file.write_text(f"🎯 {title or 'Free worksheet'}: {url}\n", encoding="utf-8")
+        modified.append(str(doc1_file.relative_to(Path(__file__).resolve().parent.parent.parent)))
+
     return modified

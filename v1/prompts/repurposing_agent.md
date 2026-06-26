@@ -51,8 +51,14 @@ Return exactly this JSON structure. All keys required. No extra keys. No markdow
     "opening_line": "string — first 2 lines must force a stop (standalone-tweet strength). PER-NICHE (see the niche formula injected above): DS → state the OUTCOME/specific result, not the topic. Life → a contrarian DECLARATION, not a question.",
     "body": "string — 200–400 words, paragraph breaks with \\n\\n, no bullet points in the hook section, professional but personal. DS: include a usable takeaway (a concrete rule/snippet), not a teaser; honesty guardrail. Life: name the mechanism (WHY this keeps happening); lead from the analytical-identity disarmer where it fits; no motivational crescendo.",
     "closing_question": "string — one specific, answerable question (not 'what do you think?') — e.g. 'What's the worst silent bug you've ever shipped?'",
-    "first_comment": "string — the blog link goes HERE, not in the body (LinkedIn suppresses reach on posts with outbound links in the body). Format: 'Full post → [BLOG_LINK]' plus one optional line of context. Posted as the pinned first comment.",
+    "first_comment": "string — the blog link goes HERE, not in the body (LinkedIn suppresses reach on posts with outbound links in the body). Format: 'Full post → [BLOG_LINK]' plus one optional line of context. Saved as linkedin_second_comment.txt — posted as the SECOND pinned comment (worksheet link takes the first slot once published).",
     "hashtags": ["string — 3–5 TOPICAL keywords specific to this post's subject (not generic), lowercase, no '#' prefix; curated niche tags are merged + capped automatically"]
+  },
+
+  "linkedin_document_caption": {
+    "opening_line": "string — hook that frames the deck (stands alone in feed; no outbound link). Strategy: same niche formula as linkedin_post opening_line — DS: state the OUTCOME; Life: a contrarian declaration.",
+    "body": "string — 100–200 words describing what's inside the slide deck, as if giving a verbal tour. Professional but personal. No bullet points. No outbound links (links go in comments). DS: name one concrete takeaway a viewer gets from flipping through. Life: name the mechanism or shift the deck delivers.",
+    "hashtags": ["string — 3–5 topical tags, lowercase, no '#' prefix; same niche policy as linkedin_post"]
   },
 
   "instagram_caption": {
@@ -100,12 +106,6 @@ Return exactly this JSON structure. All keys required. No extra keys. No markdow
     "tags": ["Shorts", "string", "string", "string", "string"],
     "hook_visual": "string — what should appear in first 1–3 seconds to stop the scroll (text overlay, action, or emotion)",
     "end_screen_cta": "string — what to say or show in the final 2–3 seconds (subscribe prompt, question, or teaser)"
-  },
-
-  "threads_post": {
-    "body": "string — 200–400 chars, conversational and direct, reads like a personal thought not a caption, keep hashtags OUT of the body, no emojis unless natural, link placeholder [BLOG_LINK] at end",
-    "hashtags": ["string — 1–2 TOPICAL keywords specific to this post, lowercase, no '#' prefix; curated niche tags are added automatically and appended after the body"],
-    "tone_note": "string — one sentence on what angle this takes vs the Instagram caption"
   },
 
   "polls": [
@@ -190,8 +190,8 @@ Before outputting, verify:
 - JSON is valid (no trailing commas, all strings quoted, arrays closed)
 - All required keys present
 - No `null` values — use empty string `""` or empty array `[]` if genuinely inapplicable
-- `linkedin_post.first_comment` carries the blog link (never put the link in `body`)
+- `linkedin_post.first_comment` carries the blog link (never put the link in `body`; this is saved as linkedin_second_comment.txt — worksheet is pinned first)
+- `linkedin_document_caption` has no outbound links in body (worksheet → 1st comment, YT link → 2nd comment)
 - `slide_outline.slides` array matches `total_slides` count
-- `threads_post.body` is under 500 chars and reads nothing like the Instagram caption
 - `youtube_shorts_metadata.description` contains `#Shorts` and is under 200 chars total
 - `youtube_shorts_metadata.tags` array always starts with `"Shorts"`

@@ -2,9 +2,13 @@
 """Generate a blog post using claude -p (Claude Pro subscription, no API key needed)."""
 
 import argparse
+import json
+import re
 import subprocess
 import sys
-from datetime import date
+import urllib.parse
+import urllib.request
+from datetime import date, timedelta
 from pathlib import Path
 
 from _console import console, spinner
@@ -17,6 +21,7 @@ from lib.slug import slugify
 from lib.schedule_calc import write_schedule_json, get_iso_week
 from lib.virality import virality_block, project_keys
 from lib.worksheet_cta import worksheet_cta_markdown, has_cta
+from lib import interview as interview_flow
 
 # Niches that ship a companion worksheet (poetry does not).
 WORKSHEET_NICHES = {"ds", "life"}
@@ -26,6 +31,397 @@ def load(path: Path) -> str:
     if not path.exists():
         sys.exit(f"Missing: {path}")
     return path.read_text(encoding="utf-8")
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Research config (topic suggestion + title generation)
+# ──────────────────────────────────────────────────────────────────────────────
+
+RESEARCH_CONFIG: dict[str, dict] = {
+    "ds": {
+        "label": "Data Science / Tech",
+        "google_seeds": [
+            "data science career 2026", "machine learning for data scientists",
+            "python data engineering", "AI tools for analysts", "Claude for data science",
+        ],
+        "medium_feeds": [
+            "https://medium.com/feed/tag/data-science",
+            "https://medium.com/feed/tag/machine-learning",
+        ],
+    },
+    "life": {
+        "label": "Life & Self-Development",
+        "google_seeds": [
+            "productivity habits 2025", "self improvement morning routine",
+            "focus and deep work tips", "personal growth mindset", "discipline vs motivation",
+        ],
+        "medium_feeds": [
+            "https://medium.com/feed/tag/self-improvement",
+            "https://medium.com/feed/tag/productivity",
+        ],
+    },
+    "poetry": {
+        "label": "Poetry / Quotes",
+        "google_seeds": [
+            "poetry about life lessons", "short poem about change and growth",
+            "quotes on grief and growth", "poem about solitude meaning",
+        ],
+        "medium_feeds": [
+            "https://medium.com/feed/tag/poetry",
+        ],
+    },
+}
+
+
+# Type-specific Google seed overrides for DS (applied when --type is set).
+_DS_TYPE_SEEDS: dict[str, list[str]] = {
+    "tutorial": [
+        "python data science tutorial 2026",
+        "Claude MCP hands-on tutorial",
+        "build AI agent python step by step",
+        "machine learning code example 2026",
+        "automate data pipeline python tutorial",
+    ],
+    "news": [
+        "AI impact on data science jobs 2026",
+        "data science career trends 2026",
+        "machine learning industry news 2026",
+        "Claude AI latest news analysis",
+        "data scientist future AI era",
+    ],
+}
+
+
+def _get(url: str, timeout: int = 6) -> str:
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; RSS reader)"})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read().decode("utf-8", errors="ignore")
+    except Exception:
+        return ""
+
+
+def fetch_google_signals(niche: str, seeds_override: list[str] | None = None) -> list[str]:
+    seeds = seeds_override or RESEARCH_CONFIG[niche]["google_seeds"]
+    seen: set[str] = set()
+    results: list[str] = []
+    for seed in seeds[:3]:
+        q = urllib.parse.quote_plus(seed)
+        raw = _get(f"https://suggestqueries.google.com/complete/search?client=firefox&q={q}")
+        try:
+            data = json.loads(raw)
+            for s in (data[1] if len(data) > 1 else []):
+                if s not in seen:
+                    seen.add(s)
+                    results.append(s)
+        except Exception:
+            pass
+    return results[:15]
+
+
+def fetch_medium_titles(niche: str) -> list[str]:
+    feeds = RESEARCH_CONFIG[niche]["medium_feeds"]
+    titles: list[str] = []
+    for url in feeds:
+        raw = _get(url, timeout=8)
+        for m in re.findall(r"<title><!\[CDATA\[(.+?)\]\]></title>", raw):
+            if m not in titles:
+                titles.append(m)
+        for m in re.findall(r"<title>(.+?)</title>", raw):
+            clean = re.sub(r"<[^>]+>", "", m).strip()
+            if clean and clean not in titles and "Medium" not in clean:
+                titles.append(clean)
+    return titles[1:16]  # skip feed-level title
+
+
+def get_recent_titles(niche: str, days: int = 90) -> list[str]:
+    cutoff = date.today() - timedelta(days=days)
+    niche_str = NICHES[niche]          # e.g. "data_science_tech"
+    blog_dir = REPO / "content" / "blogs"
+    titles: list[str] = []
+
+    # ── Primary source: annual tracker (authoritative per CLAUDE.md "TRACKER FIRST") ──
+    try:
+        from lib.tracker import read_recent_titles as _tracker_titles
+        tracker_titles = _tracker_titles(niche, days=days)
+        if tracker_titles:
+            titles.extend(tracker_titles)
+    except Exception:
+        pass  # tracker unavailable — filesystem fallback below
+
+    # ── Fallback / supplement: scan blogs/ directory for any missing entries ──
+    seen_lower = {t.lower() for t in titles}
+    if not blog_dir.exists():
+        return titles
+    for md in blog_dir.rglob("*.md"):
+        stem = md.stem
+        if f"_{niche_str}_" not in stem:
+            continue
+        date_part = stem.split(f"_{niche_str}_")[0]
+        try:
+            file_date = date.fromisoformat(date_part)
+        except ValueError:
+            continue
+        if file_date < cutoff:
+            continue
+        for line in md.read_text(encoding="utf-8", errors="ignore").splitlines():
+            if line.startswith("#"):
+                t = line.lstrip("#").strip()
+                if t and t.lower() not in seen_lower:
+                    titles.append(t)
+                    seen_lower.add(t.lower())
+                break
+    return titles
+
+
+def suggest_topics(
+    niche: str,
+    google: list[str],
+    medium: list[str],
+    recent: list[str],
+    blog_type: str | None = None,
+) -> list[str]:
+    cfg = RESEARCH_CONFIG[niche]
+    recent_block = (
+        "Already covered in the last 90 days — avoid these angles:\n"
+        + "\n".join(f"  - {t}" for t in recent[:20])
+        if recent else "No recent posts found."
+    )
+    google_block = "\n".join(f"  - {s}" for s in google[:12]) or "  (unavailable)"
+    medium_block = "\n".join(f"  - {t}" for t in medium[:10]) or "  (unavailable)"
+
+    type_directive = ""
+    if niche == "ds" and blog_type:
+        type_directive = {
+            "tutorial": (
+                "\nBLOG TYPE: TUTORIAL — every topic must be code-first: a step-by-step how-to, "
+                "hands-on guide, or worked example. Examples: 'Build X with Claude', "
+                "'How to automate Y in Python', 'Step-by-step: setting up Z'. Readers learn by doing.\n"
+            ),
+            "news": (
+                "\nBLOG TYPE: NEWS/OPINION — every topic must be conceptual or editorial, no code. "
+                "Angles: current AI/DS industry developments, job market analysis, tool comparisons, "
+                "contrarian takes, career debates. Examples: 'Why X is wrong', "
+                "'The real problem with Y', 'What Z means for DS careers'.\n"
+            ),
+        }.get(blog_type, "")
+
+    prompt = f"""\
+You are a content strategist for Tarun Gupta — a 10-year data scientist and creator.
+Niche: {cfg['label']}
+Voice: analytical but warm, personal examples, no jargon without context.
+Banned words: "In conclusion", "Dive into", "Leverage", "Game-changer", "Synergy"
+{type_directive}
+{recent_block}
+
+Google search signals (what people are actively searching right now):
+{google_block}
+
+Trending on Medium right now:
+{medium_block}
+
+Generate exactly 5 blog topic options. Each must:
+- Be a fresh angle NOT covered in the last 90 days list above
+- Have real demand (grounded in the search signals)
+- Be specific — immediately clear what the post argues or teaches
+- Work as a standalone blog post (not a series)
+
+Reply with exactly:
+1. [topic]
+2. [topic]
+3. [topic]
+4. [topic]
+5. [topic]
+
+No labels. No explanation. Just the 5 lines.
+"""
+    raw = run_claude(prompt, timeout=90, description="Researching topic options...")
+    topics: list[str] = []
+    for line in raw.splitlines():
+        s = line.strip()
+        if s and s[0].isdigit() and "." in s[:3]:
+            t = s.split(".", 1)[1].strip()
+            if t:
+                topics.append(t)
+    return topics[:5] or [l.strip() for l in raw.splitlines() if l.strip()][:5]
+
+
+def select_topic(topics: list[str], niche_label: str) -> str:
+    console.print(f"\n[bold]── Pick a topic  ·  {niche_label} ──[/bold]")
+    for i, t in enumerate(topics, 1):
+        console.print(f"  [bold]{i}.[/bold] {t}")
+    console.print()
+    while True:
+        try:
+            raw = input(f"  Your pick (1–{len(topics)}): ").strip()
+            idx = int(raw) - 1
+            if 0 <= idx < len(topics):
+                return topics[idx]
+        except (ValueError, EOFError):
+            pass
+        console.print(f"  [warn]Enter a number between 1 and {len(topics)}.[/warn]")
+
+
+def get_creator_input(topic: str, niche_label: str) -> str:
+    console.print(f"\n[bold]── Your thoughts  ·  {niche_label} ──[/bold]")
+    console.print(f"  Topic confirmed: [bold]{topic}[/bold]")
+    console.print(
+        "  Add your personal angle, examples, opinions, or stories.\n"
+        "  Claude will polish the language but preserve every idea.\n"
+        "  [Press Enter twice to finish, or Enter once on a blank line to skip]\n"
+    )
+    lines: list[str] = []
+    blank_count = 0
+    while True:
+        try:
+            line = input("  > ")
+        except EOFError:
+            break
+        if line == "":
+            blank_count += 1
+            if blank_count >= 2 or not lines:
+                break
+            lines.append("")
+        else:
+            blank_count = 0
+            lines.append(line)
+    return "\n".join(lines).strip()
+
+
+def suggest_titles(
+    niche: str,
+    topic: str,
+    creator_input: str,
+    google: list[str],
+    blog_type: str | None = None,
+) -> list[str]:
+    cfg = RESEARCH_CONFIG[niche]
+    top_keywords = ", ".join(google[:6]) or "(unavailable)"
+    creator_ctx = f"Creator's personal angle: {creator_input}" if creator_input else ""
+    type_ctx = ""
+    if niche == "ds" and blog_type:
+        type_ctx = {
+            "tutorial": (
+                "Post type: CODE-FIRST TUTORIAL. "
+                "Titles that imply hands-on value work well — 'Build', 'How to', "
+                "'Step-by-step', 'The script that...', '[N] lines of Python that...' "
+                "are strong frames. Outcome-led titles outperform topic labels."
+            ),
+            "news": (
+                "Post type: NEWS/OPINION — no code. "
+                "Titles should imply an editorial take: contrarian claim, industry analysis, "
+                "career warning, or insider perspective. "
+                "Declarative ('X is wrong') beats question ('Is X wrong?')."
+            ),
+        }.get(blog_type, "")
+
+    prompt = f"""\
+Generate 5 clickbait-but-credible blog title options for this creator.
+
+Niche:    {cfg['label']}
+Topic:    {topic}
+{creator_ctx}
+{type_ctx}
+Keywords with real search demand: {top_keywords}
+
+Each title must use a DIFFERENT tension lever:
+1. [FEAR]             — reader fears they're missing something critical right now
+2. [ANXIETY]          — taps into career/life anxiety the target reader already feels
+3. [CURIOSITY GAP]    — opens a loop they must click to close
+4. [COUNTERINTUITIVE] — challenges something they think they know
+5. [INSIDER]          — positions this as information only insiders have
+
+Rules every title must follow:
+- Signals exactly who it's for (right reader self-selects in)
+- Creates enough tension that NOT clicking feels like a loss
+- Under 85 characters where possible
+- No: "game-changer", "leverage", "dive into", "secret sauce", "In conclusion"
+
+Reply with exactly — no labels, no explanation, just 5 lines:
+1. [title]
+2. [title]
+3. [title]
+4. [title]
+5. [title]
+"""
+    raw = run_claude(prompt, timeout=90, description="Generating title options...")
+    titles: list[str] = []
+    for line in raw.splitlines():
+        s = line.strip()
+        if s and s[0].isdigit() and "." in s[:3]:
+            t = s.split(".", 1)[1].strip()
+            if t:
+                titles.append(t)
+    return titles[:5] or [l.strip() for l in raw.splitlines() if l.strip()][:5]
+
+
+def select_title(titles: list[str], topic: str) -> str:
+    levers = ["FEAR", "ANXIETY", "CURIOSITY GAP", "COUNTERINTUITIVE", "INSIDER"]
+    short = topic[:50] + ("…" if len(topic) > 50 else "")
+    console.print(f"\n[bold]── Pick a title  ·  {short} ──[/bold]")
+    for i, title in enumerate(titles):
+        lever = levers[i] if i < len(levers) else f"OPTION {i + 1}"
+        console.print(f"  [bold]{i + 1}.[/bold] [{lever}]")
+        console.print(f"     {title}\n")
+    while True:
+        try:
+            raw = input(f"  Your pick (1–{len(titles)}): ").strip()
+            idx = int(raw) - 1
+            if 0 <= idx < len(titles):
+                return titles[idx]
+        except (ValueError, EOFError):
+            pass
+        console.print(f"  [warn]Enter a number between 1 and {len(titles)}.[/warn]")
+
+
+def select_option(options: list[str], header: str) -> str:
+    """Pick one option from a numbered list. Empty input defaults to option 1."""
+    console.print(f"\n[bold]── {header} ──[/bold]")
+    for i, opt in enumerate(options, 1):
+        console.print(f"  [bold]{i}.[/bold] {opt}")
+    while True:
+        try:
+            raw = input(f"  Your pick (1–{len(options)}, Enter = 1): ").strip()
+        except (EOFError, KeyboardInterrupt):
+            return options[0]
+        if not raw:
+            return options[0]
+        if raw.isdigit() and 1 <= int(raw) <= len(options):
+            return options[int(raw) - 1]
+        console.print(f"  [warn]Enter a number between 1 and {len(options)}.[/warn]")
+
+
+def run_interview_flow(
+    niche: str,
+    topic: str,
+    google: list[str],
+    medium: list[str],
+) -> tuple[str, str]:
+    """Two-call interview path. Returns (blog_markdown, chosen_title)."""
+    cfg = interview_flow.load_interview_config(niche)
+    trend_bits = [s for s in (google[:6] + medium[:4]) if s]
+    trend_context = "; ".join(trend_bits)
+
+    # CALL 1 — questions
+    angle, questions = interview_flow.generate_questions(
+        run_claude, topic=topic, trend_context=trend_context, cfg=cfg,
+    )
+    if not questions:
+        sys.exit("Interview engine returned no questions — aborting (try re-running).")
+    if angle:
+        console.print(f"\n[info]Suggested angle:[/info] {angle}")
+
+    # Interactive Q&A
+    qa_pairs = interview_flow.run_interview(questions)
+
+    # CALL 2 — article
+    parsed = interview_flow.write_article(run_claude, topic=topic, qa_pairs=qa_pairs, cfg=cfg)
+    chosen_title = select_option(parsed["title_options"], "Pick a title")
+    blog_md = interview_flow.assemble_markdown(chosen_title, parsed)
+
+    if parsed.get("tags"):
+        console.print(f"[info]Medium tags:[/info] {', '.join(parsed['tags'])}")
+    return blog_md, chosen_title
 
 
 def build_listicle_directive(n: int, topic: str, niche: str) -> str:
@@ -74,6 +470,9 @@ def build_prompt(
     niche: str,
     listicle: int | None = None,
     project_key: str | None = None,
+    creator_input: str = "",
+    chosen_title: str = "",
+    blog_type: str | None = None,
 ) -> str:
     virality = virality_block("blog", niche, project_key)
     niche_label = {
@@ -81,6 +480,33 @@ def build_prompt(
         "life": "Life & Self-Development",
         "poetry": "Poetry/Quotes",
     }[niche]
+
+    # DS-specific type directive — injected only when --type is set
+    ds_type_block = ""
+    if niche == "ds" and blog_type == "tutorial":
+        ds_type_block = """
+
+## DS BLOG TYPE: TUTORIAL
+This is a code-first tutorial. Non-negotiable rules:
+- Include at least 2 working, runnable Python code blocks (not pseudocode)
+- Structure: problem → setup (with real imports and environment notes) → code walkthrough → result → lesson
+- Code blocks appear immediately after the text that introduces them — never at the end of the piece
+- Mark where full scripts or longer code belongs: [CODE_INSERT: one-line description of what the code does]
+- Every snippet must be copy-paste runnable — test it mentally; every import must be present
+- Do not editorialize, moralize, or pivot to career philosophy — teach the thing, then stop
+"""
+    elif niche == "ds" and blog_type == "news":
+        ds_type_block = """
+
+## DS BLOG TYPE: NEWS / OPINION
+This is an editorial or trend piece. Non-negotiable rules:
+- Zero code blocks — this is entirely conceptual, analytical, and opinionated
+- Structure: strong opinion hook → what is happening → why it matters → Tarun's take → the implication
+- Cite specific things: tool names, company names, dates, numbers — vague claims lose credibility
+- Every paragraph must advance the argument; cut decoration
+- End on an implication, not a summary, not a motivational close
+"""
+
     word_count_constraint = (
         "\n**POETRY FORMAT — the poem leads, the essay is short.** Structure: the complete "
         "poem in one blockquote, then a SHORT reflective essay of 150–350 words (not 800+). "
@@ -91,6 +517,24 @@ def build_prompt(
     )
     listicle_block = build_listicle_directive(listicle, topic, niche) if listicle else ""
 
+    title_rule = (
+        f"3. **Title** — USE THIS EXACT TITLE (do not alter a single word): {chosen_title}\n"
+        f"   # ← Do not change it."
+        if chosen_title else
+        "3. **Title** — use one of these four formulas (pick the strongest for the topic):\n"
+        "   - Specific incident: \"The [Thing] That [Concrete Result]\"\n"
+        "   - Counter-intuitive result: \"My [X] Was [Impressive Metric]. It Was Also [Failure].\"\n"
+        "   - Named lesson: \"I [Situation]. Here's What [the Silence/Mistake] Was Hiding.\"\n"
+        "   - Specific number + outcome: \"[N] [Things] That [Consequence]\"\n"
+        "   NEVER use: \"Everything You Need to Know About X\" / \"The Ultimate Guide to Y\" / \"Why Z Matters\""
+    )
+    creator_block = (
+        f"\n## Creator's Personal Angle (weave throughout — do not quote verbatim)\n"
+        f"Polish the language freely, but preserve every idea and viewpoint:\n\n"
+        f"{creator_input}\n"
+        if creator_input else ""
+    )
+
     return f"""{writing_agent}
 
 ---
@@ -98,7 +542,7 @@ def build_prompt(
 ## Virality Directives (apply throughout)
 
 {virality}
-
+{ds_type_block}
 ---
 
 ## Knowledge Base (master_brief.md)
@@ -106,7 +550,7 @@ def build_prompt(
 {master_brief}
 
 ---
-
+{creator_block}
 ## Task
 
 Niche: {niche_label}
@@ -120,12 +564,7 @@ Produce the full blog post in clean Markdown, structured exactly as specified.
 **MANDATORY REQUIREMENTS (no exceptions):**
 1. Include at least 1 `[IMAGE_INSERT: concrete pexels search term]` marker in the blog body.
 2. For poetry niche: embed the complete poem (if one is core to the topic) in one unbroken blockquote block right after the HOOK.
-3. **Title** — use one of these four formulas (pick the strongest for the topic):
-   - Specific incident: "The [Thing] That [Concrete Result]"
-   - Counter-intuitive result: "My [X] Was [Impressive Metric]. It Was Also [Failure]."
-   - Named lesson: "I [Situation]. Here's What [the Silence/Mistake] Was Hiding."
-   - Specific number + outcome: "[N] [Things] That [Consequence]"
-   NEVER use: "Everything You Need to Know About X" / "The Ultimate Guide to Y" / "Why Z Matters"
+{title_rule}
 4. **First paragraph** — open on the specific incident or counter-intuitive fact, NOT with context-setting. Hook line first. One sentence of context second. The reader must know exactly why they're reading this by the end of the first paragraph.
 5. **Subheadings** — every subheading must be a hook that pulls a skimmer in, not a section label. "The Problem" → "The Problem That 6 Months of Work Couldn't Solve". No exceptions.
 6. **Shareable sentence** — identify the single most shareable sentence in the piece (the one a stranger would screenshot and send to a friend — NOT the thesis, but the most specific or emotionally precise observation). Mark it inline with `[QUOTABLE]`.
@@ -185,12 +624,30 @@ Blog post to humanize:
 
 def main():
     parser = argparse.ArgumentParser(description="Produce a blog post via Claude Pro.")
-    parser.add_argument("--topic", required=True, help="Blog topic or working title")
+    parser.add_argument(
+        "--topic", default=None,
+        help="Blog topic (omit to pick from 5 research-driven options)",
+    )
     parser.add_argument("--niche", required=True, choices=["ds", "life", "poetry"])
     parser.add_argument(
         "--humanize",
         action="store_true",
         help="Run a post-generation humanization pass to remove AI tells",
+    )
+    parser.add_argument(
+        "--interview",
+        action="store_true",
+        help=(
+            "Replace the free-text creator-input step with a two-call interview: "
+            "model generates questions (prompts/question_generator.md), you answer "
+            "interactively, model writes the article (prompts/article_writer.md). "
+            "Config: config/interview.json. Omit to use the classic raw-input flow."
+        ),
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Run the full flow and save the draft, but never publish/stage to Medium.",
     )
     parser.add_argument(
         "--listicle",
@@ -204,36 +661,96 @@ def main():
         default=None,
         help="Build-in-public project key (see data/kb/projects.json) — injects project virality context.",
     )
+    parser.add_argument(
+        "--type",
+        choices=["tutorial", "news"],
+        default=None,
+        dest="blog_type",
+        help=(
+            "DS niche only. 'tutorial' = code-first procedural post with runnable Python; "
+            "'news' = editorial/opinion/trend piece with no code. Rejected for Life and Poetry."
+        ),
+    )
     args = parser.parse_args()
 
     if args.listicle is not None and args.listicle < 2:
         parser.error("--listicle N must be >= 2")
     if args.project and args.project not in project_keys():
         parser.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
+    if args.blog_type and args.niche != "ds":
+        parser.error("--type is only valid for --niche ds")
 
     console.rule(f"[info]Blog Producer[/info]")
-    console.print(f"Topic: [bold]{args.topic}[/bold]  Niche: [niche]{args.niche}[/niche]")
+    console.print(f"Niche: [niche]{args.niche}[/niche]")
+    if args.blog_type:
+        console.print(f"Type:  [bold]{args.blog_type.upper()}[/bold]")
 
     writing_agent = load(REPO / "prompts" / "writing_agent.md")
     master_brief  = load(REPO / "data" / "kb" / "master_brief.md")
-    combined_prompt = build_prompt(
-        writing_agent, master_brief, args.topic, args.niche,
-        listicle=args.listicle, project_key=args.project,
-    )
-    if args.listicle:
-        console.print(f"[info]Listicle mode:[/info] Top {args.listicle}")
 
-    # Step 1 — generate blog
-    blog_text = run_claude(combined_prompt, timeout=600,
-                           description="Generating blog (2–5 min)...")
+    # ── Step 1: Topic ────────────────────────────────────────────────────────
+    google: list[str] = []
+    medium: list[str] = []
+    niche_label = RESEARCH_CONFIG[args.niche]["label"]
+    # Use type-specific seeds for DS when --type is set
+    ds_seeds = _DS_TYPE_SEEDS.get(args.blog_type) if args.blog_type else None
 
-    # Validate IMAGE_INSERT present; retry once if missing
-    if "[IMAGE_INSERT" not in blog_text:
-        console.print("[warn]Warning: No IMAGE_INSERT found. Retrying with reinforced prompt...[/warn]")
-        retry_prompt = combined_prompt + "\n\n**CRITICAL: You MUST include at least 1 [IMAGE_INSERT: ...] marker in the blog body.**"
-        blog_text = run_claude(retry_prompt, timeout=600, description="Retrying with IMAGE_INSERT enforcement...")
+    if args.topic:
+        topic = args.topic
+        console.print(f"Topic: [bold]{topic}[/bold]")
+        # Still fetch Google signals for title generation
+        google = fetch_google_signals(args.niche, seeds_override=ds_seeds)
+    else:
+        console.print("\n[info]Fetching research signals...[/info]")
+        recent = get_recent_titles(args.niche)
+        console.print(f"  Recent blogs (last 90 days): {len(recent)} found")
+        google = fetch_google_signals(args.niche, seeds_override=ds_seeds)
+        console.print(f"  Google signals: {len(google)} found")
+        medium = fetch_medium_titles(args.niche)
+        console.print(f"  Medium titles: {len(medium)} found")
+        topics = suggest_topics(args.niche, google, medium, recent, blog_type=args.blog_type)
+        topic  = select_topic(topics, niche_label)
+        console.print(f"\nTopic: [bold]{topic}[/bold]")
+
+    # ── Steps 2–5: Draft ──────────────────────────────────────────────────────
+    if args.interview:
+        # Two-call interview flow replaces creator-input + title + draft generation.
+        if args.listicle or args.blog_type:
+            console.print("[warn]--listicle/--type are ignored in --interview mode.[/warn]")
+        blog_text, chosen_title = run_interview_flow(args.niche, topic, google, medium)
+        console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
+    else:
+        # ── Step 2: Creator input ──────────────────────────────────────────────
+        creator_input = get_creator_input(topic, niche_label)
+
+        # ── Step 3: Title selection ────────────────────────────────────────────
+        titles       = suggest_titles(args.niche, topic, creator_input, google, blog_type=args.blog_type)
+        chosen_title = select_title(titles, topic)
+        console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
+
+        # ── Step 4: Build prompt ───────────────────────────────────────────────
+        combined_prompt = build_prompt(
+            writing_agent, master_brief, topic, args.niche,
+            listicle=args.listicle, project_key=args.project,
+            creator_input=creator_input, chosen_title=chosen_title,
+            blog_type=args.blog_type,
+        )
+        if args.listicle:
+            console.print(f"[info]Listicle mode:[/info] Top {args.listicle}")
+        if args.blog_type:
+            console.print(f"[info]Blog type:[/info] {args.blog_type.upper()}")
+
+        # Step 5 — generate blog
+        blog_text = run_claude(combined_prompt, timeout=600,
+                               description="Generating blog (2–5 min)...")
+
+        # Validate IMAGE_INSERT present; retry once if missing
         if "[IMAGE_INSERT" not in blog_text:
-            console.print("[warn]⚠ Still no IMAGE_INSERT after retry. Proceeding anyway.[/warn]")
+            console.print("[warn]Warning: No IMAGE_INSERT found. Retrying with reinforced prompt...[/warn]")
+            retry_prompt = combined_prompt + "\n\n**CRITICAL: You MUST include at least 1 [IMAGE_INSERT: ...] marker in the blog body.**"
+            blog_text = run_claude(retry_prompt, timeout=600, description="Retrying with IMAGE_INSERT enforcement...")
+            if "[IMAGE_INSERT" not in blog_text:
+                console.print("[warn]⚠ Still no IMAGE_INSERT after retry. Proceeding anyway.[/warn]")
 
     # Step 1b — humanize (optional)
     if args.humanize:
@@ -245,7 +762,7 @@ def main():
 
     # Step 2 — save
     today = date.today().isoformat()
-    slug  = slugify(args.topic)
+    slug  = slugify(topic)  # use the local `topic` var, not args.topic (which can be None)
     filename = f"{today}_{NICHES[args.niche]}_{slug}.md"
     week = get_iso_week(today)
     out_dir  = REPO / "content" / "blogs" / week
@@ -253,7 +770,8 @@ def main():
     out_path = out_dir / filename
 
     # Append worksheet CTA for niches that ship a worksheet (idempotent).
-    if args.niche in WORKSHEET_NICHES and not has_cta(blog_text):
+    # Interview mode already ends with a tailored email CTA — don't double it.
+    if not args.interview and args.niche in WORKSHEET_NICHES and not has_cta(blog_text):
         blog_text = blog_text.rstrip() + "\n\n" + worksheet_cta_markdown(slug)
 
     out_path.write_text(blog_text, encoding="utf-8")
@@ -294,6 +812,20 @@ def main():
             f"{image_inserts} [IMAGE_INSERT] before repurposing."
         )
         console.print(f"  grep -rn 'INSERT' content/blogs/{week}/{filename}")
+
+    # ── Publish hint / dry-run guard ──────────────────────────────────────────
+    # produce_blog never auto-publishes; Medium publishing is the separate
+    # publish_medium.py step. --dry-run makes that explicit for end-to-end tests.
+    rel = out_path.relative_to(REPO)
+    if args.dry_run:
+        console.print(
+            "\n[info]DRY RUN:[/info] draft saved locally. Nothing staged or published to Medium."
+        )
+    else:
+        console.print(
+            f"\n[dim]To publish when ready:[/dim] "
+            f"python3 scripts/publish_medium.py --input {rel} --status draft"
+        )
 
 
 if __name__ == "__main__":

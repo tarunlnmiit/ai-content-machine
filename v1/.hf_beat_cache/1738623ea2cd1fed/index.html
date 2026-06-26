@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="180" data-composition-variables='{"caption_text": {"type": "string", "default": "some of the most thoughtful people i have met weren't the loudest in the room they weren't"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Fullscreen layout === */
+    #panel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (fullscreen) === */
+    #caption-layer {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1860px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="6.000" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:rgba(10,8,5,0.55);overflow:hidden;">
+        <div class="fog" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(circle at 30% 35%, rgba(124,58,237,0.18), transparent 55%), radial-gradient(circle at 72% 68%, rgba(80,60,120,0.14), transparent 60%), radial-gradient(circle at 50% 50%, rgba(15,15,18,0.5), transparent 80%);"></div>
+        <div class="vignette" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:radial-gradient(ellipse at center, transparent 40%, rgba(8,8,8,0.65) 100%);"></div>
+        <div class="slam" style="position:absolute;left:60px;top:380px;width:1800px;text-align:center;font-family:'Cormorant Garamond','Garamond','Georgia',serif;font-weight:700;font-size:220px;line-height:1.0;letter-spacing:-0.01em;color:#f5f0eb;text-shadow:0 0 50px rgba(124,58,237,0.55), 0 8px 40px rgba(0,0,0,0.7);word-wrap:break-word;overflow-wrap:break-word;">MASKED</div>
+        <div class="echo" style="position:absolute;left:60px;top:380px;width:1800px;text-align:center;font-family:'Cormorant Garamond','Garamond','Georgia',serif;font-weight:700;font-size:220px;line-height:1.0;letter-spacing:-0.01em;color:transparent;text-shadow:0 0 80px rgba(124,58,237,0.5);">MASKED</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      gsap.set(root.querySelector('.slam'), { scale: 3, opacity: 0, filter: 'blur(28px)' });
+      gsap.set(root.querySelector('.echo'), { scale: 3.1, opacity: 0, filter: 'blur(40px)' });
+      gsap.set(root.querySelector('.fog'), { opacity: 0, scale: 1.15 });
+      gsap.set(root.querySelector('.vignette'), { opacity: 0 });
+      
+      tl.to(root.querySelector('.fog'), { opacity: 1, scale: 1, duration: 1.4, ease: 'cubic-bezier(0,0,0.58,1)' }, 0);
+      tl.to(root.querySelector('.vignette'), { opacity: 1, duration: 1.2, ease: 'cubic-bezier(0,0,0.58,1)' }, 0);
+      
+      tl.to(root.querySelector('.slam'), { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.4, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 0.2);
+      tl.to(root.querySelector('.echo'), { scale: 1, opacity: 0.6, filter: 'blur(18px)', duration: 0.6, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 0.2);
+      
+      tl.to(root.querySelector('.echo'), { opacity: 0.25, scale: 1.04, duration: 2.4, ease: 'cubic-bezier(0,0,1,1)' }, 0.8);
+      tl.to(root.querySelector('.fog'), { scale: 1.06, duration: 4.0, ease: 'cubic-bezier(0,0,1,1)' }, 1.2);
+      
+      tl.to([root.querySelector('.slam'), root.querySelector('.echo')], { opacity: 0, scale: 1.08, filter: 'blur(20px)', duration: 0.6, ease: 'cubic-bezier(0.4,0,1,1)' }, 5.3);
+      tl.to([root.querySelector('.fog'), root.querySelector('.vignette')], { opacity: 0, duration: 0.6, ease: 'cubic-bezier(0.4,0,1,1)' }, 5.4);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="384" data-composition-variables='{"caption_text": {"type": "string", "default": "and that distinction has stayed with me for years and the ending tells you the motive only to make themselves happy only to make themselves happy right not righteousness not values just hunger"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Fullscreen layout === */
+    #panel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (fullscreen) === */
+    #caption-layer {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1860px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="12.800" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute; top:0; left:0; width:1920px; height:1080px; overflow:hidden; background:
+        radial-gradient(ellipse 1100px 700px at 30% 35%, rgba(124,58,237,0.18), transparent 60%),
+        radial-gradient(ellipse 900px 600px at 75% 70%, rgba(80,60,120,0.14), transparent 65%),
+        radial-gradient(circle at 50% 50%, rgba(20,16,28,0.5), transparent 70%),
+        rgba(10,8,5,0.55);">
+      
+        <div class="vignette" style="position:absolute; top:0; left:0; width:1920px; height:1080px;
+          background:radial-gradient(ellipse 1300px 800px at 50% 50%, transparent 45%, rgba(5,4,3,0.7) 100%);"></div>
+      
+        <div class="quote-mark" style="position:absolute; top:230px; left:300px; width:200px;
+          font-family:'Cormorant Garamond','Garamond',serif; font-weight:600; font-size:300px;
+          color:rgba(124,58,237,0.22); line-height:1; text-shadow:0 0 60px rgba(124,58,237,0.3);">&ldquo;</div>
+      
+        <div class="line1" style="position:absolute; top:420px; left:0; width:1920px; text-align:center;
+          font-family:'Cormorant Garamond','Garamond','Georgia',serif; font-weight:600; font-style:italic;
+          font-size:118px; letter-spacing:0.04em; color:#f5f0eb;
+          text-shadow:0 0 40px rgba(124,58,237,0.45), 0 4px 24px rgba(0,0,0,0.8);">better &mdash;</div>
+      
+        <div class="line2" style="position:absolute; top:580px; left:0; width:1920px; max-width:1860px; text-align:center;
+          font-family:'Cormorant Garamond','Garamond','Georgia',serif; font-weight:400;
+          font-size:84px; letter-spacing:0.05em; line-height:1.3; color:#c8c8d4; word-wrap:break-word;
+          overflow-wrap:break-word; text-shadow:0 0 30px rgba(80,60,120,0.5), 0 3px 18px rgba(0,0,0,0.85);">or better at being seen</div>
+      
+        <div class="rule" style="position:absolute; top:800px; left:810px; width:300px; height:2px;
+          background:linear-gradient(90deg, transparent, rgba(124,58,237,0.7), transparent);"></div>
+      
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      const line1 = root.querySelector('.line1');
+      const line2 = root.querySelector('.line2');
+      const quoteMark = root.querySelector('.quote-mark');
+      const rule = root.querySelector('.rule');
+      const vignette = root.querySelector('.vignette');
+      
+      gsap.set(line1, { opacity: 0, y: 30, scale: 0.96, filter: 'blur(8px)' });
+      gsap.set(line2, { opacity: 0, y: 30, filter: 'blur(8px)' });
+      gsap.set(quoteMark, { opacity: 0, scale: 0.85, y: 20 });
+      gsap.set(rule, { opacity: 0, scaleX: 0, transformOrigin: '50% 50%' });
+      gsap.set(vignette, { opacity: 0.6 });
+      
+      // Quote mark settles in
+      tl.to(quoteMark, { opacity: 1, scale: 1, y: 0, duration: 2.0, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 0.0);
+      
+      // Line 1 breathes in
+      tl.to(line1, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.0,
+        ease: 'cubic-bezier(0.0,0.0,0.58,1.0)' }, 0.1);
+      
+      // Hold, then line 2 enters as line 1 dims
+      tl.to(line1, { opacity: 0.42, color: '#9a93a8', duration: 0.8, ease: 'cubic-bezier(0.0,0.0,0.58,1.0)' }, 1.8);
+      tl.to(line2, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0,
+        ease: 'cubic-bezier(0.0,0.0,0.58,1.0)' }, 1.9);
+      tl.to(rule, { opacity: 1, scaleX: 1, duration: 1.2, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 2.2);
+      
+      // Slow atmospheric drift on quote mark while lines hold
+      tl.to(quoteMark, { y: -12, duration: 7.0, ease: 'cubic-bezier(0,0,1,1)' }, 2.5);
+      
+      // Gentle vignette breathe
+      tl.to(vignette, { opacity: 0.72, duration: 5.0, ease: 'cubic-bezier(0,0,1,1)' }, 3.0);
+      
+      // Graceful exit
+      tl.to([line1, line2, rule, quoteMark], { opacity: 0, y: -24, filter: 'blur(6px)', duration: 0.8,
+        ease: 'cubic-bezier(0.4,0,1,1)', stagger: 0.08 }, 11.6);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

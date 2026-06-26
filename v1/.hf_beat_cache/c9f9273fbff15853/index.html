@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="180" data-composition-variables='{"caption_text": {"type": "string", "default": "but then i realized"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Python-owned panel geometry === */
+    #panel {
+      position: absolute;
+      left: 980px; top: 60px;
+      width: 900px; height: 960px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: rgba(17,24,39,0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    /* Specular highlight at panel top edge */
+    #panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.14), transparent);
+      z-index: 100;
+    }
+    /* Claude's content is scoped here. (0,0) = panel top-left. */
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (sibling of #panel, never clipped) === */
+    #caption-layer {
+      position: absolute;
+      left: 0px; width: 1920px;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 840px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="6.000" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute; top:0; left:0; width:900px; height:960px; background:#1a1208; overflow:hidden;">
+        <div style="position:absolute; top:300px; left:50px; width:800px; height:360px;">
+          <div class="ink" style="position:absolute; top:0; left:0; width:780px; font-family:'Cormorant Garamond','Georgia',serif; font-weight:600; font-style:italic; font-size:74px; line-height:1.3; letter-spacing:-0.01em; color:#fdf8f0; max-width:840px; word-wrap:break-word; overflow-wrap:break-word; transform:rotate(-2.5deg); transform-origin:left center;">
+            silence has a <span style="color:#f59e0b;">texture</span> <span style="color:#86efac;">→</span>
+          </div>
+          <svg class="squiggle" width="520" height="40" viewBox="0 0 520 40" style="position:absolute; top:120px; left:8px; transform:rotate(-2.5deg); transform-origin:left center; overflow:visible;">
+            <path d="M4 22 Q 60 8, 120 20 T 240 20 T 360 20 T 500 18" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="caption-layer"><div id="caption-pill"><span class="w">but</span><span class="w">then</span><span class="w">i</span><span class="w">realized</span></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      const ink = root.querySelector('.ink');
+      const squiggle = root.querySelector('.squiggle path');
+      const len = squiggle.getTotalLength();
+      
+      gsap.set(ink, { opacity: 0, y: 20, scale: 0.94, filter: 'blur(6px)' });
+      gsap.set(squiggle, { strokeDasharray: len, strokeDashoffset: len });
+      
+      tl.to(ink, {
+        opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
+        duration: 0.9, ease: 'cubic-bezier(0.34,1.56,0.64,1)'
+      }, 0.1);
+      
+      tl.to(squiggle, {
+        strokeDashoffset: 0,
+        duration: 0.7, ease: 'cubic-bezier(0.16,1,0.3,1)'
+      }, 1.2);
+      
+      tl.to(ink, {
+        scale: 1.015,
+        duration: 2.5, ease: 'cubic-bezier(0.0,0.0,0.2,1)'
+      }, 2.0);
+      
+      tl.to([ink, squiggle], {
+        opacity: 0,
+        duration: 0.4, ease: 'cubic-bezier(0.4,0,1,1)'
+      }, 5.5);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+          var cw = document.querySelectorAll('#caption-pill .w');
+          gsap.set(cw, { opacity: 0, y: 8 });
+          tl.to(cw, { opacity: 1, y: 0, duration: 0.25, stagger: 0.1, ease: 'power2.out' }, 0.2);
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

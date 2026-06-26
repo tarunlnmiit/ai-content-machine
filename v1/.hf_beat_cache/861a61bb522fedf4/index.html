@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="180" data-composition-variables='{"caption_text": {"type": "string", "default": "the emotional weight that i was pretending wasn't there that's why on the day something"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Fullscreen layout === */
+    #panel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (fullscreen) === */
+    #caption-layer {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1860px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="6.000" data-width="1920" data-height="1080">
+  
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;background:
+        radial-gradient(1200px 800px at 30% 25%, rgba(245,158,11,0.16), transparent 60%),
+        radial-gradient(1000px 900px at 78% 75%, rgba(239,68,68,0.12), transparent 62%),
+        radial-gradient(1400px 1000px at 50% 50%, rgba(160,133,106,0.10), transparent 70%),
+        rgba(10,8,5,0.55);">
+      
+        <div class="haze haze1" style="position:absolute;left:160px;top:300px;width:620px;height:480px;border-radius:50%;
+          background:radial-gradient(circle, rgba(160,133,106,0.22), transparent 70%);filter:blur(40px);"></div>
+        <div class="haze haze2" style="position:absolute;left:1140px;top:360px;width:680px;height:520px;border-radius:50%;
+          background:radial-gradient(circle, rgba(245,158,11,0.16), transparent 70%);filter:blur(48px);"></div>
+      
+        <div class="kicker" style="position:absolute;left:660px;top:430px;width:600px;text-align:center;
+          font-family:'Inter','Helvetica Neue',sans-serif;font-weight:500;font-size:30px;letter-spacing:0.42em;
+          color:#a0856a;text-transform:uppercase;text-shadow:0 2px 12px rgba(0,0,0,0.7);">everything was</div>
+      
+        <div class="slam" style="position:absolute;left:160px;top:470px;width:1600px;text-align:center;
+          font-family:'Playfair Display','Georgia',serif;font-weight:900;font-size:230px;line-height:1;
+          letter-spacing:-0.02em;color:#f59e0b;
+          text-shadow:0 0 60px rgba(245,158,11,0.55), 0 0 120px rgba(239,68,68,0.35), 0 8px 30px rgba(0,0,0,0.6);">FOGGY</div>
+      
+        <div class="rule" style="position:absolute;left:860px;top:760px;width:200px;height:5px;border-radius:3px;
+          background:linear-gradient(90deg, transparent, #ef4444, #f59e0b, transparent);
+          box-shadow:0 0 24px rgba(245,158,11,0.6);transform-origin:center;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      gsap.set(root.querySelector('.slam'), { scale: 3, opacity: 0, filter: 'blur(28px)' });
+      gsap.set(root.querySelector('.kicker'), { opacity: 0, y: 14 });
+      gsap.set(root.querySelector('.rule'), { scaleX: 0, opacity: 0 });
+      gsap.set(root.querySelector('.haze1'), { opacity: 0, scale: 0.85 });
+      gsap.set(root.querySelector('.haze2'), { opacity: 0, scale: 0.85 });
+      
+      tl.to(root.querySelector('.haze1'), { opacity: 1, scale: 1, duration: 1.2, ease: 'cubic-bezier(0.0,0.0,0.2,1)' }, 0)
+        .to(root.querySelector('.haze2'), { opacity: 1, scale: 1, duration: 1.2, ease: 'cubic-bezier(0.0,0.0,0.2,1)' }, 0.15)
+        .to(root.querySelector('.kicker'), { opacity: 1, y: 0, duration: 0.6, ease: 'cubic-bezier(0.25,0.46,0.45,0.94)' }, 0.2);
+      
+      // kinetic slam: 3 -> 1 with motion-blur settle
+      tl.to(root.querySelector('.slam'), { scale: 1.06, opacity: 1, filter: 'blur(0px)', duration: 0.34, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 0.55)
+        .to(root.querySelector('.slam'), { scale: 1, duration: 0.5, ease: 'cubic-bezier(0.25,0.46,0.45,0.94)' }, 0.89)
+        .to(root.querySelector('.rule'), { scaleX: 1, opacity: 1, duration: 0.7, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 1.0);
+      
+      // gentle breathing hold
+      tl.to(root.querySelector('.slam'), { scale: 1.03, duration: 2.0, ease: 'cubic-bezier(0.25,0.46,0.45,0.94)' }, 1.6)
+        .to(root.querySelector('.haze2'), { x: 30, duration: 2.4, ease: 'cubic-bezier(0.25,0.46,0.45,0.94)' }, 1.6);
+      
+      // soft exit
+      tl.to([root.querySelector('.slam'), root.querySelector('.kicker'), root.querySelector('.rule')],
+        { opacity: 0, duration: 0.4, ease: 'cubic-bezier(0.4,0,1,1)' }, 5.55);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

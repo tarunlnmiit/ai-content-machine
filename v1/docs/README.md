@@ -1,15 +1,59 @@
-# Content Machine — Docs Hub
+# Content Machine — Docs Index
 
-Single entry point. Pick path by question.
+> Start here. Pick the doc for what you're doing right now. Close everything else.
 
-| Question | Go to |
-|----------|-------|
-| What do I do today? | [weekly-operating-guide.md](weekly-operating-guide.md) → daily file |
-| I have free Sunday — batch a week? | [sunday-batch.md](sunday-batch.md) |
-| How does video editing work? | [video-production-guide.md](video-production-guide.md) |
-| How does Medium repurposing work? | [medium-repurposing-guide.md](medium-repurposing-guide.md) |
-| How do I set up automation (launchd)? | [launchd-daily-ideas.md](launchd-daily-ideas.md) · [launchd-build-kb.md](launchd-build-kb.md) |
-| Where did the weekend mini-courses go? | Separate repo: [`tarunlnmiit/course-machine`](https://github.com/tarunlnmiit/course-machine) (extracted 2026-06-11, see [repo-split-plan.md](repo-split-plan.md)) |
+---
+
+## Reading order (open these, in this order)
+
+| # | When | File |
+|---|---|---|
+| 1 | **Every week — start here** | [`guides/weekly-operating-guide.md`](guides/weekly-operating-guide.md) |
+| 2 | **Running the pipeline** | [`guides/pipeline-2026.md`](guides/pipeline-2026.md) |
+| 3 | **Before recording** | [`guides/recording-guide.md`](guides/recording-guide.md) |
+| 4 | **After recording — V2 pipeline** | [`guides/v2-pipeline.md`](guides/v2-pipeline.md) |
+| 5 | **Blog → all derivatives** | [`guides/blog-pipeline.md`](guides/blog-pipeline.md) |
+| 6 | **Voiceover (no face) videos** | [`guides/voiceover-runner.md`](guides/voiceover-runner.md) |
+| 7 | **Raw-take / Hinglish Shorts** | [`guides/raw-take-format.md`](guides/raw-take-format.md) |
+| 8 | **Saturday + Sunday batch** | [`guides/saturday.md`](guides/saturday.md) · [`guides/sunday.md`](guides/sunday.md) |
+
+---
+
+## guides/ — living operational docs
+
+| File | What it covers |
+|---|---|
+| `weekly-operating-guide.md` | Master weekly workflow |
+| `pipeline-2026.md` | Distribution model: auto-publish daemon, channels, LinkedIn rules |
+| `v2-pipeline.md` | **V2 video pipeline** — HyperFrames + AI storyboard, all commands |
+| `recording-guide.md` | How to record talking heads and voiceovers |
+| `voiceover-runner.md` | Audio-only voiceover lane (no face) |
+| `blog-pipeline.md` | `run_blog_pipeline.py` — one command for all blog derivatives |
+| `raw-take-format.md` | Hinglish Shorts format + guardrails |
+| `weekly-runner.md` | Week-by-week runner steps |
+| `weekly-virality-framework.md` | Virality engine, hook patterns, build-in-public cadence |
+| `video-production-guide.md` | Legacy DaVinci notes (pre-V2 reference only) |
+| `analytics-driven-pipeline-2026.md` | Analytics collection + feedback loop |
+| `medium-repurposing-guide.md` | Medium-specific repurposing rules |
+| `super-profile-setup.md` | SuperProfile / CreatorFlow comment→DM setup |
+| `saturday.md` | Saturday batch steps |
+| `sunday.md` | Sunday prep steps |
+
+## setup/ — read once, then forget
+
+| File | What it covers |
+|---|---|
+| `one-time-platform-setup.md` | Meta tokens, LinkedIn auth, API keys |
+| `launchd-build-kb.md` | macOS launchd for KB daemon |
+| `launchd-daily-ideas.md` | macOS launchd for daily ideas daemon |
+
+Launchd `.plist` files → `../config/launchd/`
+
+## archive/ — historical only
+
+Week-specific plans, audits, old checklists. V2 experiment reference → `archive/v2-experiment/`.
+
+---
 
 Identity, banned words, niches → repo-root `CLAUDE.md`.
 

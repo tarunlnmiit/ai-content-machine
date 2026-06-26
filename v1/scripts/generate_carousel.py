@@ -131,31 +131,23 @@ Generate the complete, copy-pasteable HTML immediately. No preamble, no asking q
 
 
 def build_prompt(brand: dict, content: str, slides: int,
-                 niche_key: str = "life_self_dev", project_key: str | None = None) -> str:
+                 niche_key: str = "life_self_dev", project_key: str | None = None,
+                 master_brief: str | None = None) -> str:
     system = CAROUSEL_SYSTEM.format(
         **brand,
         slides=slides,
         initial=brand["brand_name"][0].upper(),
     )
     virality = virality_block("carousel", niche_key, project_key)
-    return f"""{system}
-
----
-
-## Virality Directives
-
-{virality}
-
----
-
-## Source content
-
-{content}
-
----
-
-Generate the complete carousel HTML now.
-"""
+    parts = [system, f"## Virality Directives\n\n{virality}"]
+    if master_brief:
+        parts.append(
+            "## Master Brief (creator voice, competition intelligence, what's working)\n\n"
+            + master_brief
+        )
+    parts.append(f"## Source content\n\n{content}")
+    parts.append("Generate the complete carousel HTML now.")
+    return "\n\n---\n\n".join(parts)
 
 
 from lib.slug import slugify
@@ -204,7 +196,13 @@ def main() -> None:
     console.print(f"[bold]Generating carousel[/bold] — {brand['label']}")
     console.print(f"  Niche: {niche_key} | Slides: {args.slides} | Temp: {brand['temperature']}")
 
-    prompt = build_prompt(brand, content, args.slides, niche_key=niche_key, project_key=args.project)
+    master_brief_path = REPO / "data" / "kb" / "master_brief.md"
+    master_brief = master_brief_path.read_text(encoding="utf-8") if master_brief_path.exists() else None
+    if not master_brief:
+        console.print("[warn]master_brief.md not found — competition intelligence unavailable[/warn]")
+
+    prompt = build_prompt(brand, content, args.slides, niche_key=niche_key,
+                          project_key=args.project, master_brief=master_brief)
 
     console.print(f"  Prompt: {len(prompt):,} chars")
     html = call_claude(

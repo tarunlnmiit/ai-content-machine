@@ -1,448 +1,516 @@
 #!/usr/bin/env python3
+"""Weekly idea machine — surfaces virality-scored ideas + mandatory project reels + raw takes.
+
+Reads:
+  data/ideas/{source}_{date}.json  — suggest / youtube / reddit / external for each day this week
+  data/kb/projects.json            — build-in-public projects + angle rotation
+  data/kb/raw_take_questions.json  — 28 Hinglish raw-take questions (Life niche, 4/week)
+  data/kb/master_brief.md          — voice / competition intelligence
+  data/kb/twitter_hook_patterns.json
+
+Outputs:
+  data/ideas/weekly_ideas.md       — overwritten with --force
+
+Usage:
+  python3 scripts/idea_scorer.py               # current ISO week
+  python3 scripts/idea_scorer.py --week W27    # specific week
+  python3 scripts/idea_scorer.py --force       # regenerate even if file exists
+  python3 scripts/idea_scorer.py --dry-run     # print to stdout, don't write
+  python3 scripts/idea_scorer.py --top 8       # more ideas per niche
 """
-Consolidate ideas from all sources (Reddit, YouTube, external RSS, Google/YT suggest).
-Deduplicate, apply novelty penalty vs archive, rank top N per niche (default 5).
-Write data/ideas/weekly_ideas.md.
-Use Ollama (gemma4:e2b) for classification.
-"""
+
+from __future__ import annotations
 
 import argparse
+import datetime
 import json
+import os
 import re
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
-from difflib import SequenceMatcher
 import sys
+from difflib import SequenceMatcher
 from pathlib import Path
+from typing import Any
 
-import requests
-from _console import console, progress_bar
+import anthropic
+from dotenv import load_dotenv
+from rich.console import Console
 
-REPO = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO / "scripts"))
-from lib.virality import topic_virality_multiplier  # noqa: E402
+REPO    = Path(__file__).resolve().parent.parent
+DATA    = REPO / "data"
+IDEAS   = DATA / "ideas"
+KB      = DATA / "kb"
+SCRIPTS = REPO / "scripts"
+sys.path.insert(0, str(SCRIPTS))
 
+from lib.schedule_calc import get_iso_week  # noqa: E402
 
-# Per-niche off-topic filters — drop items matching these patterns.
-# Reason: Medium tag pages (e.g. /tag/poetry) attract AI/tech essays
-# that abuse tags for reach. Strict regex to keep niche relevance.
+load_dotenv(REPO / ".env")
+console = Console()
+
+# ── Niche constants ───────────────────────────────────────────────────────────
+
+_NICHE_LABELS = {
+    "ds":     "DS — Data Science / Tech",
+    "life":   "Life — Life & Self-Development",
+    "poetry": "Poetry / Quotes",
+}
+_NICHE_JSON_KEYS = {
+    "ds":     "data_science_tech",
+    "life":   "life_self_dev",
+    "poetry": "poetry_quotes",
+}
+_JSON_TO_NICHE = {v: k for k, v in _NICHE_JSON_KEYS.items()}
+
+# ── Off-topic filters (preserved from original) ───────────────────────────────
+
 NICHE_BLOCKLIST = {
-    "poetry_quotes": re.compile(
-        # Tech / AI bleed (Medium /tag/poetry abuse)
+    "poetry": re.compile(
         r"\b(AI|GPT|ChatGPT|LLM|Claude|Anthropic|OpenAI|machine learning|"
         r"agent|crypto|bitcoin|startup|saas|stripe|kubernetes|docker|api)\b|"
-        # Off-niche content categories
         r"\b(ASMR|fanfic|fanfiction|songwriter|songwriting|lyrics|"
         r"taylor swift|beyonc[eé]|kanye|drake|"
-        # Reviews / pop culture
         r"netflix|hbo|movie review|tv show|anime|kdrama|"
-        # Politics / news
         r"trump|biden|election|congress|senate|"
-        # Writing craft (not poetry itself)
         r"how to write|writing tips|writing prompt|world.?building|"
-        # Academic / philosophy treatises (long-form essays, not poems)
         r"discourse|treatise|hermeneutic|exegesis|"
-        # Marketing / business bleed
         r"marketing|seo|conversion|funnel|monetiz|substack growth)\b",
         re.IGNORECASE,
     ),
-    "life_self_dev": re.compile(
+    "life": re.compile(
         r"\b(AI|GPT|ChatGPT|LLM|crypto|bitcoin|kubernetes|docker)\b",
         re.IGNORECASE,
     ),
 }
 
-
-HASHTAG_SPAM = re.compile(r"(#\w+\s*){3,}")
+HASHTAG_SPAM   = re.compile(r"(#\w+\s*){3,}")
 ACADEMIC_ESSAY = re.compile(
-    r"\b(and the (American|Western|Modern|Eastern)|"
-    r"reception of|reading of|analysis of|study of|"
-    r"in the (works|poetry|writing) of|"
-    r"imagination|hermeneutic|exegesis|literary criticism)\b",
+    r"\b(reception of|reading of|analysis of|study of|in the works of|"
+    r"hermeneutic|exegesis|literary criticism)\b",
     re.IGNORECASE,
 )
 
 
-def passes_blocklist(item: dict) -> bool:
-    """Return False if item matches niche blocklist."""
-    niche = item.get("niche", "")
-    title = item.get("title", "")
-    haystack = f"{title} {item.get('summary','')}"
-
+def _passes_blocklist(item: dict) -> bool:
+    niche   = item.get("niche", "")
+    payload = f"{item.get('title','')} {item.get('summary','')}"
     pattern = NICHE_BLOCKLIST.get(niche)
-    if pattern and pattern.search(haystack):
+    if pattern and pattern.search(payload):
         return False
-
-    # Poetry-specific structural filters
-    if niche == "poetry_quotes":
-        if HASHTAG_SPAM.search(title):
+    if niche == "poetry":
+        if HASHTAG_SPAM.search(item.get("title", "")):
             return False
-        if ACADEMIC_ESSAY.search(title):
+        if ACADEMIC_ESSAY.search(item.get("title", "")):
             return False
     return True
 
 
-def load_json_files(directory):
-    all_ideas = []
-    path = Path(directory)
-    for json_file in path.glob("*.json"):
-        try:
-            data = json.loads(json_file.read_text())
-            stem = json_file.stem
+# ── Loaders ──────────────────────────────────────────────────────────────────
 
-            # Format 1: suggest_*.json → {niche: {seed: {source: [strings]}}}
-            if stem.startswith("suggest_") and isinstance(data, dict):
-                for niche, seeds in data.items():
-                    if not isinstance(seeds, dict):
+def _load_json(path: Path, required: bool = False) -> Any:
+    if not path.exists():
+        if required:
+            sys.exit(f"Required file not found: {path}")
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        console.print(f"[warn]JSON error in {path}: {e}[/warn]")
+        return None
+
+
+def _week_dates(week: str) -> list[str]:
+    """Return ISO date strings Mon–Sun for the given '2026-W26' week string."""
+    year_str, wk_str = week.split("-W")
+    year, wk = int(year_str), int(wk_str)
+    jan4     = datetime.date(year, 1, 4)
+    week1_mon = jan4 - datetime.timedelta(days=jan4.weekday())
+    week_mon  = week1_mon + datetime.timedelta(weeks=wk - 1)
+    return [(week_mon + datetime.timedelta(days=d)).isoformat() for d in range(7)]
+
+
+def _load_week_ideas(week: str) -> dict[str, list[dict]]:
+    """Aggregate all per-day idea files for the week into per-niche item lists."""
+    dates   = _week_dates(week)
+    sources = ["suggest", "youtube", "reddit", "external"]
+    agg: dict[str, list[dict]] = {k: [] for k in _NICHE_JSON_KEYS.keys()}
+
+    for date in dates:
+        for src in sources:
+            data = _load_json(IDEAS / f"{src}_{date}.json")
+            if not data:
+                continue
+
+            if src == "suggest" and isinstance(data, dict):
+                # {niche_key: {seed: {platform: [strings]}}}
+                for niche_json_key, seeds in data.items():
+                    niche = _JSON_TO_NICHE.get(niche_json_key)
+                    if not niche or not isinstance(seeds, dict):
                         continue
-                    for seed, srcs in seeds.items():
-                        if not isinstance(srcs, dict):
+                    for seed, platforms in seeds.items():
+                        if not isinstance(platforms, dict):
                             continue
-                        for src_name, suggestions in srcs.items():
+                        for plat, suggestions in platforms.items():
                             if not isinstance(suggestions, list):
                                 continue
                             for s in suggestions:
-                                if not isinstance(s, str) or len(s) < 8:
-                                    continue
-                                all_ideas.append({
-                                    "title": s,
-                                    "url": "",
-                                    "source": f"{stem}_{src_name}",
-                                    "niche": niche,
-                                    "score": 0.7,  # autocomplete = decent baseline
-                                })
-                continue
+                                if isinstance(s, str) and len(s) >= 6:
+                                    agg[niche].append({
+                                        "title": s, "niche": niche,
+                                        "source": f"suggest_{plat}", "score": 0.7,
+                                    })
+            elif isinstance(data, dict):
+                # Standard {niche_json_key: [items]}
+                for niche_json_key, items in data.items():
+                    niche = _JSON_TO_NICHE.get(niche_json_key)
+                    if not niche or not isinstance(items, list):
+                        continue
+                    for item in items:
+                        if not isinstance(item, dict):
+                            continue
+                        item.setdefault("source", src)
+                        item["niche"] = niche
+                        if "score" not in item:
+                            pts = item.get("points", 0) + item.get("reactions", 0)
+                            item["score"] = min(pts / 50.0, 1.0) if pts else 0.6
+                        agg[niche].append(item)
 
-            # Format 2: standard {niche: [items]} or list
-            if isinstance(data, dict):
-                for niche, items in data.items():
-                    if isinstance(items, list):
-                        for item in items:
-                            if not isinstance(item, dict):
-                                continue
-                            item["source"] = item.get("source", stem)
-                            item["niche"] = niche
-                            # Boost external feeds w/ engagement signals
-                            if "score" not in item:
-                                pts = item.get("points", 0)
-                                reacts = item.get("reactions", 0)
-                                comments = item.get("comments", 0)
-                                if pts or reacts or comments:
-                                    item["score"] = (pts + reacts + comments * 0.5) / 50.0
-                                else:
-                                    item["score"] = 0.6  # generic feed item
-                            all_ideas.append(item)
-            else:
-                all_ideas.extend(data)
-        except Exception as e:
-            console.print(f"[warn]Error loading {json_file}: {e}[/warn]")
-    return all_ideas
+    return agg
 
 
-def string_similarity(a, b):
+# ── Deduplication + novelty ───────────────────────────────────────────────────
+
+def _similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, a.lower(), b.lower()).ratio()
 
 
-def deduplicate(ideas, threshold=0.75):
-    deduplicated, seen = [], []
-    for idea in ideas:
-        title = idea.get("title", "")
-        if not any(string_similarity(title, s) >= threshold for s in seen):
-            deduplicated.append(idea)
-            seen.append(title)
-    return deduplicated
+def _deduplicate(items: list[dict], threshold: float = 0.80) -> list[dict]:
+    seen, out = [], []
+    for item in items:
+        t = item.get("title", "")
+        if not any(_similarity(t, s) >= threshold for s in seen):
+            out.append(item)
+            seen.append(t)
+    return out
 
 
-def load_archive_titles(archive_dir="data/kb"):
-    titles = []
-    master = Path(archive_dir) / "master_brief.md"
-    if master.exists():
-        for line in master.read_text().splitlines():
-            if line.startswith("## ") or line.startswith("### "):
-                titles.append(line.strip("#").strip())
-    return titles
+def _apply_novelty_penalty(items: list[dict], archive_titles: list[str]) -> list[dict]:
+    for item in items:
+        t       = item.get("title", "")
+        max_sim = max((_similarity(t, a) for a in archive_titles), default=0)
+        base    = item.get("score", 0.5)
+        item["adj_score"] = base * 0.4 if max_sim > 0.6 else base
+    return items
 
 
-def _source_family(source: str) -> str:
-    """Group source names into families for rank normalization."""
-    s = (source or "").lower()
-    if s.startswith("reddit_"):
-        return "reddit"
-    if s.startswith("youtube_"):
-        return "youtube"
-    if s.startswith("suggest_"):
-        return "suggest"
-    if "hn" in s or "algolia" in s:
-        return "hn"
-    if "arxiv" in s:
-        return "arxiv"
-    if "medium" in s:
-        return "medium"
-    if "devto" in s:
-        return "devto"
-    if "github" in s:
-        return "github"
-    if "goodreads" in s or "poets" in s:
-        return "external_other"
-    return "other"
+# ── Deterministic project reel + raw takes ────────────────────────────────────
 
+def weekly_project_reel(niche: str, week_num: int, projects_data: dict) -> dict | None:
+    """Return the project-reel brief dict for this niche × week.
 
-def apply_rank_score(ideas):
-    """Convert raw scores into per-source rank percentile.
-
-    Why: HN points (50+) vs Reddit recency (~1.5) skew naive blending.
-    Within each (niche, source_family) group, rank items and assign
-    percentile 1.0 = best, 0.0 = worst. Final score = percentile.
-    Then niches blend evenly across families.
+    Rotates angle_rotation deterministically: angle_rotation[(week_num-1) % len(angles)].
+    Returns None if no matching project exists (e.g. poetry).
     """
-    groups = {}
-    for idea in ideas:
-        key = (idea.get("niche", ""), _source_family(idea.get("source", "")))
-        groups.setdefault(key, []).append(idea)
+    projects = projects_data.get("projects", [])
+    candidates = [
+        p for p in projects
+        if niche in p.get("niches", [p.get("hashtag_niche", "")])
+        and p.get("cadence", {}).get("frequency") == "weekly"
+    ]
+    if not candidates:
+        return None
+    proj   = candidates[0]
+    angles = proj.get("cadence", {}).get("angle_rotation", [])
+    if not angles:
+        return None
+    angle = angles[(week_num - 1) % len(angles)]
+    return {
+        "key":       proj["key"],
+        "name":      proj["name"],
+        "angle":     angle,
+        "dm_kw":     proj.get("dm_keyword", ""),
+        "pitch":     proj.get("pitch", ""),
+        "guardrail": proj.get("honesty_guardrail", ""),
+        "deliverable": proj.get("deliverable", ""),
+    }
 
-    for key, items in groups.items():
-        items.sort(key=lambda x: x.get("score", 0) or 0, reverse=True)
-        n = len(items)
-        for rank, idea in enumerate(items):
-            idea["rank_score"] = 1.0 - (rank / max(n - 1, 1))
-    return ideas
 
+def weekly_raw_take_batch(week_num: int, questions_data: dict, n: int = 4) -> list[dict]:
+    """Return n Life raw-take questions for this week.
 
-def apply_novelty_penalty(ideas, archive_titles, penalty=0.5):
-    """Apply novelty penalty on rank-normalized score."""
-    for idea in ideas:
-        title = idea.get("title", "")
-        max_sim = max((string_similarity(title, a) for a in archive_titles), default=0)
-        base = idea.get("rank_score", idea.get("score", 0) or 0.5)
-        idea["novelty_adjusted_score"] = base * penalty if max_sim > 0.6 else base
-    return ideas
-
-
-def load_past_keywords():
-    """Tokens from past top-performers (weekly_insights.md) — data-grounded virality signal.
-
-    Cross-niche: any topic resembling a proven winner gets a lift. Returns a lowercase set.
+    Rotation: batch_idx = (week_num - 1) % floor(len / n). ~7 weeks before repeat.
     """
-    path = REPO / "data" / "analytics" / "weekly_insights.md"
-    try:
-        text = path.read_text(encoding="utf-8")
-    except OSError:
-        return set()
-    stop = {"the", "a", "an", "to", "of", "and", "for", "in", "on", "with", "how", "why",
-            "your", "you", "my", "is", "are", "i", "me", "this", "that", "it"}
-    words = re.findall(r"[a-zA-Z]{4,}", text.lower())
-    return {w for w in words if w not in stop}
-
-
-def apply_virality_weight(ideas, past_keywords):
-    """Multiply novelty-adjusted score by a niche-aware virality multiplier."""
-    for idea in ideas:
-        mult = topic_virality_multiplier(
-            idea.get("title", ""), idea.get("niche", ""), past_keywords
-        )
-        base = idea.get("novelty_adjusted_score", idea.get("rank_score", 0) or 0)
-        idea["virality_adjusted_score"] = base * mult
-    return ideas
-
-
-def classify_idea(title: str, niche: str) -> str:
-    prompt = f"Classify this content idea into a brief category (1-3 words):\nNiche: {niche}\nIdea: {title}\nCategory:"
-
-    try:
-        resp = requests.post(
-            "http://localhost:11434/api/generate",
-            json={"model": "gemma4:e2b", "prompt": prompt, "stream": False},
-            timeout=10,
-        )
-        if resp.status_code == 200:
-            return resp.json().get("response", "").strip().split("\n")[0][:50]
-        console.print(f"[warn]Ollama HTTP {resp.status_code}[/warn]")
-    except Exception as e:
-        console.print(f"[warn]Ollama error: {e}[/warn]")
-
-    return "uncategorized"
-
-
-_NICHE_SHORT = {"data_science_tech": "ds", "life_self_dev": "life", "poetry_quotes": "poetry"}
-
-
-def weekly_project_reel(niche_long: str) -> dict | None:
-    """Guaranteed weekly comment->DM tool-reel idea for this niche, pulled from
-    data/kb/projects.json. Rotates the angle by ISO week so reels don't repeat.
-
-    Returns None for niches with no weekly project (e.g. poetry). This is how the
-    free_tool give-aways get baked into every week's idea list automatically.
-    """
-    short = _NICHE_SHORT.get(niche_long)
-    if not short:
-        return None
-    pj = REPO / "data" / "kb" / "projects.json"
-    try:
-        projects = json.loads(pj.read_text(encoding="utf-8")).get("projects", [])
-    except (OSError, ValueError):
-        return None
-    week_idx = datetime.now().isocalendar().week
-    for p in projects:
-        cadence = p.get("cadence") or {}
-        if cadence.get("frequency") != "weekly":
-            continue
-        if short not in (p.get("niches") or []):
-            continue
-        angles = cadence.get("angle_rotation") or [""]
-        angle = angles[week_idx % len(angles)]
-        keyword = p.get("dm_keyword", "")
-        title = f"{p.get('name', p.get('key'))} — {angle}" if angle else p.get("name", p.get("key"))
-        return {
-            "title": title,
-            "project_key": p.get("key"),
-            "dm_keyword": keyword,
-            "deliverable": p.get("deliverable", ""),
-            "guardrail": p.get("honesty_guardrail", ""),
-        }
-    return None
-
-
-def weekly_raw_take_batch(niche_long: str) -> list[dict] | None:
-    """The week's 4 Raw Take questions (Hinglish opinion Shorts) for the Life niche.
-
-    Pulls from data/kb/raw_take_questions.json and rotates a non-repeating window of
-    `per_week` questions by ISO week. Returns None for non-Life niches.
-    """
-    if _NICHE_SHORT.get(niche_long) != "life":
-        return None
-    path = REPO / "data" / "kb" / "raw_take_questions.json"
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return None
-    questions = data.get("questions") or []
+    questions = questions_data.get("questions", [])
     if not questions:
-        return None
-    per_week = (data.get("cadence") or {}).get("per_week", 4)
-    week_idx = datetime.now().isocalendar().week
-    start = (week_idx * per_week) % len(questions)
-    # Rotating window (wraps around the bank) so weeks don't repeat for ~len/per_week weeks.
-    return [questions[(start + i) % len(questions)] for i in range(per_week)]
+        return []
+    num_batches = max(1, len(questions) // n)
+    start       = ((week_num - 1) % num_batches) * n
+    return questions[start : start + n]
 
 
-def score_ideas(output_dir="data/ideas", top_n=5):
-    console.rule("[info]Idea Scorer[/info]")
+# ── Claude Haiku idea scoring ─────────────────────────────────────────────────
 
-    with progress_bar() as progress:
-        load_task = progress.add_task("Loading ideas", total=None)
-        ideas = load_json_files(output_dir)
-        progress.update(load_task, description=f"Loaded {len(ideas)} ideas", completed=1, total=1)
+_SCORE_SYSTEM = """\
+You are a content strategist for Tarun Gupta (@mistakenlyhuman / @breathofdatascience).
+Niche: {niche_label}.
+Voice: Analytical but warm, personal examples, no jargon without context.
+Banned words: "In conclusion", "Dive into", "Leverage", "Game-changer", "Synergy".
 
-        filter_task = progress.add_task("Filtering off-topic", total=None)
-        before = len(ideas)
-        ideas = [i for i in ideas if passes_blocklist(i)]
-        progress.update(filter_task, description=f"Filtered: {before} → {len(ideas)} ideas", completed=1, total=1)
+Return ONLY a valid JSON array (no markdown fences). Each object must have:
+  "idea"   : string — specific, concrete topic angle (not generic)
+  "format" : string — one of "Blog + Reel", "Reel only", "Blog only", "Carousel"
+  "hook"   : string — 1 punchy hook line (<12 words), strong opening claim
+  "score"  : integer 1–10 (10 = highest virality: search demand + emotional pull + hook potential)
+  "why"    : string — ≤12 words explaining the score
 
-        dedup_task = progress.add_task("Deduplicating", total=None)
-        ideas = deduplicate(ideas)
-        progress.update(dedup_task, description=f"After dedup: {len(ideas)} ideas", completed=1, total=1)
+Return {top_n} best ideas, sorted descending by score.
+"""
 
-        rank_task = progress.add_task("Rank-normalizing per source", total=None)
-        ideas = apply_rank_score(ideas)
-        progress.update(rank_task, description="Rank-normalized", completed=1, total=1)
+_SCORE_PROMPT = """\
+Recent titles (avoid these angles — covered last 90 days):
+{recent}
 
-        archive_task = progress.add_task("Loading archive", total=None)
-        archive_titles = load_archive_titles()
-        progress.update(archive_task, description=f"Archive has {len(archive_titles)} titles", completed=1, total=1)
+Keyword signals this week (Google/YouTube autocomplete + Reddit + external):
+{keywords}
 
-        novelty_task = progress.add_task("Applying novelty penalty", total=None)
-        ideas = apply_novelty_penalty(ideas, archive_titles)
-        progress.update(novelty_task, completed=1, total=1)
+Master brief excerpt (voice, what's working):
+{brief}
 
-        virality_task = progress.add_task("Applying virality weight", total=None)
-        ideas = apply_virality_weight(ideas, load_past_keywords())
-        progress.update(virality_task, completed=1, total=1)
+Return {top_n} scored ideas for the {niche_label} niche.
+"""
 
-        # Group by niche
-        by_niche = {}
-        for idea in ideas:
-            niche = idea.get("niche", "unknown")
-            by_niche.setdefault(niche, []).append(idea)
 
-        # Count top-N classifications needed
-        total_to_classify = sum(min(top_n, len(v)) for v in by_niche.values())
-        classify_task = progress.add_task("Classifying ideas", total=total_to_classify)
+def _score_with_claude(
+    niche: str,
+    items: list[dict],
+    recent_titles: list[str],
+    master_brief: str,
+    hook_patterns: str,
+    client: anthropic.Anthropic,
+    top_n: int = 5,
+) -> list[dict]:
+    label   = _NICHE_LABELS.get(niche, niche)
+    # Sample the highest-adj_score items first, cap at 100 for token budget
+    top_items = sorted(items, key=lambda x: x.get("adj_score", 0), reverse=True)[:100]
+    kw_lines  = "\n".join(f"- {it['title']}" for it in top_items)
 
-        # Build top-N per niche, then classify all in parallel
-        top_by_niche = {
-            niche: sorted(ideas, key=lambda x: x.get("virality_adjusted_score", x.get("novelty_adjusted_score", 0)), reverse=True)[:top_n]
-            for niche, ideas in by_niche.items()
-        }
+    system = _SCORE_SYSTEM.format(niche_label=label, top_n=top_n)
+    prompt = _SCORE_PROMPT.format(
+        recent="\n".join(f"- {t}" for t in recent_titles) if recent_titles else "(none)",
+        keywords=kw_lines,
+        brief=(master_brief or "")[:2000],
+        niche_label=label,
+        top_n=top_n,
+    )
+    try:
+        resp = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=1500,
+            system=system,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw = resp.content[0].text.strip()
+        if raw.startswith("```"):
+            raw = raw.split("```", 2)[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+            raw = raw.rsplit("```", 1)[0]
+        return sorted(json.loads(raw), key=lambda x: -x.get("score", 0))
+    except Exception as e:
+        console.print(f"  [warn]{niche} scoring failed: {e}[/warn]")
+        return []
 
-        all_pairs = [(idea, niche) for niche, ideas in top_by_niche.items() for idea in ideas]
-        futures = {}
-        with ThreadPoolExecutor(max_workers=5) as ex:
-            for idea, niche in all_pairs:
-                fut = ex.submit(classify_idea, idea["title"], niche)
-                futures[fut] = idea
-            for fut in as_completed(futures):
-                futures[fut]["category"] = fut.result()
-                progress.update(classify_task, description=f"Classified {futures[fut].get('category','')[:30]}")
-                progress.advance(classify_task)
 
-        final_ideas = top_by_niche
+# ── Markdown output ───────────────────────────────────────────────────────────
 
-    # Generate markdown report
-    lines = ["# Weekly Ideas Report", f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", ""]
-    for niche, ideas_list in final_ideas.items():
-        lines.append(f"## {niche.replace('_', ' ').title()}")
+def _render_project_reel(reel: dict) -> str:
+    cmd = f"python3 scripts/repurpose_blog.py --input <blog.md> --project {reel['key']}"
+    hooks = [
+        f"Here's {reel['angle'].lower()} — for free.",
+        f"I built {reel['name'].split(':')[0].strip()} and {reel['angle'].lower()}.",
+    ]
+    hook_lines = "\n".join(f"  - {h}" for h in hooks)
+    return (
+        f"### 🔧 Tool Reel (mandatory — 1/week · {reel['key']})\n"
+        f"> `{cmd}`\n"
+        f"> DM keyword: **{reel['dm_kw']}** · _{reel['guardrail']}_\n"
+        f"\n"
+        f"**Project:** {reel['name']}\n"
+        f"**This week's angle:** {reel['angle']}\n"
+        f"**Hook options (record 5×, keep winner):**\n"
+        f"{hook_lines}\n"
+        f"**5-beat:** Hook 0–3s → Problem 3–8s → Reveal+proof 8–28s → Payoff 28–35s → "
+        f"CTA 'Comment **{reel['dm_kw']}**' 35–45s\n"
+    )
+
+
+def _render_raw_takes(questions: list[dict]) -> str:
+    lines = [
+        "### 🎤 Raw Take Batch (4 this week — Hinglish, batch-record in one sitting)",
+        "> `docs/raw-take-format.md` · Format: 'Someone asked me — <Q>' → raw opinion → landing line",
+        "",
+    ]
+    for i, q in enumerate(questions, 1):
+        lines.append(f"{i}. **Q:** _{q['q']}_ `[{q.get('theme','')}]`")
+        lines.append(f"   Hook: \"Someone asked me — {q['q']}\"")
         lines.append("")
+    return "\n".join(lines)
 
-        # Baked-in weekly comment->DM tool reel (free_tool projects). Always first.
-        reel = weekly_project_reel(niche)
+
+def _render_scored_table(ideas: list[dict]) -> str:
+    if not ideas:
+        return "_No ideas scored — check that idea input files exist for this week._\n"
+    rows = [
+        "| Score | Idea | Hook | Format |",
+        "|-------|------|------|--------|",
+    ]
+    for idea in ideas:
+        score = idea.get("score", "?")
+        title = idea.get("idea", "").replace("|", "\\|")
+        hook  = idea.get("hook", "").replace("|", "\\|")
+        fmt   = idea.get("format", "").replace("|", "\\|")
+        rows.append(f"| {score}/10 | {title} | {hook} | {fmt} |")
+    return "\n".join(rows) + "\n"
+
+
+def render_weekly_ideas(
+    week: str,
+    project_reels: dict[str, dict | None],
+    raw_takes: list[dict],
+    scored: dict[str, list[dict]],
+) -> str:
+    today = datetime.date.today().isoformat()
+    lines = [
+        f"# Weekly Content Ideas — {week}",
+        f"_Generated: {today} · Regenerate: `python3 scripts/idea_scorer.py --force`_",
+        "",
+        "---",
+        "",
+    ]
+    for niche in ("ds", "life", "poetry"):
+        label = _NICHE_LABELS[niche]
+        lines += [f"## {label}", ""]
+
+        reel = project_reels.get(niche)
         if reel:
-            lines += [
-                f"### ⭐ Tool Reel (weekly): {reel['title']}",
-                "- **Type:** comment→DM give-a-tool reel (auto-baked from projects.json)",
-                f"- **DM keyword:** comment `{reel['dm_keyword']}` → auto-DM the deliverable",
-                f"- **Deliverable:** {reel['deliverable']}",
-                f"- **Guardrail:** {reel['guardrail']}",
-                f"- **Produce with:** `--project {reel['project_key']}` on the reel/derivative generators",
-                "",
-            ]
+            lines += [_render_project_reel(reel), ""]
 
-        # Baked-in Raw Take batch (Life only) — 4 Hinglish opinion Shorts/week, batch-recorded.
-        raw_batch = weekly_raw_take_batch(niche)
-        if raw_batch:
-            lines.append("### 🎤 Raw Take batch (4×/week, batch-record) — Hinglish opinion Shorts")
-            lines.append("- IG Reel (@mistakenlyhuman) + YouTube Short (Breath of Life). Open with the question verbatim.")
-            for j, qa in enumerate(raw_batch, 1):
-                lines.append(f"  {j}. \"Someone asked me — {qa['q']}\"  _(theme: {qa.get('theme','')})_")
-            lines += ["- See `docs/raw-take-format.md` for structure + guardrails.", ""]
+        if niche == "life" and raw_takes:
+            lines += [_render_raw_takes(raw_takes), ""]
 
-        for i, idea in enumerate(ideas_list, 1):
-            lines += [
-                f"### {i}. {idea.get('title', 'Untitled')}",
-                f"- **Score:** {idea.get('virality_adjusted_score', idea.get('novelty_adjusted_score', 0)):.3f}",
-                f"- **Novelty score:** {idea.get('novelty_adjusted_score', 0):.3f}",
-                f"- **Category:** {idea.get('category', 'uncategorized')}",
-                f"- **Source:** {idea.get('source', 'unknown')}",
-            ]
-            if "url" in idea:
-                lines.append(f"- **URL:** {idea['url']}")
-            lines.append("")
+        lines += ["### 📝 Blog + Reel Ideas (virality-scored)", ""]
+        lines += [_render_scored_table(scored.get(niche, [])), ""]
+        lines += ["---", ""]
 
-    out = Path("data/ideas") / "weekly_ideas.md"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text("\n".join(lines), encoding="utf-8")
+    return "\n".join(lines)
 
-    console.print(f"\n[success]✓ Saved to {out}[/success]")
-    for niche, ideas_list in final_ideas.items():
-        console.print(f"  [niche]{niche}[/niche]:")
-        for i, idea in enumerate(ideas_list, 1):
-            console.print(f"    {i}. [dim]{idea['title'][:65]}[/dim] ({idea.get('novelty_adjusted_score',0):.3f})")
 
-    return final_ideas
+# ── Main ─────────────────────────────────────────────────────────────────────
+
+def main() -> None:
+    ap = argparse.ArgumentParser(
+        description="Generate weekly_ideas.md with scored ideas + project reels + raw takes."
+    )
+    ap.add_argument("--week",    default=None,   help="ISO week e.g. W26 or 2026-W26 (default: current)")
+    ap.add_argument("--top",     type=int, default=5, help="Scored ideas per niche (default 5)")
+    ap.add_argument("--force",   action="store_true", help="Overwrite existing weekly_ideas.md")
+    ap.add_argument("--dry-run", action="store_true", help="Print to stdout; don't write file")
+    args = ap.parse_args()
+
+    # Resolve week string
+    today = datetime.date.today().isoformat()
+    if args.week:
+        w = args.week.strip()
+        if not w.startswith("20"):
+            w = f"{today[:4]}-{w}" if w.startswith("W") else f"20{w}"
+        week = w
+    else:
+        week = get_iso_week(today)
+
+    week_num = int(week.split("-W")[1])
+    out_path = IDEAS / "weekly_ideas.md"
+
+    if out_path.exists() and not args.force and not args.dry_run:
+        console.print(f"[dim]weekly_ideas.md exists — use --force to regenerate[/dim]")
+        console.print(f"  → {out_path.relative_to(REPO)}")
+        return
+
+    console.rule(f"[bold]Idea machine — {week}[/bold]")
+
+    # ── KB files ──────────────────────────────────────────────────────────────
+    projects_data = _load_json(KB / "projects.json", required=True)
+    raw_qs_data   = _load_json(KB / "raw_take_questions.json", required=True)
+    master_brief  = (KB / "master_brief.md").read_text(encoding="utf-8") if (KB / "master_brief.md").exists() else ""
+    hook_patterns = (KB / "twitter_hook_patterns.json").read_text(encoding="utf-8") if (KB / "twitter_hook_patterns.json").exists() else ""
+
+    # ── Deterministic ─────────────────────────────────────────────────────────
+    console.print("\n[bold]1/3 Project reels (deterministic)[/bold]")
+    project_reels: dict[str, dict | None] = {}
+    for niche in ("ds", "life", "poetry"):
+        reel = weekly_project_reel(niche, week_num, projects_data)
+        project_reels[niche] = reel
+        if reel:
+            console.print(f"  {niche}: {reel['name']} → \"{reel['angle']}\"")
+        else:
+            console.print(f"  {niche}: (no project this week)")
+
+    console.print("\n[bold]2/3 Raw take batch (deterministic)[/bold]")
+    raw_takes = weekly_raw_take_batch(week_num, raw_qs_data)
+    for i, q in enumerate(raw_takes, 1):
+        text = q["q"][:65] + "…" if len(q["q"]) > 65 else q["q"]
+        console.print(f"  {i}. {text}")
+
+    # ── Idea inputs ───────────────────────────────────────────────────────────
+    console.print("\n[bold]3/3 Scoring ideas with Claude Haiku[/bold]")
+    week_items = _load_week_ideas(week)
+    for niche, items in week_items.items():
+        console.print(f"  {niche}: {len(items)} raw signals loaded")
+
+    # Recent tracker titles (repeat-angle filter)
+    recent_by_niche: dict[str, list[str]] = {n: [] for n in ("ds", "life", "poetry")}
+    try:
+        from lib.tracker import read_recent_titles
+        for niche in ("ds", "life", "poetry"):
+            recent_by_niche[niche] = read_recent_titles(niche, days=90)
+    except Exception as e:
+        console.print(f"  [dim]Tracker unavailable: {e}[/dim]")
+
+    client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY_FREE"))
+    scored: dict[str, list[dict]] = {}
+
+    for niche in ("ds", "life", "poetry"):
+        items = week_items.get(niche, [])
+        # Filter off-topic
+        items = [it for it in items if _passes_blocklist(it)]
+        # Deduplicate
+        items = _deduplicate(items)
+        # Novelty penalty vs recent tracker
+        items = _apply_novelty_penalty(items, recent_by_niche.get(niche, []))
+
+        if not items:
+            console.print(f"  {niche}: no signals after filtering — skipping Claude call")
+            scored[niche] = []
+            continue
+
+        console.print(f"  {niche}: {len(items)} items → scoring…", end=" ", flush=True)
+        ideas = _score_with_claude(
+            niche, items, recent_by_niche.get(niche, []),
+            master_brief, hook_patterns, client, top_n=args.top,
+        )
+        scored[niche] = ideas
+        console.print(f"{len(ideas)} ideas returned")
+
+    # ── Render ────────────────────────────────────────────────────────────────
+    output = render_weekly_ideas(week, project_reels, raw_takes, scored)
+
+    if args.dry_run:
+        print(output)
+    else:
+        IDEAS.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(output, encoding="utf-8")
+        console.print(f"\n[success]✓ weekly_ideas.md → {out_path.relative_to(REPO)}[/success]")
+
+    console.print("\n[dim]Next: `produce_blog.py --topic <idea>` · record reel from brief · run `run_blog_pipeline.py`[/dim]")
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--top", type=int, default=5, help="Top N ideas per niche (default 5)")
-    ap.add_argument("--dir", default="data/ideas")
-    args = ap.parse_args()
-    score_ideas(output_dir=args.dir, top_n=args.top)
+    main()

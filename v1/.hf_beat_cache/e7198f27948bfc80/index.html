@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="502" data-composition-variables='{"caption_text": {"type": "string", "default": "breath of poetry if this one found a nerve share it with someone who's been worn down by the performance not to explain it just to say it i see it too i write things like this every week things that don't flinch stay if that's what you have been looking for"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px;
+    background: #0a0e1a;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+  }
+  
+    /* === Fullscreen layout === */
+    #panel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+    /* Fullscreen ambient background */
+    #ambient {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 30%, rgba(59,130,246,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 85% 75%, rgba(139,92,246,0.09) 0%, transparent 60%),
+        #0a0e1a;
+    }
+  
+    /* === Python-owned caption (fullscreen) === */
+    #caption-layer {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1860px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="16.721" data-width="1920" data-height="1080">
+    <div id="ambient"></div>
+  <div id="panel">
+    <div id="content">
+      <div style="position:absolute; left:0; top:0; width:1920px; height:1080px; background:#080808; overflow:hidden;">
+        <div class="orb1" style="position:absolute; left:360px; top:160px; width:1200px; height:1200px; border-radius:50%; background:radial-gradient(circle, rgba(124,58,237,0.18), rgba(124,58,237,0) 60%); filter:blur(40px);"></div>
+        <div class="orb2" style="position:absolute; left:-200px; top:480px; width:1000px; height:1000px; border-radius:50%; background:radial-gradient(circle, rgba(80,60,120,0.22), rgba(80,60,120,0) 60%); filter:blur(50px);"></div>
+        <div class="orb3" style="position:absolute; left:1100px; top:-200px; width:1100px; height:1100px; border-radius:50%; background:radial-gradient(circle, rgba(200,200,212,0.07), rgba(200,200,212,0) 60%); filter:blur(60px);"></div>
+        <div class="vignette" style="position:absolute; left:0; top:0; width:1920px; height:1080px; background:radial-gradient(ellipse at center, rgba(8,8,8,0) 40%, rgba(8,8,8,0.85) 100%);"></div>
+      
+        <div class="rule" style="position:absolute; left:760px; top:436px; width:400px; height:2px; background:linear-gradient(90deg, rgba(124,58,237,0), #7c3aed, rgba(124,58,237,0)); transform-origin:center;"></div>
+      
+        <div class="handle" style="position:absolute; left:60px; top:470px; width:1800px; text-align:center; font-family:'Cormorant Garamond','Garamond','Georgia',serif; font-weight:300; font-size:118px; letter-spacing:0.05em; color:#f5f0eb; text-shadow:0 0 40px rgba(124,58,237,0.45); max-width:1860px; word-wrap:break-word; overflow-wrap:break-word;">@breathofpoetry</div>
+      
+        <div class="pill" style="position:absolute; left:810px; top:640px; width:300px; height:74px; border-radius:40px; background:rgba(15,15,18,0.92); border:1px solid rgba(124,58,237,0.55); box-shadow:0 0 50px rgba(124,58,237,0.4), inset 0 0 20px rgba(124,58,237,0.12); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:'Inter','Helvetica Neue',Arial,sans-serif; font-weight:300; font-size:26px; letter-spacing:0.18em; text-transform:uppercase; color:#c8c8d4;">Subscribe</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+      gsap.set(root.querySelector('.handle'), { opacity: 0, scale: 0.94, y: 24, filter: 'blur(10px)' });
+      gsap.set(root.querySelector('.rule'), { scaleX: 0, opacity: 0 });
+      gsap.set(root.querySelector('.pill'), { opacity: 0, scale: 0.9, y: 18 });
+      gsap.set(root.querySelector('.orb1'), { scale: 0.85, opacity: 0.5 });
+      gsap.set(root.querySelector('.orb2'), { scale: 0.9, opacity: 0.5 });
+      gsap.set(root.querySelector('.orb3'), { scale: 0.8, opacity: 0.4 });
+      
+      // slow atmospheric drift
+      tl.to(root.querySelector('.orb1'), { scale: 1.1, opacity: 1, duration: 8, ease: 'cubic-bezier(0,0,1,1)' }, 0);
+      tl.to(root.querySelector('.orb2'), { scale: 1.15, opacity: 1, duration: 9, ease: 'cubic-bezier(0,0,1,1)' }, 0);
+      tl.to(root.querySelector('.orb3'), { scale: 1.2, opacity: 1, duration: 10, ease: 'cubic-bezier(0,0,1,1)' }, 0);
+      
+      // accent rule expands
+      tl.to(root.querySelector('.rule'), { scaleX: 1, opacity: 1, duration: 2.0, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 0.2);
+      
+      // handle breathes in
+      tl.to(root.querySelector('.handle'), { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 2.0, ease: 'cubic-bezier(0.16,1,0.3,1)' }, 0.6);
+      
+      // subscribe pill settles
+      tl.to(root.querySelector('.pill'), { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: 'cubic-bezier(0.34,1.56,0.64,1)' }, 2.6);
+      
+      // pill glow pulse
+      tl.to(root.querySelector('.pill'), { boxShadow: '0 0 75px rgba(124,58,237,0.7), inset 0 0 28px rgba(124,58,237,0.2)', duration: 1.4, ease: 'cubic-bezier(0,0,1,1)', yoyo: true, repeat: 3 }, 4.0);
+      
+      // gentle final fade out
+      tl.to([root.querySelector('.handle'), root.querySelector('.pill'), root.querySelector('.rule')], { opacity: 0, y: -16, duration: 0.8, ease: 'cubic-bezier(0.42,0,1,1)' }, 15.6);
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

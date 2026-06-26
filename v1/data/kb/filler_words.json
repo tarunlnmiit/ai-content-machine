@@ -1,0 +1,30 @@
+{
+  "_comment": "Edit these lists to control what gets removed during video trimming.",
+  "_note_unconditional": "Words that are ALWAYS fillers — removed without LLM confirmation.",
+  "_note_ambiguous": "Words that need context to decide — sent to LLM for disambiguation.",
+
+  "unconditional": [
+    "um",
+    "uh",
+    "umm",
+    "uhh",
+    "hmm",
+    "mhm",
+    "hm"
+  ],
+
+  "ambiguous": [
+    "so",
+    "like",
+    "you know",
+    "basically",
+    "literally",
+    "right",
+    "i mean",
+    "kind of",
+    "sort of",
+    "you see",
+    "okay so",
+    "and so"
+  ]
+}
