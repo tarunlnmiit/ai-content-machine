@@ -81,7 +81,28 @@ Flow once a topic is picked:
 3. **CALL 2 — article.** Topic + your Q&A → `prompts/article_writer.md` → 3 title
    options, subtitle, full article, 5 tags, and an email CTA. You pick the title.
 4. Draft is saved to `content/blogs/{week}/{slug}.md` like any other blog; tags are
-   stored as a trailing `<!-- Medium tags: … -->` comment. Continue to publishing as usual.
+   stored as a trailing `<!-- Medium tags: … -->` comment, followed by the SEO comments
+   (see **Medium SEO** below). Continue to publishing as usual.
+
+## Medium SEO (target keyphrase + SEO title/description)
+
+*Added 2026-06-26.* Both blog generators now emit Medium SEO fields so stories rank on
+Google (Medium has strong domain authority). The model picks a **target keyphrase**, weaves
+it into the title + first paragraph, and produces a **search-facing SEO title + SEO
+description** (distinct from the reader-facing title/subtitle). These are saved as trailing
+comments in the blog `.md`:
+
+```
+<!-- Target keyphrase: … -->
+<!-- SEO title: … -->
+<!-- SEO description: … -->
+```
+
+**Medium's API can't set these** (`publish_medium.py` only sends title/tags/canonical/content),
+so they're a **manual paste into Medium's SEO settings** (••• → SEO settings). `produce_blog.py`,
+`run_blog_pipeline.py`, and `publish_medium.py` all **print the values + manual checklist** when
+they finish. Parsing/rendering lives in `scripts/lib/seo.py`. Full rules:
+[medium-seo.md](medium-seo.md).
 
 **Editable without touching code:**
 

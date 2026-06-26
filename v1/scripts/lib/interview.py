@@ -187,6 +187,7 @@ def write_article(
     topic: str,
     qa_pairs: list[tuple[str, str]],
     cfg: dict[str, str],
+    extra_instruction: str = "",
 ) -> dict:
     """Returns {title_options, subtitle, article, tags, email_cta, raw}."""
     prompt = render_template("article_writer.md", {
@@ -197,13 +198,18 @@ def write_article(
         "ANSWERS": format_qa(qa_pairs),
         "CTA_LINK_OR_DESC": cfg["EMAIL_CTA_TARGET"],
     })
+    if extra_instruction:
+        prompt += f"\n\n{extra_instruction}"
     raw = run_claude(prompt, timeout=600, description="Writing the article (2–5 min)...")
     return _parse_article(raw)
 
 
 def _parse_article(raw: str) -> dict:
     """Parse the fixed CALL-2 output format. Tolerant of missing sections."""
-    sections = {"title_options": [], "subtitle": "", "article": "", "tags": [], "email_cta": ""}
+    sections = {
+        "title_options": [], "subtitle": "", "article": "", "tags": [], "email_cta": "",
+        "keyphrase": "", "seo_title": "", "seo_description": "",
+    }
     lines = raw.splitlines()
     current = None
     article_lines: list[str] = []
@@ -233,6 +239,18 @@ def _parse_article(raw: str) -> dict:
         if upper.startswith("EMAIL CTA:"):
             current = "cta"
             sections["email_cta"] = line.split(":", 1)[1].strip()
+            continue
+        if upper.startswith("TARGET KEYPHRASE:"):
+            current = "keyphrase"
+            sections["keyphrase"] = line.split(":", 1)[1].strip()
+            continue
+        if upper.startswith("SEO TITLE:"):
+            current = "seo_title"
+            sections["seo_title"] = line.split(":", 1)[1].strip()
+            continue
+        if upper.startswith("SEO DESCRIPTION:"):
+            current = "seo_description"
+            sections["seo_description"] = line.split(":", 1)[1].strip()
             continue
 
         if current == "title" and line.strip():
@@ -277,4 +295,16 @@ def assemble_markdown(title: str, parsed: dict) -> str:
     tags = parsed.get("tags", [])
     if tags:
         md += f"\n\n<!-- Medium tags: {', '.join(tags)} -->"
+
+    # SEO fields as trailing comments (Medium API can't set them; surfaced for a
+    # manual paste into Medium's SEO settings). See scripts/lib/seo.py.
+    keyphrase = parsed.get("keyphrase", "").strip()
+    seo_title = parsed.get("seo_title", "").strip()
+    seo_description = parsed.get("seo_description", "").strip()
+    if keyphrase:
+        md += f"\n<!-- Target keyphrase: {keyphrase} -->"
+    if seo_title:
+        md += f"\n<!-- SEO title: {seo_title} -->"
+    if seo_description:
+        md += f"\n<!-- SEO description: {seo_description} -->"
     return md + "\n"

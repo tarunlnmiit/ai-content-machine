@@ -30,6 +30,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 from lib.schedule_calc import get_iso_week
 from lib.content_paths import derivatives_dir
+from lib.seo import extract_seo, seo_manual_steps
 
 NICHE_FULL = {"ds": "data_science_tech", "life": "life_self_dev", "poetry": "poetry_quotes"}
 
@@ -187,6 +188,12 @@ def main() -> None:
     print(f"\n[done] blog pipeline complete for {slug}.")
     print("       Videos (long-form + shorts) are separate: run_voiceover_week.py --audio … --niche "
           f"{niche} --week {week} --slug {slug}")
+
+    # SEO manual steps for Medium (topic mode already printed these via produce_blog).
+    if not args.topic and not dry and blog.exists():
+        steps = seo_manual_steps(extract_seo(blog.read_text(encoding="utf-8")))
+        if steps:
+            print(f"\n{steps}")
 
 
 if __name__ == "__main__":

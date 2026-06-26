@@ -12,8 +12,9 @@ INPUTS:
 - AUDIENCE: {{AUDIENCE}}            // who reads this niche
 
 RULES:
-- Generate 5–8 questions, no more. The author must be able to answer all of them
-  in under 15 minutes total.
+- Generate 4–7 questions, calibrated to topic depth: focused/simple topics get
+  4–5; complex/multi-angle topics get 6–7. Never exceed 7.
+  The author must be able to answer all of them in under 15 minutes total.
 - Each question must pull out something ONLY this author can provide: a real
   experience, a concrete number or result, a strong opinion, a specific example,
   a counterintuitive lesson, or a story. Avoid questions answerable by a generic
@@ -30,4 +31,4 @@ SUGGESTED ANGLE: <one sentence>
 QUESTIONS:
 1. ...
 2. ...
-(through 5–8)
+(through 4–7)

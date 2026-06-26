@@ -22,6 +22,7 @@ from lib.schedule_calc import write_schedule_json, get_iso_week
 from lib.virality import virality_block, project_keys
 from lib.worksheet_cta import worksheet_cta_markdown, has_cta
 from lib import interview as interview_flow
+from lib.seo import extract_seo, seo_manual_steps
 
 # Niches that ship a companion worksheet (poetry does not).
 WORKSHEET_NICHES = {"ds", "life"}
@@ -316,7 +317,7 @@ def suggest_titles(
         }.get(blog_type, "")
 
     prompt = f"""\
-Generate 5 clickbait-but-credible blog title options for this creator.
+Generate 7 maximum-clickbait-but-credible blog title options for this creator.
 
 Niche:    {cfg['label']}
 Topic:    {topic}
@@ -324,25 +325,27 @@ Topic:    {topic}
 {type_ctx}
 Keywords with real search demand: {top_keywords}
 
-Each title must use a DIFFERENT tension lever:
-1. [FEAR]             — reader fears they're missing something critical right now
-2. [ANXIETY]          — taps into career/life anxiety the target reader already feels
-3. [CURIOSITY GAP]    — opens a loop they must click to close
-4. [COUNTERINTUITIVE] — challenges something they think they know
-5. [INSIDER]          — positions this as information only insiders have
+Each title must use a DIFFERENT emotion lever — prefix each line with its lever in brackets:
+1. [FOMO]             — reader feels left behind if they don't read this now
+2. [FEAR]             — loss, risk, or negative consequence if they ignore this
+3. [CURIOSITY GAP]    — incomplete info that forces a click to resolve
+4. [COUNTERINTUITIVE] — violates common wisdom; surprises the reader
+5. [ASPIRATION]       — reader imagines a better version of themselves after reading
+6. [INSIDER SECRET]   — implies privileged knowledge others don't have
+7. [SOCIAL PROOF / SPECIFICITY] — specific numbers, timeframes, or results that signal credibility
 
 Rules every title must follow:
 - Signals exactly who it's for (right reader self-selects in)
 - Creates enough tension that NOT clicking feels like a loss
+- As clickbait as possible while remaining credible and true to the content
 - Under 85 characters where possible
 - No: "game-changer", "leverage", "dive into", "secret sauce", "In conclusion"
 
-Reply with exactly — no labels, no explanation, just 5 lines:
-1. [title]
-2. [title]
-3. [title]
-4. [title]
-5. [title]
+Reply with exactly 7 lines in this format:
+1. [LEVER] title text
+2. [LEVER] title text
+...
+7. [LEVER] title text
 """
     raw = run_claude(prompt, timeout=90, description="Generating title options...")
     titles: list[str] = []
@@ -352,42 +355,46 @@ Reply with exactly — no labels, no explanation, just 5 lines:
             t = s.split(".", 1)[1].strip()
             if t:
                 titles.append(t)
-    return titles[:5] or [l.strip() for l in raw.splitlines() if l.strip()][:5]
+    return titles[:7] or [l.strip() for l in raw.splitlines() if l.strip()][:7]
 
 
 def select_title(titles: list[str], topic: str) -> str:
-    levers = ["FEAR", "ANXIETY", "CURIOSITY GAP", "COUNTERINTUITIVE", "INSIDER"]
     short = topic[:50] + ("…" if len(topic) > 50 else "")
     console.print(f"\n[bold]── Pick a title  ·  {short} ──[/bold]")
-    for i, title in enumerate(titles):
-        lever = levers[i] if i < len(levers) else f"OPTION {i + 1}"
-        console.print(f"  [bold]{i + 1}.[/bold] [{lever}]")
-        console.print(f"     {title}\n")
+    for i, title in enumerate(titles, 1):
+        console.print(f"  [bold]{i}.[/bold] {title}\n")
     while True:
         try:
             raw = input(f"  Your pick (1–{len(titles)}): ").strip()
             idx = int(raw) - 1
             if 0 <= idx < len(titles):
-                return titles[idx]
+                # Strip the [LEVER] prefix before returning clean title
+                chosen = titles[idx]
+                cleaned = re.sub(r"^\[[^\]]+\]\s*", "", chosen).strip()
+                return cleaned
         except (ValueError, EOFError):
             pass
         console.print(f"  [warn]Enter a number between 1 and {len(titles)}.[/warn]")
 
 
 def select_option(options: list[str], header: str) -> str:
-    """Pick one option from a numbered list. Empty input defaults to option 1."""
+    """Pick one option from a numbered list. Empty input defaults to option 1.
+    Strips leading [LEVER] prefix from title options before returning."""
     console.print(f"\n[bold]── {header} ──[/bold]")
     for i, opt in enumerate(options, 1):
-        console.print(f"  [bold]{i}.[/bold] {opt}")
+        console.print(f"  [bold]{i}.[/bold] {opt}\n")
     while True:
         try:
             raw = input(f"  Your pick (1–{len(options)}, Enter = 1): ").strip()
         except (EOFError, KeyboardInterrupt):
-            return options[0]
+            chosen = options[0]
+            return re.sub(r"^\[[^\]]+\]\s*", "", chosen).strip()
         if not raw:
-            return options[0]
+            chosen = options[0]
+            return re.sub(r"^\[[^\]]+\]\s*", "", chosen).strip()
         if raw.isdigit() and 1 <= int(raw) <= len(options):
-            return options[int(raw) - 1]
+            chosen = options[int(raw) - 1]
+            return re.sub(r"^\[[^\]]+\]\s*", "", chosen).strip()
         console.print(f"  [warn]Enter a number between 1 and {len(options)}.[/warn]")
 
 
@@ -416,11 +423,127 @@ def run_interview_flow(
 
     # CALL 2 — article
     parsed = interview_flow.write_article(run_claude, topic=topic, qa_pairs=qa_pairs, cfg=cfg)
+    blog_md = interview_flow.assemble_markdown(parsed["title_options"][0] if parsed["title_options"] else "Draft", parsed)
+    if "[IMAGE_INSERT" not in blog_md:
+        console.print("[warn]No IMAGE_INSERT in article — retrying with enforcement...[/warn]")
+        parsed = interview_flow.write_article(
+            run_claude, topic=topic, qa_pairs=qa_pairs, cfg=cfg,
+            extra_instruction="CRITICAL: You MUST include at least 1 [IMAGE_INSERT: search term | caption] marker in the article body.",
+        )
     chosen_title = select_option(parsed["title_options"], "Pick a title")
     blog_md = interview_flow.assemble_markdown(chosen_title, parsed)
 
     if parsed.get("tags"):
         console.print(f"[info]Medium tags:[/info] {', '.join(parsed['tags'])}")
+    return blog_md, chosen_title
+
+
+def _read_poem() -> str:
+    """Collect poem lines from stdin. Type && on own line to finish."""
+    console.print("  [dim](paste your poem; type '&&' on a new line when done)[/dim]")
+    lines: list[str] = []
+    while True:
+        try:
+            line = input("  > ")
+        except (EOFError, KeyboardInterrupt):
+            break
+        if line.strip() == "&&":
+            break
+        lines.append(line)
+    return "\n".join(lines).strip()
+
+
+def run_poem_mode(topic: str) -> tuple[str, str]:
+    """Poetry path: paste or generate a poem, wrap with 2-3 line intro + outro.
+    Returns (blog_markdown, title)."""
+
+    # ── Poem source ──────────────────────────────────────────────────────────
+    console.print("\n[bold]── Poetry Mode ──[/bold]")
+    console.print("  Do you have a poem to paste? [[bold]y[/bold]/n] ", end="")
+    try:
+        have_poem = input().strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        have_poem = "n"
+
+    if have_poem in ("y", "yes", ""):
+        console.print("\n  Paste your poem:")
+        poem_text = _read_poem()
+        if not poem_text:
+            sys.exit("No poem provided — aborting.")
+    else:
+        # Generate poem
+        console.print("\n  Topic / mood / form (e.g. 'grief in rain, free verse'): ", end="")
+        try:
+            prompt_input = input().strip()
+        except (EOFError, KeyboardInterrupt):
+            prompt_input = topic
+        gen_prompt = (
+            f"Write a short, original poem about: {prompt_input or topic}.\n"
+            "Voice: intimate, specific, no clichés. Length: 8–20 lines.\n"
+            "Output ONLY the poem — no title, no explanation."
+        )
+        poem_text = run_claude(gen_prompt, timeout=120, description="Writing poem...")
+
+    # ── Title ─────────────────────────────────────────────────────────────────
+    title_prompt = (
+        f"Output exactly 5 short, evocative Medium titles for this poem. "
+        f"Rules: one per line, no numbering, no quotes, no preamble, no explanation — "
+        f"just 5 bare title lines. Emotional resonance, not clickbait.\n\nPOEM:\n{poem_text}"
+    )
+    raw_titles = run_claude(title_prompt, timeout=60, description="Generating titles...")
+    title_options = [
+        t.strip() for t in raw_titles.strip().splitlines()
+        if t.strip() and not t.strip().lower().startswith(("here", "title", "1.", "2.", "3.", "4.", "5.", "-"))
+    ][:5]
+    if not title_options:
+        title_options = [topic]
+    chosen_title = select_option(title_options, "Pick a title")
+
+    # ── Intro + Outro ─────────────────────────────────────────────────────────
+    wrap_prompt = (
+        f"You are a ghostwriter. Given this poem and its title, write:\n"
+        f"1. INTRO: exactly 2–3 sentences before the poem. Context, mood, or when it was written. "
+        f"No summary, no explanation of the poem — just a human moment that lands the reader in it.\n"
+        f"2. OUTRO: exactly 2–3 sentences after the poem. A brief reflection or image that closes "
+        f"the piece. The very last sentence should be a subtle, almost invisible nudge to follow "
+        f"— something like 'More here, if you want it.' or 'I write more of these.' "
+        f"Never say 'subscribe', 'click', 'follow me', or 'sign up'. Feel, don't sell.\n\n"
+        f"Output format (exact):\nINTRO:\n<intro text>\nOUTRO:\n<outro text>\n\n"
+        f"TITLE: {chosen_title}\nPOEM:\n{poem_text}"
+    )
+    raw_wrap = run_claude(wrap_prompt, timeout=120, description="Writing intro + outro...")
+
+    intro, outro = "", ""
+    section = None
+    for line in raw_wrap.splitlines():
+        if line.strip().upper() == "INTRO:":
+            section = "intro"
+        elif line.strip().upper() == "OUTRO:":
+            section = "outro"
+        elif section == "intro":
+            intro = (intro + "\n" + line).strip()
+        elif section == "outro":
+            outro = (outro + "\n" + line).strip()
+
+    if not intro:
+        intro = ""
+    if not outro:
+        outro = ""
+
+    # ── Image marker ──────────────────────────────────────────────────────────
+    img_prompt = (
+        f"Given this poem title and poem, write ONE specific Pexels image search term "
+        f"(3-5 words, visual/concrete, no abstract nouns) that would make a beautiful "
+        f"accompanying photo. Output only the search term, nothing else.\n\n"
+        f"Title: {chosen_title}\nPoem:\n{poem_text}"
+    )
+    img_term = run_claude(img_prompt, timeout=30, description="Picking image...").strip().strip('"')
+    image_marker = f"[IMAGE_INSERT: {img_term} | {chosen_title}]"
+
+    # ── Assemble markdown ─────────────────────────────────────────────────────
+    poem_block = "\n".join(f"> {ln}" for ln in poem_text.splitlines())
+    blog_md = f"# {chosen_title}\n\n{intro}\n\n{image_marker}\n\n{poem_block}\n\n{outro}\n"
+
     return blog_md, chosen_title
 
 
@@ -713,7 +836,11 @@ def main():
         console.print(f"\nTopic: [bold]{topic}[/bold]")
 
     # ── Steps 2–5: Draft ──────────────────────────────────────────────────────
-    if args.interview:
+    if args.niche == "poetry" and not args.interview:
+        # Poetry mode: paste or generate poem + 2-3 line intro/outro only.
+        blog_text, chosen_title = run_poem_mode(topic)
+        console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
+    elif args.interview:
         # Two-call interview flow replaces creator-input + title + draft generation.
         if args.listicle or args.blog_type:
             console.print("[warn]--listicle/--type are ignored in --interview mode.[/warn]")
@@ -793,18 +920,17 @@ def main():
     console.print(f"  [CODE_INSERT]:     {code_inserts}")
     console.print(f"  [IMAGE_INSERT]:    {image_inserts}")
 
-    # Step 3 — summary
-    summary_prompt = (
-        "Summarise the following blog post in exactly 3 sentences. "
-        "Be specific — name the core argument, one key insight, and the takeaway. "
-        "No preamble.\n\n" + blog_text[:4000]
-    )
-    summary = run_claude(summary_prompt, timeout=60, description="Generating summary...")
-
-    console.print("\n[bold]Summary:[/bold]")
-    console.print(summary)
-
-    if personal_inserts or code_inserts or image_inserts:
+    # Step 3 — auto-fetch images (runs whenever IMAGE_INSERT markers exist)
+    if image_inserts and not args.dry_run:
+        fetch_script = Path(__file__).parent / "fetch_images.py"
+        console.print(f"\n[info]Fetching {image_inserts} image(s) from Pexels...[/info]")
+        result = subprocess.run(
+            [sys.executable, str(fetch_script), "--input", str(out_path)],
+            capture_output=False,
+        )
+        if result.returncode != 0:
+            console.print("[warn]Image fetch failed — fill [IMAGE_INSERT] markers manually.[/warn]")
+    elif personal_inserts or code_inserts or image_inserts:
         console.print(
             f"\n[warn]Action needed:[/warn] "
             f"Fill {personal_inserts} [PERSONAL_INSERT], "
@@ -812,6 +938,11 @@ def main():
             f"{image_inserts} [IMAGE_INSERT] before repurposing."
         )
         console.print(f"  grep -rn 'INSERT' content/blogs/{week}/{filename}")
+
+    # ── SEO manual steps (Medium API can't set SEO title/description) ──────────
+    seo_steps = seo_manual_steps(extract_seo(blog_text))
+    if seo_steps:
+        console.print(f"\n{seo_steps}")
 
     # ── Publish hint / dry-run guard ──────────────────────────────────────────
     # produce_blog never auto-publishes; Medium publishing is the separate

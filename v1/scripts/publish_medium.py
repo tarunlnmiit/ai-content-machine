@@ -53,6 +53,8 @@ from pathlib import Path
 import requests
 from dotenv import load_dotenv
 
+from lib.seo import extract_seo, seo_manual_steps
+
 load_dotenv()
 
 MEDIUM_API = "https://api.medium.com/v1"
@@ -366,6 +368,13 @@ def main():
     print(f"\n  Post URL: {post_url}")
     print(f"  Log:      {PUBLISHED_LOG}")
     print()
+
+    # Medium's API can't set SEO title/description — remind the user to set them
+    # manually from the SEO fields embedded in the markdown (see scripts/lib/seo.py).
+    seo_steps = seo_manual_steps(extract_seo(raw))
+    if seo_steps:
+        print(seo_steps)
+        print()
 
     return post_url
 

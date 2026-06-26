@@ -269,6 +269,22 @@ Every blog should include 2–4 images. Mark each with:
 
 ---
 
+## SEO (mandatory — Medium ranks well on Google)
+
+Search traffic now pays more, and Medium has strong domain authority, so optimise for it:
+
+- Choose ONE **target keyphrase** = the exact phrase the ideal reader would type into Google to find this piece (2–5 words). Weave it naturally into the **title** and the **first paragraph** — never keyword-stuff.
+- Produce a **search-facing SEO title and SEO description** that are DISTINCT from the on-Medium title/subtitle. Medium readers click on curiosity/expertise; Google searchers click on intent ("best / easiest / how to X"). The SEO description includes the keyphrase plus the modifiers a searcher actually uses — only ones truthful to this article.
+- **End the article with exactly these three HTML comments** (the pipeline reads them and surfaces them for Medium's SEO settings — they don't render on the page):
+
+```
+<!-- Target keyphrase: <2–5 word search phrase> -->
+<!-- SEO title: <≤60 chars, keyphrase-led, search intent> -->
+<!-- SEO description: <≤160 chars, keyphrase + truthful searcher modifiers> -->
+```
+
+---
+
 ## Post-Writing
 
 After output is complete:
