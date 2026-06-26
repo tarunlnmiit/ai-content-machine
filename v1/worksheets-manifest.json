@@ -1,54 +1,12 @@
 {
-  "generatedAt": "2026-06-16T07:43:56.437Z",
-  "count": 8,
+  "generatedAt": "2026-06-26T10:29:15.087Z",
+  "count": 1,
   "worksheets": {
-    "python-for-data-science-tutorial-210": {
-      "title": "Python For Data Science Tutorial 210",
-      "niche": "data_science_tech",
-      "date": "2026-05-25",
-      "pdfPath": "output/worksheets/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.pdf"
-    },
-    "mental-health-openness-and-breaking-stigmas": {
-      "title": "Mental Health Openness And Breaking Stigmas",
+    "ive-done-the-same-3-step-morning-routine-for-2-years": {
+      "title": "Ive Done The Same 3 Step Morning Routine For 2 Years",
       "niche": "life_self_dev",
-      "date": "2026-05-26",
-      "pdfPath": "output/worksheets/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas.pdf"
-    },
-    "python-for-data-science-tutorial-310": {
-      "title": "Python For Data Science Tutorial 310",
-      "niche": "data_science_tech",
-      "date": "2026-06-01",
-      "pdfPath": "output/worksheets/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_worksheet.pdf"
-    },
-    "the-invisible-load-audit": {
-      "title": "The Invisible Load Audit",
-      "niche": "life_self_dev",
-      "date": "2026-06-01",
-      "pdfPath": "output/worksheets/2026-W23/2026-06-01_life_self_dev_the-invisible-load-audit_worksheet.pdf"
-    },
-    "the-simple-habit-that-changed-my-productivity": {
-      "title": "The Simple Habit That Changed My Productivity",
-      "niche": "life_self_dev",
-      "date": "2026-06-08",
-      "pdfPath": "output/worksheets/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity_worksheet.pdf"
-    },
-    "python-for-data-science-tutorial-4-pandas-for-data-analysis": {
-      "title": "Python For Data Science Tutorial 4 Pandas For Data Analysis",
-      "niche": "data_science_tech",
-      "date": "2026-06-10",
-      "pdfPath": "output/worksheets/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis.pdf"
-    },
-    "python-for-data-science-tutorial-510": {
-      "title": "Python For Data Science Tutorial 510",
-      "niche": "data_science_tech",
-      "date": "2026-06-15",
-      "pdfPath": "output/worksheets/2026-W25/2026-06-15_data_science_tech_python-for-data-science-tutorial-510.pdf"
-    },
-    "unnecessary-repeated-success-advice": {
-      "title": "Unnecessary Repeated Success Advice",
-      "niche": "life_self_dev",
-      "date": "2026-06-15",
-      "pdfPath": "output/worksheets/2026-W25/2026-06-15_life_self_dev_unnecessary-repeated-success-advice.pdf"
+      "date": "2026-06-26",
+      "pdfPath": "output/worksheets/2026-W26/2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years_worksheet.pdf"
     }
   }
 }
