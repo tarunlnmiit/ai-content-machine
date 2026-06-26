@@ -1,22 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "node scripts/build-worksheets-manifest.mjs",
+  "buildCommand": "node scripts/build-worksheets-manifest.mjs && node scripts/copy-pdfs-to-public.mjs",
   "outputDirectory": "public",
-  "functions": {
-    "api/worksheet.mjs": {
-      "includeFiles": "output/worksheets/**"
-    }
-  },
   "rewrites": [
     { "source": "/get-worksheet/:slug", "destination": "/api/get-worksheet?slug=:slug" },
     { "source": "/get-worksheet", "destination": "/api/get-worksheet" }
   ],
   "headers": [
     {
-      "source": "/api/worksheet",
+      "source": "/worksheets/:path*",
       "headers": [
+        { "key": "Content-Type", "value": "application/pdf" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        { "key": "Cache-Control", "value": "private, no-store" }
       ]
     }
   ]

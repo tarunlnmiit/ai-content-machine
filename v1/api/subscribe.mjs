@@ -1,8 +1,7 @@
 // POST /api/subscribe { email, slug, company? }
-// Classifies + tags the subscriber in Kit, then returns a signed PDF URL.
+// Classifies + tags the subscriber in Kit, then redirects to static PDF.
 import { resolve } from "./_lib/manifest.mjs";
 import { captureAndTag } from "./_lib/convertkit.mjs";
-import { sign } from "./_lib/token.mjs";
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
@@ -68,8 +67,7 @@ export default async function handler(req, res) {
     return sendJson(502, { error: "Could not reach our email service. Try again shortly." });
   }
 
-  const token = sign(slug);
-  const url = `/api/worksheet?slug=${encodeURIComponent(slug)}&t=${encodeURIComponent(token)}`;
+  const url = `/worksheets/${encodeURIComponent(slug)}.pdf`;
 
   if (wantsJson) return sendJson(200, { url });
   // No-JS fallback: native form post → redirect straight to the PDF.
