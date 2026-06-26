@@ -34,6 +34,10 @@ python3 scripts/update_schedule.py \
   --medium-url 'https://medium.com/@tarun-gupta/{poetry_slug}'
 ```
 
+**Set Medium SEO (manual — API can't):** `publish_medium.py` prints the SEO title +
+description + target keyphrase when it finishes. In the Medium draft: ••• → **SEO settings** →
+paste them. Then re-upload images. See [medium-seo.md](../../guides/medium-seo.md).
+
 ---
 
 ## Step 2 — Shoot Poetry talking-head (~45 min)
