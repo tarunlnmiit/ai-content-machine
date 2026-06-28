@@ -36,10 +36,12 @@ export async function subscriberExists(email) {
 
 // POST /subscribers is an upsert (body { email_address }). Returns
 // { subscriber: { id, ... } }. Call subscriberExists() first to classify.
-export async function upsertSubscriber(email) {
+export async function upsertSubscriber(email, firstName) {
+  const body = { email_address: email };
+  if (firstName) body.first_name = firstName;
   const data = await kit(`/subscribers`, {
     method: "POST",
-    body: { email_address: email },
+    body,
   });
   return data?.subscriber ?? null;
 }
@@ -74,4 +76,14 @@ export async function captureAndTag(email) {
   const tagId = await resolveTagId(tagName);
   if (tagId) await tagSubscriber(subscriber.id, tagId);
   return exists ? "returning" : "first_time";
+}
+
+// Generic capture for any lead magnet. Tags the subscriber with `tagName`
+// (created if missing). Optionally stores a first name. Returns the subscriber.
+export async function captureWithTag(email, tagName, firstName) {
+  const subscriber = await upsertSubscriber(email, firstName);
+  if (!subscriber?.id) throw new Error("Kit upsert returned no subscriber id");
+  const tagId = await resolveTagId(tagName);
+  if (tagId) await tagSubscriber(subscriber.id, tagId);
+  return subscriber;
 }

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claude + Remotion Template Pack — Tarun Gupta</title>
+<meta name="description" content="Four drop-in video overlays you control by typing. Free.">
+<style>
+:root{
+  --ink: oklch(96% 0.01 95);
+  --paper: oklch(18% 0.02 270);
+  --panel: oklch(22% 0.02 270);
+  --accent: oklch(80% 0.16 85);
+  --accent-ink: oklch(18% 0.02 270);
+  --muted: oklch(72% 0.02 270);
+  --line: oklch(32% 0.02 270);
+  --ease: cubic-bezier(0.16,1,0.3,1);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(oklch(80% 0.16 85/0.08) 1px,transparent 1px);
+  background-size:26px 26px}
+main{max-width:42rem;margin:0 auto;padding:clamp(2.5rem,8vw,6rem) 1.5rem}
+.kicker{font-family:ui-monospace,"SF Mono",Menlo,monospace;text-transform:uppercase;
+  letter-spacing:0.24em;font-size:0.72rem;color:var(--accent);margin:0 0 1rem}
+h1{font-size:clamp(2.1rem,1rem+6vw,3.6rem);line-height:1.03;margin:0 0 0.8rem;
+  font-weight:800;letter-spacing:-0.03em}
+.lede{font-size:1.15rem;color:var(--muted);margin:0 0 2.2rem;max-width:34rem}
+ul.feat{list-style:none;padding:0;margin:0 0 2.2rem;display:flex;flex-direction:column;gap:0.65rem}
+ul.feat li{display:flex;gap:0.7rem;align-items:flex-start;font-size:1.02rem}
+ul.feat .emo{font-size:1.2rem;line-height:1.3}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:clamp(1.4rem,5vw,2.2rem);box-shadow:0 30px 80px -40px oklch(0% 0 0/0.7)}
+form{display:flex;flex-direction:column;gap:0.8rem;margin:0}
+label{font-size:0.85rem;color:var(--muted)}
+input{font:inherit;font-size:1.05rem;padding:0.9rem 1rem;border:1px solid var(--line);
+  border-radius:10px;background:var(--paper);color:var(--ink);
+  transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px oklch(80% 0.16 85/0.25)}
+button{font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;margin-top:0.3rem;
+  padding:0.95rem 1rem;border:none;border-radius:10px;color:var(--accent-ink);
+  background:var(--accent);transition:transform .15s var(--ease),filter .2s var(--ease)}
+button:hover{filter:brightness(1.07)}
+button:active{transform:translateY(1px)}
+button[disabled]{opacity:.6;cursor:progress}
+.fine{font-size:0.82rem;color:var(--muted);margin:1rem 0 0}
+.err{color:oklch(72% 0.17 25);font-size:0.9rem;min-height:1.2em;margin:0.2rem 0 0}
+.honey{position:absolute;left:-9999px}
+.done{display:none;text-align:center}
+.done.show{display:block;animation:rise .5s var(--ease) both}
+.success-form.hide{display:none}
+.dl{display:inline-block;margin-top:1.2rem;padding:0.95rem 1.6rem;border-radius:10px;
+  background:var(--accent);color:var(--accent-ink);font-weight:700;text-decoration:none}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+footer{max-width:42rem;margin:0 auto;padding:0 1.5rem 3rem;color:var(--muted);font-size:0.85rem}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">Free · Data Science &amp; AI</p>
+  <h1>Edit videos by typing — now with ready-made overlays.</h1>
+  <p class="lede">You got the setup guide. This is the shortcut: four drop-in templates you control
+  with one line, or a quick ask to Claude. Drop them in, swap your clip, post.</p>
+
+  <ul class="feat">
+    <li><span class="emo">🎬</span><span><strong>WordPopCaption</strong> — words that pop in one at a time</span></li>
+    <li><span class="emo">🪪</span><span><strong>LowerThird</strong> — a sliding name / title tag</span></li>
+    <li><span class="emo">📊</span><span><strong>ProgressBar</strong> — a bar that fills as the video plays</span></li>
+    <li><span class="emo">🔔</span><span><strong>FollowBadge</strong> — a bouncing "Follow for more" sting</span></li>
+    <li><span class="emo">⚡</span><span>A 2-minute install README + copy-paste prompts</span></li>
+  </ul>
+
+  <div class="card">
+    <form id="f" class="success-form" method="post" action="/api/pack" novalidate>
+      <input class="honey" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label for="name">First name <span style="opacity:.6">(optional)</span></label>
+      <input id="name" type="text" name="name" autocomplete="given-name" placeholder="Tarun">
+      <label for="email">Email address</label>
+      <input id="email" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+      <button type="submit">Send me the Template Pack →</button>
+      <p class="err" id="err" role="alert"></p>
+    </form>
+    <div class="done" id="done">
+      <p class="kicker" style="margin-bottom:.5rem">You're in 🎉</p>
+      <p style="font-size:1.1rem;margin:0">Check your inbox — and grab the pack right here:</p>
+      <a class="dl" id="dl" href="/downloads/claude-remotion-template-pack.zip" download>Download the Template Pack</a>
+      <p class="fine">Reply to the email with the clip you make — I feature the best ones.</p>
+    </div>
+  </div>
+  <p class="fine">No spam. Just the pack + the occasional DS/AI workflow. Unsubscribe anytime.</p>
+</main>
+<footer>
+  Made by Tarun Gupta · <a href="https://instagram.com/mistakenlyhuman">@mistakenlyhuman</a> — data science &amp; AI workflows weekly.
+</footer>
+<script>
+const f=document.getElementById('f'),err=document.getElementById('err'),btn=f.querySelector('button'),
+  done=document.getElementById('done');
+f.addEventListener('submit',async(e)=>{
+  e.preventDefault();err.textContent='';
+  const email=f.email.value.trim(),name=f.name.value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent='Please enter a valid email.';return;}
+  btn.disabled=true;btn.textContent='Sending…';
+  try{
+    const r=await fetch('/api/pack',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,name,company:f.company.value})});
+    const data=await r.json().catch(()=>({}));
+    if(r.ok&&data.url){
+      document.getElementById('dl').href=data.url;
+      f.classList.add('hide');done.classList.add('show');return;
+    }
+    err.textContent=data.error||'Something went wrong. Try again.';
+  }catch{err.textContent='Network error. Try again.';}
+  btn.disabled=false;btn.textContent='Send me the Template Pack →';
+});
+</script>
+</body>
+</html>
