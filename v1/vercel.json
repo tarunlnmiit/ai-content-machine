@@ -4,7 +4,8 @@
   "outputDirectory": "public",
   "rewrites": [
     { "source": "/get-worksheet/:slug", "destination": "/api/get-worksheet?slug=:slug" },
-    { "source": "/get-worksheet", "destination": "/api/get-worksheet" }
+    { "source": "/get-worksheet", "destination": "/api/get-worksheet" },
+    { "source": "/template-pack", "destination": "/template-pack/index.html" }
   ],
   "headers": [
     {
