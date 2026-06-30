@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 // Builds worksheets-manifest.json by globbing output/worksheets/**/*.pdf.
 // Public slug is derived from the filename (strip date + niche prefix and
-// optional _worksheet suffix). Title comes from config/worksheet_config.json
-// when the full stem is present, else Title-Cases the slug.
+// optional _worksheet suffix). Title resolves in priority order:
+//   1. config/worksheet_config.json override (full stem key)
+//   2. the worksheet content JSON `title` (content/worksheets/**/<stem>_worksheet.json)
+//   3. Title-Cased slug (last-resort fallback)
 //
 // Runs at Vercel build (buildCommand) AND locally. No npm deps.
 
@@ -36,6 +38,32 @@ function loadConfigTitles() {
   }
 }
 
+// Map worksheet stem -> human title from the generated content JSON
+// (content/worksheets/**/<stem>_worksheet.json). Source of truth for the
+// display title; avoids ugly Title-Cased slugs when config has no override.
+function loadJsonTitles() {
+  const titles = {};
+  const root = join(REPO, "content", "worksheets");
+  const walk = (dir) => {
+    let entries;
+    try { entries = readdirSync(dir); } catch { return; }
+    for (const entry of entries) {
+      const full = join(dir, entry);
+      if (statSync(full).isDirectory()) {
+        walk(full);
+      } else if (entry.endsWith("_worksheet.json")) {
+        const stem = entry.slice(0, -"_worksheet.json".length);
+        try {
+          const t = JSON.parse(readFileSync(full, "utf8")).title;
+          if (t) titles[stem] = t;
+        } catch { /* ignore unreadable json */ }
+      }
+    }
+  };
+  walk(root);
+  return titles;
+}
+
 function walkPdfs(dir, root, results = []) {
   let entries;
   try { entries = readdirSync(dir); } catch { return results; }
@@ -52,6 +80,7 @@ function walkPdfs(dir, root, results = []) {
 
 function main() {
   const configWorksheets = loadConfigTitles();
+  const jsonTitles = loadJsonTitles();
   const pdfs = walkPdfs(join(REPO, "output", "worksheets"), REPO);
 
   const bySlug = new Map(); // slug -> { date, niche, pdfPath, title }
@@ -67,7 +96,7 @@ function main() {
     const [, date, niche, slug] = m;
     const stem = `${date}_${niche}_${slug}`;
     const cfg = configWorksheets[stem];
-    const title = cfg?.title ?? titleCase(slug);
+    const title = cfg?.title ?? jsonTitles[stem] ?? titleCase(slug);
     const entry = { date, niche, slug, pdfPath: rel, title };
 
     const existing = bySlug.get(slug);
