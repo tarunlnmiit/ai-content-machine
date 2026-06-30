@@ -76,7 +76,7 @@ python3 scripts/produce_blog.py \
 
 The script will:
 1. Fetch live Google Suggest + Medium signals for the type you chose
-2. Show 5 topic options → you pick one
+2. Show 5 topic options — each pulls a different emotion lever (FOMO / FEAR / CURIOSITY GAP / COUNTERINTUITIVE / ASPIRATION / INSIDER SECRET / SOCIAL PROOF) + niche-routed trigger vocabulary, so the angles arrive emotionally charged → you pick one
 3. Ask for your personal angle (stories, opinions, examples → Claude polishes, never quotes verbatim)
 4. Show 5 title options across FEAR / ANXIETY / CURIOSITY GAP / COUNTERINTUITIVE / INSIDER levers → you pick one
 5. Generate and save to `content/blogs/{week}/YYYY-MM-DD_data_science_tech_{slug}.md`

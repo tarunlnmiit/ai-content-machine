@@ -19,13 +19,25 @@ NICHES = {"ds": "data_science_tech", "life": "life_self_dev", "poetry": "poetry_
 
 from lib.slug import slugify
 from lib.schedule_calc import write_schedule_json, get_iso_week
-from lib.virality import virality_block, project_keys
+from lib.virality import virality_block, project_keys, trigger_lexicon
 from lib.worksheet_cta import worksheet_cta_markdown, has_cta
 from lib import interview as interview_flow
 from lib.seo import extract_seo, seo_manual_steps
 
 # Niches that ship a companion worksheet (poetry does not).
 WORKSHEET_NICHES = {"ds", "life"}
+
+# Seven distinct emotion levers — shared by topic suggestion and title generation
+# so candidate angles carry emotional pull / a curiosity gap before a title exists.
+EMOTION_LEVERS = (
+    "1. [FOMO]             — reader feels left behind if they don't read this now\n"
+    "2. [FEAR]             — loss, risk, or negative consequence if they ignore this\n"
+    "3. [CURIOSITY GAP]    — incomplete info that forces a click to resolve\n"
+    "4. [COUNTERINTUITIVE] — violates common wisdom; surprises the reader\n"
+    "5. [ASPIRATION]       — reader imagines a better version of themselves after reading\n"
+    "6. [INSIDER SECRET]   — implies privileged knowledge others don't have\n"
+    "7. [SOCIAL PROOF / SPECIFICITY] — specific numbers, timeframes, or results that signal credibility"
+)
 
 
 def load(path: Path) -> str:
@@ -190,6 +202,7 @@ def suggest_topics(
     )
     google_block = "\n".join(f"  - {s}" for s in google[:12]) or "  (unavailable)"
     medium_block = "\n".join(f"  - {t}" for t in medium[:10]) or "  (unavailable)"
+    trigger_block = ", ".join(trigger_lexicon(niche))
 
     type_directive = ""
     if niche == "ds" and blog_type:
@@ -221,10 +234,18 @@ Google search signals (what people are actively searching right now):
 Trending on Medium right now:
 {medium_block}
 
+Emotional vocabulary for this niche — lean into these words where honest, never forced:
+{trigger_block}
+
+Each of the 5 topics must pull a DIFFERENT emotion lever (do NOT print the lever — let it shape the angle):
+{EMOTION_LEVERS}
+
 Generate exactly 5 blog topic options. Each must:
 - Be a fresh angle NOT covered in the last 90 days list above
 - Have real demand (grounded in the search signals)
 - Be specific — immediately clear what the post argues or teaches
+- Carry a CURIOSITY GAP — an unresolved tension or question the post pays off
+- Use a different emotion lever from the list above (all 5 distinct)
 - Work as a standalone blog post (not a series)
 
 Reply with exactly:
@@ -326,13 +347,7 @@ Topic:    {topic}
 Keywords with real search demand: {top_keywords}
 
 Each title must use a DIFFERENT emotion lever — prefix each line with its lever in brackets:
-1. [FOMO]             — reader feels left behind if they don't read this now
-2. [FEAR]             — loss, risk, or negative consequence if they ignore this
-3. [CURIOSITY GAP]    — incomplete info that forces a click to resolve
-4. [COUNTERINTUITIVE] — violates common wisdom; surprises the reader
-5. [ASPIRATION]       — reader imagines a better version of themselves after reading
-6. [INSIDER SECRET]   — implies privileged knowledge others don't have
-7. [SOCIAL PROOF / SPECIFICITY] — specific numbers, timeframes, or results that signal credibility
+{EMOTION_LEVERS}
 
 Rules every title must follow:
 - Signals exactly who it's for (right reader self-selects in)
