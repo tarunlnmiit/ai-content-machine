@@ -80,6 +80,9 @@ The script will:
 3. Ask for your personal angle (stories, opinions, examples → Claude polishes, never quotes verbatim)
 4. Show 5 title options across FEAR / ANXIETY / CURIOSITY GAP / COUNTERINTUITIVE / INSIDER levers → you pick one
 5. Generate and save to `content/blogs/{week}/YYYY-MM-DD_data_science_tech_{slug}.md`
+6. **Auto-build the companion worksheet** (DS/Life): Claude-designed HTML → PDF + manifest, and print the gated link (`--no-worksheet` to skip)
+7. **Decide AI vs stock image** per blog: if AI wins, emit a ready-to-paste prompt (saved to the sidecar) instead of fetching stock (`--image {auto,stock,ai}`)
+8. Write all human to-dos to `content/derivatives/{week}/{full_slug}/manual_steps.md` (SEO, INSERTs, worksheet link, image prompt, publish cmd) — the blog body stays clean; the console just points to this file
 
 **Type `skip` at any prompt** (topic pick, personal angle, title pick — and interview/poem questions) and Claude answers it **on your behalf in your voice** (it reads `data/kb/master_brief.md` for authenticity). Lets you run a fully hands-off draft, or skip just the steps you don't have input for.
 

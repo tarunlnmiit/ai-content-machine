@@ -41,7 +41,7 @@ Niche + ISO week are auto-derived from the blog slug.
 |---|------|------|--------|
 | 0 | (topic mode) write blog | `produce_blog.py` | `content/blogs/{week}/{slug}.md` |
 | 1 | **Phase 1** text derivatives | `repurpose_blog.py` | `content/derivatives/{week}/{slug}/` — linkedin_post(+linkedin_second_comment=blog link), linkedin_document_caption (slide deck post body), instagram_caption(+clean), newsletter, polls, slide_outline, youtube_metadata, youtube_shorts_metadata, claude_design_brief, schedule.json. **Threads dropped.** LinkedIn comment order: 1st=Worksheet (Phase 2) · 2nd=Blog link (Phase 1). |
-| 1b | **Phase 2** (auto, inside repurpose_blog.py) | same call | 2a worksheet outline JSON + Canva design prompt (DS/Life; PDF is Canva-manual) · 2b blog CTA inject · 2c linkedin_first_comment (worksheet, 1st) + 2c2 linkedin_document comments (worksheet 1st + YT link 2nd) · 2d slide deck (virality_block + master_brief) · 2e IG carousel (+Playwright PNG export, virality_block + caption formula + master_brief) · 2f IG reel brief · 2g YT filming script (virality_block + master_brief) |
+| 1b | **Phase 2** (auto, inside repurpose_blog.py) | same call | 2a worksheet (DS/Life): Claude-designed HTML → headless-Chrome PDF (no Canva) · 2b blog CTA inject · 2c linkedin_first_comment (worksheet, 1st) + 2c2 linkedin_document comments (worksheet 1st + YT link 2nd) · 2d slide deck (virality_block + master_brief) · 2e IG carousel (+Playwright PNG export, virality_block + caption formula + master_brief) · 2f IG reel brief · 2g YT filming script (virality_block + master_brief) |
 | 2 | Social images | `generate_social_images.py --slug` | `assets/social_posts/{week}/{slug}_*.png` |
 | 3 | Thumbnail brief (+HTML render) | `thumbnail_brief.py` + `generate_thumbnail.py --export --skip-remotion` | `thumbnail_brief.json` + `assets/thumbnails/{slug}_thumbnail.png` |
 | 4 | Stage to scheduler | `load_posts.py --week` | scheduling DB → auto-publish daemon |
@@ -51,8 +51,9 @@ Niche + ISO week are auto-derived from the blog slug.
 ## Stays manual (by design)
 
 - **Videos** — `run_voiceover_week.py` (needs recorded voiceover).
-- **Worksheet PDF** — designed in Canva from the outline; then `build-worksheets-manifest.mjs` +
-  `inject_worksheet_ctas.py` inject the gated URLs.
+- **Worksheet (DS/Life)** — now fully automated, **no Canva**: `generate_worksheet_html.py`
+  (Claude-designed Breath Network HTML → headless-Chrome PDF) + `build-worksheets-manifest.mjs`.
+  Runs inside `produce_blog.py` and pipeline step 6. Only push/deploy stays manual.
 - **Thumbnail Canva pass** — `generate_thumbnail.py --canva` (needs a face photo / hook); the
   pipeline only does the automatic HTML thumbnail.
 

@@ -20,9 +20,11 @@ NICHES = {"ds": "data_science_tech", "life": "life_self_dev", "poetry": "poetry_
 from lib.slug import slugify
 from lib.schedule_calc import write_schedule_json, get_iso_week
 from lib.virality import virality_block, project_keys, trigger_lexicon
-from lib.worksheet_cta import worksheet_cta_markdown, has_cta
+from lib.worksheet_cta import worksheet_cta_markdown, has_cta, worksheet_url
 from lib import interview as interview_flow
 from lib.seo import extract_seo, seo_manual_steps
+from lib.manual_steps import write_manual_steps
+from lib.image_decision import decide_image, parse_markers
 
 # Niches that ship a companion worksheet (poetry does not).
 WORKSHEET_NICHES = {"ds", "life"}
@@ -945,6 +947,20 @@ def main():
             "'news' = editorial/opinion/trend piece with no code. Rejected for Life and Poetry."
         ),
     )
+    parser.add_argument(
+        "--no-worksheet",
+        action="store_true",
+        help="Skip auto-generating the companion worksheet (DS/Life niches).",
+    )
+    parser.add_argument(
+        "--image",
+        choices=["auto", "stock", "ai"],
+        default="auto",
+        help=(
+            "Image strategy. 'auto' = Claude decides AI vs stock per blog (default); "
+            "'stock' = always fetch from Pexels; 'ai' = always emit an AI image prompt."
+        ),
+    )
     args = parser.parse_args()
 
     if args.listicle is not None and args.listicle < 2:
@@ -1057,60 +1073,89 @@ def main():
 
     out_path.write_text(blog_text, encoding="utf-8")
 
-    # Write schedule.json to derivatives dir
+    # Write schedule.json to derivatives dir; slug_dir is the per-slug home.
     full_slug = f"{today}_{NICHES[args.niche]}_{slug}"
     deriv_dir = REPO / "content" / "derivatives"
     schedule_path = write_schedule_json(full_slug, args.niche, deriv_dir)
+    slug_dir = schedule_path.parent
 
+    rel = out_path.relative_to(REPO)
     word_count = len(blog_text.split())
     personal_inserts = blog_text.count("[PERSONAL_INSERT")
     code_inserts     = blog_text.count("[CODE_INSERT")
     image_inserts    = blog_text.count("[IMAGE_INSERT")
 
-    console.print(f"\n[success]✓ Saved:[/success] {out_path.relative_to(REPO)}")
+    console.print(f"\n[success]✓ Saved:[/success] {rel}")
     console.print(f"[success]✓ Schedule:[/success] {schedule_path.relative_to(REPO)}")
-    console.print(f"  Words:             {word_count:,}")
-    console.print(f"  [PERSONAL_INSERT]: {personal_inserts}")
-    console.print(f"  [CODE_INSERT]:     {code_inserts}")
-    console.print(f"  [IMAGE_INSERT]:    {image_inserts}")
+    console.print(f"  Words: {word_count:,}  ·  PERSONAL:{personal_inserts} CODE:{code_inserts} IMAGE:{image_inserts}")
 
-    # Step 3 — auto-fetch images (runs whenever IMAGE_INSERT markers exist)
-    if image_inserts and not args.dry_run:
-        fetch_script = Path(__file__).parent / "fetch_images.py"
-        console.print(f"\n[info]Fetching {image_inserts} image(s) from Pexels...[/info]")
-        result = subprocess.run(
-            [sys.executable, str(fetch_script), "--input", str(out_path)],
-            capture_output=False,
-        )
-        if result.returncode != 0:
-            console.print("[warn]Image fetch failed — fill [IMAGE_INSERT] markers manually.[/warn]")
-    elif personal_inserts or code_inserts or image_inserts:
-        console.print(
-            f"\n[warn]Action needed:[/warn] "
-            f"Fill {personal_inserts} [PERSONAL_INSERT], "
-            f"{code_inserts} [CODE_INSERT], "
-            f"{image_inserts} [IMAGE_INSERT] before repurposing."
-        )
-        console.print(f"  grep -rn 'INSERT' content/blogs/{week}/{filename}")
+    # Collected human to-dos → written to a per-slug sidecar (not the blog body).
+    manual: list[tuple[str, str]] = [
+        ("Blog", f"- File: `{rel}`\n- Words: {word_count:,}\n- Slug: `{slug}` · Week: {week}"),
+    ]
+    if personal_inserts or code_inserts or image_inserts:
+        manual.append((
+            "Fill INSERT markers",
+            f"- {personal_inserts} `[PERSONAL_INSERT]`\n- {code_inserts} `[CODE_INSERT]`"
+            f"\n- {image_inserts} `[IMAGE_INSERT]`\n\n`grep -rn 'INSERT' content/blogs/{week}/{filename}`",
+        ))
 
-    # ── SEO manual steps (Medium API can't set SEO title/description) ──────────
+    # ── Step 3 — image strategy: AI vs stock ──────────────────────────────────
+    if image_inserts:
+        markers = parse_markers(blog_text)
+        decision = decide_image(
+            blog_text, args.niche, markers,
+            force=(None if args.image == "auto" else args.image),
+        )
+        if decision["recommendation"] == "ai":
+            console.print(f"\n[info]Image:[/info] AI recommended — {decision['reason']}")
+            body = [f"**Recommendation: AI image** — {decision['reason']}",
+                    "", "_Paste each prompt into your image generator (ChatGPT image / DALL·E):_", ""]
+            for i, p in enumerate(decision["prompts"], 1):
+                body.append(f"### Image {i} — {p.get('slot','')}\n\n```\n{p.get('prompt','').strip()}\n```\n")
+            manual.append(("Image — AI generated", "\n".join(body)))
+            console.print("  AI image prompt(s) saved to the manual-steps file (no stock fetched).")
+        else:
+            manual.append(("Image — stock", f"{decision.get('reason','')}\nFetched from Pexels into the blog's _images dir."))
+            if not args.dry_run:
+                console.print(f"\n[info]Fetching {image_inserts} image(s) from Pexels...[/info]")
+                result = subprocess.run(
+                    [sys.executable, str(Path(__file__).parent / "fetch_images.py"), "--input", str(out_path)],
+                    capture_output=False,
+                )
+                if result.returncode != 0:
+                    console.print("[warn]Image fetch failed — fill [IMAGE_INSERT] markers manually.[/warn]")
+
+    # ── Step 4 — companion worksheet (DS/Life): Claude-designed HTML → PDF ─────
+    if args.niche in WORKSHEET_NICHES and not args.no_worksheet:
+        try:
+            console.print("\n[info]Building companion worksheet (Claude-designed → PDF)...[/info]")
+            subprocess.run(
+                [sys.executable, str(Path(__file__).parent / "generate_worksheet_html.py"), "-i", str(out_path)],
+                check=True,
+            )
+            subprocess.run(
+                ["node", str(Path(__file__).parent / "build-worksheets-manifest.mjs")],
+                check=True, capture_output=True,
+            )
+            url = worksheet_url(slug)
+            console.print(f"  [success]✓ Worksheet ready[/success] · {url}")
+            manual.append(("Worksheet", f"Gated link (CTA already auto-added to the blog body):\n\n{url}"))
+        except Exception as e:  # noqa: BLE001 — never fail the blog on the worksheet
+            console.print(f"[warn]Worksheet step failed: {e}[/warn]")
+            manual.append(("Worksheet", f"⚠️ generation failed: {e}\nRetry: `python3 scripts/generate_worksheet_html.py -i {rel}`"))
+
+    # ── SEO + publish → sidecar (Medium API can't set SEO title/description) ───
     seo_steps = seo_manual_steps(extract_seo(blog_text))
     if seo_steps:
-        console.print(f"\n{seo_steps}")
+        manual.append(("SEO — set manually on Medium", seo_steps))
+    manual.append(("Publish", f"```\npython3 scripts/publish_medium.py --input {rel} --status draft\n```"))
 
-    # ── Publish hint / dry-run guard ──────────────────────────────────────────
-    # produce_blog never auto-publishes; Medium publishing is the separate
-    # publish_medium.py step. --dry-run makes that explicit for end-to-end tests.
-    rel = out_path.relative_to(REPO)
+    steps_path = write_manual_steps(slug_dir, full_slug, manual)
+    console.print(f"\n[success]✓ Manual steps:[/success] {steps_path.relative_to(REPO)}")
+
     if args.dry_run:
-        console.print(
-            "\n[info]DRY RUN:[/info] draft saved locally. Nothing staged or published to Medium."
-        )
-    else:
-        console.print(
-            f"\n[dim]To publish when ready:[/dim] "
-            f"python3 scripts/publish_medium.py --input {rel} --status draft"
-        )
+        console.print("[info]DRY RUN:[/info] draft saved locally. Nothing staged or published to Medium.")
 
 
 if __name__ == "__main__":
