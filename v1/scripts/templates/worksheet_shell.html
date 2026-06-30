@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Free Local AI Audit Worksheet</title>
+<title>__DOC_TITLE__</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
@@ -336,9 +336,9 @@
   <header class="header">
     <div class="header-accent"></div>
     <div class="header-body">
-      <div class="header-eyebrow">Local AI · Replace $200/Month</div>
-      <h1 class="header-title">The Free Local AI <em>Audit</em> Worksheet</h1>
-      <p class="header-tagline">Work through these five sections once and you'll know exactly what to cancel, what to keep, and what to build tonight.</p>
+      <div class="header-eyebrow">__EYEBROW__</div>
+      <h1 class="header-title">__TITLE_HTML__</h1>
+      <p class="header-tagline">__TAGLINE__</p>
     </div>
     <div class="header-fields">
       <div class="field">
@@ -350,7 +350,7 @@
         <div class="field-line"></div>
       </div>
       <div class="field">
-        <span class="field-label">Annual AI Spend $</span>
+        <span class="field-label">__FIELD3_LABEL__</span>
         <div class="field-line"></div>
       </div>
     </div>
@@ -358,104 +358,7 @@
 
   <!-- ═══ SECTIONS ═══ -->
   <main class="sections">
-    <div class="section">
-      <div class="section-num-bar"><div class="num-badge">1</div></div>
-      <div class="section-content">
-        <div class="section-title">Audit Your Current AI Spend</div>
-<div class="prompts"><p class="prompt">List <strong>every AI tool you pay for monthly</strong> — APIs, Copilot, cloud notebooks, subscriptions.</p><p class="prompt">For each tool, write the <strong>monthly cost</strong>, the <em>primary task</em> it handles, and whether that task touches <code>sensitive or proprietary data</code>.</p><p class="prompt">Multiply each by 12. Sum the column. <strong>That number is your baseline.</strong></p></div>
-      </div>
-      <div class="section-notes">
-        <div class="notes-label">Tools / Notes</div>
-        <div class="ruled">
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-num-bar"><div class="num-badge">2</div></div>
-      <div class="section-content">
-        <div class="section-title">Install Ollama & Run First Local Inference</div>
-<div class="prompts"><p class="prompt">Install Ollama at <strong>ollama.com</strong>, then pull a model and run the job-scoring snippet from the blog.</p><p class="prompt">Substitute a <em>real job description</em> and a short summary of your own background. <strong>Time the response.</strong></p><p class="prompt">Note: Is the JSON parseable? What was the latency? Does the output feel usable?</p></div><div class="code-block">ollama pull llama3
-response = ollama.chat(model='llama3', messages=[{'role':'user','content': prompt}])
-result = json.loads(response['message']['content'])</div>
-      </div>
-      <div class="section-notes">
-        <div class="notes-label">Latency / Output</div>
-        <div class="ruled">
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-num-bar"><div class="num-badge">3</div></div>
-      <div class="section-content">
-        <div class="section-title">Classify Your Tasks: Local vs. Hosted</div>
-<div class="prompts"><p class="prompt">Return to your tool list from Section 1. Tag each task <strong>L</strong> (local candidate) or <strong>H</strong> (hosted).</p><p class="prompt"><em>Local</em> = batch, async, runs on a schedule, or touches data that can't leave your machine. <em>Hosted</em> = interactive, latency-sensitive, non-sensitive data.</p><p class="prompt">Calculate: <strong>what percentage of your annual spend lives in the L bucket?</strong></p></div>
-      </div>
-      <div class="section-notes">
-        <div class="notes-label">L / H Tags</div>
-        <div class="ruled">
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-num-bar"><div class="num-badge">4</div></div>
-      <div class="section-content">
-        <div class="section-title">Build a Minimal Overnight Automation</div>
-<div class="prompts"><p class="prompt">Design a script — <em>pseudocode is fine</em> — that runs on a schedule, sends <strong>zero data to external APIs</strong>, and produces a ranked or scored output you'd read in the morning.</p><p class="prompt">It can be job listings, RSS feeds, a folder of documents — <strong>anything real to you.</strong></p><p class="prompt">Write the core Ollama prompt you'd send, and list the <code>JSON keys</code> you'd want back.</p></div><div class="code-block">prompt = f"Score this item 1–10. Return JSON: {{score, reasons, flags}}"
-# Run at 2am via cron — no API key, no bill in the morning</div>
-      </div>
-      <div class="section-notes">
-        <div class="notes-label">Script / Prompt</div>
-        <div class="ruled">
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-num-bar"><div class="num-badge">5</div></div>
-      <div class="section-content">
-        <div class="section-title">Measure the Quality Gap on a Real Task</div>
-<div class="prompts"><p class="prompt">Pick <strong>one task</strong> you currently send to a paid API. Run the identical prompt against a local <code>7B or 13B</code> Ollama model and against the paid API.</p><p class="prompt">Score both outputs on <strong>accuracy</strong> and <strong>usefulness</strong> (1–10 each).</p><p class="prompt">Write two sentences on where the gap is real. Write one sentence on whether <em>that gap</em> justifies the cost for this specific task.</p></div>
-      </div>
-      <div class="section-notes">
-        <div class="notes-label">Scores / Verdict</div>
-        <div class="ruled">
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-        </div>
-      </div>
-    </div>
-
+__SECTIONS__
   </main>
 </div>
 </body>

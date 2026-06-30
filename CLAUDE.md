@@ -79,10 +79,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **ONE-COMMAND BLOG PIPELINE (2026-06-21):** `scripts/run_blog_pipeline.py --input <blog.md>`
   (or `--topic "..." --niche <ds|life|poetry>` to write the blog first) produces ALL non-video
   derivatives + media in one idempotent run: text posts (`repurpose_blog`), social images+carousel,
-  slide deck, IG reel brief, thumbnail brief+HTML, worksheet outline (DS/Life), then stages via
+  slide deck, IG reel brief, thumbnail brief+HTML, **worksheet (DS/Life)**, then stages via
   `load_posts`. `--force` redoes all; `--no-stage`/`--skip-thumbnail` opt-outs. **Videos excluded**
-  (separate `run_voiceover_week.py`). Worksheet PDF + thumbnail Canva pass stay manual. Doc:
+  (separate `run_voiceover_week.py`). Thumbnail Canva pass stays manual. Doc:
   `docs/blog-pipeline.md`.
+- **WORKSHEET = AUTO, CLAUDE-DESIGNED (2026-06-30):** Worksheets (DS/Life) are now generated
+  end-to-end in code — NO Canva. `scripts/generate_worksheet_html.py -i <blog.md>` runs the outline
+  (`generate_worksheet_outline.py`) if needed, makes ONE `claude -p` call for the section content,
+  fills the fixed "Breath Network" CSS shell (`scripts/templates/worksheet_{shell,section}.html`),
+  and renders the PDF via headless Chrome (`scripts/lib/html_pdf.py`, system Chrome → Playwright
+  fallback). `produce_blog.py` and `run_blog_pipeline.py` call it automatically for DS/Life
+  (`--no-worksheet` to skip), then rebuild the manifest. Manifest title comes from the worksheet
+  JSON `title`. Push/deploy to make the gated link live stays manual.
+- **MANUAL-STEPS SIDECAR + AI-vs-STOCK IMAGE (2026-06-30):** `produce_blog.py` writes all human
+  to-dos to `content/derivatives/{week}/{full_slug}/manual_steps.md` (keyed by slug — SEO title/desc,
+  INSERT actions, worksheet link, image decision, publish cmd) instead of dumping them to the blog or
+  console; the console just points to the file. For images it weighs **AI vs stock** per blog
+  (`scripts/lib/image_decision.py`): if AI wins it emits a ready-to-paste editorial prompt (saved in
+  the sidecar) and skips the Pexels fetch; else fetches stock as before. Override with
+  `--image {auto,stock,ai}` (default `auto`).
 - **DISTRIBUTION (auto-publish daemon — "subtract to focus", 2026):** One piece → viable
   channels via `prompts/repurposing_agent.md` → per-platform derivatives → staged by
   `scripts/load_posts.py` → fired by the `scripts/scheduler.py` daemon. **LinkedIn is ACTIVE**

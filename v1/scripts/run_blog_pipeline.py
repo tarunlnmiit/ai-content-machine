@@ -167,16 +167,18 @@ def main() -> None:
         if not skip("thumbnail render", thumb_png.exists()):
             run(["python3", SCRIPTS / "generate_thumbnail.py", "--blog", str(blog), "--export", "--skip-remotion"], dry)
 
-    # ── 6. Worksheet outline (DS/Life only) ────────────────────────
-    # Phase 2 of repurpose_blog.py also runs this. Skips if _worksheet.json exists.
-    step("[6/7] Worksheet outline — DS/Life only (Phase-2-redundant; skips if exists)")
+    # ── 6. Worksheet (DS/Life only): Claude-designed HTML → PDF ─────
+    # generate_worksheet_html.py runs the outline first if its JSON is missing,
+    # then designs the HTML and renders the PDF (skips if HTML+PDF already exist).
+    step("[6/7] Worksheet — DS/Life only (Claude-designed HTML → PDF; skips if exists)")
     if niche == "poetry":
         print("  [skip] worksheet — poetry niche has no worksheet")
     else:
-        ws_json = REPO / "content" / "worksheets" / week / f"{slug}_worksheet.json"
-        if not skip("worksheet outline", ws_json.exists()):
-            run(["python3", SCRIPTS / "generate_worksheet_outline.py", "-i", str(blog)], dry)
-        print("  note: worksheet PDF (Canva) + inject_worksheet_ctas.py stay MANUAL — outline only here.")
+        ws_pdf = REPO / "output" / "worksheets" / week / f"{slug}_worksheet.pdf"
+        if not skip("worksheet", ws_pdf.exists()):
+            run(["python3", SCRIPTS / "generate_worksheet_html.py", "-i", str(blog)], dry)
+            run(["node", SCRIPTS / "build-worksheets-manifest.mjs"], dry)
+        print("  note: push/deploy to make the gated link live stays MANUAL.")
 
     # ── 7. Stage to scheduler ──────────────────────────────────────
     step("[7/7] Stage to scheduler (load_posts)")

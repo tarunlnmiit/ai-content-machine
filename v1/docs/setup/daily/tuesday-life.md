@@ -15,18 +15,14 @@ Blog exists from Monday. Today: worksheet **first**, then YouTube script, scene 
 
 Worksheet before the script so the script can auto-append a spoken "worksheet in the description" CTA (only fires if the worksheet is already in the manifest).
 
+Worksheet is now **auto-generated, Claude-designed, no Canva** (outline → HTML → PDF):
 ```bash
-python3 scripts/generate_worksheet_outline.py \
+python3 scripts/generate_worksheet_html.py \
   -i content/blogs/{week}/{life_slug}.md
-
-python3 scripts/generate_canva_worksheet_prompt.py \
-  -i content/worksheets/{life_slug}_worksheet.json
 ```
-
-Paste the printed Canva prompt into Canva AI → export PDF → save to:
-```
-output/worksheets/{week}/{life_slug}_worksheet.pdf
-```
+Renders `output/worksheets/{week}/{life_slug}_worksheet.pdf` via headless Chrome
+(`--force` to regenerate). `produce_blog.py` runs this automatically at blog time;
+this is the standalone/re-run command.
 
 Build the manifest so the slug is live and the script can see it:
 ```bash
