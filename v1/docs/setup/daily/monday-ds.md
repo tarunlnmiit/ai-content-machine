@@ -81,6 +81,8 @@ The script will:
 4. Show 5 title options across FEAR / ANXIETY / CURIOSITY GAP / COUNTERINTUITIVE / INSIDER levers → you pick one
 5. Generate and save to `content/blogs/{week}/YYYY-MM-DD_data_science_tech_{slug}.md`
 
+**Type `skip` at any prompt** (topic pick, personal angle, title pick — and interview/poem questions) and Claude answers it **on your behalf in your voice** (it reads `data/kb/master_brief.md` for authenticity). Lets you run a fully hands-off draft, or skip just the steps you don't have input for.
+
 **If you already have a topic:**
 ```bash
 python3 scripts/produce_blog.py \

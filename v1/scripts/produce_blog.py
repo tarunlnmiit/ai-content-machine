@@ -268,29 +268,125 @@ No labels. No explanation. Just the 5 lines.
     return topics[:5] or [l.strip() for l in raw.splitlines() if l.strip()][:5]
 
 
-def select_topic(topics: list[str], niche_label: str) -> str:
+# ──────────────────────────────────────────────────────────────────────────────
+# "skip" → Claude answers as the creator, in Tarun's voice
+# ──────────────────────────────────────────────────────────────────────────────
+
+SKIP_TOKEN = "skip"
+
+_PERSONA = (
+    "You are Tarun Gupta — a 10-year data scientist, writer, and creator. "
+    "Answer in the FIRST PERSON as Tarun, in his authentic voice: analytical but warm, "
+    "personal and specific with real examples, no jargon without context. "
+    'Never use these words: "In conclusion", "Dive into", "Leverage", "Game-changer", "Synergy".'
+)
+
+
+def _clean_title(s: str) -> str:
+    """Strip a leading [LEVER] prefix from a title option."""
+    return re.sub(r"^\[[^\]]+\]\s*", "", s).strip()
+
+
+def _match_option(raw: str, options: list[str]) -> str:
+    """Map Claude's free-text choice back to one of the actual options.
+
+    Claude is asked to echo an option verbatim, but may add a leading number or
+    stray words. Strip a leading 'N.'/'N)' then match by exact text, then by best
+    fuzzy ratio (difflib), falling back to the first option.
+    """
+    import difflib
+
+    r = _clean_title(re.sub(r"^\s*\d+[.)]\s*", "", raw)).lower()
+    if not r:
+        return options[0]
+    cleaned = [_clean_title(o).lower() for o in options]
+    for opt, oc in zip(options, cleaned):
+        if oc and oc == r:
+            return opt
+    best = difflib.get_close_matches(r, cleaned, n=1, cutoff=0.6)
+    if best:
+        return options[cleaned.index(best[0])]
+    return options[0]
+
+
+def answer_on_behalf(
+    kind: str,
+    *,
+    master_brief: str = "",
+    topic: str = "",
+    niche_label: str = "",
+    question: str = "",
+    options: list[str] | None = None,
+) -> str:
+    """Generate an answer as Tarun when the creator types 'skip'.
+
+    kind: 'topic' | 'title' → choose the strongest option (returns a verbatim option);
+          'creator_input'    → write the personal angle;
+          'interview'        → answer one interview question.
+    """
+    kb = f"\n\nWhat you know about Tarun (use it for authenticity):\n{master_brief.strip()}" if master_brief else ""
+    if kind in ("topic", "title"):
+        opts = options or [""]
+        label = "topic" if kind == "topic" else "title"
+        listing = "\n".join(f"{i}. {o}" for i, o in enumerate(opts, 1))
+        prompt = (
+            f"{_PERSONA}{kb}\n\nNiche: {niche_label}\n"
+            f"Here are the {label} options:\n{listing}\n\n"
+            f"Choose the single strongest {label} for you to publish — the one with the most "
+            f"emotional pull and curiosity gap that is also true to your experience. "
+            f"Reply with ONLY the chosen {label} text, exactly as written above, and nothing else."
+        )
+        raw = run_claude(prompt, timeout=90, description=f"Claude choosing a {label} on your behalf…")
+        return _match_option(raw, opts)
+    if kind == "creator_input":
+        prompt = (
+            f"{_PERSONA}{kb}\n\nNiche: {niche_label}\nTopic: {topic}\n\n"
+            "Speaking as yourself, give the personal angle for this blog: the specific stories, "
+            "opinions, lived examples, and point of view you would bring. Write 5–9 first-person "
+            "sentences of raw substance (not polished prose — the article gets written from this). "
+            "No preamble, just your take."
+        )
+        return run_claude(prompt, timeout=120, description="Claude writing your angle on your behalf…").strip()
+    if kind == "interview":
+        prompt = (
+            f"{_PERSONA}{kb}\n\nNiche: {niche_label}\nTopic: {topic}\n\n"
+            "Answer this interview question as yourself — honestly and specifically, in 2–5 sentences, "
+            f"with a concrete personal example where it fits:\n\nQ: {question}\n\nReply with just your answer."
+        )
+        return run_claude(prompt, timeout=120, description="Claude answering on your behalf…").strip()
+    return ""
+
+
+def select_topic(topics: list[str], niche_label: str, master_brief: str = "") -> str:
     console.print(f"\n[bold]── Pick a topic  ·  {niche_label} ──[/bold]")
     for i, t in enumerate(topics, 1):
         console.print(f"  [bold]{i}.[/bold] {t}")
-    console.print()
+    console.print("  [dim](type a number, or 'skip' to let Claude pick on your behalf)[/dim]\n")
     while True:
         try:
             raw = input(f"  Your pick (1–{len(topics)}): ").strip()
+        except EOFError:
+            raw = SKIP_TOKEN
+        if raw.lower() == SKIP_TOKEN:
+            chosen = answer_on_behalf("topic", master_brief=master_brief, niche_label=niche_label, options=topics)
+            console.print(f"  [info]Skipped — Claude picked:[/info] {chosen}")
+            return chosen
+        try:
             idx = int(raw) - 1
             if 0 <= idx < len(topics):
                 return topics[idx]
-        except (ValueError, EOFError):
+        except ValueError:
             pass
-        console.print(f"  [warn]Enter a number between 1 and {len(topics)}.[/warn]")
+        console.print(f"  [warn]Enter a number between 1 and {len(topics)}, or 'skip'.[/warn]")
 
 
-def get_creator_input(topic: str, niche_label: str) -> str:
+def get_creator_input(topic: str, niche_label: str, master_brief: str = "") -> str:
     console.print(f"\n[bold]── Your thoughts  ·  {niche_label} ──[/bold]")
     console.print(f"  Topic confirmed: [bold]{topic}[/bold]")
     console.print(
         "  Add your personal angle, examples, opinions, or stories.\n"
         "  Claude will polish the language but preserve every idea.\n"
-        "  [Press Enter twice to finish, or Enter once on a blank line to skip]\n"
+        "  [Press Enter twice to finish · type 'skip' to let Claude write your angle on your behalf]\n"
     )
     lines: list[str] = []
     blank_count = 0
@@ -299,6 +395,11 @@ def get_creator_input(topic: str, niche_label: str) -> str:
             line = input("  > ")
         except EOFError:
             break
+        if line.strip().lower() == SKIP_TOKEN and not lines:
+            console.print("  [info]Skipped — Claude is writing your angle on your behalf…[/info]")
+            return answer_on_behalf(
+                "creator_input", master_brief=master_brief, topic=topic, niche_label=niche_label
+            )
         if line == "":
             blank_count += 1
             if blank_count >= 2 or not lines:
@@ -373,43 +474,55 @@ Reply with exactly 7 lines in this format:
     return titles[:7] or [l.strip() for l in raw.splitlines() if l.strip()][:7]
 
 
-def select_title(titles: list[str], topic: str) -> str:
+def select_title(titles: list[str], topic: str, master_brief: str = "") -> str:
     short = topic[:50] + ("…" if len(topic) > 50 else "")
     console.print(f"\n[bold]── Pick a title  ·  {short} ──[/bold]")
     for i, title in enumerate(titles, 1):
         console.print(f"  [bold]{i}.[/bold] {title}\n")
+    console.print("  [dim](type a number, or 'skip' to let Claude pick on your behalf)[/dim]")
     while True:
         try:
             raw = input(f"  Your pick (1–{len(titles)}): ").strip()
+        except EOFError:
+            raw = SKIP_TOKEN
+        if raw.lower() == SKIP_TOKEN:
+            chosen = _clean_title(
+                answer_on_behalf("title", master_brief=master_brief, topic=topic,
+                                 niche_label="", options=titles)
+            )
+            console.print(f"  [info]Skipped — Claude picked:[/info] {chosen}")
+            return chosen
+        try:
             idx = int(raw) - 1
             if 0 <= idx < len(titles):
-                # Strip the [LEVER] prefix before returning clean title
-                chosen = titles[idx]
-                cleaned = re.sub(r"^\[[^\]]+\]\s*", "", chosen).strip()
-                return cleaned
-        except (ValueError, EOFError):
+                return _clean_title(titles[idx])
+        except ValueError:
             pass
-        console.print(f"  [warn]Enter a number between 1 and {len(titles)}.[/warn]")
+        console.print(f"  [warn]Enter a number between 1 and {len(titles)}, or 'skip'.[/warn]")
 
 
-def select_option(options: list[str], header: str) -> str:
+def select_option(options: list[str], header: str, on_skip=None) -> str:
     """Pick one option from a numbered list. Empty input defaults to option 1.
-    Strips leading [LEVER] prefix from title options before returning."""
+    Strips leading [LEVER] prefix from title options before returning.
+    If `on_skip` is given, typing 'skip' lets Claude choose on the creator's behalf."""
     console.print(f"\n[bold]── {header} ──[/bold]")
     for i, opt in enumerate(options, 1):
         console.print(f"  [bold]{i}.[/bold] {opt}\n")
+    if on_skip:
+        console.print("  [dim](type a number, Enter = 1, or 'skip' to let Claude pick)[/dim]")
     while True:
         try:
             raw = input(f"  Your pick (1–{len(options)}, Enter = 1): ").strip()
         except (EOFError, KeyboardInterrupt):
-            chosen = options[0]
-            return re.sub(r"^\[[^\]]+\]\s*", "", chosen).strip()
+            return _clean_title(options[0])
+        if on_skip and raw.lower() == SKIP_TOKEN:
+            chosen = _clean_title(on_skip(options))
+            console.print(f"  [info]Skipped — Claude picked:[/info] {chosen}")
+            return chosen
         if not raw:
-            chosen = options[0]
-            return re.sub(r"^\[[^\]]+\]\s*", "", chosen).strip()
+            return _clean_title(options[0])
         if raw.isdigit() and 1 <= int(raw) <= len(options):
-            chosen = options[int(raw) - 1]
-            return re.sub(r"^\[[^\]]+\]\s*", "", chosen).strip()
+            return _clean_title(options[int(raw) - 1])
         console.print(f"  [warn]Enter a number between 1 and {len(options)}.[/warn]")
 
 
@@ -418,9 +531,18 @@ def run_interview_flow(
     topic: str,
     google: list[str],
     medium: list[str],
+    niche_label: str = "",
+    master_brief: str = "",
 ) -> tuple[str, str]:
     """Two-call interview path. Returns (blog_markdown, chosen_title)."""
     cfg = interview_flow.load_interview_config(niche)
+    # 'skip' on any interview question → Claude answers it as Tarun.
+    answer_question = lambda q: answer_on_behalf(
+        "interview", master_brief=master_brief, topic=topic, niche_label=niche_label, question=q
+    )
+    pick_title = lambda opts: answer_on_behalf(
+        "title", master_brief=master_brief, topic=topic, niche_label=niche_label, options=opts
+    )
     trend_bits = [s for s in (google[:6] + medium[:4]) if s]
     trend_context = "; ".join(trend_bits)
 
@@ -433,8 +555,8 @@ def run_interview_flow(
     if angle:
         console.print(f"\n[info]Suggested angle:[/info] {angle}")
 
-    # Interactive Q&A
-    qa_pairs = interview_flow.run_interview(questions)
+    # Interactive Q&A — 'skip' a question → Claude answers it on your behalf
+    qa_pairs = interview_flow.run_interview(questions, on_skip=answer_question)
 
     # CALL 2 — article
     parsed = interview_flow.write_article(run_claude, topic=topic, qa_pairs=qa_pairs, cfg=cfg)
@@ -445,7 +567,7 @@ def run_interview_flow(
             run_claude, topic=topic, qa_pairs=qa_pairs, cfg=cfg,
             extra_instruction="CRITICAL: You MUST include at least 1 [IMAGE_INSERT: search term | caption] marker in the article body.",
         )
-    chosen_title = select_option(parsed["title_options"], "Pick a title")
+    chosen_title = select_option(parsed["title_options"], "Pick a title", on_skip=pick_title)
     blog_md = interview_flow.assemble_markdown(chosen_title, parsed)
 
     if parsed.get("tags"):
@@ -468,19 +590,27 @@ def _read_poem() -> str:
     return "\n".join(lines).strip()
 
 
-def run_poem_mode(topic: str) -> tuple[str, str]:
+def run_poem_mode(topic: str, niche_label: str = "", master_brief: str = "") -> tuple[str, str]:
     """Poetry path: paste or generate a poem, wrap with 2-3 line intro + outro.
     Returns (blog_markdown, title)."""
 
     # ── Poem source ──────────────────────────────────────────────────────────
     console.print("\n[bold]── Poetry Mode ──[/bold]")
-    console.print("  Do you have a poem to paste? [[bold]y[/bold]/n] ", end="")
+    console.print("  Do you have a poem to paste? [[bold]y[/bold]/n · 'skip' = Claude writes it] ", end="")
     try:
         have_poem = input().strip().lower()
     except (EOFError, KeyboardInterrupt):
         have_poem = "n"
 
-    if have_poem in ("y", "yes", ""):
+    if have_poem == SKIP_TOKEN:
+        console.print("  [info]Skipped — Claude is writing the poem on your behalf…[/info]")
+        gen_prompt = (
+            f"{_PERSONA}\n\nWrite a short, original poem about: {topic}.\n"
+            "Voice: intimate, specific, no clichés. Length: 8–20 lines.\n"
+            "Output ONLY the poem — no title, no explanation."
+        )
+        poem_text = run_claude(gen_prompt, timeout=120, description="Writing poem on your behalf…")
+    elif have_poem in ("y", "yes", ""):
         console.print("\n  Paste your poem:")
         poem_text = _read_poem()
         if not poem_text:
@@ -512,7 +642,13 @@ def run_poem_mode(topic: str) -> tuple[str, str]:
     ][:5]
     if not title_options:
         title_options = [topic]
-    chosen_title = select_option(title_options, "Pick a title")
+    chosen_title = select_option(
+        title_options, "Pick a title",
+        on_skip=lambda opts: answer_on_behalf(
+            "title", master_brief=master_brief, topic=topic,
+            niche_label=niche_label or "Poetry / Quotes", options=opts,
+        ),
+    )
 
     # ── Intro + Outro ─────────────────────────────────────────────────────────
     wrap_prompt = (
@@ -847,27 +983,30 @@ def main():
         medium = fetch_medium_titles(args.niche)
         console.print(f"  Medium titles: {len(medium)} found")
         topics = suggest_topics(args.niche, google, medium, recent, blog_type=args.blog_type)
-        topic  = select_topic(topics, niche_label)
+        topic  = select_topic(topics, niche_label, master_brief=master_brief)
         console.print(f"\nTopic: [bold]{topic}[/bold]")
 
     # ── Steps 2–5: Draft ──────────────────────────────────────────────────────
     if args.niche == "poetry" and not args.interview:
         # Poetry mode: paste or generate poem + 2-3 line intro/outro only.
-        blog_text, chosen_title = run_poem_mode(topic)
+        blog_text, chosen_title = run_poem_mode(topic, niche_label=niche_label, master_brief=master_brief)
         console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
     elif args.interview:
         # Two-call interview flow replaces creator-input + title + draft generation.
         if args.listicle or args.blog_type:
             console.print("[warn]--listicle/--type are ignored in --interview mode.[/warn]")
-        blog_text, chosen_title = run_interview_flow(args.niche, topic, google, medium)
+        blog_text, chosen_title = run_interview_flow(
+            args.niche, topic, google, medium,
+            niche_label=niche_label, master_brief=master_brief,
+        )
         console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
     else:
         # ── Step 2: Creator input ──────────────────────────────────────────────
-        creator_input = get_creator_input(topic, niche_label)
+        creator_input = get_creator_input(topic, niche_label, master_brief=master_brief)
 
         # ── Step 3: Title selection ────────────────────────────────────────────
         titles       = suggest_titles(args.niche, topic, creator_input, google, blog_type=args.blog_type)
-        chosen_title = select_title(titles, topic)
+        chosen_title = select_title(titles, topic, master_brief=master_brief)
         console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
 
         # ── Step 4: Build prompt ───────────────────────────────────────────────
