@@ -134,13 +134,23 @@ def _read_answer(prompt_label: str) -> str:
     return answer or _SKIPPED
 
 
-def run_interview(questions: list[str]) -> list[tuple[str, str]]:
-    """Ask each question; then allow editing any answer by number. Robust to empties."""
+def run_interview(questions: list[str], on_skip=None) -> list[tuple[str, str]]:
+    """Ask each question; then allow editing any answer by number. Robust to empties.
+
+    If `on_skip(question) -> str` is provided, a skipped/empty answer is replaced by
+    its return value (Claude answering on the creator's behalf) instead of [skipped].
+    """
+    def resolve(q: str, ans: str) -> str:
+        if ans == _SKIPPED and on_skip:
+            console.print("  [dim]skipped — Claude answering on your behalf…[/dim]")
+            return on_skip(q) or _SKIPPED
+        return ans
+
     answers: list[str] = []
     console.print("\n[bold]── Interview ──[/bold]")
     for i, q in enumerate(questions, 1):
         console.print(f"\n  [bold]Q{i}/{len(questions)}.[/bold] {q}")
-        answers.append(_read_answer(q))
+        answers.append(resolve(q, _read_answer(q)))
 
     # Edit pass — optional, loops until the author is done.
     while True:
@@ -160,7 +170,7 @@ def run_interview(questions: list[str]) -> list[tuple[str, str]]:
         if choice.isdigit() and 1 <= int(choice) <= len(questions):
             idx = int(choice) - 1
             console.print(f"\n  [bold]Q{idx + 1}.[/bold] {questions[idx]}")
-            answers[idx] = _read_answer(questions[idx])
+            answers[idx] = resolve(questions[idx], _read_answer(questions[idx]))
         else:
             console.print(f"  [warn]Enter a number 1–{len(questions)}, or press Enter.[/warn]")
 
