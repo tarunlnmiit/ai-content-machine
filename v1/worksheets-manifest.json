@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-30T08:55:38.935Z",
-  "count": 3,
+  "generatedAt": "2026-06-30T15:06:13.808Z",
+  "count": 4,
   "worksheets": {
     "what-hiring-managers-think-when-they-see-your-ds-github-2026": {
       "title": "GitHub Audit & AI Fluency Drills for DS Job Seekers",
@@ -19,6 +19,12 @@
       "niche": "data_science_tech",
       "date": "2026-06-30",
       "pdfPath": "output/worksheets/2026-W27/2026-06-30_data_science_tech_the-free-local-ai-setup-that-replaced-my-200month-data-scien_worksheet.pdf"
+    },
+    "the-5-minute-habit-that-replaced-3-hours-of-self-help-conten": {
+      "title": "Your 5-Minute Signal: A One-Week Data Audit",
+      "niche": "life_self_dev",
+      "date": "2026-06-30",
+      "pdfPath": "output/worksheets/2026-W27/2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten_worksheet.pdf"
     }
   }
 }
