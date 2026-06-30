@@ -232,6 +232,17 @@ def topic_virality_multiplier(
     return mult
 
 
+def trigger_lexicon(niche: Optional[str]) -> list[str]:
+    """Per-niche emotional/curiosity trigger words for topic generation.
+
+    Routes the same way as virality_block / topic_virality_multiplier:
+    voice niches (life/poetry) get the emotional lexicon, everything else
+    (ds/project) gets the build/teach lexicon. Sorted for stable prompts.
+    """
+    triggers = _VOICE_TRIGGERS if is_voice_niche(niche) else _TECH_TRIGGERS
+    return sorted(triggers)
+
+
 def virality_block(content_type: str, niche: Optional[str], project_key: Optional[str] = None) -> str:
     """Compact virality instruction block for a generator prompt.
 
