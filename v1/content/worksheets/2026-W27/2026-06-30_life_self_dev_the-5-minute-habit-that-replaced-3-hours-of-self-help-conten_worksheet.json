@@ -1,0 +1,43 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "Your 5-Minute Signal: A One-Week Data Audit",
+  "sections": [
+    {
+      "title": "The Consumption Audit",
+      "prompt": [
+        "List every self-improvement input you consumed last week (podcasts, YouTube, newsletters, books). Be specific — titles, approximate time.",
+        "For each item, write one thing you actually did differently because of it. If nothing changed, write 'nothing.'",
+        "What's the ratio of consuming to doing in your typical week? What does that number tell you?"
+      ]
+    },
+    {
+      "title": "Your Three-Line Morning Practice",
+      "prompt": [
+        "For the next 7 days, write these three things before opening your phone — what you're worried about today, what you want to accomplish, and one honest sentence about how you're feeling. Set a two-minute timer.",
+        "After day 3, read back your entries. What surprised you? What keeps showing up that you didn't expect?",
+        "Where in your morning could you realistically do this — what has to happen before it, and what would you be trading it against?"
+      ]
+    },
+    {
+      "title": "Finding the Pattern in Your Own Data",
+      "prompt": [
+        "Look at the last 30 days of your life. When did you feel genuinely good about your work or your day? Write 3-5 specific moments.",
+        "What do those moments have in common? Are you building something, analyzing something, connecting with someone, moving your body?",
+        "What decision have you been trying to 'figure out' through content consumption that your own daily experience might already be answering?"
+      ]
+    },
+    {
+      "title": "The Belief You're Carrying",
+      "prompt": [
+        "Complete this sentence honestly: 'I consume self-improvement content because I believe ___.' Write the first thing that comes out.",
+        "What would you do with your time this week if you genuinely believed you already knew enough to take the next step?",
+        "Write one thing your past self — from 6 months ago — would call you out on right now, the way the blog's author was called out by his own journal entry."
+      ]
+    }
+  ],
+  "cta": "Try the three-line practice for just three mornings, then share one thing your own data surfaced that no podcast could have told you.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-W27/2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten.md",
+  "slug": "2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten"
+}
