@@ -1,12 +1,24 @@
 {
-  "generatedAt": "2026-06-26T11:13:46.914Z",
-  "count": 1,
+  "generatedAt": "2026-06-30T08:22:12.742Z",
+  "count": 3,
   "worksheets": {
+    "what-hiring-managers-think-when-they-see-your-ds-github-2026": {
+      "title": "What Hiring Managers Think When They See Your Ds Github 2026",
+      "niche": "data_science_tech",
+      "date": "2026-06-26",
+      "pdfPath": "output/worksheets/2026-W26/2026-06-26_data_science_tech_what-hiring-managers-think-when-they-see-your-ds-github-2026.pdf"
+    },
     "ive-done-the-same-3-step-morning-routine-for-2-years": {
       "title": "Ive Done The Same 3 Step Morning Routine For 2 Years",
       "niche": "life_self_dev",
       "date": "2026-06-26",
       "pdfPath": "output/worksheets/2026-W26/2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years_worksheet.pdf"
+    },
+    "the-free-local-ai-setup-that-replaced-my-200month-data-scien": {
+      "title": "The Free Local Ai Setup That Replaced My 200month Data Scien",
+      "niche": "data_science_tech",
+      "date": "2026-06-30",
+      "pdfPath": "output/worksheets/2026-W27/2026-06-30_data_science_tech_the-free-local-ai-setup-that-replaced-my-200month-data-scien_worksheet.pdf"
     }
   }
 }
