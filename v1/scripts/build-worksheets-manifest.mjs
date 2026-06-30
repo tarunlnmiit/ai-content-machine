@@ -4,7 +4,9 @@
 // optional _worksheet suffix). Title resolves in priority order:
 //   1. config/worksheet_config.json override (full stem key)
 //   2. the worksheet content JSON `title` (content/worksheets/**/<stem>_worksheet.json)
-//   3. Title-Cased slug (last-resort fallback)
+//   3. the existing committed manifest's title (survives Vercel builds, where
+//      content/ is .vercelignore'd and step 2's JSONs are absent)
+//   4. Title-Cased slug (last-resort fallback)
 //
 // Runs at Vercel build (buildCommand) AND locally. No npm deps.
 
@@ -38,9 +40,28 @@ function loadConfigTitles() {
   }
 }
 
+// Map slug -> title from the existing committed manifest. This is the
+// build-sandbox-safe title source: content/ is excluded by .vercelignore, so
+// the worksheet JSONs are NOT present during a Vercel build — but the committed
+// manifest (correct, generated locally) IS uploaded. Preserving its titles
+// stops the build from clobbering good titles back to Title-Cased slugs.
+function loadExistingTitles() {
+  const path = join(REPO, "worksheets-manifest.json");
+  try {
+    const m = JSON.parse(readFileSync(path, "utf8"));
+    const out = {};
+    for (const [slug, e] of Object.entries(m.worksheets ?? {})) {
+      if (e?.title) out[slug] = e.title;
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
 // Map worksheet stem -> human title from the generated content JSON
 // (content/worksheets/**/<stem>_worksheet.json). Source of truth for the
-// display title; avoids ugly Title-Cased slugs when config has no override.
+// display title locally; absent in the Vercel build sandbox (content/ ignored).
 function loadJsonTitles() {
   const titles = {};
   const root = join(REPO, "content", "worksheets");
@@ -81,6 +102,7 @@ function walkPdfs(dir, root, results = []) {
 function main() {
   const configWorksheets = loadConfigTitles();
   const jsonTitles = loadJsonTitles();
+  const existingTitles = loadExistingTitles();
   const pdfs = walkPdfs(join(REPO, "output", "worksheets"), REPO);
 
   const bySlug = new Map(); // slug -> { date, niche, pdfPath, title }
@@ -96,7 +118,8 @@ function main() {
     const [, date, niche, slug] = m;
     const stem = `${date}_${niche}_${slug}`;
     const cfg = configWorksheets[stem];
-    const title = cfg?.title ?? jsonTitles[stem] ?? titleCase(slug);
+    const title =
+      cfg?.title ?? jsonTitles[stem] ?? existingTitles[slug] ?? titleCase(slug);
     const entry = { date, niche, slug, pdfPath: rel, title };
 
     const existing = bySlug.get(slug);
