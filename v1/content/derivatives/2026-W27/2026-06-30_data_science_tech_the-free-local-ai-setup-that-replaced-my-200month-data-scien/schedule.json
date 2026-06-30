@@ -1,0 +1,78 @@
+{
+  "slug": "2026-06-30_data_science_tech_the-free-local-ai-setup-that-replaced-my-200month-data-scien",
+  "niche": "ds",
+  "generated_at": "2026-06-30T13:45:58.854099+05:30",
+  "long_form": {
+    "platform": "youtube",
+    "publish_at": "2026-07-09T18:00:00+05:30",
+    "channel": "Breath of Data Science"
+  },
+  "blog": {
+    "substack_publish_at": "2026-07-02T18:00:00+05:30",
+    "medium_publish_at": "2026-07-02T18:05:00+05:30"
+  },
+  "social": {
+    "linkedin_publish_at": "2026-07-08T12:00:00+05:30",
+    "twitter_publish_at": "2026-07-08T13:00:00+05:30",
+    "ig_fb_publish_at": "2026-07-08T08:00:00+05:30",
+    "threads_publish_at": "2026-07-08T20:00:00+05:30"
+  },
+  "shorts": [
+    {
+      "slot": 0,
+      "publish_at": "2026-07-13T10:00:00+05:30"
+    },
+    {
+      "slot": 1,
+      "publish_at": "2026-07-13T20:00:00+05:30"
+    },
+    {
+      "slot": 2,
+      "publish_at": "2026-07-14T10:00:00+05:30"
+    },
+    {
+      "slot": 3,
+      "publish_at": "2026-07-14T20:00:00+05:30"
+    },
+    {
+      "slot": 4,
+      "publish_at": "2026-07-15T10:00:00+05:30"
+    },
+    {
+      "slot": 5,
+      "publish_at": "2026-07-15T20:00:00+05:30"
+    },
+    {
+      "slot": 6,
+      "publish_at": "2026-07-16T10:00:00+05:30"
+    },
+    {
+      "slot": 7,
+      "publish_at": "2026-07-16T20:00:00+05:30"
+    },
+    {
+      "slot": 8,
+      "publish_at": "2026-07-17T10:00:00+05:30"
+    },
+    {
+      "slot": 9,
+      "publish_at": "2026-07-17T20:00:00+05:30"
+    },
+    {
+      "slot": 10,
+      "publish_at": "2026-07-18T10:00:00+05:30"
+    },
+    {
+      "slot": 11,
+      "publish_at": "2026-07-18T20:00:00+05:30"
+    },
+    {
+      "slot": 12,
+      "publish_at": "2026-07-19T10:00:00+05:30"
+    },
+    {
+      "slot": 13,
+      "publish_at": "2026-07-19T20:00:00+05:30"
+    }
+  ]
+}

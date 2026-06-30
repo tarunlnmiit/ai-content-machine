@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "Local AI Audit: Map Your Subscriptions to Free Alternatives"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Audit Your Current AI Spend
+   List every AI tool you pay for monthly (APIs, Copilot, cloud notebooks, etc.). For each, write: the dollar cost, the primary task you use it for, and whether that task involves sensitive/proprietary data. Total the annual cost. This is your baseline.
+
+2. Install Ollama and Run Your First Local Inference
+   Install Ollama from ollama.com, pull llama3 with `ollama pull llama3`, then run the job-scoring snippet from the blog — substitute a real job description and a summary of your own background. Time the response. Note the latency and whether the JSON output is parseable.
+
+3. Classify Your Tasks: Local vs. Hosted
+   Take the tool list from section 1 and tag each task as L (local candidate) or H (hosted). Apply the blog's split rule: batch/async/privacy-sensitive → L; interactive/latency-sensitive/non-sensitive → H. Calculate what percentage of your spend falls in the L bucket.
+
+4. Build a Minimal Overnight Automation
+   Design a script (pseudocode is fine if you're not coding yet) that runs on a schedule, sends zero data to external APIs, and produces a ranked or scored output you'd read in the morning. It can be job listings, RSS feeds, a folder of documents — anything real to you. Write the core prompt you'd send to Ollama and the JSON keys you'd want back.
+
+5. Measure the Quality Gap on a Real Task
+   Pick one task you currently use a paid API for. Run the same prompt against a local Ollama model (7B or 13B) and against the paid API. Score both outputs on accuracy and usefulness on a 1–10 scale. Write two sentences on where the gap is real and one sentence on whether that gap justifies the cost for this specific task.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"
