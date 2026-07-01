@@ -1,7 +1,7 @@
-Create a professional worksheet PDF (A4, landscape) for "Stop Writing Loops: Your NumPy Array Thinking Upgrade"
+Create a professional worksheet PDF (A4, landscape) for "NumPy Speed Drills: Vectorize Your First Loop"
 
 Layout:
-- Header (top 20%): Title + tagline about applying ML to production
+- Header (top 20%): Title + tagline about the topic
 - 5 sections in vertical stack, each with:
   - Section number + title (bold, #1-5)
   - Bulleted prompts or template code
@@ -10,22 +10,20 @@ Layout:
 Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
 
 Sections:
-1. Find Your Loop Problem
-   Think of the last time your Python script felt slow or you wrote a `for` loop to process numbers. Describe it briefly. What were you computing? How many rows or values? What happened when you ran it?
+1. Time Your Own Loop-to-Vector Conversion
+   Write a Python loop that squares every number in a list of 50,000 integers and time it with the time module. Then rewrite it as a single NumPy vectorized operation (array ** 2) and time that. Record both durations and calculate the speedup multiplier — compare it to the tutorial's 50-200x range and note where yours falls.
 
-2. Rewrite One Loop as a NumPy Operation
-   - Take any list of numbers you care about (exam scores, expenses, steps walked, stock prices). Write them as a NumPy array: `data = np.array([...])`
-   - Now write the loop version of one calculation (e.g., multiply every value by 1.1). Then rewrite it as a single vectorized NumPy expression. What changed in how you *described* the operation?
+2. Build the IQR Outlier Detector on Your Own Numbers
+   Pull 10 real numbers from your own life — expenses, screen time hours, workout reps, whatever you track. Put them in a NumPy array and run the exact six-line IQR outlier block from the tutorial (percentile, iqr, upper_fence, lower_fence, boolean OR filter). Report which value(s), if any, got flagged and whether that matches your intuition.
 
-3. Run Your Own Descriptive Stats
-   - Use your array from Section 2. Compute: mean, std, min, max. Write the actual numbers you got.
-   - Now add one outlier (a value far outside the rest). Recompute mean and std. How much did each shift? What does that tell you about which stat to trust?
+3. Boolean Indexing Chain: From scores > 90 to Your Filter
+   Create an array of 15 values representing something you can filter meaningfully (quiz scores, daily steps, response times). Write three different boolean indexing filters chained with & or | (matching the tutorial's salaries[(salaries > x) | (salaries < y)] pattern) and print the filtered result for each. Note which filter returned the fewest matches.
 
-4. Build a 2D Array from Your Own Data
-   - Create a 3×4 matrix using numbers you make up or pull from real life (monthly scores, weekly metrics, anything with rows and columns). Print `.shape` and `.ndim`.
-   - Compute the mean of each row (`axis=1`) and each column (`axis=0`). Write what each axis result *means* in the context of your data — not just the number, but what the row average and column average represent.
+4. arange vs linspace: Prove They're Different Tools
+   Generate two arrays covering the same range 0 to 1: one using np.arange(0, 1.1, 0.1) and one using np.linspace(0, 1, 11). Print both, then explain in one sentence, based on what you see, why arange's endpoint behavior makes linspace the safer choice when you need an exact count of points.
 
-5. Practice the Mental Shift
-   In one sentence each, complete these: (1) 'Before NumPy, when I needed to filter data I would...' (2) 'With boolean masking, instead I can...' (3) 'The biggest thing that changes when I stop thinking in loops and start thinking in arrays is...'
+5. dtype Detective: Break a Mixed-Type Array on Purpose
+   Create scores = np.array([85, 92, 78]) and check its dtype. Now create np.array([85, 92, 78.5]) and check that dtype. Then try np.array([85, '92', 78]) and check that dtype. Write down what happened to the integers in each case and why NumPy's single-type rule forced that conversion.
 
 
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"

@@ -1,8 +1,8 @@
-Create a reflective worksheet PDF (A4, portrait) for "The Invisible Load Audit: What You're Carrying That Nobody Sees"
+Create a reflective worksheet PDF (A4, portrait) for "Name the Weight You're Carrying"
 
 Layout:
 - Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
-- 5 sections vertically stacked, each with:
+- 4 sections vertically stacked, each with:
   - Section title (warm orange or teal accent)
   - Reflective prompt in italics
   - Blank space for handwritten response (30-50% of section height)
@@ -11,29 +11,31 @@ Layout:
 Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
 
 Sections:
-1. Name What's In the Bag
-   - What's one thing you've been carrying silently for more than 3 months? (An unresolved argument, a loss, a disappointment, a version of events nobody else witnessed.)
-   - When did you last say 'I'm fine' and mean something else entirely? What were you actually feeling?
-   - Is there something you stopped talking about — not because it was resolved, but because you got tired of carrying it in conversation too?
+1. Find the Loop That's Running in the Background
+   - Think of one unresolved thing you're still replaying (an argument, a loss, a decision). Write the exact moment it happened — where you were, what was said.
+   - What would it look like for that thing to have an ending? Not resolution with the other person — just an ending you could write for yourself.
+   - On a scale of 1-10, how much mental bandwidth is this loop taking up on an average day?
+   - Name one task this week where you noticed the 'fog' — rereading the same paragraph, forgetting something small, forty minutes gone with nothing to show for it.
 
-2. Map the Cognitive Tax
-   - Where does this invisible load show up in your daily life? (e.g., 2 a.m. replays, reduced patience, difficulty concentrating, emotional flatness)
-   - Estimate honestly: how many hours per week do you spend mentally managing this unresolved thing — replaying, suppressing, or bracing against it?
-   - What task or relationship is getting a diminished version of you because of what you're quietly carrying?
+2. Trace Where the Weight Leaks Out
+   - Think of someone close to you. Where has the half-second delay, the shortened patience, or the distance shown up with them recently?
+   - Has anyone ever said something like 'you're here but not really here'? Write down what they said, as close to word-for-word as you remember.
+   - What are you protecting people from by staying silent — and is that protection actually working, or is it costing the relationship something instead?
+   - Pick one person you've been keeping at a slight remove. What's one true sentence you could say to them this week that isn't 'I'm fine'?
 
-3. Track the Leak
-   - Who in your life gets the 'slightly less' version of you because of what you're holding? (Less patience, less presence, more distance.)
-   - Think of a recent moment where your reaction was bigger or colder than the situation warranted. What was actually underneath it?
-   - Is there someone you're keeping at arm's length — not because you don't want closeness, but because closeness feels unsafe right now?
+3. Do the Cost Accounting
+   - List three things you've been carrying silently right now — no need to explain them, just name them.
+   - For each one, estimate: how long have you been carrying it? A week, a year, longer?
+   - What is the energy cost of containment versus the energy cost of naming it out loud to one person? Be honest about which is actually higher.
+   - If your brain has a 'finite pool' of resources, what's one thing you'd get back — creatively, professionally, relationally — if this loop closed?
 
-4. Understand Why You Haven't Put It Down
-   - Finish this sentence honestly: 'If I actually looked at this thing directly, I'd have to admit ___________.'
-   - Have you made 'handling it' part of your identity? What would it mean about you if you needed help with this?
-   - What's the story you've told yourself about why you can't or shouldn't process this yet?
-
-5. One Small Act of Putting It Down
-   - The work rarely looks dramatic. What is one small, private act that would be honest about what you're carrying? (Writing it down, saying it aloud to yourself, telling one person, booking a session with a therapist.)
-   - What does 'resolution' actually need to look like for this particular thing — not closure necessarily, but something less than carrying it alone?
-   - Write a single sentence that names what you've been holding. Not to share. Just so it exists somewhere outside your head.
+4. Choose One Small Act of Unloading
+   - Pick the lightest of the three things from Section 3 — not the heaviest. Who is one safe person you could tell it to this week?
+   - Draft the first sentence you'd use to say it out loud. Write it exactly as you'd say it.
+   - What's the smallest possible version of 'not fine' you could admit to someone today?
+   - Set a specific day and time this week to have that conversation. Put it somewhere you'll actually see it.
 
 
+Footer: "Reply with your answers — your reflections help others find their entry point."
+
+Optional: Soft watercolor accent in corner.
