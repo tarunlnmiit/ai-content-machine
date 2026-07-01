@@ -1,0 +1,31 @@
+{
+  "type": "practice_guide",
+  "niche": "data_science_tech",
+  "title": "Rewrite Your Resume Against the 1,003-Posting Dataset",
+  "sections": [
+    {
+      "title": "Rank Your Skills Against the Real Numbers",
+      "prompt": "List your top 8 skills, then next to each write the match rate from the posting data: Machine Learning (73%), Python (62%), LLM experience (31%), Generative AI (28%), NLP (20%), Deep Learning (15%), PyTorch (12%), TensorFlow (11%), RAG (10%), MLOps (10%), SQL (9%), Cloud/AWS (7%). Circle any skill you claim but can't back with a specific project — that's your gap, not a hype-chase target."
+    },
+    {
+      "title": "Rewrite One Bullet the 'Say the Skill By Name' Way",
+      "prompt": "Take your current top resume bullet (probably a list like 'Python, SQL, Tableau skills'). Rewrite it in the before/after format from the post: name the artifact you built, and put a number on the outcome — e.g. 'built pipeline, cut manual QA from 6 hours to 45 minutes weekly.' If you can't produce a real number, that's the project to do next, not the bullet to fake."
+    },
+    {
+      "title": "Spot the Rebranding in a Job Posting You've Already Seen",
+      "prompt": "Pull up one job posting you've applied to or bookmarked. Find every place it says 'LLM,' 'GenAI,' or 'AI Engineer' and ask: is this describing deep learning fundamentals under a new label? Write one sentence translating the posting's trendy term into the underlying technical skill it's actually testing for."
+    },
+    {
+      "title": "Audit Your Own Data Like the Methodology Section Did",
+      "prompt": "Pick one metric or number you've quoted about your own job search or skill-tracking (e.g. 'I've applied to 50 roles'). Apply one of the five flaws from the post to it — title-only classification, no dedup, no weighting by required-vs-nice-to-have, broken keyword matching, or double-counted entries. Write down whether your number is inflated, deflated, or roughly right."
+    },
+    {
+      "title": "Run Week 1 of the Four-Week Rebuild",
+      "prompt": "Block out Days 1–3 on your calendar this week: build one trivial LLM tool (a Slack bot or CLI Q&A tool) using chat completions, streaming, and function/tool calling on the OpenAI or Anthropic API — no theory videos. Write down the exact tool you'll build and the date you'll ship it."
+    }
+  ],
+  "cta": "Post your before/after resume bullet from Section 2 in the comments — I'll tell you if it would survive a recruiter's 6-second scan.",
+  "engage_potential": "high",
+  "blog_file": "content/blogs/2026-W27/2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t.md",
+  "slug": "2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t"
+}
