@@ -4,8 +4,8 @@ import { resolve } from "./_lib/manifest.mjs";
 import { verify } from "./_lib/token.mjs";
 
 export default function handler(req, res) {
-  const slug = String(req.query?.slug ?? "");
-  const token = String(req.query?.t ?? "");
+  const slug = String(req.query?.slug ?? "").replace(/\s+/g, "");
+  const token = String(req.query?.t ?? "").replace(/\s+/g, "");
 
   if (!verify(token, slug)) {
     res.statusCode = 403;
