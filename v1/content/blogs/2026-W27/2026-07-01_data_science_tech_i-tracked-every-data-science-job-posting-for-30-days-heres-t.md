@@ -71,3 +71,13 @@ If you want the worksheet that turns this into a resume audit you can run on you
 <!-- Target keyphrase: data science job posting skills -->
 <!-- SEO title: Data Science Job Posting Skills: What 1,003 Listings Show -->
 <!-- SEO description: I scraped 1,003 data science job postings over 30 days to find the exact skills recruiters ask for most — and what's hyped but barely hired. -->
+
+<!-- worksheet-cta -->
+
+---
+
+### Want to put this into practice?
+
+[Download the companion worksheet →](https://worksheets-thebreathnetwork.vercel.app/get-worksheet/i-tracked-every-data-science-job-posting-for-30-days-heres-t)
+
+_Free PDF. Enter your email and it opens right away._
