@@ -1,0 +1,30 @@
+{
+  "type": "practice_guide",
+  "niche": "data_science_tech",
+  "title": "Ship a Chart Nobody Judges You For",
+  "sections": [
+    {
+      "title": "Kill the Gray Background",
+      "prompt": "Load titanic dataset with sns.load_dataset('titanic'). Plot df['fare'].hist() with zero styling — screenshot it. Then run sns.set_theme(style='whitegrid', palette='muted', font_scale=1.2) plus the rcParams block (dpi 150, figsize 10x6, spines off) and replot same histogram. Put both side by side, note 3 differences you see."
+    },
+    {
+      "title": "Distribution Skew Check",
+      "prompt": "Run sns.histplot with kde=True on both df['age'] and df['fare'] side by side (subplots). Write one sentence on what the fare skew (most under £50, some over £500) means for using fare as raw model input vs log-transformed."
+    },
+    {
+      "title": "Encode a Third Variable",
+      "prompt": "Build the age-vs-fare scatterplot with hue='survived' exact color mapping from tutorial ({0:'salmon',1:'steelblue'}). Then swap hue to 'pclass' instead. Compare which hue choice reveals a clearer pattern and explain why in 2 sentences."
+    },
+    {
+      "title": "Read the Confidence Interval",
+      "prompt": "Reproduce sns.barplot(x='pclass', y='survived', errorbar='ci'). Note the survival rate and CI width for each class. Then rerun grouped by 'sex' instead of 'pclass' — does the CI get tighter or wider, and what does that tell you about sample size per group?"
+    },
+    {
+      "title": "Correlation Heatmap Audit",
+      "prompt": "Generate the sns.heatmap on numeric_cols.corr() with annot=True, cmap='coolwarm', center=0. Identify the strongest positive and strongest negative correlation pair (excluding self-correlations) and write what each pair implies about the Titanic data."
+    }
+  ],
+  "cta": "Post your before/after chart screenshot (default matplotlib vs styled) and tag the correlation pair you found strongest — I'll reply with what I'd check next.",
+  "blog_file": "content/blogs/2026-W25/2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati.md",
+  "slug": "2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati"
+}

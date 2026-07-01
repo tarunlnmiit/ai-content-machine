@@ -1,0 +1,47 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "Find Your Recursive Loop: A Self-Audit",
+  "sections": [
+    {
+      "title": "Audit Your Information Diet",
+      "prompt": [
+        "List the 3 sources (podcasts, books, accounts) you consumed most this week. For each, ask: did it give you a model for thinking, or just an update?",
+        "Pick one piece of content you consumed recently. Write one sentence on what you learned vs. one sentence on what you now see differently. If you can only fill the first, that source isn't compounding.",
+        "Name one source you keep returning to that leaves you feeling 'informed' but never changes a decision. What would you replace it with?",
+        "This week, before consuming anything new, write down one question you're trying to answer. Does the source answer it, or just add noise?"
+      ]
+    },
+    {
+      "title": "Map Your Habit Chain",
+      "prompt": [
+        "Write down your current morning sequence, step by step, exactly as it happens (not as you wish it happened).",
+        "Circle the one habit in that sequence that makes the next one easier. That's your keystone — is it getting priority, or is it the first thing you skip?",
+        "Pick one habit you're struggling to install. What existing behavior could you attach it to so it becomes the natural next step rather than a fresh decision?",
+        "Test it: skip your keystone habit for 3 days and note what breaks downstream. Write down exactly what unraveled."
+      ]
+    },
+    {
+      "title": "Review Your Reviews",
+      "prompt": [
+        "Pull up your last 3 months of journal entries or notes. What theme keeps showing up that you've never acted on?",
+        "Find one place where you blamed a bad week on 'low motivation.' Look at what happened the week before — was creating or shipping something the real variable?",
+        "Write your own version of the meta-question: 'What question am I not asking myself that I should be?' Answer it honestly, right now.",
+        "Set a date (write the actual day) to do your first 'review of reviews' this month."
+      ]
+    },
+    {
+      "title": "Find Your Highest-Leverage Skill",
+      "prompt": [
+        "List 3 skills you're currently trying to build. For each, ask: does getting better at this make any other skill easier?",
+        "Identify the one skill in your life that, if it improved 20%, would make the most other things easier (writing, focus, a specific technical skill, etc.).",
+        "Name one skill you've been treating as isolated that's actually a hidden unlock for 2-3 other goals.",
+        "Write one concrete action you'll take this week to invest in that highest-leverage skill instead of a lower-leverage one."
+      ]
+    }
+  ],
+  "cta": "Pick one section, do the audit today, and reply with the one pattern you found that surprised you — I read every one.",
+  "engage_potential": "high",
+  "blog_file": "content/blogs/2026-W25/2026-06-16_life_self_dev_recursive-self-improvement.md",
+  "slug": "2026-06-16_life_self_dev_recursive-self-improvement"
+}

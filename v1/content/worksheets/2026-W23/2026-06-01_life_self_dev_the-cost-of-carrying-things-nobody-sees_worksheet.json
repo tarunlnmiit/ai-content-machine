@@ -1,0 +1,47 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "Name the Weight You're Carrying",
+  "sections": [
+    {
+      "title": "Find the Loop That's Running in the Background",
+      "prompt": [
+        "Think of one unresolved thing you're still replaying (an argument, a loss, a decision). Write the exact moment it happened — where you were, what was said.",
+        "What would it look like for that thing to have an ending? Not resolution with the other person — just an ending you could write for yourself.",
+        "On a scale of 1-10, how much mental bandwidth is this loop taking up on an average day?",
+        "Name one task this week where you noticed the 'fog' — rereading the same paragraph, forgetting something small, forty minutes gone with nothing to show for it."
+      ]
+    },
+    {
+      "title": "Trace Where the Weight Leaks Out",
+      "prompt": [
+        "Think of someone close to you. Where has the half-second delay, the shortened patience, or the distance shown up with them recently?",
+        "Has anyone ever said something like 'you're here but not really here'? Write down what they said, as close to word-for-word as you remember.",
+        "What are you protecting people from by staying silent — and is that protection actually working, or is it costing the relationship something instead?",
+        "Pick one person you've been keeping at a slight remove. What's one true sentence you could say to them this week that isn't 'I'm fine'?"
+      ]
+    },
+    {
+      "title": "Do the Cost Accounting",
+      "prompt": [
+        "List three things you've been carrying silently right now — no need to explain them, just name them.",
+        "For each one, estimate: how long have you been carrying it? A week, a year, longer?",
+        "What is the energy cost of containment versus the energy cost of naming it out loud to one person? Be honest about which is actually higher.",
+        "If your brain has a 'finite pool' of resources, what's one thing you'd get back — creatively, professionally, relationally — if this loop closed?"
+      ]
+    },
+    {
+      "title": "Choose One Small Act of Unloading",
+      "prompt": [
+        "Pick the lightest of the three things from Section 3 — not the heaviest. Who is one safe person you could tell it to this week?",
+        "Draft the first sentence you'd use to say it out loud. Write it exactly as you'd say it.",
+        "What's the smallest possible version of 'not fine' you could admit to someone today?",
+        "Set a specific day and time this week to have that conversation. Put it somewhere you'll actually see it."
+      ]
+    }
+  ],
+  "cta": "Reply with the one sentence you drafted in Section 4 — the exact words you'd use to finally say the thing out loud. I'll be reading.",
+  "engage_potential": "high",
+  "blog_file": "content/blogs/2026-W23/2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees.md",
+  "slug": "2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees"
+}

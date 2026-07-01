@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Python for Data Science: Vectorized Thinking Workbook</title>
+<title>Pandas for Data Analysis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
@@ -336,9 +336,9 @@
   <header class="header">
     <div class="header-accent"></div>
     <div class="header-body">
-      <div class="header-eyebrow">NumPy · Think In Arrays</div>
-      <h1 class="header-title">Python for Data Science: <em>Vectorized</em> Thinking Workbook</h1>
-      <p class="header-tagline">Five hands-on drills that turn NumPy from syntax you copy into a mental model you own — loops to vectors, filters, and stats.</p>
+      <div class="header-eyebrow">Pandas · From Mess To Answers</div>
+      <h1 class="header-title">Pandas for Data <em>Analysis</em></h1>
+      <p class="header-tagline">Work your own messy dataset through orient, select, clean, and aggregate — leave with real numbers, not just notes.</p>
     </div>
     <div class="header-fields">
       <div class="field">
@@ -350,7 +350,7 @@
         <div class="field-line"></div>
       </div>
       <div class="field">
-        <span class="field-label">Speedup ×</span>
+        <span class="field-label">Dataset used</span>
         <div class="field-line"></div>
       </div>
     </div>
@@ -361,18 +361,12 @@
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">1</div></div>
       <div class="section-content">
-        <div class="section-title">Time Your Own Loop-to-Vector Conversion</div>
-<div class="prompts"><p class="prompt">Write a Python loop that <strong>squares 50,000 integers</strong> one at a time. Time it with <code>time</code>.</p><p class="prompt">Rewrite as <strong>one vectorized line</strong>: <code>arr ** 2</code>. Time that too.</p><p class="prompt">Divide loop time by vector time — your <em>speedup multiplier</em>. Tutorial saw 50–200x. Where do you land?</p></div><div class="code-block">import time, numpy as np
-arr = np.arange(50_000)
-t0 = time.time()
-result = [x**2 for x in arr]
-t1 = time.time()
-vec = arr ** 2
-t2 = time.time()
-print((t1-t0)/(t2-t1))</div>
+        <div class="section-title">Step 1 — Orient: Your First 60 Seconds with the Dataset</div>
+<div class="prompts"><p class="prompt">Name your dataset — <strong>file or description</strong>:</p><p class="prompt">Run <code>df.shape</code>, <code>df.info()</code>, <code>df.head()</code>. Rows / columns:</p><p class="prompt">List columns with <strong>null values</strong>:</p><p class="prompt">Which <em>dtypes</em> look wrong (dates as object, numbers as string)?</p><p class="prompt">First instinct — what's this data trying to tell you?</p></div><div class="code-block">print(df.shape)
+print(df.isnull().sum())</div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">Your timings</div>
+        <div class="notes-label">Shape & nulls</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>
@@ -387,15 +381,11 @@ print((t1-t0)/(t2-t1))</div>
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">2</div></div>
       <div class="section-content">
-        <div class="section-title">Build the IQR Outlier Detector on Your Own Numbers</div>
-<div class="prompts"><p class="prompt">Pull <strong>10 real numbers</strong> from your life — expenses, screen time, workout reps.</p><p class="prompt">Load into a NumPy array, run the tutorial's <em>six-line IQR block</em> exactly.</p><p class="prompt">Report which value(s) got <strong>flagged</strong> — does it match your gut sense of "weird day"?</p></div><div class="code-block">q25, q75 = np.percentile(data, [25, 75])
-iqr = q75 - q25
-upper = q75 + 1.5 * iqr
-lower = q25 - 1.5 * iqr
-outliers = data[(data > upper) | (data < lower)]</div>
+        <div class="section-title">Step 2 — Select: Define the Question Before You Filter</div>
+<div class="prompts"><p class="prompt">Write the <strong>ONE question</strong> this dataset must answer:</p><p class="prompt">List the columns <em>essential</em> to answering it:</p><p class="prompt">Write your <code>.loc</code> or boolean filter that isolates the rows you care about:</p><p class="prompt">What rows get <strong>excluded</strong> (test data, outliers, nulls) — why?</p><p class="prompt">Rows remaining after filter — does that count feel right?</p></div><div class="code-block">df.loc[df['revenue'] > 10000, ['customer_id','revenue']]</div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">Flagged values</div>
+        <div class="notes-label">Filter logic</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>
@@ -410,12 +400,12 @@ outliers = data[(data > upper) | (data < lower)]</div>
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">3</div></div>
       <div class="section-content">
-        <div class="section-title">Boolean Indexing Chain: From scores > 90 to Your Filter</div>
-<div class="prompts"><p class="prompt">Build an array of <strong>15 values</strong> you can filter meaningfully — steps, scores, response times.</p><p class="prompt">Write <strong>three chained filters</strong> using <code>&</code> or <code>|</code>, matching <code>arr[(arr > x) | (arr < y)]</code>.</p><p class="prompt">Print each filtered result. Which condition returned the <em>fewest</em> matches?</p></div><div class="code-block">arr[(arr > 90) | (arr < 60)]
-arr[(arr >= 70) & (arr <= 85)]</div>
+        <div class="section-title">Step 3 — Clean: Audit the Mess Before You Trust the Numbers</div>
+<div class="prompts"><p class="prompt">List columns needing <strong>type conversion</strong> and target type:</p><p class="prompt">How is missing data encoded? <code>NaN</code>, <code>'N/A'</code>, <code>'-'</code>, blank — list every variant found:</p><p class="prompt">Duplicate rows — run <code>df.duplicated().sum()</code>. Count:</p><p class="prompt">Which <em>string columns</em> have inconsistent casing/whitespace?</p><p class="prompt">Name the <strong>one cleaning step</strong> that most improves this dataset:</p></div><div class="code-block">df['order_date'] = pd.to_datetime(df['order_date'], errors='coerce')
+df['region'] = df['region'].str.strip().str.title()</div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">Fewest matches</div>
+        <div class="notes-label">Cleaning checklist</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>
@@ -430,11 +420,11 @@ arr[(arr >= 70) & (arr <= 85)]</div>
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">4</div></div>
       <div class="section-content">
-        <div class="section-title">arange vs linspace: Prove They're Different Tools</div>
-<div class="prompts"><p class="prompt">Generate <strong>0 to 1</strong> two ways: <code>np.arange(0, 1.1, 0.1)</code> and <code>np.linspace(0, 1, 11)</code>.</p><p class="prompt">Print both arrays side by side — look closely at the <em>endpoint</em> and array length.</p><p class="prompt">In one sentence: why does <code>arange</code>'s float drift make <code>linspace</code> the safer pick for an exact point count?</p></div>
+        <div class="section-title">Step 4 — Aggregate: Find the Summary That Actually Tells You Something</div>
+<div class="prompts"><p class="prompt">Groupby column — <strong>region, category, date, segment</strong>?</p><p class="prompt">Aggregation that fits — <em>sum, mean, count, median</em>? Why?</p><p class="prompt">Run the groupby. Highest group / lowest group:</p><p class="prompt">Is one group carrying a <strong>disproportionate share</strong> (&gt;30–40%)?</p><p class="prompt">What follow-up question does this raise the raw data couldn't answer?</p></div><div class="code-block">df.groupby('region')['revenue'].agg(['sum','mean','count'])</div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">One-line answer</div>
+        <div class="notes-label">Groupby results</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>
@@ -449,11 +439,11 @@ arr[(arr >= 70) & (arr <= 85)]</div>
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">5</div></div>
       <div class="section-content">
-        <div class="section-title">dtype Detective: Break a Mixed-Type Array on Purpose</div>
-<div class="prompts"><p class="prompt">Create <code>np.array([85, 92, 78])</code> — check <code>.dtype</code>.</p><p class="prompt">Add one float: <code>np.array([85, 92, 78.5])</code> — check <code>.dtype</code> again.</p><p class="prompt">Add one string: <code>np.array([85, '92', 78])</code> — check <code>.dtype</code> once more.</p><p class="prompt">Write down what happened to the <strong>integers</strong> each time, and why <em>one-type-per-array</em> forced it.</p></div>
+        <div class="section-title">Reflection: What the Data Actually Said</div>
+<div class="prompts"><p class="prompt">Most <strong>surprising</strong> find during cleaning — not analysis:</p><p class="prompt">Did your hypothesis hold after groupby — or did the summary <em>contradict</em> it?</p><p class="prompt">What breaks if you skip cleaning and go straight to aggregation?</p><p class="prompt">The <strong>one insight</strong> you'd hand a non-technical stakeholder:</p><p class="prompt">Next Pandas operation you need to go deeper on this dataset:</p></div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">dtype results</div>
+        <div class="notes-label">Takeaways</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>

@@ -1,0 +1,31 @@
+{
+  "type": "practice_guide",
+  "niche": "data_science_tech",
+  "title": "NumPy Speed Drills: Vectorize Your First Loop",
+  "sections": [
+    {
+      "title": "Time Your Own Loop-to-Vector Conversion",
+      "prompt": "Write a Python loop that squares every number in a list of 50,000 integers and time it with the time module. Then rewrite it as a single NumPy vectorized operation (array ** 2) and time that. Record both durations and calculate the speedup multiplier — compare it to the tutorial's 50-200x range and note where yours falls."
+    },
+    {
+      "title": "Build the IQR Outlier Detector on Your Own Numbers",
+      "prompt": "Pull 10 real numbers from your own life — expenses, screen time hours, workout reps, whatever you track. Put them in a NumPy array and run the exact six-line IQR outlier block from the tutorial (percentile, iqr, upper_fence, lower_fence, boolean OR filter). Report which value(s), if any, got flagged and whether that matches your intuition."
+    },
+    {
+      "title": "Boolean Indexing Chain: From scores > 90 to Your Filter",
+      "prompt": "Create an array of 15 values representing something you can filter meaningfully (quiz scores, daily steps, response times). Write three different boolean indexing filters chained with & or | (matching the tutorial's salaries[(salaries > x) | (salaries < y)] pattern) and print the filtered result for each. Note which filter returned the fewest matches."
+    },
+    {
+      "title": "arange vs linspace: Prove They're Different Tools",
+      "prompt": "Generate two arrays covering the same range 0 to 1: one using np.arange(0, 1.1, 0.1) and one using np.linspace(0, 1, 11). Print both, then explain in one sentence, based on what you see, why arange's endpoint behavior makes linspace the safer choice when you need an exact count of points."
+    },
+    {
+      "title": "dtype Detective: Break a Mixed-Type Array on Purpose",
+      "prompt": "Create scores = np.array([85, 92, 78]) and check its dtype. Now create np.array([85, 92, 78.5]) and check that dtype. Then try np.array([85, '92', 78]) and check that dtype. Write down what happened to the integers in each case and why NumPy's single-type rule forced that conversion."
+    }
+  ],
+  "cta": "Reply with your speedup multiplier from Section 1 and the outlier value(s) from Section 2 — I want to see the biggest jump anyone gets from loop to vector.",
+  "engage_potential": "high",
+  "blog_file": "content/blogs/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310.md",
+  "slug": "2026-06-01_data_science_tech_python-for-data-science-tutorial-310"
+}
