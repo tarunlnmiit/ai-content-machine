@@ -71,8 +71,11 @@ Outputs:
 No per-blog ConvertKit landing page anymore. Drop the PDF in `output/worksheets/{week}/` (the generator already names it `{date}_{niche}_{slug}[_worksheet].pdf`), commit, push. Vercel redeploys, regenerates the manifest, and the link goes live:
 
 ```
-https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=<slug>
+https://worksheets-thebreathnetwork.vercel.app/get-worksheet/<slug>
 ```
+
+(Legacy `?slug=<slug>` still resolves, but the clean path form above is
+canonical — Superprofile and similar embedders strip query params.)
 
 The `<slug>` is the human part of the filename (date + niche prefix stripped, `_worksheet` suffix dropped). No config edit, no landing page, no upload.
 
@@ -125,7 +128,7 @@ Is this blog actionable? (How-to, personal practice, framework)
 The link is served by a small Vercel app at the repo root (`api/`, `vercel.json`):
 
 ```
-GET  /get-worksheet?slug=<slug>   → email-capture page (title from manifest)
+GET  /get-worksheet/<slug>        → email-capture page (title from manifest; ?slug= also works)
 POST /api/subscribe {email,slug}  → Kit v4: classify new/returning, tag, sign URL
 GET  /api/worksheet?slug=&t=<tok>  → verify HMAC token → stream the PDF
 ```
