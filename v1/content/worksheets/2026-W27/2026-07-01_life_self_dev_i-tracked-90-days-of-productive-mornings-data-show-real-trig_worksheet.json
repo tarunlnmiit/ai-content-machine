@@ -1,0 +1,46 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "Find Your First-Task Latency Number",
+  "sections": [
+    {
+      "title": "Track Your Gap",
+      "prompt": [
+        "For the next 7 mornings, log: wake time, what you touched first (phone/journal/body movement), and minutes until first focused task",
+        "Rate each day 1-10 for 'productive' before bed, no overthinking",
+        "Circle the mornings where first-task latency was under 20 minutes — how many landed a high rating?",
+        "Circle the mornings phone was the first touch — what's the average rating there?"
+      ]
+    },
+    {
+      "title": "Find Your Doom-Scroll Morning",
+      "prompt": [
+        "Name one specific morning where you did everything 'right' (gym, coffee, desk on time) but the day still failed — what was the very first thing you looked at that day?",
+        "What content or feed pulled your attention before you'd chosen your own first thought?",
+        "How many minutes did that first input eat before you stood up?",
+        "If you'd swapped that input for silence, what's the one task you'd have started instead?"
+      ]
+    },
+    {
+      "title": "Audit Your Sleep Debt vs. Wake Time",
+      "prompt": [
+        "Write down 2 recent mornings: one where you forced an early wake on poor sleep, one where you woke naturally after paying off sleep debt",
+        "Compare first-task latency and output between the two — which variable actually explains the gap?",
+        "What time did you go to bed both nights? Be exact.",
+        "Are you currently chasing an hour on the clock, or the hours of sleep behind it?"
+      ]
+    },
+    {
+      "title": "Design Your No-Phone-First-Hour Test",
+      "prompt": [
+        "Pick tomorrow's first task before you go to sleep tonight — write it down now",
+        "Decide where the phone sleeps tonight (not arm's reach) and commit to the spot",
+        "Predict your productive-day rating for tomorrow if you hit zero screen time in hour one",
+        "After the day, log the actual rating and compare it to your phone-first average"
+      ]
+    }
+  ],
+  "cta": "Screenshot your 7-day log and tag me — I want to see if your first-task latency number lands anywhere near the 20-minute line.",
+  "blog_file": "content/blogs/2026-W27/2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig.md",
+  "slug": "2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig"
+}

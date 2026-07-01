@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-01T02:52:50.266Z",
-  "count": 13,
+  "generatedAt": "2026-07-01T03:55:02.999Z",
+  "count": 14,
   "worksheets": {
     "python-for-data-science-tutorial-210": {
       "title": "The Silent Bug Audit: Catch Type Errors Before They Poison Your Analysis",
@@ -79,6 +79,12 @@
       "niche": "data_science_tech",
       "date": "2026-07-01",
       "pdfPath": "output/worksheets/2026-W27/2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t_worksheet.pdf"
+    },
+    "i-tracked-90-days-of-productive-mornings-data-show-real-trig": {
+      "title": "Find Your First-Task Latency Number",
+      "niche": "life_self_dev",
+      "date": "2026-07-01",
+      "pdfPath": "output/worksheets/2026-W27/2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig_worksheet.pdf"
     }
   }
 }
