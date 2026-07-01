@@ -443,7 +443,7 @@ Verify the CTA was appended:
 ```bash
 grep "Free worksheet" content/derivatives/{week}/{ds_slug}/youtube_description.txt
 grep "Free worksheet" content/derivatives/{week}/{life_slug}/youtube_description.txt
-# Both should show a real /get-worksheet?slug=… URL
+# Both should show a real /get-worksheet/<slug> URL
 ```
 
 If nothing was injected: the slug isn't in `worksheets-manifest.json` — re-run Step 8c (`node scripts/build-worksheets-manifest.mjs`). The script gates on the manifest, NOT the PDF on disk.

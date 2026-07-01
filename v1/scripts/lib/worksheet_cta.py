@@ -28,8 +28,13 @@ def base_url() -> str:
 
 
 def worksheet_url(slug: str) -> str:
-    """Public, gated download URL for a worksheet slug."""
-    return f"{base_url()}/get-worksheet?slug={slug}"
+    """Public, gated download URL for a worksheet slug.
+
+    Clean path form (``/get-worksheet/<slug>``) — Superprofile and other
+    embedders strip ``?query`` params, so the slug must live in the path.
+    The legacy ``?slug=`` form still resolves server-side for old links.
+    """
+    return f"{base_url()}/get-worksheet/{slug}"
 
 
 def _manifest() -> dict:
