@@ -88,7 +88,10 @@ button[disabled]{opacity:.6;cursor:progress}
 </style>`;
 
 export default function handler(req, res) {
-  const slug = String(req.query?.slug ?? "").trim();
+  // Strip ALL whitespace, not just ends: worksheet links live in captions and
+  // emails that wrap long URLs, and a break inside the slug (space or newline)
+  // would otherwise miss the manifest and 404. Valid slugs never contain space.
+  const slug = String(req.query?.slug ?? "").replace(/\s+/g, "");
 
   if (!slug) {
     res.statusCode = 200;
