@@ -1,6 +1,6 @@
 # Medium Submissions Tracker
 
-_Last updated: 2026-06-30_
+_Last updated: 2026-07-01_
 
 Status values: `submitted` (awaiting decision) · `accepted` · `declined` · `published` · `draft` (ready, not yet sent)
 
@@ -14,6 +14,7 @@ Status values: `submitted` (awaiting decision) · `accepted` · `declined` · `p
 | 2026-06-26 | W26 | Poetry | The Room No One Entered | **Humans Are Stories** (own pub) | self-publishing | Add to own publication (Tarun is Editor) | Decision: all poetry goes to his own pub — no external poetry-pub gatekeeping or dead-pub hunting. |
 | 2026-06-30 | W27 | DS/Tech | The Free Local AI Setup That Replaced My $200/Month Data Science Stack | **AI in Plain English** | published | In Plain English network (Discord/community route) | ✅ PUBLISHED 2026-06-30. First piece live via the In Plain English network (unlocks Python/JS/AI in Plain English + Stackademic for future DS posts). DSC W26 still pending — not re-submitted there. |
 | 2026-06-30 | W27 | Life | The 3 Hours You Spend on Self-Help Content Are Making You Worse at Self-Improvement | **Curious** | submitted | Add-to-publication (secured Life home) | Contrarian self-improvement / 5-min-journal-beats-borrowed-frameworks essay. Mind Cafe skipped (just declined the W26 Wake-Up how-to); Curious takes contrarian reflective pieces. |
+| 2026-07-01 | W27 | DS/Tech | I Tracked Every Data Science Job Posting for 30 Days — Here's What I Found | **AI in Plain English** | submitted | In Plain English network (already a writer) | Data-heavy job-market piece (1,003 postings scraped). Submitted to AI in Plain English — network home already unlocked via the 06-30 published piece. DSC W26 still pending. |
 
 ## Publications ruled out (do not retry)
 - **Better Humans** — not accepting new writers as of 2026-06-26.
