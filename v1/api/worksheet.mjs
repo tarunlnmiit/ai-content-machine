@@ -10,6 +10,7 @@ export default function handler(req, res) {
   if (!verify(token, slug)) {
     res.statusCode = 403;
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
     res.end("Link expired or invalid. Request the worksheet again.");
     return;
   }
@@ -18,6 +19,7 @@ export default function handler(req, res) {
   if (!ws) {
     res.statusCode = 404;
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
     res.end("Worksheet not found.");
     return;
   }
@@ -28,6 +30,7 @@ export default function handler(req, res) {
   } catch {
     res.statusCode = 404;
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
     res.end("Worksheet file missing.");
     return;
   }

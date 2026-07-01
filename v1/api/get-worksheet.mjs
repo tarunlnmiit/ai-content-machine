@@ -93,6 +93,7 @@ export default function handler(req, res) {
   if (!slug) {
     res.statusCode = 200;
     res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
     res.end(listingPage());
     return;
   }
@@ -100,8 +101,11 @@ export default function handler(req, res) {
   const ws = resolve(slug);
 
   if (!ws) {
+    // Never cache a miss: a click before the deploy propagates would otherwise
+    // pin a 404 at the edge for the full max-age even after the slug goes live.
     res.statusCode = 404;
     res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
     res.end(notFoundPage());
     return;
   }
