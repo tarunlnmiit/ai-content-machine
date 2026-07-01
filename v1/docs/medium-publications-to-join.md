@@ -40,6 +40,7 @@ Tip: paste a pub's homepage URL into Medium's "Submit to a publication" search t
 | **Geek Culture** | Tech/dev | Submission guidelines post; request via form/comment. |
 | **ITNEXT** | Senior eng/devops | Apply via `itnext.io` write-for page. |
 | **Artificial Intelligence in Plain English** | AI | Covered by Plain English single application above. |
+| **Write A Catalyst** (`medium.com/write-a-catalyst`) | Fast-growing tech + productivity / self-growth crossover (coding, AI, money, self-improvement) | Follow → open their pinned "write for us" / submission-guidelines post → apply per its instructions (comment your @username or submit a draft). Also a viable **Life/productivity** home given the crossover. |
 
 **Caution:** *Better Programming* and *Better Humans/Better Marketing* (the "coach.me/Better" family) have had on-and-off acceptance — check live status before applying.
 
