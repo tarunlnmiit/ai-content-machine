@@ -1,7 +1,55 @@
 {
-  "generatedAt": "2026-07-01T02:16:45.631Z",
-  "count": 5,
+  "generatedAt": "2026-07-01T02:52:50.266Z",
+  "count": 13,
   "worksheets": {
+    "python-for-data-science-tutorial-210": {
+      "title": "The Silent Bug Audit: Catch Type Errors Before They Poison Your Analysis",
+      "niche": "data_science_tech",
+      "date": "2026-05-25",
+      "pdfPath": "output/worksheets/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210_worksheet.pdf"
+    },
+    "mental-health-openness-and-breaking-stigmas": {
+      "title": "Breaking the Silence: Redefining Your Personal Strength",
+      "niche": "life_self_dev",
+      "date": "2026-05-26",
+      "pdfPath": "output/worksheets/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas_worksheet.pdf"
+    },
+    "python-for-data-science-tutorial-310": {
+      "title": "NumPy Speed Drills: Vectorize Your First Loop",
+      "niche": "data_science_tech",
+      "date": "2026-06-01",
+      "pdfPath": "output/worksheets/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_worksheet.pdf"
+    },
+    "the-cost-of-carrying-things-nobody-sees": {
+      "title": "Name the Weight You're Carrying",
+      "niche": "life_self_dev",
+      "date": "2026-06-01",
+      "pdfPath": "output/worksheets/2026-W23/2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet.pdf"
+    },
+    "the-simple-habit-that-changed-my-productivity": {
+      "title": "Your Productivity Reboot: Choosing and Implementing One Simple Habit",
+      "niche": "life_self_dev",
+      "date": "2026-06-08",
+      "pdfPath": "output/worksheets/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity_worksheet.pdf"
+    },
+    "python-for-data-science-tutorial-4-pandas-for-data-analysis": {
+      "title": "The 4-Step Pandas First-Look Framework: From Messy CSV to Real Insight",
+      "niche": "data_science_tech",
+      "date": "2026-06-10",
+      "pdfPath": "output/worksheets/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis_worksheet.pdf"
+    },
+    "python-for-data-science-tutorial-5-out-of-10-for-visualizati": {
+      "title": "Ship a Chart Nobody Judges You For",
+      "niche": "data_science_tech",
+      "date": "2026-06-16",
+      "pdfPath": "output/worksheets/2026-W25/2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati_worksheet.pdf"
+    },
+    "recursive-self-improvement": {
+      "title": "Find Your Recursive Loop: A Self-Audit",
+      "niche": "life_self_dev",
+      "date": "2026-06-16",
+      "pdfPath": "output/worksheets/2026-W25/2026-06-16_life_self_dev_recursive-self-improvement_worksheet.pdf"
+    },
     "what-hiring-managers-think-when-they-see-your-ds-github-2026": {
       "title": "GitHub Audit & AI Fluency Drills for DS Job Seekers",
       "niche": "data_science_tech",

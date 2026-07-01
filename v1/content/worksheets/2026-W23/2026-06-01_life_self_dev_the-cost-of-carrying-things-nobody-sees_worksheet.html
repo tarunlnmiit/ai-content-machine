@@ -1,520 +1,440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Invisible Load Audit — Worksheet</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
-    /* ── Local fonts ──────────────────────────────────────────────── */
-    @font-face { font-family: 'Montserrat'; src: url('2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/fonts/Montserrat-Regular.ttf'); font-weight: 400; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Montserrat'; src: url('2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/fonts/Montserrat-Italic.ttf'); font-weight: 400; font-style: italic; font-display: swap; }
-    @font-face { font-family: 'Montserrat'; src: url('2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/fonts/Montserrat-Medium.ttf'); font-weight: 500; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Montserrat'; src: url('2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/fonts/Montserrat-MediumItalic.ttf'); font-weight: 500; font-style: italic; font-display: swap; }
-    @font-face { font-family: 'Montserrat'; src: url('2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/fonts/Montserrat-SemiBold.ttf'); font-weight: 600; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Montserrat'; src: url('2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/fonts/Montserrat-Bold.ttf'); font-weight: 700; font-style: normal; font-display: swap; }
-    @font-face { font-family: 'Montserrat'; src: url('2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/fonts/Montserrat-ExtraBold.ttf'); font-weight: 800; font-style: normal; font-display: swap; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cost of Carrying Invisible Things</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
 
-    /* ── Page palette ─────────────────────────────────────────────── */
-    :root {
-      --cream:        #FFFBF0;
-      --cream-deep:   #F4ECD8;
-      --cream-mid:    #FBF3DF;
-      --ink:          #2A2A2E;
-      --ink-soft:     #4A4A4F;
-      --ink-quiet:    #6E6A66;
-      --teal:         #0D9488;
-      --teal-deep:    #0B6B62;
-      --teal-soft:    rgba(13,148,136,0.10);
-      --warm:         #C97D4A;  /* warm orange accent */
-      --warm-deep:    #A65E2E;
-      --warm-soft:    rgba(201,125,74,0.10);
-      --rule:         rgba(42,42,46,0.13);
-      --rule-soft:    rgba(42,42,46,0.09);
+<style>
+  /* ─── Design System Tokens (Breath Network) ─── */
+  :root {
+    --ink:        #1C1C2E;
+    --ink-700:    #2A2A40;
+    --ink-600:    #3A3A52;
+    --bone:       #E8E0D5;
+    --bone-100:   #FAF6EF;
+    --bone-200:   #F1ECE2;
+    --bone-300:   #E8E0D5;
+    --bone-400:   #D6CCBC;
+    --bone-500:   #B8AC97;
+    --sky:        #7C9CB0;
+    --sky-300:    #B0C4D2;
+    --sky-700:    #557083;
+    --ochre:      #C9A96E;
+    --ochre-300:  #E2CDA1;
+    --ember:      #E8745A;
+    --font-sans:  'Montserrat', ui-sans-serif, system-ui, sans-serif;
+    --font-ed:    'Instrument Serif', 'Times New Roman', Georgia, serif;
+    --font-mono:  ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html, body {
+    width: 297mm;
+    height: 210mm;
+    overflow: hidden;
+    background: var(--bone-100);
+    font-family: var(--font-sans);
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─── PAGE SHELL ─── */
+  .page {
+    width: 297mm;
+    height: 210mm;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bone-100);
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    height: 39mm;
+    flex-shrink: 0;
+    background: var(--ink);
+    display: flex;
+    align-items: stretch;
+  }
+
+  .header-accent {
+    width: 3mm;
+    background: var(--sky);
+    flex-shrink: 0;
+  }
+
+  .header-body {
+    flex: 1;
+    padding: 7mm 9mm 7mm 8mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.5mm;
+  }
+
+  .header-eyebrow {
+    font-size: 6.5pt;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sky);
+  }
+
+  .header-title {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 15.5pt;
+    color: var(--bone);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  .header-title em {
+    font-family: var(--font-ed);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre-300);
+  }
+
+  .header-tagline {
+    font-size: 7.5pt;
+    font-weight: 400;
+    color: rgba(232,224,213,0.5);
+    line-height: 1.5;
+    max-width: 175mm;
+  }
+
+  .header-fields {
+    width: 60mm;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3.5mm;
+    padding: 7mm 9mm 7mm 6mm;
+    border-left: 0.5px solid rgba(231,224,213,0.1);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 1mm;
+  }
+
+  .field-label {
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(232,224,213,0.3);
+  }
+
+  .field-line {
+    border-bottom: 0.5px solid rgba(232,224,213,0.22);
+    height: 4.5mm;
+  }
+
+  /* ─── SECTIONS CONTAINER ─── */
+  .sections {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 9mm 5mm 0;
+    overflow: hidden;
+  }
+
+  /* ─── INDIVIDUAL SECTION ─── */
+  .section {
+    flex: 1;
+    display: flex;
+    border-bottom: 0.5px solid var(--bone-400);
+    overflow: hidden;
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  /* Left number bar */
+  .section-num-bar {
+    width: 11mm;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 4mm;
+    padding-left: 2.5mm;
+  }
+
+  .num-badge {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--sky);
+    color: #fff;
+    font-size: 6.5pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  /* Content column */
+  .section-content {
+    flex: 0 0 61%;
+    padding: 4mm 5mm 3mm 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    border-right: 0.5px solid var(--bone-400);
+    overflow: hidden;
+  }
+
+  .section-title {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  .prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+  }
+
+  .prompt {
+    font-size: 7pt;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.48;
+    padding-left: 8px;
+    position: relative;
+    text-wrap: pretty;
+  }
+
+  .prompt::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 0.5px;
+    color: var(--sky);
+    font-size: 6pt;
+    font-family: var(--font-sans);
+  }
+
+  .prompt strong {
+    font-weight: 700;
+  }
+
+  .prompt em {
+    font-family: var(--font-ed);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre);
+    font-size: 7.5pt;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    background: var(--bone-200);
+    padding: 0 2.5px;
+    border-radius: 2px;
+    color: var(--ink-700);
+  }
+
+  .code-block {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    background: var(--bone-200);
+    color: var(--ink-700);
+    padding: 2mm 3mm;
+    border-left: 1.5px solid var(--sky);
+    border-radius: 0 2px 2px 0;
+    line-height: 1.6;
+    white-space: pre;
+    margin-top: 0.5mm;
+  }
+
+  /* Notes column */
+  .section-notes {
+    flex: 1;
+    padding: 4mm 0 3mm 5mm;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    overflow: hidden;
+  }
+
+  .notes-label {
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bone-500);
+    flex-shrink: 0;
+  }
+
+  .ruled {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .ruled-line {
+    flex: 1;
+    border-bottom: 0.5px solid var(--bone-400);
+    min-height: 3mm;
+  }
+
+  /* ─── SCREEN-ONLY WRAPPER (centers A4 for display) ─── */
+  @media screen {
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #888;
+      overflow: auto;
     }
 
-    /* ── Print page ───────────────────────────────────────────────── */
-    @page {
-      size: A4 portrait;
-      margin: 13mm 14mm 11mm 14mm;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html {
-      background: #C8BFB0;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-
-    body {
-      font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
-      color: var(--ink);
-      background: #C8BFB0;
-      padding: 20px 0 40px;
-    }
-
-    @media print {
-      html, body { background: none; padding: 0; }
-      .print-btn { display: none !important; }
-      .page { margin: 0; box-shadow: none; width: 100%; }
-      .page + .page { page-break-before: always; }
-    }
-
-    /* ── Print button ─────────────────────────────────────────────── */
-    .print-btn {
-      display: block;
-      margin: 0 auto 14px;
-      width: 182mm;
-      padding: 9px 20px;
-      background: var(--ink);
-      color: var(--cream);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9pt;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      text-align: center;
-    }
-    .print-btn:hover { background: var(--teal-deep); }
-
-    /* ── A4 page shell ────────────────────────────────────────────── */
     .page {
-      width: 210mm;
-      background: var(--cream);
-      margin: 0 auto 14px;
-      padding: 13mm 14mm 11mm 14mm;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.22);
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.45);
     }
+  }
 
-    /* ── HEADER ───────────────────────────────────────────────────── */
-    .ws-header {
-      position: relative;
-      background:
-        linear-gradient(132deg,
-          #F2E9D2 0%,
-          #F7EFDC 24%,
-          #FCF4E3 50%,
-          #FFFBF0 100%);
-      border-radius: 10px;
-      padding: 10mm 11mm 9mm 11mm;
-      margin-bottom: 7mm;
-      overflow: hidden;
-      border: 1px solid rgba(201,125,74,0.18);
+  @media print {
+    html, body {
+      width: 297mm;
+      height: 210mm;
+      background: var(--bone-100);
     }
-
-    /* Soft teal wash bleeding from bottom-right of header */
-    .ws-header::after {
-      content: "";
-      position: absolute;
-      right: -30mm;
-      bottom: -40mm;
-      width: 90mm;
-      height: 90mm;
-      background: radial-gradient(circle at center, rgba(13,148,136,0.16) 0%, rgba(13,148,136,0) 70%);
-      pointer-events: none;
-    }
-
-    /* Breath-ring decoration — top right corner */
-    .breath-ring {
-      position: absolute;
-      right: -16mm;
-      top: -20mm;
-      width: 64mm;
-      height: 64mm;
-      opacity: 0.085;
-      pointer-events: none;
-    }
-
-    .header-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 3mm;
-      font-size: 7pt;
-      font-weight: 600;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--teal-deep);
-      margin-bottom: 4mm;
-      position: relative;
-    }
-
-    .header-eyebrow::after {
-      content: "";
-      flex: 0 0 28mm;
-      height: 1px;
-      background: var(--teal);
-      opacity: 0.45;
-    }
-
-    .header-title {
-      font-size: 28pt;
-      font-weight: 800;
-      line-height: 0.98;
-      letter-spacing: -0.028em;
-      color: var(--ink);
-      margin-bottom: 4mm;
-      position: relative;
-      text-wrap: balance;
-      max-width: 150mm;
-    }
-
-    .header-title-accent {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      color: var(--warm-deep);
-      letter-spacing: -0.01em;
-    }
-
-    .header-subtitle {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-style: italic;
-      font-size: 13pt;
-      color: var(--ink-soft);
-      line-height: 1.4;
-      position: relative;
-      max-width: 150mm;
-    }
-
-    .header-meta {
-      position: relative;
-      margin-top: 6mm;
-      padding-top: 4mm;
-      border-top: 1px solid rgba(42,42,46,0.10);
-      display: flex;
-      gap: 14mm;
-      font-size: 7pt;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-quiet);
-    }
-    .header-meta span strong {
-      display: block;
-      font-weight: 700;
-      color: var(--ink);
-      letter-spacing: 0.12em;
-      margin-bottom: 1.2mm;
-      font-size: 6.5pt;
-    }
-    .header-meta .meta-line {
-      display: inline-block;
-      width: 32mm;
-      height: 1px;
-      background: var(--rule);
-      vertical-align: middle;
-      margin-left: 2mm;
-    }
-
-    /* ── SECTION BASE ─────────────────────────────────────────────── */
-    .ws-section {
-      padding: 6mm 0 0 0;
-      border-top: 1px solid var(--rule-soft);
-    }
-    .ws-section:first-of-type { border-top: none; padding-top: 1mm; }
-
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      gap: 4mm;
-      margin-bottom: 4mm;
-    }
-
-    .section-num {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 22pt;
-      line-height: 0.9;
-      letter-spacing: -0.02em;
-    }
-
-    .section-title {
-      font-size: 12.5pt;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      line-height: 1.1;
-      color: var(--ink);
-      flex: 1;
-    }
-
-    .section-rule {
-      flex: 0 0 18mm;
-      height: 1px;
-      align-self: center;
-      opacity: 0.55;
-    }
-
-    /* ── PROMPTS ──────────────────────────────────────────────────── */
-    .prompts {
-      padding-left: 10mm;
-      margin-bottom: 4mm;
-      border-left: 2px solid;
-    }
-
-    .prompt {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-style: italic;
-      font-size: 10.5pt;
-      line-height: 1.42;
-      color: var(--ink-soft);
-      padding: 1.6mm 0;
-      text-wrap: pretty;
-    }
-    .prompt + .prompt {
-      border-top: 1px dashed var(--rule-soft);
-    }
-
-    .prompt-tick {
-      display: inline-block;
-      font-family: 'Montserrat', sans-serif;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 7pt;
-      letter-spacing: 0.06em;
-      vertical-align: 1.2mm;
-      margin-right: 2.5mm;
-      opacity: 0.65;
-    }
-
-    .prompt em {
-      font-style: normal;
-      font-weight: 500;
-      color: var(--ink);
-    }
-
-    /* ── WRITING LINES ────────────────────────────────────────────── */
-    .writing-lines {
-      margin-left: 0;
-      background-image: repeating-linear-gradient(
-        to bottom,
-        transparent 0,
-        transparent 7mm,
-        var(--rule) 7mm,
-        var(--rule) 7.3mm
-      );
-      margin-bottom: 4mm;
-    }
-    .lines-md { height: 42mm; }   /* 6 lines */
-    .lines-lg { height: 56mm; }   /* 8 lines */
-    .lines-xl { height: 63mm; }   /* 9 lines */
-
-    /* ── Accent utilities ─────────────────────────────────────────── */
-    .c-teal { color: var(--teal); }
-    .c-warm { color: var(--warm-deep); }
-    .b-teal { border-color: var(--teal); }
-    .b-warm { border-color: var(--warm); }
-    .bg-teal { background: var(--teal); }
-    .bg-warm { background: var(--warm); }
-
-    /* ── FOOTER ───────────────────────────────────────────────────── */
-    .ws-footer {
-      margin-top: 7mm;
-      padding-top: 4mm;
-      border-top: 1px solid var(--rule-soft);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .footer-left {
-      display: flex;
-      align-items: center;
-      gap: 4mm;
-    }
-    .footer-logo {
-      height: 5mm;
-      opacity: 0.30;
-    }
-    .footer-page {
-      font-size: 6.5pt;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-quiet);
-    }
-    .footer-note {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-style: italic;
-      font-size: 9pt;
-      color: var(--ink-quiet);
-    }
-
-    /* ── Closing card (last page) ─────────────────────────────────── */
-    .closing-card {
-      margin-top: 6mm;
-      padding: 7mm 9mm 8mm 9mm;
-      background:
-        linear-gradient(120deg,
-          rgba(13,148,136,0.07) 0%,
-          rgba(201,125,74,0.06) 100%);
-      border: 1px solid rgba(13,148,136,0.20);
-      border-radius: 8px;
-      position: relative;
-    }
-    .closing-card .ce {
-      font-size: 7pt;
-      font-weight: 600;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--teal-deep);
-      margin-bottom: 2.5mm;
-    }
-    .closing-card .ct {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-style: italic;
-      font-size: 13pt;
-      line-height: 1.42;
-      color: var(--ink-soft);
-      text-wrap: pretty;
-      max-width: 155mm;
-    }
-    .closing-card .ct strong {
-      font-style: normal;
-      font-weight: 500;
-      color: var(--ink);
-    }
-
-  </style>
+  }
+</style>
 </head>
 <body>
+<div class="page">
 
-  <button class="print-btn" onclick="window.print()">↓ Save as PDF / Print</button>
-
-  <!-- ═══════════════════════ PAGE 1 ═══════════════════════════════ -->
-  <div class="page" data-screen-label="Page 1">
-
-    <!-- ── HEADER ─────────────────────────────────────────────────── -->
-    <header class="ws-header">
-
-      <svg class="breath-ring" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="100" cy="100" r="92" stroke="#0D9488" stroke-width="1.2"/>
-        <circle cx="100" cy="100" r="74" stroke="#0D9488" stroke-width="1.2"/>
-        <circle cx="100" cy="100" r="56" stroke="#0D9488" stroke-width="1.2"/>
-        <circle cx="100" cy="100" r="38" stroke="#0D9488" stroke-width="1.2"/>
-        <circle cx="100" cy="100" r="20" stroke="#0D9488" stroke-width="1.2"/>
-        <circle cx="100" cy="100" r="4" fill="#0D9488"/>
-      </svg>
-
-      <p class="header-eyebrow">Personal growth · A reflective audit</p>
-      <h1 class="header-title">The invisible <span class="header-title-accent">load</span> audit</h1>
-      <p class="header-subtitle">What you're carrying that nobody sees —<br>and how much of you it's quietly using up.</p>
-
-      <div class="header-meta">
-        <span><strong>Name</strong><span class="meta-line"></span></span>
-        <span><strong>Date</strong><span class="meta-line"></span></span>
-        <span><strong>Sit time</strong><span class="meta-line"></span></span>
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-accent"></div>
+    <div class="header-body">
+      <div class="header-eyebrow">The Weight Nobody Tracks</div>
+      <h1 class="header-title">The Cost of Carrying <em>Invisible</em> Things</h1>
+      <p class="header-tagline">Four short exercises to find the loop running in your background, see who it's leaking onto, and take one small step toward putting it down.</p>
+    </div>
+    <div class="header-fields">
+      <div class="field">
+        <span class="field-label">Name</span>
+        <div class="field-line"></div>
       </div>
-    </header>
+      <div class="field">
+        <span class="field-label">Date</span>
+        <div class="field-line"></div>
+      </div>
+      <div class="field">
+        <span class="field-label">Loop age</span>
+        <div class="field-line"></div>
+      </div>
+    </div>
+  </header>
 
-    <!-- 01 · Name What's In the Bag ─────────────────────────────── -->
-    <section class="ws-section">
-      <div class="section-head">
-        <span class="section-num c-teal">01</span>
-        <h2 class="section-title">Name what's in the bag.</h2>
-        <span class="section-rule bg-teal"></span>
+  <!-- ═══ SECTIONS ═══ -->
+  <main class="sections">
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">1</div></div>
+      <div class="section-content">
+        <div class="section-title">Find the Loop That's Running in the Background</div>
+<div class="prompts"><p class="prompt">Name <strong>one unresolved thing</strong> you keep replaying — the exact moment, where you were, what was said.</p><p class="prompt">Skip resolution with the other person. What ending could you write for <em>yourself</em>?</p><p class="prompt">Rate it <strong>1–10</strong>: how much bandwidth is this loop eating on an average day?</p><p class="prompt">Name one task this week the <em>fog</em> hit — reread paragraph, forgotten thing, forty minutes gone.</p></div>
       </div>
-      <div class="prompts b-teal">
-        <p class="prompt"><span class="prompt-tick c-teal">a</span> What's one thing you've been carrying silently for more than three months? <em>An unresolved argument, a loss, a disappointment, a version of events nobody else witnessed.</em></p>
-        <p class="prompt"><span class="prompt-tick c-teal">b</span> When did you last say <em>"I'm fine"</em> and mean something else entirely? What were you actually feeling?</p>
-        <p class="prompt"><span class="prompt-tick c-teal">c</span> Is there something you stopped talking about — not because it was resolved, but because you got tired of carrying it in conversation too?</p>
+      <div class="section-notes">
+        <div class="notes-label">Loop details</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
       </div>
-      <div class="writing-lines lines-md"></div>
-    </section>
-
-    <!-- 02 · Map the Cognitive Tax ──────────────────────────────── -->
-    <section class="ws-section">
-      <div class="section-head">
-        <span class="section-num c-warm">02</span>
-        <h2 class="section-title">Map the cognitive tax.</h2>
-        <span class="section-rule bg-warm"></span>
-      </div>
-      <div class="prompts b-warm">
-        <p class="prompt"><span class="prompt-tick c-warm">a</span> Where does this invisible load show up in your daily life? <em>e.g. 2 a.m. replays, reduced patience, difficulty concentrating, emotional flatness.</em></p>
-        <p class="prompt"><span class="prompt-tick c-warm">b</span> Estimate honestly — how many hours per week do you spend mentally managing this unresolved thing: replaying, suppressing, or bracing against it?</p>
-        <p class="prompt"><span class="prompt-tick c-warm">c</span> What task or relationship is getting a diminished version of you because of what you're quietly carrying?</p>
-      </div>
-      <div class="writing-lines lines-md"></div>
-    </section>
-
-    <!-- 03 · Track the Leak ────────────────────────────────────── -->
-    <section class="ws-section">
-      <div class="section-head">
-        <span class="section-num c-teal">03</span>
-        <h2 class="section-title">Track the leak.</h2>
-        <span class="section-rule bg-teal"></span>
-      </div>
-      <div class="prompts b-teal">
-        <p class="prompt"><span class="prompt-tick c-teal">a</span> Who in your life gets the <em>slightly less</em> version of you because of what you're holding? Less patience, less presence, more distance.</p>
-        <p class="prompt"><span class="prompt-tick c-teal">b</span> Think of a recent moment where your reaction was bigger — or colder — than the situation warranted. What was actually underneath it?</p>
-        <p class="prompt"><span class="prompt-tick c-teal">c</span> Is there someone you're keeping at arm's length — not because you don't want closeness, but because closeness feels unsafe right now?</p>
-      </div>
-      <div class="writing-lines lines-md"></div>
-    </section>
-
-    <footer class="ws-footer">
-      <div class="footer-left">
-        <img class="footer-logo" src="2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/assets/logo-full.svg" alt="The Breath Network">
-        <span class="footer-note">Page one of two · keep going.</span>
-      </div>
-      <span class="footer-page">01 / 02</span>
-    </footer>
-
-  </div>
-
-  <!-- ═══════════════════════ PAGE 2 ═══════════════════════════════ -->
-  <div class="page" data-screen-label="Page 2">
-
-    <!-- 04 · Understand Why You Haven't Put It Down ───────────── -->
-    <section class="ws-section">
-      <div class="section-head">
-        <span class="section-num c-warm">04</span>
-        <h2 class="section-title">Understand why you haven't put it down.</h2>
-        <span class="section-rule bg-warm"></span>
-      </div>
-      <div class="prompts b-warm">
-        <p class="prompt"><span class="prompt-tick c-warm">a</span> Finish this sentence honestly — <em>"If I actually looked at this thing directly, I'd have to admit ________________________."</em></p>
-        <p class="prompt"><span class="prompt-tick c-warm">b</span> Have you made <em>"handling it"</em> part of your identity? What would it mean about you if you needed help with this?</p>
-        <p class="prompt"><span class="prompt-tick c-warm">c</span> What's the story you've told yourself about why you can't — or shouldn't — process this yet?</p>
-      </div>
-      <div class="writing-lines lines-xl"></div>
-    </section>
-
-    <!-- 05 · One Small Act of Putting It Down ─────────────────── -->
-    <section class="ws-section">
-      <div class="section-head">
-        <span class="section-num c-teal">05</span>
-        <h2 class="section-title">One small act of putting it down.</h2>
-        <span class="section-rule bg-teal"></span>
-      </div>
-      <div class="prompts b-teal">
-        <p class="prompt"><span class="prompt-tick c-teal">a</span> The work rarely looks dramatic. What is one small, private act that would be honest about what you're carrying? <em>Writing it down. Saying it aloud to yourself. Telling one person. Booking a session with a therapist.</em></p>
-        <p class="prompt"><span class="prompt-tick c-teal">b</span> What does <em>resolution</em> actually need to look like for this particular thing — not closure necessarily, but something less than carrying it alone?</p>
-        <p class="prompt"><span class="prompt-tick c-teal">c</span> Write a single sentence that names what you've been holding. <em>Not to share. Just so it exists somewhere outside your head.</em></p>
-      </div>
-      <div class="writing-lines lines-xl"></div>
-    </section>
-
-    <!-- Closing card ───────────────────────────────────────────── -->
-    <div class="closing-card">
-      <p class="ce">A note before you close this</p>
-      <p class="ct">Putting something down is not the same as throwing it away. <strong>You're not abandoning the thing you've been carrying</strong> — you're allowing it to exist somewhere other than your shoulders. Come back to this page in a month. See what's lighter.</p>
     </div>
 
-    <footer class="ws-footer">
-      <div class="footer-left">
-        <img class="footer-logo" src="2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet_assets/assets/logo-full.svg" alt="The Breath Network">
-        <span class="footer-note">thebreathnetwork.com · made for slow Sunday mornings.</span>
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">2</div></div>
+      <div class="section-content">
+        <div class="section-title">Trace Where the Weight Leaks Out</div>
+<div class="prompts"><p class="prompt">Pick someone close. Where has <strong>shortened patience</strong> or quiet distance shown up with them lately?</p><p class="prompt">Has anyone said <em>"you're here but not really here"</em>? Write it as close to word-for-word as you remember.</p><p class="prompt">What are you protecting them from by staying silent — is it working, or costing the relationship instead?</p><p class="prompt">Pick one person kept at a remove. Write <strong>one true sentence</strong> for them this week that isn't "I'm fine."</p></div>
       </div>
-      <span class="footer-page">02 / 02</span>
-    </footer>
+      <div class="section-notes">
+        <div class="notes-label">Who + what leaked</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
 
-  </div>
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">3</div></div>
+      <div class="section-content">
+        <div class="section-title">Do the Cost Accounting</div>
+<div class="prompts"><p class="prompt">List <strong>three things</strong> you're carrying silently right now — just name them, no explaining.</p><p class="prompt">For each: how long carried — a week, a year, longer?</p><p class="prompt">Compare <em>cost of containment</em> vs. <em>cost of naming it to one person</em>. Which is really higher?</p><p class="prompt">If your brain's pool is finite, what's <strong>one thing you'd get back</strong> — creative, professional, relational — if this closed?</p></div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">The three things</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
 
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">4</div></div>
+      <div class="section-content">
+        <div class="section-title">Choose One Small Act of Unloading</div>
+<div class="prompts"><p class="prompt">Pick the <strong>lightest</strong> of your three things — not the heaviest. Who's one safe person to tell this week?</p><p class="prompt">Draft the <em>first sentence</em> you'd say out loud, exactly as you'd say it.</p><p class="prompt">What's the smallest version of "not fine" you could admit to someone today?</p><p class="prompt">Set a <strong>specific day and time</strong> for that conversation. Put it somewhere you'll see it.</p></div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">Person + moment</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
 </body>
 </html>

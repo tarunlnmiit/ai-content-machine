@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Python for Data Science: Vectorized Thinking Workbook</title>
+<title>The Quiet Habit Audit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
@@ -336,9 +336,9 @@
   <header class="header">
     <div class="header-accent"></div>
     <div class="header-body">
-      <div class="header-eyebrow">NumPy · Think In Arrays</div>
-      <h1 class="header-title">Python for Data Science: <em>Vectorized</em> Thinking Workbook</h1>
-      <p class="header-tagline">Five hands-on drills that turn NumPy from syntax you copy into a mental model you own — loops to vectors, filters, and stats.</p>
+      <div class="header-eyebrow">7 Habits · One Week Test</div>
+      <h1 class="header-title">The <em>Quiet</em> Habit Audit</h1>
+      <p class="header-tagline">Pick one small habit from the blog, run it for a week, and track exactly what it changes in how you feel and focus.</p>
     </div>
     <div class="header-fields">
       <div class="field">
@@ -350,7 +350,7 @@
         <div class="field-line"></div>
       </div>
       <div class="field">
-        <span class="field-label">Speedup ×</span>
+        <span class="field-label">Week #</span>
         <div class="field-line"></div>
       </div>
     </div>
@@ -361,18 +361,11 @@
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">1</div></div>
       <div class="section-content">
-        <div class="section-title">Time Your Own Loop-to-Vector Conversion</div>
-<div class="prompts"><p class="prompt">Write a Python loop that <strong>squares 50,000 integers</strong> one at a time. Time it with <code>time</code>.</p><p class="prompt">Rewrite as <strong>one vectorized line</strong>: <code>arr ** 2</code>. Time that too.</p><p class="prompt">Divide loop time by vector time — your <em>speedup multiplier</em>. Tutorial saw 50–200x. Where do you land?</p></div><div class="code-block">import time, numpy as np
-arr = np.arange(50_000)
-t0 = time.time()
-result = [x**2 for x in arr]
-t1 = time.time()
-vec = arr ** 2
-t2 = time.time()
-print((t1-t0)/(t2-t1))</div>
+        <div class="section-title">Diagnosis: Which Productivity Gap Are You Actually Experiencing?</div>
+<div class="prompts"><p class="prompt">Physically done with work but <strong>mentally still spinning</strong>? Start with the Shutdown Ritual.</p><p class="prompt">Forgetting ideas mid-thought or losing track of what's next? Try the <em>Brain Dump</em>.</p><p class="prompt">Overwhelmed each morning, unsure what matters most? <strong>Eat one frog</strong> — only one.</p><p class="prompt">Name the real gap: closure, decision fatigue, mental clutter, open loops, or no visibility on what you've done.</p></div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">Your timings</div>
+        <div class="notes-label">Your gap</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>
@@ -387,15 +380,11 @@ print((t1-t0)/(t2-t1))</div>
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">2</div></div>
       <div class="section-content">
-        <div class="section-title">Build the IQR Outlier Detector on Your Own Numbers</div>
-<div class="prompts"><p class="prompt">Pull <strong>10 real numbers</strong> from your life — expenses, screen time, workout reps.</p><p class="prompt">Load into a NumPy array, run the tutorial's <em>six-line IQR block</em> exactly.</p><p class="prompt">Report which value(s) got <strong>flagged</strong> — does it match your gut sense of "weird day"?</p></div><div class="code-block">q25, q75 = np.percentile(data, [25, 75])
-iqr = q75 - q25
-upper = q75 + 1.5 * iqr
-lower = q25 - 1.5 * iqr
-outliers = data[(data > upper) | (data < lower)]</div>
+        <div class="section-title">Your Chosen Habit: Specific Implementation Plan</div>
+<div class="prompts"><p class="prompt">Which <strong>ONE habit</strong> starts this week? Write it down — this is the commitment.</p><p class="prompt">Where and when does it happen? Be exact: time, place, <code>pen and paper</code> — no app.</p><p class="prompt">What's the <em>smallest</em> version you could do today? Shutdown = 2 minutes. Brain dump = one page.</p><p class="prompt">What stops you — friction, forgetfulness, or doubt? Name the barrier you'll remove.</p></div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">Flagged values</div>
+        <div class="notes-label">The commitment</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>
@@ -410,12 +399,11 @@ outliers = data[(data > upper) | (data < lower)]</div>
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">3</div></div>
       <div class="section-content">
-        <div class="section-title">Boolean Indexing Chain: From scores > 90 to Your Filter</div>
-<div class="prompts"><p class="prompt">Build an array of <strong>15 values</strong> you can filter meaningfully — steps, scores, response times.</p><p class="prompt">Write <strong>three chained filters</strong> using <code>&</code> or <code>|</code>, matching <code>arr[(arr > x) | (arr < y)]</code>.</p><p class="prompt">Print each filtered result. Which condition returned the <em>fewest</em> matches?</p></div><div class="code-block">arr[(arr > 90) | (arr < 60)]
-arr[(arr >= 70) & (arr <= 85)]</div>
+        <div class="section-title">Your First Week: Daily Contact Points</div>
+<div class="prompts"><p class="prompt">Mon–Sun: <strong>did you do it?</strong> Note what you noticed about attention, mood, or how you felt after.</p><p class="prompt">Each habit is a moment of <em>contact</em> with how you spend attention — where did you feel that this week?</p></div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">Fewest matches</div>
+        <div class="notes-label">Daily log</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>
@@ -430,30 +418,11 @@ arr[(arr >= 70) & (arr <= 85)]</div>
     <div class="section">
       <div class="section-num-bar"><div class="num-badge">4</div></div>
       <div class="section-content">
-        <div class="section-title">arange vs linspace: Prove They're Different Tools</div>
-<div class="prompts"><p class="prompt">Generate <strong>0 to 1</strong> two ways: <code>np.arange(0, 1.1, 0.1)</code> and <code>np.linspace(0, 1, 11)</code>.</p><p class="prompt">Print both arrays side by side — look closely at the <em>endpoint</em> and array length.</p><p class="prompt">In one sentence: why does <code>arange</code>'s float drift make <code>linspace</code> the safer pick for an exact point count?</p></div>
+        <div class="section-title">Define Your One Metric for This Week</div>
+<div class="prompts"><p class="prompt">Pick <strong>ONE number</strong> that matters: rituals completed, pages written, blocks finished, frogs eaten, or days tracked.</p><p class="prompt">Write your metric and a realistic target — <em>5 out of 7 days</em> is a solid start.</p><p class="prompt">End of week: did you hit it? What does that tell you about whether this habit is your right starting point?</p></div>
       </div>
       <div class="section-notes">
-        <div class="notes-label">One-line answer</div>
-        <div class="ruled">
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-          <div class="ruled-line"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-num-bar"><div class="num-badge">5</div></div>
-      <div class="section-content">
-        <div class="section-title">dtype Detective: Break a Mixed-Type Array on Purpose</div>
-<div class="prompts"><p class="prompt">Create <code>np.array([85, 92, 78])</code> — check <code>.dtype</code>.</p><p class="prompt">Add one float: <code>np.array([85, 92, 78.5])</code> — check <code>.dtype</code> again.</p><p class="prompt">Add one string: <code>np.array([85, '92', 78])</code> — check <code>.dtype</code> once more.</p><p class="prompt">Write down what happened to the <strong>integers</strong> each time, and why <em>one-type-per-array</em> forced it.</p></div>
-      </div>
-      <div class="section-notes">
-        <div class="notes-label">dtype results</div>
+        <div class="notes-label">This week's number</div>
         <div class="ruled">
           <div class="ruled-line"></div>
           <div class="ruled-line"></div>

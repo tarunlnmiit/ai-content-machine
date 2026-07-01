@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "Ship a Chart Nobody Judges You For"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Kill the Gray Background
+   Load titanic dataset with sns.load_dataset('titanic'). Plot df['fare'].hist() with zero styling — screenshot it. Then run sns.set_theme(style='whitegrid', palette='muted', font_scale=1.2) plus the rcParams block (dpi 150, figsize 10x6, spines off) and replot same histogram. Put both side by side, note 3 differences you see.
+
+2. Distribution Skew Check
+   Run sns.histplot with kde=True on both df['age'] and df['fare'] side by side (subplots). Write one sentence on what the fare skew (most under £50, some over £500) means for using fare as raw model input vs log-transformed.
+
+3. Encode a Third Variable
+   Build the age-vs-fare scatterplot with hue='survived' exact color mapping from tutorial ({0:'salmon',1:'steelblue'}). Then swap hue to 'pclass' instead. Compare which hue choice reveals a clearer pattern and explain why in 2 sentences.
+
+4. Read the Confidence Interval
+   Reproduce sns.barplot(x='pclass', y='survived', errorbar='ci'). Note the survival rate and CI width for each class. Then rerun grouped by 'sex' instead of 'pclass' — does the CI get tighter or wider, and what does that tell you about sample size per group?
+
+5. Correlation Heatmap Audit
+   Generate the sns.heatmap on numeric_cols.corr() with annot=True, cmap='coolwarm', center=0. Identify the strongest positive and strongest negative correlation pair (excluding self-correlations) and write what each pair implies about the Titanic data.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"
