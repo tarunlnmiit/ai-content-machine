@@ -39,6 +39,11 @@ REMOTION_DIR = REPO / "remotion"
 REMOTION_PUBLIC = REMOTION_DIR / "public"
 SCRIPTS = REPO / "scripts"
 
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+from lib.notify import notify
+
 FFMPEG_BIN = "/opt/homebrew/bin/ffmpeg"
 
 SECONDS_PER_CLIP = 12  # one unique B-roll clip per ~12s of audio (variety target)
@@ -128,9 +133,29 @@ def broll_ready(broll_dir: Path) -> bool:
 
 
 def render(composition: str, out_file: Path, edit_plan_rel: str, dry: bool) -> bool:
+    """Render the B-roll montage base from the EditPlan.
+
+    The Remotion VoiceoverEdit composition is not present in the repo, so the montage
+    is rendered with the ffmpeg Ken Burns renderer (lib.broll_montage): full-bleed
+    cover + alternating punch-in + crossfade + muxed voiceover. Captions and overlays
+    are layered on afterward by hyperframes(). NOTE: Remotion overlay *scenes*
+    (scenePlanFile) are not applied here — that was Remotion's job. `composition` is
+    kept for signature compatibility; the output size comes from the plan's outputSize.
+    """
     out_file.parent.mkdir(parents=True, exist_ok=True)
-    props = json.dumps({"editPlanFile": edit_plan_rel})
-    return run(["npx", "remotion", "render", composition, str(out_file), "--props", props], dry, cwd=REMOTION_DIR)
+    plan_path = REMOTION_PUBLIC / edit_plan_rel
+    print(f"\n$ broll_montage {plan_path} → {out_file}  [{composition}]")
+    if dry:
+        return True
+    if str(SCRIPTS) not in sys.path:
+        sys.path.insert(0, str(SCRIPTS))
+    try:
+        from lib.broll_montage import render_montage_from_plan
+        render_montage_from_plan(plan_path, REMOTION_PUBLIC, out_file, ffmpeg=FFMPEG_BIN)
+    except Exception as exc:  # noqa: BLE001 - surface render failure like run()
+        print(f"  [FAIL] montage render: {exc}", file=sys.stderr)
+        return False
+    return out_file.exists()
 
 
 def main() -> None:
@@ -236,6 +261,8 @@ def main() -> None:
 
     if args.skip_shorts:
         print("\n[done] long-form complete (shorts skipped).")
+        if not dry:
+            notify("Voiceover pipeline ✓", f"{args.slug}: long-form complete (shorts skipped)")
         return
 
     # ── 7. Detect self-complete sections ───────────────────────────
@@ -251,6 +278,7 @@ def main() -> None:
 
     if not sections_path.exists():
         print("[shorts] no sections file produced — skipping shorts.")
+        notify("Voiceover pipeline ✓", f"{args.slug}: long-form complete (no shorts detected)")
         return
     sections = json.loads(sections_path.read_text())
     full_caps = json.loads(caps_path.read_text())
@@ -301,7 +329,22 @@ def main() -> None:
             hyperframes(short_out, f"{args.week}_{sslug}", captions_on, args.caption_y, dry=dry, fresh=force)
 
     print(f"\n[done] long-form + {len(sections)} short(s) built for {args.slug}.")
+    notify("Voiceover pipeline ✓", f"{args.slug}: long-form + {len(sections)} short(s) built")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        raise
+    except SystemExit as exc:
+        # sys.exit(1) = fatal step failure; sys.exit("ERROR: ...") = missing input.
+        # argparse usage errors (code 2) stay silent.
+        if isinstance(exc.code, str) and exc.code:
+            notify("Voiceover pipeline FAILED", exc.code[:200])
+        elif exc.code == 1:
+            notify("Voiceover pipeline FAILED", "fatal step failure — see log")
+        raise
+    except Exception as exc:
+        notify("Voiceover pipeline FAILED", f"{type(exc).__name__}: {exc}"[:200])
+        raise

@@ -49,6 +49,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.content_paths import derivatives_dir   # type: ignore[import]
+from lib.notify import notify                    # type: ignore[import]
 
 FFMPEG_BIN  = "/opt/homebrew/bin/ffmpeg"
 FFPROBE_BIN = "/opt/homebrew/bin/ffprobe"
@@ -137,9 +138,12 @@ def phase_preflight(raw: Path, manifest: dict, work_dir: Path) -> None:
 
 # ── Phase 2: Trim ──────────────────────────────────────────────────────────
 
-def phase_trim(raw: Path, niche: str, work_dir: Path, is_audio_only: bool = False) -> Path:
+def phase_trim(raw: Path, niche: str, work_dir: Path, is_audio_only: bool = False,
+               pace: str | None = None) -> Path:
     print("\n[pipeline] Phase 2: Trim (silence, retakes, fillers)")
-    from video_trim import trim_video  # type: ignore[import]
+    from video_trim import trim_video, apply_pace  # type: ignore[import]
+    if pace:
+        apply_pace(pace)
 
     trim_out = work_dir / "trimmed.mp4"
     result = trim_video(
@@ -274,7 +278,7 @@ def phase_storyboard(
         b.end_sec - b.start_sec for b in storyboard.beats if b.beat_type == "overlay"
     ) / storyboard.total_duration_sec * 100
     print(f"  beats     : {n_beats}")
-    print(f"  overlay % : {overlay_pct:.0f}%  (cap: {'70' if is_reel else '40'}%)")
+    print(f"  overlay % : {overlay_pct:.0f}%  (cap: {'100' if is_reel else '40'}%)")
     print(f"  saved     : {storyboard_path}")
 
     _mark_done(work_dir, 4, {
@@ -390,9 +394,42 @@ def _build_work_dir(slug: str, fmt: str) -> Path:
     return wd
 
 
+def _print_review_gate(storyboard_path: Path, work_dir: Path) -> None:
+    """Print the review-gate banner: a beat summary + how to edit and resume."""
+    md_path = work_dir / "STORYBOARD.md"
+    print("\n" + "=" * 64)
+    print("  REVIEW GATE — storyboard ready, rendering PAUSED")
+    print("=" * 64)
+    try:
+        sb = json.loads(storyboard_path.read_text())
+        beats = sb.get("beats", [])
+        print(f"  caption_style: {sb.get('caption_style', '?')}    beats: {len(beats)}")
+        for b in beats:
+            span = f"{float(b.get('start_sec', 0)):.1f}-{float(b.get('end_sec', 0)):.1f}s"
+            block = b.get("overlay_block") or b.get("transition_block") or "-"
+            content = (b.get("overlay_content") or "")[:38]
+            print(f"    {int(b.get('beat_id', 0)):>2}  {b.get('beat_type', '?'):<12} "
+                  f"{span:<12} {block:<22} {content}")
+    except Exception as exc:  # noqa: BLE001 - summary is best-effort
+        print(f"  (could not summarise storyboard: {exc})")
+    print("-" * 64)
+    print(f"  EDIT    {storyboard_path}")
+    print(f"  READ    {md_path}")
+    print("  Adjust beats (block, timing, overlay_content, hook text), then:")
+    print("  RESUME  re-run the SAME command WITHOUT --review   -> renders + composites")
+    print("  REDO    add --restart-from 4                       -> regenerate storyboard")
+    print("=" * 64 + "\n")
+
+
 # ── Main ───────────────────────────────────────────────────────────────────
 
+# Tracks the phase in flight so the failure notification can name it.
+_PHASE = 0
+_SLUG = ""
+
+
 def main() -> None:
+    global _PHASE, _SLUG
     ap = argparse.ArgumentParser(
         description="Run the full V2 video pipeline: raw recording → final MP4",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -420,6 +457,11 @@ def main() -> None:
                     help="Re-run from phase N onward (1–6). Removes phase markers N+.")
     ap.add_argument("--work-dir", default=None,
                     help="Override working directory")
+    ap.add_argument("--review", action="store_true",
+                    help="Halt after the storyboard for manual review/edit. Re-run the "
+                         "SAME command WITHOUT --review to resume rendering.")
+    ap.add_argument("--pace", choices=["tight", "natural", "relaxed"], default=None,
+                    help="Trim pacing preset (default: manifest 'pace', else the tuned values).")
     args = ap.parse_args()
 
     raw = Path(args.raw)
@@ -440,6 +482,7 @@ def main() -> None:
     niche = manifest["niche"]
     fmt   = manifest.get("format", "longform")
     slug  = manifest.get("slug", raw.stem)
+    _SLUG = slug
     is_reel = fmt == "reel"
     is_voiceover = args.voiceover or manifest.get("is_voiceover", False)
     is_audio_only = raw.suffix.lower() in (".m4a", ".mp3", ".aac", ".wav")
@@ -470,6 +513,7 @@ def main() -> None:
     t_start = time.time()
 
     # ── Phase 1: Preflight ─────────────────────────────────────────────────
+    _PHASE = 1
     if not _phase_done(work_dir, 1):
         phase_preflight(raw, manifest, work_dir)
         _mark_done(work_dir, 1)
@@ -477,16 +521,19 @@ def main() -> None:
         print("[pipeline] Phase 1: Preflight — skipped (done)")
 
     # ── Phase 2: Trim ──────────────────────────────────────────────────────
+    _PHASE = 2
     if not _phase_done(work_dir, 2):
         if is_pre_edited:
             trimmed = phase_trim_pre_edited(raw, work_dir)
         else:
-            trimmed = phase_trim(raw, niche, work_dir, is_audio_only)
+            trimmed = phase_trim(raw, niche, work_dir, is_audio_only,
+                                 pace=args.pace or manifest.get("pace"))
     else:
         print("[pipeline] Phase 2: Trim — skipped (done)")
         trimmed = Path(_phase_result(work_dir, 2)["trimmed_path"])
 
     # ── Phase 3: Crop (reel only) ──────────────────────────────────────────
+    _PHASE = 3
     if is_reel:
         if not _phase_done(work_dir, 3):
             base_video = phase_crop(trimmed, work_dir)
@@ -504,6 +551,7 @@ def main() -> None:
         transcript_json = work_dir / "transcript.json"
 
     # ── Phase 4: Storyboard ────────────────────────────────────────────────
+    _PHASE = 4
     if not _phase_done(work_dir, 4):
         storyboard_path = phase_storyboard(
             trimmed=trimmed,
@@ -517,7 +565,14 @@ def main() -> None:
         print("[pipeline] Phase 4: Storyboard — skipped (done)")
         storyboard_path = Path(_phase_result(work_dir, 4)["storyboard_path"])
 
+    # ── Review gate: pause after storyboard so you can edit STORYBOARD.json ──
+    if args.review:
+        _print_review_gate(storyboard_path, work_dir)
+        notify("V2 video pipeline — review gate", f"{slug}: storyboard ready, rendering paused")
+        return
+
     # ── Phase 5: HyperFrames ───────────────────────────────────────────────
+    _PHASE = 5
     if not _phase_done(work_dir, 5):
         final_mp4 = phase_hf(
             storyboard_path=storyboard_path,
@@ -533,6 +588,7 @@ def main() -> None:
         final_mp4 = Path(_phase_result(work_dir, 5)["final_mp4"])
 
     # ── Phase 6: Output ────────────────────────────────────────────────────
+    _PHASE = 6
     if not _phase_done(work_dir, 6):
         output = phase_output(final_mp4, manifest, work_dir)
     else:
@@ -542,7 +598,22 @@ def main() -> None:
     elapsed = time.time() - t_start
     print(f"\n  Total time : {elapsed/60:.1f} min")
     print(f"  Final      : {output}\n")
+    notify("V2 video pipeline ✓", f"{slug} complete in {elapsed/60:.1f} min → {output.name}")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        raise
+    except SystemExit as exc:
+        # Phase failures exit 1 (e.g. preflight); argparse usage errors (code 2,
+        # before any phase ran) stay silent.
+        if exc.code not in (0, None) and _PHASE:
+            notify("V2 video pipeline FAILED", f"{_SLUG or 'pipeline'}: failed at phase {_PHASE}")
+        raise
+    except Exception as exc:
+        where = f"phase {_PHASE}" if _PHASE else "setup (before phase 1)"
+        notify("V2 video pipeline FAILED",
+               f"{_SLUG or 'pipeline'}: {where} — {type(exc).__name__}: {exc}"[:200])
+        raise

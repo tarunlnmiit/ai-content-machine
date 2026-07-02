@@ -47,6 +47,10 @@ from datetime import datetime
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "scripts"))
+
+from lib.niche_config import model_for
+
 KB = REPO / "data" / "kb"
 CONTENT_REELS = REPO / "content" / "reels"
 
@@ -55,8 +59,8 @@ HOOK_PATTERNS_PATH = KB / "twitter_hook_patterns.json"
 PROJECTS_PATH = KB / "projects.json"
 WEEKLY_IDEAS_PATH = REPO / "data" / "ideas" / "weekly_ideas.md"
 
-CLAUDE_MODEL_SCRIPT = "claude-opus-4-8"      # script generation: quality matters
-CLAUDE_MODEL_HOOK = "claude-haiku-4-5-20251001"  # hook selection: cheap classification
+CLAUDE_MODEL_SCRIPT = model_for("reel_script")  # script generation: quality matters
+CLAUDE_MODEL_HOOK = model_for("reel_hook")      # hook selection: cheap classification
 
 # Word count targets for a 45s reel at 140-160 wpm
 TARGET_WORDS_MIN = 100

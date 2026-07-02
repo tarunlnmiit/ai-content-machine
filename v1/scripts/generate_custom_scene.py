@@ -28,12 +28,13 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.claude_cli import call_claude
+from lib.niche_config import model_for
 
 SCENES_DIR = REPO / "remotion" / "src" / "compositions" / "scenes"
 RENDERER_PATH = REPO / "remotion" / "src" / "compositions" / "SceneRenderer.tsx"
 REMOTION_DIR = REPO / "remotion"
 
-MODEL = "claude-haiku-4-5-20251001"
+MODEL = model_for("custom_scene")
 MAX_RETRIES = 3
 
 # ── Prompt templates ────────────────────────────────────────────────────────

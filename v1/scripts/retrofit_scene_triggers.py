@@ -33,6 +33,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.claude_cli import call_claude
+from lib.niche_config import model_for
 
 REMOTION_PUBLIC = REPO / "remotion" / "public"
 CAPTIONS_ROOT = REMOTION_PUBLIC / "captions"
@@ -137,7 +138,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Re-anchor overlay triggers to the spoken transcript")
     parser.add_argument("--overlay", required=True, help="Path to overlay scene-plan JSON")
     parser.add_argument("--captions", default=None, help="Path to captions JSON (auto-resolved if omitted)")
-    parser.add_argument("--model", default="claude-opus-4-8", help="Claude model id")
+    parser.add_argument("--model", default=model_for("retrofit"), help="Claude model id")
     parser.add_argument("--no-cache", action="store_true", help="Bypass cache, call Claude fresh")
     parser.add_argument("--dry-run", action="store_true", help="Print proposed triggers, don't write")
     args = parser.parse_args()

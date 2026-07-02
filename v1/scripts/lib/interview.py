@@ -210,7 +210,7 @@ def write_article(
     })
     if extra_instruction:
         prompt += f"\n\n{extra_instruction}"
-    raw = run_claude(prompt, timeout=600, description="Writing the article (2–5 min)...")
+    raw = run_claude(prompt, timeout=900, description="Writing the article (Fable 5, may take several minutes)...")
     return _parse_article(raw)
 
 

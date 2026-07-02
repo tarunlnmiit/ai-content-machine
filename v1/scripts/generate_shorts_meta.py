@@ -134,7 +134,7 @@ Return ONLY valid JSON, no prose, no markdown fences:
 {{"title": "...", "description": "...", "tags": [...]}}"""
 
     try:
-        out = call_claude(prompt, cache=True, model=model_for("metadata"),
+        out = call_claude(prompt, cache=True, model=model_for("shorts_meta"),
                           temperature=ctx["temperature"], timeout=90,
                           progress_label=f"generating metadata").strip()
     except RuntimeError as e:

@@ -131,3 +131,6 @@ v1/remotion/public/broll/
 v1/output/animations/**/*.mp4
 v2/assets/
 v2/remotion/public/videos/
+
+# MCP config contains env-var references; never commit
+.mcp.json
