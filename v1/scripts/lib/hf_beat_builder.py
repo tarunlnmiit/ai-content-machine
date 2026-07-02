@@ -30,6 +30,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from lib.niche_config import model_for
 from lib.hf_templates import (
     PANEL_LAYOUTS,
     build_caption_layer,
@@ -43,7 +44,7 @@ REPO = Path(__file__).resolve().parent.parent.parent
 KB = REPO / "data" / "kb"
 
 CLAUDE_BIN = shutil.which("claude") or "/Users/tarungupta/.local/bin/claude"
-MODEL_BEAT = "claude-opus-4-8"   # best quality for design-rich HTML compositions
+MODEL_BEAT = model_for("beat_html")   # best quality for design-rich HTML compositions
 
 # Cache dir: reuse identical beats (same block_type + duration + caption hash)
 BEAT_CACHE_DIR = REPO / ".hf_beat_cache"
@@ -163,10 +164,10 @@ def _duration_frames(start: float, end: float, fps: int = 30) -> int:
     return max(1, round((end - start) * fps))
 
 
-_CACHE_VERSION = "v9"  # bumped: no-overlap text rule + lower-third-minimal two-phrase stacking
+_CACHE_VERSION = "v10"  # bumped: global caption track — per-beat pill suppressed when global captions on
 
-def _cache_key(beat: BeatSpec, niche: str, resolution: str) -> str:
-    payload = f"{_CACHE_VERSION}:{niche}:{resolution}:{beat.block_type}:{beat.caption}:{json.dumps(beat.data, sort_keys=True)}"
+def _cache_key(beat: BeatSpec, niche: str, resolution: str, global_captions: bool = False) -> str:
+    payload = f"{_CACHE_VERSION}:{niche}:{resolution}:{global_captions}:{beat.block_type}:{beat.caption}:{json.dumps(beat.data, sort_keys=True)}"
     return hashlib.md5(payload.encode()).hexdigest()[:16]
 
 
@@ -244,7 +245,9 @@ def _load_design_constants(niche: str) -> str:
             in_section = False
         if in_section:
             parts.append(line)
-    return "\n".join(parts)[:2500]
+    # Cap generously so PALETTE + TYPOGRAPHY + MOTION + CAPTION + SHORT-FORM all survive
+    # (the prompt references the palette by name, so it must actually be present).
+    return "\n".join(parts)[:6000]
 
 
 def _validate_composition_html(html: str, duration_frames: int, beat_idx: int) -> list[str]:
@@ -325,6 +328,14 @@ def _compose_prompt(
             "All text must still be legible — use text-shadow or strong font-weight to compensate for the reduced contrast.\n"
         )
 
+    reel_note = ""
+    if is_reel:
+        reel_note = (
+            "\nVERTICAL REEL (1080×1920): keep everything inside the central safe zone — nothing in the\n"
+            "top 14% or bottom 20% (platform UI covers it). Go BIG and phone-legible: hero text ≥ 90px,\n"
+            "heavy weight, high contrast; ONE idea on screen at a time; faster motion (entrances ≤ 0.4s).\n"
+        )
+
     return f"""You are generating visual content for a premium motion-graphics video beat.
 
 NICHE: {niche.upper()}
@@ -332,7 +343,7 @@ BLOCK TYPE: {beat.block_type}
 YOUR BOX: {box_w}×{box_h}px  ← this is your entire world. (0,0) = top-left of your box.
 DURATION: {duration_sec:.1f}s
 {panel_note}
-{glass_note}
+{glass_note}{reel_note}
 DESIGN CONSTANTS — follow exactly:
 {design_constants}
 {block_context}
@@ -374,9 +385,9 @@ BLOCK 2 — GSAP timeline body. Rules:
 
 VISUAL QUALITY — pick the style that fits best:
 {"Panel: the glass surface is already drawn. Design the content that lives INSIDE it." if is_panel else "Fullscreen: use 3+ layered radial gradients as background, never flat single color."}
-• Primary text > 48px: gradient fill (linear-gradient(135deg,#3b82f6,#8b5cf6,#06b6d4)) + text-fill:transparent OR glow filter.
+• Primary text > 48px: gradient fill using 2–3 ACCENT colours FROM THE DESIGN CONSTANTS PALETTE ABOVE (linear-gradient(135deg, <accent1>, <accent2>, <accent3>)) + -webkit-background-clip:text; -webkit-text-fill-color:transparent — OR a glow filter. NEVER hardcode a colour that is not in the palette.
 • Entrance: scale 0.92→1, opacity 0→1, y 20→0, duration 0.5s, elastic ease.
-• Use ≥3 colors from palette. Glow: text-shadow 0 0 30px rgba(59,130,246,0.7) on hero text.
+• Use ≥3 colours from the palette. Glow: text-shadow 0 0 30px <a palette accent colour at ~0.6 alpha> on hero text.
 • Neo-brutalist terminal style for code blocks: hard border, JetBrains Mono, scanlines.
 • Aurora / kinetic typography for conceptual reveals: gradient text, weight animation, depth.
 
@@ -429,12 +440,17 @@ def build_beat_project(
     resolution: str = "landscape",
     is_reel: bool = False,
     use_cache: bool = True,
+    global_captions: bool = False,
 ) -> Path:
     """Generate a HyperFrames project directory for this beat.
 
     Returns the project directory (contains index.html).
+
+    global_captions: when True, the continuous caption track (caption_track.py)
+    owns all transcript captions, so the per-beat caption pill is suppressed here
+    to avoid double subtitles.
     """
-    cache_key = _cache_key(beat, niche, resolution)
+    cache_key = _cache_key(beat, niche, resolution, global_captions)
     cached = BEAT_CACHE_DIR / cache_key
 
     if use_cache and cached.exists() and (cached / "index.html").exists():
@@ -462,10 +478,11 @@ def build_beat_project(
     # Python-owned caption — suppressed for blocks that ARE the caption display,
     # pure transitions, or fullscreen code/terminal renders.
     # Adding the pill on top of self-captioning blocks creates double subtitles.
-    if beat.block_type not in NO_CAPTION_BLOCKS:
-        caption_html, caption_js = build_caption_layer(beat.caption)
-    else:
+    if global_captions or beat.block_type in NO_CAPTION_BLOCKS:
+        # Continuous caption track owns captions (or this block IS the text) → no pill.
         caption_html, caption_js = "", ""
+    else:
+        caption_html, caption_js = build_caption_layer(beat.caption)
 
     # HyperFrames variables JSON
     variables_json = json.dumps({
@@ -535,6 +552,7 @@ def build_all_beats(
     niche: str,
     work_dir: Path,
     is_reel: bool = False,
+    global_captions: bool = False,
 ) -> list[tuple[BeatSpec, Path]]:
     """Build project dirs for all beats in a storyboard.
 
@@ -599,7 +617,8 @@ def build_all_beats(
         print(f"  [hf-builder] Beat {beat.idx:02d} {beat.block_type} "
               f"({start:.1f}s–{end:.1f}s, {_duration_frames(start, end)}f)")
 
-        project_dir = build_beat_project(beat, niche, work_dir, resolution, is_reel)
+        project_dir = build_beat_project(beat, niche, work_dir, resolution, is_reel,
+                                         global_captions=global_captions)
         results.append((beat, project_dir))
 
     return results

@@ -303,7 +303,9 @@ def _score_with_claude(
     )
     try:
         resp = client.messages.create(
-            model="claude-haiku-4-5-20251001",
+            # Sonnet 5 for idea scoring — highest-leverage judgment call in the
+            # pipeline; weekly volume is tiny so API cost stays in pennies.
+            model="claude-sonnet-5",
             max_tokens=1500,
             system=system,
             messages=[{"role": "user", "content": prompt}],

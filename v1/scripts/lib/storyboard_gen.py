@@ -39,7 +39,13 @@ REPO = Path(__file__).resolve().parent.parent.parent
 
 DESIGN_DIR = REPO / "data" / "kb" / "design"
 
-CLAUDE_MODEL = "claude-opus-4-8"
+try:
+    from lib.niche_config import model_for
+except ImportError:  # standalone CLI run: python3 lib/storyboard_gen.py
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from lib.niche_config import model_for
+
+CLAUDE_MODEL = model_for("storyboard")
 
 # Outro sits at the very end and lasts a few seconds — NOT a percentage of
 # runtime. A percentage rule makes the outro balloon on long videos (e.g. 90%
@@ -204,7 +210,7 @@ def build_storyboard_prompt(
     transcript_readable = "\n".join(tx_lines)
 
     fmt_label = "SHORT-FORM REEL (portrait 9:16, ~45s)" if is_reel else "LONG-FORM (landscape)"
-    overlay_cap_pct = 70 if is_reel else 40
+    overlay_cap_pct = 100 if is_reel else 40
     overlay_cap_sec = total_duration * overlay_cap_pct / 100
 
     reel_beat_instruction = ""
@@ -349,6 +355,20 @@ Produce a storyboard as a JSON object with this exact schema:
 12. **No overlapping beats.** Beats must be strictly contiguous: each beat's start_sec
     must equal the previous beat's end_sec (no gaps, no overlaps). Sort by start_sec.
 
+13. **BEAT 1 IS ALWAYS A HOOK OVERLAY (0–~3s).** The very first beat must be an
+    `overlay` covering roughly 0–3s with punchy, STANDALONE text (≤ 8 words) that
+    creates curiosity or states the payoff. Never open on a bare talking_head — the
+    first 3 seconds decide whether anyone keeps watching. overlay_content must read on
+    its own with no spoken setup (e.g. "ONE PROMPT = A PRIVATE HISTORIAN").
+
+14. **ENUMERATION → LABELED CALLOUTS.** When the narration lists named parts or steps
+    (e.g. "in five parts: role, task, exclude…", "three things", "step one / two"),
+    emit ONE overlay per item using a label block (`lower-third-minimal`,
+    `floating-pill-badge`, or `bento-data-grid`), with overlay_content = the LABEL
+    itself (e.g. "1 · ROLE", "2 · TASK"), each timed to when that item is spoken.
+    This is MANDATORY over screen-recordings — never leave a raw screen capture on
+    screen without a labeled callout naming what the viewer is looking at.
+
 Respond with ONLY the JSON object. No prose before or after."""
 
 
@@ -396,6 +416,66 @@ def call_claude(prompt: str, model: str = CLAUDE_MODEL) -> str:
     return result.stdout.strip()
 
 
+HOOK_MAX_SEC = 3.0
+_HOOK_BLOCK_FALLBACKS = ("editorial-emphasis", "kinetic-slam", "kinetic-word-pop", "weight-shift")
+
+
+def _shorten_hook(text: str, max_words: int = 8) -> str:
+    words = [w for w in re.split(r"\s+", text.strip()) if w]
+    return " ".join(words[:max_words]).upper().strip(" ,.-")
+
+
+def _pick_hook_block(caption_style: str, allowed: set[str]) -> str | None:
+    if caption_style and caption_style in allowed:
+        return caption_style
+    for b in _HOOK_BLOCK_FALLBACKS:
+        if b in allowed:
+            return b
+    return None
+
+
+def _ensure_hook_overlay(
+    beats: list["Beat"],
+    caption_style: str,
+    allowed: set[str],
+    words: list[dict],
+    total_duration: float,
+) -> list["Beat"]:
+    """Guarantee beat 1 is a hook overlay covering ~0-3s. Auto-inserts one if the
+    model opened on a bare talking_head (the first 3s decide retention)."""
+    if not beats:
+        return beats
+    first = beats[0]
+    already = (first.beat_type == "overlay" and first.start_sec <= 0.5
+               and bool((first.overlay_content or "").strip()))
+    if already:
+        return beats
+    block = _pick_hook_block(caption_style, allowed)
+    if not block:
+        return beats
+    hook_end = min(HOOK_MAX_SEC, total_duration,
+                   first.end_sec if first.end_sec > 1.0 else HOOK_MAX_SEC)
+    if hook_end <= 0.4:
+        return beats
+    hook_text = _shorten_hook(first.transcript_excerpt
+                              or transcript_excerpt(words, 0.0, hook_end)) or "WATCH THIS"
+    hook = Beat(
+        beat_id=0, beat_type="overlay", start_sec=0.0, end_sec=hook_end,
+        duration_sec=hook_end, transcript_excerpt=hook_text, overlay_block=block,
+        overlay_layout="fullscreen", overlay_content=hook_text,
+        overlay_rationale="Auto-enforced hook (first 3s retention).",
+        transition_block=None, caption_style=caption_style, broll_keywords=None,
+    )
+    if first.end_sec > hook_end + 0.5:
+        first.start_sec = hook_end
+        first.duration_sec = first.end_sec - hook_end
+        beats.insert(0, hook)
+    else:
+        beats[0] = hook
+    print(f"[storyboard] Hook enforced: 0-{hook_end:.1f}s '{hook_text}' ({block})")
+    return beats
+
+
 def parse_storyboard_response(
     raw_response: str,
     niche: str,
@@ -403,6 +483,8 @@ def parse_storyboard_response(
     total_duration: float,
     transcript_words: list[dict],
     design_md: str,
+    is_reel: bool = False,
+    force_hook: bool = True,
 ) -> Storyboard:
     """Parse Claude's JSON response into a Storyboard object.
 
@@ -426,6 +508,8 @@ def parse_storyboard_response(
 
     beats: list[Beat] = []
     overlay_seconds = 0.0
+    # Reels are all-overlay by design — don't downgrade them. Long-form caps at 40%.
+    overlay_cap = 1.0 if is_reel else 0.40
 
     for rb in raw_beats:
         start = max(0.0, float(rb.get("start_sec", 0)))
@@ -446,7 +530,7 @@ def parse_storyboard_response(
         # Enforce density cap: if adding this overlay would exceed 40%, downgrade
         if beat_type == "overlay":
             duration = end - start
-            if overlay_seconds + duration > total_duration * 0.40:
+            if overlay_seconds + duration > total_duration * overlay_cap:
                 print(f"[storyboard] Density cap reached at beat {rb.get('beat_id')} — "
                       f"downgrading to talking_head")
                 beat_type = "talking_head"
@@ -513,6 +597,12 @@ def parse_storyboard_response(
         if beats[i].beat_type == "outro" and beats[i - 1].end_sec > beats[i].start_sec:
             beats[i - 1].end_sec = beats[i].start_sec
             beats[i - 1].duration_sec = beats[i - 1].end_sec - beats[i - 1].start_sec
+
+    # 4. Ensure the first ~3s is a hook overlay (retention). Auto-inserts one if the
+    #    model opened on a bare talking_head.
+    if force_hook:
+        beats = _ensure_hook_overlay(beats, caption_style, allowed_blocks,
+                                     transcript_words, total_duration)
 
     # Compute color grade from niche (hardcoded to match DESIGN.md)
     color_grade_map = {
@@ -636,7 +726,7 @@ def generate_storyboard(
 
     print(f"[storyboard] Parsing response ({len(raw_response)} chars)...")
     sb = parse_storyboard_response(
-        raw_response, niche, slug, total_duration, words, design_md
+        raw_response, niche, slug, total_duration, words, design_md, is_reel=is_reel
     )
 
     print(f"[storyboard] {sb.beat_count} beats, "

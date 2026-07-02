@@ -34,29 +34,37 @@ BANNED WORDS: "In conclusion", "Dive into", "Leverage", "Game-changer", "Synergy
 """
 
 # Current model ids (see CLAUDE.md / claude-api skill).
+FABLE = "claude-fable-5"    # Mythos-class, above Opus — premium limits, minutes-long turns
 OPUS = "claude-opus-4-8"
-SONNET = "claude-sonnet-4-6"
+SONNET = "claude-sonnet-5"  # near-Opus coding/agentic quality at Sonnet-tier limits
+SONNET_46 = "claude-sonnet-4-6"
 HAIKU = "claude-haiku-4-5-20251001"
 
 # Task → model routing (Max 5x). Override per-call where a script needs to.
+# Fable 5 only on quality-critical LOW-VOLUME tasks (burns limits fast, long turns).
 MODEL_BY_TASK = {
-    "hero_blog": OPUS,          # produce_blog, ghostwrite — flagship long-form
+    "hero_blog": FABLE,        # produce_blog, ghostwrite — flagship long-form, weekly, quality-critical
     "buffer": SONNET,          # bulk drafts, lower stakes
     "repurpose": SONNET,       # mechanical transform of existing text
     "html_asset": SONNET,      # slides / carousel / social / thumbnail
     "scene_plan": SONNET,      # structured semantic reasoning
     "metadata": HAIKU,         # small classification / hashtags / throwaway
+    "shorts_meta": SONNET,     # generate_shorts_meta — user-facing titles/descriptions, drives CTR
+    "beat_html": SONNET,       # hf_beat_builder — highest-volume call; Sonnet 5 ≈ Opus on this shape
+    "storyboard": OPUS,        # storyboard_gen — beat list from transcript
+    "reel_script": OPUS,       # prepare_reel_script — script generation, quality matters
+    "reel_hook": SONNET,       # prepare_reel_script — hook selection; first 3s decide everything
+    "custom_scene": SONNET,    # generate_custom_scene — TSX codegen; better model = fewer tsc retries
+    "retrofit": SONNET,        # retrofit_scene_triggers — transcript trigger re-anchoring
 }
 
 
 def model_for(task: str, niche: Optional[str] = None) -> str:
     """Return the model id for a pipeline task.
 
-    Poetry hero content gets Opus for creative depth; everything else follows
-    MODEL_BY_TASK. Unknown tasks fall back to Sonnet.
+    Everything follows MODEL_BY_TASK (hero_blog included — Fable 5).
+    Unknown tasks fall back to Sonnet.
     """
-    if task == "hero_blog":
-        return OPUS
     return MODEL_BY_TASK.get(task, SONNET)
 
 

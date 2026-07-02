@@ -25,6 +25,7 @@ from lib import interview as interview_flow
 from lib.seo import extract_seo, seo_manual_steps
 from lib.manual_steps import write_manual_steps
 from lib.image_decision import decide_image, parse_markers
+from lib.niche_config import model_for
 
 # Niches that ship a companion worksheet (poetry does not).
 WORKSHEET_NICHES = {"ds", "life"}
@@ -849,10 +850,13 @@ Produce the full blog post in clean Markdown, structured exactly as specified.
 
 
 def run_claude(prompt: str, timeout: int, description: str) -> str:
+    # hero_blog routes via niche_config.MODEL_BY_TASK (Fable 5) — single turns can
+    # run minutes on hard tasks, so article-writing callers pass generous timeouts.
+    model = model_for("hero_blog")
     with spinner() as progress:
         task = progress.add_task(description)
         result = subprocess.run(
-            ["claude", "-p", prompt],
+            ["claude", "-p", prompt, "--model", model],
             capture_output=True, text=True, timeout=timeout,
         )
         progress.update(task, description=f"[success]{description} — done[/success]")
@@ -1038,14 +1042,14 @@ def main():
             console.print(f"[info]Blog type:[/info] {args.blog_type.upper()}")
 
         # Step 5 — generate blog
-        blog_text = run_claude(combined_prompt, timeout=600,
+        blog_text = run_claude(combined_prompt, timeout=900,
                                description="Generating blog (2–5 min)...")
 
         # Validate IMAGE_INSERT present; retry once if missing
         if "[IMAGE_INSERT" not in blog_text:
             console.print("[warn]Warning: No IMAGE_INSERT found. Retrying with reinforced prompt...[/warn]")
             retry_prompt = combined_prompt + "\n\n**CRITICAL: You MUST include at least 1 [IMAGE_INSERT: ...] marker in the blog body.**"
-            blog_text = run_claude(retry_prompt, timeout=600, description="Retrying with IMAGE_INSERT enforcement...")
+            blog_text = run_claude(retry_prompt, timeout=900, description="Retrying with IMAGE_INSERT enforcement...")
             if "[IMAGE_INSERT" not in blog_text:
                 console.print("[warn]⚠ Still no IMAGE_INSERT after retry. Proceeding anyway.[/warn]")
 
