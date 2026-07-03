@@ -1,0 +1,78 @@
+{
+  "slug": "2026-06-16_ds_faceless_s01",
+  "niche": "ds",
+  "kind": "voiceover",
+  "audioFile": "audio/2026-W25/2026-06-16_ds_faceless_s01.m4a",
+  "durationSec": 42.04,
+  "silenceTrimStartSec": 0.0,
+  "silenceTrimEndSec": 42.04,
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W25/2026-06-16_ds_faceless_s01/cue-0.mp4",
+      "startSec": 0.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-1",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W25/2026-06-16_ds_faceless_s01/cue-1.mp4",
+      "startSec": 6.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-2",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W25/2026-06-16_ds_faceless_s01/cue-2.mp4",
+      "startSec": 12.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-3",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W25/2026-06-16_ds_faceless_s01/cue-3.mp4",
+      "startSec": 18.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-4",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W25/2026-06-16_ds_faceless_s01/cue-0.mp4",
+      "startSec": 24.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-5",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W25/2026-06-16_ds_faceless_s01/cue-1.mp4",
+      "startSec": 30.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-6",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W25/2026-06-16_ds_faceless_s01/cue-2.mp4",
+      "startSec": 36.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-7",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W25/2026-06-16_ds_faceless_s01/cue-3.mp4",
+      "startSec": 42.0,
+      "durationSec": 0.04
+    }
+  ],
+  "captionsFile": "captions/2026-W25/2026-06-16_ds_faceless_s01.captions.json",
+  "showSubtitles": false,
+  "colorGrading": {
+    "saturate": 1.05,
+    "hueRotate": -4,
+    "contrast": 1.14,
+    "brightness": 0.97,
+    "overlayColor": "rgba(0, 70, 90, 0.10)"
+  },
+  "look": "cinematic",
+  "outputSize": "9x16"
+}

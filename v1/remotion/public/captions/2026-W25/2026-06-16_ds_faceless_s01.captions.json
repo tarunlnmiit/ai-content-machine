@@ -1,0 +1,107 @@
+[
+  {
+    "text": "I stopped googling travel guides, I interrogated an AI instead.",
+    "startMs": 0,
+    "endMs": 3800,
+    "timestampMs": 0,
+    "confidence": null
+  },
+  {
+    "text": "Ask it the best things to do in Paris.",
+    "startMs": 3800,
+    "endMs": 6160,
+    "timestampMs": 3800,
+    "confidence": null
+  },
+  {
+    "text": "You'll get the I filter and the loop.",
+    "startMs": 6160,
+    "endMs": 8400,
+    "timestampMs": 6160,
+    "confidence": null
+  },
+  {
+    "text": "The same 10 things from every list.",
+    "startMs": 8400,
+    "endMs": 10400,
+    "timestampMs": 8400,
+    "confidence": null
+  },
+  {
+    "text": "The model isn't failing you, your prompt is.",
+    "startMs": 10400,
+    "endMs": 13200,
+    "timestampMs": 10400,
+    "confidence": null
+  },
+  {
+    "text": "So I gave it a job in five parts.",
+    "startMs": 13200,
+    "endMs": 15800,
+    "timestampMs": 13200,
+    "confidence": null
+  },
+  {
+    "text": "Roll, historian, not chatbot.",
+    "startMs": 15800,
+    "endMs": 18600,
+    "timestampMs": 15800,
+    "confidence": null
+  },
+  {
+    "text": "Task three lesser known sites with the error and the address.",
+    "startMs": 18600,
+    "endMs": 23160,
+    "timestampMs": 18600,
+    "confidence": null
+  },
+  {
+    "text": "Exclude, no I filter, no top 10 list.",
+    "startMs": 23160,
+    "endMs": 26920,
+    "timestampMs": 23160,
+    "confidence": null
+  },
+  {
+    "text": "Format, a table, not a wall of text.",
+    "startMs": 26920,
+    "endMs": 29960,
+    "timestampMs": 26920,
+    "confidence": null
+  },
+  {
+    "text": "In verify, two sources each, flag conflicts, no making things up.",
+    "startMs": 29960,
+    "endMs": 34560,
+    "timestampMs": 29960,
+    "confidence": null
+  },
+  {
+    "text": "It stopped being a chatbot and started being a guide.",
+    "startMs": 34560,
+    "endMs": 37760,
+    "timestampMs": 34560,
+    "confidence": null
+  },
+  {
+    "text": "Same model, everyone has.",
+    "startMs": 37760,
+    "endMs": 40040,
+    "timestampMs": 37760,
+    "confidence": null
+  },
+  {
+    "text": "I just stopped asking like a tourist.",
+    "startMs": 40040,
+    "endMs": 42040,
+    "timestampMs": 40040,
+    "confidence": null
+  },
+  {
+    "text": "Comment prompt and I will DM you the whole thing.",
+    "startMs": 42040,
+    "endMs": 44880,
+    "timestampMs": 42040,
+    "confidence": null
+  }
+]

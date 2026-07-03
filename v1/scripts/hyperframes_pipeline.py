@@ -332,6 +332,7 @@ def run_hf_pipeline(
     work_dir: Path,
     is_reel: bool = False,
     has_screen_recording: bool = False,
+    burn_global_captions: bool = True,
 ) -> Path:
     """Full HyperFrames pipeline: storyboard → compositions → renders → composite.
 
@@ -372,7 +373,8 @@ def run_hf_pipeline(
 
     # ── Phase 1: Build beat project directories ────────────────────────────
     print(f"\n[hf-pipeline] Phase 1: Building beat compositions")
-    beat_projects = build_all_beats(storyboard, transcript_words, niche, work_dir, is_reel)
+    beat_projects = build_all_beats(storyboard, transcript_words, niche, work_dir, is_reel,
+                                    global_captions=burn_global_captions)
     print(f"  Built {len(beat_projects)} compositions")
 
     # ── Phase 2: Render each beat ──────────────────────────────────────────
@@ -426,6 +428,21 @@ def run_hf_pipeline(
         trimmed_video, beat_renders, final_output, niche, is_reel,
         has_screen_recording=has_screen_recording,
     )
+
+    # ── Phase 4b: Burn continuous word-synced caption track ────────────────
+    # The per-beat pill only covered overlay beats, so talking-head stretches
+    # had NO captions (85% watch muted). Burn one continuous track from the
+    # transcript over the whole composite, suppressed inside NO_CAPTION_BLOCKS
+    # windows. Style: karaoke active-word pop (see lib/caption_track.py).
+    if burn_global_captions and transcript_words:
+        from lib.caption_track import build_caption_ass, burn_caption_track
+        cap_resolution = "portrait" if is_reel else "landscape"
+        ass_path = work_dir / "captions.ass"
+        build_caption_ass(transcript_words, storyboard, niche, cap_resolution, ass_path)
+        captioned = work_dir / "final_captioned.mp4"
+        burn_caption_track(final_output, ass_path, captioned, FFMPEG_BIN)
+        captioned.replace(final_output)  # keep canonical name for downstream
+        print(f"  [hf-pipeline] Burned continuous caption track ({cap_resolution})")
 
     # ── Phase 5: Validate final output ─────────────────────────────────────
     print(f"\n[hf-pipeline] Phase 4: Validating final output")

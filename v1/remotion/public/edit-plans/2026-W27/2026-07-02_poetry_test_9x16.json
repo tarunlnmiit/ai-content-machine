@@ -1,0 +1,92 @@
+{
+  "slug": "2026-07-02_poetry_test_9x16",
+  "niche": "poetry",
+  "kind": "voiceover",
+  "audioFile": "audio/2026-W27/2026-07-02_poetry_test_9x16.m4a",
+  "durationSec": 57.22,
+  "silenceTrimStartSec": 0.0,
+  "silenceTrimEndSec": 57.22,
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-0.mp4",
+      "startSec": 0.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-1",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-1.mp4",
+      "startSec": 6.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-2",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-2.mp4",
+      "startSec": 12.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-3",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-3.mp4",
+      "startSec": 18.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-4",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-4.mp4",
+      "startSec": 24.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-5",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-5.mp4",
+      "startSec": 30.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-6",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-0.mp4",
+      "startSec": 36.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-7",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-1.mp4",
+      "startSec": 42.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-8",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-2.mp4",
+      "startSec": 48.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-9",
+      "description": "voiceover b-roll montage",
+      "clipFile": "broll/2026-W27/2026-07-02_poetry_test_9x16/cue-3.mp4",
+      "startSec": 54.0,
+      "durationSec": 3.22
+    }
+  ],
+  "captionsFile": "",
+  "showSubtitles": false,
+  "colorGrading": {
+    "saturate": 1.16,
+    "hueRotate": -3,
+    "contrast": 1.03,
+    "brightness": 1.04,
+    "overlayColor": "rgba(255, 180, 120, 0.10)"
+  },
+  "look": "poetry",
+  "outputSize": "9x16"
+}

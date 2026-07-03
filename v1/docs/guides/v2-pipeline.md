@@ -87,7 +87,7 @@ python3 v1/scripts/run_video_pipeline.py \
 | 2 Trim | Whisper transcribe (one pass), adaptive silence detection, retake removal (pause + token overlap), filler word disambiguation | `scripts/video_trim.py` |
 | 3 Crop | Portrait 9:16 crop for reels only; skipped for long-form | `scripts/lib/video_utils.py:crop_vertical` |
 | 4 Storyboard | Claude Opus reads transcript + DESIGN.md → JSON beat list (block types, timestamps, captions) | `scripts/lib/storyboard_gen.py` |
-| 5 HyperFrames | Claude Haiku writes composition HTML per beat → `hyperframes render` per beat → FFmpeg composite all beats over trimmed video | `scripts/hyperframes_pipeline.py` |
+| 5 HyperFrames | Claude Opus writes composition HTML per beat → `hyperframes render` per beat → FFmpeg composite all beats over trimmed video | `scripts/hyperframes_pipeline.py` |
 | 6 Output | Copy final.mp4 to canonical path, write pipeline_meta.json | `run_video_pipeline.py:phase_output` |
 
 ---
@@ -227,7 +227,84 @@ shows the trimmed talking-head footage (beats composite over a continuous base v
 
 ---
 
+## Captions — continuous word-synced track (2026-07-01)
+
+Captions are burned as ONE continuous track over the final composite, not per beat.
+
+- **Source:** `transcript.json` word-level timings. Module: `scripts/lib/caption_track.py`.
+- **Style:** karaoke active-word pop — two lines, primary white (`#f0f4ff`), the
+  currently-spoken word enlarged + tinted with the niche accent (`NICHE_ACCENT`:
+  ds cyan, life amber, poetry violet). Font Inter 700, mobile-safe margins.
+- **Coverage:** EVERY segment, including plain talking-head stretches. Previously the
+  per-beat pill only appeared on overlay beats (`build_all_beats` skips `talking_head`
+  beats), so talking-head reels had caption gaps — the reel formula requires captions
+  burned in (85% watch muted).
+- **Suppression:** words inside a beat whose block ∈ `NO_CAPTION_BLOCKS` are dropped
+  (that block already renders the text) — no double subtitles.
+- **Wiring:** `run_hf_pipeline(..., burn_global_captions=True)` burns the track right
+  after `build_ffmpeg_composite` (Phase 4b). When on, the per-beat pill is suppressed
+  via `build_all_beats(..., global_captions=True)`. Beat cache bumped to `v10`. Toggle
+  off with `burn_global_captions=False`.
+- **ffmpeg requirement (libass):** burning the `.ass` track needs an ffmpeg built with
+  **libass**. The pipeline's default `/opt/homebrew/bin/ffmpeg` on this machine is a
+  stripped build WITHOUT libass, so `burn_caption_track` (`caption_track.py`) resolves at
+  runtime to a libass-capable binary — it tries the passed bin, then the ffmpeg sibling of
+  the running python (`content_engine_env` conda ffmpeg HAS libass), then PATH; the first
+  with the `ass` filter wins. It also picks an available H.264 encoder: `libx264`
+  (`-crf 18 -preset medium`) if present, else `h264_videotoolbox` (`-b:v 10M`, since
+  VideoToolbox rejects `-crf`/`-preset`). Run the pipeline under the conda env python so
+  the sibling resolves. If no libass ffmpeg is found it raises a clear error.
+
+---
+
+## Hook, overlays & beat prompt (2026-07-01, Phase 2)
+
+- **Hook overlay (retention):** beat 1 is always a hook overlay covering ~0–3s.
+  `build_storyboard_prompt` requires it (rule 13) and `parse_storyboard_response`
+  ENFORCES it via `_ensure_hook_overlay` — if the model opens on a bare talking_head, a
+  hook overlay is auto-inserted (block = the video's caption_style or a text fallback;
+  content derived from the opening line). Toggle with `force_hook=False`.
+- **Reel overlay cap fixed:** the density downgrade used a hardcoded 40% for ALL
+  formats, silently converting most reel overlays back to talking_head (this starved
+  reels of overlays *and* the hook). Now `overlay_cap = 1.0` for reels (all-overlay by
+  design) / `0.40` for long-form; prompt `overlay_cap_pct` for reels raised 70→100.
+- **Enumeration → labeled callouts:** storyboard rule 14 — when narration lists named
+  parts/steps ("in five parts: role, task…"), emit one labeled overlay per item
+  (`lower-third-minimal` / `floating-pill-badge` / `bento-data-grid`); mandatory over
+  screen-recordings so a raw capture is never left unlabeled.
+- **Beat prompt (`hf_beat_builder._compose_prompt`):** removed the hardcoded blue
+  gradient/glow (it leaked DS colours into life/poetry) — it now references the injected
+  DESIGN CONSTANTS palette by name; `is_reel` now adds a vertical-safe-area + big-type
+  guidance block; `_load_design_constants` cap raised 2500→6000 so the full
+  PALETTE/MOTION/CAPTION/SHORT-FORM sections reach the model.
+
+---
+
+## Review gate — `--review` (2026-07-01)
+
+A human checkpoint between the (cheap) storyboard and the (expensive) beat render.
+
+- `python3 v1/scripts/run_video_pipeline.py --raw <file> --manifest <m> --review`
+  runs Phases 1–4 (trim → transcript → storyboard) then **halts** before Phase 5,
+  printing a beat summary and the paths to `STORYBOARD.json` (edit) and `STORYBOARD.md`
+  (read).
+- Edit `STORYBOARD.json` in the Claude Code desktop app (prompt → diff → keep): change a
+  beat's `overlay_block`, timing, `overlay_content`, the hook text, `caption_style`, etc.
+- **Resume:** re-run the SAME command **without** `--review`. The existing phase-marker
+  system (`_phase_done` / `_mark_done`) skips Phases 1–4 and continues from Phase 5 using
+  the edited storyboard. To regenerate the storyboard instead, use `--restart-from 4`.
+- No new state or work_dir — the gate reuses the resumable pipeline; the only addition is
+  the flag and a `_print_review_gate` banner.
+
+---
+
 ## Trim settings
+
+**Pacing presets (2026-07-01):** `--pace {tight,natural,relaxed}` (on `video_trim.py`
+and `run_video_pipeline.py`, or a manifest `pace` key) nudges pacing without editing code —
+`natural` == the tuned defaults below (a no-op), `tight` is snappier, `relaxed` leaves more
+air. Fine-grained overrides on `video_trim.py`: `--breath-max`, `--sentence-target`,
+`--long-pause-keep`, `--silence-db`. All applied by `apply_pace()` before the trim runs.
 
 | Constant | Value | Effect |
 |---|---|---|
@@ -249,7 +326,7 @@ Edit these in `scripts/video_trim.py` top-of-file constants.
 | Reel script generation | `claude-opus-4-8` | Quality matters — this is what you record |
 | Hook selection (reel) | `claude-haiku-4-5-20251001` | Fast, cheap classification |
 | Storyboard generation | `claude-opus-4-8` | Complex beat layout, design-spec reasoning |
-| Beat composition HTML | `claude-haiku-4-5-20251001` | One call per beat, must be fast |
+| Beat composition HTML | `claude-opus-4-8` | Design-rich HTML/GSAP — quality matters (`hf_beat_builder.MODEL_BEAT`) |
 | Filler disambiguation | `claude-haiku-4-5-20251001` | Context-aware "so" / "like" decisions |
 
 All calls use `claude -p` CLI subprocess. No Anthropic API key required — uses your Claude subscription.

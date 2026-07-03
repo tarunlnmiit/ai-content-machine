@@ -95,6 +95,33 @@ WHISPER_MODEL = "large-v3"       # most accurate; change to "base" for speed tes
 # Filler word config (editable without code changes)
 FILLER_LIST_PATH = REPO / "data" / "kb" / "filler_words.json"
 
+# ── Pacing presets ──────────────────────────────────────────────────────────
+# "natural" == the current tuned defaults (applying it is a no-op). "tight" is
+# snappier (less breathing room), "relaxed" leaves more air. Override individual
+# thresholds too. Applied by apply_pace() before trim_video() runs.
+PACE_PRESETS: dict[str, dict[str, float]] = {
+    "tight":   {"NATURAL_BREATH_MAX_SEC": 0.50, "SENTENCE_PAUSE_TARGET_SEC": 0.25, "LONG_PAUSE_KEEP_SEC": 0.30},
+    "natural": {"NATURAL_BREATH_MAX_SEC": 0.80, "SENTENCE_PAUSE_TARGET_SEC": 0.35, "LONG_PAUSE_KEEP_SEC": 0.40},
+    "relaxed": {"NATURAL_BREATH_MAX_SEC": 1.10, "SENTENCE_PAUSE_TARGET_SEC": 0.55, "LONG_PAUSE_KEEP_SEC": 0.60},
+}
+
+
+def apply_pace(pace: str | None = None, overrides: dict[str, float | None] | None = None) -> None:
+    """Reassign pacing globals from a preset + explicit overrides, in place.
+
+    Call BEFORE trim_video() — the trim functions read these module globals at
+    call time. pace=None and no overrides leaves the tuned defaults untouched.
+    """
+    g = globals()
+    if pace and pace in PACE_PRESETS:
+        g.update(PACE_PRESETS[pace])
+        print(f"[trim] pace preset '{pace}': {PACE_PRESETS[pace]}")
+    if overrides:
+        clean = {k: v for k, v in overrides.items() if v is not None}
+        if clean:
+            g.update(clean)
+            print(f"[trim] pace overrides: {clean}")
+
 
 # ---------------------------------------------------------------------------
 # Data classes
@@ -835,7 +862,23 @@ def main() -> None:
     ap.add_argument("--out", required=True, help="Output path for trimmed file")
     ap.add_argument("--audio-only", action="store_true",
                     help="Input is audio-only (voiceover track)")
+    ap.add_argument("--pace", choices=["tight", "natural", "relaxed"], default=None,
+                    help="Pacing preset (default: the current tuned values)")
+    ap.add_argument("--breath-max", type=float, default=None,
+                    help="Override NATURAL_BREATH_MAX_SEC — pauses shorter than this stay untouched")
+    ap.add_argument("--sentence-target", type=float, default=None,
+                    help="Override SENTENCE_PAUSE_TARGET_SEC — what 0.8–2s pauses compress to")
+    ap.add_argument("--long-pause-keep", type=float, default=None,
+                    help="Override LONG_PAUSE_KEEP_SEC — how much of a >2s pause to keep")
+    ap.add_argument("--silence-db", type=float, default=None,
+                    help="Override SILENCE_DB_BELOW_SPEECH — silence sensitivity (dB below speech)")
     args = ap.parse_args()
+    apply_pace(args.pace, {
+        "NATURAL_BREATH_MAX_SEC": args.breath_max,
+        "SENTENCE_PAUSE_TARGET_SEC": args.sentence_target,
+        "LONG_PAUSE_KEEP_SEC": args.long_pause_keep,
+        "SILENCE_DB_BELOW_SPEECH": args.silence_db,
+    })
 
     raw = Path(args.raw)
     if not raw.exists():
