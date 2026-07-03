@@ -134,3 +134,12 @@ v2/remotion/public/videos/
 
 # MCP config contains env-var references; never commit
 .mcp.json
+
+# ============================================
+# Experiment-branch reconcile (2026-07-03): caches, logs, sandbox, test output
+# ============================================
+v1/.hf_beat_cache/
+/data/
+experiments/
+v1/assets/test/
+*.bak
