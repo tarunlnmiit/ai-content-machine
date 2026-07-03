@@ -8,7 +8,7 @@ Status values: `submitted` (awaiting decision) · `accepted` · `declined` · `p
 
 | Date submitted | Week | Niche | Article | Publication | Status | Method | Notes |
 |---|---|---|---|---|---|---|---|
-| 2026-06-26 | W26 | DS/Tech | What hiring managers actually think when they see your data science GitHub in 2026 | **Data Science Collective** | submitted | Notion form (new writer) | Title→sentence case, Resources section added, CTA trimmed to fit DSC guidelines. Reply in 3–5 business days; silence = passed. |
+| 2026-06-26 | W26 | DS/Tech | What hiring managers actually think when they see your data science GitHub in 2026 | **DataDrivenInvestor** | draft | Add-to-publication (already contributing) | DSC not accepting new writers (confirmed 2026-07-03) — pulled. AI in Plain English skipped — W27 piece already queued there. HackerNoon ruled out — off Medium (confirmed 2026-07-03). Routed to DataDrivenInvestor — career/hiring angle fits, already contributing. |
 | 2026-06-26 | W26 | Life | How to Build a Wake-Up Ritual That Survives a Real Life *(Better Humans tutorial variant)* | **Mind Cafe** | declined | Add-to-publication (already a writer) | Declined by Mind Cafe (2026-06-30). Resubmitted → Change Your Mind Change Your Life. Medium draft: medium.com/@tarun-gupta/6ff111792128 |
 | 2026-06-30 | W26 | Life | How to Build a Wake-Up Ritual That Survives Real Life | **Change Your Mind Change Your Life** | submitted | Add-to-publication (already contributing) | Resubmit after Mind Cafe declined. Secured Life home, routine/habit how-to is its core lane. |
 | 2026-06-26 | W26 | Poetry | The Room No One Entered | **Humans Are Stories** (own pub) | self-publishing | Add to own publication (Tarun is Editor) | Decision: all poetry goes to his own pub — no external poetry-pub gatekeeping or dead-pub hunting. |
@@ -23,11 +23,13 @@ Status values: `submitted` (awaiting decision) · `accepted` · `declined` · `p
 - **Poets Unlimited** — ceased operation.
 - **The Junction** — dead; last post Sep 2022.
 - **Scribe** — dead (confirmed by Tarun 2026-06-26, despite stale "recent post" metadata).
+- **Data Science Collective** — not accepting new writer submissions as of 2026-07-03. W26 piece pulled, resubmitted to AI in Plain English network instead.
+- **HackerNoon** — off Medium (confirmed by Tarun 2026-07-03), same move as Towards Data Science. Remove from DS/Tech contributing list.
 
 > **Poetry policy:** all poetry self-published to **Humans Are Stories** (Tarun's own pub, he's Editor). Stop hunting external poetry pubs.
 
 ## Homes secured per niche (cap ~4 each, then go deep)
-- **DS/Tech:** The Startup, DataDrivenInvestor, AI Advances, HackerNoon, Technology Hits, DataSeries, SYNERGY, zipBoard *(already contributing)* · Data Science Collective *(pending — W26 submitted 06-26)* · AI in Plain English ✓ *(first piece PUBLISHED 06-30 — network home: Python/JS/AI in Plain English + Stackademic)*
+- **DS/Tech:** The Startup, DataDrivenInvestor, AI Advances, Technology Hits, DataSeries, SYNERGY, zipBoard *(already contributing)* · AI in Plain English ✓ *(first piece PUBLISHED 06-30 — network home: Python/JS/AI in Plain English + Stackademic)* — Data Science Collective + HackerNoon ruled out (07-03: not accepting / off Medium).
 - **Life:** Mind Cafe ✓, Change Your Mind Change Your Life, Be Yourself, Curious, ILLUMINATION, Kick Ass At Life *(already contributing)*
 - **Poetry:** CRY Magazine, Other Doors, The Lark, Writers' Blokke, iPoetry, Humans Are Stories *(already contributing)*
 

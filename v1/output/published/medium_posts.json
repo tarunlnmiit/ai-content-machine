@@ -124,5 +124,41 @@
     ],
     "published_at": "2026-06-30T15:18:57.391965+00:00",
     "token_used": "personal"
+  },
+  {
+    "title": "I Scraped 1,003 Data Science Job Postings — 87% Want This One Thing, and Most Candidates Still Don't Say It",
+    "medium_url": "https://medium.com/@tarun-gupta/afdbc3bd8d99",
+    "medium_id": "afdbc3bd8d99",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W27/2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t.md",
+    "status": "draft",
+    "tags": [
+      "data-science",
+      "career-advice",
+      "machine-learning",
+      "python",
+      "productivity"
+    ],
+    "published_at": "2026-07-01T03:34:24.941947+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "I Woke at 6AM Every Day for 90 Days. The Data Said Wake Time Was Never the Point.",
+    "medium_url": "https://medium.com/@tarun-gupta/8ad4e2352e6e",
+    "medium_id": "8ad4e2352e6e",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "content/blogs/2026-W27/2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig.md",
+    "status": "draft",
+    "tags": [
+      "productivity",
+      "data-science",
+      "self-improvement",
+      "morning-routines",
+      "this-happened-to-me"
+    ],
+    "published_at": "2026-07-01T04:13:33.811690+00:00",
+    "token_used": "personal"
   }
 ]
