@@ -8,7 +8,9 @@
       "repo_url": "https://github.com/tarunlnmiit/autopilot-jobhunt",
       "pitch": "Free AI job agent: scans 130+ careers pages nightly, scores roles vs your resume with an LLM, Telegram-pings top matches, drafts tailored applications.",
       "honesty_guardrail": "Scans, scores, notifies, drafts. Does NOT auto-apply. Never say 'auto-applies'.",
-      "niches": ["ds"],
+      "niches": [
+        "ds"
+      ],
       "hashtag_niche": "autopilot",
       "utm_campaign": "autopilot-jobhunt",
       "dm_keyword": "jobs",
@@ -31,7 +33,11 @@
         "threads": "post",
         "linkedin": "active (employer cleared); text post via scheduler.py, repo link in pinned first comment",
         "medium": "narrative build story (publish via scripts/publish_medium.py)",
-        "excluded": ["twitter (dropped — dead in analytics)", "hacker_news (account blocked)", "reddit (blocked)"]
+        "excluded": [
+          "twitter (dropped — dead in analytics)",
+          "hacker_news (account blocked)",
+          "reddit (blocked)"
+        ]
       },
       "dm_link_template": "https://github.com/tarunlnmiit/autopilot-jobhunt?utm_source=instagram&utm_medium=dm&utm_campaign=autopilot-jobhunt",
       "source_assets": "../../autopilot-jobs/demo (reels, launch copy, articles)"
@@ -49,7 +55,9 @@
       "dm_keyword": "FLOW",
       "deliverable": "n8n workflow JSON (free import) + the Claude prompt pack, in a public repo",
       "primary_goal": "github_stars",
-      "niches": ["ds"],
+      "niches": [
+        "ds"
+      ],
       "cadence": {
         "frequency": "weekly",
         "format": "comment->DM give-a-tool reel (1/week, DS)",
@@ -66,7 +74,11 @@
         "youtube_shorts": "same cut; repo link line 1 of description + pinned comment",
         "threads": "post",
         "linkedin": "active (employer cleared); text post via scheduler.py, repo link in pinned first comment",
-        "excluded": ["twitter (dropped)", "hacker_news (blocked)", "reddit (blocked)"]
+        "excluded": [
+          "twitter (dropped)",
+          "hacker_news (blocked)",
+          "reddit (blocked)"
+        ]
       },
       "dm_link_template": "https://github.com/tarunlnmiit/claude-n8n-nightly-agent?utm_source=instagram&utm_medium=dm&utm_campaign=free-tool-ds-n8n",
       "source_assets": ""
@@ -84,7 +96,9 @@
       "dm_keyword": "SYSTEM",
       "deliverable": "duplicatable Notion template + the Claude brain-dump prompt (email-gated for list capture)",
       "primary_goal": "email_capture",
-      "niches": ["life"],
+      "niches": [
+        "life"
+      ],
       "cadence": {
         "frequency": "weekly",
         "format": "comment->DM give-a-tool reel (1/week, Life)",
@@ -101,10 +115,55 @@
         "youtube_shorts": "same cut; template link line 1 of description + pinned comment",
         "threads": "post",
         "linkedin": "active (employer cleared); text post via scheduler.py, link in pinned first comment",
-        "excluded": ["twitter (dropped)", "hacker_news (blocked)", "reddit (blocked)"]
+        "excluded": [
+          "twitter (dropped)",
+          "hacker_news (blocked)",
+          "reddit (blocked)"
+        ]
       },
       "dm_link_template": "https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=claude-notion-weekly-system&utm_source=instagram&utm_medium=dm&utm_campaign=free-tool-life-notion",
       "source_assets": ""
+    },
+    {
+      "key": "inbox_to_action",
+      "name": "inbox-to-action",
+      "repo": "tarunlnmiit/inbox-to-action",
+      "repo_url": "https://github.com/tarunlnmiit/inbox-to-action",
+      "pitch": "One command triages your inbox in a single agentic pass: classify, summarize, extract tasks, draft replies. Never sends email (enforced by test). BYOK across 6 LLM providers including fully-local Ollama. pip install inbox-to-action.",
+      "honesty_guardrail": "Drafts only — it CANNOT send email (no send scope in the codebase, enforced by test). Default provider is cloud (OpenRouter): out of the box, email content goes to a third party; only the ollama/claude providers keep mail local. Not a spam filter, not an email client.",
+      "niches": [
+        "ds"
+      ],
+      "hashtag_niche": "autopilot",
+      "utm_campaign": "inbox_to_action",
+      "dm_keyword": "INBOX",
+      "primary_goal": "github_stars",
+      "cadence": {
+        "frequency": "weekly",
+        "format": "build-in-public reel",
+        "angle_rotation": [
+          "new companies added to the scan",
+          "a real job a user landed via the shortlist",
+          "a live LLM score example (0-100 vs resume)",
+          "a new feature shipped (draft, export, MCP)",
+          "behind-the-scenes: how the scoring prompt works"
+        ]
+      },
+      "channels": {
+        "instagram": "reel + comment->DM (keyword 'jobs') via SuperProfile or CreatorFlow (ManyChat replacements)",
+        "youtube_shorts": "same cut; repo link line 1 of description + pinned comment",
+        "tiktok": "same cut; link in bio",
+        "threads": "post",
+        "linkedin": "active (employer cleared); text post via scheduler.py, repo link in pinned first comment",
+        "medium": "narrative build story (publish via scripts/publish_medium.py)",
+        "excluded": [
+          "twitter (dropped — dead in analytics)",
+          "hacker_news (account blocked)",
+          "reddit (blocked)"
+        ]
+      },
+      "dm_link_template": "https://github.com/tarunlnmiit/autopilot-jobhunt?utm_source=instagram&utm_medium=dm&utm_campaign=autopilot-jobhunt",
+      "source_assets": []
     }
   ]
 }
