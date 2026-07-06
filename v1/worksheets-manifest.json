@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-01T03:55:02.999Z",
-  "count": 14,
+  "generatedAt": "2026-07-06T09:29:21.308Z",
+  "count": 16,
   "worksheets": {
     "python-for-data-science-tutorial-210": {
       "title": "The Silent Bug Audit: Catch Type Errors Before They Poison Your Analysis",
@@ -85,6 +85,18 @@
       "niche": "life_self_dev",
       "date": "2026-07-01",
       "pdfPath": "output/worksheets/2026-W27/2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig_worksheet.pdf"
+    },
+    "the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w": {
+      "title": "Build Your Own Read-Only Local Agent Audit",
+      "niche": "data_science_tech",
+      "date": "2026-07-06",
+      "pdfPath": "output/worksheets/2026-W28/2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w_worksheet.pdf"
+    },
+    "your-overloaded-self-improvement-schedule-is-slowly-making-y": {
+      "title": "The Slot-11 Audit: Find Who Your Schedule Is Actually Building",
+      "niche": "life_self_dev",
+      "date": "2026-07-06",
+      "pdfPath": "output/worksheets/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y_worksheet.pdf"
     }
   }
 }

@@ -1,0 +1,46 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "The Slot-11 Audit: Find Who Your Schedule Is Actually Building",
+  "sections": [
+    {
+      "title": "Count Your Habits Like He Counted His",
+      "prompt": [
+        "List every tracked habit you currently run — app, spreadsheet, streak, all of it. How many total?",
+        "Which ones would you defend as 'the ones that matter most'? Circle no more than 4.",
+        "For everything not circled: when did you last do it without checking a box first — could you even tell?",
+        "Which habit on your list looks most virtuous on paper (like his tracking spreadsheet) but you haven't examined its actual effect?"
+      ]
+    },
+    {
+      "title": "Find Your Own 'Mom Called at 7:40' Moment",
+      "prompt": [
+        "Think of the last time a routine or tracker made you irritated at a person you love for interrupting it. What was the routine?",
+        "What did you choose that day — the checkbox or the person? Be specific about what you said or did.",
+        "Is there a closed door in your life right now — a partner, kid, friend — who's stopped arguing and just says 'okay'?",
+        "Write the sentence you'd say out loud if someone asked you to skip your routine tonight. Does it sound like declining a meeting?"
+      ]
+    },
+    {
+      "title": "Find What's Quietly Starving",
+      "prompt": [
+        "Like his fiction reading, name one thing you used to enjoy that produces no loggable number — has it quietly stopped?",
+        "Do you feel low-grade guilt during hours that don't 'feed a cell' in some tracker? Name the last hour that happened.",
+        "What's your version of his Sunday cricket reruns — time you've labeled 'wasted' and are one productivity podcast away from cutting?",
+        "If you cut that 'dead time,' what filled it instead — and was that actually an improvement?"
+      ]
+    },
+    {
+      "title": "Run the Cut-to-4 Experiment",
+      "prompt": [
+        "Pick your 4 keepers, the way he kept one workout, one 5-minute journal, 30 minutes of writing, and sleep by 11.",
+        "Write down exactly what you're dropping this week — name each one, not just 'the extras.'",
+        "Estimate hours reclaimed per week, like his 12 hours. Where specifically will that time go — a person, a hobby, sleep?",
+        "Set a 3-week check-in date (his output tripled by week 3) — what's the one honest metric you'll check, besides a streak count?"
+      ]
+    }
+  ],
+  "cta": "Reply with your habit count before and after — tell me what made your top-4 cut and what you're finally giving room to breathe.",
+  "blog_file": "content/blogs/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y.md",
+  "slug": "2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y"
+}
