@@ -1,0 +1,32 @@
+<div class="card" data-card-id="card-02">
+  <style>
+    .card[data-card-id="card-02"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-02"] .chip {
+      position: absolute; right: 90px; top: 120px; max-width: 640px;
+      padding: 30px 38px;
+      background: rgba(14, 10, 36, 0.66);
+      border: 1px solid rgba(167, 139, 250, 0.45);
+      border-radius: 18px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+    }
+    .card[data-card-id="card-02"] .q {
+      margin: 0; font: italic 500 36px/1.45 ui-serif, serif; color: #f5f3ff;
+    }
+    .card[data-card-id="card-02"] .q .hl { color: #a78bfa; }
+    .card[data-card-id="card-02"] .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #a78bfa; box-shadow: 0 0 16px #a78bfa;
+      margin-bottom: 14px;
+    }
+  </style>
+  <div class="root">
+    <div class="chip" id="card-02-chip" data-anim="slide-in" data-anim-at="0.2" data-anim-duration="0.6" data-anim-from="right" data-anim-distance="60">
+      <div class="dot" data-anim="scale-pop" data-anim-at="0.7" data-anim-duration="0.4"></div>
+      <p class="q">"in the dark, wrapped in a blanket that feels like <span class="hl">the whole world</span>"</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+@font-face { font-family: 'Caveat'; src: url('fonts/Caveat-400-latin.woff2') format('woff2'); font-weight: 400; font-display: block; }
+@font-face { font-family: 'Caveat'; src: url('fonts/Caveat-700-latin.woff2') format('woff2'); font-weight: 700; font-display: block; }
+@font-face { font-family: 'Inter'; src: url('fonts/Inter-400-latin.woff2') format('woff2'); font-weight: 400; font-display: block; }
+@font-face { font-family: 'Inter'; src: url('fonts/Inter-700-latin.woff2') format('woff2'); font-weight: 700; font-display: block; }
+@font-face { font-family: 'LXGW WenKai TC'; src: url('fonts/LXGWWenKaiTC-400-latin.woff2') format('woff2'); font-weight: 400; font-display: block; }
+@font-face { font-family: 'Virgil'; src: url('fonts/Virgil.woff2') format('woff2'); font-display: block; }
+
+:root {
+  --bg: #f6efe1; --text: #2d2d2d;
+  --accent-0: #bf5700; --accent-1: #d62728; --accent-2: #6c757d;
+  --accent-3: #e9b54a; --accent-4: #3d5a80;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+  background: #000;
+  font-family: 'Inter', 'Caveat', 'LXGW WenKai TC', ui-sans-serif, system-ui, sans-serif;
+}
+#stage { position: relative; width: 100%; height: 100%; overflow: hidden; }
+
+.video-wrapper {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  overflow: hidden; border-radius: 0; box-shadow: none;
+}
+.video-wrapper video { width: 100%; height: 100%; object-fit: cover; }
+.video-wrapper.framed { border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
+.video-wrapper.pip-pill {
+  border-radius: 18px; border: 4px solid rgba(255,255,255,0.92);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+}
+
+.card-host { position: absolute; pointer-events: none; overflow: hidden; }
+.card-host .card { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.card-host .char { display: inline-block; visibility: visible; }
+</style>
+</head>
+<body>
+<div id="stage" data-composition-id="talking-head-recut" data-start="0" data-duration="300.3" data-fps="30" data-width="1920" data-height="1080">
+
+  <div class="video-wrapper" id="video-wrap">
+    <video id="bg-video" src="input-video.mp4" muted playsinline data-start="0" data-duration="300.3" data-track-index="1"></video>
+  </div>
+
+<div class="card-host clip" data-card-id="card-01" data-start="0.8000" data-duration="10.0000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-01">
+  <style>
+    .card[data-card-id="card-01"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-01"] .panel {
+      position: absolute; left: 84px; top: 96px; max-width: 1100px;
+      display: flex; flex-direction: column; gap: 22px;
+    }
+    .card[data-card-id="card-01"] .kicker {
+      align-self: flex-start; padding: 10px 20px;
+      background: rgba(14, 16, 24, 0.82); color: #f1e8d5;
+      font: 700 18px/1 'Inter', sans-serif; letter-spacing: 0.28em;
+    }
+    .card[data-card-id="card-01"] .title {
+      margin: 0; font: italic 800 112px/1.02 ui-serif, 'Times New Roman', serif;
+      color: #fffdf6;
+      text-shadow: 0 4px 40px rgba(0, 0, 0, 0.65), 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+    .card[data-card-id="card-01"] .title .first { color: #ff3a2d; }
+    .card[data-card-id="card-01"] .rule {
+      width: 0; height: 6px; background: #ff3a2d; border-radius: 3px;
+    }
+    .card[data-card-id="card-01"] .detail {
+      margin: 0; font: 400 30px/1.4 ui-serif, serif; color: #f6efe1;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+    }
+  </style>
+  <div class="root">
+    <div class="panel">
+      <span class="kicker" data-anim="fade-in" data-anim-at="0.1" data-anim-duration="0.4" id="card-01-a1">BREATH OF POETRY</span>
+      <h1 class="title" id="card-01-title" data-anim="blur-in" data-anim-at="0.4" data-anim-duration="0.8"><span class="first">When Dreams</span><br />Speak of Love</h1>
+      <div class="rule" id="card-01-rule" data-anim="grow-x" data-anim-at="1.1" data-anim-duration="0.5" data-anim-target-w="420"></div>
+      <p class="detail" data-anim="fade-in" data-anim-at="1.4" data-anim-duration="0.5" id="card-01-a2">on loving someone safe — and alive</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-02" data-start="11.9000" data-duration="14.6000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-02">
+  <style>
+    .card[data-card-id="card-02"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-02"] .chip {
+      position: absolute; right: 90px; top: 120px; max-width: 640px;
+      padding: 30px 38px;
+      background: rgba(14, 10, 36, 0.66);
+      border: 1px solid rgba(167, 139, 250, 0.45);
+      border-radius: 18px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+    }
+    .card[data-card-id="card-02"] .q {
+      margin: 0; font: italic 500 36px/1.45 ui-serif, serif; color: #f5f3ff;
+    }
+    .card[data-card-id="card-02"] .q .hl { color: #a78bfa; }
+    .card[data-card-id="card-02"] .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #a78bfa; box-shadow: 0 0 16px #a78bfa;
+      margin-bottom: 14px;
+    }
+  </style>
+  <div class="root">
+    <div class="chip" id="card-02-chip" data-anim="slide-in" data-anim-at="0.2" data-anim-duration="0.6" data-anim-from="right" data-anim-distance="60">
+      <div class="dot" data-anim="scale-pop" data-anim-at="0.7" data-anim-duration="0.4" id="card-02-a1"></div>
+      <p class="q">"in the dark, wrapped in a blanket that feels like <span class="hl">the whole world</span>"</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-03" data-start="27.2000" data-duration="10.8000" data-track-index="2" style="left:0px;top:576px;width:1920px;height:504px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-03">
+  <style>
+    .card[data-card-id="card-03"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #ffffff; color: #111;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 40px 96px; box-sizing: border-box; gap: 18px;
+    }
+    .card[data-card-id="card-03"] .rules-top {
+      width: 100%; border-top: 3px solid #111; border-bottom: 1px solid #111;
+      height: 6px;
+    }
+    .card[data-card-id="card-03"] .struck {
+      margin: 0; font: 600 44px/1.15 'Inter', sans-serif; color: #9a9a9a;
+      position: relative; align-self: flex-start;
+    }
+    .card[data-card-id="card-03"] .strike {
+      position: absolute; left: -6px; top: 52%; height: 5px; width: 0;
+      background: #e8190f;
+    }
+    .card[data-card-id="card-03"] .title {
+      margin: 0; font: 800 76px/1.08 'Inter', sans-serif; color: #111;
+      letter-spacing: -0.02em;
+    }
+    .card[data-card-id="card-03"] .title .hl { color: #e8190f; }
+    .card[data-card-id="card-03"] .tag {
+      font: 700 17px/1 'Inter', sans-serif; letter-spacing: 0.3em; color: #e8190f;
+    }
+  </style>
+  <div class="root">
+    <div class="rules-top"></div>
+    <span class="tag" data-anim="fade-in" data-anim-at="0.1" data-anim-duration="0.35" id="card-03-a1">THE QUESTION SHIFTS</span>
+    <p class="struck" data-anim="fade-in" data-anim-at="0.35" data-anim-duration="0.4" id="card-03-a2">Are they good enough?<span class="strike" id="card-03-strike" data-anim="grow-x" data-anim-at="0.9" data-anim-duration="0.45" data-anim-target-w="560"></span></p>
+    <h2 class="title" data-anim="slide-in" data-anim-at="1.3" data-anim-duration="0.55" data-anim-from="bottom" data-anim-distance="40" id="card-03-a3">Am I <span class="hl">brave enough</span> to let them in?</h2>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-04" data-start="39.6000" data-duration="14.8000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-04">
+  <style>
+    .card[data-card-id="card-04"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-04"] .chip {
+      position: absolute; left: 84px; top: 96px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .card[data-card-id="card-04"] .kicker {
+      display: flex; align-items: center; gap: 12px;
+      font: 600 17px/1 ui-monospace, monospace; letter-spacing: 0.3em; color: #a78bfa;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+    }
+    .card[data-card-id="card-04"] .kicker .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #a78bfa; box-shadow: 0 0 14px #a78bfa;
+    }
+    .card[data-card-id="card-04"] .line {
+      margin: 0; font: italic 800 84px/1.05 ui-serif, serif; color: #f5f3ff;
+      text-shadow: 0 0 40px rgba(167, 139, 250, 0.6), 0 3px 24px rgba(0, 0, 0, 0.75);
+    }
+  </style>
+  <div class="root">
+    <div class="chip">
+      <span class="kicker" data-anim="fade-in" data-anim-at="0.1" data-anim-duration="0.4" id="card-04-a1"><span class="dot"></span>THE POEM</span>
+      <h2 class="line" data-anim="blur-in" data-anim-at="0.45" data-anim-duration="0.8" id="card-04-a2">"safe, but alive"</h2>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-05" data-start="55.6000" data-duration="10.8000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-05">
+  <style>
+    .card[data-card-id="card-05"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-05"] .chip {
+      position: absolute; right: 90px; top: 110px; max-width: 680px;
+      padding: 32px 40px;
+      background: rgba(241, 232, 213, 0.92);
+      border-left: 8px solid #ff3a2d;
+      box-shadow: 0 14px 48px rgba(0, 0, 0, 0.42);
+    }
+    .card[data-card-id="card-05"] .q {
+      margin: 0; font: italic 700 42px/1.3 ui-serif, serif; color: #0e1018;
+    }
+    .card[data-card-id="card-05"] .q .hl {
+      background: linear-gradient(transparent 60%, rgba(255, 58, 45, 0.28) 60%);
+      padding: 0 3px;
+    }
+    .card[data-card-id="card-05"] .mark {
+      font: 800 96px/0.4 ui-serif, serif; color: #ff3a2d; display: block; margin-bottom: 10px;
+    }
+  </style>
+  <div class="root">
+    <div class="chip" id="card-05-chip" data-anim="mask-reveal" data-anim-at="0.2" data-anim-duration="0.6" data-anim-direction="left">
+      <span class="mark">"</span>
+      <p class="q">the <span class="hl">sweetest symphony</span> entered my ears</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-06" data-start="67.8000" data-duration="8.7000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-06">
+  <style>
+    .card[data-card-id="card-06"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-06"] .chip {
+      position: absolute; left: 84px; top: 110px; max-width: 720px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .card[data-card-id="card-06"] .star {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #f2cf3a;
+      box-shadow: 0 0 22px #f2cf3a, 0 0 6px #fff;
+    }
+    .card[data-card-id="card-06"] .q {
+      margin: 0; font: italic 600 52px/1.25 ui-serif, serif; color: #fffdf6;
+      text-shadow: 0 0 34px rgba(242, 207, 58, 0.45), 0 3px 20px rgba(0, 0, 0, 0.75);
+    }
+    .card[data-card-id="card-06"] .q .hl { color: #f2cf3a; }
+  </style>
+  <div class="root">
+    <div class="chip">
+      <span class="star" data-anim="scale-pop" data-anim-at="0.15" data-anim-duration="0.5" id="card-06-a1"></span>
+      <p class="q" data-anim="blur-in" data-anim-at="0.4" data-anim-duration="0.7" id="card-06-a2">"the twinkle in your eyes can rival <span class="hl">that of a star</span>"</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-07" data-start="77.4000" data-duration="12.3000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-07">
+  <style>
+    .card[data-card-id="card-07"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-07"] .band {
+      position: absolute; left: 0; top: 88px; width: 100%;
+      display: flex; justify-content: center;
+    }
+    .card[data-card-id="card-07"] .inner {
+      max-width: 1240px; text-align: center; padding: 26px 48px;
+      background: linear-gradient(160deg, rgba(27, 22, 72, 0.78), rgba(14, 10, 36, 0.78));
+      border-radius: 20px;
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 16px 60px rgba(0, 0, 0, 0.5);
+    }
+    .card[data-card-id="card-07"] .q {
+      margin: 0; font: italic 600 46px/1.35 ui-serif, serif; color: #f5f3ff;
+    }
+    .card[data-card-id="card-07"] .q .hl {
+      color: #a78bfa; text-shadow: 0 0 22px rgba(167, 139, 250, 0.7);
+    }
+  </style>
+  <div class="root">
+    <div class="band">
+      <div class="inner" id="card-07-inner" data-anim="slide-in" data-anim-at="0.2" data-anim-duration="0.6" data-anim-from="top" data-anim-distance="50">
+        <p class="q">"<span class="hl">dissolving in my arms</span>, out of sheer love and embarrassment"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-08" data-start="90.6000" data-duration="9.2000" data-track-index="2" style="left:0px;top:0px;width:960px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-08">
+  <style>
+    .card[data-card-id="card-08"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #ffffff; color: #111;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 72px 76px; box-sizing: border-box; gap: 40px;
+    }
+    .card[data-card-id="card-08"] .kicker {
+      font: 700 19px/1 'Inter', sans-serif; letter-spacing: 0.32em; color: #111;
+      border-top: 3px solid #111; border-bottom: 1px solid #111; padding: 12px 0;
+    }
+    .card[data-card-id="card-08"] .row { display: flex; flex-direction: column; gap: 6px; }
+    .card[data-card-id="card-08"] .word {
+      font: 800 92px/1 'Inter', sans-serif; letter-spacing: -0.02em; color: #111;
+    }
+    .card[data-card-id="card-08"] .becomes {
+      font: 500 34px/1.2 'Inter', sans-serif; color: #6d6d6d;
+    }
+    .card[data-card-id="card-08"] .becomes .bad { color: #e8190f; font-weight: 800; }
+    .card[data-card-id="card-08"] .bar { width: 0; height: 10px; background: #e8190f; }
+  </style>
+  <div class="root">
+    <span class="kicker" data-anim="fade-in" data-anim-at="0.1" data-anim-duration="0.4" id="card-08-a1">MOST LOVE SONGS COLLAPSE</span>
+    <div class="row">
+      <span class="word" data-anim="slide-in" data-anim-at="0.5" data-anim-duration="0.5" data-anim-from="left" data-anim-distance="60" id="card-08-a2">SAFE</span>
+      <span class="becomes" data-anim="fade-in" data-anim-at="0.9" data-anim-duration="0.4" id="card-08-a3">becomes <span class="bad">settling</span></span>
+      <div class="bar" id="card-08-bar1" data-anim="grow-x" data-anim-at="1.0" data-anim-duration="0.5" data-anim-target-w="330"></div>
+    </div>
+    <div class="row">
+      <span class="word" data-anim="slide-in" data-anim-at="1.5" data-anim-duration="0.5" data-anim-from="left" data-anim-distance="60" id="card-08-a4">ALIVE</span>
+      <span class="becomes" data-anim="fade-in" data-anim-at="1.9" data-anim-duration="0.4" id="card-08-a5">becomes <span class="bad">chaos</span></span>
+      <div class="bar" id="card-08-bar2" data-anim="grow-x" data-anim-at="2.0" data-anim-duration="0.5" data-anim-target-w="330"></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-09" data-start="100.2000" data-duration="7.2000" data-track-index="2" style="left:0px;top:0px;width:960px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-09">
+  <style>
+    .card[data-card-id="card-09"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #f1e8d5; color: #0e1018;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 72px 76px; box-sizing: border-box; gap: 26px;
+    }
+    .card[data-card-id="card-09"] .block {
+      position: absolute; top: 64px; right: 72px; width: 84px; height: 84px;
+      background: #ff3a2d; transform: rotate(12deg);
+    }
+    .card[data-card-id="card-09"] .ring {
+      position: absolute; bottom: 84px; right: 84px; width: 72px; height: 72px;
+      border: 4px solid #1f6bff; border-radius: 50%;
+    }
+    .card[data-card-id="card-09"] .kicker {
+      align-self: flex-start; padding: 9px 18px; background: #0e1018; color: #f1e8d5;
+      font: 700 17px/1 ui-monospace, monospace; letter-spacing: 0.24em;
+    }
+    .card[data-card-id="card-09"] .title {
+      margin: 0; font: italic 800 108px/1.0 ui-serif, serif; color: #0e1018;
+      letter-spacing: -0.01em;
+    }
+    .card[data-card-id="card-09"] .title .first { color: #ff3a2d; }
+  </style>
+  <div class="root">
+    <span class="block" data-anim="scale-pop" data-anim-at="0.2" data-anim-duration="0.5" id="card-09-a1"></span>
+    <span class="ring" data-anim="fade-in" data-anim-at="0.5" data-anim-duration="0.4" id="card-09-a2"></span>
+    <span class="kicker" data-anim="fade-in" data-anim-at="0.1" data-anim-duration="0.35" id="card-09-a3">THE THESIS</span>
+    <h2 class="title" data-anim="blur-in" data-anim-at="0.4" data-anim-duration="0.7" id="card-09-a4"><span class="first">This poem</span> refuses to choose.</h2>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-10" data-start="107.8000" data-duration="10.8000" data-track-index="2" style="left:0px;top:576px;width:1920px;height:504px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-10">
+  <style>
+    .card[data-card-id="card-10"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #f7f3e8; color: #22303f;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 36px 96px; box-sizing: border-box; gap: 24px;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(37, 87, 167, 0.08) 40px);
+    }
+    .card[data-card-id="card-10"] .title {
+      margin: 0; font: 700 62px/1.15 ui-serif, serif; color: #22303f; text-align: center;
+    }
+    .card[data-card-id="card-10"] .title .hl {
+      background: linear-gradient(transparent 58%, rgba(37, 87, 167, 0.22) 58%); padding: 0 4px;
+    }
+    .card[data-card-id="card-10"] .chips { display: flex; gap: 22px; }
+    .card[data-card-id="card-10"] .chip {
+      padding: 14px 28px; border: 2px solid #2557a7; border-radius: 999px;
+      font: 600 27px/1 'Inter', sans-serif; color: #2557a7; background: rgba(37, 87, 167, 0.06);
+    }
+    .card[data-card-id="card-10"] .plus { font: 800 34px/1 'Inter', sans-serif; color: #22303f; align-self: center; }
+  </style>
+  <div class="root">
+    <h2 class="title" data-anim="fade-in" data-anim-at="0.15" data-anim-duration="0.5" id="card-10-a1">They hold you <span class="hl">steady</span> while you <span class="hl">expand</span></h2>
+    <div class="chips">
+      <span class="chip" data-anim="slide-in" data-anim-at="0.8" data-anim-duration="0.5" data-anim-from="left" data-anim-distance="40" id="card-10-a2">nervous system relaxes</span>
+      <span class="plus" data-anim="fade-in" data-anim-at="1.2" data-anim-duration="0.3" id="card-10-a3">+</span>
+      <span class="chip" data-anim="slide-in" data-anim-at="1.3" data-anim-duration="0.5" data-anim-from="right" data-anim-distance="40" id="card-10-a4">aliveness opens up</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-11" data-start="119.2000" data-duration="20.0000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-11">
+  <style>
+    .card[data-card-id="card-11"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #fbf7ec; color: #2d2d2d;
+      font-family: 'Caveat', cursive;
+      padding: 80px 100px; box-sizing: border-box;
+      display: flex; flex-direction: column; gap: 30px;
+    }
+    .card[data-card-id="card-11"] .kicker {
+      font: 700 46px/1 'Caveat', cursive; color: #ff6b35;
+    }
+    .card[data-card-id="card-11"] .words { display: flex; gap: 44px; align-items: baseline; flex-wrap: wrap; max-width: 1320px; }
+    .card[data-card-id="card-11"] .w {
+      font: 700 118px/1 'Caveat', cursive; color: #2d2d2d;
+      border-bottom: 5px dashed rgba(255, 107, 53, 0.55); padding-bottom: 4px;
+    }
+    .card[data-card-id="card-11"] .w.alt { color: #ff6b35; }
+    .card[data-card-id="card-11"] .note {
+      margin-top: 12px; max-width: 1280px;
+      font: 500 52px/1.35 'Caveat', cursive; color: #5a5348;
+    }
+    .card[data-card-id="card-11"] .note .hl { color: #2d2d2d; font-weight: 700; }
+    .card[data-card-id="card-11"] .scribble {
+      position: absolute; top: 70px; right: 560px; width: 120px; height: 120px;
+      border: 5px solid rgba(255, 107, 53, 0.5); border-radius: 50% 46% 52% 48%;
+      transform: rotate(-8deg);
+    }
+  </style>
+  <div class="root">
+    <span class="scribble" data-anim="fade-in" data-anim-at="1.6" data-anim-duration="0.5" id="card-11-a1"></span>
+    <span class="kicker" data-anim="fade-in" data-anim-at="0.15" data-anim-duration="0.45" id="card-11-a2">the poem gives you texture —</span>
+    <div class="words">
+      <span class="w" data-anim="scale-pop" data-anim-at="0.6" data-anim-duration="0.5" id="card-11-a3">darkness</span>
+      <span class="w alt" data-anim="scale-pop" data-anim-at="1.0" data-anim-duration="0.5" id="card-11-a4">blanket</span>
+      <span class="w" data-anim="scale-pop" data-anim-at="1.4" data-anim-duration="0.5" id="card-11-a5">bonfire</span>
+      <span class="w alt" data-anim="scale-pop" data-anim-at="1.8" data-anim-duration="0.5" id="card-11-a6">mama</span>
+    </div>
+    <p class="note" data-anim="fade-in" data-anim-at="2.6" data-anim-duration="0.6" id="card-11-a7">not symbols — <span class="hl">actual places</span> where you stop performing and just exist</p>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-12" data-start="140.6000" data-duration="10.0000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-12">
+  <style>
+    .card[data-card-id="card-12"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-12"] .panel {
+      position: absolute; left: 84px; top: 110px; max-width: 1240px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .card[data-card-id="card-12"] .kicker {
+      align-self: flex-start; padding: 10px 20px; background: #ff3a2d; color: #fffdf6;
+      font: 800 18px/1 'Inter', sans-serif; letter-spacing: 0.3em;
+    }
+    .card[data-card-id="card-12"] .title {
+      margin: 0; font: italic 800 96px/1.04 ui-serif, serif; color: #fffdf6;
+      text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7), 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+  <div class="root">
+    <div class="panel">
+      <span class="kicker" data-anim="scale-pop" data-anim-at="0.15" data-anim-duration="0.45" id="card-12-a1">THE TURN</span>
+      <h2 class="title" id="card-12-title" data-anim="mask-reveal" data-anim-at="0.5" data-anim-duration="0.7" data-anim-direction="left">What most love stories get wrong</h2>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-13" data-start="151.4000" data-duration="16.6000" data-track-index="2" style="left:0px;top:576px;width:1920px;height:504px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-13">
+  <style>
+    .card[data-card-id="card-13"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      color: #f5f3ff; font-family: 'Inter', ui-sans-serif, sans-serif;
+      background:
+        radial-gradient(70% 55% at 25% 30%, rgba(167, 139, 250, 0.32) 0%, transparent 55%),
+        linear-gradient(160deg, #1b1648 0%, #0e0a24 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 36px 110px; box-sizing: border-box; gap: 20px;
+    }
+    .card[data-card-id="card-13"] .title {
+      margin: 0; font: 700 54px/1.22 ui-serif, serif; color: #f5f3ff;
+      max-width: 1560px;
+    }
+    .card[data-card-id="card-13"] .title .hl {
+      color: #a78bfa; text-shadow: 0 0 24px rgba(167, 139, 250, 0.7);
+    }
+    .card[data-card-id="card-13"] .detail {
+      margin: 0; font: italic 500 36px/1.3 ui-serif, serif; color: #b6b4d0;
+    }
+    .card[data-card-id="card-13"] .rule { width: 0; height: 4px; background: #a78bfa; border-radius: 2px; }
+  </style>
+  <div class="root">
+    <h2 class="title" data-anim="fade-in" data-anim-at="0.2" data-anim-duration="0.6" id="card-13-a1">They melt because their beloved <span class="hl">lights up talking about someone else</span>.</h2>
+    <div class="rule" id="card-13-rule" data-anim="grow-x" data-anim-at="0.9" data-anim-duration="0.5" data-anim-target-w="360"></div>
+    <p class="detail" data-anim="fade-in" data-anim-at="1.2" data-anim-duration="0.5" id="card-13-a2">that's a different ache entirely</p>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-14" data-start="169.5000" data-duration="16.9000" data-track-index="2" style="left:0px;top:0px;width:960px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-14">
+  <style>
+    .card[data-card-id="card-14"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #f7f3e8; color: #22303f;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 64px 72px; box-sizing: border-box; gap: 28px;
+    }
+    .card[data-card-id="card-14"] .kicker {
+      font: 700 18px/1 'Inter', sans-serif; letter-spacing: 0.3em; color: #2557a7;
+      border-bottom: 2px solid #2557a7; padding-bottom: 12px; align-self: flex-start;
+    }
+    .card[data-card-id="card-14"] .circles { position: relative; height: 210px; width: 460px; }
+    .card[data-card-id="card-14"] .c {
+      position: absolute; top: 0; width: 200px; height: 200px; border-radius: 50%;
+      border: 5px solid #2557a7; opacity: 0.85;
+    }
+    .card[data-card-id="card-14"] .c1 { left: 0; }
+    .card[data-card-id="card-14"] .c2 { left: 240px; border-color: #ff6b35; }
+    .card[data-card-id="card-14"] .title {
+      margin: 0; font: 700 58px/1.18 ui-serif, serif; color: #22303f; max-width: 800px;
+    }
+    .card[data-card-id="card-14"] .title .hl {
+      background: linear-gradient(transparent 58%, rgba(37, 87, 167, 0.22) 58%); padding: 0 4px;
+    }
+    .card[data-card-id="card-14"] .detail {
+      margin: 0; font: italic 500 32px/1.4 ui-serif, serif; color: #6b6353; max-width: 780px;
+    }
+  </style>
+  <div class="root">
+    <span class="kicker" data-anim="fade-in" data-anim-at="0.15" data-anim-duration="0.4" id="card-14-a1">THE ACHE OF INTEGRATION</span>
+    <div class="circles">
+      <div class="c c1" id="card-14-c1" data-anim="fade-in" data-anim-at="0.6" data-anim-duration="0.5"></div>
+      <div class="c c2" id="card-14-c2" data-anim="fade-in" data-anim-at="0.85" data-anim-duration="0.5"></div>
+    </div>
+    <h2 class="title" data-anim="fade-in" data-anim-at="1.6" data-anim-duration="0.55" id="card-14-a2">the circles of your life <span class="hl">collapse into one</span></h2>
+    <p class="detail" data-anim="fade-in" data-anim-at="2.2" data-anim-duration="0.5" id="card-14-a3">not as a guest — as someone who was always supposed to be there</p>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-15" data-start="188.5000" data-duration="6.9000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-15">
+  <style>
+    .card[data-card-id="card-15"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-15"] .band {
+      position: absolute; left: 0; top: 100px; width: 100%;
+      display: flex; justify-content: center;
+    }
+    .card[data-card-id="card-15"] .inner {
+      max-width: 1420px; text-align: center; padding: 34px 56px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    }
+    .card[data-card-id="card-15"] .q {
+      margin: 0; font: 800 58px/1.2 'Inter', sans-serif; color: #111;
+      letter-spacing: -0.015em;
+    }
+    .card[data-card-id="card-15"] .q .hl {
+      border-bottom: 6px solid #2f9e44;
+    }
+  </style>
+  <div class="root">
+    <div class="band">
+      <div class="inner" id="card-15-inner" data-anim="mask-reveal" data-anim-at="0.2" data-anim-duration="0.6" data-anim-direction="left">
+        <p class="q">chosen by someone <span class="hl">your whole world</span> would also choose</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-16" data-start="196.6000" data-duration="8.3000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-16">
+  <style>
+    .card[data-card-id="card-16"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-16"] .stackw {
+      position: absolute; left: 110px; top: 120px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .card[data-card-id="card-16"] .no {
+      font: italic 700 66px/1.1 ui-serif, serif; color: rgba(245, 243, 255, 0.75);
+      text-shadow: 0 3px 22px rgba(0, 0, 0, 0.8);
+    }
+    .card[data-card-id="card-16"] .final {
+      font: italic 800 128px/1.05 ui-serif, serif; color: #a78bfa;
+      text-shadow: 0 0 46px rgba(167, 139, 250, 0.75), 0 4px 28px rgba(0, 0, 0, 0.8);
+      margin-top: 10px;
+    }
+  </style>
+  <div class="root">
+    <div class="stackw">
+      <span class="no" data-anim="slide-in" data-anim-at="0.2" data-anim-duration="0.5" data-anim-from="left" data-anim-distance="50" id="card-16-a1">Not triumph.</span>
+      <span class="no" data-anim="slide-in" data-anim-at="0.9" data-anim-duration="0.5" data-anim-from="left" data-anim-distance="50" id="card-16-a2">Not arrival.</span>
+      <span class="final" data-anim="blur-in" data-anim-at="1.8" data-anim-duration="0.8" id="card-16-a3">Dissolution.</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-17" data-start="206.0000" data-duration="16.5000" data-track-index="2" style="left:0px;top:576px;width:1920px;height:504px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-17">
+  <style>
+    .card[data-card-id="card-17"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #efe6d0; color: #2b2318;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 36px 110px; box-sizing: border-box; gap: 20px;
+      border-top: 6px double #8b1d1d;
+    }
+    .card[data-card-id="card-17"] .kicker {
+      font: 800 19px/1 ui-serif, serif; letter-spacing: 0.34em; color: #8b1d1d;
+    }
+    .card[data-card-id="card-17"] .title {
+      margin: 0; font: 700 52px/1.22 ui-serif, serif; color: #2b2318; max-width: 1560px;
+      text-align: justify;
+    }
+    .card[data-card-id="card-17"] .title .hl { color: #8b1d1d; font-style: italic; }
+    .card[data-card-id="card-17"] .chips { display: flex; gap: 18px; }
+    .card[data-card-id="card-17"] .chip {
+      padding: 10px 22px; border: 2px solid #8b1d1d;
+      font: 700 24px/1 ui-serif, serif; color: #8b1d1d;
+      transform: rotate(-1deg);
+    }
+  </style>
+  <div class="root">
+    <span class="kicker" data-anim="fade-in" data-anim-at="0.15" data-anim-duration="0.4" id="card-17-a1">THE EMBARRASSMENT IS THE KEY</span>
+    <h2 class="title" data-anim="fade-in" data-anim-at="0.5" data-anim-duration="0.6" id="card-17-a2">the vulnerability of <span class="hl">wanting something so badly</span> you can already feel its texture</h2>
+    <div class="chips">
+      <span class="chip" data-anim="scale-pop" data-anim-at="1.3" data-anim-duration="0.45" id="card-17-a3">already taste it</span>
+      <span class="chip" data-anim="scale-pop" data-anim-at="1.7" data-anim-duration="0.45" id="card-17-a4">would risk everything for it</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-18" data-start="223.3000" data-duration="11.6000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-18">
+  <style>
+    .card[data-card-id="card-18"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent; font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-18"] .band {
+      position: absolute; left: 0; top: 110px; width: 100%;
+      display: flex; justify-content: center;
+    }
+    .card[data-card-id="card-18"] .q {
+      margin: 0; font: italic 800 84px/1.1 ui-serif, serif; color: #f5f3ff;
+      text-align: center; max-width: 1500px;
+      text-shadow: 0 0 44px rgba(167, 139, 250, 0.65), 0 4px 30px rgba(0, 0, 0, 0.85);
+    }
+    .card[data-card-id="card-18"] .q .hl { color: #a78bfa; }
+  </style>
+  <div class="root">
+    <div class="band">
+      <p class="q" data-anim="blur-in" data-anim-at="0.25" data-anim-duration="0.9" id="card-18-a1">a dream <span class="hl">almost real enough</span> to touch</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-19" data-start="236.7000" data-duration="21.6000" data-track-index="2" style="left:0px;top:0px;width:1920px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-19">
+  <style>
+    .card[data-card-id="card-19"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #fbf7ec; color: #2d2d2d;
+      font-family: 'Caveat', cursive;
+      padding: 90px 100px; box-sizing: border-box;
+      display: flex; flex-direction: column; gap: 40px;
+    }
+    .card[data-card-id="card-19"] .title {
+      margin: 0; font: 700 128px/1.05 'Caveat', cursive; color: #2d2d2d; max-width: 1300px;
+    }
+    .card[data-card-id="card-19"] .title .hl { color: #ff6b35; }
+    .card[data-card-id="card-19"] .underline {
+      width: 0; height: 7px; background: rgba(255, 107, 53, 0.6); border-radius: 4px;
+    }
+    .card[data-card-id="card-19"] .note {
+      margin: 0; max-width: 1240px;
+      font: 500 54px/1.35 'Caveat', cursive; color: #5a5348;
+    }
+    .card[data-card-id="card-19"] .note .hl { color: #2d2d2d; font-weight: 700; }
+  </style>
+  <div class="root">
+    <h2 class="title" data-anim="fade-in" data-anim-at="0.2" data-anim-duration="0.6" id="card-19-a1">something comes loose — like a <span class="hl">knot finally giving way</span></h2>
+    <div class="underline" id="card-19-line" data-anim="grow-x" data-anim-at="0.9" data-anim-duration="0.6" data-anim-target-w="760"></div>
+    <p class="note" data-anim="fade-in" data-anim-at="1.6" data-anim-duration="0.6" id="card-19-a2">love isn't complete until you can imagine them <span class="hl">fully alive</span> in the lives of the people you came from</p>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-20" data-start="258.9000" data-duration="18.1000" data-track-index="2" style="left:0px;top:0px;width:960px;height:1080px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-20">
+  <style>
+    .card[data-card-id="card-20"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #ffffff; color: #111;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 64px 76px; box-sizing: border-box; gap: 30px;
+    }
+    .card[data-card-id="card-20"] .row {
+      font: 800 62px/1.1 'Inter', sans-serif; color: #111; letter-spacing: -0.015em;
+    }
+    .card[data-card-id="card-20"] .row .neq { color: #e8190f; padding: 0 10px; }
+    .card[data-card-id="card-20"] .row .soft { color: #8a8a8a; font-weight: 600; }
+    .card[data-card-id="card-20"] .divider { width: 100%; border-top: 3px solid #111; border-bottom: 1px solid #111; height: 5px; }
+    .card[data-card-id="card-20"] .title {
+      margin: 0; font: 800 68px/1.1 'Inter', sans-serif; color: #111;
+    }
+    .card[data-card-id="card-20"] .title .hl { border-bottom: 7px solid #e8190f; }
+    .card[data-card-id="card-20"] .detail { margin: 0; font: 500 32px/1.3 'Inter', sans-serif; color: #6d6d6d; }
+  </style>
+  <div class="root">
+    <span class="row" data-anim="slide-in" data-anim-at="0.2" data-anim-duration="0.5" data-anim-from="left" data-anim-distance="50" id="card-20-a1">SAFE <span class="neq">&ne;</span> <span class="soft">unchanged</span></span>
+    <span class="row" data-anim="slide-in" data-anim-at="0.7" data-anim-duration="0.5" data-anim-from="left" data-anim-distance="50" id="card-20-a2">ALIVE <span class="neq">&ne;</span> <span class="soft">reckless</span></span>
+    <div class="divider" data-anim="fade-in" data-anim-at="1.3" data-anim-duration="0.4" id="card-20-a3"></div>
+    <h2 class="title" data-anim="fade-in" data-anim-at="1.6" data-anim-duration="0.55" id="card-20-a4">they live in <span class="hl">the same moment</span></h2>
+    <p class="detail" data-anim="fade-in" data-anim-at="2.3" data-anim-duration="0.5" id="card-20-a5">you stop being divided. you just love them.</p>
+  </div>
+</div>
+
+</div>
+
+<div class="card-host clip" data-card-id="card-21" data-start="280.4000" data-duration="19.5000" data-track-index="2" style="left:0px;top:576px;width:1920px;height:504px;visibility:hidden;opacity:0;">
+<div class="card" data-card-id="card-21">
+  <style>
+    .card[data-card-id="card-21"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #fdf3e7; color: #2d2d2d;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 40px 96px; box-sizing: border-box; gap: 60px;
+    }
+    .card[data-card-id="card-21"] .left { display: flex; flex-direction: column; gap: 16px; max-width: 980px; }
+    .card[data-card-id="card-21"] .wordmark {
+      font: italic 800 64px/1 ui-serif, serif; color: #2d2d2d;
+    }
+    .card[data-card-id="card-21"] .wordmark .hl { color: #ff2e63; }
+    .card[data-card-id="card-21"] .cta {
+      margin: 0; font: 600 34px/1.3 'Inter', sans-serif; color: #2d2d2d;
+    }
+    .card[data-card-id="card-21"] .cta .tag {
+      background: #ff2e63; color: #fff; padding: 3px 12px; border-radius: 8px;
+    }
+    .card[data-card-id="card-21"] .prompts { display: flex; flex-direction: column; gap: 10px; }
+    .card[data-card-id="card-21"] .p {
+      padding: 12px 24px; background: #fff; border-radius: 14px;
+      border: 2px solid rgba(255, 46, 99, 0.35);
+      font: 600 27px/1 'Inter', sans-serif; color: #2d2d2d;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    }
+    .card[data-card-id="card-21"] .p .no { color: #ff2e63; font-weight: 800; margin-right: 10px; }
+  </style>
+  <div class="root">
+    <div class="left">
+      <span class="wordmark" data-anim="fade-in" data-anim-at="0.2" data-anim-duration="0.5" id="card-21-a1">Breath of <span class="hl">Poetry</span></span>
+      <p class="cta" data-anim="fade-in" data-anim-at="0.7" data-anim-duration="0.5" id="card-21-a2"><span class="tag">share it</span> with someone who needs a name for that feeling — or write one moment you felt both safe and alive</p>
+    </div>
+    <div class="prompts">
+      <span class="p" data-anim="slide-in" data-anim-at="1.3" data-anim-duration="0.45" data-anim-from="right" data-anim-distance="40" id="card-21-a3"><span class="no">01</span>What was the darkness?</span>
+      <span class="p" data-anim="slide-in" data-anim-at="1.6" data-anim-duration="0.45" data-anim-from="right" data-anim-distance="40" id="card-21-a4"><span class="no">02</span>What was the warmth?</span>
+      <span class="p" data-anim="slide-in" data-anim-at="1.9" data-anim-duration="0.45" data-anim-from="right" data-anim-distance="40" id="card-21-a5"><span class="no">03</span>Who was there?</span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script>
+    (function () {
+      const tl = window.gsap.timeline({ paused: true });
+          // ── card-01 [0.8, 10.8] video=FULL ──
+          tl.set('.card-host[data-card-id="card-01"]', { visibility: 'visible' }, 0.8);
+          tl.fromTo('.card-host[data-card-id="card-01"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.8);
+          tl.fromTo('.card[data-card-id="card-01"] #card-01-a1', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.9);
+          tl.fromTo('.card[data-card-id="card-01"] #card-01-title', { opacity: 0, filter: 'blur(14px)' }, { opacity: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, 1.2);
+          tl.fromTo('.card[data-card-id="card-01"] #card-01-rule', { width: 0 }, { width: 420, duration: 0.5, ease: 'power2.out' }, 1.9);
+          tl.fromTo('.card[data-card-id="card-01"] #card-01-a2', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 2.2);
+          tl.to('.card-host[data-card-id="card-01"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 10.4667);
+          tl.set('.card-host[data-card-id="card-01"]', { visibility: 'hidden' }, 10.8);
+          // ── card-02 [11.9, 26.5] video=FULL ──
+          tl.set('.card-host[data-card-id="card-02"]', { visibility: 'visible' }, 11.9);
+          tl.fromTo('.card-host[data-card-id="card-02"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 11.9);
+          tl.fromTo('.card[data-card-id="card-02"] #card-02-chip', { opacity: 0, x: 60.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'power2.out' }, 12.1);
+          tl.fromTo('.card[data-card-id="card-02"] #card-02-a1', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.6)' }, 12.6);
+          tl.to('.card-host[data-card-id="card-02"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 26.1333);
+          tl.set('.card-host[data-card-id="card-02"]', { visibility: 'hidden' }, 26.5);
+          // ── card-03 [27.2, 38.0] video=STACK ──
+          tl.set('.card-host[data-card-id="card-03"]', { visibility: 'visible' }, 27.2);
+          tl.fromTo('.card-host[data-card-id="card-03"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 27.2);
+          tl.fromTo('.card[data-card-id="card-03"] #card-03-a1', { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 27.3);
+          tl.fromTo('.card[data-card-id="card-03"] #card-03-a2', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 27.5333);
+          tl.fromTo('.card[data-card-id="card-03"] #card-03-strike', { width: 0 }, { width: 560, duration: 0.45, ease: 'power2.out' }, 28.1);
+          tl.fromTo('.card[data-card-id="card-03"] #card-03-a3', { opacity: 0, x: 0, y: 40.0 }, { opacity: 1, x: 0, y: 0, duration: 0.55, ease: 'power2.out' }, 28.5);
+          tl.to('.card-host[data-card-id="card-03"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 37.6667);
+          tl.set('.card-host[data-card-id="card-03"]', { visibility: 'hidden' }, 38.0);
+          // ── card-04 [39.6, 54.4] video=FULL ──
+          tl.set('.card-host[data-card-id="card-04"]', { visibility: 'visible' }, 39.6);
+          tl.fromTo('.card-host[data-card-id="card-04"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 39.6);
+          tl.fromTo('.card[data-card-id="card-04"] #card-04-a1', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 39.7);
+          tl.fromTo('.card[data-card-id="card-04"] #card-04-a2', { opacity: 0, filter: 'blur(14px)' }, { opacity: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, 40.0667);
+          tl.to('.card-host[data-card-id="card-04"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 54.0667);
+          tl.set('.card-host[data-card-id="card-04"]', { visibility: 'hidden' }, 54.4);
+          // ── card-05 [55.6, 66.4] video=FULL ──
+          tl.set('.card-host[data-card-id="card-05"]', { visibility: 'visible' }, 55.6);
+          tl.fromTo('.card-host[data-card-id="card-05"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 55.6);
+          tl.fromTo('.card[data-card-id="card-05"] #card-05-chip', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)', duration: 0.6, ease: 'power2.inOut' }, 55.8);
+          tl.to('.card-host[data-card-id="card-05"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 66.0667);
+          tl.set('.card-host[data-card-id="card-05"]', { visibility: 'hidden' }, 66.4);
+          // ── card-06 [67.8, 76.5] video=FULL ──
+          tl.set('.card-host[data-card-id="card-06"]', { visibility: 'visible' }, 67.8);
+          tl.fromTo('.card-host[data-card-id="card-06"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 67.8);
+          tl.fromTo('.card[data-card-id="card-06"] #card-06-a1', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)' }, 67.9333);
+          tl.fromTo('.card[data-card-id="card-06"] #card-06-a2', { opacity: 0, filter: 'blur(14px)' }, { opacity: 1, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' }, 68.2);
+          tl.to('.card-host[data-card-id="card-06"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 76.1333);
+          tl.set('.card-host[data-card-id="card-06"]', { visibility: 'hidden' }, 76.5);
+          // ── card-07 [77.4, 89.7] video=FULL ──
+          tl.set('.card-host[data-card-id="card-07"]', { visibility: 'visible' }, 77.4);
+          tl.fromTo('.card-host[data-card-id="card-07"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 77.4);
+          tl.fromTo('.card[data-card-id="card-07"] #card-07-inner', { opacity: 0, x: 0, y: -50.0 }, { opacity: 1, x: 0, y: 0, duration: 0.6, ease: 'power2.out' }, 77.6);
+          tl.to('.card-host[data-card-id="card-07"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 89.3667);
+          tl.set('.card-host[data-card-id="card-07"]', { visibility: 'hidden' }, 89.7);
+          // ── card-08 [90.6, 99.8] video=SPLIT ──
+          tl.set('.card-host[data-card-id="card-08"]', { visibility: 'visible' }, 90.6);
+          tl.fromTo('.card-host[data-card-id="card-08"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 90.6);
+          tl.fromTo('.card[data-card-id="card-08"] #card-08-a1', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 90.7);
+          tl.fromTo('.card[data-card-id="card-08"] #card-08-a2', { opacity: 0, x: -60.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, 91.1);
+          tl.fromTo('.card[data-card-id="card-08"] #card-08-a3', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 91.5);
+          tl.fromTo('.card[data-card-id="card-08"] #card-08-bar1', { width: 0 }, { width: 330, duration: 0.5, ease: 'power2.out' }, 91.6);
+          tl.fromTo('.card[data-card-id="card-08"] #card-08-a4', { opacity: 0, x: -60.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, 92.1);
+          tl.fromTo('.card[data-card-id="card-08"] #card-08-a5', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 92.5);
+          tl.fromTo('.card[data-card-id="card-08"] #card-08-bar2', { width: 0 }, { width: 330, duration: 0.5, ease: 'power2.out' }, 92.6);
+          tl.to('.card-host[data-card-id="card-08"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 99.4667);
+          tl.set('.card-host[data-card-id="card-08"]', { visibility: 'hidden' }, 99.8);
+          // ── card-09 [100.2, 107.4] video=SPLIT ──
+          tl.set('.card-host[data-card-id="card-09"]', { visibility: 'visible' }, 100.2);
+          tl.fromTo('.card-host[data-card-id="card-09"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 100.2);
+          tl.fromTo('.card[data-card-id="card-09"] #card-09-a1', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)' }, 100.4);
+          tl.fromTo('.card[data-card-id="card-09"] #card-09-a2', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 100.7);
+          tl.fromTo('.card[data-card-id="card-09"] #card-09-a3', { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 100.3);
+          tl.fromTo('.card[data-card-id="card-09"] #card-09-a4', { opacity: 0, filter: 'blur(14px)' }, { opacity: 1, filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' }, 100.6);
+          tl.to('.card-host[data-card-id="card-09"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 107.0667);
+          tl.set('.card-host[data-card-id="card-09"]', { visibility: 'hidden' }, 107.4);
+          // ── card-10 [107.8, 118.6] video=STACK ──
+          tl.set('.card-host[data-card-id="card-10"]', { visibility: 'visible' }, 107.8);
+          tl.fromTo('.card-host[data-card-id="card-10"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 107.8);
+          tl.fromTo('.card[data-card-id="card-10"] #card-10-a1', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 107.9333);
+          tl.fromTo('.card[data-card-id="card-10"] #card-10-a2', { opacity: 0, x: -40.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, 108.6);
+          tl.fromTo('.card[data-card-id="card-10"] #card-10-a3', { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' }, 109.0);
+          tl.fromTo('.card[data-card-id="card-10"] #card-10-a4', { opacity: 0, x: 40.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, 109.1);
+          tl.to('.card-host[data-card-id="card-10"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 118.2667);
+          tl.set('.card-host[data-card-id="card-10"]', { visibility: 'hidden' }, 118.6);
+          // ── card-11 [119.2, 139.2] video=PIP ──
+          tl.set('.card-host[data-card-id="card-11"]', { visibility: 'visible' }, 119.2);
+          tl.fromTo('.card-host[data-card-id="card-11"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 119.2);
+          tl.fromTo('.card[data-card-id="card-11"] #card-11-a1', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 120.8);
+          tl.fromTo('.card[data-card-id="card-11"] #card-11-a2', { opacity: 0 }, { opacity: 1, duration: 0.45, ease: 'power2.out' }, 119.3667);
+          tl.fromTo('.card[data-card-id="card-11"] #card-11-a3', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)' }, 119.8);
+          tl.fromTo('.card[data-card-id="card-11"] #card-11-a4', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)' }, 120.2);
+          tl.fromTo('.card[data-card-id="card-11"] #card-11-a5', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)' }, 120.6);
+          tl.fromTo('.card[data-card-id="card-11"] #card-11-a6', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)' }, 121.0);
+          tl.fromTo('.card[data-card-id="card-11"] #card-11-a7', { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 121.8);
+          tl.to('.card-host[data-card-id="card-11"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 138.8667);
+          tl.set('.card-host[data-card-id="card-11"]', { visibility: 'hidden' }, 139.2);
+          // ── card-12 [140.6, 150.6] video=FULL ──
+          tl.set('.card-host[data-card-id="card-12"]', { visibility: 'visible' }, 140.6);
+          tl.fromTo('.card-host[data-card-id="card-12"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 140.6);
+          tl.fromTo('.card[data-card-id="card-12"] #card-12-a1', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(1.6)' }, 140.7333);
+          tl.fromTo('.card[data-card-id="card-12"] #card-12-title', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)', duration: 0.7, ease: 'power2.inOut' }, 141.1);
+          tl.to('.card-host[data-card-id="card-12"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 150.2667);
+          tl.set('.card-host[data-card-id="card-12"]', { visibility: 'hidden' }, 150.6);
+          // ── card-13 [151.4, 168.0] video=STACK ──
+          tl.set('.card-host[data-card-id="card-13"]', { visibility: 'visible' }, 151.4);
+          tl.fromTo('.card-host[data-card-id="card-13"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 151.4);
+          tl.fromTo('.card[data-card-id="card-13"] #card-13-a1', { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 151.6);
+          tl.fromTo('.card[data-card-id="card-13"] #card-13-rule', { width: 0 }, { width: 360, duration: 0.5, ease: 'power2.out' }, 152.3);
+          tl.fromTo('.card[data-card-id="card-13"] #card-13-a2', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 152.6);
+          tl.to('.card-host[data-card-id="card-13"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 167.6667);
+          tl.set('.card-host[data-card-id="card-13"]', { visibility: 'hidden' }, 168.0);
+          // ── card-14 [169.5, 186.4] video=SPLIT ──
+          tl.set('.card-host[data-card-id="card-14"]', { visibility: 'visible' }, 169.5);
+          tl.fromTo('.card-host[data-card-id="card-14"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 169.5);
+          tl.fromTo('.card[data-card-id="card-14"] #card-14-a1', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 169.6667);
+          tl.fromTo('.card[data-card-id="card-14"] #card-14-c1', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 170.1);
+          tl.fromTo('.card[data-card-id="card-14"] #card-14-c2', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 170.3333);
+          tl.fromTo('.card[data-card-id="card-14"] #card-14-a2', { opacity: 0 }, { opacity: 1, duration: 0.55, ease: 'power2.out' }, 171.1);
+          tl.fromTo('.card[data-card-id="card-14"] #card-14-a3', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 171.7);
+          tl.to('.card-host[data-card-id="card-14"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 186.0667);
+          tl.set('.card-host[data-card-id="card-14"]', { visibility: 'hidden' }, 186.4);
+          // ── card-15 [188.5, 195.4] video=FULL ──
+          tl.set('.card-host[data-card-id="card-15"]', { visibility: 'visible' }, 188.5);
+          tl.fromTo('.card-host[data-card-id="card-15"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 188.5);
+          tl.fromTo('.card[data-card-id="card-15"] #card-15-inner', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)', duration: 0.6, ease: 'power2.inOut' }, 188.7);
+          tl.to('.card-host[data-card-id="card-15"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 195.0667);
+          tl.set('.card-host[data-card-id="card-15"]', { visibility: 'hidden' }, 195.4);
+          // ── card-16 [196.6, 204.9] video=FULL ──
+          tl.set('.card-host[data-card-id="card-16"]', { visibility: 'visible' }, 196.6);
+          tl.fromTo('.card-host[data-card-id="card-16"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 196.6);
+          tl.fromTo('.card[data-card-id="card-16"] #card-16-a1', { opacity: 0, x: -50.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, 196.8);
+          tl.fromTo('.card[data-card-id="card-16"] #card-16-a2', { opacity: 0, x: -50.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, 197.5);
+          tl.fromTo('.card[data-card-id="card-16"] #card-16-a3', { opacity: 0, filter: 'blur(14px)' }, { opacity: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power2.out' }, 198.4);
+          tl.to('.card-host[data-card-id="card-16"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 204.5333);
+          tl.set('.card-host[data-card-id="card-16"]', { visibility: 'hidden' }, 204.9);
+          // ── card-17 [206.0, 222.5] video=STACK ──
+          tl.set('.card-host[data-card-id="card-17"]', { visibility: 'visible' }, 206.0);
+          tl.fromTo('.card-host[data-card-id="card-17"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 206.0);
+          tl.fromTo('.card[data-card-id="card-17"] #card-17-a1', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 206.1333);
+          tl.fromTo('.card[data-card-id="card-17"] #card-17-a2', { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 206.5);
+          tl.fromTo('.card[data-card-id="card-17"] #card-17-a3', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(1.6)' }, 207.3);
+          tl.fromTo('.card[data-card-id="card-17"] #card-17-a4', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(1.6)' }, 207.7);
+          tl.to('.card-host[data-card-id="card-17"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 222.1333);
+          tl.set('.card-host[data-card-id="card-17"]', { visibility: 'hidden' }, 222.5);
+          // ── card-18 [223.3, 234.9] video=FULL ──
+          tl.set('.card-host[data-card-id="card-18"]', { visibility: 'visible' }, 223.3);
+          tl.fromTo('.card-host[data-card-id="card-18"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 223.3);
+          tl.fromTo('.card[data-card-id="card-18"] #card-18-a1', { opacity: 0, filter: 'blur(14px)' }, { opacity: 1, filter: 'blur(0px)', duration: 0.9, ease: 'power2.out' }, 223.5333);
+          tl.to('.card-host[data-card-id="card-18"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 234.5333);
+          tl.set('.card-host[data-card-id="card-18"]', { visibility: 'hidden' }, 234.9);
+          // ── card-19 [236.7, 258.3] video=PIP ──
+          tl.set('.card-host[data-card-id="card-19"]', { visibility: 'visible' }, 236.7);
+          tl.fromTo('.card-host[data-card-id="card-19"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 236.7);
+          tl.fromTo('.card[data-card-id="card-19"] #card-19-a1', { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 236.9);
+          tl.fromTo('.card[data-card-id="card-19"] #card-19-line', { width: 0 }, { width: 760, duration: 0.6, ease: 'power2.out' }, 237.6);
+          tl.fromTo('.card[data-card-id="card-19"] #card-19-a2', { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 238.3);
+          tl.to('.card-host[data-card-id="card-19"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 257.9333);
+          tl.set('.card-host[data-card-id="card-19"]', { visibility: 'hidden' }, 258.3);
+          // ── card-20 [258.9, 277.0] video=SPLIT ──
+          tl.set('.card-host[data-card-id="card-20"]', { visibility: 'visible' }, 258.9);
+          tl.fromTo('.card-host[data-card-id="card-20"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 258.9);
+          tl.fromTo('.card[data-card-id="card-20"] #card-20-a1', { opacity: 0, x: -50.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, 259.1);
+          tl.fromTo('.card[data-card-id="card-20"] #card-20-a2', { opacity: 0, x: -50.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: 'power2.out' }, 259.6);
+          tl.fromTo('.card[data-card-id="card-20"] #card-20-a3', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 260.2);
+          tl.fromTo('.card[data-card-id="card-20"] #card-20-a4', { opacity: 0 }, { opacity: 1, duration: 0.55, ease: 'power2.out' }, 260.5);
+          tl.fromTo('.card[data-card-id="card-20"] #card-20-a5', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 261.2);
+          tl.to('.card-host[data-card-id="card-20"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 276.6667);
+          tl.set('.card-host[data-card-id="card-20"]', { visibility: 'hidden' }, 277.0);
+          // ── card-21 [280.4, 299.9] video=STACK ──
+          tl.set('.card-host[data-card-id="card-21"]', { visibility: 'visible' }, 280.4);
+          tl.fromTo('.card-host[data-card-id="card-21"]', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 280.4);
+          tl.fromTo('.card[data-card-id="card-21"] #card-21-a1', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 280.6);
+          tl.fromTo('.card[data-card-id="card-21"] #card-21-a2', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 281.1);
+          tl.fromTo('.card[data-card-id="card-21"] #card-21-a3', { opacity: 0, x: 40.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'power2.out' }, 281.7);
+          tl.fromTo('.card[data-card-id="card-21"] #card-21-a4', { opacity: 0, x: 40.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'power2.out' }, 282.0);
+          tl.fromTo('.card[data-card-id="card-21"] #card-21-a5', { opacity: 0, x: 40.0, y: 0 }, { opacity: 1, x: 0, y: 0, duration: 0.45, ease: 'power2.out' }, 282.3);
+          tl.to('.card-host[data-card-id="card-21"]', { opacity: 0, duration: 0.35, ease: 'power2.in' }, 299.5333);
+          tl.set('.card-host[data-card-id="card-21"]', { visibility: 'hidden' }, 299.9);
+          // ── video framing transitions ──
+          tl.set('#video-wrap', { className: 'video-wrapper framed', zIndex: 0 }, 26.5);
+          tl.to('#video-wrap', { left: 14, top: 14, width: 1892, height: 548, duration: 0.6, ease: 'power2.inOut' }, 26.5);
+          tl.set('#video-wrap', { className: 'video-wrapper', zIndex: 0 }, 38.9);
+          tl.to('#video-wrap', { left: 0, top: 0, width: 1920, height: 1080, duration: 0.6, ease: 'power2.inOut' }, 38.9);
+          tl.set('#video-wrap', { className: 'video-wrapper', zIndex: 0 }, 89.9);
+          tl.to('#video-wrap', { left: 960, top: 0, width: 960, height: 1080, duration: 0.6, ease: 'power2.inOut' }, 89.9);
+          tl.set('#video-wrap', { className: 'video-wrapper framed', zIndex: 0 }, 107.3);
+          tl.to('#video-wrap', { left: 14, top: 14, width: 1892, height: 548, duration: 0.6, ease: 'power2.inOut' }, 107.3);
+          tl.set('#video-wrap', { className: 'video-wrapper pip-pill', zIndex: 10 }, 118.5);
+          tl.to('#video-wrap', { left: 1480, top: 744, width: 400, height: 300, duration: 0.6, ease: 'power2.inOut' }, 118.5);
+          tl.set('#video-wrap', { className: 'video-wrapper', zIndex: 0 }, 139.9);
+          tl.to('#video-wrap', { left: 0, top: 0, width: 1920, height: 1080, duration: 0.6, ease: 'power2.inOut' }, 139.9);
+          tl.set('#video-wrap', { className: 'video-wrapper framed', zIndex: 0 }, 150.7);
+          tl.to('#video-wrap', { left: 14, top: 14, width: 1892, height: 548, duration: 0.6, ease: 'power2.inOut' }, 150.7);
+          tl.set('#video-wrap', { className: 'video-wrapper', zIndex: 0 }, 168.8);
+          tl.to('#video-wrap', { left: 960, top: 0, width: 960, height: 1080, duration: 0.6, ease: 'power2.inOut' }, 168.8);
+          tl.set('#video-wrap', { className: 'video-wrapper', zIndex: 0 }, 187.8);
+          tl.to('#video-wrap', { left: 0, top: 0, width: 1920, height: 1080, duration: 0.6, ease: 'power2.inOut' }, 187.8);
+          tl.set('#video-wrap', { className: 'video-wrapper framed', zIndex: 0 }, 205.3);
+          tl.to('#video-wrap', { left: 14, top: 14, width: 1892, height: 548, duration: 0.6, ease: 'power2.inOut' }, 205.3);
+          tl.set('#video-wrap', { className: 'video-wrapper', zIndex: 0 }, 222.6);
+          tl.to('#video-wrap', { left: 0, top: 0, width: 1920, height: 1080, duration: 0.6, ease: 'power2.inOut' }, 222.6);
+          tl.set('#video-wrap', { className: 'video-wrapper pip-pill', zIndex: 10 }, 236.0);
+          tl.to('#video-wrap', { left: 1480, top: 744, width: 400, height: 300, duration: 0.6, ease: 'power2.inOut' }, 236.0);
+          tl.set('#video-wrap', { className: 'video-wrapper', zIndex: 0 }, 258.2);
+          tl.to('#video-wrap', { left: 960, top: 0, width: 960, height: 1080, duration: 0.6, ease: 'power2.inOut' }, 258.2);
+          tl.set('#video-wrap', { className: 'video-wrapper framed', zIndex: 0 }, 279.7);
+          tl.to('#video-wrap', { left: 14, top: 14, width: 1892, height: 548, duration: 0.6, ease: 'power2.inOut' }, 279.7);
+      window.__timelines = window.__timelines || {};
+      window.__timelines['talking-head-recut'] = tl;
+    })();
+  </script>
+</div>
+</body>
+</html>
