@@ -1,3 +1,12 @@
+---
+title: "Convert a Python list to a NumPy array"
+type: script
+date: 2026-06-02
+week: 2026-W23
+slug: python-for-data-science-tutoria
+platform: yt
+tags: [content/script, week/2026-W23]
+---
 ```
 SHOW: Breath of Data Science
 EPISODE TITLE (working): NumPy and the Art of Thinking in Arrays — Python for Data Science Tutorial 3/10

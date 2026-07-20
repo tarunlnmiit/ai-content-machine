@@ -1,3 +1,11 @@
+---
+title: "Instagram Reel Brief — Python Tutorial 2/10: Variables & Data Types"
+type: derivative
+niche: data_science_tech
+week: 2026-W22
+slug: ig-reel-brief
+tags: [content/derivative, niche/data_science_tech, week/2026-W22]
+---
 # Instagram Reel Brief — Python Tutorial 2/10: Variables & Data Types
 
 **Week:** 2026-W22

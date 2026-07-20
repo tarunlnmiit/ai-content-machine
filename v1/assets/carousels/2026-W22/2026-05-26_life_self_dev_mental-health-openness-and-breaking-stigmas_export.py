@@ -1,51 +1,49 @@
 """
-Export carousel slides as 1080×1350px PNGs.
-Usage: python export_carousel_slides.py
-Output: assets/carousels/slides/slide_01.png … slide_07.png
+Export Breath of Life carousel slides to 1080x1350 PNGs.
+Usage: python export_carousel.py <input.html> <output_dir>
 """
-import asyncio
+import sys
 from pathlib import Path
-from playwright.async_api import async_playwright
+from playwright.sync_api import sync_playwright
 
-HTML_FILE   = Path("assets/carousels/the-lie-we-inherited-about-strength.html").resolve()
-OUT_DIR     = Path("assets/carousels/slides")
-SLIDE_COUNT = 7
-SLIDE_W     = 420
-SLIDE_H     = 525
-IG_HEADER_H = 54          # px — header height at 1× scale
-SCALE       = 1080 / 420  # ≈ 2.571  →  1080×1350 output
+SLIDE_W, SLIDE_H = 420, 525
+SCALE = 1080 / SLIDE_W  # 1080x1350 output
+TOTAL_SLIDES = 7
 
+def export(html_path: str, out_dir: str):
+    html_path = Path(html_path).resolve()
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
 
-async def main():
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    async with async_playwright() as pw:
-        browser = await pw.chromium.launch()
-        page = await browser.new_page(
-            viewport={"width": SLIDE_W, "height": SLIDE_H + IG_HEADER_H + 120},
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(
+            viewport={"width": 500, "height": 700},
             device_scale_factor=SCALE,
         )
-        await page.goto(f"file://{HTML_FILE}")
-        await page.wait_for_load_state("networkidle")
+        page.goto(f"file://{html_path}")
+        page.wait_for_timeout(300)
 
-        for i in range(SLIDE_COUNT):
-            await page.evaluate(f"goTo({i})")
-            await page.wait_for_timeout(450)  # let transition settle
+        viewport = page.locator("#viewport")
 
-            clip = {
-                "x": 0,
-                "y": IG_HEADER_H,   # skip IG chrome header
-                "width": SLIDE_W,
-                "height": SLIDE_H,
-            }
-            out = OUT_DIR / f"slide_{i+1:02d}.png"
-            await page.screenshot(path=str(out), clip=clip)
-            print(f"✓  slide_{i+1:02d}.png  ({int(SLIDE_W*SCALE)}×{int(SLIDE_H*SCALE)}px)")
+        for i in range(TOTAL_SLIDES):
+            # move track to slide i and bake that slide's own progress fill
+            page.evaluate(
+                """([i, w]) => {
+                    const track = document.getElementById('track');
+                    track.style.transition = 'none';
+                    track.style.transform = `translateX(-${i * w}px)`;
+                    const slide = track.children[i];
+                    slide.querySelectorAll('.progress-seg .fill').forEach((f, idx) => {
+                        f.style.width = idx <= i ? '100%' : '0%';
+                    });
+                }""",
+                [i, SLIDE_W],
+            )
+            page.wait_for_timeout(120)
+            viewport.screenshot(path=str(out_dir / f"slide_{i+1}.png"))
 
-        await browser.close()
-
-    print(f"\n✅  {SLIDE_COUNT} slides → {OUT_DIR}/")
-
+        browser.close()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    export(sys.argv[1], sys.argv[2])

@@ -1,3 +1,12 @@
+---
+title: "The Lie We Inherited About Strength"
+type: blog
+niche: life_self_dev
+date: 2026-05-26
+week: 2026-W22
+slug: mental-health-openness-and-breaking-stigmas
+tags: [content/blog, niche/life_self_dev, week/2026-W22]
+---
 Reading source. Drafting now.
 
 ---

@@ -1,3 +1,9 @@
+---
+type: buffer
+niche: life_self_dev
+slug: how-i-turned-my-habits-into-an-engine-social-copy
+tags: [content/buffer, niche/life_self_dev]
+---
 ### TWITTER THREAD
 
 You can meditate every morning, read every evening, and hit your workout streaks — and still feel stuck. The problem isn't the habits. It's that they're not connected. They're noise, not momentum.

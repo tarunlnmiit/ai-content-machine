@@ -1,3 +1,9 @@
+---
+type: buffer
+niche: data_science_tech
+slug: complete-python-course-2026-beginner-to-advance-tutorial-110-social-copy
+tags: [content/buffer, niche/data_science_tech]
+---
 ### TWITTER THREAD
 
 Most tutorials teach Python the same way: syntax first, thinking later. Here's why that fails for data science:

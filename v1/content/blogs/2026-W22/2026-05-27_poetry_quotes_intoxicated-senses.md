@@ -1,6 +1,11 @@
 ---
 title: "The Hangover That Won't Lift"
+type: blog
 niche: poetry_quotes
+date: 2026-05-27
+week: 2026-W22
+slug: intoxicated-senses
+tags: [content/blog, niche/poetry_quotes, week/2026-W22]
 ---
 
 There's a specific kind of madness that doesn't announce itself. One day you're fine. The next, someone's laugh is living rent-free in your head — and the part of your brain that's supposed to run the show has quietly handed over the keys.

@@ -1,3 +1,12 @@
+---
+title: "Production Guide: The Cost of Carrying Things Nobody Sees"
+type: script
+niche: life_self_dev
+date: 2026-06-03
+week: 2026-W23
+slug: the-cost-of-carrying-things-nobody
+tags: [content/script, niche/life_self_dev, week/2026-W23]
+---
 # Production Guide: The Cost of Carrying Things Nobody Sees
 
 ## Voiceover Recording

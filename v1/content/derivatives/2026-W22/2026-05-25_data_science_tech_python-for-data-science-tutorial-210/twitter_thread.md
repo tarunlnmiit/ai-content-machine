@@ -1,3 +1,11 @@
+---
+title: "Twitter Thread — DS Tutorial 2/10"
+type: derivative
+niche: data_science_tech
+week: 2026-W22
+slug: twitter-thread
+tags: [content/derivative, niche/data_science_tech, week/2026-W22]
+---
 # Twitter Thread — DS Tutorial 2/10
 # Post manually — cannot be scheduled
 

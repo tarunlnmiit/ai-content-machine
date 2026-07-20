@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Data Science — Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#6B8FA8; --light:#96BAD0; --dark:#3D5F75;
+    --bg-light:#EDE8DC; --border:#D6D0C4; --bg-dark:#1E1B2E;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Space Grotesk',sans-serif; background:#0c0c10; display:flex; justify-content:center; padding:40px 20px;}
+
+  .ig-frame{width:420px; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.5);}
+  .ig-header{display:flex; align-items:center; gap:10px; padding:12px 14px;}
+  .ig-avatar{width:34px; height:34px; border-radius:50%; background:linear-gradient(165deg,var(--dark),var(--primary),var(--light)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;}
+  .ig-handle{font-weight:600; font-size:13px; color:#111;}
+  .ig-more{margin-left:auto; color:#666; font-size:18px;}
+
+  .carousel-viewport{width:420px; height:525px; overflow:hidden; position:relative; cursor:grab; touch-action:pan-y;}
+  .carousel-viewport.dragging{cursor:grabbing;}
+  .carousel-track{display:flex; width:calc(420px * 8); height:525px; transition:transform .35s cubic-bezier(.22,.61,.36,1);}
+
+  .slide{position:relative; width:420px; height:525px; overflow:hidden; flex-shrink:0;}
+  .slide.light{background-color:var(--bg-light);
+    background-image:repeating-linear-gradient(0deg, transparent 0 27px, var(--border) 27px 28px);}
+  .slide.dark{background-color:var(--bg-dark);
+    background-image:repeating-linear-gradient(0deg, transparent 0 27px, rgba(150,186,208,.08) 27px 28px);}
+  .slide.gradient{background:linear-gradient(165deg,#3D5F75 0%,#6B8FA8 50%,#96BAD0 100%);}
+
+  .slide-inner{position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:center; padding:0 36px;}
+  .slide-inner.bottom{justify-content:flex-end; padding:0 36px 52px;}
+
+  /* fixed overlay positions */
+  .badge{position:absolute; top:18px; left:18px; z-index:5; font-size:11px; font-weight:600; letter-spacing:.04em; padding:4px 10px; border-radius:20px; background:rgba(255,255,255,.85); color:var(--dark);}
+  .slide.dark .badge{background:rgba(255,255,255,.14); color:var(--bg-light);}
+  .follow-tag{position:absolute; top:18px; right:18px; z-index:5; font-size:11px; font-weight:600; color:var(--dark); background:rgba(255,255,255,.85); padding:4px 10px; border-radius:20px;}
+  .slide.dark .follow-tag{color:var(--bg-light); background:rgba(255,255,255,.14);}
+  .swipe-arrow{position:absolute; top:50%; right:18px; transform:translateY(-50%); z-index:5; width:34px; height:34px; border-radius:50%; background:var(--dark); color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 6px 16px rgba(0,0,0,.3);}
+  .save-tag{position:absolute; bottom:18px; right:18px; z-index:5; font-size:10px; font-weight:600; letter-spacing:.03em; color:var(--dark); background:rgba(255,255,255,.85); padding:4px 10px; border-radius:20px;}
+  .slide.dark .save-tag{color:var(--bg-light); background:rgba(255,255,255,.14);}
+
+  .progress-row{position:absolute; top:0; left:0; right:0; z-index:6; display:flex; gap:4px; padding:8px 12px 0;}
+  .progress-seg{flex:1; height:3px; background:rgba(0,0,0,.14); border-radius:2px; overflow:hidden;}
+  .slide.dark .progress-seg, .slide.gradient .progress-seg{background:rgba(255,255,255,.22);}
+  .progress-seg .fill{height:100%; width:0%; background:var(--dark);}
+  .slide.dark .progress-seg .fill, .slide.gradient .progress-seg .fill{background:#fff;}
+
+  .kicker{font-size:11px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--dark); margin-bottom:10px;}
+  .slide.dark .kicker{color:var(--light);}
+  .slide.gradient .kicker{color:rgba(255,255,255,.85);}
+
+  .headline{font-size:30px; font-weight:700; line-height:1.18; color:#1a1a1a;}
+  .slide.dark .headline{color:var(--bg-light);}
+  .slide.gradient .headline{color:#fff;}
+  .body-copy{font-size:17px; font-weight:500; line-height:1.5; color:#2a2a2a; margin-top:2px;}
+  .slide.dark .body-copy{color:#EDE8DC;}
+  .slide.gradient .body-copy{color:rgba(255,255,255,.94);}
+
+  .hl{background:var(--primary); color:#fff; padding:2px 6px; border-radius:3px; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .hl.orange{background:var(--dark); color:#fff;}
+  .slide.light .hl.orange{background:var(--dark);}
+
+  .card{background:#fff; border-radius:10px; box-shadow:0 18px 34px rgba(0,0,0,.22); padding:20px 22px; transform:rotate(-2.4deg);}
+  .slide.dark .card{background:#26223a;}
+  .card.tilt-r{transform:rotate(2.2deg);}
+
+  .numbered-list{list-style:none; margin-top:14px; display:flex; flex-direction:column; gap:10px;}
+  .numbered-list li{display:flex; gap:10px; align-items:flex-start; font-size:14.5px; line-height:1.4; color:#2a2a2a;}
+  .slide.dark .numbered-list li{color:#EDE8DC;}
+  .numbered-list .num{flex-shrink:0; width:22px; height:22px; border-radius:50%; background:var(--primary); color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;}
+
+  .logo-lockup{width:30px; height:30px; border-radius:50%; background:linear-gradient(165deg,var(--dark),var(--primary)); color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; margin-bottom:14px;}
+
+  .doodle{position:absolute; z-index:1; opacity:.55;}
+
+  .cta-button{margin-top:22px; display:inline-flex; align-items:center; gap:8px; background:#fff; color:var(--dark); font-weight:700; font-size:15px; padding:13px 22px; border-radius:30px; box-shadow:0 14px 30px rgba(0,0,0,.25); width:fit-content;}
+  .handle-tag{margin-top:14px; font-size:12px; color:rgba(255,255,255,.85); font-weight:600;}
+
+  .ig-dots{display:flex; justify-content:center; gap:5px; padding:10px 0;}
+  .ig-dot{width:5px; height:5px; border-radius:50%; background:#ccc;}
+  .ig-dot.active{background:var(--dark); width:12px; border-radius:3px;}
+
+  .ig-actions{display:flex; align-items:center; gap:14px; padding:8px 14px; font-size:20px; color:#222;}
+  .ig-actions .spacer{margin-left:auto;}
+  .ig-caption{padding:0 14px 16px; font-size:13px; line-height:1.5; color:#222;}
+  .ig-caption b{font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div class="ig-handle">breathofdatascience</div>
+    <div class="ig-more">&#8942;</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">1 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:70px;left:26px;width:34px" viewBox="0 0 24 24" fill="none" stroke="#3D5F75" stroke-width="1.4"><path d="M12 2l2.6 6.6L21 10l-5 4.4 1.4 7L12 18l-5.4 3.4L8 14.4 3 10l6.4-1.4z"/></svg>
+        <svg class="doodle" style="bottom:120px;left:40px;width:46px" viewBox="0 0 60 30" fill="none" stroke="#3D5F75" stroke-width="1.6"><path d="M2 24C18 4 42 4 56 18" stroke-linecap="round"/><path d="M48 12l8 6-8 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="slide-inner">
+          <div class="logo-lockup">B</div>
+          <div class="kicker">I'm a data scientist who writes novels</div>
+          <div class="card">
+            <div class="headline">The skill that makes AI good isn't the tool. It's <span class="hl">one habit</span> I use for code, fiction, and bad days.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">2 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <svg class="doodle" style="top:80px;right:60px;width:20px" viewBox="0 0 20 20" fill="#96BAD0"><circle cx="3" cy="10" r="2.4"/><circle cx="10" cy="10" r="2.4"/><circle cx="17" cy="10" r="2.4"/></svg>
+        <div class="slide-inner">
+          <div class="kicker">Why your prompts fail</div>
+          <div class="card tilt-r">
+            <div class="body-copy">You type "write me a story." Get back something bland. Blame the AI. But that's not AI failing — that's the oldest rule in data: <span class="hl">garbage in, garbage out.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 — CREDIBILITY -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">3 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <svg class="doodle" style="top:100px;left:24px;width:30px" viewBox="0 0 24 24" fill="none" stroke="#3D5F75" stroke-width="1.4"><path d="M12 2l2.6 6.6L21 10l-5 4.4 1.4 7L12 18l-5.4 3.4L8 14.4 3 10l6.4-1.4z"/></svg>
+        <div class="slide-inner">
+          <div class="kicker">Where this came from</div>
+          <div class="card">
+            <div class="body-copy">10 years finding signal in noise as a data scientist. Just as many years writing novels nobody saw. I built <span class="hl">dozens of prompts</span> for both halves of my brain — then noticed they all followed the same pattern.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 — THE PATTERN -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">4 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <svg class="doodle" style="bottom:90px;right:50px;width:46px" viewBox="0 0 60 30" fill="none" stroke="#96BAD0" stroke-width="1.6"><path d="M2 24C18 4 42 4 56 18" stroke-linecap="round"/><path d="M48 12l8 6-8 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="slide-inner">
+          <div class="kicker">The <span class="hl">4-part pattern</span></div>
+          <div class="card">
+            <ol class="numbered-list">
+              <li><span class="num">1</span> A role — "you are a senior engineer"</li>
+              <li><span class="num">2</span> A specific ask — not "help me," but "give me 8 ranked options"</li>
+              <li><span class="num">3</span> Constraints — tone, length, what to avoid</li>
+              <li><span class="num">4</span> Room for your judgment — AI generates, you decide</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 — EXAMPLE 1 -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">5 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <svg class="doodle" style="top:90px;right:34px;width:20px" viewBox="0 0 20 20" fill="#3D5F75"><circle cx="3" cy="10" r="2.4"/><circle cx="10" cy="10" r="2.4"/><circle cx="17" cy="10" r="2.4"/></svg>
+        <div class="slide-inner">
+          <div class="kicker">Where I use it #1 — the blank page</div>
+          <div class="card tilt-r">
+            <div class="body-copy">Stuck on a novel idea for years. One prompt gave me <span class="hl">8 ranked plot twists</span>. Not the answer — just enough fog cleared to choose.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6 — EXAMPLE 2 -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">6 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <svg class="doodle" style="top:70px;left:30px;width:28px" viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="1.4"><path d="M12 2l2.6 6.6L21 10l-5 4.4 1.4 7L12 18l-5.4 3.4L8 14.4 3 10l6.4-1.4z"/></svg>
+        <div class="slide-inner">
+          <div class="kicker">Where I use it #2 — debugging</div>
+          <div class="card">
+            <div class="body-copy">Same pattern, different brain. One paragraph of setup turns the assistant from a search box into <span class="hl orange">a senior colleague</span>. My debugging time genuinely dropped.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7 — RECAP -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">7 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <svg class="doodle" style="bottom:110px;left:30px;width:46px" viewBox="0 0 60 30" fill="none" stroke="#3D5F75" stroke-width="1.6"><path d="M2 24C18 4 42 4 56 18" stroke-linecap="round"/><path d="M48 12l8 6-8 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="slide-inner">
+          <div class="kicker">The thing I got wrong for 10 years</div>
+          <div class="card tilt-r">
+            <div class="headline" style="font-size:23px;">I thought the analyst and the writer in me were two different people. They're not. <span class="hl">AI didn't replace either one — it just got them talking.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8 — CTA -->
+      <div class="slide gradient">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">8 / 8</div>
+        <svg class="doodle" style="top:70px;right:30px;width:30px;opacity:.4" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4"><path d="M12 2l2.6 6.6L21 10l-5 4.4 1.4 7L12 18l-5.4 3.4L8 14.4 3 10l6.4-1.4z"/></svg>
+        <div class="slide-inner bottom">
+          <div class="kicker">Want the exact prompts?</div>
+          <div class="headline" style="font-size:26px;">3 prompts I actually use — for code, the blank page, and the hard days.</div>
+          <div class="cta-button">💬 Comment AI ↓</div>
+          <div class="handle-tag">@breathofdatascience — I'll DM you the copy-paste versions.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dots">
+    <span class="ig-dot active"></span><span class="ig-dot"></span><span class="ig-dot"></span><span class="ig-dot"></span>
+    <span class="ig-dot"></span><span class="ig-dot"></span><span class="ig-dot"></span><span class="ig-dot"></span>
+  </div>
+
+  <div class="ig-actions">
+    <span>♡</span><span>💬</span><span>➤</span>
+    <span class="spacer">🔖</span>
+  </div>
+
+  <div class="ig-caption">
+    <b>breathofdatascience</b> 10 years as a data scientist. Just as many years writing novels no one read.
+    Turns out the same skill makes AI useful for both — not a tool, a habit: role + specific ask +
+    constraints + room for your judgment. I use it to unstick a plot, cut my debugging time, and
+    think out loud on the hard days.<br><br>
+    Comment <b>AI</b> and I'll send you the exact 3 I use — copy, paste, done.<br><br>
+    #dataScience #promptengineering #claudeai #chatgpt #careeradvice
+  </div>
+</div>
+
+<script>
+(function(){
+  const N = 8, SLIDE_W = 420;
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('viewport');
+  const dots = document.querySelectorAll('.ig-dot');
+  let current = 0, startX = 0, dx = 0, dragging = false;
+
+  function render(){
+    track.style.transform = `translateX(${-current * SLIDE_W}px)`;
+    dots.forEach((d,i)=>d.classList.toggle('active', i===current));
+    document.querySelectorAll('.slide').forEach((s,i)=>{
+      s.querySelectorAll('.progress-seg .fill').forEach((f,segIdx)=>{
+        f.style.width = segIdx <= i ? '100%' : '0%';
+      });
+    });
+  }
+  function goTo(i){ current = Math.max(0, Math.min(N-1, i)); render(); }
+
+  viewport.addEventListener('pointerdown', e=>{ dragging = true; startX = e.clientX; dx = 0; track.style.transition='none'; viewport.classList.add('dragging'); });
+  viewport.addEventListener('pointermove', e=>{ if(!dragging) return; dx = e.clientX - startX; track.style.transform = `translateX(${-current*SLIDE_W + dx}px)`; });
+  window.addEventListener('pointerup', ()=>{
+    if(!dragging) return;
+    dragging = false; viewport.classList.remove('dragging'); track.style.transition='';
+    if (dx < -60) goTo(current+1); else if (dx > 60) goTo(current-1); else render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

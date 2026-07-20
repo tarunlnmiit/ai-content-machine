@@ -1,3 +1,13 @@
+---
+title: "I Stopped Googling Travel Guides. I Interrogated an AI Instead."
+type: script
+niche: data_science_tech
+date: 2026-06-16
+week: 2026-W25
+slug: faceless
+platform: yt
+tags: [content/script, niche/data_science_tech, week/2026-W25]
+---
 # I Stopped Googling Travel Guides. I Interrogated an AI Instead.
 
 **Hook:** Every AI travel recommendation sounds the same — same 10 things, same tourist loop. The model isn't broken. Your prompt is.

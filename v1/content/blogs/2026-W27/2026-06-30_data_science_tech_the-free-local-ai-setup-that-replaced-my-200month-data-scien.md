@@ -1,3 +1,12 @@
+---
+title: "You're Still Paying $200/Month for AI Tools You Could Replace With a Free Local Setup Tonight"
+type: blog
+niche: data_science_tech
+date: 2026-06-30
+week: 2026-W27
+slug: the-free-local-ai-setup-that-replaced-my-200month-data-scien
+tags: [content/blog, niche/data_science_tech, week/2026-W27]
+---
 # You're Still Paying $200/Month for AI Tools You Could Replace With a Free Local Setup Tonight
 
 *How a job-hunt bot I built with Ollama and tinyfish — running at 2am while I slept — convinced me I don't need a single subscription anymore.*

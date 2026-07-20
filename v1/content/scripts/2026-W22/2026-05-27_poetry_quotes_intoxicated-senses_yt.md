@@ -1,105 +1,100 @@
-# The Hangover You Didn't Consent To — A Poem About Love, Obsession, and Losing Your Coordinates
-
-**Hook:** There's a specific kind of madness that doesn't announce itself. One day you're fine — the next, someone's laugh is living rent-free in your head, and the part of your brain that's supposed to run the show has quietly handed over the keys.
-
+---
+title: "The Hangover That Won't Lift"
+type: script
+niche: poetry_quotes
+date: 2026-05-27
+week: 2026-W22
+slug: intoxicated-senses
+platform: yt
+tags: [content/script, niche/poetry_quotes, week/2026-W22]
 ---
 
-## The Hangover That Won't Schedule a Time Out
+```
+SHOW: Breath of Poetry
+EPISODE TITLE (working): The Hangover That Won't Lift
+TARGET RUNTIME: 8–9 minutes
+WORD COUNT: ~1090 (narration + poem, read once)
+```
 
-[BROLL: slow morning — coffee cup, diffused window light, hands cradling a mug]
+[ANIMATION: 5-second title card — "Breath of Poetry: The Hangover That Won't Lift"]
 
-The trouble isn't the feeling itself. It's what comes after. When you realize you've been running on a hangover you didn't consent to — and it refuses to leave.
+There's a specific kind of madness that doesn't announce itself. One day you're fine. The next, someone's laugh is living rent-free in your head — and the part of your brain that's supposed to run the show has quietly handed over the keys.
 
-This poem starts there. With that exact disorientation.
+[BROLL: soft morning light, single figure walking, steam rising from a cup]
 
-> *Love has taken away all my senses, like that of alcohol —*
-> *effects of booze reside for a short period.*
-> *But your intoxication doesn't want to go away.*
+I want to read you something I wrote about that exact handover.
 
-The hangover metaphor works because hangovers have an endpoint. You sleep it off, you hydrate, you move on. This one doesn't schedule a time out.
+[PAUSE]
 
----
+> Love has taken away
+> all my senses
+> like that of alcohol
+> effects of booze reside
+> for a short period
+> but your intoxication
+> doesn't want to go away
+> my heart keeps enjoying the hangover you created
+> your twinkling eyes
+> your enlightening smile
+> your ebony hair
+> are stuck with me
+> like a newborn sticks to her mother
+> my mind finds no way
+> to get around you
+> it keeps coming back
+> like a moth attracted to the flame
+> like waves to the shore
+> like cold to the winter
+> like a rainbow after the rain
+> I know
+> this isn't going to do any good to me
+> but the heart wants what the heart wants
+> earlier
+> my mind and heart worked in sync
+> but it seems
+> like their ecosystems have collided
+> deciding not to comply with each other
+> leaving me without a ground to stand on
+> or a sky to cover my head with
 
-## What Keeps It Alive — The Power of Specific Detail
+[PAUSE]
 
-[BROLL: close-up of eyes, someone smiling mid-conversation, dark hair catching light]
+[BROLL: close shot, hands around a warm mug, window light]
 
-> *Your twinkling eyes, your enlightening smile, your ebony hair —*
-> *has stuck with me, like a newborn sticks to her mother.*
+Here's why I reached for a hangover instead of butterflies, or sparks, or any of the usual words for this. Alcohol has a half-life. You can graph it. Blood alcohol rises, peaks, and clears on a schedule your liver keeps whether you cooperate or not. A hangover, by definition, is temporary. It has an expiration.
 
-Notice what the poem doesn't do. It doesn't soften into abstraction. It stays specific. That's what makes it land.
+This doesn't.
 
-Vague longing is forgettable. But a face — particular features, a real presence — that stays. The poem makes no attempt to universalize this into something prettier. These particular things are stuck. And they refuse to unstick.
+That's the whole poem. Not "I'm intoxicated by you" — anyone can say that. It's "the mechanism that's supposed to clear itself isn't clearing." I kept waiting for the half-life. It never showed up.
 
----
+[PAUSE]
 
-## The Moth Has No Choice
+Notice what the poem doesn't do. It doesn't stay abstract. Twinkling eyes. An enlightening smile. Ebony hair. Three concrete images, not one vague ache — and that's deliberate. Vague longing evaporates from memory in a day. A specific face doesn't. "I feel so much for you" gets forgotten by tomorrow. "Your ebony hair are stuck with me like a newborn sticks to her mother" stays, because it's a real image doing real work, not a placeholder for a feeling.
 
-[BROLL: moth near light, ocean waves repeating against shore, fire in darkness]
+[BROLL: moth circling a candle flame, close focus, warm light]
 
-> *My mind finds no way to get around you. It keeps coming back —*
-> *like a moth attracted to the flame, like waves to the shore,*
-> *like coal to the winter, like a rainbow after the rain.*
+Then the poem changes its own argument. "It keeps coming back like a moth attracted to the flame." A moth doesn't choose the flame. There's no deliberation in there, no cost-benefit calculation running. It's pulled. That's the line where this stops being about romance and starts being about physics — something acting on you, not something you're doing.
 
-The moth-to-flame image isn't romantic the way people assume. Moths don't *choose* the flame. They're wired to the light. No deliberation, no weighing of outcomes — just pull, pure and indifferent to consequence.
+And if you've done any kind of quantitative work, the next lines will land differently for you than for most people. "Earlier my mind and heart worked in sync." That's a system description. Two components, synchronized, producing one stable output — desire checked by reason, want weighed against what actually makes sense. Same architecture as any well-behaved pipeline: inputs go in, a sane process runs, an output comes out you can defend.
 
-When love starts feeling like physics instead of a decision, you're somewhere new. And the unsettling part isn't losing control. It's discovering you're not entirely unhappy about it.
+[PAUSE]
 
----
+Then: "like their ecosystems have collided, deciding not to comply with each other." Two systems that used to agree, now returning contradictory answers to the same input. Anyone who's debugged a pipeline that suddenly starts disagreeing with itself knows that failure state exactly. Except here there's no log to check, no stack trace to read. Just the felt experience of your own mind and heart returning different answers to the same question — both fully confident, both sure the other one is wrong.
 
-## What the Brain Actually Archives
+[BROLL: cracked dry earth, aerial or close, golden hour light]
 
-[BROLL: multiple open terminal windows, scrolling logs, a dark desk at night]
+Which brings us to the last two lines. "Leaving me without a ground to stand on, or a sky to cover my head with." No floor, no ceiling. That's not a metaphor for sadness — it's a metaphor for having no coordinates at all. The tools you'd normally use to figure out where you stand, logic or instinct or whatever you usually trust, aren't returning a usable answer right now. You're not broken. You're standing exactly where the poem says you are: nowhere, with nothing to orient by.
 
-I'll make this personal for a second.
+[PAUSE]
 
-There was one night — four terminals open, Databricks logs scrolling, coffee cold for an hour — when a voice cut through the noise without warning. Not a serious conversation, not an emotional moment. Just the way she laughed after interrupting herself mid-sentence, days earlier.
+I don't think this poem resolves anything, and I didn't want it to. It doesn't end in a lesson. It ends in an honest status report: this is where I am. Still here. Still enjoying a hangover I never asked for and can't seem to sleep off.
 
-And suddenly the entire debugging session disappeared behind that one tiny memory.
+If you read that and recognized the exact shape of it, you're allowed to still be in it. Nobody's handing you a deadline for when the intoxication has to clear.
 
-That's the unsettling thing about attachment. The brain doesn't archive what matters *logically*. It preserves texture, tone, timing. The microscopic human details you never consciously chose to keep.
+[BROLL: single figure by a window, held still, city or trees behind them]
 
----
+This is Breath of Poetry. If a line here found something you've been carrying quietly, tell me which one in the comments, or send this to the one person it makes you think of. And if you want more of these, subscribe — I put a new one out every week.
 
-## When the Ecosystem Collides
+I'll see you in the next one.
 
-[BROLL: fault line aerial shot, tectonic imagery, ground cracking at seam]
-
-The poem's real subject arrives near the end.
-
-> *Earlier, my mind and heart worked in sync —*
-> *but it seems like their ecosystems have collided,*
-> *deciding not to comply with each other,*
-> *leaving me without a ground to stand on, or a sky to cover my head with.*
-
-That's the quiet operating system most of us rely on. Desire checked by reason. Want weighed against what makes sense. Orderly, predictable, safe.
-
-Then someone walks in. And the whole architecture resets.
-
-No ground. No sky. That's not chaos — it's not obsession. It's the sudden, disorienting absence of *coordinates*. The tools you've always used to navigate your own interior no longer apply.
-
-I've had nights where one part of me was building airtight arguments for distance — rationalizing, analyzing patterns, trying to reduce emotion into something solvable like bad code. And then another part would still reopen old messages. Still search for meaning in silence. Still stand emotionally in places my logic had left hours earlier.
-
-That's the collision the poem talks about. Not heartbreak, exactly. More like realizing the mind and heart operate on completely different programming languages — when something matters enough.
-
----
-
-## Not a Malfunction — A Signal
-
-[BROLL: two tectonic plates, fault line at golden hour]
-
-The poem doesn't resolve this. It doesn't offer a path back to equilibrium. It just tells the truth: *this is where you are now.* Suspended. Recalibrating without asking to.
-
-*The heart wants what the heart wants.* We say it like a disclaimer — half surrender, half apology.
-
-This poem says it differently. Not as an excuse. As a report from inside the collision.
-
-Maybe when the mind and heart stop cooperating — when you're left without ground or sky — that's not a malfunction. That's a signal. The only honest one you'll get that something actually matters enough to overturn the whole system.
-
-No coordinates. No stability. Just the full, unfiltered weight of being alive enough to feel it.
-
-That's not a problem to solve. That's the experience itself.
-
----
-
-**Close:** This is Breath of Poetry. If this poem touched something you've been carrying quietly — share it with the one person it makes you think of. Or leave a line from it in the comments — the one that stayed with you. I'll see you in the next one.
+[ANIMATION: 5-second outro card — logo mark + "Breath of Poetry"]

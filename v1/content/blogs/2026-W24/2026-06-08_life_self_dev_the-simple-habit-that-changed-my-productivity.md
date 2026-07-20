@@ -1,3 +1,12 @@
+---
+title: "7 Simple Habits That Quietly Rewired My Productivity"
+type: blog
+niche: life_self_dev
+date: 2026-06-08
+week: 2026-W24
+slug: the-simple-habit-that-changed-my-productivity
+tags: [content/blog, niche/life_self_dev, week/2026-W24]
+---
 ```markdown
 # 7 Simple Habits That Quietly Rewired My Productivity
 

@@ -1,6 +1,11 @@
 ---
 title: "Every Colour Has a Feeling"
+type: blog
 niche: poetry_quotes
+date: 2026-06-08
+week: 2026-W24
+slug: poetry-dips-its-fingers-in-every-colour
+tags: [content/blog, niche/poetry_quotes, week/2026-W24]
 ---
 
 I spent a decade working with things that can be measured — data, models, dashboards. Then a poem found a nerve no dataset ever mapped, and something released. I didn't plan for that. I don't have a framework for it. I've stopped pretending the two lives are separate.

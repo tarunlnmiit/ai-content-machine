@@ -1,192 +1,149 @@
-Reading transcript now and drafting script.
-
+---
+title: "The Type Error That Makes Your Analysis Wrong Without Crashing"
+type: script
+niche: data_science_tech
+date: 2026-05-25
+week: 2026-W22
+slug: python-for-data-science-tutorial-210
+platform: yt
+tags: [content/script, niche/data_science_tech, week/2026-W22]
 ---
 
-# Why Python Lies to You (And How to Stop It): Data Types, Lists, and Dictionaries
-
-**Hook:** Your analysis will give you a wrong answer someday — and the worst part is it won't crash. Python will just hand you a number so plausible you'll believe it, ship it, and find out six months later.
-
----
-
-## The Silent Bug That Bites Every Data Scientist
-
-Here's how it happens.
-
-Your CSV comes in with a column called `H`. You load it. You sum the values. Python reports a total, and you move on.
-
-Except that column was stored as text — as strings, not numbers. So when Python "added" them, it didn't calculate 28 + 35 + 42. It smashed the strings together: `"283542"`.
-
-[BROLL: terminal showing string concatenation vs numeric addition side by side]
-
-No error message. No warning. Just a wrong answer sitting in your spreadsheet, looking completely legitimate.
-
-This is what this tutorial is about — the difference between data that *looks* like a number and data Python *actually treats* as a number. And the structures that let you build analysis that doesn't lie to you by accident.
-
----
-
-## Why Python's Flexibility Is Also Its Trap
-
-In the first tutorial, you built your first script: lists, dictionaries, looping, calculating an average. You handled multiple data types without ever naming them — integers, strings, floats, maybe a Boolean.
-
-Python is dynamically typed. That means you don't declare what type something is — you just assign a value and Python figures it out. This feels like a feature.
-
-And it is. Right up until the moment it lets you concatenate numbers like they're words and call the result a sum.
-
-[BROLL: code snippet showing `"28" + "35"` returning `"2835"`]
-
-For beginners, this causes confusion. For data scientists, it causes *expensive* confusion — the kind where your analysis runs fine, your numbers look reasonable, and then six months later someone asks: *wait, how did you get that?* And you can't trace it back, because the bug was never in your logic. It was in your data types all along.
-
----
-
-## What We're Covering Today
-
-Four things:
-
-1. **The four primitive types** Python uses — integers, floats, strings, Booleans
-2. **Lists** — ordered sequences
-3. **Dictionaries** — how data scientists think about records
-4. **Functions** — turning code you copy-paste into code you actually reuse
-
-By the end, you'll know what type every piece of your data is, why that matters, and how to catch type mistakes before they become silent bugs.
-
----
-
-## The Four Primitives
-
-Let's start with assignment. Python has a built-in function called `type()` that tells you exactly what you're holding.
-
-```python
-print(type(28))      # <class 'int'>
-print(type("28"))    # <class 'str'>
+```
+SHOW: Breath of Data Science
+EPISODE TITLE (working): The Type Error That Makes Your Analysis Wrong Without Crashing
+TARGET RUNTIME: 6–7 minutes
+WORD COUNT: 930
 ```
 
-[BROLL: running the above in terminal, output shown]
+[ANIMATION: 5-second title card — "Python for Data Science #2: Types, Lists, Dicts, Functions"]
 
-Same-looking value. Completely different type. That's the trap.
+[BROLL: 5-second intro — terminal typing `print("28" + "35")`, output `2835` appearing on screen]
 
-Here are the four primitives:
+Your analysis will give you a wrong answer someday. Not an error. Not a crash. A perfectly confident wrong number.
 
-- **Integer** — whole numbers. `age = 28`
-- **Float** — decimals. `accuracy = 0.94`
-- **String** — text in quotes. `role = "analyst"`
-- **Boolean** — `True` or `False`. `has_missing = False`
+[SCREEN: CSV file open in a text editor — an `age` column, values `28`, `35`, `42`]
 
-Python treats them completely differently, even when they look the same. `1`, `1.0`, and `"1"` are three distinct things.
+Here's how it happens. Your CSV comes in with a column labeled `age`. You load it, you sum it, Python reports the sum, you move on.
 
 ```python
-age = 28          # int
-year = 2024       # int
-accuracy = 0.94   # float
-rate = 1.5        # float
-role = "analyst"  # str
-has_missing = False  # bool
+print("28" + "35")   # "2835"
 ```
 
-[BROLL: `type()` printed for each variable, output scrolling in terminal]
+Except the column was stored as strings. Python didn't add 28 and 35. It concatenated them. No error, no warning — a number plausible enough to fool you, and anyone reading your report.
 
----
+This is tutorial two. It's about types — the difference between data that looks like a number and data Python treats like a number. The structures that make data science work before you ever open a library.
 
-## The Silent Bug, Demonstrated
+[SCREEN: four variable assignments — `age = 28`, `salary = 85000.50`, `name = "Alex"`, `is_outlier = False`]
 
-Here it is, live:
+Four types carry every Python data pipeline: integers, floats, strings, booleans.
 
 ```python
-print(28 + 35)      # 63   ✓
-print(28.0 + 35.0)  # 63.0 ✓
-print("28" + "35")  # 2835 ✗
+age = 28
+print(type(age))          # <class 'int'>
+
+salary = 85000.50
+print(type(salary))       # <class 'float'>
+
+name = "Alex"
+print(type(name))         # <class 'str'>
+
+is_outlier = False
+print(type(is_outlier))   # <class 'bool'>
 ```
 
-[BROLL: running this — first two lines correct, third line shows "2835"]
-
-Python did not add those numbers. It concatenated the text. No error, no warning — just a plain wrong answer.
-
----
-
-## How to Check What You're Holding
-
-Use `type()`. Get in the habit of calling it on anything that came from outside your code — especially CSVs, APIs, and user input.
+`type()` tells you what you're actually holding. And the fix for the concatenation bug is one function call away.
 
 ```python
-h = "28"          # came from CSV — it's a string
-print(type(h))    # <class 'str'>
-
-h_int = int(h)    # explicit conversion
-print(h_int + 10) # 38 ✓
+raw_age = "28"           # came from a CSV — it's a string
+age = int(raw_age)
+print(age + 10)          # 38 — now it adds correctly
 ```
 
-[BROLL: terminal output showing type str → conversion → int arithmetic working correctly]
+`int()`, `float()`, `str()`, `bool()` — those four conversions cover almost everything. Rule to keep for life: any data from a CSV, an API, or user input arrives as a string until you convert it.
 
-The four conversion functions you'll use constantly:
+[PAUSE]
+
+[SCREEN: `scores = [85, 92, 78, 95, 88]` with index arrows drawn under each value]
+
+Next structure — lists. Ordered, mutable, zero-indexed.
 
 ```python
-int("42")      # → 42
-float("42.5")  # → 42.5
-str(42)        # → "42"
-bool(0)        # → False
+scores = [85, 92, 78, 95, 88]
+print(scores[0])    # 85
+print(scores[-1])   # 88
+print(scores[1:3])  # [92, 78] — index 1 and 2, NOT 3
 ```
 
-**Rule of thumb:** any data from a CSV, API, or user input arrives as a string until you convert it. This is where silent bugs are born. You load your CSV, sum a column, get a result that looks plausible — and never realize it was concatenation instead of addition.
-
----
-
-## Lists — Ordered Collections
-
-A list is a sequence: an ordered collection of items, created with square brackets.
+That slice trips up everyone the first week. `scores[1:3]` stops before index 3 — the end is exclusive. Once that clicks, comprehensions get easy.
 
 ```python
-scores = [85, 92, 78, 95]
+high_scores = [s for s in scores if s > 85]
+scores_as_percentages = [s / 100 for s in scores]
 ```
 
-Access items by position. Python indexes from zero:
+[SCREEN: comprehension breaking down left to right — "for each s in scores, if s > 85, include s / 100"]
+
+Read it left to right: for each `s` in `scores`, if `s` is greater than 85, include it. Every data scientist writes this pattern constantly — it replaces a three-line loop with one readable expression.
+
+[PAUSE]
+
+Lists give you sequences. Dictionaries give you rows.
 
 ```python
-scores[0]  # 85
-scores[1]  # 92
+person = {"name": "Alex", "age": 28, "role": "analyst"}
+print(person["name"])              # "Alex"
+print(person.get("email", "not set"))  # "not set"
 ```
 
-[BROLL: list index diagram — position 0, 1, 2, 3 labeled]
+Never index a dict you don't control with square brackets — a missing key crashes the whole script. `.get()` returns a default instead.
 
-You can slice — pull a range of items:
+[SCREEN: a list of four dicts scrolling — `employees = [{"name": "Alex", ...}, {"name": "Jamie", ...}, ...]`]
+
+In real work you're almost never holding one dictionary. You're holding a list of dictionaries — one dict per row.
 
 ```python
-scores[1:3]  # [92, 78]
+employees = [
+    {"name": "Alex",  "role": "analyst",  "salary": 85000},
+    {"name": "Jamie", "role": "engineer", "salary": 92000},
+]
+
+analysts = [e for e in employees if e["role"] == "analyst"]
+avg = sum(e["salary"] for e in analysts) / len(analysts)
 ```
 
-Python slicing is *exclusive on the end* — `1:3` gives you index 1 and 2, not 3. This trips up everyone in their first week.
+List of dicts, filter with a comprehension, aggregate with `sum()` and `len()` — that's exactly what Pandas does internally, at a much larger scale. Learn it here and Pandas stops being a wall of methods to memorize.
 
-Add an item with `.append()`:
+[PAUSE]
+
+Last piece — functions. A named, reusable block of logic.
 
 ```python
-scores.append(90)
-print(scores)  # [85, 92, 78, 95, 90]
+def calculate_average(numbers):
+    return sum(numbers) / len(numbers)
+
+print(calculate_average(scores))    # 87.6
+print(calculate_average([85000, 92000, 78000]))  # 85000.0
 ```
 
----
-
-## Filtering Lists — Two Ways
-
-Say you want every score above 85.
-
-**Way 1: for loop**
+Same function, any list. And default arguments let you set a fallback you can override on demand.
 
 ```python
-for score in scores:
-    if score > 85:
-        print(score)
-# 92, 95, 90
+def is_outlier(value, mean, threshold=2.0):
+    distance = abs(value - mean) / mean
+    return distance > threshold / 10
+
+outliers = [s for s in scores if is_outlier(s, mean=87.6)]
 ```
 
-**Way 2: list comprehension**
+I hit this wall early on, building analytics scripts for content tracking. I had the same twelve-line block — clean values, calculate an average, filter rows — copy-pasted across three notebooks. Every small change meant hunting through duplicated code, hoping I hadn't missed a copy. The moment I turned that block into a function, the whole workflow changed. Fewer silent mistakes, faster iteration, code I still trusted six weeks later when I reopened the project.
 
-```python
-high_scores = [score for score in scores if score > 85]
-print(high_scores)  # [92, 95, 90]
-```
+[SCREEN: three-line summary card — "types encode intention · lists are sequences, dicts are records · functions make code testable"]
 
-[BROLL: both outputs side by side in terminal — same result]
+Four things most beginners miss: types encode intention. Lists are sequences, dicts are records. List comprehensions are concise loops. Functions make code testable. Not the libraries — these. Every pipeline you'll ever build rests on them.
 
-List comprehension is concise, readable, and every data scientist uses this pattern constantly. Get comfortable with it early — you'll see it everywhere in pandas, NumPy, and real production code.
+Tutorial three brings NumPy — these same structures, scaled to millions of rows.
 
----
+Rewrite tutorial one's average as a function. Add a filter function next to it. Reply with what you built, or the first type error you caught — and if this is useful, send it to one person still learning Python.
 
-**Close:** Data science bugs don't always crash. The dangerous ones run quietly and hand you a wrong answer with a straight face. Understanding what type your data actually is — not just what it looks like — is the first layer of defense. In the next part, we go deeper: dictionaries, functions, and how these pieces connect into real analysis workflows. If this helped, subscribe — one tutorial a week, no fluff.
+[ANIMATION: 5-second outro card — "Next: NumPy for Data Science (#3/10)"]

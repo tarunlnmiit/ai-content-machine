@@ -1,3 +1,11 @@
+---
+title: "Claude + Remotion Template Pack"
+type: reel
+niche: data_science_tech
+week: 2026-W26
+slug: readme
+tags: [content/reel, niche/data_science_tech, week/2026-W26]
+---
 # Claude + Remotion Template Pack
 
 Four drop-in video overlays you control by editing one line — or by asking Claude. Built to work

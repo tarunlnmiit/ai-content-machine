@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="135" data-composition-variables='{"caption_text": {"type": "string", "default": "ask it the best things to do in paris you'll get the eiffel tower and the louvre"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1080px; height: 1920px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1080px; height: 1920px;
+    overflow: hidden;
+  }
+  
+    /* === Fullscreen layout === */
+    #panel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+  
+    /* === Python-owned caption (fullscreen) === */
+    #caption-layer {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1020px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="4.500" data-width="1080" data-height="1920">
+  
+  <div id="panel">
+    <div id="content">
+
+      <div class='pk-scrim' style="position:absolute;left:0;right:0;top:0;height:760px;pointer-events:none;background:linear-gradient(to top,transparent 0%,rgba(4,6,10,0.45) 46%,rgba(4,6,10,0.9) 100%);"></div>
+      <div class="pk-card" style="position:absolute;left:60px;right:60px;top:190px;
+           padding:38px 46px;border-radius:28px;background:rgba(18,22,31,0.72);
+           backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);
+           border:1px solid rgba(255,255,255,0.10);box-shadow:0 24px 70px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06);">
+        <div style="position:absolute;top:0;left:9%;right:9%;height:1px;
+             background:linear-gradient(to right,transparent,rgba(255,255,255,0.16),transparent);"></div>
+        <div style="font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;font-size:22px;letter-spacing:0.34em;text-transform:uppercase;
+             color:#4da3ff;margin-bottom:20px;">// the tension</div>
+        <div class="pk-dec" data-final="The model isn&#x27;t failing. Your prompt is."
+             style="font-family:Inter,'SF Pro Display','Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:60px;line-height:1.1;
+             letter-spacing:-0.03em;color:#eef2f9;min-height:140px;">&nbsp;</div>
+        <div class="pk-cur" style="display:inline-block;width:16px;height:56px;vertical-align:-10px;
+             margin-left:6px;background:#37e0d8;box-shadow:0 0 18px #37e0d8;"></div>
+      </div>
+    
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+
+      const card=root.querySelector('.pk-card'),dec=root.querySelector('.pk-dec'),
+            cur=root.querySelector('.pk-cur');
+      const final=dec.getAttribute('data-final');
+      const glyphs='ABCDEFGHKMNPRSTUVXYZ01<>/#=$*';
+      gsap.set(card,{opacity:0,y:36,scale:0.98});
+      gsap.set(cur,{opacity:0});
+      tl.to(card,{opacity:1,y:0,scale:1,duration:0.65,ease:'power3.out'},0.05);
+      tl.to(cur,{opacity:1,duration:0.2},0.5);
+      const state={p:0};
+      tl.to(state,{p:1,duration:1.05,ease:'none',onUpdate:function(){
+        const n=Math.floor(state.p*final.length);
+        let out='';
+        for(let i=0;i<final.length;i++){
+          if(i<n||final[i]===' '){out+=final[i];}
+          else{out+=glyphs[(Math.floor(state.p*97)+i*7)%glyphs.length];}
+        }
+        dec.textContent=out;
+      }},0.5);
+      tl.to(dec,{onComplete:function(){dec.textContent=final;}},1.55);
+      tl.to(cur,{opacity:0.25,duration:0.4,yoyo:true,repeat:6,ease:'power1.inOut'},1.6);
+    
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

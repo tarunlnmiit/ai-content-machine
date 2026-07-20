@@ -1,3 +1,12 @@
+---
+title: "Production Guide: Only to Make Themselves Happy"
+type: script
+niche: poetry_quotes
+date: 2026-06-03
+week: 2026-W23
+slug: looking-at-the-world-through-a-refl
+tags: [content/script, niche/poetry_quotes, week/2026-W23]
+---
 # Production Guide: Only to Make Themselves Happy
 
 ## Voiceover Recording

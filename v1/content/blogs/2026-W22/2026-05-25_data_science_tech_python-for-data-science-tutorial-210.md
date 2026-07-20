@@ -1,3 +1,12 @@
+---
+title: "The Type Error That Makes Your Analysis Wrong Without Crashing"
+type: blog
+niche: data_science_tech
+date: 2026-05-25
+week: 2026-W22
+slug: python-for-data-science-tutorial-210
+tags: [content/blog, niche/data_science_tech, week/2026-W22]
+---
 The file that's there is Tutorial 1. Tutorial 2 is what you pasted — it's the content to humanize. Applying the pass now.
 
 ---

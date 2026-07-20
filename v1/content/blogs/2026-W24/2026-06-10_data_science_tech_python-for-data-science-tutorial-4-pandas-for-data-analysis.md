@@ -1,3 +1,12 @@
+---
+title: "Python for Data Science: Tutorial 4/10 — Pandas for Data Analysis"
+type: blog
+niche: data_science_tech
+date: 2026-06-10
+week: 2026-W24
+slug: python-for-data-science-tutorial-4-pandas-for-data-analysis
+tags: [content/blog, niche/data_science_tech, week/2026-W24]
+---
 # Python for Data Science: Tutorial 4/10 — Pandas for Data Analysis
 
 ## HOOK

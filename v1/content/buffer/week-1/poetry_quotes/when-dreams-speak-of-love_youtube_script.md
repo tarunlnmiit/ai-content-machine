@@ -1,3 +1,10 @@
+---
+type: buffer
+niche: poetry_quotes
+slug: when-dreams-speak-of-love
+platform: youtube
+tags: [content/buffer, niche/poetry_quotes]
+---
 ```
 SHOW: Breath of Poetry
 EPISODE TITLE (working): Safe and Alive

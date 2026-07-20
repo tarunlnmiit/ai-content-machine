@@ -1,3 +1,12 @@
+---
+title: "The Room No One Entered"
+type: blog
+niche: poetry_quotes
+date: 2026-06-26
+week: 2026-W26
+slug: i-wrote-a-poem-every-time-life-broke-me-heres-what-the-words
+tags: [content/blog, niche/poetry_quotes, week/2026-W26]
+---
 # The Room No One Entered
 
 This one came from a quiet Tuesday — the kind where everything went right and something still felt wrong. It's about the particular loneliness of being good at showing up.

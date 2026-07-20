@@ -1,3 +1,11 @@
+---
+title: "Shorts Captions — 2026-05-25_data_science_tech_python-for-data-science-tutorial-210"
+type: derivative
+niche: data_science_tech
+week: 2026-W22
+slug: shorts-captions
+tags: [content/derivative, niche/data_science_tech, week/2026-W22]
+---
 # Shorts Captions — 2026-05-25_data_science_tech_python-for-data-science-tutorial-210
 Generated: 2026-06-18
 

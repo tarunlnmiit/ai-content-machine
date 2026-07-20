@@ -1,3 +1,12 @@
+---
+title: "What hiring managers actually think when they see your data science GitHub in 2026"
+type: blog
+niche: data_science_tech
+date: 2026-06-26
+week: 2026-W26
+slug: what-hiring-managers-think-when-they-see-your-ds-github-2026
+tags: [content/blog, niche/data_science_tech, week/2026-W26]
+---
 # What hiring managers actually think when they see your data science GitHub in 2026
 
 *The job market didn't close because AI took the work. It closed because juniors forgot to grow up.*

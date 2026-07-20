@@ -1,3 +1,12 @@
+---
+title: "5 Loops That Make Self-Improvement Self-Sustaining"
+type: blog
+niche: life_self_dev
+date: 2026-06-16
+week: 2026-W25
+slug: recursive-self-improvement
+tags: [content/blog, niche/life_self_dev, week/2026-W25]
+---
 # 5 Loops That Make Self-Improvement Self-Sustaining
 
 ---

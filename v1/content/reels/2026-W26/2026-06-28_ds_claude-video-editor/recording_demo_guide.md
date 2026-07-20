@@ -1,3 +1,11 @@
+---
+title: "Recording + Demo Guide — Claude (desktop app) edits a dummy video with Remotion"
+type: reel
+niche: data_science_tech
+week: 2026-W26
+slug: recording-demo-guide
+tags: [content/reel, niche/data_science_tech, week/2026-W26]
+---
 # Recording + Demo Guide — Claude (desktop app) edits a dummy video with Remotion
 
 Goal: a clean screen-recording where you **type a request in the Claude desktop app**, Claude adds

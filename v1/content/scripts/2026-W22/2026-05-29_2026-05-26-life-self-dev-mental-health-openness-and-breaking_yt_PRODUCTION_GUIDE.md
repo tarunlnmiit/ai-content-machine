@@ -1,3 +1,12 @@
+---
+title: "Production Guide: ** The Lie We Inherited About Strength"
+type: script
+niche: life_self_dev
+date: 2026-05-29
+week: 2026-W22
+slug: mental-health-openness-and-breaking
+tags: [content/script, niche/life_self_dev, week/2026-W22]
+---
 # Production Guide: ** The Lie We Inherited About Strength
 
 ## Voiceover Recording

@@ -1,3 +1,11 @@
+---
+title: "The Lie We Inherited About Strength"
+type: buffer
+niche: life_self_dev
+slug: mental-health-openness-and-breaking-stigmas
+platform: substack
+tags: [content/buffer, niche/life_self_dev]
+---
 Reading source. Drafting now.
 
 ---

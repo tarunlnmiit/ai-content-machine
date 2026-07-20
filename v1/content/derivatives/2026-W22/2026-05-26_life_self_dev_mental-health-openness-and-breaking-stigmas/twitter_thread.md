@@ -1,3 +1,11 @@
+---
+title: "Twitter Thread — Life / Mental Health"
+type: derivative
+niche: life_self_dev
+week: 2026-W22
+slug: twitter-thread
+tags: [content/derivative, niche/life_self_dev, week/2026-W22]
+---
 # Twitter Thread — Life / Mental Health
 # Post manually — cannot be scheduled
 

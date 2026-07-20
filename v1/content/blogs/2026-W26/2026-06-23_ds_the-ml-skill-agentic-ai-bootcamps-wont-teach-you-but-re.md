@@ -1,3 +1,12 @@
+---
+title: "The ML Skill Agentic AI Bootcamps Won't Teach You (But Replaces You If You Skip It)"
+type: blog
+niche: data_science_tech
+date: 2026-06-23
+week: 2026-W26
+slug: the-ml-skill-agentic-ai-bootcamps-wont-teach-you-but-re
+tags: [content/blog, niche/data_science_tech, week/2026-W26]
+---
 # The ML Skill Agentic AI Bootcamps Won't Teach You (But Replaces You If You Skip It)
 
 *Alt subtitles:*

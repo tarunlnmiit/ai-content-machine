@@ -1,3 +1,12 @@
+---
+type: script
+niche: poetry_quotes
+date: 2026-06-16
+week: 2026-W25
+slug: you-have-gotta-dance-like-there-is-nobody-watching
+platform: yt
+tags: [content/script, niche/poetry_quotes, week/2026-W25]
+---
 ```
 SHOW: Breath of Poetry
 EPISODE TITLE (working): You Have to Dance Like Nobody's Watching

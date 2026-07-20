@@ -1,3 +1,9 @@
+---
+title: "Daily Content Guide"
+type: archive
+slug: daily-guide
+tags: [content/archive]
+---
 # Daily Content Guide
 
 > Open this every morning. Follow the steps for today. Close the laptop.

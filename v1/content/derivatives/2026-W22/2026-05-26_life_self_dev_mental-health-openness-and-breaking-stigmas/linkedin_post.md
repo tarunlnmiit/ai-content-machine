@@ -1,5 +1,12 @@
+---
+title: "LinkedIn Post — Life / Mental Health"
+type: derivative
+niche: life_self_dev
+week: 2026-W22
+slug: linkedin-post
+tags: [content/derivative, niche/life_self_dev, week/2026-W22]
+---
 # LinkedIn Post — Life / Mental Health
-# Status: DRAFT — do not publish until employer clearance
 
 ---
 

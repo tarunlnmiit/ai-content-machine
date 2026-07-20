@@ -1,3 +1,10 @@
+---
+type: buffer
+niche: poetry_quotes
+slug: looking-at-the-world-through-a-reflective-lens
+platform: youtube
+tags: [content/buffer, niche/poetry_quotes]
+---
 Reading the source, writing the script now.
 
 ```

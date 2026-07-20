@@ -1,3 +1,12 @@
+---
+title: "I've Done the Same 3-Step Morning Routine for 2 Years. Here's Why I'll Never Change It."
+type: blog
+niche: life_self_dev
+date: 2026-06-26
+week: 2026-W26
+slug: ive-done-the-same-3-step-morning-routine-for-2-years
+tags: [content/blog, niche/life_self_dev, week/2026-W26]
+---
 # I've Done the Same 3-Step Morning Routine for 2 Years. Here's Why I'll Never Change It.
 
 *A self-care morning that fits a real life — with a spouse, a social calendar, and no desire to suffer for productivity.*

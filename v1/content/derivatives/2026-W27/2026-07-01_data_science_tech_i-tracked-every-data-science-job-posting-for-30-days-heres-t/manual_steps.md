@@ -1,3 +1,11 @@
+---
+title: "Manual steps — `2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t`"
+type: derivative
+niche: data_science_tech
+week: 2026-W27
+slug: manual-steps
+tags: [content/derivative, niche/data_science_tech, week/2026-W27]
+---
 # Manual steps — `2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t`
 
 _Generated 2026-07-01. Everything below is a human action; the blog body stays clean._

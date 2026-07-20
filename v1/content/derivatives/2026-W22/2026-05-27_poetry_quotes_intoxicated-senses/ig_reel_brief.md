@@ -1,3 +1,11 @@
+---
+title: "Instagram Reel Brief — The Hangover That Won't Lift (Intoxicated Senses)"
+type: derivative
+niche: poetry_quotes
+week: 2026-W22
+slug: ig-reel-brief
+tags: [content/derivative, niche/poetry_quotes, week/2026-W22]
+---
 # Instagram Reel Brief — The Hangover That Won't Lift (Intoxicated Senses)
 
 **Week:** 2026-W22

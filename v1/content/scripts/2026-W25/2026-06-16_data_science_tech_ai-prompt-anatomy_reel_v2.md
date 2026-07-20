@@ -1,3 +1,12 @@
+---
+title: "Reel Script v2 — \"I stopped writing bad prompts\" (Prompt Anatomy — Jobhunt Framework)"
+type: script
+niche: data_science_tech
+date: 2026-06-16
+week: 2026-W25
+slug: ai-prompt-anatomy-reel-v2
+tags: [content/script, niche/data_science_tech, week/2026-W25]
+---
 # Reel Script v2 — "I stopped writing bad prompts" (Prompt Anatomy — Jobhunt Framework)
 
 **Niche:** Data Science / Tech · **Format:** talking-head + screen-record proof (before/after)

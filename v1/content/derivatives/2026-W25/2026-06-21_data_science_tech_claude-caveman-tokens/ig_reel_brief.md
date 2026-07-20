@@ -1,3 +1,11 @@
+---
+title: "IG Reel Brief — Claude + Caveman (save tokens)"
+type: derivative
+niche: data_science_tech
+week: 2026-W25
+slug: ig-reel-brief
+tags: [content/derivative, niche/data_science_tech, week/2026-W25]
+---
 # IG Reel Brief — Claude + Caveman (save tokens)
 
 **Niche:** DS · **Format:** Reel (9:16) · **Destinations:** Instagram Reel (@mistakenlyhuman) + YouTube Short

@@ -1,3 +1,10 @@
+---
+title: "Re-share Brief — Breath of Life Ep 8"
+type: derivative
+niche: life_self_dev
+slug: re-share-breathoflife-ep8
+tags: [content/derivative, niche/life_self_dev]
+---
 # Re-share Brief — Breath of Life Ep 8
 # "Why Humans Need Closure to Move On? The Need For Closure"
 # Post this the same week as the first new episode goes live.

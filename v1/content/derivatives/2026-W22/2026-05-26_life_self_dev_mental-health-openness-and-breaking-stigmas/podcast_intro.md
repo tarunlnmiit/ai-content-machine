@@ -1,3 +1,11 @@
+---
+title: "Podcast Metadata — Breath of Life"
+type: derivative
+niche: life_self_dev
+week: 2026-W22
+slug: podcast-intro
+tags: [content/derivative, niche/life_self_dev, week/2026-W22]
+---
 # Podcast Metadata — Breath of Life
 # Episode: The Lie We Inherited About Strength
 

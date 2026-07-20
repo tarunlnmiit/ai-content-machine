@@ -1,3 +1,10 @@
+---
+type: buffer
+niche: life_self_dev
+slug: how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals
+platform: youtube
+tags: [content/buffer, niche/life_self_dev]
+---
 ```
 SHOW: Breath of Life
 EPISODE TITLE (working): Your Habits Are Not the Problem

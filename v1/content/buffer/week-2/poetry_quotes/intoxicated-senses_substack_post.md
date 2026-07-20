@@ -1,4 +1,11 @@
 ---
+type: buffer
+niche: poetry_quotes
+slug: intoxicated-senses
+platform: substack
+tags: [content/buffer, niche/poetry_quotes]
+---
+---
 
 ## HOOK
 

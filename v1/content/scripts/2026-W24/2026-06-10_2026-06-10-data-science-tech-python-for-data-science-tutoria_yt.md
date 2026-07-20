@@ -1,3 +1,11 @@
+---
+type: script
+date: 2026-06-10
+week: 2026-W24
+slug: python-for-data-science-tutoria
+platform: yt
+tags: [content/script, week/2026-W24]
+---
 ```
 SHOW: Breath of Data Science
 EPISODE TITLE (working): Pandas in 4 Essential Skills: Load, Filter, Clean, Aggregate

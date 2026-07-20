@@ -1,3 +1,12 @@
+---
+title: "I Stopped Googling Travel Guides. I Interrogated an AI Instead - Here's the Exact Prompt That Worked"
+type: blog
+niche: data_science_tech
+date: 2026-06-16
+week: 2026-W25
+slug: ai-prompt-anatomy-travel
+tags: [content/blog, niche/data_science_tech, week/2026-W25]
+---
 # I Stopped Googling Travel Guides. I Interrogated an AI Instead - Here's the Exact Prompt That Worked
 
 Most people ask ChatGPT questions. I gave it a job. Here's the 5-part prompt anatomy that turned AI into my personal Parisian historian.

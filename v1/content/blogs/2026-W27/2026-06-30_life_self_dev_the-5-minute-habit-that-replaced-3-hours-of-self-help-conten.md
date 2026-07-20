@@ -1,3 +1,12 @@
+---
+title: "The 3 Hours You Spend on Self-Help Content Are Making You Worse at Self-Improvement"
+type: blog
+niche: life_self_dev
+date: 2026-06-30
+week: 2026-W27
+slug: the-5-minute-habit-that-replaced-3-hours-of-self-help-conten
+tags: [content/blog, niche/life_self_dev, week/2026-W27]
+---
 # The 3 Hours You Spend on Self-Help Content Are Making You Worse at Self-Improvement
 
 *Why real-time data on your own head beats borrowed frameworks for someone else's problems*

@@ -1,3 +1,11 @@
+---
+title: "Production Runbook — \"Claude replaced my video editor\" (granular, how-to)"
+type: reel
+niche: data_science_tech
+week: 2026-W26
+slug: production-runbook
+tags: [content/reel, niche/data_science_tech, week/2026-W26]
+---
 # Production Runbook — "Claude replaced my video editor" (granular, how-to)
 
 Companion to `reel_brief.md`. This is the **how**, step by step. Times assume macOS (your
