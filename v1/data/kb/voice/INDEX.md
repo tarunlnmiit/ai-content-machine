@@ -1,3 +1,9 @@
+---
+title: "Voice KB — Index (Poetry + Life)"
+type: kb
+slug: index
+tags: [content/kb]
+---
 # Voice KB — Index (Poetry + Life)
 
 Read this first. This folder is the **emotional/voice virality** knowledge base for the Poetry and Life/self-dev

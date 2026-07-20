@@ -1,3 +1,10 @@
+---
+title: "Poetry Niche Virality Formula"
+type: kb
+niche: poetry_quotes
+slug: formula
+tags: [content/kb, niche/poetry_quotes]
+---
 # Poetry Niche Virality Formula
 ## Reference account: @christi.steyn (~100k+ followers, spoken-word poetry)
 

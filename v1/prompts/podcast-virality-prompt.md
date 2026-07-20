@@ -1,3 +1,9 @@
+---
+title: "Podcast Virality Prompt (Spotify for Podcasters)"
+type: prompt
+slug: podcast-virality-prompt
+tags: [content/prompt]
+---
 # Podcast Virality Prompt (Spotify for Podcasters)
 
 Paste everything below into a new Claude conversation when you want help optimising your podcast for growth on Spotify — episode titles, show descriptions, episode structure, listener retention, or promotion strategy.

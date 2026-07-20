@@ -1,3 +1,9 @@
+---
+title: "Updated & Sustainable Content Strategy — 2026"
+type: kb
+slug: content-strategy
+tags: [content/kb]
+---
 # Updated & Sustainable Content Strategy — 2026
 
 > Source: handwritten notes (v2/Content-2026-06-23-16-52.pdf)  

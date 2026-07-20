@@ -1,3 +1,9 @@
+---
+title: "02 — Emotional Idea Bank (poetry + life)"
+type: kb
+slug: 02-idea-bank
+tags: [content/kb]
+---
 # 02 — Emotional Idea Bank (poetry + life)
 
 Concept menu for ideation. Each idea = an emotional hook archetype (`01`) + a theme that has resonated, mapped to

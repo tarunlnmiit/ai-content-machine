@@ -1,3 +1,10 @@
+---
+title: "DESIGN.md — Life & Self-Development Niche"
+type: kb
+niche: life_self_dev
+slug: design
+tags: [content/kb, niche/life_self_dev]
+---
 # DESIGN.md — Life & Self-Development Niche
 # Version: V2 (HyperFrames + Remotion pipeline)
 # Purpose: Machine-consumable look bible. Every beat builder reads this verbatim.

@@ -1,3 +1,9 @@
+---
+title: "YouTube Stock Video Script Agent"
+type: prompt
+slug: yt-stock-script-agent
+tags: [content/prompt]
+---
 # YouTube Stock Video Script Agent
 
 ## Role

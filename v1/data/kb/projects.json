@@ -134,7 +134,7 @@
       "niches": [
         "ds"
       ],
-      "hashtag_niche": "autopilot",
+      "hashtag_niche": "inbox_to_action",
       "utm_campaign": "inbox_to_action",
       "dm_keyword": "INBOX",
       "primary_goal": "github_stars",
@@ -142,15 +142,15 @@
         "frequency": "weekly",
         "format": "build-in-public reel",
         "angle_rotation": [
-          "new companies added to the scan",
-          "a real job a user landed via the shortlist",
-          "a live LLM score example (0-100 vs resume)",
-          "a new feature shipped (draft, export, MCP)",
-          "behind-the-scenes: how the scoring prompt works"
+          "a real inbox triaged live (unread mail -> tasks + drafts)",
+          "a Gmail draft it created, never sent (the safety proof)",
+          "a new LLM provider added (BYOK, incl. fully-local Ollama)",
+          "a new feature shipped (MCP server, calendar flagging, exports)",
+          "behind-the-scenes: how the classification prompt works"
         ]
       },
       "channels": {
-        "instagram": "reel + comment->DM (keyword 'jobs') via SuperProfile or CreatorFlow (ManyChat replacements)",
+        "instagram": "reel + comment->DM (keyword 'INBOX') via SuperProfile or CreatorFlow (ManyChat replacements)",
         "youtube_shorts": "same cut; repo link line 1 of description + pinned comment",
         "tiktok": "same cut; link in bio",
         "threads": "post",
@@ -162,7 +162,7 @@
           "reddit (blocked)"
         ]
       },
-      "dm_link_template": "https://github.com/tarunlnmiit/autopilot-jobhunt?utm_source=instagram&utm_medium=dm&utm_campaign=autopilot-jobhunt",
+      "dm_link_template": "https://github.com/tarunlnmiit/inbox-to-action?utm_source=instagram&utm_medium=dm&utm_campaign=inbox_to_action",
       "source_assets": []
     }
   ]

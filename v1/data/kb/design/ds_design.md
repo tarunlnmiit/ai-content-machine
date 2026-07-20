@@ -1,3 +1,10 @@
+---
+title: "DESIGN.md — Data Science / Tech Niche"
+type: kb
+niche: data_science_tech
+slug: design
+tags: [content/kb, niche/data_science_tech]
+---
 # DESIGN.md — Data Science / Tech Niche
 # Version: V2 (HyperFrames + Remotion pipeline)
 # Purpose: Machine-consumable look bible. Every beat builder reads this verbatim.

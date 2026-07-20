@@ -1,3 +1,10 @@
+---
+title: "Life Niche Virality Formula"
+type: kb
+niche: life_self_dev
+slug: formula
+tags: [content/kb, niche/life_self_dev]
+---
 # Life Niche Virality Formula
 ## Reference account: @ankurwarikoo (~9M+ followers, India's top self-dev creator)
 

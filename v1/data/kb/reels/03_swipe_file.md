@@ -1,3 +1,9 @@
+---
+title: "03 — Swipe File (evidence base)"
+type: kb
+slug: 03-swipe-file
+tags: [content/kb]
+---
 # 03 — Swipe File (evidence base)
 
 Every reference reel opened individually. Format: creator · hook/topic · keyword CTA · engagement · post ID. First number = likes; shares flagged where high. (IG doesn't expose saves; the middle count is unreliable due to Facebook cross-posted comments — treat likes + shares as signal.) ⭐ = closest to the build-and-teach lane.
@@ -56,3 +62,5 @@ Once a piece ships, add a row. Over time your own reels become the highest-prior
 - [2026-06-20] YT · One Line That Will Save Your Data Science Projects — 137 views, 1 likes, 0 comments
 - [2026-06-19] YT · Skip Hello World. Write This Instead. — 52 views, 0 likes, 0 comments
 - [2026-06-19] YT · You'll Write This Pattern 1,000 Times in Data Science — 47 views, 1 likes, 0 comments
+- [2026-06-22] YT · Python Gave Me a WRONG Answer With No Error (Here's Why) | Python for Data Science #2 — 56 views, 0 likes, 0 comments
+- [2026-06-21] YT · Why Simple Python Scripts Scale Further Than You Think — 19 views, 0 likes, 0 comments

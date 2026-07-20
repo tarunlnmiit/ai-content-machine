@@ -1,3 +1,9 @@
+---
+title: "Layout Catalogue — HyperFrames Beat Library"
+type: kb
+slug: layout-catalogue
+tags: [content/kb]
+---
 # Layout Catalogue — HyperFrames Beat Library
 # Version: v4 (52 blocks · 9 position zones)
 # Machine-readable. Storyboard generator reads this at runtime.

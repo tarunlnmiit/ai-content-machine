@@ -1,3 +1,9 @@
+---
+title: "Reel KB — Index"
+type: kb
+slug: index
+tags: [content/kb]
+---
 # Reel KB — Index
 
 Read this first. This folder holds the content-pattern knowledge base, reverse-engineered from a top-performing reel and ~24 saved inspiration reels. It is **format-agnostic source intelligence**: the patterns feed the whole repurposing pipeline (blog → YouTube → social/carousels → clips → Remotion reels), not just reels.

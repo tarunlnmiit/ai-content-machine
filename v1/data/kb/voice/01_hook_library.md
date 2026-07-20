@@ -1,3 +1,9 @@
+---
+title: "01 — Emotional Hook / Angle Library (poetry + life)"
+type: kb
+slug: 01-hook-library
+tags: [content/kb]
+---
 # 01 — Emotional Hook / Angle Library (poetry + life)
 
 Emotional archetypes that earn recognition (saves/shares), drawn from the account's proven voice

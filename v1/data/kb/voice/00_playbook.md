@@ -1,3 +1,9 @@
+---
+title: "00 — Voice Playbook (poetry + life strategy spine)"
+type: kb
+slug: 00-playbook
+tags: [content/kb]
+---
 # 00 — Voice Playbook (poetry + life strategy spine)
 
 The reels KB sells *built things*. This KB sells *being understood*. Poetry and life don't go viral by proving a

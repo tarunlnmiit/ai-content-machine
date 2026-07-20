@@ -1,3 +1,10 @@
+---
+title: "DESIGN.md — Poetry / Quotes Niche"
+type: kb
+niche: poetry_quotes
+slug: design
+tags: [content/kb, niche/poetry_quotes]
+---
 # DESIGN.md — Poetry / Quotes Niche
 # Version: V2 (HyperFrames + Remotion pipeline)
 # Purpose: Machine-consumable look bible. Every beat builder reads this verbatim.

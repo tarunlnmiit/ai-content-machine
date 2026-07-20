@@ -1,3 +1,9 @@
+---
+title: "04 — Authenticity Guardrail (poetry + life)"
+type: kb
+slug: 04-authenticity-guardrail
+tags: [content/kb]
+---
 # 04 — Authenticity Guardrail (poetry + life)
 
 Non-negotiable QA gate, the voice-niche companion to the tech `reels/04_honesty_guardrail.md`. Applies at the

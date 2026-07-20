@@ -1,3 +1,9 @@
+---
+title: "Worksheet Design Prompts for Canva"
+type: prompt
+slug: worksheet-canva-prompts
+tags: [content/prompt]
+---
 # Worksheet Design Prompts for Canva
 
 ## Data Science: Model-to-SQL Conversion Checklist

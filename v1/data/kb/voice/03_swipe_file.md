@@ -1,3 +1,9 @@
+---
+title: "03 — Swipe File (poetry + life evidence base)"
+type: kb
+slug: 03-swipe-file
+tags: [content/kb]
+---
 # 03 — Swipe File (poetry + life evidence base)
 
 The creator's *own* best-performing poetry/life pieces — the highest-priority evidence, because it reflects this
@@ -44,3 +50,5 @@ Once a piece ships, add a row. Your own pieces are the highest-priority signal a
 - [2026-06-17] YT · The Person Your Whole World Would Also Choose — 1 views, 0 likes, 0 comments
 - [2026-06-16] YT · Embarrassment Is the Key to Love — 3 views, 0 likes, 0 comments
 - [2026-06-16] YT · What Love Stories Get Wrong About Longing — 65 views, 1 likes, 0 comments
+- [2026-06-24] YT · Why 40% of Men Won't Admit They're Struggling (And What It's Costing Them) — 13 views, 0 likes, 0 comments
+- [2026-06-26] YT · When Love Becomes a Hangover You Can't Sleep Off | Intoxicated Senses (Original Poem) — 0 views, 0 likes, 0 comments

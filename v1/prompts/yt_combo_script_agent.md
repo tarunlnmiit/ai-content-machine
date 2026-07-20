@@ -1,3 +1,9 @@
+---
+title: "YouTube Combo Script Agent (Stock + Screen)"
+type: prompt
+slug: yt-combo-script-agent
+tags: [content/prompt]
+---
 # YouTube Combo Script Agent (Stock + Screen)
 
 ## Role
