@@ -1,0 +1,47 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "The Ten-Second Rule: A Worksheet for Saying the Hard Thing",
+  "sections": [
+    {
+      "title": "Find Your Silent Room",
+      "prompt": [
+        "Think of a recent meeting or conversation where everyone nodded but the room felt tense underneath. What was the unspoken number, risk, or truth everyone could see but nobody named?",
+        "Whose exchanged glances or body language told you the real story that day?",
+        "What did staying quiet cost the team in the weeks after — a missed deadline, a redo, a blown launch?",
+        "Write the exact sentence you would have said if you'd had the nerve, the way the author said 'the real number is closer to eight.'"
+      ]
+    },
+    {
+      "title": "Check If It's the Junior Analyst Move",
+      "prompt": [
+        "Is there someone on your team (or in your life) whose struggle you've been quietly fixing behind the scenes instead of naming directly?",
+        "What are you telling yourself about why silence is 'kinder' right now?",
+        "If this stayed unsaid for four more months, what's the blindsided moment that could follow — like the director pulling someone aside cold?",
+        "What would 'why did nobody tell me' sound like coming from this person, and does that change your urgency?"
+      ]
+    },
+    {
+      "title": "Draft the Sentence Using the Two Moves",
+      "prompt": [
+        "Rewrite your hard truth using the shared-problem framing: swap 'you didn't' for 'we set this up wrong — can we look at what happened.'",
+        "If the issue is someone avoiding an obvious problem, write the plain-and-owned version: 'I'm going to say the thing nobody's saying, and I might be wrong: ___.'",
+        "Read both versions out loud. Which one still sounds true if you're wrong about the details?",
+        "Type the final sentence into your notes app right now — not rehearsed in your head, actually written down."
+      ]
+    },
+    {
+      "title": "Run the Ego Gut-Check",
+      "prompt": [
+        "Ask yourself: would I still want this said if I later found out I misread the situation?",
+        "Is any part of this about needing to be right, needing to win, or needing credit for catching it?",
+        "Describe the quiet, reluctant feeling versus the loud, urgent feeling — which one are you actually feeling about this specific thing?",
+        "Name one situation from the past year where you now realize you were chasing being right instead of being useful."
+      ]
+    }
+  ],
+  "cta": "Reply with the exact sentence you wrote down in Section 3 — I read every one and I'll tell you if the 'we' framing is doing its job.",
+  "engage_potential": "high",
+  "blog_file": "content/blogs/2026-W28/2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it.md",
+  "slug": "2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it"
+}

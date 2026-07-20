@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Life — Carousel: self-improvement burnout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-primary:#E8705A;
+    --brand-light:#EF9585;
+    --brand-dark:#B34A38;
+    --light-bg:#EDE8DC;
+    --light-border:#D6D0C4;
+    --dark-bg:#1E1B2E;
+    --grad: linear-gradient(165deg, #B34A38 0%, #E8705A 50%, #EF9585 100%);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Nunito Sans', sans-serif;
+    background:#0d0d10;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:40px 0;
+  }
+
+  .ig-frame{
+    width:420px;
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .ig-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 14px;
+    border-bottom:1px solid #efefef;
+  }
+  .ig-avatar{
+    width:34px; height:34px; border-radius:50%;
+    background:var(--grad);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:700; font-size:16px; font-family:'Lora',serif;
+    flex-shrink:0;
+  }
+  .ig-handle{ font-size:13px; font-weight:600; color:#111; }
+  .ig-sub{ font-size:11px; color:#8a8a8a; }
+  .ig-dots{ margin-left:auto; font-size:18px; color:#333; letter-spacing:2px; }
+
+  .carousel-viewport{
+    width:420px;
+    height:525px;
+    overflow:hidden;
+    position:relative;
+    touch-action:pan-y;
+    cursor:grab;
+  }
+  .carousel-viewport:active{ cursor:grabbing; }
+
+  .carousel-track{
+    display:flex;
+    height:100%;
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    will-change: transform;
+  }
+
+  .slide{
+    width:420px;
+    height:525px;
+    flex-shrink:0;
+    position:relative;
+    background:var(--light-bg);
+    color:var(--dark-bg);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .slide.dark{
+    background:var(--dark-bg);
+    color:var(--light-bg);
+  }
+  .slide.grad{
+    background:var(--grad);
+    color:#fff;
+  }
+
+  .progress-row{
+    display:flex;
+    gap:5px;
+    padding:14px 18px 0;
+  }
+  .progress-seg{
+    flex:1;
+    height:3px;
+    border-radius:2px;
+    background:rgba(0,0,0,0.12);
+    overflow:hidden;
+  }
+  .slide.dark .progress-seg, .slide.grad .progress-seg{
+    background:rgba(255,255,255,0.22);
+  }
+  .progress-seg .fill{
+    height:100%;
+    width:0%;
+    background:var(--brand-dark);
+    border-radius:2px;
+  }
+  .slide.dark .progress-seg .fill, .slide.grad .progress-seg .fill{
+    background:#fff;
+  }
+
+  .slide-num{
+    position:absolute;
+    top:16px;
+    right:36px;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.5px;
+    padding:4px 9px;
+    border-radius:20px;
+    background:rgba(0,0,0,0.06);
+  }
+  .slide.dark .slide-num, .slide.grad .slide-num{ background:rgba(255,255,255,0.14); }
+
+  .follow-tag{
+    position:absolute;
+    top:16px;
+    left:36px;
+    font-size:10.5px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    opacity:0.75;
+  }
+
+  .content{
+    flex:1;
+    padding:0 36px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .content.bottom{
+    justify-content:flex-end;
+    padding:0 36px 52px;
+  }
+
+  .tag{
+    display:inline-block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--brand-dark);
+    background:rgba(232,112,90,0.14);
+    padding:6px 12px;
+    border-radius:20px;
+    margin-bottom:18px;
+    width:fit-content;
+    font-family:'Nunito Sans', sans-serif;
+  }
+  .slide.dark .tag{ color:var(--brand-light); background:rgba(239,149,133,0.16); }
+  .slide.grad .tag{ color:#fff; background:rgba(255,255,255,0.18); }
+
+  h1.headline{
+    font-family:'Lora', serif;
+    font-size:34px;
+    font-weight:600;
+    line-height:1.2;
+    letter-spacing:-0.3px;
+  }
+  h2.headline{
+    font-family:'Lora', serif;
+    font-size:27px;
+    font-weight:600;
+    line-height:1.24;
+    letter-spacing:-0.2px;
+    margin-bottom:14px;
+  }
+  .sub{
+    font-size:16px;
+    font-weight:400;
+    line-height:1.55;
+    margin-top:14px;
+    opacity:0.85;
+  }
+  .accent{ color:var(--brand-primary); }
+  .slide.dark .accent{ color:var(--brand-light); }
+  .slide.grad .accent{ color:#fff; text-decoration:underline; text-decoration-color:rgba(255,255,255,0.5); }
+
+  .stat-row{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    margin-bottom:16px;
+  }
+  .stat-num{
+    font-family:'Lora', serif;
+    font-weight:700;
+    font-size:22px;
+    color:var(--brand-primary);
+    min-width:64px;
+  }
+  .slide.dark .stat-num{ color:var(--brand-light); }
+  .stat-text .stat-title{ font-weight:700; font-size:15px; }
+  .stat-text .stat-desc{ font-size:13px; opacity:0.72; margin-top:2px; line-height:1.4; }
+
+  .feature-list{ margin-top:6px; }
+  .feature-row{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px solid var(--light-border);
+  }
+  .slide.dark .feature-row{ border-bottom:1px solid rgba(255,255,255,0.1); }
+  .feature-check{
+    width:20px; height:20px; border-radius:6px;
+    background:var(--brand-primary);
+    color:#fff; font-size:11px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; margin-top:1px;
+  }
+  .feature-row .ftext{ font-size:14px; line-height:1.4; font-weight:600; }
+  .feature-row .fdesc{ font-size:12px; opacity:0.65; margin-top:2px; font-weight:400; }
+
+  .guard-box{
+    border:1.5px solid var(--brand-primary);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-top:16px;
+    background:rgba(232,112,90,0.08);
+  }
+  .slide.dark .guard-box{ background:rgba(239,149,133,0.08); }
+  .guard-box .glabel{ font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--brand-dark); }
+  .slide.dark .guard-box .glabel{ color:var(--brand-light); }
+  .guard-box .gtext{ font-size:14.5px; margin-top:6px; line-height:1.45; font-weight:600; }
+
+  .quote-box{
+    border-left:3px solid var(--brand-primary);
+    padding-left:18px;
+    margin-top:6px;
+  }
+  .quote-box p{ font-family:'Lora', serif; font-size:20px; font-weight:600; line-height:1.4; }
+
+  .cta-btn{
+    display:inline-block;
+    background:#fff;
+    color:var(--brand-dark);
+    font-weight:700;
+    font-size:15px;
+    padding:14px 28px;
+    border-radius:30px;
+    margin-top:22px;
+    width:fit-content;
+    letter-spacing:0.3px;
+  }
+  .cta-keyword{
+    font-weight:700;
+    background:rgba(255,255,255,0.22);
+    padding:2px 8px;
+    border-radius:6px;
+  }
+  .save-hint{
+    font-size:12.5px;
+    opacity:0.75;
+    margin-top:14px;
+  }
+
+  .swipe-arrow{
+    position:absolute;
+    bottom:26px;
+    right:32px;
+    width:38px; height:38px;
+    border-radius:50%;
+    background:rgba(0,0,0,0.08);
+    display:flex; align-items:center; justify-content:center;
+    animation: nudge 1.6s ease-in-out infinite;
+  }
+  .slide.dark .swipe-arrow, .slide.grad .swipe-arrow{ background:rgba(255,255,255,0.18); }
+  .swipe-arrow svg{ width:16px; height:16px; }
+  @keyframes nudge{
+    0%,100%{ transform:translateX(0); }
+    50%{ transform:translateX(4px); }
+  }
+
+  .save-corner{
+    position:absolute;
+    bottom:26px;
+    left:36px;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    opacity:0.7;
+  }
+
+  .footer-attr{
+    position:absolute;
+    bottom:8px;
+    left:0; right:0;
+    text-align:center;
+    font-size:9.5px;
+    opacity:0.4;
+    letter-spacing:0.5px;
+  }
+
+  .ig-actions{
+    display:flex;
+    align-items:center;
+    padding:10px 14px 4px;
+    gap:16px;
+  }
+  .ig-icon{ font-size:22px; }
+  .ig-dots-indicator{
+    display:flex;
+    gap:5px;
+    justify-content:center;
+    padding:6px 0 4px;
+  }
+  .ig-dot{
+    width:5px; height:5px; border-radius:50%;
+    background:#d6d0c4;
+  }
+  .ig-dot.active{ background:var(--brand-dark); width:14px; border-radius:3px; }
+
+  .ig-caption{
+    padding:2px 14px 16px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:#222;
+  }
+  .ig-caption b{ font-weight:700; }
+  .ig-caption .tagline{ color:#8a8a8a; display:block; margin-top:4px; }
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">mistakenlyhuman</div>
+      <div class="ig-sub">Original audio</div>
+    </div>
+    <div class="ig-dots">⋯</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1: COVER / HOOK -->
+      <div class="slide dark">
+        <div class="progress-row" id="progress-row"></div>
+        <div class="slide-num">1 / 8</div>
+        <div class="content">
+          <div class="tag">A confession</div>
+          <h1 class="headline">I had <span class="accent">14 active habit streaks.</span><br>Then I chose one of them over my wife.</h1>
+          <p class="sub">She asked me to watch a movie. I pulled up my Notion tracker to explain why I couldn't — like I was declining a meeting.</p>
+        </div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#EDE8DC" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="footer-attr">@mistakenlyhuman</div>
+      </div>
+
+      <!-- SLIDE 2: REFRAME -->
+      <div class="slide">
+        <div class="progress-row"></div>
+        <div class="slide-num">2 / 8</div>
+        <div class="content">
+          <div class="tag">The reframe</div>
+          <h2 class="headline">Self-improvement burnout doesn't look like <span class="accent">quitting.</span></h2>
+          <p class="sub">It looks like winning — on paper — while the person the whole plan was for slowly disappears. I finished the deep work block anyway. That's the part that still bothers me.</p>
+        </div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#B34A38" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="footer-attr">@mistakenlyhuman</div>
+      </div>
+
+      <!-- SLIDE 3: THE SPECIFICS -->
+      <div class="slide dark">
+        <div class="progress-row"></div>
+        <div class="slide-num">3 / 8</div>
+        <div class="content">
+          <div class="tag">March 2024, at its worst</div>
+          <h2 class="headline">Three hours of "becoming better" before 9am.</h2>
+          <div class="feature-list">
+            <div class="feature-row">
+              <div class="feature-check">✓</div>
+              <div class="ftext">11 habits tracked across Notion, Habitica, and a spreadsheet I built myself</div>
+            </div>
+            <div class="feature-row">
+              <div class="feature-check">✓</div>
+              <div class="ftext">My mom called at 7:40. I didn't pick up — it was Anki time.</div>
+            </div>
+            <div class="feature-row">
+              <div class="feature-check">✓</div>
+              <div class="ftext">I felt irritated at my own mother for interrupting a streak</div>
+            </div>
+          </div>
+        </div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#EDE8DC" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="footer-attr">@mistakenlyhuman</div>
+      </div>
+
+      <!-- SLIDE 4: CAUSE AND EFFECT BACKWARDS -->
+      <div class="slide">
+        <div class="progress-row"></div>
+        <div class="slide-num">4 / 8</div>
+        <div class="content">
+          <div class="tag">What the data showed</div>
+          <h2 class="headline">The advice has cause and effect <span class="accent">backwards.</span></h2>
+          <p class="sub">My consistency score was 91%. By every standard the productivity gurus set, I was the success story. Then I looked at the data honestly: the weeks I scored highest were the weeks I wrote nothing worth reading — and called my parents least.</p>
+        </div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#B34A38" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="footer-attr">@mistakenlyhuman</div>
+      </div>
+
+      <!-- SLIDE 5: THE MOST VIRTUOUS HABIT DID THE MOST HARM -->
+      <div class="slide dark">
+        <div class="progress-row"></div>
+        <div class="slide-num">5 / 8</div>
+        <div class="content">
+          <div class="tag">The one that surprised me</div>
+          <h2 class="headline">The habit that hurt me most wasn't a lazy one.</h2>
+          <p class="sub">It was tracking everything. A novel doesn't produce a loggable number the way 20 pages of a self-help book does — so fiction quietly starved to death in my system. I stopped reading it. Not decided to. Stopped.</p>
+          <div class="guard-box">
+            <div class="glabel">What changed</div>
+            <div class="gtext">I became someone who audits his own life like a quarterly report. My wife noticed before I did.</div>
+          </div>
+        </div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#EDE8DC" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="footer-attr">@mistakenlyhuman</div>
+      </div>
+
+      <!-- SLIDE 6: BEFORE / AFTER NUMBERS -->
+      <div class="slide">
+        <div class="progress-row"></div>
+        <div class="slide-num">6 / 8</div>
+        <div class="content">
+          <div class="tag">What I cut, what came back</div>
+          <div class="stat-row">
+            <div class="stat-num">14→4</div>
+            <div class="stat-text">
+              <div class="stat-title">Tracked habits</div>
+              <div class="stat-desc">Dropped: cold showers, a second workout, speed-reading, three journaling apps, a guilt-driven "one paper a day" rule</div>
+            </div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-num">~12hrs</div>
+            <div class="stat-text">
+              <div class="stat-title">Reclaimed per week</div>
+              <div class="stat-desc">Mornings went from 2.5 hours to about 45 minutes</div>
+            </div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-num">3x</div>
+            <div class="stat-text">
+              <div class="stat-title">Writing output, in 3 weeks</div>
+              <div class="stat-desc">Not a better writing system — the habit finally had room instead of running at slot 11 of 14</div>
+            </div>
+          </div>
+        </div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#B34A38" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="footer-attr">@mistakenlyhuman</div>
+      </div>
+
+      <!-- SLIDE 7: THE WASTED TIME WAS LOAD-BEARING / RECAP -->
+      <div class="slide dark">
+        <div class="progress-row"></div>
+        <div class="slide-num">7 / 8</div>
+        <div class="content">
+          <div class="tag">The test</div>
+          <div class="quote-box">
+            <p>Don't ask "am I consistent?" Ask "who is this consistency producing?"</p>
+          </div>
+          <p class="sub">I used to rewatch cricket highlights I'd already seen, outcomes I knew by heart. I called it dead time and replaced it with a podcast at 1.5x. That's when I started drafting tweets in my head during dinner.</p>
+        </div>
+        <div class="swipe-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#EDE8DC" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+        <div class="footer-attr">@mistakenlyhuman</div>
+      </div>
+
+      <!-- SLIDE 8: CTA -->
+      <div class="slide grad">
+        <div class="progress-row"></div>
+        <div class="slide-num">8 / 8</div>
+        <div class="content bottom">
+          <div class="tag">Free worksheet</div>
+          <h2 class="headline">Run this same audit on your own schedule.</h2>
+          <p class="sub">I built the exact worksheet I used to find which 12 habits were suffocating the 4 that mattered — free, no strings.</p>
+          <div class="cta-btn">Comment <span class="cta-keyword">AUDIT</span> and I'll DM it to you</div>
+          <div class="save-hint">Don't want to comment? DM me "AUDIT" directly.</div>
+        </div>
+        <div class="footer-attr">@mistakenlyhuman</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-actions">
+    <div class="ig-icon">♡</div>
+    <div class="ig-icon">💬</div>
+    <div class="ig-icon">➤</div>
+    <div class="ig-icon" style="margin-left:auto;">⚑</div>
+  </div>
+  <div class="ig-dots-indicator" id="dots-indicator"></div>
+
+  <div class="ig-caption">
+    <b>mistakenlyhuman</b> I had 14 active habit streaks. My consistency score was 91%. And the weeks I scored highest were the weeks I called my parents least and wrote nothing worth reading.
+    <span class="tagline">Self-improvement burnout doesn't look like quitting — it looks like winning, while the person the plan was for disappears. I cut 14 habits to 4, got 12 hours a week back, and tripled my writing output in 3 weeks. Comment AUDIT for the free worksheet to run this same audit on your own schedule.</span>
+  </div>
+
+</div>
+
+<script>
+  const SLIDE_COUNT = 8;
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('viewport');
+  const progressRow = document.getElementById('progress-row');
+  const dotsIndicator = document.getElementById('dots-indicator');
+  const SLIDE_W = 420;
+  let current = 0;
+
+  for (let i = 0; i < SLIDE_COUNT; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'progress-seg';
+    const fill = document.createElement('div');
+    fill.className = 'fill';
+    seg.appendChild(fill);
+    progressRow.appendChild(seg);
+
+    const dot = document.createElement('div');
+    dot.className = 'ig-dot' + (i === 0 ? ' active' : '');
+    dotsIndicator.appendChild(dot);
+  }
+
+  function render() {
+    track.style.transform = `translateX(-${current * SLIDE_W}px)`;
+    const fills = progressRow.querySelectorAll('.fill');
+    fills.forEach((fill, i) => {
+      fill.style.width = i <= current ? '100%' : '0%';
+    });
+    const dots = dotsIndicator.querySelectorAll('.ig-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === current);
+    });
+  }
+  render();
+
+  let startX = 0, dragging = false, deltaX = 0;
+
+  viewport.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX;
+    track.style.transition = 'none';
+  });
+  viewport.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    deltaX = e.clientX - startX;
+    track.style.transform = `translateX(${-current * SLIDE_W + deltaX}px)`;
+  });
+  window.addEventListener('pointerup', () => {
+    if (!dragging) return;
+    dragging = false;
+    track.style.transition = '';
+    if (deltaX < -60 && current < SLIDE_COUNT - 1) current++;
+    else if (deltaX > 60 && current > 0) current--;
+    deltaX = 0;
+    render();
+  });
+
+  viewport.addEventListener('click', (e) => {
+    if (Math.abs(deltaX) > 5) return;
+    const rect = viewport.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    if (clickX > rect.width / 2 && current < SLIDE_COUNT - 1) current++;
+    else if (clickX <= rect.width / 2 && current > 0) current--;
+    render();
+  });
+</script>
+
+</body>
+</html>

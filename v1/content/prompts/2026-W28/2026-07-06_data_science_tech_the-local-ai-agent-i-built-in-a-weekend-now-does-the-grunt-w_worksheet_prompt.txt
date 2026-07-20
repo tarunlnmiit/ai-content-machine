@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "Build Your Own Read-Only Local Agent Audit"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Spec Your Local Stack
+   Write down your own equivalent of the Ollama + Qwen2.5-14B + LangGraph + DuckDB stack: pick a local model your machine can run (check quant size against your RAM), and list the exact tool-calls it gets access to first — file listing, SELECT queries, CSV grep — nothing else, matching the read-only-first rule from the post.
+
+2. Find Your Own Null-Signup Bug
+   Take a real table you own with nullable date or category columns and ask: if I dropped every null row right now, what silent business meaning would I destroy? Write the one-line reclassification (like the signup_channel isna().map() fix) that turns the null into signal instead of deleting it.
+
+3. Draw Your Reliable vs Can't-Touch Line
+   List 5 tasks you'd hand to a local agent. For each, mark 'Reliable' only if you can verify the answer in under 10 seconds (re-run the query, eyeball the number) and 'Can't touch' if it requires knowing why a number moved or which metric matters for a decision — be honest about which column most tasks land in.
+
+4. Cost the Cloud-vs-Local Tradeoff
+   Calculate your own version of the '$60-70/month in API calls' number: estimate how many cleanup/profiling calls you'd make locally in a week, multiply by your current API per-call cost, and compare against the hardware you already own to decide if going local is a real unlock or just a vibe.
+
+5. Write the Escalation Sentence
+   Pick a metric your agent (or you) tracks weekly. Write the one sentence a junior analyst should say when the number moves — the 'that's not the question you should be asking' pushback — for a scenario where an external event (pricing change, upstream schema change) makes the raw delta misleading.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"
