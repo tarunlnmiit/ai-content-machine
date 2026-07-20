@@ -1,3 +1,9 @@
+---
+title: "Medium Publications to Join as a Writer"
+type: doc
+slug: medium-publications-to-join
+tags: [content/doc]
+---
 # Medium Publications to Join as a Writer
 
 > Generated 2026-06-26. Goal: relevant Medium publications **not yet** in your "Submit to a publication → Contributing" list, grouped by your 3 niches, with how to get added as a writer.
