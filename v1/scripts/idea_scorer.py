@@ -302,15 +302,12 @@ def _score_with_claude(
         top_n=top_n,
     )
     try:
-        resp = client.messages.create(
-            # Sonnet 5 for idea scoring — highest-leverage judgment call in the
-            # pipeline; weekly volume is tiny so API cost stays in pennies.
-            model="claude-sonnet-5",
-            max_tokens=1500,
-            system=system,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = resp.content[0].text.strip()
+        # Sonnet 5 for idea scoring — highest-leverage judgment call in the
+        # pipeline. Via claude -p on subscription OAuth (API key retired 2026-07).
+        from lib.claude_cli import call_claude
+        raw = call_claude(
+            f"{system}\n\n{prompt}", cache=False, timeout=180, model="claude-sonnet-5"
+        ).strip()
         if raw.startswith("```"):
             raw = raw.split("```", 2)[1]
             if raw.startswith("json"):
@@ -347,13 +344,14 @@ def _render_project_reel(reel: dict) -> str:
 
 def _render_raw_takes(questions: list[dict]) -> str:
     lines = [
-        "### 🎤 Raw Take Batch (4 this week — Hinglish, batch-record in one sitting)",
+        "### 🎤 Raw Take Batch (4 this week — English, batch-record in one sitting)",
         "> `docs/raw-take-format.md` · Format: 'Someone asked me — <Q>' → raw opinion → landing line",
         "",
     ]
     for i, q in enumerate(questions, 1):
-        lines.append(f"{i}. **Q:** _{q['q']}_ `[{q.get('theme','')}]`")
-        lines.append(f"   Hook: \"Someone asked me — {q['q']}\"")
+        q_text = q.get("q_en", q["q"])
+        lines.append(f"{i}. **Q:** _{q_text}_ `[{q.get('theme','')}]`")
+        lines.append(f"   Hook: \"Someone asked me — {q_text}\"")
         lines.append("")
     return "\n".join(lines)
 
@@ -493,7 +491,7 @@ def main() -> None:
             scored[niche] = []
             continue
 
-        console.print(f"  {niche}: {len(items)} items → scoring…", end=" ", flush=True)
+        console.print(f"  {niche}: {len(items)} items → scoring…", end=" ")
         ideas = _score_with_claude(
             niche, items, recent_by_niche.get(niche, []),
             master_brief, hook_patterns, client, top_n=args.top,

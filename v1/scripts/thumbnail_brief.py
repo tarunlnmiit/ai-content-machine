@@ -122,7 +122,7 @@ def main():
         try:
             print("Calling claude -p ...", end=" ", flush=True)
             result = subprocess.run(
-                ["claude", "-p", prompt],
+                ["claude", "-p", "--", prompt],
                 capture_output=True, text=True, timeout=120,
             )
             if result.returncode != 0 or not result.stdout.strip():

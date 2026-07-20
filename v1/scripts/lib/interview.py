@@ -62,6 +62,10 @@ def load_interview_config(niche: str) -> dict[str, str]:
 def render_template(template_name: str, values: dict[str, str]) -> str:
     """Substitute {{PLACEHOLDER}} tokens. Unknown placeholders are left blank."""
     text = (PROMPTS_DIR / template_name).read_text(encoding="utf-8")
+    if text.startswith("---\n"):
+        end = text.find("\n---\n", 4)
+        if end != -1:
+            text = text[end + 5:]
 
     def repl(match: re.Match) -> str:
         return str(values.get(match.group(1).strip(), ""))
@@ -210,7 +214,7 @@ def write_article(
     })
     if extra_instruction:
         prompt += f"\n\n{extra_instruction}"
-    raw = run_claude(prompt, timeout=900, description="Writing the article (Fable 5, may take several minutes)...")
+    raw = run_claude(prompt, timeout=900, description="Writing the article (Opus 4.8, may take several minutes)...")
     return _parse_article(raw)
 
 

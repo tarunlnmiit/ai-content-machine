@@ -219,7 +219,7 @@ def run_claude(prompt: str, timeout: int, description: str) -> str:
     with spinner() as progress:
         task = progress.add_task(description)
         result = subprocess.run(
-            ["claude", "-p", prompt],
+            ["claude", "-p", "--", prompt],
             capture_output=True, text=True, timeout=timeout,
         )
         progress.update(task, description=f"[success]{description} — done[/success]")

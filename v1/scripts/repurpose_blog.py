@@ -157,7 +157,7 @@ def extract_json(text: str) -> dict:
 def call_claude_pro(prompt: str) -> tuple[str, dict]:
     """Returns (text, usage_dict). Raises on subprocess failure."""
     result = subprocess.run(
-        ["claude", "-p", prompt],
+        ["claude", "-p", "--", prompt],
         capture_output=True,
         text=True,
         timeout=600,
@@ -738,7 +738,7 @@ def main() -> None:
 
     # 2e. IG carousel (HTML + Playwright PNG export)
     console.print("\n[bold]2e. IG carousel[/bold]")
-    carousel_html = REPO / "assets" / "carousels" / f"{slug}_carousel.html"
+    carousel_html = REPO / "assets" / "carousels" / week / f"{slug}_carousel.html"
     if should_run("carousel", carousel_html):
         run_step(
             ["python3", SCRIPTS / "generate_carousel.py",

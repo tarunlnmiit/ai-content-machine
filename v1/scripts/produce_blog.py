@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import random
 import re
 import subprocess
 import sys
@@ -59,10 +60,20 @@ RESEARCH_CONFIG: dict[str, dict] = {
         "google_seeds": [
             "data science career 2026", "machine learning for data scientists",
             "python data engineering", "AI tools for analysts", "Claude for data science",
+            "LLM agents in production", "data science interview preparation 2026",
+            "MLOps best practices", "SQL vs python for analytics",
+            "AI automation for small business", "vector databases explained",
+            "prompt engineering for data work",
         ],
         "medium_feeds": [
             "https://medium.com/feed/tag/data-science",
             "https://medium.com/feed/tag/machine-learning",
+            "https://medium.com/feed/tag/artificial-intelligence",
+            "https://medium.com/feed/tag/python",
+            "https://medium.com/feed/tag/llm",
+            "https://medium.com/feed/tag/data-engineering",
+            "https://medium.com/feed/tag/programming",
+            "https://medium.com/feed/tag/mlops",
         ],
     },
     "life": {
@@ -70,10 +81,20 @@ RESEARCH_CONFIG: dict[str, dict] = {
         "google_seeds": [
             "productivity habits 2025", "self improvement morning routine",
             "focus and deep work tips", "personal growth mindset", "discipline vs motivation",
+            "how to build better relationships", "career growth mindset shift",
+            "sleep and energy management tips", "journaling for self reflection",
+            "minimalism and decluttering life", "emotional intelligence at work",
+            "how to make better decisions",
         ],
         "medium_feeds": [
             "https://medium.com/feed/tag/self-improvement",
             "https://medium.com/feed/tag/productivity",
+            "https://medium.com/feed/tag/self-help",
+            "https://medium.com/feed/tag/motivation",
+            "https://medium.com/feed/tag/mindfulness",
+            "https://medium.com/feed/tag/habits",
+            "https://medium.com/feed/tag/mental-health",
+            "https://medium.com/feed/tag/psychology",
         ],
     },
     "poetry": {
@@ -117,11 +138,18 @@ def _get(url: str, timeout: int = 6) -> str:
         return ""
 
 
+def _daily_sample(pool: list[str], k: int) -> list[str]:
+    """Date-seeded sample: same subset within a day (reproducible reruns),
+    rotates across days so consecutive runs pull fresh signal."""
+    rng = random.Random(date.today().toordinal())
+    return rng.sample(pool, min(k, len(pool)))
+
+
 def fetch_google_signals(niche: str, seeds_override: list[str] | None = None) -> list[str]:
     seeds = seeds_override or RESEARCH_CONFIG[niche]["google_seeds"]
     seen: set[str] = set()
     results: list[str] = []
-    for seed in seeds[:3]:
+    for seed in _daily_sample(seeds, 3):
         q = urllib.parse.quote_plus(seed)
         raw = _get(f"https://suggestqueries.google.com/complete/search?client=firefox&q={q}")
         try:
@@ -138,16 +166,18 @@ def fetch_google_signals(niche: str, seeds_override: list[str] | None = None) ->
 def fetch_medium_titles(niche: str) -> list[str]:
     feeds = RESEARCH_CONFIG[niche]["medium_feeds"]
     titles: list[str] = []
-    for url in feeds:
+    for url in _daily_sample(feeds, 3):
         raw = _get(url, timeout=8)
+        feed_titles: list[str] = []
         for m in re.findall(r"<title><!\[CDATA\[(.+?)\]\]></title>", raw):
-            if m not in titles:
-                titles.append(m)
+            if m not in titles and m not in feed_titles:
+                feed_titles.append(m)
         for m in re.findall(r"<title>(.+?)</title>", raw):
             clean = re.sub(r"<[^>]+>", "", m).strip()
-            if clean and clean not in titles and "Medium" not in clean:
-                titles.append(clean)
-    return titles[1:16]  # skip feed-level title
+            if clean and clean not in titles and clean not in feed_titles and "Medium" not in clean:
+                feed_titles.append(clean)
+        titles.extend(feed_titles[1:])  # per-feed skip of the feed-level title
+    return titles[:25]
 
 
 def get_recent_titles(niche: str, days: int = 90) -> list[str]:
@@ -850,13 +880,13 @@ Produce the full blog post in clean Markdown, structured exactly as specified.
 
 
 def run_claude(prompt: str, timeout: int, description: str) -> str:
-    # hero_blog routes via niche_config.MODEL_BY_TASK (Fable 5) — single turns can
+    # hero_blog routes via niche_config.MODEL_BY_TASK (Opus 4.8) — single turns can
     # run minutes on hard tasks, so article-writing callers pass generous timeouts.
     model = model_for("hero_blog")
     with spinner() as progress:
         task = progress.add_task(description)
         result = subprocess.run(
-            ["claude", "-p", prompt, "--model", model],
+            ["claude", "-p", "--model", model, "--", prompt],
             capture_output=True, text=True, timeout=timeout,
         )
         progress.update(task, description=f"[success]{description} — done[/success]")
@@ -955,6 +985,11 @@ def main():
         "--no-worksheet",
         action="store_true",
         help="Skip auto-generating the companion worksheet (DS/Life niches).",
+    )
+    parser.add_argument(
+        "--no-carousel",
+        action="store_true",
+        help="Skip auto-generating the Instagram carousel (all niches).",
     )
     parser.add_argument(
         "--image",
@@ -1148,6 +1183,23 @@ def main():
         except Exception as e:  # noqa: BLE001 — never fail the blog on the worksheet
             console.print(f"[warn]Worksheet step failed: {e}[/warn]")
             manual.append(("Worksheet", f"⚠️ generation failed: {e}\nRetry: `python3 scripts/generate_worksheet_html.py -i {rel}`"))
+
+    # ── Step 5 — Instagram carousel (all niches): Claude-designed HTML + PNG export ──
+    # repurpose_blog.py also runs this in the full pipeline; generate_carousel.py
+    # self-skips when the output exists, so the overlap is an idempotent no-op.
+    if not args.no_carousel:
+        try:
+            console.print("\n[info]Building Instagram carousel...[/info]")
+            carousel_cmd = [sys.executable, str(Path(__file__).parent / "generate_carousel.py"),
+                            "--blog", str(out_path), "--export"]
+            if args.project:
+                carousel_cmd += ["--project", args.project]
+            subprocess.run(carousel_cmd, check=True)
+            console.print("  [success]✓ Carousel ready[/success]")
+            manual.append(("Carousel", f"Generated: `assets/carousels/{week}/{full_slug}_carousel.html` (+ exported slide PNGs)."))
+        except Exception as e:  # noqa: BLE001 — never fail the blog on the carousel
+            console.print(f"[warn]Carousel step failed: {e}[/warn]")
+            manual.append(("Carousel", f"⚠️ generation failed: {e}\nRetry: `python3 scripts/generate_carousel.py --blog {rel} --export`"))
 
     # ── SEO + publish → sidecar (Medium API can't set SEO title/description) ───
     seo_steps = seo_manual_steps(extract_seo(blog_text))

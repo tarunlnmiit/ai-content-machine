@@ -243,33 +243,41 @@ def trigger_lexicon(niche: Optional[str]) -> list[str]:
     return sorted(triggers)
 
 
-def virality_block(content_type: str, niche: Optional[str], project_key: Optional[str] = None) -> str:
+def virality_block(content_type: str, niche: Optional[str], project_key: Optional[str] = None,
+                   suppress_house_style: bool = False) -> str:
     """Compact virality instruction block for a generator prompt.
 
     Routes poetry/life -> Voice KB, ds/project -> Reels KB. Returns "" if KB is unavailable.
+
+    When ``suppress_house_style`` is True, the style directives that an authoritative
+    external playbook (e.g. the carousel playbook) is meant to own are omitted: the hook
+    taxonomy, the niche caption/cover formula digest, and the format CTA line. The generic
+    spine, the honesty/authenticity guardrail, and the project block are always kept.
     """
     parts: list[str] = [_SPINE]
 
     if is_voice_niche(niche):
         # Emotional layer (always for poetry/life — never the tech KB, even with a project;
         # the project block still appends below). Prefer voice/01 archetype names.
-        archetypes = _h3_headings(_read(VOICE_DIR / "01_hook_library.md"))
-        if not archetypes:
-            archetypes = [c["name"] for c in load_voice_hooks(niche)]
-        if archetypes:
-            parts.append("EMOTIONAL HOOKS (pick one, test 2-3): " + "; ".join(archetypes[:6]) + ".")
+        if not suppress_house_style:
+            archetypes = _h3_headings(_read(VOICE_DIR / "01_hook_library.md"))
+            if not archetypes:
+                archetypes = [c["name"] for c in load_voice_hooks(niche)]
+            if archetypes:
+                parts.append("EMOTIONAL HOOKS (pick one, test 2-3): " + "; ".join(archetypes[:6]) + ".")
         parts.append(_VOICE_GUARDRAIL)
     else:
         # Tech/build layer (ds, or any niche when a project is set).
-        archetypes = _h3_headings(_read(REELS_DIR / "01_hook_library.md"))
-        if archetypes:
-            parts.append("BUILD/TEACH HOOKS (pick one): " + "; ".join(archetypes[:6]) + ".")
+        if not suppress_house_style:
+            archetypes = _h3_headings(_read(REELS_DIR / "01_hook_library.md"))
+            if archetypes:
+                parts.append("BUILD/TEACH HOOKS (pick one): " + "; ".join(archetypes[:6]) + ".")
         parts.append(_TECH_GUARDRAIL)
 
     if content_type in ("clip_select", "scene_plan_short"):
         parts.append(_FIVE_BEAT)
 
-    if content_type in _FORMULA_TYPES:
+    if content_type in _FORMULA_TYPES and not suppress_house_style:
         digest = caption_formula_digest(niche)
         if digest:
             parts.append("NICHE VIRALITY FORMULA (cover/hook/caption — this niche):\n" + digest)
@@ -278,8 +286,9 @@ def virality_block(content_type: str, niche: Optional[str], project_key: Optiona
     if proj:
         parts.append(_project_block(proj))
 
-    cta = _CTA.get(content_type)
-    if cta:
-        parts.append(cta)
+    if not suppress_house_style:
+        cta = _CTA.get(content_type)
+        if cta:
+            parts.append(cta)
 
     return "\n".join(parts)

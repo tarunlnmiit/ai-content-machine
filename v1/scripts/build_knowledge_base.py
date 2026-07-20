@@ -290,7 +290,7 @@ Use specific numbers from the analytics. Focus on actionable insights.
     log("Calling claude -p ...")
     try:
         result = _sp.run(
-            ["claude", "-p", prompt],
+            ["claude", "-p", "--", prompt],
             capture_output=True, text=True, timeout=300,
         )
         if result.returncode == 0 and result.stdout.strip():
