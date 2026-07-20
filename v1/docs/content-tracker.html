@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Content Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#14121f;color:#EDE8DC;font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+       padding:28px;line-height:1.5}
+  h1{font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
+  .sub{font-size:13px;opacity:.6;margin-bottom:16px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;align-items:center}
+  .toolbar select,.toolbar input,.toolbar button{background:rgba(255,255,255,.06);
+       border:1px solid rgba(255,255,255,.15);
+       color:#EDE8DC;border-radius:8px;padding:6px 10px;font-size:13px;font-family:inherit}
+  .toolbar input{min-width:220px}
+  .toolbar button{cursor:pointer}
+  .toolbar button:hover{background:rgba(255,255,255,.12)}
+  .summary{font-size:12px;opacity:.6;margin-bottom:10px}
+  .sortwrap{display:flex;align-items:center;gap:6px}
+  .sortwrap label{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;opacity:.5}
+
+  .cell-editor{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);
+       color:#EDE8DC;border-radius:4px;padding:4px 6px;font-size:12px;font-family:inherit}
+  .cell-editor select{max-width:200px}
+  .cell-editor input{min-width:120px}
+  .notebtn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);
+       color:#EDE8DC;border-radius:4px;padding:1px 7px;margin-top:5px;font-size:10.5px;
+       font-family:inherit;cursor:pointer;opacity:.7;display:block}
+  .notebtn:hover{opacity:1;background:rgba(255,255,255,.12)}
+  .cell-flash{animation:cellFlash 0.3s ease-out}
+  @keyframes cellFlash{0%{background:rgba(127,209,168,.3)}100%{background:transparent}}
+  .cell-error{animation:cellError 0.4s ease-out}
+  @keyframes cellError{0%{background:rgba(232,116,90,.3)}100%{background:transparent}}
+
+  /* the wrap owns BOTH axes of scrolling — that is what gives sticky th a moving
+     scrollport to stick to, and it keeps the page itself from growing. */
+  .table-wrap{overflow:auto;max-height:calc(100vh - 260px);
+       border:1px solid rgba(255,255,255,.12);border-radius:10px;max-width:100%}
+  table{border-collapse:collapse;width:100%;font-size:12.5px}
+  th,td{text-align:left;padding:7px 10px;vertical-align:top;
+       border-bottom:1px solid rgba(255,255,255,.08);white-space:nowrap}
+  th{position:sticky;top:0;z-index:2;background:#1b1830;font-size:10.5px;text-transform:uppercase;
+     letter-spacing:.08em;opacity:.65;cursor:pointer;user-select:none;
+     border-bottom:none;box-shadow:inset 0 -1px 0 rgba(255,255,255,.15)}
+  th:hover{opacity:1}
+  th.sorted{opacity:1;color:#EDE8DC}
+  td code{font-family:'JetBrains Mono',monospace;font-size:11.5px;opacity:.85}
+  tr.flagged td{background:rgba(232,116,90,.08)}
+  .flagbadge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;
+       border:1px solid #E8745A;color:#E8745A;background:rgba(232,116,90,.12)}
+  .orphanbadge{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.08em;
+       padding:1px 6px;border-radius:4px;margin-right:6px;vertical-align:1px;
+       border:1px solid rgba(237,232,220,.3);color:#EDE8DC;background:rgba(255,255,255,.07)}
+  .qmark{color:#E8745A;font-weight:800}
+
+  /* nowrap stays the default (dates/statuses must not break); only the prose-y and
+     path columns opt into wrapping, or the table runs ~16000px wide. */
+  /* min-width matters as much as max: under auto table layout the nowrap columns
+     bully the wrapping ones down to a few characters and rows grow 7 lines tall. */
+  td[data-key="title"],th[data-key="title"]{white-space:normal;min-width:250px;max-width:320px}
+  td[data-key="flags"],th[data-key="flags"]{white-space:normal;min-width:170px;max-width:240px;cursor:pointer}
+  td[data-key="notes"],th[data-key="notes"]{white-space:normal;min-width:240px;max-width:380px;cursor:pointer}
+  td[data-auto="1"]{white-space:normal;max-width:320px;word-break:break-all}
+  td[data-key="reel.ref"],td[data-key="longform.ref"]{white-space:normal;max-width:220px;word-break:break-all}
+  td[data-key="medium.url"],td[data-key="linkedin.url"],td[data-key="carousel.url"],
+  td[data-key="reel.ig"],td[data-key="reel.yt"],td[data-key="longform.url"],
+  td[data-key="worksheet.url"]{white-space:normal;max-width:240px;word-break:break-all}
+  td[data-key="medium.pub"]{white-space:normal;max-width:170px}
+  .clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  td.expanded .clamp{-webkit-line-clamp:unset;display:block}
+  td[data-key="title"] .clamp{-webkit-line-clamp:3}
+
+  .colwrap{position:relative;display:inline-block}
+  .colpanel{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:10;
+       background:#1b1830;border:1px solid rgba(255,255,255,.18);border-radius:10px;
+       padding:12px 14px;min-width:520px;max-height:60vh;overflow:auto;
+       box-shadow:0 12px 32px rgba(0,0,0,.5);
+       columns:2;column-gap:22px}
+  .colpanel.open{display:block}
+  .colgroup{break-inside:avoid;margin-bottom:12px}
+  .colgroup h4{font-size:10px;text-transform:uppercase;letter-spacing:.1em;opacity:.5;
+       margin-bottom:5px;font-weight:800}
+  .colgroup label{display:block;font-size:12px;padding:2px 0;cursor:pointer;opacity:.9}
+  .colgroup label:hover{opacity:1}
+  .colgroup input{margin-right:7px;vertical-align:-1px}
+  .colgroup .ga{font-size:10px;opacity:.5;cursor:pointer;margin-left:6px;text-decoration:underline}
+  .ds-foot{margin-top:20px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12);
+       font-size:11px;opacity:.55}
+</style>
+</head>
+<body>
+<h1>Content Tracker</h1>
+<p class="sub">Generated by v1/scripts/generate_tracker_html.py from v1/docs/content-tracker.md. Data baked in — no live fetch.</p>
+<div class="toolbar">
+  <select id="fWeek"><option value="">All weeks</option></select>
+  <select id="fNiche"><option value="">All niches</option></select>
+  <select id="fMediumStatus"><option value="">All medium statuses</option></select>
+  <select id="fType">
+    <option value="">All types</option>
+    <option value="orphan">Orphans only</option>
+    <option value="piece">Non-orphans only</option>
+  </select>
+  <input id="fSearch" type="text" placeholder="Search title / slug / notes...">
+  <span class="colwrap">
+    <button id="colBtn" type="button">Columns ▾</button>
+    <div class="colpanel" id="colPanel"></div>
+  </span>
+  <span class="sortwrap">
+    <label for="fSort">Sort</label>
+    <select id="fSort"></select>
+    <select id="fSortDir">
+      <option value="desc">newest / Z→A</option>
+      <option value="asc">oldest / A→Z</option>
+    </select>
+  </span>
+</div>
+<p class="summary" id="summary"></p>
+<div class="table-wrap">
+  <table id="tracker">
+    <thead><tr id="headRow"></tr></thead>
+    <tbody id="bodyRows"></tbody>
+  </table>
+</div>
+<div class="ds-foot">Regenerate with: python3 v1/scripts/generate_tracker_html.py</div>
+<script>
+const COLUMNS = [["slug", "Slug", "Core"], ["title", "Title", "Core"], ["week", "Week", "Core"], ["niche", "Niche", "Core"], ["date", "Date", "Core"], ["flags", "Flags", "Core"], ["medium.pub", "Medium Pub", "Medium"], ["medium.status", "Medium Status", "Medium"], ["medium.submitted", "Medium Submitted", "Medium"], ["medium.url", "Medium URL", "Medium"], ["medium.method", "Medium Method", "Medium"], ["linkedin.status", "LinkedIn Status", "LinkedIn"], ["linkedin.url", "LinkedIn URL", "LinkedIn"], ["carousel.status", "Carousel Status", "Carousel"], ["carousel.url", "Carousel URL", "Carousel"], ["reel.ref", "Reel Ref", "Reel"], ["reel.status", "Reel Status", "Reel"], ["reel.cta", "Reel CTA", "Reel"], ["reel.ig", "Reel IG", "Reel"], ["reel.yt", "Reel YT", "Reel"], ["longform.ref", "Longform Ref", "Longform"], ["longform.status", "Longform Status", "Longform"], ["longform.url", "Longform URL", "Longform"], ["worksheet.status", "Worksheet Status", "Worksheet"], ["worksheet.url", "Worksheet URL", "Worksheet"], ["source_draft", "Source Draft", "Meta"], ["blog", "Blog (auto)", "Auto"], ["carousel", "Carousel HTML (auto)", "Auto"], ["carousel_export", "Carousel Export (auto)", "Auto"], ["worksheet", "Worksheet PDF (auto)", "Auto"], ["reel_script", "Reel Script (auto)", "Auto"], ["reel_video", "Reel Video (auto)", "Auto"], ["longform_video", "Longform Video (auto)", "Auto"], ["derivatives", "Derivatives (auto)", "Auto"], ["notes", "Notes", "Notes"]];
+const ROWS = [{"title": "What Hiring Managers Actually Think When They See Your Data Science GitHub in 2026", "week": "W26", "niche": "ds", "date": "2026-06-26", "medium.pub": "DataDrivenInvestor", "medium.status": "published", "medium.submitted": "2026-06-26", "medium.url": "—", "medium.method": "Add-to-publication (already contributing)", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-26_data_science_tech_what-hiring-managers-think-when-they-see-your-ds-github-2026", "notes": "✅ PUBLISHED. DSC not accepting new writers (confirmed 2026-07-03) — pulled. AI in Plain English skipped — W27 piece already queued there. HackerNoon ruled out — off Medium (confirmed 2026-07-03). Routed to DataDrivenInvestor — career/hiring angle fits, already contributing.", "blog": "v1/content/blogs/2026-W26/2026-06-26_data_science_tech_what-hiring-managers-think-when-they-see-your-ds-github-2026.md", "carousel": "—", "carousel_export": "—", "worksheet": "v1/output/worksheets/2026-W26/2026-06-26_data_science_tech_what-hiring-managers-think-when-they-see-your-ds-github-2026.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": false}, {"title": "How to Build a Wake-Up Ritual That Survives Real Life", "week": "W26", "niche": "life", "date": "2026-06-26", "medium.pub": "Publishous", "medium.status": "published", "medium.submitted": "2026-07-10", "medium.url": "—", "medium.method": "New pub submission — https://medium.com/publishous", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years_betterhumans", "notes": "✅ PUBLISHED 2026-07-14 (confirmed via Medium submissions outbox 2026-07-16). History: declined by Mind Cafe (2026-06-30) under variant title *\"...Survives a Real Life\"*; also submitted to Change Your Mind Change Your Life (CMCML) — quiet since 2026-05-29, not dead just slow, no ETA, that submission left standing/unconfirmed. Rerouted to Publishous to keep momentum — published there. Personal Growth Project ruled out — dead since Apr 2025. Practice in Public ruled out — no confirmed link/slug (2026-07-10).", "blog": "v1/content/blogs/2026-W26/2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years_betterhumans.md", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": false}, {"title": "The Room No One Entered", "week": "W26", "niche": "poetry", "date": "2026-06-26", "medium.pub": "Humans Are Stories (own pub)", "medium.status": "self-publishing", "medium.submitted": "2026-06-26", "medium.url": "—", "medium.method": "Add to own publication (Tarun is Editor)", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-26_poetry_quotes_i-wrote-a-poem-every-time-life-broke-me-heres-what-the-words", "notes": "Decision: all poetry goes to his own pub — no external poetry-pub gatekeeping or dead-pub hunting.", "blog": "v1/content/blogs/2026-W26/2026-06-26_poetry_quotes_i-wrote-a-poem-every-time-life-broke-me-heres-what-the-words.md", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W26/2026-06-26_poetry_quotes_i-wrote-a-poem-every-time-life-broke-me-heres-what-the-words", "_flagged": false, "_orphan": false}, {"title": "The Free Local AI Setup That Replaced My $200/Month Data Science Stack", "week": "W27", "niche": "ds", "date": "2026-06-30", "medium.pub": "AI in Plain English", "medium.status": "published", "medium.submitted": "2026-06-30", "medium.url": "—", "medium.method": "In Plain English network (Discord/community route)", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-30_data_science_tech_the-free-local-ai-setup-that-replaced-my-200month-data-scien", "notes": "✅ PUBLISHED 2026-06-30. First piece live via the In Plain English network (unlocks Python/JS/AI in Plain English + Stackademic for future DS posts). DSC W26 still pending — not re-submitted there.", "blog": "v1/content/blogs/2026-W27/2026-06-30_data_science_tech_the-free-local-ai-setup-that-replaced-my-200month-data-scien.md", "carousel": "—", "carousel_export": "—", "worksheet": "v1/output/worksheets/2026-W27/2026-06-30_data_science_tech_the-free-local-ai-setup-that-replaced-my-200month-data-scien_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W27/2026-06-30_data_science_tech_the-free-local-ai-setup-that-replaced-my-200month-data-scien", "_flagged": false, "_orphan": false}, {"title": "The 3 Hours You Spend on Self-Help Content Are Making You Worse at Self-Improvement", "week": "W27", "niche": "life", "date": "2026-06-30", "medium.pub": "ILLUMINATION", "medium.status": "published", "medium.submitted": "2026-07-06", "medium.url": "—", "medium.method": "Add-to-publication", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten", "notes": "✅ PUBLISHED. Curious found dead (2026-07-06) — pulled. Resubmitted to ILLUMINATION, contrarian self-improvement essay fits.", "blog": "v1/content/blogs/2026-W27/2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten.md", "carousel": "—", "carousel_export": "—", "worksheet": "v1/output/worksheets/2026-W27/2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W27/2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten", "_flagged": false, "_orphan": false}, {"title": "I Scraped 1,003 Data Science Job Postings — 87% Want This One Thing, and Most Candidates Still…", "week": "W27", "niche": "ds", "date": "2026-07-01", "medium.pub": "Artificial Intelligence in Plain English", "medium.status": "published", "medium.submitted": "2026-07-01", "medium.url": "—", "medium.method": "In Plain English network (already a writer)", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t", "notes": "✅ PUBLISHED 2026-07-07 (verified via Medium submissions outbox 2026-07-16). Data-heavy job-market piece (1,003 postings scraped). Network home already unlocked via the 06-30 published piece. DSC W26 still pending.", "blog": "v1/content/blogs/2026-W27/2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t.md", "carousel": "—", "carousel_export": "—", "worksheet": "v1/output/worksheets/2026-W27/2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W27/2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t", "_flagged": false, "_orphan": false}, {"title": "I Woke at 6AM Every Day for 90 Days. The Data Said Wake Time Was Never the Point.", "week": "W27", "niche": "life", "date": "2026-07-01", "medium.pub": "Know Thyself Heal Thyself", "medium.status": "published", "medium.submitted": "2026-07-14", "medium.url": "—", "medium.method": "Add-to-publication (already a writer)", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig", "notes": "✅ PUBLISHED 2026-07-15 (verified via Medium submissions outbox 2026-07-16). Kick Ass At Life gone quiet (no posts since 2026-06-05, editor likely on hiatus) — pulled, resubmitted to Know Thyself Heal Thyself.", "blog": "v1/content/blogs/2026-W27/2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig.md", "carousel": "—", "carousel_export": "—", "worksheet": "v1/output/worksheets/2026-W27/2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W27/2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig", "_flagged": false, "_orphan": false}, {"title": "I Built a Local AI Agent That Does a Junior Analyst's Grunt Work in 4 Minutes", "week": "W28", "niche": "ds", "date": "2026-07-06", "medium.pub": "Technology Hits", "medium.status": "published", "medium.submitted": "2026-07-06", "medium.url": "—", "medium.method": "New pub submission", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend", "reel.status": "script", "reel.cta": "AGENT", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w", "notes": "✅ PUBLISHED 2026-07-06 (verified via Medium submissions outbox 2026-07-16). AI Advances declined + zipBoard dead (07-06) — resubmitted to Technology Hits.", "blog": "v1/content/blogs/2026-W28/2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w.md", "carousel": "v1/assets/carousels/2026-W28/2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w_carousel.html", "carousel_export": "v1/assets/carousels/2026-W28/2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w_export.py", "worksheet": "v1/output/worksheets/2026-W28/2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w_worksheet.pdf", "reel_script": "v1/content/reels/2026-W28/2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend_ig_reel.md", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W28/2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w", "_flagged": false, "_orphan": false}, {"title": "Your Self-Improvement Schedule Is Slowly Making You Someone You Don't Recognize", "week": "W28", "niche": "life", "date": "2026-07-06", "medium.pub": "Write A Catalyst", "medium.status": "submitted", "medium.submitted": "2026-07-06", "medium.url": "—", "medium.method": "New pub submission", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule", "reel.status": "script", "reel.cta": "AUDIT", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "33", "flags": "—", "slug": "2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y", "notes": "Pending review on Medium (verified via submissions outbox 2026-07-16). Be Yourself confirmed dead (no posts since 2025) — pulled, resubmitted to Write A Catalyst (productivity/self-growth crossover).", "blog": "v1/content/blogs/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y.md", "carousel": "v1/assets/carousels/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y_carousel.html", "carousel_export": "v1/assets/carousels/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y_export.py", "worksheet": "v1/output/worksheets/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y_worksheet.pdf", "reel_script": "v1/content/reels/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule_ig_reel.md", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y", "_flagged": false, "_orphan": false}, {"title": "Everyone Building RAG Is Getting Vector Databases Wrong", "week": "W28", "niche": "ds", "date": "2026-07-10", "medium.pub": "SYNERGY", "medium.status": "published", "medium.submitted": "2026-07-10", "medium.url": "https://medium.com/@tarun-gupta/dfb2706068a1", "medium.method": "Add-to-publication (secured, unused this week)", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-07-10_data_science_tech_i-asked-5-senior-engineers-to-explain-a-vector-database-with", "notes": "✅ PUBLISHED 2026-07-12 (verified via Medium submissions outbox 2026-07-16). Technology Hits already holds W28 DS submission (07-06) — avoided stacking, routed to secured-but-unused SYNERGY. Worksheet: The Vector DB Readiness Checklist.", "blog": "v1/content/blogs/2026-W28/2026-07-10_data_science_tech_i-asked-5-senior-engineers-to-explain-a-vector-database-with.md", "carousel": "—", "carousel_export": "—", "worksheet": "v1/output/worksheets/2026-W28/2026-07-10_data_science_tech_i-asked-5-senior-engineers-to-explain-a-vector-database-with_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W28/2026-07-10_data_science_tech_i-asked-5-senior-engineers-to-explain-a-vector-database-with", "_flagged": false, "_orphan": false}, {"title": "The Skill Every High-Performer Has That Nobody Taught You in Any Meeting", "week": "W28", "niche": "life", "date": "2026-07-10", "medium.pub": "Mind Cafe", "medium.status": "submitted", "medium.submitted": "2026-07-10", "medium.url": "—", "medium.method": "Add-to-publication (secured, unused this week)", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "32", "flags": "—", "slug": "2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it", "notes": "Pending review on Medium (verified via submissions outbox 2026-07-16). Write A Catalyst already holds W28 Life submission (07-06) — avoided stacking, routed to secured-but-unused Mind Cafe. Worksheet: The Ten-Second Rule.", "blog": "v1/content/blogs/2026-W28/2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it.md", "carousel": "—", "carousel_export": "—", "worksheet": "v1/output/worksheets/2026-W28/2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W28/2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it", "_flagged": false, "_orphan": false}, {"title": "I Deleted Three Weeks of Content", "week": "W24", "niche": "ds", "date": "2026-06-08", "medium.pub": "ILLUMINATION", "medium.status": "published", "medium.submitted": "2026-06-08", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "2026-06-08_data_science_tech_i-deleted-three-weeks-of-content", "reel.status": "script", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-08_data_science_tech_i-deleted-three-weeks-of-content", "notes": "✅ PUBLISHED 2026-06-08. Reclassified Life→DS/Tech (2026-07-16): content is a git/dev-tools recovery story, not self-dev — carousel/reel regenerated under DS niche.", "blog": "v1/content/blogs/2026-W24/2026-06-08_data_science_tech_i-deleted-three-weeks-of-content.md", "carousel": "v1/assets/carousels/2026-W24/2026-06-08_data_science_tech_i-deleted-three-weeks-of-content_carousel.html", "carousel_export": "v1/assets/carousels/2026-W24/2026-06-08_data_science_tech_i-deleted-three-weeks-of-content_export.py", "worksheet": "—", "reel_script": "v1/content/reels/2026-W24/i-deleted-three-weeks-of-content/2026-06-08_data_science_tech_i-deleted-three-weeks-of-content_ig_reel.md", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": false}, {"title": "The One Skill That Makes You Good at AI (It's Not What You Think)", "week": "W22", "niche": "ds", "date": "2026-05-31", "medium.pub": "ILLUMINATION", "medium.status": "published", "medium.submitted": "2026-05-31", "medium.url": "https://medium.com/illumination/the-one-skill-that-makes-you-good-at-ai-its-not-what-you-think-ab03dc03a523", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "scheduled", "carousel.url": "—", "reel.ref": "2026-05-31_data_science_tech_the-one-skill-that-makes-you-good-at-ai", "reel.status": "script", "reel.cta": "AI", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "script", "longform.url": "—", "worksheet.status": "deployed", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-05-31_data_science_tech_the-one-skill-that-makes-you-good-at-ai", "notes": "✅ PUBLISHED 2026-05-31.\nhttps://payhip.com/NovelPromptCo", "blog": "v1/content/blogs/2026-W22/2026-05-31_data_science_tech_the-one-skill-that-makes-you-good-at-ai.md", "carousel": "v1/assets/carousels/2026-W22/2026-05-31_data_science_tech_the-one-skill-that-makes-you-good-at-ai_carousel.html", "carousel_export": "v1/assets/carousels/2026-W22/2026-05-31_data_science_tech_the-one-skill-that-makes-you-good-at-ai_export.py", "worksheet": "—", "reel_script": "v1/content/reels/2026-W22/the-one-skill-that-makes-you-good-at-ai/2026-05-31_data_science_tech_the-one-skill-that-makes-you-good-at-ai_ig_reel.md", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W22/2026-05-31_data_science_tech_the-one-skill-that-makes-you-good-at-ai", "_flagged": true, "_orphan": false}, {"title": "You Don't Need Mastodon.py to Automate Toots — Just `requests` and 40 Lines", "week": "W29", "niche": "ds", "date": "2026-07-16", "medium.pub": "Technology Hits", "medium.status": "submitted", "medium.submitted": "2026-07-16", "medium.url": "https://medium.com/@tarun-gupta/e43cd7dc9d1d", "medium.method": "Add-to-publication", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "deployed", "worksheet.url": "—", "source_draft": "2", "flags": "—", "slug": "2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli", "notes": "Submitted as Medium draft 2026-07-16. From drafts-completion batch (source Medium draft: 'Building a Mastodon Automation Bot Using Python and Streamlit'); worksheet live.", "blog": "v1/content/blogs/2026-W29/2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli.md", "carousel": "v1/assets/carousels/2026-W29/2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli_carousel.html", "carousel_export": "v1/assets/carousels/2026-W29/2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli_export.py", "worksheet": "v1/output/worksheets/2026-W29/2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W29/2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli", "_flagged": true, "_orphan": false}, {"title": "Ten Years Of Independence Taught Me Two Things I Blame My Parents For. I Can Only Write One.", "week": "W29", "niche": "life", "date": "2026-07-16", "medium.pub": "ILLUMINATION", "medium.status": "published", "medium.submitted": "2026-07-16", "medium.url": "https://medium.com/illumination/ten-years-of-independence-taught-me-two-things-i-blame-my-parents-for-af812b212af0", "medium.method": "Add-to-publication", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "LETTER", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "deployed", "worksheet.url": "—", "source_draft": "7", "flags": "—", "slug": "2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat", "notes": "✅ PUBLISHED (confirmed by Tarun 2026-07-17). From drafts-completion batch (source Medium draft: 'Dear 16 year old Tarun,'); worksheet live.", "blog": "v1/content/blogs/2026-W29/2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat.md", "carousel": "v1/assets/carousels/2026-W29/2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat_carousel.html", "carousel_export": "v1/assets/carousels/2026-W29/2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat_export.py", "worksheet": "v1/output/worksheets/2026-W29/2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W29/2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat", "_flagged": true, "_orphan": false}, {"title": "I Built a Production-Grade MLOps Pipeline in One Weekend With Nothing But Free Tools", "week": "W29", "niche": "ds", "date": "2026-07-14", "medium.pub": "TBD (proposed: SYNERGY)", "medium.status": "draft", "medium.submitted": "—", "medium.url": "https://medium.com/@tarun-gupta/1e612f081b18", "medium.method": "TBD", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit", "notes": "Produced 2026-07-14, not yet submitted. Secured pub SYNERGY last used 07-10 — avoids stacking with Mastodon piece (proposed Technology Hits).", "blog": "v1/content/blogs/2026-W29/2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit.md", "carousel": "v1/assets/carousels/2026-W29/2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit_carousel.html", "carousel_export": "v1/assets/carousels/2026-W29/2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit_export.py", "worksheet": "v1/output/worksheets/2026-W29/2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W29/2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit", "_flagged": false, "_orphan": false}, {"title": "How to Make Better Decisions Under Pressure Without Ever Truly Trusting Yourself", "week": "W29", "niche": "life", "date": "2026-07-14", "medium.pub": "TBD (proposed: Write A Catalyst)", "medium.status": "draft", "medium.submitted": "—", "medium.url": "https://medium.com/@tarun-gupta/a591a021c2f9", "medium.method": "TBD", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru", "notes": "Produced 2026-07-14, not yet submitted. Write A Catalyst last used 07-06, productivity/self-growth fit — avoids stacking with Mind Cafe (pending) and Know Thyself Heal Thyself (used 07-14).", "blog": "v1/content/blogs/2026-W29/2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru.md", "carousel": "v1/assets/carousels/2026-W29/2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru_carousel.html", "carousel_export": "v1/assets/carousels/2026-W29/2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru_export.py", "worksheet": "v1/output/worksheets/2026-W29/2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W29/2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru", "_flagged": false, "_orphan": false}, {"title": "The Person You're Begging To Notice You Isn't The Problem. This Is.", "week": "W29", "niche": "life", "date": "2026-07-17", "medium.pub": "Thoughts And Ideas", "medium.status": "submitted", "medium.submitted": "2026-07-17", "medium.url": "—", "medium.method": "Add-to-publication (already contributing)", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "2026-07-17_life_self_dev_the-person-youre-begging-to-notice", "reel.status": "none", "reel.cta": "LETTER", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "generated", "worksheet.url": "—", "source_draft": "34", "flags": "—", "slug": "2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec", "notes": "Submitted 2026-07-17. Produced same day from Medium drafts-completion batch (row 34, source draft: 'Understanding Who Truly Cares: A Guide to Valuing Real Connections'); carousel live, worksheet generated but not yet deployed (Vercel push pending — 404 as of 07-17). Mind Cafe + Write A Catalyst ruled out — each already had a piece pending review. ILLUMINATION already used W29 (Ten Years piece, published). First piece submitted to Thoughts And Ideas (26K followers) — new secured home, unused before this.", "blog": "v1/content/blogs/2026-W29/2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec.md", "carousel": "v1/assets/carousels/2026-W29/2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec_carousel.html", "carousel_export": "v1/assets/carousels/2026-W29/2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec_export.py", "worksheet": "v1/output/worksheets/2026-W29/2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec_worksheet.pdf", "reel_script": "v1/content/reels/2026-W29/2026-07-17_life_self_dev_the-person-youre-begging-to-notice_ig_reel.md", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W29/2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec", "_flagged": false, "_orphan": false}, {"title": "I Stopped Googling Travel Guides. I Interrogated an AI Instead — Here's the Exact Prompt That Worked", "week": "W25", "niche": "life", "date": "2026-06-16", "medium.pub": "ILLUMINATION", "medium.status": "published", "medium.submitted": "2026-06-16", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? niche conflict — tracker says Life, blog file slug says data_science_tech. Confirm with Tarun.", "slug": "2026-06-16_data_science_tech_ai-prompt-anatomy-travel", "notes": "✅ PUBLISHED 2026-06-16.", "blog": "v1/content/blogs/2026-W25/2026-06-16_data_science_tech_ai-prompt-anatomy-travel.md", "carousel": "v1/assets/carousels/2026-W25/2026-06-16_data_science_tech_ai-prompt-anatomy-travel_carousel.html", "carousel_export": "v1/assets/carousels/2026-W25/2026-06-16_data_science_tech_ai-prompt-anatomy-travel_export.py", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W25/2026-06-16_data_science_tech_ai-prompt-anatomy-travel", "_flagged": true, "_orphan": false}, {"title": "Safe and Alive", "week": "W27", "niche": "life", "date": "—", "medium.pub": "Writers' Blokke", "medium.status": "published", "medium.submitted": "2026-07-02", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? pre-pipeline piece — no blog file in repo", "slug": "ORPHAN:safe-and-alive", "notes": "✅ PUBLISHED 2026-07-02.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "You'll Never Actually Reach This Goal — And That's Exactly the Point", "week": "W25", "niche": "life", "date": "—", "medium.pub": "Mind Cafe", "medium.status": "published", "medium.submitted": "2026-06-19", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? pre-pipeline piece — no blog file in repo", "slug": "ORPHAN:youll-never-actually-reach-this-goal", "notes": "✅ PUBLISHED 2026-06-19.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "The Silent Killer No One Talks About (And It's Not What You Think)", "week": "W25", "niche": "life", "date": "—", "medium.pub": "An Injustice!", "medium.status": "published", "medium.submitted": "2026-06-19", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? pre-pipeline piece — no blog file in repo", "slug": "ORPHAN:the-silent-killer-no-one-talks-about", "notes": "✅ PUBLISHED 2026-06-19.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "How I Stopped Doom-Scrolling Job Boards", "week": "W24", "niche": "life", "date": "—", "medium.pub": "ILLUMINATION", "medium.status": "published", "medium.submitted": "2026-06-13", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? pre-pipeline piece — no blog file in repo", "slug": "ORPHAN:how-i-stopped-doom-scrolling-job-boards", "notes": "✅ PUBLISHED 2026-06-13.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "Python Silently Lied to You (And You Didn't Notice)", "week": "W25", "niche": "ds", "date": "—", "medium.pub": "Technology Hits", "medium.status": "published", "medium.submitted": "2026-06-18", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? possible match 2026-05-25_data_science_tech_python-for-data-science-tutorial-210 (H1 \"The Type Error That Makes Your Analysis Wrong Without Crashing\") — dates disagree (W22 file vs W25 row). NOT auto-linked. Confirm with Tarun.", "slug": "ORPHAN:python-silently-lied-to-you", "notes": "✅ PUBLISHED 2026-06-18.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "You're Not in Love. You're Hungover.", "week": "W25", "niche": "life", "date": "—", "medium.pub": "Weeds & Wildflowers", "medium.status": "published", "medium.submitted": "2026-06-16", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? possible match 2026-05-27_poetry_quotes_intoxicated-senses (H1 \"The Hangover That Won't Lift\") — niche disagrees (row Life / file poetry). NOT auto-linked. Confirm with Tarun.", "slug": "ORPHAN:youre-not-in-love-youre-hungover", "notes": "✅ PUBLISHED 2026-06-16.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "How I Turned My Habits into an \"Engine\" to Get Me to My Goals", "week": "W25", "niche": "life", "date": "—", "medium.pub": "Hello, Love", "medium.status": "published", "medium.submitted": "2026-06-15", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? no exact H1 match; candidates 2026-06-16_life_self_dev_recursive-self-improvement / 2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity. NOT auto-linked. Confirm with Tarun.", "slug": "ORPHAN:how-i-turned-my-habits-into-an-engine", "notes": "✅ PUBLISHED 2026-06-15.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "Python for Data Science", "week": "W25", "niche": "ds", "date": "—", "medium.pub": "DataSeries", "medium.status": "withdrawn", "medium.submitted": "2026-06-15", "medium.url": "—", "medium.method": "Backfilled from Medium submissions outbox (2026-07-16) — pre-tracker piece, no submission record", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? ambiguous across 5 tutorial blog files. Withdrawn on Medium. NOT auto-linked. Confirm with Tarun.", "slug": "ORPHAN:python-for-data-science-withdrawn", "notes": "Withdrawn on Medium (status confirmed via submissions outbox 2026-07-16).", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "The Type Error That Makes Your Analysis Wrong Without Crashing", "week": "W22", "niche": "ds", "date": "2026-05-25", "medium.pub": "Technology Hits", "medium.status": "published", "medium.submitted": "2026-06-18", "medium.url": "https://medium.com/technology-hits/python-silently-lied-to-you-and-you-didnt-notice-2393bcab9c79", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "scheduled", "carousel.url": "—", "reel.ref": "—", "reel.status": "script", "reel.cta": "TYPES", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "script", "longform.url": "—", "worksheet.status": "deployed", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-05-25_data_science_tech_python-for-data-science-tutorial-210", "notes": "https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210&source=post_page-----2393bcab9c79---------------------------------------", "blog": "v1/content/blogs/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210.md", "carousel": "v1/assets/carousels/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210_carousel.html", "carousel_export": "v1/assets/carousels/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210_export.py", "worksheet": "v1/output/worksheets/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W22/2026-05-25_data_science_tech_python-for-data-science-tutorial-210", "_flagged": true, "_orphan": false}, {"title": "The Lie We Inherited About Strength", "week": "W22", "niche": "life", "date": "2026-05-26", "medium.pub": "An Injustice!", "medium.status": "published", "medium.submitted": "2026-06-19", "medium.url": "https://aninjusticemag.com/the-silent-killer-no-one-talks-about-and-its-not-what-you-think-4680ca8fd155", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "posted", "carousel.url": "—", "reel.ref": "—", "reel.status": "script", "reel.cta": "ASK", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "script", "longform.url": "—", "worksheet.status": "deployed", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas", "notes": "https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=mental-health-openness-and-breaking-stigmas&source=post_page-----4680ca8fd155---------------------------------------", "blog": "v1/content/blogs/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas.md", "carousel": "v1/assets/carousels/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas_carousel.html", "carousel_export": "v1/assets/carousels/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas_export.py", "worksheet": "v1/output/worksheets/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W22/2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas", "_flagged": true, "_orphan": false}, {"title": "The Hangover That Won't Lift", "week": "W22", "niche": "poetry", "date": "2026-05-27", "medium.pub": "Weeds & Wildflowers", "medium.status": "published", "medium.submitted": "2026-06-16", "medium.url": "https://medium.com/weeds-wildflowers/youre-not-in-love-you-re-hungover-6dee883b512f", "medium.method": "—", "linkedin.status": "none", "linkedin.url": "—", "carousel.status": "scheduled", "carousel.url": "—", "reel.ref": "—", "reel.status": "script", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "script", "longform.url": "—", "worksheet.status": "none", "worksheet.url": "—", "source_draft": "—", "flags": "? title sourced from YAML frontmatter `title:` field — file has no markdown H1 (`# `) line.", "slug": "2026-05-27_poetry_quotes_intoxicated-senses", "notes": "—", "blog": "v1/content/blogs/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses.md", "carousel": "v1/assets/carousels/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_carousel.html", "carousel_export": "v1/assets/carousels/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses_export.py", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W22/2026-05-27_poetry_quotes_intoxicated-senses", "_flagged": true, "_orphan": false}, {"title": "Python for Data Science: Tutorial 3/10 — NumPy and the Art of Thinking in Arrays", "week": "W23", "niche": "ds", "date": "2026-06-01", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-01_data_science_tech_python-for-data-science-tutorial-310", "notes": "—", "blog": "v1/content/blogs/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310.md", "carousel": "v1/assets/carousels/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_carousel.html", "carousel_export": "v1/assets/carousels/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_export.py", "worksheet": "v1/output/worksheets/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W23/2026-06-01_data_science_tech_python-for-data-science-tutorial-310", "_flagged": false, "_orphan": false}, {"title": "The Cost of Carrying Things Nobody Sees", "week": "W23", "niche": "life", "date": "2026-06-01", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees", "notes": "—", "blog": "v1/content/blogs/2026-W23/2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees.md", "carousel": "v1/assets/carousels/2026-W23/2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_carousel.html", "carousel_export": "v1/assets/carousels/2026-W23/2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_export.py", "worksheet": "v1/output/worksheets/2026-W23/2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W23/2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees", "_flagged": false, "_orphan": false}, {"title": "Only to Make Themselves Happy", "week": "W23", "niche": "poetry", "date": "2026-06-01", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? title sourced from YAML frontmatter `title:` field — file has no markdown H1 (`# `) line.", "slug": "2026-06-01_poetry_quotes_looking-at-the-world-through-a-reflective-lens", "notes": "—", "blog": "v1/content/blogs/2026-W23/2026-06-01_poetry_quotes_looking-at-the-world-through-a-reflective-lens.md", "carousel": "v1/assets/carousels/2026-W23/2026-06-01_poetry_quotes_looking-at-the-world-through-a-reflective-lens_carousel.html", "carousel_export": "v1/assets/carousels/2026-W23/2026-06-01_poetry_quotes_looking-at-the-world-through-a-reflective-lens_export.py", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W23/2026-06-01_poetry_quotes_looking-at-the-world-through-a-reflective-lens", "_flagged": true, "_orphan": false}, {"title": "7 Simple Habits That Quietly Rewired My Productivity", "week": "W24", "niche": "life", "date": "2026-06-08", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity", "notes": "—", "blog": "v1/content/blogs/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity.md", "carousel": "v1/assets/carousels/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity_carousel.html", "carousel_export": "v1/assets/carousels/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity_export.py", "worksheet": "v1/output/worksheets/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W24/2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity", "_flagged": false, "_orphan": false}, {"title": "Every Colour Has a Feeling", "week": "W24", "niche": "poetry", "date": "2026-06-08", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? title sourced from YAML frontmatter `title:` field — file has no markdown H1 (`# `) line.", "slug": "2026-06-08_poetry_quotes_poetry-dips-its-fingers-in-every-colour", "notes": "—", "blog": "v1/content/blogs/2026-W24/2026-06-08_poetry_quotes_poetry-dips-its-fingers-in-every-colour.md", "carousel": "v1/assets/carousels/2026-W24/2026-06-08_poetry_quotes_poetry-dips-its-fingers-in-every-colour_carousel.html", "carousel_export": "v1/assets/carousels/2026-W24/2026-06-08_poetry_quotes_poetry-dips-its-fingers-in-every-colour_export.py", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W24/2026-06-08_poetry_quotes_poetry-dips-its-fingers-in-every-colour", "_flagged": true, "_orphan": false}, {"title": "Python for Data Science: Tutorial 4/10 — Pandas for Data Analysis", "week": "W24", "niche": "ds", "date": "2026-06-10", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis", "notes": "—", "blog": "v1/content/blogs/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis.md", "carousel": "v1/assets/carousels/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis_carousel.html", "carousel_export": "v1/assets/carousels/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis_export.py", "worksheet": "v1/output/worksheets/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W24/2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis", "_flagged": false, "_orphan": false}, {"title": "Python for Data Science — Tutorial 5/10: Making Your Data Tell a Story with Matplotlib and Seaborn", "week": "W25", "niche": "ds", "date": "2026-06-16", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati", "notes": "—", "blog": "v1/content/blogs/2026-W25/2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati.md", "carousel": "v1/assets/carousels/2026-W25/2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati_carousel.html", "carousel_export": "v1/assets/carousels/2026-W25/2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati_export.py", "worksheet": "v1/output/worksheets/2026-W25/2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W25/2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati", "_flagged": false, "_orphan": false}, {"title": "5 Loops That Make Self-Improvement Self-Sustaining", "week": "W25", "niche": "life", "date": "2026-06-16", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-16_life_self_dev_recursive-self-improvement", "notes": "—", "blog": "v1/content/blogs/2026-W25/2026-06-16_life_self_dev_recursive-self-improvement.md", "carousel": "v1/assets/carousels/2026-W25/2026-06-16_life_self_dev_recursive-self-improvement_carousel.html", "carousel_export": "v1/assets/carousels/2026-W25/2026-06-16_life_self_dev_recursive-self-improvement_export.py", "worksheet": "v1/output/worksheets/2026-W25/2026-06-16_life_self_dev_recursive-self-improvement_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W25/2026-06-16_life_self_dev_recursive-self-improvement", "_flagged": false, "_orphan": false}, {"title": "Dance When the Playlist Ends", "week": "W25", "niche": "poetry", "date": "2026-06-16", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? title sourced from YAML frontmatter `title:` field — file has no markdown H1 (`# `) line.", "slug": "2026-06-16_poetry_quotes_you-have-gotta-dance-like-there-is-nobody-watching", "notes": "—", "blog": "v1/content/blogs/2026-W25/2026-06-16_poetry_quotes_you-have-gotta-dance-like-there-is-nobody-watching.md", "carousel": "v1/assets/carousels/2026-W25/2026-06-16_poetry_quotes_you-have-gotta-dance-like-there-is-nobody-watching_carousel.html", "carousel_export": "v1/assets/carousels/2026-W25/2026-06-16_poetry_quotes_you-have-gotta-dance-like-there-is-nobody-watching_export.py", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "v1/content/derivatives/2026-W25/2026-06-16_poetry_quotes_you-have-gotta-dance-like-there-is-nobody-watching", "_flagged": true, "_orphan": false}, {"title": "The ML Skill Agentic AI Bootcamps Won't Teach You (But Replaces You If You Skip It)", "week": "W26", "niche": "ds", "date": "2026-06-23", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-23_ds_the-ml-skill-agentic-ai-bootcamps-wont-teach-you-but-re", "notes": "—", "blog": "v1/content/blogs/2026-W26/2026-06-23_ds_the-ml-skill-agentic-ai-bootcamps-wont-teach-you-but-re.md", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": false}, {"title": "I've Done the Same 3-Step Morning Routine for 2 Years. Here's Why I'll Never Change It.", "week": "W26", "niche": "life", "date": "2026-06-26", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years", "notes": "—", "blog": "v1/content/blogs/2026-W26/2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years.md", "carousel": "—", "carousel_export": "—", "worksheet": "v1/output/worksheets/2026-W26/2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years_worksheet.pdf", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": false}, {"title": "Inbox to Action", "week": "W28", "niche": "ds", "date": "—", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:inbox-to-action", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "6 GitHub Repos That Slash Claude Code Tokens", "week": "W25", "niche": "ds", "date": "2026-06-21", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:6-github-repos-that-slash-claude-code-tokens", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "I Automated Job Hunting", "week": "W25", "niche": "ds", "date": "2026-06-21", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:automated-job-hunting-script", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "I Turned Claude Into a Primitive Beast", "week": "W25", "niche": "ds", "date": "2026-06-22", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:claude-primitive-beast-token-cut", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "Grief Does Not End, It Changes Shape and Learns to Live Besid…", "week": "—", "niche": "poetry", "date": "—", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:grief-does-not-end-it-changes-shape-and-learns-to-live-besid", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "Write It Before You Decide It", "week": "—", "niche": "life", "date": "—", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:how-i-gained-clarity-by-writing-my-decisions-down-before-i-m", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "The One Question I Ask Before Every Big Decision", "week": "—", "niche": "life", "date": "—", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:the-one-question-i-ask-before-every-big-decision", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "The Weekend Build That Taught Me More Than 6 Months of Tutor…", "week": "—", "niche": "ds", "date": "—", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:the-weekend-build-that-taught-me-more-than-6-months-of-tutor", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "Pandas for Data Analysis: Load, Filter, Clean, Aggregate — 4 Essentials", "week": "W24", "niche": "ds", "date": "—", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "—", "slug": "ORPHAN:pandas-for-data-analysis-load-filter-clean-aggregate-4-essen", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": false, "_orphan": true}, {"title": "Dear 16 Year Old Tarun", "week": "W29", "niche": "life", "date": "2026-07-16", "medium.pub": "ILLUMINATION", "medium.status": "published", "medium.submitted": "2026-07-17", "medium.url": "https://medium.com/illumination/ten-years-of-independence-taught-me-two-things-i-blame-my-parents-for-af812b212af0", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "scheduled", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "LETTER", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "deployed", "worksheet.url": "—", "source_draft": "—", "flags": "? superseded by 2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat (same underlying draft #7, retitled/reworked for full blog structure). Carousel not regenerated under the new slug — confirm with Tarun whether to regenerate or discard.", "slug": "ORPHAN:dear-16-year-old-tarun", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "Fable Mode Plugin", "week": "W29", "niche": "ds", "date": "2026-07-13", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "2026-07-13_ds_tech_fable-mode-plugin", "reel.status": "script", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? reel-only artifact — no blog, no Medium row (news-timed build-in-public reel per script header: github.com/tarunlnmiit/fable-mode).", "slug": "ORPHAN:fable-mode-plugin", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "v1/content/reels/2026-W29/2026-07-13_ds_tech_fable-mode-plugin_ig_reel.md", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "Python Data Visualization", "week": "W24", "niche": "ds", "date": "2026-06-08", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? not in spec's known ORPHAN list — found via listing. Filename suggests \"tutorial 4/10\" but the carousel's own <title> is \"Python Data Visualization Carousel\" — likely an early/mislabeled draft superseded by 2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati (Tutorial 5/10, Matplotlib/Seaborn). NOT auto-linked. Confirm with Tarun.", "slug": "ORPHAN:python-for-data-science-tutorial-410", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "Inbox to Action: One Command Triages Your Gmail Inbox in a Si…", "week": "—", "niche": "ds", "date": "—", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? not in spec's known ORPHAN list — found via listing. Possible duplicate/variant export of ORPHAN:inbox-to-action (same project, per carousel <title> \"Breath of Data Science — Carousel: inbox-to-action\"). NOT auto-linked. Confirm with Tarun.", "slug": "ORPHAN:inbox-to-action-one-command-triages-your-gmail-inbox-in-a-si", "notes": "—", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "The Best Part of Pushkar Wasn't a Place", "week": "W30", "niche": "life", "date": "2026-07-21", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "v1/content/scripts/2026-W30/2026-07-21_life_pushkar_voice-memo-script.md", "reel.status": "script", "reel.cta": "PUSHKAR", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? reel-only artifact — no blog, IG-only, W30 Pushkar trip. Recording pending — see manual_steps.md.", "slug": "ORPHAN:pushkar-musician-reel", "notes": "Voice memo not yet recorded. [PERSONAL_INSERT]/[CONFIRM] markers in the script must be resolved before recording. Publish gated on manual_steps.md.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "Birds Don't Look Back", "week": "W30", "niche": "poetry", "date": "2026-07-23", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "none", "carousel.url": "—", "reel.ref": "v1/assets/hyperframes/2026-07-19_2026-W30_poetry_pushkar_FINAL.mp4", "reel.status": "rendered", "reel.cta": "—", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? reel-only artifact — no blog, IG-only, W30 Pushkar trip. Text-over-B-roll poetry reel, no face/VO.", "slug": "ORPHAN:pushkar-fish-poem", "notes": "Final render done (49s). Caption = poem prose block, zero hashtags. Publish gated on manual_steps.md.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}, {"title": "More Photos of Us Laughing Than of the Lake", "week": "W30", "niche": "life", "date": "2026-07-25", "medium.pub": "—", "medium.status": "—", "medium.submitted": "—", "medium.url": "—", "medium.method": "—", "linkedin.status": "—", "linkedin.url": "—", "carousel.status": "created", "carousel.url": "—", "reel.ref": "—", "reel.status": "none", "reel.cta": "save + caption comment prompt", "reel.ig": "—", "reel.yt": "—", "longform.ref": "—", "longform.status": "none", "longform.url": "—", "worksheet.status": "—", "worksheet.url": "—", "source_draft": "—", "flags": "? reel-only artifact — no blog, IG-only, W30 Pushkar trip. 7-slide carousel.", "slug": "ORPHAN:pushkar-photo-carousel", "notes": "Slides exported: v1/assets/carousels/slides/2026-W30/2026-07-25_life_pushkar-carousel/ (slide_1–7.png). HTML: v1/assets/carousels/2026-W30/2026-07-25_life_pushkar-carousel_carousel.html. Copy file has 4 [CONFIRM] + 2 [PERSONAL_INSERT] markers Tarun must resolve before publish — see manual_steps.md.", "blog": "—", "carousel": "—", "carousel_export": "—", "worksheet": "—", "reel_script": "—", "reel_video": "—", "longform_video": "—", "derivatives": "—", "_flagged": true, "_orphan": true}];
+const HIDDEN_BY_DEFAULT = ["blog", "carousel", "carousel.url", "carousel_export", "derivatives", "linkedin.url", "longform.ref", "longform.url", "longform_video", "medium.method", "medium.submitted", "medium.url", "reel.ig", "reel.ref", "reel.yt", "reel_script", "reel_video", "slug", "source_draft", "worksheet", "worksheet.url"];
+const AUTO_KEYS = new Set(["blog", "carousel", "carousel_export", "worksheet", "reel_script", "reel_video", "longform_video", "derivatives"]);
+const DEFAULT_SORT_KEY = "date";
+const PUBS = {"ds": ["AI in Plain English", "Artificial Intelligence in Plain English", "DataDrivenInvestor", "DataSeries", "ILLUMINATION", "SYNERGY", "TBD (proposed: SYNERGY)", "Technology Hits", "The Startup"], "life": ["An Injustice!", "Change Your Mind Change Your Life", "Hello, Love", "ILLUMINATION", "Kick Ass At Life", "Know Thyself Heal Thyself", "Mind Cafe", "Publishous", "TBD (proposed: Write A Catalyst)", "Thoughts And Ideas", "Weeds & Wildflowers", "Write A Catalyst", "Writers' Blokke"], "poetry": ["CRY Magazine", "Humans Are Stories", "Humans Are Stories (own pub)", "Other Doors", "The Lark", "Weeds & Wildflowers", "Writers' Blokke", "iPoetry"]};
+const LS_KEY = 'content-tracker.hiddenColumns.v1';
+
+const ALL_KEYS = new Set(COLUMNS.map(c => c[0]));
+const headRow = document.getElementById('headRow');
+let sortKey = DEFAULT_SORT_KEY, sortAsc = false;
+
+// Persist the HIDDEN set, not the visible one: storing "visible" would make any column
+// added to COLUMNS later invisible forever for anyone with an existing localStorage entry.
+function loadHidden() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      const a = JSON.parse(raw);
+      if (Array.isArray(a)) return new Set(a.filter(k => ALL_KEYS.has(k)));
+    }
+  } catch (e) { /* private mode / disabled storage — fall through to defaults */ }
+  return new Set(HIDDEN_BY_DEFAULT);
+}
+function saveHidden() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify([...hidden])); } catch (e) { /* non-fatal */ }
+}
+let hidden = loadHidden();
+const visibleColumns = () => COLUMNS.filter(c => !hidden.has(c[0]));
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+const noteBtnHtml = slug =>
+  LIVE ? '<button type="button" class="notebtn" data-slug="' + esc(slug) + '">+ note</button>' : '';
+
+function cellHtml(key, val, row) {
+  if (key === 'title') {
+    const badge = row._orphan ? '<span class="orphanbadge">ORPHAN</span>' : '';
+    return '<span class="clamp">' + badge + esc(val) + '</span>';
+  }
+  if (val === '—') {
+    if (key === 'notes') return '<code class="clamp">—</code>' + noteBtnHtml(row.slug);
+    return '—';
+  }
+  if (val === '?') return '<span class="qmark">?</span>';
+  if (key === 'flags') return '<span class="flagbadge clamp">' + esc(val) + '</span>';
+  if (key === 'notes') {
+    return '<code class="clamp">' + esc(val).replace(/\n/g, '<br>') + '</code>' + noteBtnHtml(row.slug);
+  }
+  const looksLikePath = /^v1\//.test(val) || AUTO_KEYS.has(key);
+  const cellContent = looksLikePath ? '<code>' + esc(val) + '</code>' : esc(val);
+  return cellContent;
+}
+
+function uniqueSorted(key) {
+  return [...new Set(ROWS.map(r => r[key]).filter(v => v && v !== '—'))].sort();
+}
+
+function populateSelect(id, key) {
+  const sel = document.getElementById(id);
+  for (const v of uniqueSorted(key)) {
+    const opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    sel.appendChild(opt);
+  }
+}
+populateSelect('fWeek', 'week');
+populateSelect('fNiche', 'niche');
+populateSelect('fMediumStatus', 'medium.status');
+
+function renderHead() {
+  headRow.innerHTML = '';
+  for (const [key, label] of visibleColumns()) {
+    const th = document.createElement('th');
+    th.textContent = label + (sortKey === key ? (sortAsc ? ' ▲' : ' ▼') : '');
+    th.dataset.key = key;
+    if (sortKey === key) th.className = 'sorted';
+    th.addEventListener('click', () => {
+      if (sortKey === key) sortAsc = !sortAsc; else { sortKey = key; sortAsc = true; }
+      syncSortControls();
+      render();
+    });
+    headRow.appendChild(th);
+  }
+}
+
+// the dropdown and the clickable headers are two views of one sort state
+function buildSortSelect() {
+  const sel = document.getElementById('fSort');
+  sel.innerHTML = '';
+  for (const [key, label, group] of COLUMNS) {
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = group === 'Core' || group === 'Notes' ? label : group + ' · ' + label;
+    sel.appendChild(opt);
+  }
+  sel.value = sortKey;
+  document.getElementById('fSortDir').value = sortAsc ? 'asc' : 'desc';
+}
+
+function syncSortControls() {
+  document.getElementById('fSort').value = sortKey;
+  document.getElementById('fSortDir').value = sortAsc ? 'asc' : 'desc';
+}
+
+document.getElementById('fSort').addEventListener('change', e => {
+  sortKey = e.target.value;
+  render();
+});
+document.getElementById('fSortDir').addEventListener('change', e => {
+  sortAsc = e.target.value === 'asc';
+  render();
+});
+
+function buildColPanel() {
+  const panel = document.getElementById('colPanel');
+  panel.innerHTML = '';
+  const groups = [];
+  for (const [key, label, group] of COLUMNS) {
+    let g = groups.find(x => x.name === group);
+    if (!g) { g = {name: group, cols: []}; groups.push(g); }
+    g.cols.push([key, label]);
+  }
+  for (const g of groups) {
+    const box = document.createElement('div');
+    box.className = 'colgroup';
+    const h = document.createElement('h4');
+    h.textContent = g.name;
+    const all = document.createElement('span');
+    all.className = 'ga'; all.textContent = 'all';
+    all.addEventListener('click', () => setGroup(g, true));
+    const none = document.createElement('span');
+    none.className = 'ga'; none.textContent = 'none';
+    none.addEventListener('click', () => setGroup(g, false));
+    h.appendChild(all); h.appendChild(none);
+    box.appendChild(h);
+    for (const [key, label] of g.cols) {
+      const lab = document.createElement('label');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox'; cb.checked = !hidden.has(key); cb.dataset.key = key;
+      cb.addEventListener('change', () => toggleColumn(key, cb.checked));
+      lab.appendChild(cb);
+      lab.appendChild(document.createTextNode(label));
+      box.appendChild(lab);
+    }
+    panel.appendChild(box);
+  }
+}
+
+function afterVisibilityChange() {
+  // sorting by a column you can no longer see is silently confusing
+  if (hidden.has(sortKey)) { sortKey = DEFAULT_SORT_KEY; sortAsc = false; }
+  saveHidden();
+  buildColPanel();
+  render();
+}
+
+function toggleColumn(key, show) {
+  if (show) hidden.delete(key); else hidden.add(key);
+  afterVisibilityChange();
+}
+
+function setGroup(g, show) {
+  for (const [key] of g.cols) { if (show) hidden.delete(key); else hidden.add(key); }
+  afterVisibilityChange();
+}
+
+const colBtn = document.getElementById('colBtn');
+colBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('colPanel').classList.toggle('open');
+});
+document.addEventListener('click', e => {
+  const panel = document.getElementById('colPanel');
+  if (!panel.contains(e.target) && e.target !== colBtn) panel.classList.remove('open');
+});
+
+function currentFilters() {
+  return {
+    week: document.getElementById('fWeek').value,
+    niche: document.getElementById('fNiche').value,
+    mediumStatus: document.getElementById('fMediumStatus').value,
+    type: document.getElementById('fType').value,
+    search: document.getElementById('fSearch').value.trim().toLowerCase(),
+  };
+}
+
+// '—'/'?' are "unknown", not values — they must sink regardless of sort direction,
+// so they are handled outside the sortAsc flip.
+const norm = v => (v == null || v === '—' || v === '' || v === '?') ? null : String(v);
+const cmpTitle = (a, b) => String(a.title ?? '').localeCompare(String(b.title ?? ''));
+
+function render() {
+  const f = currentFilters();
+  let rows = ROWS.filter(r => {
+    if (f.week && r.week !== f.week) return false;
+    if (f.niche && r.niche !== f.niche) return false;
+    if (f.mediumStatus && r['medium.status'] !== f.mediumStatus) return false;
+    if (f.type === 'orphan' && !r._orphan) return false;
+    if (f.type === 'piece' && r._orphan) return false;
+    if (f.search) {
+      const hay = (r.slug + ' ' + r.title + ' ' + r.notes).toLowerCase();
+      if (!hay.includes(f.search)) return false;
+    }
+    return true;
+  });
+  if (sortKey) {
+    rows = rows.slice().sort((a, b) => {
+      const av = norm(a[sortKey]), bv = norm(b[sortKey]);
+      if (av === null && bv === null) return cmpTitle(a, b);
+      if (av === null) return 1;
+      if (bv === null) return -1;
+      const c = av.localeCompare(bv);
+      return c ? (sortAsc ? c : -c) : cmpTitle(a, b);
+    });
+  }
+  renderHead();
+  const cols = visibleColumns();
+  const body = document.getElementById('bodyRows');
+  body.innerHTML = '';
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    if (r._flagged) tr.className = 'flagged';
+    for (const [key] of cols) {
+      const td = document.createElement('td');
+      td.dataset.key = key;
+      if (AUTO_KEYS.has(key)) td.dataset.auto = '1';
+      const val = r[key] ?? '—';
+
+      // Try to render an editor for editable cells. `flags` is editable in the
+      // schema but holds long diagnostic prose — an input truncates it, so it
+      // stays a read-only clamped badge.
+      if (LIVE && EDITABLE_SET.has(key) && key !== 'flags') {
+        const editor = renderEditor(key, val, r);
+        if (editor) {
+          td.appendChild(editor);
+          tr.appendChild(td);
+          continue;
+        }
+      }
+
+      // Fall back to static HTML
+      td.innerHTML = cellHtml(key, val, r);
+      tr.appendChild(td);
+    }
+    body.appendChild(tr);
+  }
+  document.getElementById('summary').textContent =
+    rows.length + ' of ' + ROWS.length + ' rows shown · ' +
+    ROWS.filter(r => r._flagged).length + ' flagged · ' +
+    ROWS.filter(r => r._orphan).length + ' orphans · ' +
+    cols.length + ' of ' + COLUMNS.length + ' columns';
+}
+
+document.getElementById('bodyRows').addEventListener('click', e => {
+  const td = e.target.closest('td[data-key="notes"], td[data-key="flags"], td[data-key="title"]');
+  if (td) td.classList.toggle('expanded');
+});
+
+for (const id of ['fWeek', 'fNiche', 'fMediumStatus', 'fType']) {
+  document.getElementById(id).addEventListener('change', render);
+}
+document.getElementById('fSearch').addEventListener('input', render);
+
+// ── cell editing ──────────────────────────────────────────────────────────────
+const LIVE = location.protocol.startsWith('http');
+const EDITABLE_SET = new Set(["medium.pub", "medium.status", "medium.submitted", "medium.url", "medium.method", "linkedin.status", "linkedin.url", "carousel.status", "carousel.url", "reel.ref", "reel.status", "reel.cta", "reel.ig", "reel.yt", "longform.ref", "longform.status", "longform.url", "worksheet.status", "worksheet.url", "source_draft", "flags"]);
+const ENUMS_MAP = {"medium.status": ["submitted", "accepted", "declined", "published", "withdrawn", "draft", "self-publishing", "—"], "linkedin.status": ["posted", "scheduled", "pending", "none", "—"], "carousel.status": ["none", "created", "scheduled", "posted", "—"], "reel.status": ["script", "rendered", "scheduled", "posted", "none", "—"], "longform.status": ["none", "script", "assembled", "scheduled", "published", "—"], "worksheet.status": ["none", "generated", "deployed", "—"]};
+const URL_FIELDS_SET = new Set(["carousel.url", "medium.url", "worksheet.url", "reel.yt", "reel.ig", "longform.url", "linkedin.url"]);
+const DATE_FIELDS_SET = new Set(["medium.submitted"]);
+
+// Same objects as ROWS, not copies: render() reads ROWS, so a saved edit written only
+// to a copy would silently revert on the next sort/filter.
+const ROWS_BY_SLUG = Object.fromEntries(ROWS.map(r => [r.slug, r]));
+
+function updateRowCell(slug, key, newValue) {
+  if (ROWS_BY_SLUG[slug]) {
+    ROWS_BY_SLUG[slug][key] = newValue;
+  }
+}
+
+function flashCell(cell, success) {
+  cell.classList.add(success ? 'cell-flash' : 'cell-error');
+  setTimeout(() => cell.classList.remove(success ? 'cell-flash' : 'cell-error'), 400);
+  if (success) cell.removeAttribute('title');
+}
+
+// Errors surface on the cell, never in a modal: a dialog blocks every later
+// interaction, and a spreadsheet should not stop the world to report a typo.
+function cellError(cell, msg) {
+  flashCell(cell, false);
+  cell.title = msg;
+}
+
+function revealNewPubInput(select, slug, niche, previousValue) {
+  const cell = select.closest('td');
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'cell-editor';
+  input.dataset.key = 'medium.pub';
+  input.dataset.slug = slug;
+  input.value = '';
+  input.dataset.previousValue = previousValue;
+
+  function revert(showValue) {
+    const v = showValue === undefined ? previousValue : showValue;
+    cell.innerHTML = '';
+    const newSelect = renderEditor('medium.pub', v === '' ? '—' : v, ROWS_BY_SLUG[slug]);
+    if (newSelect) cell.appendChild(newSelect);
+  }
+
+  // Enter fires the save, and the resulting revert() blurs the input — without this
+  // guard the blur handler submits a second time with a now-stale `expected` and the
+  // successful save reports a bogus 409.
+  let submitted = false;
+
+  function saveNewPub() {
+    if (submitted) return;
+    const newValue = input.value.trim();
+    if (!newValue) {
+      revert();
+      return;
+    }
+    submitted = true;
+    input.disabled = true;
+    fetch('/api/tracker-field', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({slug, field: 'medium.pub', value: newValue, expected: previousValue === '' ? '—' : previousValue}),
+    })
+    .then(res => res.json().then(data => ({status: res.status, data})))
+    .then(({status, data}) => {
+      if (status === 200) {
+        updateRowCell(slug, 'medium.pub', data.new || '—');
+        if (niche in PUBS && !PUBS[niche].includes(newValue)) {
+          PUBS[niche].push(newValue);
+          PUBS[niche].sort();
+        }
+        flashCell(cell, true);
+        revert();
+      } else if (status === 409) {
+        const onDisk = data.current || previousValue;
+        updateRowCell(slug, 'medium.pub', onDisk);
+        cellError(cell, 'changed on disk to "' + onDisk + '" — your edit was not applied');
+        revert(onDisk);
+      } else {
+        cellError(cell, data.error || 'save failed');
+        revert();
+      }
+    })
+    .catch(err => {
+      cellError(cell, 'network error: ' + err);
+      revert();
+    });
+  }
+
+  cell.innerHTML = '';
+  cell.appendChild(input);
+  input.focus();
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      saveNewPub();
+    } else if (e.key === 'Escape') {
+      submitted = true;   // Escape abandons the edit; blur must not resurrect it
+      revert();
+    }
+  });
+
+  input.addEventListener('blur', () => {
+    setTimeout(() => {
+      if (!submitted && document.activeElement !== input) {
+        saveNewPub();
+      }
+    }, 50);
+  });
+}
+
+function renderEditor(key, value, row) {
+  if (!LIVE || !EDITABLE_SET.has(key)) return null;
+
+  value = value === '—' ? '' : value;
+
+  if (key === 'medium.pub') {
+    const select = document.createElement('select');
+    select.className = 'cell-editor';
+    select.dataset.key = key;
+    select.dataset.slug = row.slug;
+    select.dataset.originalValue = value;
+
+    // (unset) option
+    const unsetOpt = document.createElement('option');
+    unsetOpt.value = '—';
+    unsetOpt.textContent = '(unset)';
+    if (value === '') unsetOpt.selected = true;
+    select.appendChild(unsetOpt);
+
+    // pubs for this niche
+    const niche = row.niche;
+    const pubList = PUBS[niche] || [];
+    for (const pub of pubList) {
+      const opt = document.createElement('option');
+      opt.value = pub;
+      opt.textContent = pub;
+      if (pub === value) opt.selected = true;
+      select.appendChild(opt);
+    }
+
+    // current value if not in list
+    if (value && !pubList.includes(value) && value !== '') {
+      const opt = document.createElement('option');
+      opt.value = value;
+      opt.textContent = value;
+      opt.selected = true;
+      select.appendChild(opt);
+    }
+
+    // "+ New publication…" escape hatch
+    const newOpt = document.createElement('option');
+    newOpt.value = '__NEW_PUB__';
+    newOpt.textContent = '+ New publication…';
+    select.appendChild(newOpt);
+
+    select.addEventListener('change', e => {
+      if (e.target.value === '__NEW_PUB__') {
+        revealNewPubInput(select, row.slug, row.niche, value);
+      } else {
+        saveCell(e.target);
+      }
+    });
+
+    return select;
+  }
+
+  if (key in ENUMS_MAP) {
+    const select = document.createElement('select');
+    select.className = 'cell-editor';
+    select.dataset.key = key;
+    select.dataset.slug = row.slug;
+    for (const opt of ENUMS_MAP[key]) {
+      const option = document.createElement('option');
+      option.value = opt;
+      option.textContent = opt === '—' ? '(unset)' : opt;
+      if (opt === (value === '' ? '—' : value)) option.selected = true;
+      select.appendChild(option);
+    }
+    select.addEventListener('change', e => saveCell(e.target));
+    return select;
+  }
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'cell-editor';
+  input.dataset.key = key;
+  input.dataset.slug = row.slug;
+  input.value = value;
+  input.addEventListener('blur', () => saveCell(input));
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') saveCell(input);
+  });
+  return input;
+}
+
+function saveCell(editor) {
+  const slug = editor.dataset.slug;
+  const key = editor.dataset.key;
+  const newValue = editor.value;
+  const oldValue = ROWS_BY_SLUG[slug] ? ROWS_BY_SLUG[slug][key] : '—';
+  const expected = oldValue === '—' ? '—' : oldValue;
+
+  if (newValue === (oldValue === '—' ? '' : oldValue)) {
+    return; // no change
+  }
+
+  const cell = editor.closest('td');
+  editor.disabled = true;
+
+  fetch('/api/tracker-field', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({slug, field: key, value: newValue, expected}),
+  })
+  .then(res => res.json().then(data => ({status: res.status, data})))
+  .then(({status, data}) => {
+    if (status === 200) {
+      updateRowCell(slug, key, data.new || '—');
+      flashCell(cell, true);
+      if (editor.tagName === 'INPUT') {
+        editor.value = data.new === '—' ? '' : data.new;
+      } else {
+        const idx = [...editor.options].findIndex(o => o.value === (data.new || '—'));
+        if (idx >= 0) editor.selectedIndex = idx;
+      }
+    } else if (status === 409) {
+      flashCell(cell, false);
+      const onDisk = data.current || '—';
+      updateRowCell(slug, key, onDisk);
+      if (editor.tagName === 'INPUT') {
+        editor.value = onDisk === '—' ? '' : onDisk;
+      } else {
+        editor.value = onDisk;
+      }
+      editor.dataset.originalValue = onDisk;
+      cellError(cell, 'changed on disk to "' + onDisk + '" — your edit was not applied');
+    } else {
+      cellError(cell, data.error || 'save failed');
+      // a rejected value must not stay on screen — revert the control either way
+      editor.value = editor.tagName === 'INPUT' && oldValue === '—' ? '' : oldValue;
+    }
+  })
+  .catch(err => {
+    cellError(cell, 'network error: ' + err);
+    editor.value = editor.tagName === 'INPUT' && oldValue === '—' ? '' : oldValue;
+  })
+  .finally(() => {
+    editor.disabled = false;
+  });
+}
+
+// Note button handler. Capture phase + stopPropagation so adding a note never
+// also toggles the cell's clamp/expand.
+document.getElementById('bodyRows').addEventListener('click', e => {
+  const btn = e.target.closest('.notebtn');
+  if (btn) {
+    e.stopPropagation();
+    const slug = btn.dataset.slug;
+    const text = prompt('Add a note:');
+    if (text && text.trim()) {
+      fetch('/api/tracker-note', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({slug, text}),
+      })
+      .then(res => res.json().then(data => ({status: res.status, data})))
+      .then(({status, data}) => {
+        const cell = btn.closest('td');
+        if (status === 200) {
+          // append in place — reloading would discard sort, filters and column choices
+          const row = ROWS_BY_SLUG[slug];
+          const appended = data.appended || text.trim();
+          row.notes = row.notes && row.notes !== '—' ? row.notes + '\n' + appended : appended;
+          updateRowCell(slug, 'notes', row.notes);
+          render();
+        } else {
+          cellError(cell, data.error || 'note failed');
+        }
+      })
+      .catch(err => cellError(btn.closest('td'), 'network error: ' + err));
+    }
+  }
+}, true);
+
+buildColPanel();
+buildSortSelect();
+render();
+</script>
+</body>
+</html>
