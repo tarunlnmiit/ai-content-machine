@@ -1,135 +1,89 @@
-# Weekly Ideas Report
-Generated: 2026-06-23 06:13:18
+# Weekly Content Ideas — 2026-W28
+_Generated: 2026-07-12 · Regenerate: `python3 scripts/idea_scorer.py --force`_
 
-## Data Science Tech
+---
 
-### ⭐ Tool Reel (weekly): Claude + n8n nightly agent — the exact Claude prompt that powers the summary
-- **Type:** comment→DM give-a-tool reel (auto-baked from projects.json)
-- **DM keyword:** comment `FLOW` → auto-DM the deliverable
-- **Deliverable:** n8n workflow JSON (free import) + the Claude prompt pack, in a public repo
-- **Guardrail:** It drafts and summarizes on a schedule — you review the output. It is not autonomous and does not act without you. Never say 'fully automated' or 'runs your life'.
-- **Produce with:** `--project free_tool_ds` on the reel/derivative generators
+## DS — Data Science / Tech
 
-### 1. Data Engineer Bootcamp (FREE 27+ Hour Course) - SQL, Python, Cloud, Bash, AI, Git & GitHub
-- **Score:** 1.304
-- **Novelty score:** 0.988
-- **Category:** uncategorized
-- **Source:** youtube_2026-06-22
-- **URL:** https://youtu.be/ol9_NnC9-cc
+### 🔧 Tool Reel (mandatory — 1/week · autopilot)
+> `python3 scripts/repurpose_blog.py --input <blog.md> --project autopilot`
+> DM keyword: **jobs** · _Scans, scores, notifies, drafts. Does NOT auto-apply. Never say 'auto-applies'._
 
-### 2. Accounting → Financial Data Analytics: Would you focus on pipeline integration first or move into SQL and analytics?
-- **Score:** 1.271
-- **Novelty score:** 0.963
-- **Category:** uncategorized
-- **Source:** reddit_2026-06-09
-- **URL:** https://www.reddit.com/r/analytics/comments/1tvmvgy/accounting_financial_data_analytics_would_you/
+**Project:** autopilot-jobhunt
+**This week's angle:** a live LLM score example (0-100 vs resume)
+**Hook options (record 5×, keep winner):**
+  - Here's a live llm score example (0-100 vs resume) — for free.
+  - I built autopilot-jobhunt and a live llm score example (0-100 vs resume).
+**5-beat:** Hook 0–3s → Problem 3–8s → Reveal+proof 8–28s → Payoff 28–35s → CTA 'Comment **jobs**' 35–45s
 
-### 3. data science life cycle
-- **Score:** 1.225
-- **Novelty score:** 0.988
-- **Category:** uncategorized
-- **Source:** suggest_2026-06-10_google
-- **URL:** 
 
-### 4. One-Tailed vs Two-Tailed Tests: Does It Actually Matter?
-- **Score:** 1.224
-- **Novelty score:** 0.995
-- **Category:** uncategorized
-- **Source:** medium_data_science
-- **URL:** https://medium.com/@atticusli/one-tailed-vs-two-tailed-tests-does-it-actually-matter-922fcda7b06a?source=rss------data_science-5
+### 📝 Blog + Reel Ideas (virality-scored)
 
-### 5. data science using python
-- **Score:** 1.209
-- **Novelty score:** 0.975
-- **Category:** uncategorized
-- **Source:** suggest_2026-06-10_google
-- **URL:** 
+| Score | Idea | Hook | Format |
+|-------|------|------|--------|
+| 9/10 | Ilya's 30-paper ML reading list (30papers.com) — I ranked them by what actually mattered for my 10-year career | Ilya's 30 papers exist. I only needed 6. | Blog + Reel |
+| 9/10 | 'Can I do data science after 12th / without maths / without coding' — answering the top 5 autocomplete questions honestly, no gatekeeping | 5 questions Google won't answer straight. I will. | Carousel |
+| 8/10 | GLM 5.2 running on a slow computer (HN thread) — what local-model-on-cheap-hardware means for DS job security | Ran a top model on a potato. Your job just got shakier. | Reel only |
+| 8/10 | GLM 5.2 and 'the coming AI margin collapse' — what falling inference costs mean for DS salaries and hiring in 2026 | AI margins are collapsing. Your salary might follow. | Blog + Reel |
+| 7/10 | Postgres rewritten in Rust passing 100% regression tests — what this means for DS folks who just use pandas/SQL and never think about the engine | Your database got rewritten. You'll never notice — here's why that's the point. | Blog only |
 
-## Life Self Dev
 
-### ⭐ Tool Reel (weekly): Claude + Notion: brain-dump -> weekly system — the exact Claude prompt (paste it on screen)
-- **Type:** comment→DM give-a-tool reel (auto-baked from projects.json)
-- **DM keyword:** comment `SYSTEM` → auto-DM the deliverable
-- **Deliverable:** duplicatable Notion template + the Claude brain-dump prompt (email-gated for list capture)
-- **Guardrail:** It structures what you give it into a system. It does not build the habit for you or track on its own. Never say it 'fixes your discipline' or 'changes your life'.
-- **Produce with:** `--project free_tool_life` on the reel/derivative generators
+---
 
-### 🎤 Raw Take batch (4×/week, batch-record) — Hinglish opinion Shorts
-- IG Reel (@mistakenlyhuman) + YouTube Short (Breath of Life). Open with the question verbatim.
-  1. "Someone asked me — Overthinking band kaise karun raat ko?"  _(theme: anxiety)_
-  2. "Someone asked me — Confidence fake karun ya wait karun real aane tak?"  _(theme: self-worth)_
-  3. "Someone asked me — Logon ko 'naa' kaise bolun bina dare?"  _(theme: boundaries)_
-  4. "Someone asked me — Burnout me hoon par ruk nahi sakta — kya karun?"  _(theme: discipline)_
-- See `docs/raw-take-format.md` for structure + guardrails.
+## Life — Life & Self-Development
 
-### 1. What Real Love Looks Like When a Man Truly Loves You
-- **Score:** 1.617
-- **Novelty score:** 0.980
-- **Category:** uncategorized
-- **Source:** medium_psychology
-- **URL:** https://medium.com/@edithtali/what-real-love-looks-like-when-a-man-truly-loves-you-5d90e295512d?source=rss------psychology-5
+### 🔧 Tool Reel (mandatory — 1/week · free_tool_life)
+> `python3 scripts/repurpose_blog.py --input <blog.md> --project free_tool_life`
+> DM keyword: **SYSTEM** · _It structures what you give it into a system. It does not build the habit for you or track on its own. Never say it 'fixes your discipline' or 'changes your life'._
 
-### 2. Nobody Talks About How Lonely It Is to Lose an Online Job
-- **Score:** 1.393
-- **Novelty score:** 0.988
-- **Category:** uncategorized
-- **Source:** medium_self_improvement
-- **URL:** https://medium.com/@tuanrjlyn/nobody-talks-about-how-lonely-it-is-to-lose-an-online-job-bc96a43f027d?source=rss------self_improvement-5
+**Project:** Claude + Notion: brain-dump -> weekly system
+**This week's angle:** the one Notion view that makes it stick
+**Hook options (record 5×, keep winner):**
+  - Here's the one notion view that makes it stick — for free.
+  - I built Claude + Notion and the one notion view that makes it stick.
+**5-beat:** Hook 0–3s → Problem 3–8s → Reveal+proof 8–28s → Payoff 28–35s → CTA 'Comment **SYSTEM**' 35–45s
 
-### 3. The Frictionless Flow: Why Willpower Alone Isn’t Enough for Deep Focus
-- **Score:** 1.371
-- **Novelty score:** 0.920
-- **Category:** uncategorized
-- **Source:** medium_self_improvement
-- **URL:** https://medium.com/@PrimeLifestyleHub/the-frictionless-flow-why-willpower-alone-isnt-enough-for-deep-focus-c907a8185b73?source=rss------self_improvement-5
 
-### 4. How I Read The Bible 25 Times With These 2 Simple Habits
-- **Score:** 1.350
-- **Novelty score:** 0.906
-- **Category:** uncategorized
-- **Source:** youtube_2026-06-22
-- **URL:** https://youtu.be/0xZGHM7qbdo
+### 🎤 Raw Take Batch (4 this week — Hinglish, batch-record in one sitting)
+> `docs/raw-take-format.md` · Format: 'Someone asked me — <Q>' → raw opinion → landing line
 
-### 5. The Quiet Strength of One More Time
-- **Score:** 1.342
-- **Novelty score:** 0.952
-- **Category:** uncategorized
-- **Source:** medium_productivity
-- **URL:** https://anasanaa.medium.com/the-quiet-strength-of-one-more-time-6a9dc87c1014?source=rss------productivity-5
+1. **Q:** _Apne se choti umar walon se peeche feel hota hai — kyun?_ `[comparison]`
+   Hook: "Someone asked me — Apne se choti umar walon se peeche feel hota hai — kyun?"
 
-## Poetry Quotes
+2. **Q:** _Maaf kaise karun jisne hurt kiya?_ `[relationships]`
+   Hook: "Someone asked me — Maaf kaise karun jisne hurt kiya?"
 
-### 1. “You've gotta dance like there's nobody watching, Love like you'll never be hurt, Sing like there's nobody listening, And live like it's heaven on earth.” ― William W. Purkey
-- **Score:** 1.490
-- **Novelty score:** 1.000
-- **Category:** uncategorized
-- **Source:** goodreads_inspirational
-- **URL:** https://www.goodreads.com/quotes/tag/inspirational
+3. **Q:** _Ambition aur peace dono chahiye — possible hai?_ `[meaning]`
+   Hook: "Someone asked me — Ambition aur peace dono chahiye — possible hai?"
 
-### 2. fact about someone that always wanna be near his crush.
-- **Score:** 1.327
-- **Novelty score:** 0.941
-- **Category:** uncategorized
-- **Source:** medium_quotes
-- **URL:** https://medium.com/@nadyasafwa233/fact-about-someone-that-always-wanna-be-near-his-crush-0f6015f0b1d9?source=rss------quotes-5
+4. **Q:** _Khud se honest kaise rahun jab sach dukhta ho?_ `[self-doubt]`
+   Hook: "Someone asked me — Khud se honest kaise rahun jab sach dukhta ho?"
 
-### 3. “Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.” ― Martin Luther King Jr., A Testament of Hope: The Essential Writings and Speeches
-- **Score:** 1.290
-- **Novelty score:** 0.970
-- **Category:** uncategorized
-- **Source:** goodreads_inspirational
-- **URL:** https://www.goodreads.com/quotes/tag/inspirational
 
-### 4. “I Don’t Want to Hurt You… I Just Want to Set You Free From Me”
-- **Score:** 1.250
-- **Novelty score:** 0.887
-- **Category:** uncategorized
-- **Source:** medium_poetry
-- **URL:** https://medium.com/grief-book-club/i-dont-want-to-hurt-you-i-just-want-to-set-you-free-from-me-70182c2e5e75?source=rss------poetry-5
+### 📝 Blog + Reel Ideas (virality-scored)
 
-### 5. People Don't Know the Difference Between Writing a Book and Being a Writer...
-- **Score:** 1.229
-- **Novelty score:** 0.983
-- **Category:** uncategorized
-- **Source:** youtube_2026-06-09
-- **URL:** https://youtu.be/5Wkl-W45yY8
+| Score | Idea | Hook | Format |
+|-------|------|------|--------|
+| 9/10 | Discipline vs consistency — different skills, most people train wrong one | Discipline gets you started. Consistency keeps you alive. | Blog + Reel |
+| 9/10 | Emotionally strong ≠ emotionless — data scientist's framework for processing not suppressing | Emotionless isn't strong. It's numb wearing a costume. | Blog + Reel |
+| 8/10 | Why 'be more productive' searches spike but productivity never sticks — system over motivation | You don't need more productivity. You need fewer decisions. | Carousel |
+| 8/10 | Confidence isn't fixed trait — built same way skill build (10yr DS analogy: iteration not talent) | Confident people aren't fearless. They're just repeat customers of failure. | Blog + Reel |
+| 7/10 | Present-moment focus for analytical minds — why data people struggle most with 'be present' | Your brain optimizes for future. Presence has zero ROI it understands. | Reel only |
+
+
+---
+
+## Poetry / Quotes
+
+### 📝 Blog + Reel Ideas (virality-scored)
+
+| Score | Idea | Hook | Format |
+|-------|------|------|--------|
+| 9/10 | Rupi Kaur vs Robert Frost: why algorithm rewards short poems, not shallow ones | Short poem ≠ shallow poem. Prove it. | Blog + Reel |
+| 8/10 | Breakdown: Coleridge's Xanadu — why unfinished poem beats finished ones | Best poem ever written... he never finished it. | Reel only |
+| 8/10 | One-sided love poems: why they outperform mutual-love poems on IG | Unrequited love writes better poems. Data says so. | Carousel |
+| 8/10 | How to write a poem about anything in 4 lines (Wordsworth's daffodils method) | 4 lines. Any topic. Real formula. | Blog + Reel |
+| 7/10 | Quiet strength poems: why 'overthinking' is this generation's most-searched emotion | You're not overthinking. You're under-writing. | Reel only |
+
+
+---

@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Prompt Pack — 2026-W29</title>
+<style>
+  html,body { margin:0; height:100%; background:#0d0d10; color:#f4f1ea;
+               font-family:Georgia,'Times New Roman',serif; }
+  .slide { display:none; height:100vh; box-sizing:border-box; padding:6vh 8vw;
+            flex-direction:column; justify-content:center; }
+  .slide.active { display:flex; }
+  .meta { font-family:-apple-system,sans-serif; font-size:14px; letter-spacing:.2em;
+           display:flex; justify-content:space-between; opacity:.9; }
+  .protocol { font-family:-apple-system,sans-serif; font-size:15px; color:#8a8578;
+               margin:2vh 0 4vh; letter-spacing:.05em; }
+  .question { font-size:clamp(2.2rem, 5.5vw, 4.5rem); line-height:1.25; margin:0; }
+  .theme { font-family:-apple-system,sans-serif; color:#5c584e; margin-top:5vh;
+            text-transform:uppercase; letter-spacing:.25em; font-size:12px; }
+  .hint { position:fixed; bottom:16px; right:24px; font-family:-apple-system,sans-serif;
+           font-size:12px; color:#444; }
+</style></head><body>
+
+    <section class="slide" data-idx="0">
+      <div class="meta"><span class="niche" style="color:#e8b44f">LIFE</span>
+        <span class="count">1 / 8</span></div>
+      <p class="protocol">pause 3s &rarr; read the question aloud, word for word &rarr; answer raw</p>
+      <h1 class="question">How do I trust myself when everything is failing?</h1>
+      <p class="theme">self-doubt</p>
+    </section>
+    <section class="slide" data-idx="1">
+      <div class="meta"><span class="niche" style="color:#e8b44f">LIFE</span>
+        <span class="count">2 / 8</span></div>
+      <p class="protocol">pause 3s &rarr; read the question aloud, word for word &rarr; answer raw</p>
+      <h1 class="question">Should I settle or take a risk in my career?</h1>
+      <p class="theme">career</p>
+    </section>
+    <section class="slide" data-idx="2">
+      <div class="meta"><span class="niche" style="color:#e8b44f">LIFE</span>
+        <span class="count">3 / 8</span></div>
+      <p class="protocol">pause 3s &rarr; read the question aloud, word for word &rarr; answer raw</p>
+      <h1 class="question">Old mistakes keep replaying in my head — how do I move past them?</h1>
+      <p class="theme">self-doubt</p>
+    </section>
+    <section class="slide" data-idx="3">
+      <div class="meta"><span class="niche" style="color:#e8b44f">LIFE</span>
+        <span class="count">4 / 8</span></div>
+      <p class="protocol">pause 3s &rarr; read the question aloud, word for word &rarr; answer raw</p>
+      <h1 class="question">Should I quit my job or start something of my own?</h1>
+      <p class="theme">career</p>
+    </section>
+    <section class="slide" data-idx="4">
+      <div class="meta"><span class="niche" style="color:#b48ce8">POETRY</span>
+        <span class="count">5 / 8</span></div>
+      <p class="protocol">pause 3s &rarr; read the question aloud, word for word &rarr; answer raw</p>
+      <h1 class="question">When did you realize poetry could say things you couldn&#x27;t in normal conversation?</h1>
+      <p class="theme">scored_idea</p>
+    </section>
+    <section class="slide" data-idx="5">
+      <div class="meta"><span class="niche" style="color:#b48ce8">POETRY</span>
+        <span class="count">6 / 8</span></div>
+      <p class="protocol">pause 3s &rarr; read the question aloud, word for word &rarr; answer raw</p>
+      <h1 class="question">What&#x27;s the scariest part about sharing something this personal with a camera?</h1>
+      <p class="theme">scored_idea</p>
+    </section>
+    <section class="slide" data-idx="6">
+      <div class="meta"><span class="niche" style="color:#4fc3e8">DS</span>
+        <span class="count">7 / 8</span></div>
+      <p class="protocol">pause 3s &rarr; read the question aloud, word for word &rarr; answer raw</p>
+      <h1 class="question">How does your LLM actually score a resume against a job posting?</h1>
+      <p class="theme">scored_idea</p>
+    </section>
+    <section class="slide" data-idx="7">
+      <div class="meta"><span class="niche" style="color:#4fc3e8">DS</span>
+        <span class="count">8 / 8</span></div>
+      <p class="protocol">pause 3s &rarr; read the question aloud, word for word &rarr; answer raw</p>
+      <h1 class="question">Why score resumes when you could just auto-apply to everything?</h1>
+      <p class="theme">scored_idea</p>
+    </section>
+  <div class="hint">&larr; / &rarr; or space to move &middot; one question per take</div>
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let idx = 0;
+  function show(i) {
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') show(idx + 1);
+    if (e.key === 'ArrowLeft') show(idx - 1);
+  });
+  show(0);
+</script></body></html>

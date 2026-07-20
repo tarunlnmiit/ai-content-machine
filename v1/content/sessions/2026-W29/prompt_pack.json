@@ -1,0 +1,68 @@
+{
+  "week": "2026-W29",
+  "generated": "2026-07-12",
+  "theme_filter": [
+    "career",
+    "self-doubt"
+  ],
+  "language": "English",
+  "protocol": "3s silence → read question aloud verbatim → answer raw; retake = pause 2s and restart",
+  "questions": [
+    {
+      "niche": "life",
+      "text": "How do I trust myself when everything is failing?",
+      "theme": "self-doubt",
+      "source": "raw_take_bank",
+      "id": "q01"
+    },
+    {
+      "niche": "life",
+      "text": "Should I settle or take a risk in my career?",
+      "theme": "career",
+      "source": "raw_take_bank",
+      "id": "q02"
+    },
+    {
+      "niche": "life",
+      "text": "Old mistakes keep replaying in my head — how do I move past them?",
+      "theme": "self-doubt",
+      "source": "raw_take_bank",
+      "id": "q03"
+    },
+    {
+      "niche": "life",
+      "text": "Should I quit my job or start something of my own?",
+      "theme": "career",
+      "source": "raw_take_bank",
+      "id": "q04"
+    },
+    {
+      "niche": "poetry",
+      "text": "When did you realize poetry could say things you couldn't in normal conversation?",
+      "theme": "scored_idea",
+      "source": "weekly_ideas",
+      "id": "q05"
+    },
+    {
+      "niche": "poetry",
+      "text": "What's the scariest part about sharing something this personal with a camera?",
+      "theme": "scored_idea",
+      "source": "weekly_ideas",
+      "id": "q06"
+    },
+    {
+      "niche": "ds",
+      "text": "How does your LLM actually score a resume against a job posting?",
+      "theme": "scored_idea",
+      "source": "weekly_ideas",
+      "id": "q07"
+    },
+    {
+      "niche": "ds",
+      "text": "Why score resumes when you could just auto-apply to everything?",
+      "theme": "scored_idea",
+      "source": "weekly_ideas",
+      "id": "q08"
+    }
+  ]
+}
