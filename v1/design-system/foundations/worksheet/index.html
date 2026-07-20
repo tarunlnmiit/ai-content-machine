@@ -1,0 +1,46 @@
+<!-- @dsCard group="Foundations · Worksheet" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Worksheet Tokens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Lora:ital@0;1&family=Nunito+Sans:wght@400;700&family=Playfair+Display:ital@0;1&family=DM+Sans:wght@400;700&family=Inter:wght@400;600;800&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;600;800&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#1C1C2E;color:#E8E0D5;font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+       padding:36px;line-height:1.5}
+  h1{font-size:26px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
+  h2{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;
+      opacity:.55;margin:28px 0 12px}
+  .sub{font-size:13px;opacity:.6;margin-bottom:8px}
+  .grid{display:flex;flex-wrap:wrap;gap:14px}
+  .swatch{width:150px;border-radius:10px;overflow:hidden;
+           border:1px solid rgba(255,255,255,.12)}
+  .swatch .chip{height:74px}
+  .swatch .meta{padding:8px 10px;background:rgba(255,255,255,.05);font-size:11px}
+  .swatch .meta b{display:block;font-size:12px;margin-bottom:2px}
+  .swatch .meta code{font-family:'JetBrains Mono',monospace;opacity:.75}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:8px}
+  th,td{text-align:left;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.5}
+  td code,pre{font-family:'JetBrains Mono',monospace;font-size:12px}
+  pre{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);
+      border-radius:8px;padding:14px;overflow:auto;white-space:pre-wrap}
+  .dot{display:inline-block;width:13px;height:13px;border-radius:3px;
+        vertical-align:-2px;margin-right:7px;border:1px solid rgba(255,255,255,.25)}
+  .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;
+       background:rgba(255,255,255,.09);margin:0 6px 6px 0}
+  .warn{border:1px solid #E8745A;background:rgba(232,116,90,.08);border-radius:10px;
+        padding:12px 16px;font-size:13px;margin:16px 0}
+  .specimen{font-size:30px;margin:6px 0 14px}
+  .ds-foot{margin-top:36px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);
+           font-size:11px;opacity:.55}
+</style>
+</head>
+<body>
+<h1>Worksheet — “Breath Network” Tokens</h1><p class="sub">Source: v1/scripts/templates/worksheet_shell.html :root (System C). A4-landscape PDF worksheets, DS & Life niches only.</p><h2>Colors</h2><div class='grid'><div class="swatch"><div class="chip" style="background:#1C1C2E"></div><div class="meta"><b>--ink</b><code>#1C1C2E</code> </div></div><div class="swatch"><div class="chip" style="background:#2A2A40"></div><div class="meta"><b>--ink-700</b><code>#2A2A40</code> </div></div><div class="swatch"><div class="chip" style="background:#3A3A52"></div><div class="meta"><b>--ink-600</b><code>#3A3A52</code> </div></div><div class="swatch"><div class="chip" style="background:#E8E0D5"></div><div class="meta"><b>--bone</b><code>#E8E0D5</code> </div></div><div class="swatch"><div class="chip" style="background:#FAF6EF"></div><div class="meta"><b>--bone-100</b><code>#FAF6EF</code> </div></div><div class="swatch"><div class="chip" style="background:#F1ECE2"></div><div class="meta"><b>--bone-200</b><code>#F1ECE2</code> </div></div><div class="swatch"><div class="chip" style="background:#E8E0D5"></div><div class="meta"><b>--bone-300</b><code>#E8E0D5</code> </div></div><div class="swatch"><div class="chip" style="background:#D6CCBC"></div><div class="meta"><b>--bone-400</b><code>#D6CCBC</code> </div></div><div class="swatch"><div class="chip" style="background:#B8AC97"></div><div class="meta"><b>--bone-500</b><code>#B8AC97</code> </div></div><div class="swatch"><div class="chip" style="background:#7C9CB0"></div><div class="meta"><b>--sky</b><code>#7C9CB0</code> </div></div><div class="swatch"><div class="chip" style="background:#B0C4D2"></div><div class="meta"><b>--sky-300</b><code>#B0C4D2</code> </div></div><div class="swatch"><div class="chip" style="background:#557083"></div><div class="meta"><b>--sky-700</b><code>#557083</code> </div></div><div class="swatch"><div class="chip" style="background:#C9A96E"></div><div class="meta"><b>--ochre</b><code>#C9A96E</code> </div></div><div class="swatch"><div class="chip" style="background:#E2CDA1"></div><div class="meta"><b>--ochre-300</b><code>#E2CDA1</code> </div></div><div class="swatch"><div class="chip" style="background:#E8745A"></div><div class="meta"><b>--ember</b><code>#E8745A</code> </div></div></div><h2>Fonts</h2><table><tr><th>Token</th><th>Stack</th></tr><tr><td><code>--font-sans</code></td><td>'Montserrat', ui-sans-serif, system-ui, sans-serif</td></tr><tr><td><code>--font-ed</code></td><td>'Instrument Serif', 'Times New Roman', Georgia, serif</td></tr><tr><td><code>--font-mono</code></td><td>ui-monospace, 'SF Mono', Menlo, Consolas, monospace</td></tr></table>
+<footer class="ds-foot">Systems A (brand kit) / B (video bibles) / C (worksheet shell) are intentionally divergent palettes. Mirror only — do NOT reconcile. Edit repo sources, never this project.</footer>
+</body>
+</html>

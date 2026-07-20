@@ -1,3 +1,9 @@
+---
+title: "YouTube Channel Audit — June 18, 2026"
+type: doc
+slug: youtube-audit-2026-06-18
+tags: [content/doc]
+---
 # YouTube Channel Audit — June 18, 2026
 
 ---

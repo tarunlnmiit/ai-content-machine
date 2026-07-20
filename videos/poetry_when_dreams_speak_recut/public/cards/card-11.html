@@ -1,0 +1,41 @@
+<div class="card" data-card-id="card-11">
+  <style>
+    .card[data-card-id="card-11"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #fbf7ec; color: #2d2d2d;
+      font-family: 'Caveat', cursive;
+      padding: 80px 100px; box-sizing: border-box;
+      display: flex; flex-direction: column; gap: 30px;
+    }
+    .card[data-card-id="card-11"] .kicker {
+      font: 700 46px/1 'Caveat', cursive; color: #ff6b35;
+    }
+    .card[data-card-id="card-11"] .words { display: flex; gap: 44px; align-items: baseline; flex-wrap: wrap; max-width: 1320px; }
+    .card[data-card-id="card-11"] .w {
+      font: 700 118px/1 'Caveat', cursive; color: #2d2d2d;
+      border-bottom: 5px dashed rgba(255, 107, 53, 0.55); padding-bottom: 4px;
+    }
+    .card[data-card-id="card-11"] .w.alt { color: #ff6b35; }
+    .card[data-card-id="card-11"] .note {
+      margin-top: 12px; max-width: 1280px;
+      font: 500 52px/1.35 'Caveat', cursive; color: #5a5348;
+    }
+    .card[data-card-id="card-11"] .note .hl { color: #2d2d2d; font-weight: 700; }
+    .card[data-card-id="card-11"] .scribble {
+      position: absolute; top: 70px; right: 560px; width: 120px; height: 120px;
+      border: 5px solid rgba(255, 107, 53, 0.5); border-radius: 50% 46% 52% 48%;
+      transform: rotate(-8deg);
+    }
+  </style>
+  <div class="root">
+    <span class="scribble" data-anim="fade-in" data-anim-at="1.6" data-anim-duration="0.5"></span>
+    <span class="kicker" data-anim="fade-in" data-anim-at="0.15" data-anim-duration="0.45">the poem gives you texture —</span>
+    <div class="words">
+      <span class="w" data-anim="scale-pop" data-anim-at="0.6" data-anim-duration="0.5">darkness</span>
+      <span class="w alt" data-anim="scale-pop" data-anim-at="1.0" data-anim-duration="0.5">blanket</span>
+      <span class="w" data-anim="scale-pop" data-anim-at="1.4" data-anim-duration="0.5">bonfire</span>
+      <span class="w alt" data-anim="scale-pop" data-anim-at="1.8" data-anim-duration="0.5">mama</span>
+    </div>
+    <p class="note" data-anim="fade-in" data-anim-at="2.6" data-anim-duration="0.6">not symbols — <span class="hl">actual places</span> where you stop performing and just exist</p>
+  </div>
+</div>

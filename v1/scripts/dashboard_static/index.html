@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Machine — Weekly Operator</title>
+<style>
+  :root{
+    --paper:#faf7f2;
+    --paper-raised:#fffdf9;
+    --ink:#231f1a;
+    --ink-soft:#5b5347;
+    --ink-faint:#928a7c;
+    --line:#e6ddcf;
+    --accent:#b5822a;
+    --accent-ink:#7a5613;
+    --accent-soft:#f3e3c4;
+    --good:#3f7d4f;
+    --good-soft:#e2efe2;
+    --bad:#a3402f;
+    --bad-soft:#f6e0da;
+    --amber:#c07f19;
+    --amber-soft:#faeccb;
+    --life:#b5822a;
+    --life-soft:#f3e3c4;
+    --poetry:#7756a5;
+    --poetry-soft:#e9e1f5;
+    --ds:#1f8a9e;
+    --ds-soft:#dcf1f4;
+    --shadow-sm: 0 1px 2px rgba(35,31,26,0.06);
+    --shadow-md: 0 4px 14px rgba(35,31,26,0.08);
+    --radius: 10px;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:15px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 24px 80px;
+  }
+
+  /* ---------- top banner (backend down) ---------- */
+  .banner{
+    display:none;
+    background:var(--bad-soft);
+    border:1px solid var(--bad);
+    color:var(--bad);
+    border-radius:var(--radius);
+    padding:14px 18px;
+    margin-bottom:22px;
+    font-weight:600;
+  }
+  .banner.show{ display:block; }
+  .banner code{
+    background:rgba(0,0,0,0.06);
+    padding:2px 6px;
+    border-radius:4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  /* ---------- header ---------- */
+  header.top{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:18px;
+    padding-bottom:22px;
+    border-bottom:2px solid var(--ink);
+    margin-bottom:8px;
+  }
+  header.top .titleblock h1{
+    font-family:var(--serif);
+    font-size:2rem;
+    margin:0 0 4px;
+    letter-spacing:-0.01em;
+  }
+  header.top .titleblock .week{
+    color:var(--ink-soft);
+    font-size:0.95rem;
+  }
+  .headline-metric{
+    text-align:right;
+  }
+  .headline-metric .num{
+    font-family:var(--serif);
+    font-size:2.6rem;
+    color:var(--accent-ink);
+    line-height:1;
+  }
+  .headline-metric .label{
+    font-size:0.78rem;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-top:4px;
+  }
+
+  .freshness-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin:16px 0 40px;
+  }
+  .light{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 14px 6px 10px;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    cursor:default;
+  }
+  .light .dot{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--ink-faint);
+    flex-shrink:0;
+  }
+  .light .dot.green{ background:var(--good); box-shadow:0 0 0 3px var(--good-soft); }
+  .light .dot.amber{ background:var(--amber); box-shadow:0 0 0 3px var(--amber-soft); }
+  .light b{ color:var(--ink); font-weight:600; }
+  .light .lightdate{ color:var(--ink-faint); }
+
+  /* ---------- spine / sections ---------- */
+  .spine{
+    position:relative;
+    padding-left:44px;
+  }
+  .spine::before{
+    content:"";
+    position:absolute;
+    left:15px; top:8px; bottom:8px;
+    width:2px;
+    background:linear-gradient(var(--line), var(--line));
+    background-size:2px 10px;
+  }
+  section.step{
+    position:relative;
+    margin-bottom:52px;
+  }
+  section.step .marker{
+    position:absolute;
+    left:-44px; top:-2px;
+    width:32px; height:32px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:0.95rem;
+  }
+  section.step h2{
+    font-family:var(--serif);
+    font-size:1.5rem;
+    margin:0 0 4px;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  section.step h2 .when{
+    font-family:var(--sans);
+    font-size:0.78rem;
+    color:var(--ink-faint);
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    background:var(--accent-soft);
+    padding:3px 9px;
+    border-radius:999px;
+  }
+  section.step .subnote{
+    color:var(--ink-soft);
+    font-size:0.88rem;
+    margin:0 0 18px;
+  }
+
+  .card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-sm);
+    padding:18px 20px;
+  }
+
+  /* ---------- prep buttons ---------- */
+  .prep-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(190px,1fr));
+    gap:14px;
+  }
+  .prep-item{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  button{
+    font-family:var(--sans);
+    cursor:pointer;
+  }
+  .btn{
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    padding:11px 16px;
+    border-radius:8px;
+    font-size:0.92rem;
+    font-weight:600;
+    transition:transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  }
+  .btn:hover{ box-shadow:var(--shadow-md); transform:translateY(-1px); }
+  .btn:active{ transform:translateY(0); }
+  .btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .btn.primary{ background:var(--accent); border-color:var(--accent-ink); color:#2a1c04; }
+  .btn.ghost{ background:transparent; color:var(--ink); }
+  .btn.small{ padding:6px 12px; font-size:0.8rem; }
+  .btn:disabled{ opacity:0.55; cursor:not-allowed; transform:none; }
+  .btn.running{ animation:pulse 1.1s ease-in-out infinite; }
+  .btn.done-flash{ animation:flash 0.8s ease; }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(181,130,42,0.35); }
+    50%{ box-shadow:0 0 0 6px rgba(181,130,42,0); }
+  }
+  @keyframes flash{
+    0%{ background:var(--good); border-color:var(--good); }
+    100%{ }
+  }
+  .caption{
+    font-size:0.78rem;
+    color:var(--ink-faint);
+    line-height:1.4;
+  }
+  .job-status{
+    font-size:0.76rem;
+    font-weight:700;
+    min-height:1em;
+  }
+  .job-status.ok{ color:var(--good); }
+  .job-status.err{ color:var(--bad); }
+  .job-status.run{ color:var(--accent-ink); }
+
+  .log-panel{
+    margin-top:16px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+    display:none;
+  }
+  .log-panel.open{ display:block; }
+  .log-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--accent-soft);
+    padding:8px 14px;
+    font-size:0.78rem;
+    font-weight:700;
+    color:var(--accent-ink);
+    cursor:pointer;
+  }
+  .log-body{
+    background:#1c1913;
+    color:#e8dfcd;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:0.78rem;
+    max-height:220px;
+    overflow-y:auto;
+    padding:12px 14px;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+
+  /* ---------- menu ---------- */
+  .menu-section{ margin-bottom:20px; }
+  .menu-section:last-child{ margin-bottom:0; }
+  .menu-section h3{
+    font-size:0.95rem;
+    margin:0 0 10px;
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+    padding-bottom:6px;
+  }
+  .menu-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:7px 4px;
+    border-radius:6px;
+  }
+  .menu-item:hover{ background:var(--accent-soft); }
+  .menu-item input[type=checkbox]{
+    width:18px; height:18px;
+    margin-top:2px;
+    accent-color:var(--accent);
+    flex-shrink:0;
+    cursor:pointer;
+  }
+  .menu-item label{
+    flex:1;
+    cursor:pointer;
+    font-size:0.92rem;
+  }
+  .chip{
+    display:inline-block;
+    font-size:0.68rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    padding:2px 8px;
+    border-radius:999px;
+    margin-left:8px;
+    vertical-align:middle;
+  }
+  .chip.life{ background:var(--life-soft); color:var(--life); }
+  .chip.poetry{ background:var(--poetry-soft); color:var(--poetry); }
+  .chip.ds{ background:var(--ds-soft); color:var(--ds); }
+
+  .menu-toolbar{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:14px;
+  }
+
+  /* ---------- record protocol ---------- */
+  .protocol-card{
+    background:#231f1a;
+    color:#f2ead9;
+    border-radius:var(--radius);
+    padding:20px 22px;
+    font-size:0.95rem;
+    line-height:1.65;
+    box-shadow:var(--shadow-md);
+  }
+  .protocol-card b{ color:var(--accent); }
+  .inbox-list{
+    margin-top:18px;
+  }
+  .inbox-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 4px;
+    border-bottom:1px solid var(--line);
+    font-size:0.88rem;
+  }
+  .inbox-row:last-child{ border-bottom:none; }
+  .inbox-meta{ color:var(--ink-faint); font-size:0.78rem; }
+
+  /* ---------- process ---------- */
+  .clip-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 4px;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+    font-size:0.86rem;
+  }
+  .clip-row:last-child{ border-bottom:none; }
+  .clip-q{ flex:1; min-width:180px; }
+  .clip-qid{ color:var(--ink-faint); font-weight:700; margin-right:6px; }
+  .status-chip{
+    font-size:0.68rem;
+    font-weight:700;
+    padding:2px 9px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    color:var(--ink-faint);
+  }
+  .status-chip.filled{
+    background:var(--good-soft);
+    border-color:var(--good);
+    color:var(--good);
+  }
+  .score{
+    font-size:0.76rem;
+    color:var(--ink-faint);
+  }
+  .banner-amber{
+    background:var(--amber-soft);
+    border:1px solid var(--amber);
+    color:#6b4a0c;
+    border-radius:8px;
+    padding:11px 16px;
+    font-size:0.85rem;
+    margin:14px 0;
+  }
+  .episode-row{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- review ---------- */
+  .review-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+    gap:18px;
+  }
+  .review-card{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:var(--paper-raised);
+    overflow:hidden;
+    box-shadow:var(--shadow-sm);
+    transition:box-shadow 0.15s ease;
+  }
+  .review-card.approved{ box-shadow:0 0 0 3px var(--good-soft), var(--shadow-sm); }
+  .review-card.rejected{ opacity:0.5; }
+  .review-media{
+    width:100%;
+    aspect-ratio:9/16;
+    background:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    max-height:320px;
+    object-fit:contain;
+  }
+  .review-media img{ width:100%; height:100%; object-fit:cover; }
+  .review-name{
+    font-size:0.8rem;
+    padding:8px 10px 2px;
+    color:var(--ink-soft);
+    word-break:break-word;
+  }
+  .review-actions{
+    display:flex;
+    gap:8px;
+    padding:8px 10px 12px;
+  }
+  .review-actions button{
+    flex:1;
+    padding:7px 0;
+    border-radius:6px;
+    border:1px solid var(--line);
+    background:var(--paper);
+    font-size:0.85rem;
+    font-weight:700;
+  }
+  .review-actions .approve.active{ background:var(--good); color:#fff; border-color:var(--good); }
+  .review-actions .reject.active{ background:var(--bad); color:#fff; border-color:var(--bad); }
+  .meta-block{
+    grid-column:1/-1;
+  }
+  .meta-block pre{
+    white-space:pre-wrap;
+    font-size:0.78rem;
+    background:#f3ede1;
+    border-radius:8px;
+    padding:12px;
+    max-height:260px;
+    overflow:auto;
+  }
+  .meta-block summary{
+    cursor:pointer;
+    font-weight:700;
+    padding:10px 4px;
+  }
+
+  .guardrail-card{
+    margin-top:18px;
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    font-size:0.88rem;
+    color:var(--accent-ink);
+    font-weight:600;
+  }
+
+  .empty-state{
+    color:var(--ink-faint);
+    font-size:0.88rem;
+    padding:10px 4px;
+  }
+
+  footer.foot{
+    margin-top:60px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    color:var(--ink-faint);
+    font-size:0.78rem;
+    text-align:center;
+  }
+
+  @media (max-width:768px){
+    .wrap{ padding:18px 14px 60px; }
+    header.top{ flex-direction:column; align-items:flex-start; }
+    .headline-metric{ text-align:left; }
+    .spine{ padding-left:36px; }
+    section.step .marker{ left:-36px; width:26px; height:26px; font-size:0.82rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="backendBanner" class="banner">
+    Backend not running — start with: <code>python3 scripts/dashboard.py</code>. The layout below is a preview; buttons won't do anything until it's up.
+  </div>
+
+  <header class="top">
+    <div class="titleblock">
+      <h1>This Week</h1>
+      <div class="week" id="weekLabel">Loading week…</div>
+    </div>
+    <div class="headline-metric">
+      <div class="num" id="headlineNum">—</div>
+      <div class="label" id="headlineLabel">Run analytics ↓</div>
+    </div>
+  </header>
+
+  <div class="freshness-row" id="freshnessRow"></div>
+
+  <div class="spine">
+
+    <!-- ① PREP -->
+    <section class="step" id="step-prep">
+      <div class="marker">①</div>
+      <h2>Prep <span class="when">Monday · 15 min</span></h2>
+      <p class="subnote">Run these in order. Each opens a log below so you can see it's actually working.</p>
+      <div class="card">
+        <div class="prep-grid" id="prepGrid"></div>
+        <div class="log-panel" id="logPanel">
+          <div class="log-head" id="logHead">
+            <span id="logTitle">Log</span>
+            <span id="logToggle">hide ▲</span>
+          </div>
+          <div class="log-body" id="logBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ② MENU -->
+    <section class="step" id="step-menu">
+      <div class="marker">②</div>
+      <h2>The Menu</h2>
+      <p class="subnote">Tick what ships this week. Untouched = skipped, no guilt.</p>
+      <div class="card">
+        <div id="menuSections"></div>
+        <div class="menu-toolbar">
+          <a class="btn ghost small" id="teleprompterLink" href="#" target="_blank" rel="noopener">Open teleprompter →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ RECORD -->
+    <section class="step" id="step-record">
+      <div class="marker">③</div>
+      <h2>Record <span class="when">Weekend · 60–90 min</span></h2>
+      <div class="protocol-card">
+        Green screen on. For each question: pause 3 seconds → read the question aloud, word for word → answer raw.
+        To retake: pause 2s, re-read the question, start over — <b>last take wins</b>.
+        Then drop the file into <b>assets/raw/inbox/</b>.
+      </div>
+      <div class="card inbox-list">
+        <div id="inboxList"></div>
+      </div>
+    </section>
+
+    <!-- ④ PROCESS -->
+    <section class="step" id="step-process">
+      <div class="marker">④</div>
+      <h2>Process</h2>
+      <div class="card">
+        <div id="unmatchedBanner"></div>
+        <div id="clipsList"></div>
+        <div class="episode-row" id="episodeRow"></div>
+      </div>
+    </section>
+
+    <!-- ⑤ REVIEW -->
+    <section class="step" id="step-review">
+      <div class="marker">⑤</div>
+      <h2>Review &amp; ship <span class="when">Sunday · 20 min</span></h2>
+      <div class="card">
+        <div class="review-grid" id="reviewGrid"></div>
+        <div class="guardrail-card">
+          Publishing runs OUTSIDE this dashboard (guardrail). Once you approve here, the publish runbook ships it — nothing goes live from this page.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="foot">
+    Something failed twice? Stop. Check <code>docs/runbooks/50-recovery.md</code> — known fixes for scheduler, Whisper, ffmpeg, greenscreen.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var API_BASE = "";
+  var state = null;
+  var backendUp = true;
+  var pollTimer = null;
+  var logTimer = null;
+  var currentLogAction = null;
+  var currentLogSince = 0;
+
+  var PREP_ACTIONS = [
+    { action:"analytics",   label:"Run analytics",       caption:"Pulls performance numbers into the headline metric and insight files." },
+    { action:"fetch_ideas", label:"Refresh ideas",        caption:"Fetches new raw idea inputs for the week." },
+    { action:"score",       label:"Score ideas",          caption:"Ranks ideas so the strongest ones make the menu." },
+    { action:"pack",        label:"Generate prompt pack", caption:"Builds this week's interview question set." },
+    { action:"menu",        label:"Render menu",          caption:"Turns the scored ideas + prompt pack into the checklist below." }
+  ];
+
+  var EPISODE_NICHES = ["life","poetry","ds"];
+  var NICHE_LABEL = { life:"Life", poetry:"Poetry", ds:"Data Science" };
+
+  function $(id){ return document.getElementById(id); }
+
+  function fmtDate(d){
+    if(!d) return "no data yet";
+    return d;
+  }
+
+  function escapeHtml(s){
+    if(s == null) return "";
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function truncate(s, n){
+    if(!s) return "";
+    s = String(s);
+    return s.length > n ? s.slice(0, n - 1) + "…" : s;
+  }
+
+  function nicheChip(niche){
+    if(!niche) return "";
+    var cls = (niche === "life" || niche === "poetry" || niche === "ds") ? niche : "";
+    if(!cls) return "";
+    return '<span class="chip ' + cls + '">' + escapeHtml(niche) + '</span>';
+  }
+
+  // ---------------- networking ----------------
+
+  function safeFetch(url, opts){
+    return fetch(url, opts).then(function(res){
+      if(!res.ok){
+        return res.text().then(function(t){
+          var err = new Error("HTTP " + res.status + ": " + t);
+          err.status = res.status;
+          throw err;
+        });
+      }
+      return res.json();
+    });
+  }
+
+  function showBackendDown(){
+    backendUp = false;
+    $("backendBanner").classList.add("show");
+    renderSkeleton();
+  }
+
+  function hideBackendDown(){
+    if(!backendUp){
+      backendUp = true;
+      $("backendBanner").classList.remove("show");
+    }
+  }
+
+  function loadState(){
+    try{
+      return safeFetch(API_BASE + "/api/state")
+        .then(function(data){
+          hideBackendDown();
+          state = data;
+          renderAll();
+        })
+        .catch(function(err){
+          console.warn("state load failed", err);
+          showBackendDown();
+        });
+    }catch(e){
+      console.warn("state load threw", e);
+      showBackendDown();
+      return Promise.resolve();
+    }
+  }
+
+  function startPolling(){
+    if(pollTimer) clearInterval(pollTimer);
+    pollTimer = setInterval(function(){
+      // only poll idle if nothing is running to avoid clobbering log view state
+      loadState();
+    }, 10000);
+  }
+
+  // ---------------- render: header ----------------
+
+  function renderHeader(){
+    if(!state){
+      $("weekLabel").textContent = "Waiting for backend…";
+      return;
+    }
+    $("weekLabel").textContent = state.week ? ("Week " + state.week) : "No week detected yet";
+    if(state.headline !== null && state.headline !== undefined && state.headline !== ""){
+      $("headlineNum").textContent = state.headline;
+      $("headlineLabel").textContent = "this week";
+    } else {
+      $("headlineNum").textContent = "—";
+      $("headlineLabel").textContent = "Run analytics ↓";
+    }
+    renderFreshness();
+  }
+
+  function renderFreshness(){
+    var row = $("freshnessRow");
+    row.innerHTML = "";
+    var f = (state && state.freshness) || {};
+    var items = [
+      { key:"idea_inputs", label:"Idea inputs", hint:"Fix: click Refresh ideas" },
+      { key:"insights",    label:"Insights",    hint:"Fix: click Run analytics" },
+      { key:"prompt_pack",  label:"Prompt pack", hint:"Fix: click Generate prompt pack", exists:true },
+      { key:"scheduler",   label:"Scheduler",   hint:"Fix: click Render menu" }
+    ];
+    items.forEach(function(it){
+      var d = f[it.key] || {};
+      var isFresh, dateStr;
+      if(it.exists){
+        isFresh = !!d.exists;
+        dateStr = d.week ? ("week " + d.week) : "not built";
+      } else {
+        isFresh = !!d.fresh;
+        dateStr = d.date || "no data yet";
+      }
+      var el = document.createElement("div");
+      el.className = "light";
+      el.title = it.hint;
+      el.innerHTML =
+        '<span class="dot ' + (isFresh ? "green" : "amber") + '"></span>' +
+        '<b>' + escapeHtml(it.label) + '</b>' +
+        '<span class="lightdate">' + escapeHtml(dateStr) + '</span>';
+      row.appendChild(el);
+    });
+  }
+
+  // ---------------- render: prep + jobs ----------------
+
+  function renderPrep(){
+    var grid = $("prepGrid");
+    grid.innerHTML = "";
+    var jobs = (state && state.jobs) || {};
+    PREP_ACTIONS.forEach(function(item){
+      var job = jobs[item.action] || {};
+      var wrap = document.createElement("div");
+      wrap.className = "prep-item";
+      var btnId = "prepbtn-" + item.action;
+      var statusId = "prepstatus-" + item.action;
+      wrap.innerHTML =
+        '<button class="btn primary' + (job.running ? " running" : "") + '" id="' + btnId + '" data-action="' + item.action + '"' + (job.running ? " disabled" : "") + '>' + escapeHtml(item.label) + '</button>' +
+        '<div class="caption">' + escapeHtml(item.caption) + '</div>' +
+        '<div class="job-status" id="' + statusId + '"></div>';
+      grid.appendChild(wrap);
+      var statusEl = wrap.querySelector("#" + statusId);
+      if(job.running){
+        statusEl.textContent = "Running…";
+        statusEl.className = "job-status run";
+      } else if(job.exit_code === 0){
+        statusEl.textContent = "✓ done";
+        statusEl.className = "job-status ok";
+      } else if(job.exit_code !== undefined && job.exit_code !== null){
+        statusEl.textContent = "✗ failed (exit " + job.exit_code + ")";
+        statusEl.className = "job-status err";
+      }
+    });
+
+    grid.querySelectorAll("button[data-action]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        runAction(btn.getAttribute("data-action"), {}, btn, PREP_ACTIONS.find(function(p){return p.action === btn.getAttribute("data-action");}).label);
+      });
+    });
+  }
+
+  function runAction(action, params, btnEl, displayName){
+    if(!backendUp) return;
+    if(btnEl){
+      btnEl.disabled = true;
+      btnEl.classList.add("running");
+    }
+    openLogPanel(action, displayName || action);
+    safeFetch(API_BASE + "/api/run", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ action: action, params: params || {} })
+    }).then(function(){
+      pollLogsUntilDone(action, btnEl);
+    }).catch(function(err){
+      console.warn("run failed", err);
+      if(btnEl){
+        btnEl.disabled = false;
+        btnEl.classList.remove("running");
+      }
+      appendLogLine("Failed to start: " + err.message);
+    });
+  }
+
+  function openLogPanel(action, title){
+    currentLogAction = action;
+    currentLogSince = 0;
+    $("logPanel").classList.add("open");
+    $("logTitle").textContent = "Log — " + title;
+    $("logBody").textContent = "";
+  }
+
+  function appendLogLine(line){
+    var body = $("logBody");
+    body.textContent += (body.textContent ? "\n" : "") + line;
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function pollLogsUntilDone(action, btnEl){
+    if(logTimer) clearInterval(logTimer);
+    logTimer = setInterval(function(){
+      safeFetch(API_BASE + "/api/logs?action=" + encodeURIComponent(action) + "&since=" + currentLogSince)
+        .then(function(res){
+          if(res.lines && res.lines.length){
+            res.lines.forEach(appendLogLine);
+          }
+          if(res.next !== undefined) currentLogSince = res.next;
+          if(!res.running){
+            clearInterval(logTimer);
+            if(btnEl){
+              btnEl.disabled = false;
+              btnEl.classList.remove("running");
+              btnEl.classList.add("done-flash");
+              setTimeout(function(){ btnEl.classList.remove("done-flash"); }, 900);
+            }
+            appendLogLine(res.exit_code === 0 ? "✓ done" : "✗ exited with code " + res.exit_code);
+            loadState();
+          }
+        })
+        .catch(function(err){
+          console.warn("log poll failed", err);
+          clearInterval(logTimer);
+          if(btnEl){
+            btnEl.disabled = false;
+            btnEl.classList.remove("running");
+          }
+        });
+    }, 1500);
+  }
+
+  // ---------------- render: menu ----------------
+
+  function renderMenu(){
+    var wrap = $("menuSections");
+    wrap.innerHTML = "";
+    var menu = (state && state.menu) || {};
+    if(!menu.exists || !menu.sections || !menu.sections.length){
+      wrap.innerHTML = '<div class="empty-state">No menu yet. Run ① Prep top to bottom, ending with "Render menu", to build this checklist.</div>';
+    } else {
+      menu.sections.forEach(function(section){
+        var sec = document.createElement("div");
+        sec.className = "menu-section";
+        var itemsHtml = (section.items || []).map(function(item){
+          var niche = detectNicheForText(item.text);
+          var cbId = "menu-item-" + item.line_idx;
+          return '<div class="menu-item">' +
+            '<input type="checkbox" id="' + cbId + '" data-idx="' + item.line_idx + '"' + (item.checked ? " checked" : "") + '>' +
+            '<label for="' + cbId + '">' + escapeHtml(item.text) + nicheChip(niche) + '</label>' +
+            '</div>';
+        }).join("");
+        sec.innerHTML = '<h3>' + escapeHtml(section.title || "Untitled") + '</h3>' + (itemsHtml || '<div class="empty-state">Nothing here.</div>');
+        wrap.appendChild(sec);
+      });
+      wrap.querySelectorAll('input[type=checkbox][data-idx]').forEach(function(cb){
+        cb.addEventListener("change", function(){
+          toggleMenuItem(parseInt(cb.getAttribute("data-idx"), 10), cb.checked, cb);
+        });
+      });
+    }
+
+    var link = $("teleprompterLink");
+    if(state && state.week){
+      link.href = "/sessions/" + state.week + "/teleprompter.html";
+    } else {
+      link.href = "#";
+    }
+  }
+
+  function detectNicheForText(text){
+    if(!text || !state || !state.questions) return null;
+    var lower = text.toLowerCase();
+    var found = state.questions.find(function(q){
+      return q.text && lower.indexOf(q.text.toLowerCase().slice(0, 20)) !== -1;
+    });
+    return found ? found.niche : null;
+  }
+
+  function toggleMenuItem(idx, checked, cbEl){
+    if(!backendUp){ cbEl.checked = !checked; return; }
+    safeFetch(API_BASE + "/api/menu-toggle", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ line_idx: idx, checked: checked })
+    }).catch(function(err){
+      console.warn("menu toggle failed", err);
+      cbEl.checked = !checked; // revert
+    });
+  }
+
+  // ---------------- render: record / inbox ----------------
+
+  function renderInbox(){
+    var wrap = $("inboxList");
+    var inbox = (state && state.inbox) || [];
+    if(!inbox.length){
+      wrap.innerHTML = '<div class="empty-state">assets/raw/inbox/ is empty. Record your takes, then drop the file here.</div>';
+      return;
+    }
+    wrap.innerHTML = inbox.map(function(f){
+      return '<div class="inbox-row">' +
+        '<div><div>' + escapeHtml(f.name) + '</div>' +
+        '<div class="inbox-meta">' + (f.size_mb != null ? f.size_mb + " MB" : "") + (f.mtime ? " · " + escapeHtml(f.mtime) : "") + '</div></div>' +
+        '<button class="btn small" data-slice-file="' + escapeHtml(f.name) + '">Slice</button>' +
+        '</div>';
+    }).join("");
+    wrap.querySelectorAll("button[data-slice-file]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var file = btn.getAttribute("data-slice-file");
+        runAction("slice", { file: file }, btn, "Slice " + file);
+      });
+    });
+  }
+
+  // ---------------- render: process ----------------
+
+  function renderProcess(){
+    var unmatchedWrap = $("unmatchedBanner");
+    var unmatched = (state && state.unmatched_questions) || [];
+    if(unmatched.length){
+      unmatchedWrap.innerHTML = '<div class="banner-amber">Not recorded / not matched: ' +
+        unmatched.map(escapeHtml).join(", ") + ' — re-record or skip.</div>';
+    } else {
+      unmatchedWrap.innerHTML = "";
+    }
+
+    var listWrap = $("clipsList");
+    var clips = (state && state.clips) || [];
+    if(!clips.length){
+      listWrap.innerHTML = '<div class="empty-state">No clips sliced yet. Slice a file in ③ Record above to see rows here.</div>';
+    } else {
+      listWrap.innerHTML = clips.map(function(c){
+        var st = c.status || {};
+        var compositeBtn = !st.composited
+          ? '<button class="btn small" data-composite="' + escapeHtml(c.qid) + '" data-niche="' + escapeHtml(c.niche || "") + '">Composite</button>'
+          : "";
+        var trimBtn = (st.composited && !st.trimmed)
+          ? '<button class="btn small" data-trim="' + escapeHtml(c.qid) + '" data-niche="' + escapeHtml(c.niche || "") + '">Trim</button>'
+          : "";
+        return '<div class="clip-row">' +
+          '<div class="clip-q"><span class="clip-qid">' + escapeHtml(c.qid) + '</span>' + escapeHtml(truncate(c.question, 70)) + '</div>' +
+          '<div class="score">' + (c.score != null ? "score " + c.score : "") + '</div>' +
+          nicheChip(c.niche) +
+          '<span class="status-chip filled">sliced ✓</span>' +
+          '<span class="status-chip' + (st.composited ? " filled" : "") + '">composited' + (st.composited ? " ✓" : "") + '</span>' +
+          '<span class="status-chip' + (st.trimmed ? " filled" : "") + '">trimmed' + (st.trimmed ? " ✓" : "") + '</span>' +
+          compositeBtn + trimBtn +
+          '</div>';
+      }).join("");
+      listWrap.querySelectorAll("button[data-composite]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var qid = btn.getAttribute("data-composite");
+          runAction("composite", { qid: qid, niche: btn.getAttribute("data-niche") }, btn, "Composite " + qid);
+        });
+      });
+      listWrap.querySelectorAll("button[data-trim]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var qid = btn.getAttribute("data-trim");
+          runAction("trim", { qid: qid, niche: btn.getAttribute("data-niche") }, btn, "Trim " + qid);
+        });
+      });
+    }
+
+    var epRow = $("episodeRow");
+    epRow.innerHTML = EPISODE_NICHES.map(function(n){
+      return '<button class="btn ghost" data-episode="' + n + '">Assemble ' + NICHE_LABEL[n] + ' episode</button>';
+    }).join("");
+    epRow.querySelectorAll("button[data-episode]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var n = btn.getAttribute("data-episode");
+        runAction("episode", { niche: n }, btn, "Assemble " + NICHE_LABEL[n] + " episode");
+      });
+    });
+  }
+
+  // ---------------- render: review ----------------
+
+  function renderReview(){
+    var grid = $("reviewGrid");
+    var review = (state && state.review) || {};
+    var items = review.items || [];
+    var metaByNiche = review.episode_meta || {};
+
+    var html = "";
+    if(!items.length && !Object.keys(metaByNiche).length){
+      grid.innerHTML = '<div class="empty-state">Nothing to review yet. Assemble an episode in ④ Process above.</div>';
+      return;
+    }
+
+    items.forEach(function(item){
+      var cardClass = "review-card" + (item.approved === true ? " approved" : (item.approved === false ? " rejected" : ""));
+      var mediaHtml = "";
+      if(item.kind === "video"){
+        mediaHtml = '<video class="review-media" controls preload="metadata" src="' + escapeHtml(item.rel_url) + '"></video>';
+      } else if(item.kind === "image"){
+        mediaHtml = '<div class="review-media"><img src="' + escapeHtml(item.rel_url) + '" alt="' + escapeHtml(item.name) + '"></div>';
+      } else {
+        mediaHtml = '<div class="review-media" style="color:#eee;font-size:0.8rem;padding:10px;text-align:center;">' + escapeHtml(item.kind || "file") + '</div>';
+      }
+      html += '<div class="' + cardClass + '" data-name="' + escapeHtml(item.name) + '">' +
+        mediaHtml +
+        '<div class="review-name">' + escapeHtml(item.name) + '</div>' +
+        '<div class="review-actions">' +
+          '<button class="approve' + (item.approved === true ? " active" : "") + '" data-approve="true">Approve ✓</button>' +
+          '<button class="reject' + (item.approved === false ? " active" : "") + '" data-approve="false">Reject ✗</button>' +
+        '</div>' +
+      '</div>';
+    });
+
+    Object.keys(metaByNiche).forEach(function(niche){
+      html += '<div class="review-card meta-block">' +
+        '<details><summary>' + escapeHtml(NICHE_LABEL[niche] || niche) + ' — episode notes</summary>' +
+        '<pre>' + escapeHtml(metaByNiche[niche]) + '</pre>' +
+        '</details></div>';
+    });
+
+    grid.innerHTML = html;
+
+    grid.querySelectorAll(".review-card[data-name] button[data-approve]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var card = btn.closest(".review-card");
+        var name = card.getAttribute("data-name");
+        var approved = btn.getAttribute("data-approve") === "true";
+        setApproval(name, approved, card);
+      });
+    });
+  }
+
+  function setApproval(name, approved, cardEl){
+    if(!backendUp) return;
+    var prevClass = cardEl.className;
+    cardEl.className = "review-card" + (approved ? " approved" : " rejected");
+    safeFetch(API_BASE + "/api/approve", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ name: name, approved: approved })
+    }).then(function(){
+      loadState();
+    }).catch(function(err){
+      console.warn("approve failed", err);
+      cardEl.className = prevClass;
+    });
+  }
+
+  // ---------------- master render ----------------
+
+  function renderAll(){
+    renderHeader();
+    renderPrep();
+    renderMenu();
+    renderInbox();
+    renderProcess();
+    renderReview();
+  }
+
+  function renderSkeleton(){
+    $("weekLabel").textContent = "Waiting for backend…";
+    $("headlineNum").textContent = "—";
+    $("headlineLabel").textContent = "Run analytics ↓";
+    $("freshnessRow").innerHTML = '<div class="light"><span class="dot"></span>Waiting for backend…</div>';
+    renderPrep();
+    $("menuSections").innerHTML = '<div class="empty-state">Backend not running. Start it, then this fills with your checklist.</div>';
+    $("inboxList").innerHTML = '<div class="empty-state">Backend not running. Start it to see assets/raw/inbox/.</div>';
+    $("unmatchedBanner").innerHTML = "";
+    $("clipsList").innerHTML = '<div class="empty-state">Backend not running.</div>';
+    $("episodeRow").innerHTML = "";
+    $("reviewGrid").innerHTML = '<div class="empty-state">Backend not running.</div>';
+  }
+
+  // ---------------- log panel toggle ----------------
+
+  $("logHead").addEventListener("click", function(){
+    var body = $("logBody");
+    var toggle = $("logToggle");
+    if(body.style.display === "none"){
+      body.style.display = "block";
+      toggle.textContent = "hide ▲";
+    } else {
+      body.style.display = "none";
+      toggle.textContent = "show ▼";
+    }
+  });
+
+  // ---------------- boot ----------------
+
+  renderSkeleton();
+  loadState().then(startPolling);
+
+})();
+</script>
+</body>
+</html>

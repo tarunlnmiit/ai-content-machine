@@ -1,3 +1,12 @@
+---
+title: "I Scraped 1,003 Data Science Job Postings — 87% Want This One Thing, and Most Candidates Still Don't Say It"
+type: blog
+niche: data_science_tech
+date: 2026-07-01
+week: 2026-W27
+slug: i-tracked-every-data-science-job-posting-for-30-days-heres-t
+tags: [content/blog, niche/data_science_tech, week/2026-W27]
+---
 # I Scraped 1,003 Data Science Job Postings — 87% Want This One Thing, and Most Candidates Still Don't Say It
 
 *A 30-day scrape of real job postings, five methodology mistakes I'd fix, and the four-week rebuild I'd run if I had zero of this skill today.*

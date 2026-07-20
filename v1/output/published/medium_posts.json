@@ -160,5 +160,95 @@
     ],
     "published_at": "2026-07-01T04:13:33.811690+00:00",
     "token_used": "personal"
+  },
+  {
+    "title": "While You Were Waiting for Permission, I Built a Local AI Agent That Does a Junior Analyst's Grunt Work in 4 Minutes",
+    "medium_url": "https://medium.com/@tarun-gupta/1a36ccdce51d",
+    "medium_id": "1a36ccdce51d",
+    "canonical_url": null,
+    "publication": "AI Advances",
+    "source_file": "content/blogs/2026-W28/2026-07-06_data_science_tech_the-local-ai-agent-i-built-in-a-weekend-now-does-the-grunt-w.md",
+    "status": "draft",
+    "tags": [
+      "artificial-intelligence",
+      "data-science",
+      "programming",
+      "productivity",
+      "software-development"
+    ],
+    "published_at": "2026-07-06T10:19:53.136997+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "Your Self-Improvement Schedule Is Slowly Making You Someone You Don't Recognize",
+    "medium_url": "https://medium.com/@tarun-gupta/1f54c98806ce",
+    "medium_id": "1f54c98806ce",
+    "canonical_url": null,
+    "publication": "Be Yourself",
+    "source_file": "content/blogs/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y.md",
+    "status": "draft",
+    "tags": [
+      "self-improvement",
+      "productivity",
+      "mental-health",
+      "relationships",
+      "self-awareness"
+    ],
+    "published_at": "2026-07-06T10:20:25.872569+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "The Skill Every High-Performer Has That Nobody Taught You in Any Meeting",
+    "medium_url": "https://medium.com/@tarun-gupta/0e8b0d6d1073",
+    "medium_id": "0e8b0d6d1073",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "/Users/tarungupta/Making It Big/Claude/content-machine/v1/content/blogs/2026-W28/2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it.md",
+    "status": "draft",
+    "tags": [
+      "self-improvement",
+      "psychology",
+      "leadership",
+      "work",
+      "personal-development"
+    ],
+    "published_at": "2026-07-10T07:08:01.064939+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "The Person You're Begging To Notice You Isn't The Problem. This Is.",
+    "medium_url": "https://medium.com/@tarun-gupta/fea937b11719",
+    "medium_id": "fea937b11719",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "/Users/tarungupta/Making It Big/Claude/content-machine/v1/content/blogs/2026-W29/2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec.md",
+    "status": "draft",
+    "tags": [
+      "relationships",
+      "psychology",
+      "self-awareness",
+      "life-lessons",
+      "personal-development"
+    ],
+    "published_at": "2026-07-17T04:53:22.732380+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "The Career-Killing Meeting Habit You Think Makes You Look Engaged",
+    "medium_url": "https://medium.com/@tarun-gupta/fb50af1e38b5",
+    "medium_id": "fb50af1e38b5",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "/Users/tarungupta/Making It Big/Claude/content-machine/v1/content/blogs/2026-W30/2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less.md",
+    "status": "draft",
+    "tags": [
+      "psychology",
+      "leadership",
+      "business",
+      "productivity",
+      "self-improvement"
+    ],
+    "published_at": "2026-07-20T09:44:23.621387+00:00",
+    "token_used": "personal"
   }
 ]

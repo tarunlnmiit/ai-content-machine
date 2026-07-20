@@ -1,3 +1,13 @@
+---
+title: "Style baseline — run this at the top of every notebook"
+type: script
+niche: data_science_tech
+date: 2026-06-16
+week: 2026-W25
+slug: python-for-data-science-tutorial-5-out-of-10-for-visualizati
+platform: yt
+tags: [content/script, niche/data_science_tech, week/2026-W25]
+---
 ```
 SHOW: Breath of Data Science
 EPISODE TITLE (working): Your Charts Are Getting Judged Before Your Model Is

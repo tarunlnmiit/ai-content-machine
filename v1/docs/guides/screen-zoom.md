@@ -1,3 +1,9 @@
+---
+title: "Screen-recording auto-zoom (`lib/screen_zoom.py`)"
+type: doc
+slug: screen-zoom
+tags: [content/doc]
+---
 # Screen-recording auto-zoom (`lib/screen_zoom.py`)
 
 Makes screen recordings more legible on a phone. A raw capture cropped to 9:16

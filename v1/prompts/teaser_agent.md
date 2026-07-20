@@ -1,3 +1,9 @@
+---
+title: "Teaser Agent — short \"whole-piece\" copy + backlink"
+type: prompt
+slug: teaser-agent
+tags: [content/prompt]
+---
 # Teaser Agent — short "whole-piece" copy + backlink
 
 You turn ONE already-published piece (a YouTube video transcript or a Medium blog) into a

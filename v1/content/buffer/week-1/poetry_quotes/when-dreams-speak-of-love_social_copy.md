@@ -1,3 +1,9 @@
+---
+type: buffer
+niche: poetry_quotes
+slug: when-dreams-speak-of-love-social-copy
+tags: [content/buffer, niche/poetry_quotes]
+---
 ### TWITTER THREAD
 
 Everyone talks about finding someone safe. Or finding someone who makes you feel alive. They're wrong.

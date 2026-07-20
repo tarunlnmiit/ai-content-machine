@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Poetry — The Hangover That Won't Lift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-primary:#B89850;
+    --brand-light:#D4BC7A;
+    --brand-dark:#8A6E30;
+    --light-bg:#EDE8DC;
+    --light-border:#D6D0C4;
+    --dark-bg:#1E1B2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:#0c0b12;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:40px 0;
+  }
+
+  .ig-frame{
+    width:420px;
+    background:#000;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+    color:#fff;
+  }
+  .ig-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 14px;
+  }
+  .ig-avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:linear-gradient(165deg,#8A6E30 0%,#B89850 50%,#D4BC7A 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:#1E1B2E;
+    flex-shrink:0;
+  }
+  .ig-handle{font-size:13px;font-weight:700;}
+  .ig-sub{font-size:11px;color:#9a9a9a;}
+  .ig-more{margin-left:auto;font-size:18px;color:#ddd;letter-spacing:1px;}
+
+  .carousel-viewport{
+    width:420px;
+    height:525px;
+    overflow:hidden;
+    position:relative;
+    cursor:grab;
+    background:var(--light-bg);
+  }
+  .carousel-viewport.dragging{cursor:grabbing;}
+  .carousel-track{
+    display:flex;
+    flex-direction:row;
+    width:calc(420px * 7);
+    height:100%;
+    transition:transform .35s cubic-bezier(.16,1,.3,1);
+    will-change:transform;
+  }
+
+  .slide{
+    width:420px;
+    height:525px;
+    flex-shrink:0;
+    position:relative;
+    overflow:hidden;
+  }
+  .slide.light{background:var(--light-bg);}
+  .slide.dark{background:var(--dark-bg);}
+  .slide.cta{background:linear-gradient(165deg,#8A6E30 0%,#B89850 50%,#D4BC7A 100%);}
+
+  /* paper texture */
+  .paper{
+    position:absolute;inset:0;
+    pointer-events:none;
+  }
+  .slide.light .paper{
+    background:repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 30px,
+      rgba(138,110,48,.10) 31px
+    );
+  }
+  .slide.dark .paper{
+    background:repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 30px,
+      rgba(212,188,122,.06) 31px
+    );
+  }
+  .slide.cta .paper{display:none;}
+
+  /* doodles — reused set: feather, wave, dot cluster */
+  .doodle{position:absolute;opacity:.5;pointer-events:none;}
+  .slide.dark .doodle{opacity:.35;}
+
+  /* overlays */
+  .badge{
+    position:absolute;top:18px;left:18px;
+    font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.06em;
+    padding:4px 9px;border-radius:20px;
+    background:rgba(30,27,46,.08);
+    color:var(--brand-dark);
+    z-index:5;
+  }
+  .slide.dark .badge{background:rgba(237,232,220,.1);color:var(--brand-light);}
+  .slide.cta .badge{background:rgba(30,27,46,.18);color:#1E1B2E;}
+
+  .follow-tag{
+    position:absolute;top:18px;right:18px;
+    font-size:10.5px;font-weight:700;letter-spacing:.02em;
+    padding:5px 10px;border-radius:20px;
+    background:var(--brand-dark);color:#F4EFE3;
+    z-index:5;
+  }
+  .slide.dark .follow-tag{background:var(--brand-light);color:#1E1B2E;}
+
+  .swipe-arrow{
+    position:absolute;top:50%;right:18px;transform:translateY(-50%);
+    width:34px;height:34px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(30,27,46,.85);color:#EDE8DC;
+    font-size:15px;z-index:5;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+  }
+  .slide.dark .swipe-arrow{background:rgba(237,232,220,.92);color:#1E1B2E;}
+
+  .save-tag{
+    position:absolute;bottom:18px;right:18px;
+    font-size:10px;font-weight:700;letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:5px 10px;border-radius:6px;
+    background:rgba(30,27,46,.06);
+    color:var(--brand-dark);
+    border:1px solid var(--light-border);
+    z-index:5;
+  }
+  .slide.dark .save-tag{background:rgba(237,232,220,.08);color:var(--brand-light);border-color:rgba(212,188,122,.25);}
+
+  /* progress bar */
+  .progress-row{
+    position:absolute;top:0;left:0;right:0;
+    display:flex;gap:4px;
+    padding:10px 14px 0;
+    z-index:6;
+  }
+  .progress-seg{
+    flex:1;height:3px;border-radius:2px;
+    background:rgba(30,27,46,.15);
+    overflow:hidden;
+  }
+  .slide.dark .progress-seg{background:rgba(237,232,220,.15);}
+  .slide.cta .progress-seg{background:rgba(30,27,46,.2);}
+  .progress-seg .fill{
+    height:100%;width:0%;
+    background:var(--brand-dark);
+  }
+  .slide.dark .progress-seg .fill{background:var(--brand-light);}
+  .slide.cta .progress-seg .fill{background:#1E1B2E;}
+
+  /* content cards */
+  .card{
+    position:relative;
+    border-radius:14px;
+    box-shadow:0 14px 32px rgba(30,27,46,.14);
+  }
+  .slide.light .card{background:#F7F4EC;border:1px solid var(--light-border);}
+  .slide.dark .card{background:#28243a;border:1px solid rgba(212,188,122,.16);}
+
+  .kicker{
+    font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--brand-primary);margin-bottom:10px;
+  }
+  .slide.dark .kicker{color:var(--brand-light);}
+  .slide.cta .kicker{color:rgba(30,27,46,.7);}
+
+  h1,h2{font-family:'Playfair Display',serif;font-weight:700;color:#1E1B2E;line-height:1.14;}
+  .slide.dark h1, .slide.dark h2{color:#F4EFE3;}
+  .slide.cta h1, .slide.cta h2{color:#1E1B2E;}
+
+  .body-copy{font-family:'DM Sans',sans-serif;font-size:15.5px;line-height:1.6;color:#3a3628;}
+  .slide.dark .body-copy{color:#d8d3e0;}
+
+  .poem-line{
+    font-family:'Playfair Display',serif;font-style:italic;font-size:17px;
+    line-height:1.55;color:#2a2718;
+  }
+  .slide.dark .poem-line{color:#ece7f2;}
+
+  .hl{background:var(--brand-primary);color:#1E1B2E;padding:2px 6px;border-radius:3px;}
+  .hl.orange{background:var(--brand-light);color:#1E1B2E;padding:2px 6px;border-radius:3px;}
+
+  .content-wrap{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:0 36px;
+  }
+  .content-wrap.bottom{justify-content:flex-end;padding:0 36px 52px;}
+
+  .cta-btn{
+    display:inline-block;margin-top:18px;
+    background:#1E1B2E;color:#F4EFE3;
+    font-weight:700;font-size:14px;
+    padding:13px 22px;border-radius:30px;
+    text-align:center;
+    box-shadow:0 10px 24px rgba(30,27,46,.3);
+  }
+
+  .attribution{
+    position:absolute;bottom:18px;left:18px;
+    font-size:10px;letter-spacing:.04em;color:var(--brand-dark);opacity:.7;
+  }
+  .slide.dark .attribution{color:var(--brand-light);}
+  .slide.cta .attribution{display:none;}
+
+  /* dots */
+  .ig-dots{display:flex;justify-content:center;gap:5px;padding:10px 0 4px;}
+  .ig-dots span{width:5px;height:5px;border-radius:50%;background:#555;}
+  .ig-dots span.active{background:#B89850;}
+
+  .ig-actions{display:flex;align-items:center;gap:14px;padding:10px 14px 4px;font-size:22px;}
+  .ig-actions .spacer{flex:1;}
+
+  .ig-caption{padding:6px 14px 18px;font-size:12.5px;line-height:1.55;color:#e6e6e6;}
+  .ig-caption b{color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">mistakenlyhuman</div>
+      <div class="ig-sub">Breath of Poetry</div>
+    </div>
+    <div class="ig-more">&#8942;</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK (light) -->
+      <div class="slide light">
+        <div class="paper"></div>
+        <svg class="doodle" style="top:70px;left:26px;width:30px;" viewBox="0 0 40 60"><path d="M20 2C10 14 6 30 12 48c2 6 6 8 8 10-1-8-2-16 2-24 6-12 4-22-2-32z" fill="none" stroke="#8A6E30" stroke-width="1.4"/></svg>
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">1 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+        <div class="content-wrap">
+          <div class="card" style="padding:30px 26px;transform:rotate(-1.5deg);">
+            <div class="kicker">Breath of Poetry</div>
+            <h1 style="font-size:34px;">There's a hangover <span class="hl">that never lifts.</span></h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM/REFRAME (dark) -->
+      <div class="slide dark">
+        <div class="paper"></div>
+        <svg class="doodle" style="bottom:90px;right:30px;width:60px;" viewBox="0 0 80 20"><path d="M2 10 Q 20 -4, 40 10 T 78 10" fill="none" stroke="#D4BC7A" stroke-width="1.6"/></svg>
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">2 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+        <div class="content-wrap">
+          <div class="card" style="padding:28px 24px;transform:rotate(1.2deg);">
+            <div class="kicker">It doesn't announce itself</div>
+            <p class="body-copy">One day you're fine. The next, <span class="hl orange">someone's laugh is living rent-free</span> in your head — and the part of your brain that's supposed to run the show has quietly handed over the keys.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 — POEM EXCERPT 1 (light) -->
+      <div class="slide light">
+        <div class="paper"></div>
+        <svg class="doodle" style="top:64px;right:24px;" width="26" viewBox="0 0 20 20"><circle cx="3" cy="3" r="2" fill="#B89850"/><circle cx="12" cy="8" r="1.6" fill="#8A6E30"/><circle cx="6" cy="15" r="1.2" fill="#B89850"/></svg>
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">3 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+        <div class="content-wrap">
+          <div class="card" style="padding:30px 26px;transform:rotate(-1deg);">
+            <div class="kicker">From the poem</div>
+            <p class="poem-line">Love has taken away<br>all my senses<br>like that of alcohol —<br>effects of booze reside<br>for a short period,<br>but <span class="hl">your intoxication</span><br>doesn't want to go away.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 — POEM EXCERPT 2 (dark) -->
+      <div class="slide dark">
+        <div class="paper"></div>
+        <svg class="doodle" style="bottom:80px;left:26px;width:30px;" viewBox="0 0 40 60"><path d="M20 2C10 14 6 30 12 48c2 6 6 8 8 10-1-8-2-16 2-24 6-12 4-22-2-32z" fill="none" stroke="#D4BC7A" stroke-width="1.4"/></svg>
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">4 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+        <div class="content-wrap">
+          <div class="card" style="padding:30px 26px;transform:rotate(1.4deg);">
+            <div class="kicker">It keeps coming back</div>
+            <p class="poem-line">like a <span class="hl orange">moth</span> attracted to the flame,<br>like waves to the shore,<br>like cold to the winter,<br>like a rainbow after the rain.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 — POEM EXCERPT 3 (light) -->
+      <div class="slide light">
+        <div class="paper"></div>
+        <svg class="doodle" style="top:60px;left:28px;width:56px;" viewBox="0 0 80 20"><path d="M2 10 Q 20 -4, 40 10 T 78 10" fill="none" stroke="#8A6E30" stroke-width="1.6"/></svg>
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">5 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+        <div class="content-wrap">
+          <div class="card" style="padding:30px 26px;transform:rotate(-1.3deg);">
+            <div class="kicker">The ecosystems collided</div>
+            <p class="poem-line">Earlier, my mind and heart<br>worked in sync. But it seems<br>their <span class="hl">ecosystems have collided</span> —<br>deciding not to comply<br>with each other.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6 — QUOTABLE (dark) -->
+      <div class="slide dark">
+        <div class="paper"></div>
+        <svg class="doodle" style="top:70px;right:28px;" width="26" viewBox="0 0 20 20"><circle cx="3" cy="3" r="2" fill="#D4BC7A"/><circle cx="12" cy="8" r="1.6" fill="#B89850"/><circle cx="6" cy="15" r="1.2" fill="#D4BC7A"/></svg>
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">6 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+        <div class="content-wrap">
+          <div class="card" style="padding:32px 26px;transform:rotate(1.5deg);">
+            <div class="kicker">What it leaves you with</div>
+            <h2 style="font-size:24px;line-height:1.4;">Leaving me without <span class="hl orange">a ground to stand on</span>, or a sky to cover my head with.</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7 — CTA (gradient) -->
+      <div class="slide cta">
+        <svg class="doodle" style="top:60px;left:24px;width:26px;opacity:.4;" viewBox="0 0 40 60"><path d="M20 2C10 14 6 30 12 48c2 6 6 8 8 10-1-8-2-16 2-24 6-12 4-22-2-32z" fill="none" stroke="#1E1B2E" stroke-width="1.4"/></svg>
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">7 / 7</div>
+        <div class="content-wrap bottom">
+          <div class="card" style="padding:28px 24px;background:rgba(247,244,236,.92);transform:rotate(-1deg);">
+            <p class="poem-line" style="color:#1E1B2E;font-size:16px;">The hangover metaphor works because it has an endpoint. <span class="hl">This doesn't.</span></p>
+            <div class="cta-btn">Comment "HANGOVER" — I'll DM you the full poem + where to listen</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dots" id="dots"></div>
+
+  <div class="ig-actions">
+    <span>&#9825;</span><span>&#128172;</span><span>&#10148;</span>
+    <span class="spacer"></span><span>&#128278;</span>
+  </div>
+
+  <div class="ig-caption">
+    <b>mistakenlyhuman</b> There's a kind of intoxication that never wears off — a person's laugh living rent-free in your head, long after the moth stops circling the flame.<br><br>
+    I wrote this about the hangover with no endpoint. If it's yours too, comment <b>"HANGOVER"</b> and I'll send you the full poem — and where to listen to it read aloud.
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('viewport');
+  const dotsEl = document.getElementById('dots');
+  const SLIDE_W = 420;
+  const TOTAL = 7;
+  let current = 0;
+
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('span');
+    if (i === 0) d.className = 'active';
+    dotsEl.appendChild(d);
+  }
+
+  function render() {
+    track.style.transform = `translateX(-${current * SLIDE_W}px)`;
+    [...dotsEl.children].forEach((d, i) => d.classList.toggle('active', i === current));
+    document.querySelectorAll('.slide').forEach((slide, i) => {
+      slide.querySelectorAll('.progress-seg .fill').forEach((fill, segIdx) => {
+        fill.style.width = segIdx <= i ? '100%' : '0%';
+      });
+    });
+  }
+  render();
+
+  document.querySelectorAll('.slide').forEach((slide) => {
+    const arrow = slide.querySelector('.swipe-arrow');
+    if (arrow) arrow.addEventListener('click', () => {
+      if (current < TOTAL - 1) { current++; render(); }
+    });
+  });
+
+  let startX = 0, dragging = false;
+  viewport.addEventListener('pointerdown', (e) => {
+    dragging = true; startX = e.clientX; viewport.classList.add('dragging');
+  });
+  window.addEventListener('pointerup', (e) => {
+    if (!dragging) return;
+    dragging = false; viewport.classList.remove('dragging');
+    const dx = e.clientX - startX;
+    if (dx < -40 && current < TOTAL - 1) current++;
+    else if (dx > 40 && current > 0) current--;
+    render();
+  });
+</script>
+
+</body>
+</html>

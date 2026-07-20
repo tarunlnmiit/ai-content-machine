@@ -1,3 +1,9 @@
+---
+title: "Canva AI 2.0 Conversational Prompts"
+type: prompt
+slug: canva-ai-2-0-workflow
+tags: [content/prompt]
+---
 # Canva AI 2.0 Conversational Prompts
 
 Wednesday Step 6 — Use these templates to generate all 3 assets at once.

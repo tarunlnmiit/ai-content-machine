@@ -1,6 +1,11 @@
 ---
 title: "Dance When the Playlist Ends"
+type: blog
 niche: poetry_quotes
+date: 2026-06-16
+week: 2026-W25
+slug: you-have-gotta-dance-like-there-is-nobody-watching
+tags: [content/blog, niche/poetry_quotes, week/2026-W25]
 ---
 
 There's a video I shot last year. Six seconds. Me, alone in my apartment at 11pm, doing something embarrassing enough that I almost deleted it. I didn't. We all have a move we keep holding back.

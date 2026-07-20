@@ -1,3 +1,9 @@
+---
+title: "Plan: Emotional B-roll Clip-Shorts (3rd reel type) + Custom Reel Covers"
+type: doc
+slug: plan-broll-clipshorts-and-reel-covers
+tags: [content/doc]
+---
 # Plan: Emotional B-roll Clip-Shorts (3rd reel type) + Custom Reel Covers
 
 ## Context

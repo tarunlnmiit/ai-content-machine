@@ -1,0 +1,84 @@
+<!-- @dsCard group="Foundations · Video Look Bibles" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video Bible — Poetry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Lora:ital@0;1&family=Nunito+Sans:wght@400;700&family=Playfair+Display:ital@0;1&family=DM+Sans:wght@400;700&family=Inter:wght@400;600;800&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;600;800&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0e1a;color:#f0f4ff;font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+       padding:36px;line-height:1.5}
+  h1{font-size:26px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
+  h2{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;
+      opacity:.55;margin:28px 0 12px}
+  .sub{font-size:13px;opacity:.6;margin-bottom:8px}
+  .grid{display:flex;flex-wrap:wrap;gap:14px}
+  .swatch{width:150px;border-radius:10px;overflow:hidden;
+           border:1px solid rgba(255,255,255,.12)}
+  .swatch .chip{height:74px}
+  .swatch .meta{padding:8px 10px;background:rgba(255,255,255,.05);font-size:11px}
+  .swatch .meta b{display:block;font-size:12px;margin-bottom:2px}
+  .swatch .meta code{font-family:'JetBrains Mono',monospace;opacity:.75}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:8px}
+  th,td{text-align:left;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.5}
+  td code,pre{font-family:'JetBrains Mono',monospace;font-size:12px}
+  pre{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);
+      border-radius:8px;padding:14px;overflow:auto;white-space:pre-wrap}
+  .dot{display:inline-block;width:13px;height:13px;border-radius:3px;
+        vertical-align:-2px;margin-right:7px;border:1px solid rgba(255,255,255,.25)}
+  .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;
+       background:rgba(255,255,255,.09);margin:0 6px 6px 0}
+  .warn{border:1px solid #E8745A;background:rgba(232,116,90,.08);border-radius:10px;
+        padding:12px 16px;font-size:13px;margin:16px 0}
+  .specimen{font-size:30px;margin:6px 0 14px}
+  .ds-foot{margin-top:36px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);
+           font-size:11px;opacity:.55}
+</style>
+</head>
+<body>
+<h1>Video Look Bible — Poetry</h1><p class="sub">Source: v1/data/kb/design/poetry_design.md (System B) — HyperFrames/Remotion beat builders read this verbatim.</p><h2>Palette</h2><table><tr><th>Role</th><th>Hex</th><th>Usage</th></tr><tr><td>Background void</td><td><span class="dot" style="background:#080808"></span>#080808</td><td>Default canvas — near-black, not pure black</td></tr><tr><td>Background mid</td><td><span class="dot" style="background:#0f0f12"></span>#0f0f12</td><td>Secondary surfaces</td></tr><tr><td>Primary text</td><td><span class="dot" style="background:#f5f0eb"></span>#f5f0eb</td><td>Poetry text — slightly warm white</td></tr><tr><td>Accent purple</td><td><span class="dot" style="background:#7c3aed"></span>#7c3aed</td><td>Chromatic edges, spectral highlights</td></tr><tr><td>Accent silver</td><td><span class="dot" style="background:#c8c8d4"></span>#c8c8d4</td><td>Subtitles, secondary text</td></tr><tr><td>Atmospheric fog</td><td><span class="dot" style="background:rgba(80, 60, 120, 0.06)"></span>rgba(80, 60, 120, 0.06)</td><td>Subtle purple cast over video</td></tr><tr><td>Glass card bg</td><td><span class="dot" style="background:rgba(15, 15, 18, 0.92)"></span>rgba(15, 15, 18, 0.92)</td><td>Card backgrounds (used rarely)</td></tr></table><h2>Typography</h2><table><tr><th>Role</th><th>Font</th><th>Weight</th><th>Size (1080p)</th></tr><tr><td>Poem lines</td><td>Cormorant Garamond</td><td>400 (Regular)</td><td>56–80px</td></tr><tr><td>Poem lines (emphasis)</td><td>Cormorant Garamond</td><td>600 (SemiBold Italic)</td><td>60–84px</td></tr><tr><td>Kinetic slam word</td><td>Cormorant Garamond</td><td>700 (Bold)</td><td>180–260px</td></tr><tr><td>Title / opening</td><td>Cormorant Garamond</td><td>300 (Light)</td><td>64–80px</td></tr><tr><td>Attribution / byline</td><td>Inter</td><td>300 (Light)</td><td>24–28px</td></tr></table><h2>Motion language</h2><table><tr><th>Name</th><th>Value</th><th>Use case</th></tr><tr><td>Breath in</td><td>cubic-bezier(0.0, 0.0, 0.58, 1.0)</td><td>Poem line enters</td></tr><tr><td>Breath out</td><td>cubic-bezier(0.42, 0, 1.0, 1.0)</td><td>Poem line exits</td></tr><tr><td>Deep settle</td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Opening title settle</td></tr><tr><td>Linear</td><td>cubic-bezier(0, 0, 1, 1)</td><td>Grain, warp, continuous effects</td></tr></table><pre>- Poem line enter: `1.0s`
+- Poem line exit: `0.8s`
+- Hold between lines: `2.0–3.0s` (let the line breathe before revealing next)
+- Kinetic slam: `0.4s` in, `2.5s` hold, `0.6s` exit
+- Transition: `1.2s`
+- Opening title: `2.0s` fade in
+---</pre><h2>Color grade</h2><pre>Applied as a CSS filter on the base video layer.
+
+```css
+filter: contrast(1.08) saturate(0.85) brightness(0.96) hue-rotate(0deg);
+```
+
+Additional purple overlay: `rgba(120, 80, 200, 0.04)` at full frame, `mix-blend-mode: screen`.
+
+Remotion EditPlan fields:
+```json
+{
+  "look": "poetry",
+  "colorGrading": {
+    "contrast": 1.08,
+    "saturate": 0.85,
+    "brightness": 0.96,
+    "hueRotate": 0
+  }
+}
+```
+
+Note: `"look": "poetry"` activates the existing Remotion letterbox + duotone in TalkingHeadEdit.
+
+---</pre><h2>Banned</h2><pre>- Blue color tones (DS niche color)
+- Warm amber tones (Life niche color)
+- Code blocks, terminal windows, data charts
+- Bullet lists, numbered lists
+- Fast glitch transitions
+- Multiple words on screen simultaneously (one word/line at a time is the rule)
+- Emoji
+- Notification banners, subscribe animations
+- Comic sans, any novelty fonts
+- Bright, saturated backgrounds</pre>
+<footer class="ds-foot">Systems A (brand kit) / B (video bibles) / C (worksheet shell) are intentionally divergent palettes. Mirror only — do NOT reconcile. Edit repo sources, never this project.</footer>
+</body>
+</html>

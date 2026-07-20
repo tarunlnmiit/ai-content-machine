@@ -1,3 +1,11 @@
+---
+title: "Integers — whole numbers"
+type: buffer
+niche: data_science_tech
+slug: python-for-data-science-tutorial-310
+platform: youtube
+tags: [content/buffer, niche/data_science_tech]
+---
 ```
 SHOW: Breath of Data Science
 EPISODE TITLE: Variables, Data Types, and Silent Bugs

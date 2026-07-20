@@ -1,3 +1,9 @@
+---
+title: "Terminal prompt — bake @mavgpt caption formula into the pipeline"
+type: prompt
+slug: bake-mavgpt-formula
+tags: [content/prompt]
+---
 # Terminal prompt — bake @mavgpt caption formula into the pipeline
 
 Paste this into Claude Code CLI (`claude` in terminal, inside the content-machine repo).

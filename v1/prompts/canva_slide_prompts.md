@@ -1,3 +1,9 @@
+---
+title: "Canva Slide Deck Prompts"
+type: prompt
+slug: canva-slide-prompts
+tags: [content/prompt]
+---
 # Canva Slide Deck Prompts
 
 Generated for Step 6 (Wednesday) — `generate_slides.py` + Canva Bulk Create.

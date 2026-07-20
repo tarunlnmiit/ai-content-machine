@@ -1,3 +1,12 @@
+---
+type: script
+niche: poetry_quotes
+date: 2026-06-08
+week: 2026-W24
+slug: poetry-dips-its-fingers-in-every-co
+platform: yt
+tags: [content/script, niche/poetry_quotes, week/2026-W24]
+---
 ```
 SHOW: Breath of Poetry
 EPISODE TITLE (working): Poetry Dips Its Fingers in Every Colour

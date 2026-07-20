@@ -1,3 +1,12 @@
+---
+title: "Poetry & Quotes Video — CapCut Editing Guide"
+type: archive
+niche: poetry_quotes
+date: 2026-05-14
+week: 2026-W20
+slug: the-end-of-poetry-by-ada-limó
+tags: [content/archive, niche/poetry_quotes, week/2026-W20]
+---
 # Poetry & Quotes Video — CapCut Editing Guide
 **Video:** `2026-05-14_poetry_quotes_the-end-of-poetry-by-ada-limó`
 

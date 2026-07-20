@@ -1,6 +1,40 @@
+---
+title: "Content Machine — Docs Index"
+type: doc
+slug: readme
+tags: [content/doc]
+---
 # Content Machine — Docs Index
 
 > Start here. Pick the doc for what you're doing right now. Close everything else.
+
+---
+
+## Run the dashboard (operator UI)
+
+```bash
+python3 v1/scripts/dashboard.py               # → http://localhost:8765
+python3 v1/scripts/dashboard.py --port 8801   # if 8765 is taken
+python3 v1/scripts/dashboard.py --no-reload   # pin the running code
+```
+
+Localhost-only, no publish endpoints by design. Two pages:
+
+| URL | What it's for |
+|---|---|
+| `localhost:8765/` | Weekly loop: prep buttons (analytics → ideas → pack → menu), menu checkboxes, inbox slicing, per-clip composite/trim, episode assembly, review + approvals |
+| `localhost:8765/tracker` | **Content tracker** — every piece across Medium / LinkedIn / carousel / reel / longform / worksheet |
+
+The tracker table is **editable in place**: statuses are dropdowns, links and refs are text
+inputs, `+ note` appends to a record's history. Each edit writes straight to
+`docs/content-tracker.md` and regenerates the view. No Claude call, no save button.
+
+**Auto-reloads on code change.** Edit any `scripts/*.py` the server has imported and it
+re-execs itself in place — same PID, same port, no manual restart. A reload waits until no
+job is running, so it can never kill a composite or episode render mid-flight. `--no-reload`
+turns it off. (Browser state isn't affected; just refresh if you changed the page template.)
+
+Details → [`content-tracker.md`](content-tracker.md) · [`guides/weekly-operating-guide.md`](guides/weekly-operating-guide.md)
 
 ---
 

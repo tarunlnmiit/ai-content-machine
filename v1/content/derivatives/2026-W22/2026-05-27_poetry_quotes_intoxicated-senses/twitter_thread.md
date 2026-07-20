@@ -1,3 +1,11 @@
+---
+title: "Twitter Thread — Poetry / Intoxicated Senses"
+type: derivative
+niche: poetry_quotes
+week: 2026-W22
+slug: twitter-thread
+tags: [content/derivative, niche/poetry_quotes, week/2026-W22]
+---
 # Twitter Thread — Poetry / Intoxicated Senses
 # Post manually — cannot be scheduled
 

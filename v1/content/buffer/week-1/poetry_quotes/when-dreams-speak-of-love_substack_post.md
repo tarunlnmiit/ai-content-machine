@@ -1,3 +1,11 @@
+---
+title: "Safe and Alive"
+type: buffer
+niche: poetry_quotes
+slug: when-dreams-speak-of-love
+platform: substack
+tags: [content/buffer, niche/poetry_quotes]
+---
 # Safe and Alive
 
 ## Hook

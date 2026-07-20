@@ -1,3 +1,9 @@
+---
+title: "05 — Pipeline Map (voice KB → blog-first pipeline)"
+type: kb
+slug: 05-pipeline-map
+tags: [content/kb]
+---
 # 05 — Pipeline Map (voice KB → blog-first pipeline)
 
 Where this KB plugs into the pipeline for **poetry + life**. Patterns are source intelligence, so they enter

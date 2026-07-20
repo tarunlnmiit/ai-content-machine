@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Collect weekly analytics: YouTube (Data API v3), Twitter (twitter_tweets.json),
-Instagram (instagram_posts.json). Summarise with Ollama. Save weekly_insights.md.
+Instagram (instagram_posts.json). Summarise with claude -p (Haiku). Save weekly_insights.md.
 
 Runs via cron every Sunday at 8 PM.
 Twitter and Instagram data assumed refreshed by Composio/Apify before this runs.
@@ -16,12 +16,11 @@ from pathlib import Path
 import requests
 from dotenv import load_dotenv
 from _console import console, progress_bar
+from lib.claude_cli import call_claude
+from lib.niche_config import model_for
 
 REPO = Path(__file__).parent.parent
 load_dotenv(REPO / ".env")
-
-OLLAMA_URL   = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "gemma4:e2b"
 
 YOUTUBE_CHANNELS = {
     "Breath of Data Science": os.getenv("YT_CHANNEL_ID_DS",       "UCxxxxDS"),
@@ -311,26 +310,22 @@ Data:
 Summary:"""
 
 
-def _summarise_with_ollama(prompt: str) -> str:
-    resp = requests.post(
-        OLLAMA_URL,
-        json={"model": OLLAMA_MODEL, "prompt": prompt, "stream": False},
-        timeout=60,
-    )
-    if resp.status_code != 200:
-        raise RuntimeError(f"Ollama HTTP {resp.status_code}")
-    return resp.json().get("response", "").strip()
-
-
 def summarise(data: dict) -> str:
     prompt = _make_summary_prompt(data)
     try:
-        result = _summarise_with_ollama(prompt)
-        console.print("  [success]Summary via Ollama[/success]")
-        return result
+        result = call_claude(
+            prompt,
+            cache=False,  # fresh numbers every week — never reuse
+            timeout=120,
+            model=model_for("analytics_summary"),
+        ).strip()
+        if result:
+            console.print("  [success]Summary via claude (Haiku)[/success]")
+            return result
+        raise RuntimeError("empty response")
     except Exception as e:
-        console.print(f"  [warn]Ollama failed: {e}[/warn]")
-    return "Summary unavailable — Ollama failed."
+        console.print(f"  [warn]Claude summary failed: {e}[/warn]")
+    return "Summary unavailable — claude summariser failed."
 
 
 # ── Save ──────────────────────────────────────────────────────────────────────

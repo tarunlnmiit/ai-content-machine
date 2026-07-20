@@ -1,0 +1,21 @@
+I'm a data scientist who writes novels. For ten years those two halves of my brain never talked to each other.
+
+Then AI got good, and I noticed something: the skill that makes you good at data science — asking precise questions — is the exact same skill that makes you good at AI. Not the tool. The question.
+
+Here's the pattern I see constantly. Someone types "write me a story" or "fix my code," gets back something bland, and decides AI is overhyped.
+
+That's not the model failing. That's a vague prompt getting a vague answer — the oldest rule in data. Garbage in, garbage out.
+
+The people getting real value aren't using a secret tool. They're giving the AI a role, a specific ask, real constraints, and leaving room for their own judgment. That's the whole trick.
+
+One I use constantly, for debugging:
+
+"You are a pragmatic senior engineer. I'll share code and errors. Explain the root cause in plain terms, give the smallest correct fix, and point out any edge case or security issue I'm missing. Ask before assuming requirements."
+
+One paragraph, and the assistant stops being a search box and starts being a colleague.
+
+I spent a decade believing the analyst and the writer were two different people who happened to share a skull. They're not. They're the same person asking good questions, just about different things.
+
+Your AI answer is capped by your question. Ask a better one.
+
+#AI #ChatGPT #DataScience #PromptEngineering #Productivity

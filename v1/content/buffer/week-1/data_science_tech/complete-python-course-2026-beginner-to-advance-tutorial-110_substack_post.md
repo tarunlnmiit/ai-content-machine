@@ -1,3 +1,11 @@
+---
+title: "Python for Data Science: Tutorial 1/10 — Why Your Setup Matters More Than Your First Program"
+type: buffer
+niche: data_science_tech
+slug: complete-python-course-2026-beginner-to-advance-tutorial-110
+platform: substack
+tags: [content/buffer, niche/data_science_tech]
+---
 # Python for Data Science: Tutorial 1/10 — Why Your Setup Matters More Than Your First Program
 
 ## HOOK

@@ -1,3 +1,11 @@
+---
+title: "Demo Guide — the dummy clip Remotion edits (for the reel)"
+type: reel
+niche: data_science_tech
+week: 2026-W26
+slug: demo-guide
+tags: [content/reel, niche/data_science_tech, week/2026-W26]
+---
 # Demo Guide — the dummy clip Remotion edits (for the reel)
 
 Goal: a ~5-second dummy clip + an animated text overlay that **Claude adds in Remotion**.

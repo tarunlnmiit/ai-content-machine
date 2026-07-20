@@ -1,3 +1,11 @@
+---
+title: "Landing Page Copy + Reel Caption"
+type: reel
+niche: data_science_tech
+week: 2026-W26
+slug: landing-page-and-caption
+tags: [content/reel, niche/data_science_tech, week/2026-W26]
+---
 # Landing Page Copy + Reel Caption
 
 ## A. Email-gated landing page (the upgrade = the Template Pack)

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-06T09:29:21.308Z",
-  "count": 16,
+  "generatedAt": "2026-07-20T09:48:45.732Z",
+  "count": 25,
   "worksheets": {
     "python-for-data-science-tutorial-210": {
       "title": "The Silent Bug Audit: Catch Type Errors Before They Poison Your Analysis",
@@ -97,6 +97,60 @@
       "niche": "life_self_dev",
       "date": "2026-07-06",
       "pdfPath": "output/worksheets/2026-W28/2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y_worksheet.pdf"
+    },
+    "i-asked-5-senior-engineers-to-explain-a-vector-database-with": {
+      "title": "The Vector DB Readiness Checklist: Count, Build, Audit",
+      "niche": "data_science_tech",
+      "date": "2026-07-10",
+      "pdfPath": "output/worksheets/2026-W28/2026-07-10_data_science_tech_i-asked-5-senior-engineers-to-explain-a-vector-database-with_worksheet.pdf"
+    },
+    "high-emotional-intelligence-at-work-isnt-about-being-nice-it": {
+      "title": "The Ten-Second Rule: A Worksheet for Saying the Hard Thing",
+      "niche": "life_self_dev",
+      "date": "2026-07-10",
+      "pdfPath": "output/worksheets/2026-W28/2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it_worksheet.pdf"
+    },
+    "i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit": {
+      "title": "Audit Your Own MLOps Pipeline Before It Silently Lies to You",
+      "niche": "data_science_tech",
+      "date": "2026-07-14",
+      "pdfPath": "output/worksheets/2026-W29/2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit_worksheet.pdf"
+    },
+    "how-to-make-better-decisions-under-pressure-without-ever-tru": {
+      "title": "The Pre-Mortem Worksheet: Decide Before the Pressure Hits",
+      "niche": "life_self_dev",
+      "date": "2026-07-14",
+      "pdfPath": "output/worksheets/2026-W29/2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru_worksheet.pdf"
+    },
+    "building-a-mastodon-automation-bot-using-python-and-streamli": {
+      "title": "Build Your Own Two-Endpoint API Wrapper",
+      "niche": "data_science_tech",
+      "date": "2026-07-16",
+      "pdfPath": "output/worksheets/2026-W29/2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli_worksheet.pdf"
+    },
+    "dear-16-year-old-tarun": {
+      "title": "The Letter You'd Write Your 16-Year-Old Self",
+      "niche": "life_self_dev",
+      "date": "2026-07-16",
+      "pdfPath": "output/worksheets/2026-W29/2026-07-16_life_self_dev_dear-16-year-old-tarun_worksheet.pdf"
+    },
+    "what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat": {
+      "title": "The Inventory Audit: What Your Ambitions Are Really Made Of",
+      "niche": "life_self_dev",
+      "date": "2026-07-16",
+      "pdfPath": "output/worksheets/2026-W29/2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat_worksheet.pdf"
+    },
+    "understanding-who-truly-cares-a-guide-to-valuing-real-connec": {
+      "title": "Run the Numbers on Who You're Actually Choosing",
+      "niche": "life_self_dev",
+      "date": "2026-07-17",
+      "pdfPath": "output/worksheets/2026-W29/2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec_worksheet.pdf"
+    },
+    "why-the-most-emotionally-intelligent-people-at-work-say-less": {
+      "title": "The One-Question Meeting Audit",
+      "niche": "life_self_dev",
+      "date": "2026-07-20",
+      "pdfPath": "output/worksheets/2026-W30/2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less_worksheet.pdf"
     }
   }
 }

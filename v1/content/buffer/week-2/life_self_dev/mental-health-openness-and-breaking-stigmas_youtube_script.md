@@ -1,3 +1,10 @@
+---
+type: buffer
+niche: life_self_dev
+slug: mental-health-openness-and-breaking-stigmas
+platform: youtube
+tags: [content/buffer, niche/life_self_dev]
+---
 ```
 SHOW: Breath of Life
 EPISODE TITLE (working): Your Habits Are Not the Problem

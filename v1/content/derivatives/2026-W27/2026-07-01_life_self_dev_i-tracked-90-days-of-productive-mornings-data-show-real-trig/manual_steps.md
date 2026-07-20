@@ -1,3 +1,11 @@
+---
+title: "Manual steps — `2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig`"
+type: derivative
+niche: life_self_dev
+week: 2026-W27
+slug: manual-steps
+tags: [content/derivative, niche/life_self_dev, week/2026-W27]
+---
 # Manual steps — `2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig`
 
 _Generated 2026-07-01. Everything below is a human action; the blog body stays clean._

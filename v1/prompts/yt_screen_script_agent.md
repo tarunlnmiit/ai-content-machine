@@ -1,3 +1,9 @@
+---
+title: "YouTube Screen Recording Script Agent"
+type: prompt
+slug: yt-screen-script-agent
+tags: [content/prompt]
+---
 # YouTube Screen Recording Script Agent
 
 ## Role

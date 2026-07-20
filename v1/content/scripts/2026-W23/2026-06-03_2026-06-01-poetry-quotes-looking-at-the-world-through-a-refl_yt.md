@@ -1,3 +1,12 @@
+---
+type: script
+niche: poetry_quotes
+date: 2026-06-03
+week: 2026-W23
+slug: looking-at-the-world-through-a-refl
+platform: yt
+tags: [content/script, niche/poetry_quotes, week/2026-W23]
+---
 Write blocked. Output script here instead:
 
 ---

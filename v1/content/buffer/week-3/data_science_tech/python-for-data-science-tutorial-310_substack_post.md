@@ -1,3 +1,11 @@
+---
+title: "Python for Data Science: Tutorial 3/10 — NumPy and the Art of Thinking in Arrays"
+type: buffer
+niche: data_science_tech
+slug: python-for-data-science-tutorial-310
+platform: substack
+tags: [content/buffer, niche/data_science_tech]
+---
 # Python for Data Science: Tutorial 3/10 — NumPy and the Art of Thinking in Arrays
 
 ## HOOK

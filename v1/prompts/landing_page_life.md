@@ -1,3 +1,10 @@
+---
+title: "Life & Self-Dev Worksheet Landing Page — Claude Design Prompt"
+type: prompt
+niche: life_self_dev
+slug: landing-page-life
+tags: [content/prompt, niche/life_self_dev]
+---
 # Life & Self-Dev Worksheet Landing Page — Claude Design Prompt
 
 Create a warm, approachable landing page for a Life & Self-Development worksheet lead magnet using the brand kit below.

@@ -1,3 +1,9 @@
+---
+title: "02 — Idea Bank"
+type: kb
+slug: 02-idea-bank
+tags: [content/kb]
+---
 # 02 — Idea Bank
 
 Concept menu for ideation. Each idea = a hook archetype + a topic from the saved set + a build/teach angle, mapped to the 5 beats. Because your pipeline starts from a blog, each idea is framed as a **blog/YouTube topic** that then compresses into clips, carousels, and Remotion reels.

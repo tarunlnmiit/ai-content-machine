@@ -1,3 +1,12 @@
+---
+title: "I Woke at 6AM Every Day for 90 Days. The Data Said Wake Time Was Never the Point."
+type: blog
+niche: life_self_dev
+date: 2026-07-01
+week: 2026-W27
+slug: i-tracked-90-days-of-productive-mornings-data-show-real-trig
+tags: [content/blog, niche/life_self_dev, week/2026-W27]
+---
 # I Woke at 6AM Every Day for 90 Days. The Data Said Wake Time Was Never the Point.
 
 *I tracked wake time, energy, and first-task latency for 90 mornings — and the number that predicted a good day wasn't the clock.*

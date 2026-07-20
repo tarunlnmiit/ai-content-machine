@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inventory You Never Priced</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+  /* ─── Design System Tokens (Breath Network) ─── */
+  :root {
+    --ink:        #1C1C2E;
+    --ink-700:    #2A2A40;
+    --ink-600:    #3A3A52;
+    --bone:       #E8E0D5;
+    --bone-100:   #FAF6EF;
+    --bone-200:   #F1ECE2;
+    --bone-300:   #E8E0D5;
+    --bone-400:   #D6CCBC;
+    --bone-500:   #B8AC97;
+    --sky:        #7C9CB0;
+    --sky-300:    #B0C4D2;
+    --sky-700:    #557083;
+    --ochre:      #C9A96E;
+    --ochre-300:  #E2CDA1;
+    --ember:      #E8745A;
+    --font-sans:  'Montserrat', ui-sans-serif, system-ui, sans-serif;
+    --font-ed:    'Instrument Serif', 'Times New Roman', Georgia, serif;
+    --font-mono:  ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html, body {
+    width: 297mm;
+    height: 210mm;
+    overflow: hidden;
+    background: var(--bone-100);
+    font-family: var(--font-sans);
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─── PAGE SHELL ─── */
+  .page {
+    width: 297mm;
+    height: 210mm;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bone-100);
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    height: 39mm;
+    flex-shrink: 0;
+    background: var(--ink);
+    display: flex;
+    align-items: stretch;
+  }
+
+  .header-accent {
+    width: 3mm;
+    background: var(--sky);
+    flex-shrink: 0;
+  }
+
+  .header-body {
+    flex: 1;
+    padding: 7mm 9mm 7mm 8mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.5mm;
+  }
+
+  .header-eyebrow {
+    font-size: 6.5pt;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sky);
+  }
+
+  .header-title {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 15.5pt;
+    color: var(--bone);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  .header-title em {
+    font-family: var(--font-ed);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre-300);
+  }
+
+  .header-tagline {
+    font-size: 7.5pt;
+    font-weight: 400;
+    color: rgba(232,224,213,0.5);
+    line-height: 1.5;
+    max-width: 175mm;
+  }
+
+  .header-fields {
+    width: 60mm;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3.5mm;
+    padding: 7mm 9mm 7mm 6mm;
+    border-left: 0.5px solid rgba(231,224,213,0.1);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 1mm;
+  }
+
+  .field-label {
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(232,224,213,0.3);
+  }
+
+  .field-line {
+    border-bottom: 0.5px solid rgba(232,224,213,0.22);
+    height: 4.5mm;
+  }
+
+  /* ─── SECTIONS CONTAINER ─── */
+  .sections {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 9mm 5mm 0;
+    overflow: hidden;
+  }
+
+  /* ─── INDIVIDUAL SECTION ─── */
+  .section {
+    flex: 1;
+    display: flex;
+    border-bottom: 0.5px solid var(--bone-400);
+    overflow: hidden;
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  /* Left number bar */
+  .section-num-bar {
+    width: 11mm;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 4mm;
+    padding-left: 2.5mm;
+  }
+
+  .num-badge {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--sky);
+    color: #fff;
+    font-size: 6.5pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  /* Content column */
+  .section-content {
+    flex: 0 0 61%;
+    padding: 4mm 5mm 3mm 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    border-right: 0.5px solid var(--bone-400);
+    overflow: hidden;
+  }
+
+  .section-title {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  .prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+  }
+
+  .prompt {
+    font-size: 7pt;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.48;
+    padding-left: 8px;
+    position: relative;
+    text-wrap: pretty;
+  }
+
+  .prompt::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 0.5px;
+    color: var(--sky);
+    font-size: 6pt;
+    font-family: var(--font-sans);
+  }
+
+  .prompt strong {
+    font-weight: 700;
+  }
+
+  .prompt em {
+    font-family: var(--font-ed);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre);
+    font-size: 7.5pt;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    background: var(--bone-200);
+    padding: 0 2.5px;
+    border-radius: 2px;
+    color: var(--ink-700);
+  }
+
+  .code-block {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    background: var(--bone-200);
+    color: var(--ink-700);
+    padding: 2mm 3mm;
+    border-left: 1.5px solid var(--sky);
+    border-radius: 0 2px 2px 0;
+    line-height: 1.6;
+    white-space: pre;
+    margin-top: 0.5mm;
+  }
+
+  /* Notes column */
+  .section-notes {
+    flex: 1;
+    padding: 4mm 0 3mm 5mm;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    overflow: hidden;
+  }
+
+  .notes-label {
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bone-500);
+    flex-shrink: 0;
+  }
+
+  .ruled {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .ruled-line {
+    flex: 1;
+    border-bottom: 0.5px solid var(--bone-400);
+    min-height: 3mm;
+  }
+
+  /* ─── SCREEN-ONLY WRAPPER (centers A4 for display) ─── */
+  @media screen {
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #888;
+      overflow: auto;
+    }
+
+    .page {
+      box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+    }
+  }
+
+  @media print {
+    html, body {
+      width: 297mm;
+      height: 210mm;
+      background: var(--bone-100);
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-accent"></div>
+    <div class="header-body">
+      <div class="header-eyebrow">TEN YEARS OUT · TWO GRIEVANCES</div>
+      <h1 class="header-title">The <em>Inventory</em> You Never Priced</h1>
+      <p class="header-tagline">Twenty minutes to name the generation lag, the education trade, and the ambition you caught instead of chose.</p>
+    </div>
+    <div class="header-fields">
+      <div class="field">
+        <span class="field-label">Name</span>
+        <div class="field-line"></div>
+      </div>
+      <div class="field">
+        <span class="field-label">Date</span>
+        <div class="field-line"></div>
+      </div>
+      <div class="field">
+        <span class="field-label">Years out</span>
+        <div class="field-line"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ SECTIONS ═══ -->
+  <main class="sections">
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">1</div></div>
+      <div class="section-content">
+        <div class="section-title">Map Your Generation Lag</div>
+<div class="prompts">
+  <p class="prompt">Name one topic where you outran your parents so fast a conversation now feels like <strong>a bad phone line</strong>.</p>
+  <p class="prompt">Write your last argument with a parent. Strip out blame — what's the real <em>exposure gap</em> underneath?</p>
+  <p class="prompt">Name the specific thing they built instead of running the race beside you.</p>
+  <p class="prompt">Does calling this <strong>structural, not personal</strong> change how angry you feel? One sentence, either way.</p>
+</div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">STRUCTURAL VS PERSONAL</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">2</div></div>
+      <div class="section-content">
+        <div class="section-title">Price What Your Education Actually Bought</div>
+<div class="prompts">
+  <p class="prompt">Finish it: <strong>"If I'd had a smaller education, I'd be happy with ___."</strong> Name the job, the street, the Sunday.</p>
+  <p class="prompt">Name one person who stayed small. Describe their ordinary Tuesday, in specifics.</p>
+  <p class="prompt">What door did your education open that you can never close again, even wishing you could?</p>
+  <p class="prompt">Would you trade the exposure back for the peace? Answer honestly — <em>no resolution required</em>.</p>
+</div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">THE TRADE NOBODY WARNS YOU</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">3</div></div>
+      <div class="section-content">
+        <div class="section-title">Trace Your Ambition Back to Its Source</div>
+<div class="prompts">
+  <p class="prompt">Before you <em>caught</em> your current ambitions, what was the one visible option you mistook for a calling?</p>
+  <p class="prompt">Name the first person who showed you an ambition you'd never been offered. What did it do to you that week?</p>
+  <p class="prompt">List two things nobody ever put in front of you as a kid — art, travel, a trade, a business.</p>
+  <p class="prompt">Is the goal you're chasing actually yours, or <strong>borrowed</strong> from someone you stood near at the right moment?</p>
+</div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">CAUGHT, NOT CHOSEN</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">4</div></div>
+      <div class="section-content">
+        <div class="section-title">Find the Love Underneath the Ambition</div>
+<div class="prompts">
+  <p class="prompt">Under the hustle — career, fitness, content — name the actual want: recognition, love returned, proving something to someone specific.</p>
+  <p class="prompt">Write about one time you gave <strong>love with open arms</strong> and it didn't come back. What wall went up after?</p>
+  <p class="prompt">Which of your walls still protect you, and which have outlived the threat that built them?</p>
+  <p class="prompt">What's your version of <em>lyrics for songs that don't exist yet</em> — where your unspent love actually goes?</p>
+</div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">THE ENGINE UNDER THE HUSTLE</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

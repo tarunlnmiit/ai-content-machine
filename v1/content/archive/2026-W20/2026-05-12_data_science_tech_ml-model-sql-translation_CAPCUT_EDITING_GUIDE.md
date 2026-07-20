@@ -1,3 +1,12 @@
+---
+title: "Data Science Video — CapCut Editing Guide"
+type: archive
+niche: data_science_tech
+date: 2026-05-12
+week: 2026-W20
+slug: ml-model-sql-translation
+tags: [content/archive, niche/data_science_tech, week/2026-W20]
+---
 # Data Science Video — CapCut Editing Guide
 **Video:** `2026-05-12_data_science_tech_ml-model-sql-translation`
 

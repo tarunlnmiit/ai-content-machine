@@ -1,0 +1,12 @@
+{
+  "slug": "i-deleted-three-weeks-of-content",
+  "niche": "ds",
+  "format": "reel",
+  "content_type": "blog_reel",
+  "week": "2026-W24",
+  "source": "content/blogs/2026-W24/2026-06-08_data_science_tech_i-deleted-three-weeks-of-content.md",
+  "reel_script": "/Users/tarungupta/Making It Big/Claude/content-machine/v1/content/reels/2026-W24/i-deleted-three-weeks-of-content/2026-06-08_data_science_tech_i-deleted-three-weeks-of-content_ig_reel.md",
+  "project_key": null,
+  "created_at": "2026-07-16T19:18:03.912141",
+  "_note": "Record the 5-beat script in 2026-06-08_data_science_tech_i-deleted-three-weeks-of-content_ig_reel.md as talking-head, then run: python3 scripts/run_video_pipeline.py --raw <recording> --manifest /Users/tarungupta/Making It Big/Claude/content-machine/v1/content/reels/2026-W24/i-deleted-three-weeks-of-content/manifest.json"
+}

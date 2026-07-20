@@ -1,3 +1,9 @@
+---
+title: "One-Time Platform Setup — Instagram, LinkedIn, Threads + Meta Graph API"
+type: doc
+slug: one-time-platform-setup
+tags: [content/doc]
+---
 # One-Time Platform Setup — Instagram, LinkedIn, Threads + Meta Graph API
 
 Do each section below once. These settings persist and compound over time. Most creators skip this and wonder why their content doesn't grow — the profile is the landing page. If someone finds a reel, thread, or post compelling, they immediately tap your profile. What they see in the next 5 seconds determines whether they follow.

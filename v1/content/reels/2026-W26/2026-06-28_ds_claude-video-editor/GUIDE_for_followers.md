@@ -1,3 +1,11 @@
+---
+title: "Edit Videos by Typing: The Claude + Remotion Setup"
+type: reel
+niche: data_science_tech
+week: 2026-W26
+slug: guide-for-followers
+tags: [content/reel, niche/data_science_tech, week/2026-W26]
+---
 # Edit Videos by Typing: The Claude + Remotion Setup
 
 You don't open a timeline. You don't scrub clips. You tell Claude what you want in plain English,

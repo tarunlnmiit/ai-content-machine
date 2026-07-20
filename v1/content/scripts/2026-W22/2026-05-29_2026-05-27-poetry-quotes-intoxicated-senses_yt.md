@@ -1,3 +1,12 @@
+---
+type: script
+niche: poetry_quotes
+date: 2026-05-29
+week: 2026-W22
+slug: intoxicated-senses
+platform: yt
+tags: [content/script, niche/poetry_quotes, week/2026-W22]
+---
 Reading the source, writing the script now.
 
 ```

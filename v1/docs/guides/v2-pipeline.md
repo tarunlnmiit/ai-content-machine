@@ -1,3 +1,9 @@
+---
+title: "V2 Video Pipeline — HyperFrames + AI Storyboard"
+type: doc
+slug: v2-pipeline
+tags: [content/doc]
+---
 # V2 Video Pipeline — HyperFrames + AI Storyboard
 
 > Added 2026-06-24. This replaces the old manual-DaVinci path for both talking-head and

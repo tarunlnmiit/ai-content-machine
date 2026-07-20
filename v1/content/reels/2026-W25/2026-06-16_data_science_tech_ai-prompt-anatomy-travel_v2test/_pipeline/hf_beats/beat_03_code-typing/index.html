@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html data-composition-fps="30" data-composition-duration="228" data-composition-variables='{"caption_text": {"type": "string", "default": "same 10 things from every list the model isn't failing you your prompt is so i gave it a job in five parts"}, "niche_color": {"type": "string", "default": "#3b82f6"}}'>
+<head>
+<meta charset="utf-8">
+<style>
+  /* === Python-owned base === */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1080px; height: 1920px;
+    background: transparent;
+    overflow: hidden;
+  }
+  #main {
+    position: relative;
+    width: 1080px; height: 1920px;
+    overflow: hidden;
+  }
+  
+    /* === Fullscreen layout === */
+    #panel {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    #content {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+  
+    /* Fullscreen ambient background */
+    #ambient {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 30%, rgba(59,130,246,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 85% 75%, rgba(139,92,246,0.09) 0%, transparent 60%),
+        #0a0e1a;
+    }
+  
+    /* === Python-owned caption (fullscreen) === */
+    #caption-layer {
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 80px;
+      display: flex; justify-content: center; align-items: flex-end;
+      pointer-events: none;
+    }
+  /* Caption pill */
+  #caption-pill {
+    max-width: 1020px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: rgba(10,14,26,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f4ff;
+    font: 600 30px/1.4 'Inter', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  #caption-pill .w {
+    display: inline-block;
+    margin: 0 3px;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-duration="7.600" data-width="1080" data-height="1920">
+    
+  <div id="panel">
+    <div id="content">
+
+      <div class='pk-scrim' style="position:absolute;left:0;right:0;top:0;height:820px;pointer-events:none;background:linear-gradient(to top,transparent 0%,rgba(4,6,10,0.45) 46%,rgba(4,6,10,0.9) 100%);"></div>
+      <div style="position:absolute;top:170px;left:60px;right:60px;
+           border-radius:26px;overflow:hidden;background:rgba(10,13,20,0.86);
+           backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+           border:1px solid rgba(255,255,255,0.10);box-shadow:0 26px 80px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.05);">
+        <div style="display:flex;align-items:center;gap:11px;padding:20px 28px;
+             border-bottom:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.02);">
+          <span style="width:15px;height:15px;border-radius:50%;background:#ff5f57;"></span>
+          <span style="width:15px;height:15px;border-radius:50%;background:#febc2e;"></span>
+          <span style="width:15px;height:15px;border-radius:50%;background:#28c840;"></span>
+          <span style="margin-left:16px;font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;font-size:24px;color:#7f8798;">prompt.md</span>
+        </div>
+        <div style="padding:30px 40px 36px;">
+          <div class="pk-head" style="opacity:0;font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;font-size:34px;color:#eef2f9;margin-bottom:16px;">
+            one prompt <span style="color:#7f8798;">=</span> <span style="color:#4da3ff;">5 parts</span></div>
+          <div class='pk-row' style="opacity:0;display:flex;align-items:baseline;gap:22px;padding:9px 0;font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;font-size:40px;"><span style="color:#7f8798;font-size:26px;width:40px;">01</span><span style="color:#4da3ff;font-weight:600;">role</span><span style="color:#565f72;">:</span><span style="color:#eef2f9;">&#8226;</span></div><div class='pk-row' style="opacity:0;display:flex;align-items:baseline;gap:22px;padding:9px 0;font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;font-size:40px;"><span style="color:#7f8798;font-size:26px;width:40px;">02</span><span style="color:#37e0d8;font-weight:600;">task</span><span style="color:#565f72;">:</span><span style="color:#eef2f9;">&#8226;</span></div><div class='pk-row' style="opacity:0;display:flex;align-items:baseline;gap:22px;padding:9px 0;font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;font-size:40px;"><span style="color:#7f8798;font-size:26px;width:40px;">03</span><span style="color:#f6c177;font-weight:600;">exclude</span><span style="color:#565f72;">:</span><span style="color:#eef2f9;">&#8226;</span></div><div class='pk-row' style="opacity:0;display:flex;align-items:baseline;gap:22px;padding:9px 0;font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;font-size:40px;"><span style="color:#7f8798;font-size:26px;width:40px;">04</span><span style="color:#a78bfa;font-weight:600;">format</span><span style="color:#565f72;">:</span><span style="color:#eef2f9;">&#8226;</span></div><div class='pk-row' style="opacity:0;display:flex;align-items:baseline;gap:22px;padding:9px 0;font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;font-size:40px;"><span style="color:#7f8798;font-size:26px;width:40px;">05</span><span style="color:#7ee787;font-weight:600;">verify</span><span style="color:#565f72;">:</span><span style="color:#eef2f9;">&#8226;</span></div>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function () {
+  var vars = window.__hyperframes && window.__hyperframes.getVariables
+    ? window.__hyperframes.getVariables() : {};
+  var tl = gsap.timeline();
+  var root = document.getElementById('content');
+
+  /* ── Claude's content timeline (scoped to #content) ── */
+  (function (tl, root, vars) {
+
+      const head=root.querySelector('.pk-head'),rows=root.querySelectorAll('.pk-row');
+      gsap.set(head,{opacity:0,y:12});
+      tl.to(head,{opacity:1,y:0,duration:0.5,ease:'power2.out'},0.3);
+      rows.forEach((r,i)=>{
+        gsap.set(r,{x:22});
+        tl.to(r,{opacity:1,x:0,duration:0.45,ease:'power3.out'},0.65+i*0.34);
+      });
+    
+  })(tl, root, vars);
+
+  /* ── Caption timeline (Python-owned) ── */
+  (function (tl) {
+
+  })(tl);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

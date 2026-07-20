@@ -1,3 +1,9 @@
+---
+title: "Master Brief — Tarun Gupta Content Strategy"
+type: kb
+slug: master-brief
+tags: [content/kb]
+---
 # Master Brief — Tarun Gupta Content Strategy
 > Last updated: June 2026. Replace the AI-generated 2023 placeholder that was here before.
 > This file is injected into every blog generation prompt. Keep it accurate.

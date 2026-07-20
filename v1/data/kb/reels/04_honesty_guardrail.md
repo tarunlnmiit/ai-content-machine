@@ -1,3 +1,9 @@
+---
+title: "04 — Honesty Guardrail"
+type: kb
+slug: 04-honesty-guardrail
+tags: [content/kb]
+---
 # 04 — Honesty Guardrail
 
 Non-negotiable QA gate. Applies at the **blog stage** (so it propagates to every derivative) and again at final review of each format. The winner outperformed *because* it under-promised and over-showed.

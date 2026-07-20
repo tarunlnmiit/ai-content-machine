@@ -1,3 +1,9 @@
+---
+title: "@mavgpt Caption Formula (DS / build-in-public reels)"
+type: kb
+slug: 06-mavgpt-caption-formula
+tags: [content/kb]
+---
 # @mavgpt Caption Formula (DS / build-in-public reels)
 
 ## Reference account: @mavgpt (Maverick Maltin — AI & ChatGPT), 887k followers

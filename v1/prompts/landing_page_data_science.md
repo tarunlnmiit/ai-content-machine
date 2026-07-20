@@ -1,3 +1,9 @@
+---
+title: "Data Science Worksheet Landing Page — Claude Design Prompt"
+type: prompt
+slug: landing-page-data-science
+tags: [content/prompt]
+---
 # Data Science Worksheet Landing Page — Claude Design Prompt
 
 Create a clean, professional landing page for a Data Science worksheet lead magnet using the brand kit below.

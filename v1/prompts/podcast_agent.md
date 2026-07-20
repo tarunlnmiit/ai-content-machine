@@ -1,3 +1,9 @@
+---
+title: "Podcast Agent Prompt"
+type: prompt
+slug: podcast-agent
+tags: [content/prompt]
+---
 # Podcast Agent Prompt
 
 ## Role

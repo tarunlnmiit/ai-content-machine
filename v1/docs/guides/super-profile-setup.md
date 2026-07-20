@@ -1,3 +1,9 @@
+---
+title: "Super Profile Link-in-Bio Setup"
+type: doc
+slug: super-profile-setup
+tags: [content/doc]
+---
 # Super Profile Link-in-Bio Setup
 
 ## @mistakenlyhuman (Life & Poetry)

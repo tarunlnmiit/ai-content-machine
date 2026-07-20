@@ -1,3 +1,11 @@
+---
+title: "Podcast Metadata — Breath of Poetry"
+type: derivative
+niche: poetry_quotes
+week: 2026-W22
+slug: podcast-intro
+tags: [content/derivative, niche/poetry_quotes, week/2026-W22]
+---
 # Podcast Metadata — Breath of Poetry
 # Episode: Intoxicated Senses
 

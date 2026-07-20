@@ -1,3 +1,12 @@
+---
+title: "Integers — whole numbers"
+type: script
+date: 2026-05-28
+week: 2026-W22
+slug: python-for-data-science-tutoria
+platform: yt
+tags: [content/script, week/2026-W22]
+---
 ```
 SHOW: Breath of Data Science
 EPISODE TITLE: Variables, Data Types, and Silent Bugs

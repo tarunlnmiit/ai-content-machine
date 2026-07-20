@@ -1,3 +1,11 @@
+---
+title: "Waking Up to What We've Built"
+type: buffer
+niche: poetry_quotes
+slug: looking-at-the-world-through-a-reflective-lens
+platform: substack
+tags: [content/buffer, niche/poetry_quotes]
+---
 Reading source. Drafting now.
 
 ---

@@ -1,3 +1,12 @@
+---
+type: script
+niche: life_self_dev
+date: 2026-06-16
+week: 2026-W25
+slug: recursive-self-improvement
+platform: yt
+tags: [content/script, niche/life_self_dev, week/2026-W25]
+---
 ```
 SHOW: Breath of Life
 EPISODE TITLE (working): 5 Loops That Make Self-Improvement Self-Sustaining

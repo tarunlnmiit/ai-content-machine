@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Data Science — LinkedIn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#6B8FA8; --light:#96BAD0; --dark:#3D5F75;
+    --dark-bg:#1E1B2E;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:#000;}
+  .frame.li{
+    position:relative; width:1200px; height:628px; overflow:hidden;
+    background:var(--dark-bg);
+    font-family:'Space Grotesk',sans-serif;
+  }
+  /* left accent bar */
+  .accent{position:absolute; left:0; top:0; width:6px; height:100%; background:var(--primary); z-index:10;}
+
+  /* decorative grid/circuit layer, right 45% zone */
+  .decor{position:absolute; right:0; top:0; width:45%; height:100%; z-index:1; overflow:hidden;}
+  .decor svg{position:absolute; inset:0; width:100%; height:100%;}
+
+  /* text zone, left 55% */
+  .text-zone{position:relative; z-index:10; width:55%; height:100%; display:flex; flex-direction:column; justify-content:center; padding:0 0 0 70px;}
+  .kicker{font-size:15px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--light); margin-bottom:18px;}
+  .hook{font-size:56px; font-weight:700; line-height:1.16; color:#F5F3ED; max-width:560px;}
+  .hook .hl{background:var(--primary); color:#fff; padding:2px 10px; border-radius:4px; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .sub{font-size:22px; font-weight:500; line-height:1.45; color:rgba(245,243,237,.72); margin-top:24px; max-width:520px;}
+
+  .brand-bar{position:absolute; left:0; right:0; bottom:0; z-index:10; display:flex; justify-content:space-between; align-items:center; padding:20px 36px 20px 70px;}
+  .handle{font-size:16px; font-weight:600; color:rgba(245,243,237,.65);}
+  .brandname{font-size:16px; font-weight:600; color:rgba(245,243,237,.65);}
+</style>
+</head>
+<body>
+
+<div class="frame li">
+  <div class="accent"></div>
+
+  <div class="decor">
+    <svg viewBox="0 0 540 628" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- circuit-style grid, DS niche decorative cue -->
+      <g stroke="#6B8FA8" stroke-opacity="0.35" stroke-width="1.5">
+        <line x1="40" y1="0" x2="40" y2="628"/>
+        <line x1="140" y1="0" x2="140" y2="628"/>
+        <line x1="240" y1="0" x2="240" y2="628"/>
+        <line x1="340" y1="0" x2="340" y2="628"/>
+        <line x1="440" y1="0" x2="440" y2="628"/>
+        <line x1="0" y1="80" x2="540" y2="80"/>
+        <line x1="0" y1="200" x2="540" y2="200"/>
+        <line x1="0" y1="320" x2="540" y2="320"/>
+        <line x1="0" y1="440" x2="540" y2="440"/>
+        <line x1="0" y1="560" x2="540" y2="560"/>
+      </g>
+      <g fill="#96BAD0" fill-opacity="0.55">
+        <circle cx="140" cy="80" r="5"/>
+        <circle cx="240" cy="200" r="5"/>
+        <circle cx="340" cy="320" r="5"/>
+        <circle cx="440" cy="200" r="5"/>
+        <circle cx="140" cy="440" r="5"/>
+        <circle cx="340" cy="560" r="5"/>
+        <circle cx="40" cy="320" r="5"/>
+      </g>
+      <g stroke="#96BAD0" stroke-opacity="0.5" stroke-width="2">
+        <path d="M140 80 L240 200 L340 200" fill="none"/>
+        <path d="M340 320 L440 200" fill="none"/>
+        <path d="M140 440 L40 320" fill="none"/>
+        <path d="M140 440 L340 560" fill="none"/>
+      </g>
+      <!-- quotation glyph, oversized, faint -->
+      <text x="330" y="470" font-family="Space Grotesk" font-size="220" font-weight="700" fill="#3D5F75" fill-opacity="0.45">"</text>
+    </svg>
+  </div>
+
+  <div class="text-zone">
+    <div class="kicker">I'm a data scientist who writes novels</div>
+    <div class="hook">Your AI answer is capped by your <span class="hl">question.</span></div>
+    <div class="sub">Same skill runs data science and fiction. It's the one that makes AI actually useful — not the tool.</div>
+  </div>
+
+  <div class="brand-bar">
+    <div class="handle">@breathofdatascience</div>
+    <div class="brandname">Breath of Data Science</div>
+  </div>
+</div>
+
+</body>
+</html>

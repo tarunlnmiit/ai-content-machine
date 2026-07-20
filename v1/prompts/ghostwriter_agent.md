@@ -1,3 +1,9 @@
+---
+title: "Ghostwriter Agent Prompt"
+type: prompt
+slug: ghostwriter-agent
+tags: [content/prompt]
+---
 # Ghostwriter Agent Prompt
 
 ## Role

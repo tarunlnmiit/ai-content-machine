@@ -1,0 +1,13 @@
+Stop touching the same email four times.
+
+Read it. Copy the to-do. Block the calendar. Summarize the long thread. One command does all four — classifies your unread mail, extracts tasks with deadlines, drafts the replies, flags what needs calendar time.
+
+It never sends anything. No send scope in the codebase — enforced by a test, not a promise.
+
+BYOK across 6 LLM providers, including fully-local Ollama.
+
+Comment "INBOX" and I'll DM you the repo + setup 👆
+
+pip install inbox-to-action · open source
+
+#claude #claudecode #ai #python #datascience #opensource #devproductivity #productivity #aitools #buildinpublic

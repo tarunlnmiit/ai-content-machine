@@ -1,3 +1,12 @@
+---
+title: "How to Build a Wake-Up Ritual That Survives a Real Life"
+type: blog
+niche: life_self_dev
+date: 2026-06-26
+week: 2026-W26
+slug: ive-done-the-same-3-step-morning-routine-for-2-years-betterhumans
+tags: [content/blog, niche/life_self_dev, week/2026-W26]
+---
 # How to Build a Wake-Up Ritual That Survives a Real Life
 
 *A field-tested method for designing a morning practice that holds up against a marriage, a social life, and workdays you don't control — no 5am required.*

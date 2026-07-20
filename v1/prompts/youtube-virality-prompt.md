@@ -1,3 +1,9 @@
+---
+title: "YouTube Virality Prompt (Long-Form + Shorts)"
+type: prompt
+slug: youtube-virality-prompt
+tags: [content/prompt]
+---
 # YouTube Virality Prompt (Long-Form + Shorts)
 
 Paste everything below into a new Claude conversation when you want help optimising your YouTube presence — titles, thumbnails, scripts, Shorts strategy, audience retention, or channel growth.

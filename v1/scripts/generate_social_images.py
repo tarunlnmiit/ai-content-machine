@@ -477,18 +477,22 @@ def _export_carousel_pdf(slug: str, week: str, niche: str) -> None:
         console.print("[warn]playwright not installed — skipping PDF export[/warn]")
         return
 
-    carousel_html = REPO / "assets" / "carousels" / f"{slug}_carousel.html"
+    carousel_html = REPO / "assets" / "carousels" / week / f"{slug}_carousel.html"
     if not carousel_html.exists():
         return
 
-    pdf_out = REPO / "assets" / "carousels" / f"{slug}_carousel.pdf"
+    pdf_out = REPO / "assets" / "carousels" / week / f"{slug}_carousel.pdf"
 
     async def _pdf() -> None:
         async with async_playwright() as p:
             browser = await p.chromium.launch()
-            page = await browser.new_page(viewport={"width": 420, "height": 2975})  # 7 slides × 425px height
+            page = await browser.new_page(viewport={"width": 420, "height": 800})
             await page.goto(f"file://{carousel_html.resolve()}", wait_until="networkidle")
             await page.wait_for_timeout(1000)
+            # Measure actual rendered height instead of assuming a fixed slide count.
+            content_height = await page.evaluate("document.body.scrollHeight")
+            await page.set_viewport_size({"width": 420, "height": content_height})
+            await page.wait_for_timeout(200)
             await page.pdf(path=str(pdf_out), format="A4")
             await browser.close()
 

@@ -1,3 +1,12 @@
+---
+title: "Python for Data Science: Tutorial 3/10 — NumPy and the Art of Thinking in Arrays"
+type: blog
+niche: data_science_tech
+date: 2026-06-01
+week: 2026-W23
+slug: python-for-data-science-tutorial-310
+tags: [content/blog, niche/data_science_tech, week/2026-W23]
+---
 # Python for Data Science: Tutorial 3/10 — NumPy and the Art of Thinking in Arrays
 
 ## HOOK

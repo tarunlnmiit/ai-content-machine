@@ -1,3 +1,12 @@
+---
+title: "The Cost of Carrying Things Nobody Sees"
+type: blog
+niche: life_self_dev
+date: 2026-06-01
+week: 2026-W23
+slug: the-cost-of-carrying-things-nobody-sees
+tags: [content/blog, niche/life_self_dev, week/2026-W23]
+---
 # The Cost of Carrying Things Nobody Sees
 
 ---

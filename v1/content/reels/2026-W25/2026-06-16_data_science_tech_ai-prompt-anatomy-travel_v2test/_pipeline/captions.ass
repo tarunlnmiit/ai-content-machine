@@ -1,0 +1,140 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Inter,76,&H00FFF4F0,&H00FFF4F0,&H00000000,&H00000000,-1,0,0,0,100,100,1,0,1,6,3,2,76,76,470,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:00.10,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}I{\fs76\1c&H00FFF4F0\bord6} STOPPED GOOGLING\NTRAVEL
+Dialogue: 0,0:00:00.10,0:00:00.36,Cap,,0,0,0,,{\fad(30,0)}{\fs76}I {\fs87\1c&H0000D4FF\bord8}STOPPED{\fs76\1c&H00FFF4F0\bord6} GOOGLING\NTRAVEL
+Dialogue: 0,0:00:00.36,0:00:00.84,Cap,,0,0,0,,{\fad(30,0)}{\fs76}I STOPPED {\fs87\1c&H0000D4FF\bord8}GOOGLING{\fs76\1c&H00FFF4F0\bord6}\NTRAVEL
+Dialogue: 0,0:00:00.84,0:00:01.08,Cap,,0,0,0,,{\fad(30,0)}{\fs76}I STOPPED GOOGLING\N{\fs87\1c&H0000D4FF\bord8}TRAVEL{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:01.08,0:00:01.60,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}GUIDES{\fs76\1c&H00FFF4F0\bord6} I\NINTERROGATED AN
+Dialogue: 0,0:00:01.60,0:00:01.80,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GUIDES {\fs87\1c&H0000D4FF\bord8}I{\fs76\1c&H00FFF4F0\bord6}\NINTERROGATED AN
+Dialogue: 0,0:00:01.80,0:00:02.50,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GUIDES I\N{\fs87\1c&H0000D4FF\bord8}INTERROGATED{\fs76\1c&H00FFF4F0\bord6} AN
+Dialogue: 0,0:00:02.50,0:00:02.68,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GUIDES I\NINTERROGATED {\fs87\1c&H0000D4FF\bord8}AN{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:02.68,0:00:02.90,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}AI{\fs76\1c&H00FFF4F0\bord6} INSTEAD ASK IT
+Dialogue: 0,0:00:02.90,0:00:03.62,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AI {\fs87\1c&H0000D4FF\bord8}INSTEAD{\fs76\1c&H00FFF4F0\bord6} ASK IT
+Dialogue: 0,0:00:03.62,0:00:04.02,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AI INSTEAD {\fs87\1c&H0000D4FF\bord8}ASK{\fs76\1c&H00FFF4F0\bord6} IT
+Dialogue: 0,0:00:04.02,0:00:04.20,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AI INSTEAD ASK {\fs87\1c&H0000D4FF\bord8}IT{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:04.20,0:00:04.36,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}THE{\fs76\1c&H00FFF4F0\bord6} BEST THINGS TO
+Dialogue: 0,0:00:04.36,0:00:04.58,Cap,,0,0,0,,{\fad(30,0)}{\fs76}THE {\fs87\1c&H0000D4FF\bord8}BEST{\fs76\1c&H00FFF4F0\bord6} THINGS TO
+Dialogue: 0,0:00:04.58,0:00:04.84,Cap,,0,0,0,,{\fad(30,0)}{\fs76}THE BEST {\fs87\1c&H0000D4FF\bord8}THINGS{\fs76\1c&H00FFF4F0\bord6} TO
+Dialogue: 0,0:00:04.84,0:00:05.00,Cap,,0,0,0,,{\fad(30,0)}{\fs76}THE BEST THINGS {\fs87\1c&H0000D4FF\bord8}TO{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:05.00,0:00:05.16,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}DO{\fs76\1c&H00FFF4F0\bord6} IN PARIS YOU'LL
+Dialogue: 0,0:00:05.16,0:00:05.32,Cap,,0,0,0,,{\fad(30,0)}{\fs76}DO {\fs87\1c&H0000D4FF\bord8}IN{\fs76\1c&H00FFF4F0\bord6} PARIS YOU'LL
+Dialogue: 0,0:00:05.32,0:00:05.76,Cap,,0,0,0,,{\fad(30,0)}{\fs76}DO IN {\fs87\1c&H0000D4FF\bord8}PARIS{\fs76\1c&H00FFF4F0\bord6} YOU'LL
+Dialogue: 0,0:00:05.76,0:00:06.26,Cap,,0,0,0,,{\fad(30,0)}{\fs76}DO IN PARIS {\fs87\1c&H0000D4FF\bord8}YOU'LL{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:06.26,0:00:06.46,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}GET{\fs76\1c&H00FFF4F0\bord6} THE EIFFEL\NTOWER
+Dialogue: 0,0:00:06.46,0:00:06.66,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GET {\fs87\1c&H0000D4FF\bord8}THE{\fs76\1c&H00FFF4F0\bord6} EIFFEL\NTOWER
+Dialogue: 0,0:00:06.66,0:00:06.96,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GET THE {\fs87\1c&H0000D4FF\bord8}EIFFEL{\fs76\1c&H00FFF4F0\bord6}\NTOWER
+Dialogue: 0,0:00:06.96,0:00:07.14,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GET THE EIFFEL\N{\fs87\1c&H0000D4FF\bord8}TOWER{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:07.14,0:00:07.40,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}AND{\fs76\1c&H00FFF4F0\bord6} THE LOUVRE THE
+Dialogue: 0,0:00:07.40,0:00:07.52,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND {\fs87\1c&H0000D4FF\bord8}THE{\fs76\1c&H00FFF4F0\bord6} LOUVRE THE
+Dialogue: 0,0:00:07.52,0:00:07.94,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND THE {\fs87\1c&H0000D4FF\bord8}LOUVRE{\fs76\1c&H00FFF4F0\bord6} THE
+Dialogue: 0,0:00:07.94,0:00:08.46,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND THE LOUVRE {\fs87\1c&H0000D4FF\bord8}THE{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:08.46,0:00:08.68,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}SAME{\fs76\1c&H00FFF4F0\bord6} 10 THINGS\NFROM
+Dialogue: 0,0:00:08.68,0:00:08.88,Cap,,0,0,0,,{\fad(30,0)}{\fs76}SAME {\fs87\1c&H0000D4FF\bord8}10{\fs76\1c&H00FFF4F0\bord6} THINGS\NFROM
+Dialogue: 0,0:00:08.88,0:00:09.20,Cap,,0,0,0,,{\fad(30,0)}{\fs76}SAME 10 {\fs87\1c&H0000D4FF\bord8}THINGS{\fs76\1c&H00FFF4F0\bord6}\NFROM
+Dialogue: 0,0:00:09.20,0:00:09.46,Cap,,0,0,0,,{\fad(30,0)}{\fs76}SAME 10 THINGS\N{\fs87\1c&H0000D4FF\bord8}FROM{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:09.46,0:00:09.72,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}EVERY{\fs76\1c&H00FFF4F0\bord6} LIST THE\NMODEL
+Dialogue: 0,0:00:09.72,0:00:10.24,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EVERY {\fs87\1c&H0000D4FF\bord8}LIST{\fs76\1c&H00FFF4F0\bord6} THE\NMODEL
+Dialogue: 0,0:00:10.24,0:00:10.44,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EVERY LIST {\fs87\1c&H0000D4FF\bord8}THE{\fs76\1c&H00FFF4F0\bord6}\NMODEL
+Dialogue: 0,0:00:10.44,0:00:10.78,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EVERY LIST THE\N{\fs87\1c&H0000D4FF\bord8}MODEL{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:10.78,0:00:11.24,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}ISN'T{\fs76\1c&H00FFF4F0\bord6} FAILING YOU\NYOUR
+Dialogue: 0,0:00:11.24,0:00:11.46,Cap,,0,0,0,,{\fad(30,0)}{\fs76}ISN'T {\fs87\1c&H0000D4FF\bord8}FAILING{\fs76\1c&H00FFF4F0\bord6} YOU\NYOUR
+Dialogue: 0,0:00:11.46,0:00:11.84,Cap,,0,0,0,,{\fad(30,0)}{\fs76}ISN'T FAILING {\fs87\1c&H0000D4FF\bord8}YOU{\fs76\1c&H00FFF4F0\bord6}\NYOUR
+Dialogue: 0,0:00:11.84,0:00:12.16,Cap,,0,0,0,,{\fad(30,0)}{\fs76}ISN'T FAILING YOU\N{\fs87\1c&H0000D4FF\bord8}YOUR{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:12.16,0:00:12.56,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}PROMPT{\fs76\1c&H00FFF4F0\bord6} IS SO I
+Dialogue: 0,0:00:12.56,0:00:12.98,Cap,,0,0,0,,{\fad(30,0)}{\fs76}PROMPT {\fs87\1c&H0000D4FF\bord8}IS{\fs76\1c&H00FFF4F0\bord6} SO I
+Dialogue: 0,0:00:12.98,0:00:13.34,Cap,,0,0,0,,{\fad(30,0)}{\fs76}PROMPT IS {\fs87\1c&H0000D4FF\bord8}SO{\fs76\1c&H00FFF4F0\bord6} I
+Dialogue: 0,0:00:13.34,0:00:13.48,Cap,,0,0,0,,{\fad(30,0)}{\fs76}PROMPT IS SO {\fs87\1c&H0000D4FF\bord8}I{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:13.48,0:00:13.72,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}GAVE{\fs76\1c&H00FFF4F0\bord6} IT A JOB
+Dialogue: 0,0:00:13.72,0:00:13.90,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GAVE {\fs87\1c&H0000D4FF\bord8}IT{\fs76\1c&H00FFF4F0\bord6} A JOB
+Dialogue: 0,0:00:13.90,0:00:13.98,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GAVE IT {\fs87\1c&H0000D4FF\bord8}A{\fs76\1c&H00FFF4F0\bord6} JOB
+Dialogue: 0,0:00:13.98,0:00:14.26,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GAVE IT A {\fs87\1c&H0000D4FF\bord8}JOB{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:14.26,0:00:14.46,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}IN{\fs76\1c&H00FFF4F0\bord6} FIVE PARTS ROLL
+Dialogue: 0,0:00:14.46,0:00:14.72,Cap,,0,0,0,,{\fad(30,0)}{\fs76}IN {\fs87\1c&H0000D4FF\bord8}FIVE{\fs76\1c&H00FFF4F0\bord6} PARTS ROLL
+Dialogue: 0,0:00:14.72,0:00:15.62,Cap,,0,0,0,,{\fad(30,0)}{\fs76}IN FIVE {\fs87\1c&H0000D4FF\bord8}PARTS{\fs76\1c&H00FFF4F0\bord6} ROLL
+Dialogue: 0,0:00:15.62,0:00:15.96,Cap,,0,0,0,,{\fad(30,0)}{\fs76}IN FIVE PARTS {\fs87\1c&H0000D4FF\bord8}ROLL{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:15.96,0:00:16.90,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}HISTORIAN{\fs76\1c&H00FFF4F0\bord6} NOT\NCHATBOT TASK
+Dialogue: 0,0:00:16.90,0:00:17.56,Cap,,0,0,0,,{\fad(30,0)}{\fs76}HISTORIAN {\fs87\1c&H0000D4FF\bord8}NOT{\fs76\1c&H00FFF4F0\bord6}\NCHATBOT TASK
+Dialogue: 0,0:00:17.56,0:00:18.28,Cap,,0,0,0,,{\fad(30,0)}{\fs76}HISTORIAN NOT\N{\fs87\1c&H0000D4FF\bord8}CHATBOT{\fs76\1c&H00FFF4F0\bord6} TASK
+Dialogue: 0,0:00:18.28,0:00:18.80,Cap,,0,0,0,,{\fad(30,0)}{\fs76}HISTORIAN NOT\NCHATBOT {\fs87\1c&H0000D4FF\bord8}TASK{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:18.80,0:00:19.38,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}THREE{\fs76\1c&H00FFF4F0\bord6} LESSER KNOWN\NSITES
+Dialogue: 0,0:00:19.38,0:00:19.82,Cap,,0,0,0,,{\fad(30,0)}{\fs76}THREE {\fs87\1c&H0000D4FF\bord8}LESSER{\fs76\1c&H00FFF4F0\bord6} KNOWN\NSITES
+Dialogue: 0,0:00:19.82,0:00:20.08,Cap,,0,0,0,,{\fad(30,0)}{\fs76}THREE LESSER {\fs87\1c&H0000D4FF\bord8}KNOWN{\fs76\1c&H00FFF4F0\bord6}\NSITES
+Dialogue: 0,0:00:20.08,0:00:20.46,Cap,,0,0,0,,{\fad(30,0)}{\fs76}THREE LESSER KNOWN\N{\fs87\1c&H0000D4FF\bord8}SITES{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:20.92,0:00:21.18,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}WITH{\fs76\1c&H00FFF4F0\bord6} THE ERA AND
+Dialogue: 0,0:00:21.18,0:00:21.32,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WITH {\fs87\1c&H0000D4FF\bord8}THE{\fs76\1c&H00FFF4F0\bord6} ERA AND
+Dialogue: 0,0:00:21.32,0:00:21.64,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WITH THE {\fs87\1c&H0000D4FF\bord8}ERA{\fs76\1c&H00FFF4F0\bord6} AND
+Dialogue: 0,0:00:21.64,0:00:21.90,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WITH THE ERA {\fs87\1c&H0000D4FF\bord8}AND{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:21.90,0:00:22.04,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}THE{\fs76\1c&H00FFF4F0\bord6} ADDRESS
+Dialogue: 0,0:00:22.04,0:00:22.32,Cap,,0,0,0,,{\fad(30,0)}{\fs76}THE {\fs87\1c&H0000D4FF\bord8}ADDRESS{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:23.28,0:00:23.80,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}EXCLUDE{\fs76\1c&H00FFF4F0\bord6} NO EIFFEL\NTOWER
+Dialogue: 0,0:00:23.80,0:00:24.32,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EXCLUDE {\fs87\1c&H0000D4FF\bord8}NO{\fs76\1c&H00FFF4F0\bord6} EIFFEL\NTOWER
+Dialogue: 0,0:00:24.32,0:00:24.66,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EXCLUDE NO {\fs87\1c&H0000D4FF\bord8}EIFFEL{\fs76\1c&H00FFF4F0\bord6}\NTOWER
+Dialogue: 0,0:00:24.66,0:00:24.84,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EXCLUDE NO EIFFEL\N{\fs87\1c&H0000D4FF\bord8}TOWER{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:25.00,0:00:25.28,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}NO{\fs76\1c&H00FFF4F0\bord6} TOP 10 LIST
+Dialogue: 0,0:00:25.28,0:00:25.56,Cap,,0,0,0,,{\fad(30,0)}{\fs76}NO {\fs87\1c&H0000D4FF\bord8}TOP{\fs76\1c&H00FFF4F0\bord6} 10 LIST
+Dialogue: 0,0:00:25.56,0:00:25.76,Cap,,0,0,0,,{\fad(30,0)}{\fs76}NO TOP {\fs87\1c&H0000D4FF\bord8}10{\fs76\1c&H00FFF4F0\bord6} LIST
+Dialogue: 0,0:00:25.76,0:00:26.00,Cap,,0,0,0,,{\fad(30,0)}{\fs76}NO TOP 10 {\fs87\1c&H0000D4FF\bord8}LIST{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:26.82,0:00:27.34,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}FORMAT{\fs76\1c&H00FFF4F0\bord6} A TABLE NOT
+Dialogue: 0,0:00:27.34,0:00:27.62,Cap,,0,0,0,,{\fad(30,0)}{\fs76}FORMAT {\fs87\1c&H0000D4FF\bord8}A{\fs76\1c&H00FFF4F0\bord6} TABLE NOT
+Dialogue: 0,0:00:27.62,0:00:28.08,Cap,,0,0,0,,{\fad(30,0)}{\fs76}FORMAT A {\fs87\1c&H0000D4FF\bord8}TABLE{\fs76\1c&H00FFF4F0\bord6} NOT
+Dialogue: 0,0:00:28.08,0:00:28.56,Cap,,0,0,0,,{\fad(30,0)}{\fs76}FORMAT A TABLE {\fs87\1c&H0000D4FF\bord8}NOT{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:28.56,0:00:28.70,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}A{\fs76\1c&H00FFF4F0\bord6} WALL OF TEXT
+Dialogue: 0,0:00:28.70,0:00:28.84,Cap,,0,0,0,,{\fad(30,0)}{\fs76}A {\fs87\1c&H0000D4FF\bord8}WALL{\fs76\1c&H00FFF4F0\bord6} OF TEXT
+Dialogue: 0,0:00:28.84,0:00:28.96,Cap,,0,0,0,,{\fad(30,0)}{\fs76}A WALL {\fs87\1c&H0000D4FF\bord8}OF{\fs76\1c&H00FFF4F0\bord6} TEXT
+Dialogue: 0,0:00:28.96,0:00:29.28,Cap,,0,0,0,,{\fad(30,0)}{\fs76}A WALL OF {\fs87\1c&H0000D4FF\bord8}TEXT{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:29.28,0:00:29.94,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}AND{\fs76\1c&H00FFF4F0\bord6} VERIFY TWO\NSOURCES
+Dialogue: 0,0:00:29.94,0:00:30.30,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND {\fs87\1c&H0000D4FF\bord8}VERIFY{\fs76\1c&H00FFF4F0\bord6} TWO\NSOURCES
+Dialogue: 0,0:00:30.30,0:00:31.20,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND VERIFY {\fs87\1c&H0000D4FF\bord8}TWO{\fs76\1c&H00FFF4F0\bord6}\NSOURCES
+Dialogue: 0,0:00:31.20,0:00:31.62,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND VERIFY TWO\N{\fs87\1c&H0000D4FF\bord8}SOURCES{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:31.62,0:00:32.04,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}EACH{\fs76\1c&H00FFF4F0\bord6} FLAG\NCONFLICTS NO
+Dialogue: 0,0:00:32.04,0:00:32.38,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EACH {\fs87\1c&H0000D4FF\bord8}FLAG{\fs76\1c&H00FFF4F0\bord6}\NCONFLICTS NO
+Dialogue: 0,0:00:32.38,0:00:33.06,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EACH FLAG\N{\fs87\1c&H0000D4FF\bord8}CONFLICTS{\fs76\1c&H00FFF4F0\bord6} NO
+Dialogue: 0,0:00:33.06,0:00:33.46,Cap,,0,0,0,,{\fad(30,0)}{\fs76}EACH FLAG\NCONFLICTS {\fs87\1c&H0000D4FF\bord8}NO{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:33.46,0:00:33.72,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}MAKING{\fs76\1c&H00FFF4F0\bord6} THINGS UP\NIT
+Dialogue: 0,0:00:33.72,0:00:34.02,Cap,,0,0,0,,{\fad(30,0)}{\fs76}MAKING {\fs87\1c&H0000D4FF\bord8}THINGS{\fs76\1c&H00FFF4F0\bord6} UP\NIT
+Dialogue: 0,0:00:34.02,0:00:34.40,Cap,,0,0,0,,{\fad(30,0)}{\fs76}MAKING THINGS {\fs87\1c&H0000D4FF\bord8}UP{\fs76\1c&H00FFF4F0\bord6}\NIT
+Dialogue: 0,0:00:34.40,0:00:34.58,Cap,,0,0,0,,{\fad(30,0)}{\fs76}MAKING THINGS UP\N{\fs87\1c&H0000D4FF\bord8}IT{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:34.58,0:00:34.82,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}STOPPED{\fs76\1c&H00FFF4F0\bord6} BEING A\NCHATBOT
+Dialogue: 0,0:00:34.82,0:00:35.12,Cap,,0,0,0,,{\fad(30,0)}{\fs76}STOPPED {\fs87\1c&H0000D4FF\bord8}BEING{\fs76\1c&H00FFF4F0\bord6} A\NCHATBOT
+Dialogue: 0,0:00:35.12,0:00:35.32,Cap,,0,0,0,,{\fad(30,0)}{\fs76}STOPPED BEING {\fs87\1c&H0000D4FF\bord8}A{\fs76\1c&H00FFF4F0\bord6}\NCHATBOT
+Dialogue: 0,0:00:35.32,0:00:35.74,Cap,,0,0,0,,{\fad(30,0)}{\fs76}STOPPED BEING A\N{\fs87\1c&H0000D4FF\bord8}CHATBOT{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:35.74,0:00:35.92,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}AND{\fs76\1c&H00FFF4F0\bord6} STARTED BEING\NA
+Dialogue: 0,0:00:35.92,0:00:36.22,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND {\fs87\1c&H0000D4FF\bord8}STARTED{\fs76\1c&H00FFF4F0\bord6} BEING\NA
+Dialogue: 0,0:00:36.22,0:00:36.52,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND STARTED {\fs87\1c&H0000D4FF\bord8}BEING{\fs76\1c&H00FFF4F0\bord6}\NA
+Dialogue: 0,0:00:36.52,0:00:36.68,Cap,,0,0,0,,{\fad(30,0)}{\fs76}AND STARTED BEING\N{\fs87\1c&H0000D4FF\bord8}A{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:36.68,0:00:37.38,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}GUIDE{\fs76\1c&H00FFF4F0\bord6} SAME MODEL\NEVERYONE
+Dialogue: 0,0:00:37.38,0:00:37.94,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GUIDE {\fs87\1c&H0000D4FF\bord8}SAME{\fs76\1c&H00FFF4F0\bord6} MODEL\NEVERYONE
+Dialogue: 0,0:00:37.94,0:00:38.32,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GUIDE SAME {\fs87\1c&H0000D4FF\bord8}MODEL{\fs76\1c&H00FFF4F0\bord6}\NEVERYONE
+Dialogue: 0,0:00:38.32,0:00:39.00,Cap,,0,0,0,,{\fad(30,0)}{\fs76}GUIDE SAME MODEL\N{\fs87\1c&H0000D4FF\bord8}EVERYONE{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:39.00,0:00:39.62,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}HAS{\fs76\1c&H00FFF4F0\bord6} I JUST STOPPED
+Dialogue: 0,0:00:39.62,0:00:40.08,Cap,,0,0,0,,{\fad(30,0)}{\fs76}HAS {\fs87\1c&H0000D4FF\bord8}I{\fs76\1c&H00FFF4F0\bord6} JUST STOPPED
+Dialogue: 0,0:00:40.08,0:00:40.30,Cap,,0,0,0,,{\fad(30,0)}{\fs76}HAS I {\fs87\1c&H0000D4FF\bord8}JUST{\fs76\1c&H00FFF4F0\bord6} STOPPED
+Dialogue: 0,0:00:40.30,0:00:40.56,Cap,,0,0,0,,{\fad(30,0)}{\fs76}HAS I JUST {\fs87\1c&H0000D4FF\bord8}STOPPED{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:40.56,0:00:40.92,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}ASKING{\fs76\1c&H00FFF4F0\bord6} LIKE A\NTOURIST
+Dialogue: 0,0:00:40.92,0:00:41.24,Cap,,0,0,0,,{\fad(30,0)}{\fs76}ASKING {\fs87\1c&H0000D4FF\bord8}LIKE{\fs76\1c&H00FFF4F0\bord6} A\NTOURIST
+Dialogue: 0,0:00:41.24,0:00:41.38,Cap,,0,0,0,,{\fad(30,0)}{\fs76}ASKING LIKE {\fs87\1c&H0000D4FF\bord8}A{\fs76\1c&H00FFF4F0\bord6}\NTOURIST
+Dialogue: 0,0:00:41.38,0:00:41.64,Cap,,0,0,0,,{\fad(30,0)}{\fs76}ASKING LIKE A\N{\fs87\1c&H0000D4FF\bord8}TOURIST{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:41.90,0:00:42.20,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}COMMENT{\fs76\1c&H00FFF4F0\bord6} PROMPT AND\NI
+Dialogue: 0,0:00:42.20,0:00:42.58,Cap,,0,0,0,,{\fad(30,0)}{\fs76}COMMENT {\fs87\1c&H0000D4FF\bord8}PROMPT{\fs76\1c&H00FFF4F0\bord6} AND\NI
+Dialogue: 0,0:00:42.58,0:00:43.04,Cap,,0,0,0,,{\fad(30,0)}{\fs76}COMMENT PROMPT {\fs87\1c&H0000D4FF\bord8}AND{\fs76\1c&H00FFF4F0\bord6}\NI
+Dialogue: 0,0:00:43.04,0:00:43.14,Cap,,0,0,0,,{\fad(30,0)}{\fs76}COMMENT PROMPT AND\N{\fs87\1c&H0000D4FF\bord8}I{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:43.14,0:00:43.32,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}WILL{\fs76\1c&H00FFF4F0\bord6} DM YOU THE
+Dialogue: 0,0:00:43.32,0:00:43.56,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WILL {\fs87\1c&H0000D4FF\bord8}DM{\fs76\1c&H00FFF4F0\bord6} YOU THE
+Dialogue: 0,0:00:43.56,0:00:43.76,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WILL DM {\fs87\1c&H0000D4FF\bord8}YOU{\fs76\1c&H00FFF4F0\bord6} THE
+Dialogue: 0,0:00:43.76,0:00:43.96,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WILL DM YOU {\fs87\1c&H0000D4FF\bord8}THE{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:43.96,0:00:44.12,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}WHOLE{\fs76\1c&H00FFF4F0\bord6} THING COPY\NPASTE
+Dialogue: 0,0:00:44.12,0:00:44.52,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WHOLE {\fs87\1c&H0000D4FF\bord8}THING{\fs76\1c&H00FFF4F0\bord6} COPY\NPASTE
+Dialogue: 0,0:00:44.52,0:00:45.02,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WHOLE THING {\fs87\1c&H0000D4FF\bord8}COPY{\fs76\1c&H00FFF4F0\bord6}\NPASTE
+Dialogue: 0,0:00:45.02,0:00:45.26,Cap,,0,0,0,,{\fad(30,0)}{\fs76}WHOLE THING COPY\N{\fs87\1c&H0000D4FF\bord8}PASTE{\fs76\1c&H00FFF4F0\bord6}
+Dialogue: 0,0:00:45.26,0:00:45.54,Cap,,0,0,0,,{\fad(30,0)}{\fs76}{\fs87\1c&H0000D4FF\bord8}READY{\fs76\1c&H00FFF4F0\bord6}

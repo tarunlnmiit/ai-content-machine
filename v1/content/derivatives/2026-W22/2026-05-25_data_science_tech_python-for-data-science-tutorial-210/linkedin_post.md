@@ -1,5 +1,12 @@
+---
+title: "LinkedIn Post — DS Tutorial 2/10"
+type: derivative
+niche: data_science_tech
+week: 2026-W22
+slug: linkedin-post
+tags: [content/derivative, niche/data_science_tech, week/2026-W22]
+---
 # LinkedIn Post — DS Tutorial 2/10
-# Status: DRAFT — do not publish until employer clearance
 
 ---
 

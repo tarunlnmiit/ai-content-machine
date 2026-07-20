@@ -1,3 +1,12 @@
+---
+title: "Reel Script — \"I interrogated an AI for travel secrets\" (Prompt Anatomy)"
+type: script
+niche: data_science_tech
+date: 2026-06-16
+week: 2026-W25
+slug: ai-prompt-anatomy-travel-reel
+tags: [content/script, niche/data_science_tech, week/2026-W25]
+---
 # Reel Script — "I interrogated an AI for travel secrets" (Prompt Anatomy)
 
 **Niche:** Data Science / Tech · **Format:** talking-head reel + screen-record proof

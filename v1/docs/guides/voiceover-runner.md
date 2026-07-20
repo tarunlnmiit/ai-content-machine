@@ -1,3 +1,9 @@
+---
+title: "Voiceover-First Runner (additive lane)"
+type: doc
+slug: voiceover-runner
+tags: [content/doc]
+---
 # Voiceover-First Runner (additive lane)
 
 *Added 2026-06-21. This is an **additional** way to make videos — the talking-head pipeline

@@ -1,3 +1,9 @@
+---
+type: buffer
+niche: data_science_tech
+slug: python-for-data-science-tutorial-210-social-copy
+tags: [content/buffer, niche/data_science_tech]
+---
 ## Twitter/X
 
 Most tutorials teach Python the same way: syntax first, thinking later. Here's why that fails for data science:

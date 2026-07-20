@@ -1,3 +1,9 @@
+---
+title: "Week 2026-06-08 Publishing Checklist"
+type: doc
+slug: week-2026-06-08-publishing-checklist
+tags: [content/doc]
+---
 # Week 2026-06-08 Publishing Checklist
 **Week: Jun 8–Jun 14, 2026**
 

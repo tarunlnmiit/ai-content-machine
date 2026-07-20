@@ -41,9 +41,9 @@ SONNET_46 = "claude-sonnet-4-6"
 HAIKU = "claude-haiku-4-5-20251001"
 
 # Task → model routing (Max 5x). Override per-call where a script needs to.
-# Fable 5 only on quality-critical LOW-VOLUME tasks (burns limits fast, long turns).
+# Opus 4.8 on quality-critical LOW-VOLUME tasks (burns limits fast, long turns).
 MODEL_BY_TASK = {
-    "hero_blog": FABLE,        # produce_blog, ghostwrite — flagship long-form, weekly, quality-critical
+    "hero_blog": OPUS,         # produce_blog, ghostwrite — flagship long-form, weekly, quality-critical
     "buffer": SONNET,          # bulk drafts, lower stakes
     "repurpose": SONNET,       # mechanical transform of existing text
     "html_asset": SONNET,      # slides / carousel / social / thumbnail
@@ -56,13 +56,14 @@ MODEL_BY_TASK = {
     "reel_hook": SONNET,       # prepare_reel_script — hook selection; first 3s decide everything
     "custom_scene": SONNET,    # generate_custom_scene — TSX codegen; better model = fewer tsc retries
     "retrofit": SONNET,        # retrofit_scene_triggers — transcript trigger re-anchoring
+    "analytics_summary": HAIKU,  # collect_analytics — weekly numbers → bullets, mechanical
 }
 
 
 def model_for(task: str, niche: Optional[str] = None) -> str:
     """Return the model id for a pipeline task.
 
-    Everything follows MODEL_BY_TASK (hero_blog included — Fable 5).
+    Everything follows MODEL_BY_TASK (hero_blog included — Opus 4.8).
     Unknown tasks fall back to Sonnet.
     """
     return MODEL_BY_TASK.get(task, SONNET)

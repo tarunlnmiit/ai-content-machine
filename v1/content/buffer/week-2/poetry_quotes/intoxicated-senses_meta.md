@@ -1,3 +1,10 @@
+---
+title: "Intoxicated Senses"
+type: buffer
+niche: poetry_quotes
+slug: intoxicated-senses-meta
+tags: [content/buffer, niche/poetry_quotes]
+---
 # Intoxicated Senses
 
 **Niche:** poetry_quotes

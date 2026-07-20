@@ -1,3 +1,10 @@
+---
+title: "Plan — W21 Content Performance Report (3 pieces: Medium + YT long form)"
+type: doc
+week: 2026-W21
+slug: 2026-w21-content-performance-report
+tags: [content/doc, week/2026-W21]
+---
 # Plan — W21 Content Performance Report (3 pieces: Medium + YT long form)
 
 ## Context

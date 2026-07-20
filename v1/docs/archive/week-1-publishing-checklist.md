@@ -1,3 +1,9 @@
+---
+title: "Week 1 Publishing Checklist"
+type: doc
+slug: week-1-publishing-checklist
+tags: [content/doc]
+---
 # Week 1 Publishing Checklist
 **Week: Jun 9–13, 2026**
 

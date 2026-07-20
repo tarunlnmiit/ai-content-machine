@@ -1,3 +1,11 @@
+---
+title: "Reel Playbook — \"Claude can now edit your videos\" (DS)"
+type: reel
+niche: data_science_tech
+week: 2026-W26
+slug: playbook
+tags: [content/reel, niche/data_science_tech, week/2026-W26]
+---
 # Reel Playbook — "Claude can now edit your videos" (DS)
 
 Everything to make this reel, end to end: the angle, the original script, the exact desktop-app

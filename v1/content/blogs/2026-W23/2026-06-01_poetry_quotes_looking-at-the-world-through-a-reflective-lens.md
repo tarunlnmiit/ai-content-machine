@@ -1,6 +1,11 @@
 ---
 title: "Only to Make Themselves Happy"
+type: blog
 niche: poetry_quotes
+date: 2026-06-01
+week: 2026-W23
+slug: looking-at-the-world-through-a-reflective-lens
+tags: [content/blog, niche/poetry_quotes, week/2026-W23]
 ---
 
 There's a moment — usually quiet, usually late — when the performance stops making sense. You've watched someone get torn apart for being real. You've watched the hollow ones get praised. And something in you goes still, then cold.

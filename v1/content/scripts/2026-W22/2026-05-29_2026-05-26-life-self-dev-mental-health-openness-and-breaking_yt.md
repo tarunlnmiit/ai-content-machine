@@ -1,3 +1,12 @@
+---
+type: script
+niche: life_self_dev
+date: 2026-05-29
+week: 2026-W22
+slug: mental-health-openness-and-breaking
+platform: yt
+tags: [content/script, niche/life_self_dev, week/2026-W22]
+---
 Waiting for write permission. Here's the complete script for review while you decide:
 
 ---

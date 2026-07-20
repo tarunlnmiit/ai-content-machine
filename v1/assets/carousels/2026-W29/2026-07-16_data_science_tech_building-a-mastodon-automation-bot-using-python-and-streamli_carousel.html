@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breath of Data Science — Mastodon Bot Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-primary: #6B8FA8;
+    --brand-light: #96BAD0;
+    --brand-dark: #3D5F75;
+    --light-bg: #EDE8DC;
+    --light-border: #D6D0C4;
+    --dark-bg: #1E1B2E;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #0e0d14;
+    display:flex; align-items:center; justify-content:center;
+    min-height:100vh; padding:40px 0;
+  }
+
+  /* ---------- IG FRAME ---------- */
+  .ig-frame {
+    width:420px; background:#fff; border-radius:14px; overflow:hidden;
+    box-shadow:0 30px 60px rgba(0,0,0,0.45);
+  }
+  .ig-header {
+    display:flex; align-items:center; gap:10px; padding:12px 14px;
+    border-bottom:1px solid #efefef;
+  }
+  .ig-avatar {
+    width:34px; height:34px; border-radius:50%;
+    background:linear-gradient(165deg,var(--brand-dark) 0%,var(--brand-primary) 50%,var(--brand-light) 100%);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:700; font-size:15px; flex-shrink:0;
+  }
+  .ig-handle { font-size:13px; font-weight:600; color:#111; }
+  .ig-sub { font-size:11px; color:#8e8e8e; }
+  .ig-dots { margin-left:auto; font-size:18px; color:#333; letter-spacing:2px; }
+
+  /* ---------- CAROUSEL ---------- */
+  .carousel-viewport {
+    width:420px; height:525px; overflow:hidden; position:relative; background:#000;
+  }
+  .carousel-track {
+    display:flex; width:calc(420px * 7); height:525px;
+    transition: transform 0.45s cubic-bezier(.16,1,.3,1);
+  }
+  .slide {
+    width:420px; height:525px; flex-shrink:0; position:relative;
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+
+  /* backgrounds: notebook/kraft texture, LIGHT and DARK variants */
+  .slide.light {
+    background-color: var(--light-bg);
+    background-image: repeating-linear-gradient(0deg, transparent 0 27px, var(--light-border) 27px 28px);
+  }
+  .slide.dark {
+    background-color: var(--dark-bg);
+    background-image: repeating-linear-gradient(0deg, transparent 0 27px, rgba(255,255,255,0.045) 27px 28px);
+  }
+  .slide.cta {
+    background: linear-gradient(165deg, var(--brand-dark) 0%, var(--brand-primary) 50%, var(--brand-light) 100%);
+  }
+
+  /* ---------- PROGRESS BAR ---------- */
+  .progress-row {
+    display:flex; gap:5px; padding:16px 18px 0; position:relative; z-index:5;
+  }
+  .progress-seg {
+    flex:1; height:3px; background:rgba(0,0,0,0.15); border-radius:2px; overflow:hidden;
+  }
+  .slide.dark .progress-seg, .slide.cta .progress-seg { background:rgba(255,255,255,0.22); }
+  .progress-seg .fill {
+    height:100%; width:0%; background:var(--brand-dark); border-radius:2px;
+  }
+  .slide.dark .progress-seg .fill, .slide.cta .progress-seg .fill { background:#fff; }
+
+  /* ---------- MANDATORY OVERLAY ELEMENTS (fixed corners) ---------- */
+  .badge {
+    position:absolute; top:18px; left:18px; z-index:6;
+    font-size:10.5px; font-weight:600; letter-spacing:0.5px;
+    color:var(--brand-dark); background:rgba(255,255,255,0.75);
+    padding:3px 9px; border-radius:20px; border:1px solid var(--light-border);
+  }
+  .slide.dark .badge, .slide.cta .badge {
+    color:#fff; background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.25);
+  }
+  .follow-tag {
+    position:absolute; top:18px; right:18px; z-index:6;
+    font-size:10.5px; font-weight:600; color:#fff;
+    background:var(--brand-dark); padding:4px 10px; border-radius:20px;
+    white-space:nowrap;
+  }
+  .swipe-arrow {
+    position:absolute; top:50%; right:18px; transform:translateY(-50%); z-index:6;
+    width:38px; height:38px; border-radius:50%;
+    background:rgba(61,95,117,0.9); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:18px;
+  }
+  .slide.light .swipe-arrow { background:var(--brand-dark); }
+  .save-tag {
+    position:absolute; bottom:18px; right:18px; z-index:6;
+    font-size:10px; font-weight:600; letter-spacing:0.3px; color:var(--brand-dark);
+    background:rgba(255,255,255,0.85); padding:4px 9px; border-radius:6px;
+    border:1px solid var(--light-border);
+  }
+  .slide.dark .save-tag { color:#fff; background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.2); }
+
+  /* ---------- DOODLES (reused set) ---------- */
+  .doodle { position:absolute; opacity:0.5; z-index:1; }
+  .slide.dark .doodle, .slide.cta .doodle { opacity:0.35; filter:brightness(3); }
+
+  /* ---------- HIGHLIGHT BLOCKS ---------- */
+  .hl { background:var(--brand-dark); color:#fff; padding:2px 6px; border-radius:3px; }
+  .hl.orange { background:var(--brand-light); color:var(--brand-dark); padding:2px 6px; border-radius:3px; }
+
+  /* ---------- CONTENT ---------- */
+  .content { padding:0 36px; flex:1; display:flex; flex-direction:column; justify-content:center; position:relative; z-index:4; }
+  .content.bottom { justify-content:flex-end; padding:0 36px 52px; }
+  .kicker {
+    font-size:11.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--brand-primary); margin-bottom:10px;
+  }
+  .slide.dark .kicker, .slide.cta .kicker { color:var(--brand-light); }
+  .headline { font-size:30px; font-weight:700; line-height:1.22; color:var(--brand-dark); }
+  .slide.dark .headline, .slide.cta .headline { color:#fff; }
+  .body-text { font-size:17px; font-weight:500; line-height:1.5; color:#2b2b2b; }
+  .slide.dark .body-text { color:#e8e6f0; }
+
+  /* ---------- CARD (rotated collage layer) ---------- */
+  .card {
+    background:#fff; border-radius:8px; box-shadow:0 18px 34px rgba(0,0,0,0.22);
+    padding:20px 20px; position:relative; z-index:3;
+  }
+  .card.rot-l { transform:rotate(-2.4deg); }
+  .card.rot-r { transform:rotate(2.2deg); }
+  .card + .card { margin-top:16px; }
+  .washi {
+    position:absolute; width:60px; height:18px; background:var(--brand-light);
+    opacity:0.65; top:-10px; left:24px; transform:rotate(-6deg); border-radius:2px;
+  }
+  .mono-line { font-family:'Space Grotesk',monospace; font-size:13.5px; color:var(--brand-dark); font-weight:600; }
+
+  /* ---------- CTA SLIDE ---------- */
+  .cta-btn {
+    display:inline-block; background:#fff; color:var(--brand-dark);
+    font-weight:700; font-size:15px; padding:14px 22px; border-radius:10px;
+    text-align:center; box-shadow:0 14px 26px rgba(0,0,0,0.25);
+  }
+  .cta-sub { color:rgba(255,255,255,0.85); font-size:13px; margin-top:14px; font-weight:500; }
+  .logo-lockup {
+    width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,0.18);
+    border:1.5px solid rgba(255,255,255,0.5); color:#fff; font-weight:700; font-size:20px;
+    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
+  }
+
+  /* ---------- IG FOOTER ---------- */
+  .ig-actions { display:flex; align-items:center; gap:16px; padding:12px 14px 6px; font-size:20px; }
+  .ig-actions .spacer { margin-left:auto; }
+  .ig-likes { padding:0 14px; font-size:13px; font-weight:600; }
+  .ig-caption { padding:6px 14px 16px; font-size:12.5px; line-height:1.5; color:#222; }
+  .ig-caption b { font-weight:700; }
+  .ig-dotsrow { display:flex; justify-content:center; gap:5px; padding:8px 0 4px; }
+  .ig-dotsrow span { width:5px; height:5px; border-radius:50%; background:#ddd; }
+  .ig-dotsrow span.active { background:var(--brand-dark); }
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">breathofdatascience</div>
+      <div class="ig-sub">Original audio</div>
+    </div>
+    <div class="ig-dots">⋯</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK (light) -->
+      <div class="slide light">
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">1 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:70px;left:24px;width:34px;height:34px" viewBox="0 0 24 24" fill="none" stroke="#3D5F75" stroke-width="1.4"><path d="M12 2l2.4 6.6L21 9.2l-5.2 4.3L17.4 21 12 17l-5.4 4 1.6-7.5L3 9.2l6.6-.6z"/></svg>
+        <svg class="doodle" style="bottom:120px;left:30px;width:40px;height:40px" viewBox="0 0 40 40" fill="none" stroke="#3D5F75" stroke-width="1.6"><circle cx="8" cy="30" r="2.2" fill="#3D5F75"/><circle cx="18" cy="34" r="2.2" fill="#3D5F75"/><circle cx="28" cy="30" r="2.2" fill="#3D5F75"/></svg>
+        <div class="content">
+          <div class="card rot-l" style="margin:0 0 18px;">
+            <div class="washi"></div>
+            <div class="kicker" style="margin-bottom:6px;">MASTODON AUTOMATION</div>
+            <div class="headline">You don't need <span class="hl">Mastodon.py</span> to post a toot.</div>
+          </div>
+          <div class="card rot-r">
+            <div class="headline" style="font-size:24px;">You need <span class="hl orange">2 endpoints</span> and 40 lines of Python.</div>
+          </div>
+        </div>
+        <span class="swipe-arrow">→</span>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM (dark) -->
+      <div class="slide dark">
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">2 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:90px;right:70px;width:36px;height:36px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4"><path d="M4 14c4-8 10-8 14 0" stroke-linecap="round"/><path d="M14 11l4 3-3 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="content">
+          <div class="kicker">THE TRAP</div>
+          <div class="card rot-r" style="background:#EDE8DC;">
+            <div class="body-text" style="color:#2b2b2b;">Installed the library. Read its docs for <b>20 minutes</b> just to attach one image.</div>
+          </div>
+          <div class="card rot-l">
+            <div class="body-text" style="color:#2b2b2b;">Then I opened the network inspector instead — Mastodon's <span class="hl">whole API</span> is two HTTP calls.</div>
+          </div>
+        </div>
+        <span class="swipe-arrow">→</span>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 3 — CREDIBILITY (light) -->
+      <div class="slide light">
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">3 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="bottom:100px;right:60px;width:34px;height:34px" viewBox="0 0 24 24" fill="none" stroke="#3D5F75" stroke-width="1.4"><path d="M12 2l2.4 6.6L21 9.2l-5.2 4.3L17.4 21 12 17l-5.4 4 1.6-7.5L3 9.2l6.6-.6z"/></svg>
+        <div class="content">
+          <div class="kicker">WHY LISTEN TO ME</div>
+          <div class="card rot-l">
+            <div class="washi"></div>
+            <div class="body-text"><b>10 years</b> as a data scientist. One rule for every library I'm about to install:</div>
+          </div>
+          <div class="card rot-r">
+            <div class="mono-line">am I calling <span class="hl orange">3 functions</span> from this package, or <span class="hl orange">30</span>?</div>
+            <div class="body-text" style="margin-top:8px;">A posting bot calls two. That's the whole test.</div>
+          </div>
+        </div>
+        <span class="swipe-arrow">→</span>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 4 — VALUE 1: the two endpoints (dark) -->
+      <div class="slide dark">
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">4 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:80px;left:60px;width:36px;height:36px" viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="8" cy="30" r="2.2" fill="#fff"/><circle cx="18" cy="34" r="2.2" fill="#fff"/><circle cx="28" cy="30" r="2.2" fill="#fff"/></svg>
+        <div class="content">
+          <div class="kicker">THE ENTIRE JOB</div>
+          <div class="card rot-l" style="background:#EDE8DC;">
+            <div class="mono-line">POST /api/v1/media</div>
+            <div class="body-text" style="color:#2b2b2b;margin-top:6px;">uploads the image → hands back a <span class="hl">media ID</span></div>
+          </div>
+          <div class="card rot-r" style="background:#EDE8DC;">
+            <div class="mono-line">POST /api/v1/statuses</div>
+            <div class="body-text" style="color:#2b2b2b;margin-top:6px;">sends the toot → attaches that ID</div>
+          </div>
+          <div class="body-text" style="margin-top:14px;color:#c9c6d6;font-size:14px;">Both use one bearer token. No OAuth dance, no cookies.</div>
+        </div>
+        <span class="swipe-arrow">→</span>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 5 — VALUE 2: fail loud (light) -->
+      <div class="slide light">
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">5 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="bottom:130px;left:40px;width:34px;height:34px" viewBox="0 0 24 24" fill="none" stroke="#3D5F75" stroke-width="1.4"><path d="M4 14c4-8 10-8 14 0" stroke-linecap="round"/><path d="M14 11l4 3-3 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="content">
+          <div class="kicker">THE LINE THAT SAVES YOU</div>
+          <div class="card rot-r">
+            <div class="washi"></div>
+            <div class="mono-line">.raise_for_status()</div>
+          </div>
+          <div class="card rot-l">
+            <div class="body-text">Skip it, and a wrong-scope token fails <span class="hl">silently</span> — your toot posts with no image. No error. No crash.</div>
+          </div>
+        </div>
+        <span class="swipe-arrow">→</span>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 6 — RECAP / QUOTABLE (dark) -->
+      <div class="slide dark">
+        <div class="progress-row"><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div></div>
+        <div class="badge">6 / 7</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:70px;right:60px;width:34px;height:34px" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4"><path d="M12 2l2.4 6.6L21 9.2l-5.2 4.3L17.4 21 12 17l-5.4 4 1.6-7.5L3 9.2l6.6-.6z"/></svg>
+        <div class="content">
+          <div class="kicker">THE ACTUAL LESSON</div>
+          <div class="card rot-l" style="background:#EDE8DC;">
+            <div class="headline" style="font-size:21px;color:#2b2b2b;">Every dependency you add is a thing that can <span class="hl">break</span>, deprecate, or change its API on a Tuesday.</div>
+          </div>
+          <div class="body-text" style="margin-top:16px;color:#dcd9e6;">40 lines you wrote beat 4,000 you imported — every time you debug them at 2am.</div>
+        </div>
+        <span class="swipe-arrow">→</span>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 7 — CTA (gradient) -->
+      <div class="slide cta">
+        <div class="progress-row"><div class="progress-seg"><div class="fill" style="width:100%"></div></div><div class="progress-seg"><div class="fill" style="width:100%"></div></div><div class="progress-seg"><div class="fill" style="width:100%"></div></div><div class="progress-seg"><div class="fill" style="width:100%"></div></div><div class="progress-seg"><div class="fill" style="width:100%"></div></div><div class="progress-seg"><div class="fill" style="width:100%"></div></div><div class="progress-seg"><div class="fill" style="width:100%"></div></div></div>
+        <div class="badge">7 / 7</div>
+        <svg class="doodle" style="bottom:90px;left:26px;width:30px;height:30px" viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="8" cy="30" r="2.2" fill="#fff"/><circle cx="18" cy="34" r="2.2" fill="#fff"/><circle cx="28" cy="30" r="2.2" fill="#fff"/></svg>
+        <div class="content" style="align-items:flex-start;">
+          <div class="logo-lockup">B</div>
+          <div class="headline" style="font-size:26px;">Want the full 40-line script + the Streamlit UI version?</div>
+          <div class="cta-btn">Comment "TOOT" 👇</div>
+          <div class="cta-sub">I'll DM it to you free — text bot + UI wrapper, both included.</div>
+          <div class="cta-sub" style="margin-top:24px;font-weight:700;color:#fff;">@breathofdatascience</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dotsrow" id="dotsrow">
+    <span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="ig-actions">
+    <span>♡</span><span>💬</span><span>➤</span><span class="spacer">🔖</span>
+  </div>
+  <div class="ig-likes">Liked by tessa.fairbrook and 2,847 others</div>
+  <div class="ig-caption">
+    <b>breathofdatascience</b> Installed Mastodon.py. Read the docs for 20 minutes to attach ONE image. Then closed the tab — the whole API is 2 HTTP calls.<br><br>
+    Comment "TOOT" and I'll DM you the 40-line script + the Streamlit UI, free. 🧵
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('#dotsrow span');
+  const viewport = document.getElementById('viewport');
+  const SLIDE_W = 420;
+  const TOTAL = 7;
+  let current = 0;
+  let startX = 0, dragging = false, deltaX = 0;
+
+  function goTo(i) {
+    current = Math.max(0, Math.min(TOTAL - 1, i));
+    track.style.transform = `translateX(-${current * SLIDE_W}px)`;
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+  }
+
+  viewport.addEventListener('pointerdown', e => { dragging = true; startX = e.clientX; track.style.transition = 'none'; });
+  window.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    deltaX = e.clientX - startX;
+    track.style.transform = `translateX(${-current * SLIDE_W + deltaX}px)`;
+  });
+  window.addEventListener('pointerup', () => {
+    if (!dragging) return;
+    dragging = false;
+    track.style.transition = 'transform 0.45s cubic-bezier(.16,1,.3,1)';
+    if (deltaX < -60) goTo(current + 1);
+    else if (deltaX > 60) goTo(current - 1);
+    else goTo(current);
+    deltaX = 0;
+  });
+
+  goTo(0);
+</script>
+
+</body>
+</html>

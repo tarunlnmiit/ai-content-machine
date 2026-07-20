@@ -1,3 +1,10 @@
+---
+type: buffer
+niche: life_self_dev
+slug: the-cost-of-carrying-things-nobody-sees
+platform: youtube
+tags: [content/buffer, niche/life_self_dev]
+---
 Waiting for write permission. Here's the complete script for review while you decide:
 
 ---

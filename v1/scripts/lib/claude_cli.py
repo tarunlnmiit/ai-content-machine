@@ -133,11 +133,12 @@ def call_claude(
             sys.stderr.write(f"  [cache hit] {progress_label}\n")
         return key.read_text()
 
-    cmd = ["claude", "-p", prompt]
+    cmd = ["claude", "-p"]
     if model:
         cmd += ["--model", model]
     if temperature is not None:
         cmd += ["--append-system-prompt", _temp_directive(temperature)]
+    cmd += ["--", prompt]
 
     last_err: Optional[Exception] = None
     out = ""

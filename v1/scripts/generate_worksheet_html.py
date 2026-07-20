@@ -28,6 +28,7 @@ REPO = Path(__file__).parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from lib.claude_cli import call_claude  # noqa: E402
+from lib.design_system_ref import worksheet_reference  # noqa: E402
 from lib.schedule_calc import get_iso_week  # noqa: E402
 from lib.html_pdf import html_to_pdf  # noqa: E402
 from generate_worksheet_outline import NICHE_MAP, detect_niche, _extract_json  # noqa: E402
@@ -40,7 +41,8 @@ def _load_template(name: str) -> str:
     return (TEMPLATES / name).read_text(encoding="utf-8")
 
 
-def _build_design_prompt(blog_text: str, worksheet: dict, niche_key: str) -> str:
+def _build_design_prompt(blog_text: str, worksheet: dict, niche_key: str,
+                         design_system_ref: str = "") -> str:
     """Ask Claude to fill the design slots — content only, never CSS/markup chrome."""
     n = len(worksheet.get("sections", []))
     sections_json = json.dumps(worksheet.get("sections", []), indent=2, ensure_ascii=False)
@@ -90,7 +92,7 @@ content_html RULES — use ONLY these tags/classes, nothing else:
 - Keep it tight: this is a single A4-landscape page split across {n} sections.
 Worked example of a good content_html:
 {example}
-
+{design_system_ref}
 Return exactly {n} sections, in order. No markdown fences, no commentary — just the JSON object.
 """
 
@@ -162,7 +164,12 @@ def generate(blog_path: Path, force: bool = False) -> Path | None:
 
     blog_text = blog_path.read_text(encoding="utf-8")
     niche_cfg = NICHE_MAP[niche_key]
-    prompt = _build_design_prompt(blog_text, worksheet, niche_key)
+    ds_ref = worksheet_reference()
+    if ds_ref:
+        print(f"  [design] design-system reference loaded ({len(ds_ref):,} chars)")
+    else:
+        print("  [design] design-system mirror not found — prompt runs without grounding block")
+    prompt = _build_design_prompt(blog_text, worksheet, niche_key, design_system_ref=ds_ref)
 
     print(f"  [design] Claude designing worksheet HTML ({len(sections)} sections)…")
     design: dict | None = None

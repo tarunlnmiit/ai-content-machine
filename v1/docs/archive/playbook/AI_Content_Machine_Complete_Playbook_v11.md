@@ -1,3 +1,9 @@
+---
+title: "⚡ AI CONTENT CREATION MACHINE"
+type: doc
+slug: ai-content-machine-complete-playbook-v11
+tags: [content/doc]
+---
 # ⚡ AI CONTENT CREATION MACHINE
 ## The Complete Playbook v11
 

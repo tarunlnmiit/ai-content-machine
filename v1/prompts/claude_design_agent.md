@@ -1,3 +1,9 @@
+---
+title: "Claude Design Prompt Generator"
+type: prompt
+slug: claude-design-agent
+tags: [content/prompt]
+---
 # Claude Design Prompt Generator
 
 ## Role

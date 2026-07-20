@@ -1,3 +1,9 @@
+---
+title: "01 — Hook / Angle Library"
+type: kb
+slug: 01-hook-library
+tags: [content/kb]
+---
 # 01 — Hook / Angle Library
 
 8 archetypes, ranked by frequency + performance in the saved set. These are **angle patterns** — use them for blog titles, YouTube titles, reel hooks, and carousel covers, not just reels. Each entry: pattern → real examples → performance note.

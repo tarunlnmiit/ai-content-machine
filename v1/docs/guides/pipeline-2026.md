@@ -1,3 +1,9 @@
+---
+title: "Content Pipeline 2026 — \"Subtract to Focus\" (canonical)"
+type: doc
+slug: pipeline-2026
+tags: [content/doc]
+---
 # Content Pipeline 2026 — "Subtract to Focus" (canonical)
 
 *Adopted 2026-06-20. This is the source of truth. Where any older guide disagrees, this wins.*
@@ -92,3 +98,26 @@ winner, give it the maintenance minimum and push the niche that IS winning (stag
 
 Substack is retired. The **worksheet email list** (DS/Life, via the Vercel/Kit app) is the only
 channel you own — everything else is rented from an algorithm. Treat it as core, not a footnote.
+
+---
+
+## v2 cadence addendum (2026-07-12) — Raw-First Reboot
+
+Supersedes the ~9-reel weekly target above. Diagnosis: decision overload broke the loop
+(analytics stalled W24 → stale ideas → nothing produced). Fix = fewer outputs, one decision
+surface, raw unscripted recording (scripted talking-head killed watch time).
+
+**Weekly output:**
+- 1 long-form raw Q&A episode (niche rotates; routes to that niche's channel)
+- 3–4 reels (per-question clips from the session), IG + YT Shorts, ALL ENGLISH
+- 1 blog per niche + Medium + worksheets (DS/Life) — spine unchanged
+- DS build-in-public reel only when a session naturally yields one
+
+**Paused:** carousels, quote cards, slide decks, faceless-voiceover lane,
+scripted-talking-head-from-blog, the 9-reel target. Worksheets STAY.
+
+**Human touchpoints (~2–2.5 hrs/wk):** Mon menu check (15 min) · optional Wed ad-hoc clip ·
+weekend batch sitting (60–90 min, greenscreen, teleprompter prompt pack) · Sun review (20 min).
+
+**Lane doc:** `docs/guides/raw-session-lane.md`. **Runbooks (Opus/Sonnet/Haiku):**
+`v1/docs/runbooks/00-INDEX.md`.

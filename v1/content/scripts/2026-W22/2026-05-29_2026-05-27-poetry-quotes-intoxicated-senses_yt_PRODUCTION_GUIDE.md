@@ -1,3 +1,12 @@
+---
+title: "Production Guide: The Hangover That Won't Lift"
+type: script
+niche: poetry_quotes
+date: 2026-05-29
+week: 2026-W22
+slug: intoxicated-senses
+tags: [content/script, niche/poetry_quotes, week/2026-W22]
+---
 # Production Guide: The Hangover That Won't Lift
 
 ## Voiceover Recording

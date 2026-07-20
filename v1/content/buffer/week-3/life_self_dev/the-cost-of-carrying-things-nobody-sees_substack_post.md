@@ -1,3 +1,11 @@
+---
+title: "The Cost of Carrying Things Nobody Sees"
+type: buffer
+niche: life_self_dev
+slug: the-cost-of-carrying-things-nobody-sees
+platform: substack
+tags: [content/buffer, niche/life_self_dev]
+---
 # The Cost of Carrying Things Nobody Sees
 
 ---

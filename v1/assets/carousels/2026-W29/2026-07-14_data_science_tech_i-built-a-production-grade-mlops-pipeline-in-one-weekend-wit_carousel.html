@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Data Science — MLOps Silent Failure Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-primary:#6B8FA8;
+    --brand-light:#96BAD0;
+    --brand-dark:#3D5F75;
+    --light-bg:#EDE8DC;
+    --light-border:#D6D0C4;
+    --dark-bg:#1E1B2E;
+    --gradient: linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Space Grotesk',sans-serif;
+    background:#0c0c10;
+    display:flex;
+    justify-content:center;
+    padding:60px 20px;
+  }
+
+  /* ---------- Instagram frame ---------- */
+  .ig-frame{
+    width:420px;
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  .ig-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 14px;
+  }
+  .ig-avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--gradient);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:700;font-size:16px;
+    flex-shrink:0;
+  }
+  .ig-handle{font-size:13px;font-weight:700;color:#1E1B2E;line-height:1.1;}
+  .ig-sub{font-size:11px;color:#8a8a8a;}
+  .ig-dots{margin-left:auto;font-size:18px;color:#333;letter-spacing:1px;}
+
+  /* ---------- Carousel viewport ---------- */
+  .carousel-viewport{
+    width:420px;
+    height:525px;
+    overflow:hidden;
+    position:relative;
+    touch-action:pan-y;
+    cursor:grab;
+  }
+  .carousel-track{
+    display:flex;
+    width:calc(420px * 8);
+    height:100%;
+    transition:transform .35s cubic-bezier(.16,1,.3,1);
+    will-change:transform;
+  }
+  .slide{
+    width:420px;
+    height:525px;
+    flex-shrink:0;
+    position:relative;
+    background:var(--light-bg);
+    color:var(--dark-bg);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .slide.dark{background:var(--dark-bg);color:var(--light-bg);}
+  .slide.gradient{background:var(--gradient);color:#fff;}
+
+  /* ---------- progress row ---------- */
+  .progress-row{
+    position:absolute;
+    top:16px;left:20px;right:20px;
+    display:flex;
+    gap:5px;
+    z-index:5;
+  }
+  .progress-seg{
+    flex:1;
+    height:3px;
+    border-radius:2px;
+    background:rgba(61,95,117,.18);
+    overflow:hidden;
+  }
+  .slide.dark .progress-seg, .slide.gradient .progress-seg{background:rgba(255,255,255,.22);}
+  .progress-seg .fill{
+    height:100%;
+    width:0%;
+    background:var(--brand-dark);
+    border-radius:2px;
+  }
+  .slide.dark .progress-seg .fill, .slide.gradient .progress-seg .fill{background:#fff;}
+
+  /* ---------- follow / save tags ---------- */
+  .follow-tag{
+    position:absolute;
+    top:30px;right:20px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--brand-dark);
+    background:rgba(255,255,255,.55);
+    padding:5px 10px;
+    border-radius:20px;
+    z-index:5;
+  }
+  .slide.dark .follow-tag, .slide.gradient .follow-tag{
+    color:#fff;
+    background:rgba(255,255,255,.15);
+  }
+  .save-tag{
+    position:absolute;
+    bottom:22px;right:20px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--brand-dark);
+    z-index:5;
+  }
+  .slide.dark .save-tag, .slide.gradient .save-tag{color:var(--brand-light);}
+
+  /* ---------- slide badge ---------- */
+  .slide-badge{
+    position:absolute;
+    top:30px;left:20px;
+    font-size:10px;
+    font-weight:700;
+    color:var(--brand-primary);
+    z-index:5;
+  }
+  .slide.dark .slide-badge, .slide.gradient .slide-badge{color:var(--brand-light);}
+
+  /* ---------- content ---------- */
+  .content{padding:0 36px;}
+  .content.bottom-align{padding:0 36px 52px;justify-content:flex-end;display:flex;flex-direction:column;flex:1;}
+  .kicker{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--brand-primary);
+    margin-bottom:14px;
+  }
+  .slide.dark .kicker, .slide.gradient .kicker{color:var(--brand-light);}
+  .accent-bar{
+    width:44px;height:4px;
+    background:var(--brand-primary);
+    border-radius:2px;
+    margin-bottom:18px;
+  }
+  .slide.dark .accent-bar, .slide.gradient .accent-bar{background:#fff;}
+  h1.headline{
+    font-size:34px;
+    font-weight:700;
+    line-height:1.14;
+    letter-spacing:-.01em;
+  }
+  h2.headline{
+    font-size:26px;
+    font-weight:700;
+    line-height:1.2;
+    margin-bottom:16px;
+  }
+  p.body-copy{
+    font-size:15.5px;
+    line-height:1.55;
+    font-weight:400;
+    opacity:.92;
+  }
+  p.body-copy + p.body-copy{margin-top:12px;}
+  .stat-line{
+    font-size:15px;
+    font-weight:700;
+    margin-top:18px;
+    color:var(--brand-dark);
+  }
+  .slide.dark .stat-line, .slide.gradient .stat-line{color:var(--brand-light);}
+
+  /* stack list */
+  .stack-row{
+    display:flex;
+    gap:14px;
+    padding:11px 0;
+    border-bottom:1px solid rgba(255,255,255,.12);
+  }
+  .stack-row:first-child{border-top:1px solid rgba(255,255,255,.12);}
+  .stack-num{
+    font-size:13px;font-weight:700;color:var(--brand-light);
+    width:18px;flex-shrink:0;
+  }
+  .stack-name{font-size:13.5px;font-weight:700;margin-bottom:2px;}
+  .stack-vs{font-size:12px;opacity:.65;}
+  .stack-vs .strike{text-decoration:line-through;opacity:.6;}
+
+  /* quote box */
+  .quote-box{
+    border-left:3px solid var(--brand-primary);
+    padding:4px 0 4px 18px;
+    margin-top:20px;
+  }
+  .slide.dark .quote-box, .slide.gradient .quote-box{border-left-color:var(--brand-light);}
+  .quote-box p{font-size:16px;font-weight:700;line-height:1.4;font-style:italic;}
+
+  /* code box */
+  .code-box{
+    background:rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:8px;
+    padding:14px 16px;
+    margin-top:16px;
+    font-family:'SF Mono',Menlo,Consolas,monospace;
+    font-size:11px;
+    line-height:1.6;
+    color:#d8e4ea;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .code-box .cm{color:#7fa8bd;}
+
+  /* swipe arrow */
+  .swipe-arrow{
+    position:absolute;
+    right:18px;top:50%;
+    transform:translateY(-50%);
+    width:34px;height:34px;
+    border-radius:50%;
+    background:rgba(61,95,117,.14);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+    color:var(--brand-dark);
+    z-index:5;
+  }
+  .slide.dark .swipe-arrow, .slide.gradient .swipe-arrow{
+    background:rgba(255,255,255,.14);
+    color:#fff;
+  }
+
+  /* CTA slide */
+  .cta-btn{
+    margin-top:26px;
+    display:inline-block;
+    background:#fff;
+    color:var(--brand-dark);
+    font-weight:700;
+    font-size:14px;
+    padding:14px 22px;
+    border-radius:10px;
+    text-align:center;
+  }
+  .cta-keyword{
+    font-weight:700;
+    background:rgba(255,255,255,.22);
+    padding:2px 8px;
+    border-radius:5px;
+  }
+  .cta-fallback{
+    margin-top:14px;
+    font-size:12px;
+    opacity:.85;
+  }
+  .logo-lockup{
+    display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  }
+  .logo-circle{
+    width:30px;height:30px;border-radius:50%;
+    background:rgba(255,255,255,.2);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:14px;
+  }
+  .logo-name{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+
+  /* ---------- IG footer (dots + icons + caption) ---------- */
+  .ig-dotsrow{
+    display:flex;justify-content:center;gap:6px;
+    padding:12px 0 8px;
+  }
+  .ig-dot{width:6px;height:6px;border-radius:50%;background:var(--light-border);}
+  .ig-dot.active{background:var(--brand-primary);}
+  .ig-icons{
+    display:flex;align-items:center;
+    padding:4px 14px 8px;
+    font-size:21px;
+    gap:16px;
+    color:#1E1B2E;
+  }
+  .ig-icons .spacer{margin-left:auto;}
+  .ig-likes{
+    padding:0 14px 4px;
+    font-size:13px;font-weight:700;color:#1E1B2E;
+  }
+  .ig-caption{
+    padding:0 14px 18px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:#1E1B2E;
+  }
+  .ig-caption b{font-weight:700;}
+  .ig-caption .keyword{color:var(--brand-dark);font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">breathofdatascience</div>
+      <div class="ig-sub">Original audio</div>
+    </div>
+    <div class="ig-dots">⋯</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK (LIGHT_BG) -->
+      <div class="slide" data-index="0">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="slide-badge">1 / 8</span>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="content">
+          <div class="kicker">Data Science · MLOps</div>
+          <div class="accent-bar"></div>
+          <h1 class="headline">The MLOps bug that cost me a Saturday never threw a single error.</h1>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <div class="swipe-arrow">→</div>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM / REFRAME (DARK_BG) -->
+      <div class="slide dark" data-index="1">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="slide-badge">2 / 8</span>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="content">
+          <div class="kicker">The reframe</div>
+          <h2 class="headline">You're not serving predictions at Netflix scale.</h2>
+          <p class="body-copy">You're serving maybe 200 a day. That one honest number is why a Kubernetes cluster and a $400/month platform bill are the wrong tool — not the safe one.</p>
+          <p class="stat-line">Most solo practitioners are over-engineering for a scale they don't have.</p>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <div class="swipe-arrow">→</div>
+      </div>
+
+      <!-- SLIDE 3 — CREDIBILITY / PROOF (LIGHT_BG) -->
+      <div class="slide" data-index="2">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="slide-badge">3 / 8</span>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="content">
+          <div class="kicker">What I actually built</div>
+          <h2 class="headline">One weekend. 14 hours. Zero Kubernetes.</h2>
+          <p class="body-copy">Most of that time went to fighting Docker networking, not modeling. It's been running on autopilot ever since — untouched for months, retraining nightly, serving real predictions.</p>
+          <div class="quote-box"><p>10 years in data science. This is the exact stack I'd rebuild from scratch.</p></div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <div class="swipe-arrow">→</div>
+      </div>
+
+      <!-- SLIDE 4 — VALUE BODY: THE STACK (DARK_BG) -->
+      <div class="slide dark" data-index="3">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="slide-badge">4 / 8</span>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="content">
+          <div class="kicker">The stack, tool by tool</div>
+          <div class="stack-row">
+            <div class="stack-num">01</div>
+            <div><div class="stack-name">Prefect — not Airflow</div><div class="stack-vs">One process, registered flows in <span class="strike">an afternoon</span> under an hour.</div></div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-num">02</div>
+            <div><div class="stack-name">MLflow, self-hosted — not W&B</div><div class="stack-vs">SQLite backend, local <code>./mlruns</code>. My experiment history, my server.</div></div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-num">03</div>
+            <div><div class="stack-name">FastAPI + Uvicorn — not SageMaker</div><div class="stack-vs">40 lines. No idle GPU billed 24/7 for a few hundred requests.</div></div>
+          </div>
+          <div class="stack-row">
+            <div class="stack-num">04</div>
+            <div><div class="stack-name">Evidently → Prometheus/Grafana</div><div class="stack-vs">Skipped Arize and Fiddler entirely — free, and it caught the drift I cared about.</div></div>
+          </div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <div class="swipe-arrow">→</div>
+      </div>
+
+      <!-- SLIDE 5 — VALUE BODY: THE BUG (LIGHT_BG) -->
+      <div class="slide" data-index="4">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="slide-badge">5 / 8</span>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="content">
+          <div class="kicker">The bug that ate a Saturday</div>
+          <h2 class="headline">MLflow logged to a relative path. Cron runs from $HOME.</h2>
+          <p class="body-copy">Every run showed green. Metrics logged fine. Then the scheduler quietly wrote a second <code>./mlruns</code> tree from a different working directory. No error. No warning.</p>
+          <p class="stat-line">The tell: predictions never changed, even as fresh runs kept appearing in the UI.</p>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <div class="swipe-arrow">→</div>
+      </div>
+
+      <!-- SLIDE 6 — VALUE BODY: THE FIX (DARK_BG) -->
+      <div class="slide dark" data-index="5">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="slide-badge">6 / 8</span>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="content">
+          <div class="kicker">The fix — one assert</div>
+          <p class="body-copy">Absolute paths in one <code>.env</code> the cron sources, plus a startup check that fails loud instead of failing silent:</p>
+          <div class="code-box"><span class="cm"># both training and serving MUST resolve here</span>
+ARTIFACT_ROOT = Path(os.environ["MLFLOW_ARTIFACT_ROOT"]).resolve()
+
+assert ARTIFACT_ROOT.is_absolute()
+assert ARTIFACT_ROOT.exists()</div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <div class="swipe-arrow">→</div>
+      </div>
+
+      <!-- SLIDE 7 — RECAP / THESIS (LIGHT_BG) -->
+      <div class="slide" data-index="6">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="slide-badge">7 / 8</span>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="content">
+          <div class="kicker">The thesis</div>
+          <div class="quote-box"><p>A config that silently does nothing is worse than one that errors.</p></div>
+          <p class="body-copy" style="margin-top:20px;">Kubernetes wouldn't have made one prediction more accurate. It would've handed me a second system to babysit. Go count your predictions per day — that number tells you how much machinery you're allowed to skip.</p>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+        <div class="swipe-arrow">→</div>
+      </div>
+
+      <!-- SLIDE 8 — CTA (GRADIENT, no arrow) -->
+      <div class="slide gradient" data-index="7">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="slide-badge">8 / 8</span>
+        <div class="content">
+          <div class="logo-lockup"><div class="logo-circle">B</div><div class="logo-name">Breath of Data Science</div></div>
+          <h2 class="headline">Get the exact .env, the startup asserts, and the drift-check script.</h2>
+          <p class="body-copy">The same three files running my pipeline right now — free.</p>
+          <div class="cta-btn">Comment <span class="cta-keyword">STACK</span> and I'll DM it to you</div>
+          <p class="cta-fallback">Don't want to comment? DM me "STACK" directly.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dotsrow">
+    <div class="ig-dot active" data-dot="0"></div>
+    <div class="ig-dot" data-dot="1"></div>
+    <div class="ig-dot" data-dot="2"></div>
+    <div class="ig-dot" data-dot="3"></div>
+    <div class="ig-dot" data-dot="4"></div>
+    <div class="ig-dot" data-dot="5"></div>
+    <div class="ig-dot" data-dot="6"></div>
+    <div class="ig-dot" data-dot="7"></div>
+  </div>
+
+  <div class="ig-icons">
+    <span>♡</span><span>💬</span><span>➤</span><span class="spacer">⚑</span>
+  </div>
+  <div class="ig-likes">Liked by devs_who_read_logs and 2,847 others</div>
+  <div class="ig-caption">
+    <b>breathofdatascience</b> Your "production" MLOps pipeline might have a bug that never throws an error — mine didn't, for a full day. I built this stack in one weekend with free tools only (no Kubernetes, no $400/mo platform) and it's run untouched for months. Swipe for the exact stack, the bug, and the one-line fix.<br><br>
+    Comment <span class="keyword">STACK</span> and I'll DM you the exact .env + startup asserts + drift-check script — the same files running my pipeline right now.
+  </div>
+
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('viewport');
+  const dots = document.querySelectorAll('.ig-dot');
+  const SLIDE_W = 420;
+  const TOTAL = 8;
+  let current = 0;
+  let startX = 0;
+  let dragging = false;
+  let baseX = 0;
+
+  function goTo(i){
+    current = Math.max(0, Math.min(TOTAL - 1, i));
+    track.style.transform = `translateX(${-current * SLIDE_W}px)`;
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+  }
+
+  viewport.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX;
+    baseX = -current * SLIDE_W;
+    track.style.transition = 'none';
+    viewport.style.cursor = 'grabbing';
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    track.style.transform = `translateX(${baseX + dx}px)`;
+  });
+
+  window.addEventListener('pointerup', (e) => {
+    if (!dragging) return;
+    dragging = false;
+    viewport.style.cursor = 'grab';
+    track.style.transition = 'transform .35s cubic-bezier(.16,1,.3,1)';
+    const dx = e.clientX - startX;
+    if (dx < -60 && current < TOTAL - 1) current++;
+    else if (dx > 60 && current > 0) current--;
+    goTo(current);
+  });
+
+  dots.forEach((d) => d.addEventListener('click', () => goTo(parseInt(d.dataset.dot))));
+</script>
+
+</body>
+</html>

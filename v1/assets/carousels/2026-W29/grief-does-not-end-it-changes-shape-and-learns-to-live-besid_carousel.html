@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Poetry — Grief Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-primary:#B89850;
+    --brand-light:#D4BC7A;
+    --brand-dark:#8A6E30;
+    --light-bg:#EDE8DC;
+    --light-border:#D6D0C4;
+    --dark-bg:#1E1B2E;
+    --card-light:#F7F4EC;
+    --card-dark:#26223A;
+    --grad: linear-gradient(165deg,#8A6E30 0%,#B89850 50%,#D4BC7A 100%);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'DM Sans', sans-serif;
+    background:#0d0c14;
+    display:flex; justify-content:center; align-items:center;
+    min-height:100vh; padding:40px 0;
+  }
+  .ig-frame{
+    width:420px;
+    background:#000;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.55);
+    color:#fff;
+  }
+  .ig-header{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 14px;
+    background:#000;
+  }
+  .avatar{
+    width:34px; height:34px; border-radius:50%;
+    background:var(--grad);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display', serif; font-weight:700; font-style:italic;
+    color:#1E1B2E; font-size:16px;
+    flex-shrink:0;
+  }
+  .ig-header .handle{font-size:13px; font-weight:700;}
+  .ig-header .sub{font-size:11px; color:#9a9a9a; font-weight:400;}
+  .ig-header .meta{display:flex; flex-direction:column; line-height:1.3;}
+  .ig-header .dots{margin-left:auto; font-size:18px; color:#ddd; letter-spacing:1px;}
+
+  .carousel-viewport{
+    width:420px; height:525px;
+    overflow:hidden;
+    position:relative;
+  }
+  .carousel-track{
+    display:flex; flex-direction:row;
+    width:calc(420px * 7);
+    height:525px;
+    transition:transform .45s cubic-bezier(.16,1,.3,1);
+    cursor:grab;
+  }
+  .slide{
+    width:420px; height:525px;
+    position:relative;
+    flex-shrink:0;
+    display:flex; flex-direction:column; justify-content:center;
+    overflow:hidden;
+  }
+  .slide.light{
+    background-color:var(--light-bg);
+    background-image:repeating-linear-gradient(to bottom, transparent 0 27px, rgba(138,110,48,0.07) 27px 28px);
+  }
+  .slide.dark{
+    background-color:var(--dark-bg);
+    background-image:repeating-linear-gradient(to bottom, transparent 0 27px, rgba(212,188,122,0.05) 27px 28px);
+    color:#EDE8DC;
+  }
+  .slide.cta{
+    background:var(--grad);
+    color:#241d10;
+  }
+
+  /* progress bar */
+  .progress-row{
+    position:absolute; top:0; left:0; right:0;
+    display:flex; gap:5px;
+    padding:14px 16px 0;
+    z-index:5;
+  }
+  .progress-seg{
+    flex:1; height:3px; border-radius:2px;
+    background:rgba(138,110,48,0.18);
+    overflow:hidden;
+  }
+  .slide.dark .progress-seg{ background:rgba(255,255,255,0.15); }
+  .slide.cta .progress-seg{ background:rgba(36,29,16,0.2); }
+  .progress-seg .fill{
+    height:100%; width:0%;
+    background:var(--brand-dark);
+    border-radius:2px;
+  }
+  .slide.dark .progress-seg .fill{ background:var(--brand-light); }
+  .slide.cta .progress-seg .fill{ background:#241d10; }
+
+  /* fixed overlay corners */
+  .badge{
+    position:absolute; top:18px; left:18px;
+    font-size:11px; font-weight:700; letter-spacing:.03em;
+    background:rgba(138,110,48,0.12);
+    color:var(--brand-dark);
+    padding:4px 9px; border-radius:20px;
+    z-index:5;
+  }
+  .slide.dark .badge{ background:rgba(212,188,122,0.14); color:var(--brand-light); }
+  .slide.cta .badge{ background:rgba(36,29,16,0.14); color:#241d10; }
+
+  .follow-tag{
+    position:absolute; top:18px; right:18px;
+    font-size:10.5px; font-weight:700;
+    color:var(--brand-dark);
+    background:rgba(138,110,48,0.1);
+    padding:4px 9px; border-radius:20px;
+    z-index:5;
+  }
+  .slide.dark .follow-tag{ color:var(--brand-light); background:rgba(212,188,122,0.12); }
+
+  .swipe-arrow{
+    position:absolute; top:50%; right:18px;
+    transform:translateY(-50%);
+    width:34px; height:34px; border-radius:50%;
+    background:var(--brand-dark);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:15px;
+    z-index:5;
+    box-shadow:0 6px 14px rgba(138,110,48,.35);
+  }
+  .slide.dark .swipe-arrow{ background:var(--brand-light); color:#1E1B2E; }
+
+  .save-tag{
+    position:absolute; bottom:18px; right:18px;
+    font-size:10.5px; font-weight:700;
+    color:var(--brand-dark);
+    background:rgba(138,110,48,0.1);
+    padding:4px 9px; border-radius:20px;
+    z-index:5;
+  }
+  .slide.dark .save-tag{ color:var(--brand-light); background:rgba(212,188,122,0.12); }
+
+  /* content */
+  .content{ padding:0 36px; position:relative; z-index:3; }
+  .content.bottom{ padding:0 36px 52px; }
+  .kicker{
+    font-size:11px; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--brand-dark);
+    margin-bottom:14px;
+  }
+  .slide.dark .kicker{ color:var(--brand-light); }
+  .slide.cta .kicker{ color:#241d10; }
+
+  .card{
+    background:var(--card-light);
+    border-radius:10px;
+    padding:22px 22px;
+    box-shadow:0 10px 26px rgba(60,45,10,.10);
+    transform:rotate(-1.2deg);
+  }
+  .slide.dark .card{ background:var(--card-dark); box-shadow:0 10px 26px rgba(0,0,0,.35); }
+  .card.r2{ transform:rotate(1.3deg); margin-top:14px; }
+
+  .headline{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:30px;
+    line-height:1.28;
+    color:#241f14;
+  }
+  .slide.dark .headline{ color:#EDE8DC; }
+  .slide.cta .headline{ color:#241d10; font-size:26px; }
+
+  .body-copy{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:19px;
+    line-height:1.6;
+    color:#3a3324;
+  }
+  .slide.dark .body-copy{ color:#e3ddc9; }
+
+  .hl{
+    background:var(--brand-primary);
+    color:#241d10;
+    padding:2px 6px; border-radius:3px;
+    font-style:normal;
+  }
+  .hl.orange{ background:var(--brand-light); }
+
+  .doodle{ position:absolute; opacity:.85; z-index:2; }
+
+  /* CTA button */
+  .cta-btn{
+    display:inline-block;
+    margin-top:22px;
+    background:#241d10;
+    color:#EDE8DC;
+    font-weight:700;
+    font-size:14px;
+    padding:13px 22px;
+    border-radius:30px;
+    box-shadow:0 10px 24px rgba(0,0,0,.25);
+  }
+  .cta-handle{ margin-top:16px; font-size:12px; font-weight:700; color:#3a2f14; }
+
+  /* dot pagination (frame-level, not progress bar) */
+  .ig-dots{
+    display:flex; justify-content:center; gap:6px;
+    padding:10px 0 4px;
+    background:#000;
+  }
+  .ig-dots span{ width:5px; height:5px; border-radius:50%; background:#444; }
+  .ig-dots span.active{ background:var(--brand-light); }
+
+  .ig-actions{
+    display:flex; align-items:center; gap:14px;
+    padding:10px 14px 4px;
+    background:#000;
+  }
+  .ig-actions .spacer{ margin-left:auto; }
+  .ig-actions svg{ display:block; }
+
+  .ig-caption{
+    padding:6px 14px 16px;
+    background:#000;
+    font-size:12.5px;
+    line-height:1.55;
+    color:#e6e6e6;
+  }
+  .ig-caption b{ color:#fff; }
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <div class="ig-header">
+    <div class="avatar">B</div>
+    <div class="meta">
+      <span class="handle">mistakenlyhuman</span>
+      <span class="sub">Breath of Poetry</span>
+    </div>
+    <div class="dots">&#8226;&#8226;&#8226;</div>
+  </div>
+
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="badge">1 / 7</span>
+        <span class="follow-tag">Tap to follow &rarr;</span>
+        <svg class="doodle" style="top:70px; left:20px;" width="40" height="16" viewBox="0 0 40 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8C6 2 10 2 14 8C18 14 22 14 26 8C30 2 34 2 38 8" stroke="#8A6E30" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <div class="content">
+          <div class="kicker">on grief</div>
+          <div class="card">
+            <div class="headline">Grief does not <span class="hl">end</span>.</div>
+            <div class="body-copy" style="margin-top:12px; font-size:16px;">it changes shape and learns to live <span class="hl orange">beside</span> you</div>
+          </div>
+        </div>
+        <svg class="doodle" style="bottom:60px; left:26px;" width="24" height="10" viewBox="0 0 24 10" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="5" r="2" fill="#D4BC7A"/><circle cx="12" cy="5" r="2.6" fill="#B89850"/><circle cx="21" cy="5" r="1.6" fill="#8A6E30"/></svg>
+        <span class="save-tag">Save this &darr;</span>
+        <div class="swipe-arrow">&rarr;</div>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM / REFRAME -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="badge">2 / 7</span>
+        <span class="follow-tag">Tap to follow &rarr;</span>
+        <svg class="doodle" style="top:80px; right:60px;" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 22C6 22 10 10 22 4" stroke="#D4BC7A" stroke-width="1.2" stroke-linecap="round"/><path d="M8 20L11 17M10 16L13 13M12 12L15 9" stroke="#D4BC7A" stroke-width="1" stroke-linecap="round"/></svg>
+        <div class="content">
+          <div class="kicker">what they told you</div>
+          <div class="card r2">
+            <div class="body-copy">Time heals. Get closure. Move on. As if grief were a wound that <span class="hl">closes</span>. It is not a wound. It is a room — and your life keeps building <span class="hl orange">other rooms</span> around it.</div>
+          </div>
+        </div>
+        <span class="save-tag">Save this &darr;</span>
+        <div class="swipe-arrow">&rarr;</div>
+      </div>
+
+      <!-- SLIDE 3 — VALUE BODY 1 -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="badge">3 / 7</span>
+        <span class="follow-tag">Tap to follow &rarr;</span>
+        <div class="content">
+          <div class="kicker">one year in</div>
+          <div class="card">
+            <div class="body-copy">Your thumb still finds their name in the call list before your mind catches up. That is not forgetting. That is muscle remembering what the <span class="hl">calendar</span> cannot.</div>
+          </div>
+        </div>
+        <svg class="doodle" style="bottom:56px; left:24px;" width="40" height="16" viewBox="0 0 40 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8C6 2 10 2 14 8C18 14 22 14 26 8C30 2 34 2 38 8" stroke="#B89850" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <span class="save-tag">Save this &darr;</span>
+        <div class="swipe-arrow">&rarr;</div>
+      </div>
+
+      <!-- SLIDE 4 — VALUE BODY 2 -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="badge">4 / 7</span>
+        <span class="follow-tag">Tap to follow &rarr;</span>
+        <svg class="doodle" style="top:66px; left:24px;" width="24" height="10" viewBox="0 0 24 10" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="5" r="2" fill="#D4BC7A"/><circle cx="12" cy="5" r="2.6" fill="#B89850"/><circle cx="21" cy="5" r="1.6" fill="#8A6E30"/></svg>
+        <div class="content">
+          <div class="kicker">the actual shape of it</div>
+          <div class="card r2">
+            <div class="body-copy">Grief does not shrink. You grow <span class="hl">around</span> it. The life gets bigger — the grief stays exactly its size, just takes up less of the <span class="hl orange">room</span>.</div>
+          </div>
+        </div>
+        <span class="save-tag">Save this &darr;</span>
+        <div class="swipe-arrow">&rarr;</div>
+      </div>
+
+      <!-- SLIDE 5 — VALUE BODY 3 / PERMISSION -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="badge">5 / 7</span>
+        <span class="follow-tag">Tap to follow &rarr;</span>
+        <svg class="doodle" style="top:74px; right:64px;" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 22C6 22 10 10 22 4" stroke="#8A6E30" stroke-width="1.2" stroke-linecap="round"/><path d="M8 20L11 17M10 16L13 13M12 12L15 9" stroke="#8A6E30" stroke-width="1" stroke-linecap="round"/></svg>
+        <div class="content">
+          <div class="kicker">permission</div>
+          <div class="card">
+            <div class="body-copy">Crying at a commercial nobody else noticed is not a relapse. It is love, five years later, still looking for somewhere to <span class="hl orange">go</span>.</div>
+          </div>
+        </div>
+        <span class="save-tag">Save this &darr;</span>
+        <div class="swipe-arrow">&rarr;</div>
+      </div>
+
+      <!-- SLIDE 6 — RECAP / THESIS (QUOTABLE) -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <span class="badge">6 / 7</span>
+        <span class="follow-tag">Tap to follow &rarr;</span>
+        <div class="content">
+          <div class="kicker">the thesis</div>
+          <div class="card r2">
+            <div class="headline" style="font-size:24px;">You don't get over it. You get so you can <span class="hl">carry</span> it — and keep <span class="hl orange">living beside it</span>.</div>
+          </div>
+        </div>
+        <svg class="doodle" style="bottom:58px; left:22px;" width="40" height="16" viewBox="0 0 40 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8C6 2 10 2 14 8C18 14 22 14 26 8C30 2 34 2 38 8" stroke="#D4BC7A" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <span class="save-tag">Save this &darr;</span>
+        <div class="swipe-arrow">&rarr;</div>
+      </div>
+
+      <!-- SLIDE 7 — CTA -->
+      <div class="slide cta">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:100%;"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%;"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%;"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%;"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%;"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%;"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%;"></div></div>
+        </div>
+        <span class="badge">7 / 7</span>
+        <div class="content bottom">
+          <div class="kicker">if you needed this today</div>
+          <div class="headline">I wrote the rest of this poem for the ones you lost.</div>
+          <div class="cta-btn">Comment GRIEF — I'll send it to you</div>
+          <div class="cta-handle">@mistakenlyhuman</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dots" id="dots">
+    <span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="ig-actions">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.2C.3 8 2 4 6 4c2.2 0 3.7 1.2 6 3.6C14.3 5.2 15.8 4 18 4c4 0 5.7 4 4 7.8-2.5 4.6-10 9.2-10 9.2z" stroke="#fff" stroke-width="1.6"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.5 8.5 0 1 1-4.06-7.26L21 3l-1.3 4.3A8.46 8.46 0 0 1 21 11.5z" stroke="#fff" stroke-width="1.6"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#fff" stroke-width="1.6"/></svg>
+    <svg class="spacer" width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 3h12v18l-6-4-6 4V3z" stroke="#fff" stroke-width="1.6"/></svg>
+  </div>
+
+  <div class="ig-caption">
+    <b>mistakenlyhuman</b> grief doesn't end. it changes shape and learns to live beside you — swipe through if you're still carrying someone.
+    comment <b>GRIEF</b> and I'll send you the rest of this poem — one you can send to somebody who needs it too. 🕊️
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('#dots span');
+  const N = 7, W = 420;
+  let current = 0, startX = 0, dragging = false, deltaX = 0;
+
+  function go(i){
+    current = Math.max(0, Math.min(N-1, i));
+    track.style.transform = `translateX(${-current * W}px)`;
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+  }
+
+  document.querySelectorAll('.swipe-arrow').forEach(arrow=>{
+    arrow.style.cursor = 'pointer';
+    arrow.addEventListener('click', () => go(current + 1));
+  });
+
+  track.addEventListener('pointerdown', e => { dragging = true; startX = e.clientX; track.style.transition = 'none'; });
+  window.addEventListener('pointermove', e => {
+    if(!dragging) return;
+    deltaX = e.clientX - startX;
+    track.style.transform = `translateX(${-current * W + deltaX}px)`;
+  });
+  window.addEventListener('pointerup', () => {
+    if(!dragging) return;
+    dragging = false;
+    track.style.transition = '';
+    if(deltaX < -60) go(current + 1);
+    else if(deltaX > 60) go(current - 1);
+    else go(current);
+    deltaX = 0;
+  });
+
+  go(0);
+})();
+</script>
+
+</body>
+</html>

@@ -1,3 +1,9 @@
+---
+title: "Working Tool Combos — Idea Cards + Shoot Scripts"
+type: kb
+slug: working-combos
+tags: [content/kb]
+---
 # Working Tool Combos — Idea Cards + Shoot Scripts
 
 Real, verified-as-of-June-2026 "tool + tool" / "Claude + skill" combos you can actually set up, demo, and shoot. Every combo here exists and works today (sources at the end). Each card flags **demo type** (dev / no-code / local), the **honest impact**, and **why it hooks** — built so you only ever claim what you can show on screen (`04_honesty_guardrail.md`).

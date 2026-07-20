@@ -1,3 +1,11 @@
+---
+title: "Deploy: Template Pack landing page"
+type: reel
+niche: data_science_tech
+week: 2026-W26
+slug: deploy
+tags: [content/reel, niche/data_science_tech, week/2026-W26]
+---
 # Deploy: Template Pack landing page
 
 Built into your existing Vercel project **worksheets-thebreathnetwork** (same `api/` + `public/`).

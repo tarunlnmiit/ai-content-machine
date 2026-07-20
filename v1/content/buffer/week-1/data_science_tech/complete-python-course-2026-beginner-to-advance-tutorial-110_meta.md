@@ -1,3 +1,10 @@
+---
+title: "Complete Python Course 2026: Beginner to Advanced"
+type: buffer
+niche: data_science_tech
+slug: complete-python-course-2026-beginner-to-advance-tutorial-110-meta
+tags: [content/buffer, niche/data_science_tech]
+---
 # Complete Python Course 2026: Beginner to Advanced
 
 **Niche:** Data Science/Tech

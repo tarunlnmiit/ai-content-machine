@@ -1,3 +1,10 @@
+---
+title: "Poetry Community Landing Page — Claude Design Prompt"
+type: prompt
+niche: poetry_quotes
+slug: landing-page-poetry
+tags: [content/prompt, niche/poetry_quotes]
+---
 # Poetry Community Landing Page — Claude Design Prompt
 
 Create an elegant, introspective landing page for poetry community/newsletter signup using the brand kit below.

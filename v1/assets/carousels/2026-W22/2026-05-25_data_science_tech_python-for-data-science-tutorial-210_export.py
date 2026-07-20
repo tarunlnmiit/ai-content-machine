@@ -1,52 +1,49 @@
-"""
-Export carousel slides as 1080x1350px PNGs.
-Usage: python export_carousel.py assets/carousels/python-tutorial-2-carousel.html
-"""
-
+"""Export each carousel slide to 1080x1350 PNG via Playwright."""
 import asyncio
-import sys
 from pathlib import Path
 from playwright.async_api import async_playwright
 
-SLIDE_COUNT   = 7
-SLIDE_W       = 420
-SLIDE_H       = 525
-SCALE         = 1080 / 420          # ≈ 2.5714  →  output 1080×1350px
-SETTLE_MS     = 420                 # wait after goTo() for transition to finish
+HTML_PATH = "carousel.html"  # save the HTML above to this path
+OUT_DIR = Path("assets/carousels/slides")
+SLIDE_W, SLIDE_H = 420, 525
+SCALE = 1080 / SLIDE_W  # 1080x1350 output at scale 2.571...
 
-
-async def export_carousel(html_path: str) -> None:
-    src = Path(html_path).resolve()
-    if not src.exists():
-        sys.exit(f"File not found: {src}")
-
-    out_dir = Path("assets/carousels/slides")
-    out_dir.mkdir(parents=True, exist_ok=True)
-
-    async with async_playwright() as pw:
-        browser = await pw.chromium.launch()
-        ctx = await browser.new_context(
+async def export_slides():
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page(
             viewport={"width": SLIDE_W, "height": SLIDE_H},
             device_scale_factor=SCALE,
         )
-        page = await ctx.new_page()
-        await page.goto(f"file://{src}")
-        await page.wait_for_load_state("networkidle")
-        await page.wait_for_timeout(600)       # allow Google Fonts to render
+        await page.goto(f"file://{Path(HTML_PATH).resolve()}")
 
-        for i in range(SLIDE_COUNT):
-            await page.evaluate(f"window.goTo({i})")
-            await page.wait_for_timeout(SETTLE_MS)
+        track = page.locator("#track")
+        slides = page.locator(".slide")
+        count = await slides.count()
 
-            out_path = out_dir / f"slide_{i + 1:02d}.png"
-            await page.locator(".carousel-viewport").screenshot(path=str(out_path))
-            print(f"  ✓ slide {i + 1}/{SLIDE_COUNT}  →  {out_path}")
+        for i in range(count):
+            # jump the track directly to slide i (bypass drag/transition)
+            await page.evaluate(
+                "(i) => { window.goTo ? goTo(i) : null; "
+                "document.getElementById('track').style.transition='none'; "
+                "document.getElementById('track').style.transform = `translateX(${-i * 420}px)`; }",
+                i,
+            )
+            await page.wait_for_timeout(80)
+
+            frame_box = await page.locator(".carousel-viewport").bounding_box()
+            await page.screenshot(
+                path=str(OUT_DIR / f"slide_{i+1:02d}.png"),
+                clip={
+                    "x": frame_box["x"],
+                    "y": frame_box["y"],
+                    "width": SLIDE_W,
+                    "height": SLIDE_H,
+                },
+            )
 
         await browser.close()
 
-    print(f"\nDone. {SLIDE_COUNT} slides written to {out_dir}/")
-
-
 if __name__ == "__main__":
-    html = sys.argv[1] if len(sys.argv) > 1 else "assets/carousels/python-tutorial-2-carousel.html"
-    asyncio.run(export_carousel(html))
+    asyncio.run(export_slides())

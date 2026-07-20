@@ -1,3 +1,9 @@
+---
+title: "05 — Pipeline Map"
+type: kb
+slug: 05-pipeline-map
+tags: [content/kb]
+---
 # 05 — Pipeline Map
 
 Where this KB plugs into your blog-first repurposing pipeline. The patterns are source intelligence, so they enter **upstream at the blog** and propagate to every derivative — not bolted on only at the reel step.

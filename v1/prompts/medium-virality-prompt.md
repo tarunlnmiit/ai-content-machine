@@ -1,3 +1,9 @@
+---
+title: "Medium Virality Prompt"
+type: prompt
+slug: medium-virality-prompt
+tags: [content/prompt]
+---
 # Medium Virality Prompt
 
 Paste everything below into a new Claude conversation when you want help optimising a blog post for Medium virality, writing a new Medium article from scratch, or auditing your Medium strategy.

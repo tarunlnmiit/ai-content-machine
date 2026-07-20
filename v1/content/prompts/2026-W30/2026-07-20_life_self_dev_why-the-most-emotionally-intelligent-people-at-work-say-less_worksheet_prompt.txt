@@ -1,0 +1,40 @@
+Create a reflective worksheet PDF (A4, portrait) for "The One-Question Meeting Audit"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 4 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Find Your 'What Decision Does This Feed?' Moment
+   - Think of your next scheduled meeting. What decision is actually on the table — write it in one sentence, the way Priya's team should have before they started blaming each other.
+   - Recall a recent meeting where you added an opinion. Was it feeding that decision, or just adding to the pile?
+   - Name one recurring meeting where two different projects have been 'wearing the same words,' like the demo-next-week vs. customer-in-Q3 mix-up in the blog.
+   - What's one fact you could pull before your next tense meeting — like Priya's churn numbers — that would end an argument before it starts?
+
+2. Run the Direction Test on Your Silence
+   - Think of a time you stayed quiet in a meeting. Were you holding back so someone else could think, or protecting your own comfort?
+   - Did you feel relief afterward, or intent? The blog says relief is the tell of disappearing, not restraint.
+   - Recall the quarterly review story — a colleague got credit for work you built because you stayed quiet too long. When has this happened to you?
+   - Write the one sentence you should have said in that moment, even a few minutes late.
+
+3. Practice the 'What Do You Know?' Move
+   - Recall a time you were sure you were right and said so directly. What would 'What do you know about this that the data might not?' have surfaced instead?
+   - Name one person at work whose pushback you've dismissed as 'anecdotal.' What's one question you could ask them this week instead of arguing?
+   - The stakeholder in the story became an ally after being asked a question instead of corrected. Who could become an ally of yours the same way?
+
+4. Audit What Your 'Yes' Is Worth
+   - When did you last say 'I don't know yet — let me sit with it and come back to you' instead of answering on the spot?
+   - Think of the colleague who asked 'what would have to be true for this to work?' before answering. Where could you use that exact line this week?
+   - Do people at work double-check what you say, or take it at face value? What's driving that?
+   - Pick one meeting this week where you'll track the gap between what's being discussed and the decision it's actually for. What did you notice?
+
+
+Footer: "Reply with your answers — your reflections help others find their entry point."
+
+Optional: Soft watercolor accent in corner.

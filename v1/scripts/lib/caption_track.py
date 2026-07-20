@@ -111,7 +111,7 @@ BORDER_ACTIVE = 8               # outline px for the active word
 # give life/poetry their own hex (e.g. amber &H000B9EF5 / violet &H00FEB4D8).
 NICHE_ACCENT = {
     "ds":     "&H0000D4FF",     # #FFD400 gold
-    "life":   "&H0000D4FF",     # #FFD400 gold
+    "life":   "&H000B9EF5",
     "poetry": "&H0000D4FF",     # #FFD400 gold
 }
 

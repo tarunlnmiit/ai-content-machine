@@ -1,3 +1,11 @@
+---
+title: "Python for Data Science: Tutorial 2/10 — Variables, Data Types, and the Structures That Actually Matter"
+type: buffer
+niche: data_science_tech
+slug: python-for-data-science-tutorial-210
+platform: substack
+tags: [content/buffer, niche/data_science_tech]
+---
 The file that's there is Tutorial 1. Tutorial 2 is what you pasted — it's the content to humanize. Applying the pass now.
 
 ---

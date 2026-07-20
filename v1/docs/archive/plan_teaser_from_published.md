@@ -1,3 +1,9 @@
+---
+title: "Plan: Teasers + Backlinks from Existing Published YouTube / Medium"
+type: doc
+slug: plan-teaser-from-published
+tags: [content/doc]
+---
 # Plan: Teasers + Backlinks from Existing Published YouTube / Medium
 
 ## Context

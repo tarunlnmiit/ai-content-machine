@@ -1,3 +1,9 @@
+---
+title: "00 — Playbook (strategy spine)"
+type: kb
+slug: 00-playbook
+tags: [content/kb]
+---
 # 00 — Playbook (strategy spine)
 
 ## Why the winning reel worked

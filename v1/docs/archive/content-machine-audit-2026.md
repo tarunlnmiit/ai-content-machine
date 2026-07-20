@@ -1,3 +1,9 @@
+---
+title: "Content Machine Audit: Instagram \"Social Media with AI\" Collection"
+type: doc
+slug: content-machine-audit-2026
+tags: [content/doc]
+---
 # Content Machine Audit: Instagram "Social Media with AI" Collection
 **Date:** June 2026  
 **Analyst:** Claude (Senior Content Strategist + Creator Economy Analyst)  

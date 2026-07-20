@@ -1,0 +1,77 @@
+<!-- @dsCard group="Foundations · Video Look Bibles" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video Bible — DS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Lora:ital@0;1&family=Nunito+Sans:wght@400;700&family=Playfair+Display:ital@0;1&family=DM+Sans:wght@400;700&family=Inter:wght@400;600;800&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;600;800&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0e1a;color:#f0f4ff;font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+       padding:36px;line-height:1.5}
+  h1{font-size:26px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
+  h2{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;
+      opacity:.55;margin:28px 0 12px}
+  .sub{font-size:13px;opacity:.6;margin-bottom:8px}
+  .grid{display:flex;flex-wrap:wrap;gap:14px}
+  .swatch{width:150px;border-radius:10px;overflow:hidden;
+           border:1px solid rgba(255,255,255,.12)}
+  .swatch .chip{height:74px}
+  .swatch .meta{padding:8px 10px;background:rgba(255,255,255,.05);font-size:11px}
+  .swatch .meta b{display:block;font-size:12px;margin-bottom:2px}
+  .swatch .meta code{font-family:'JetBrains Mono',monospace;opacity:.75}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:8px}
+  th,td{text-align:left;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.5}
+  td code,pre{font-family:'JetBrains Mono',monospace;font-size:12px}
+  pre{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);
+      border-radius:8px;padding:14px;overflow:auto;white-space:pre-wrap}
+  .dot{display:inline-block;width:13px;height:13px;border-radius:3px;
+        vertical-align:-2px;margin-right:7px;border:1px solid rgba(255,255,255,.25)}
+  .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;
+       background:rgba(255,255,255,.09);margin:0 6px 6px 0}
+  .warn{border:1px solid #E8745A;background:rgba(232,116,90,.08);border-radius:10px;
+        padding:12px 16px;font-size:13px;margin:16px 0}
+  .specimen{font-size:30px;margin:6px 0 14px}
+  .ds-foot{margin-top:36px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);
+           font-size:11px;opacity:.55}
+</style>
+</head>
+<body>
+<h1>Video Look Bible — DS</h1><p class="sub">Source: v1/data/kb/design/ds_design.md (System B) — HyperFrames/Remotion beat builders read this verbatim.</p><h2>Palette</h2><table><tr><th>Role</th><th>Hex</th><th>Usage</th></tr><tr><td>Background dark</td><td><span class="dot" style="background:#0a0e1a"></span>#0a0e1a</td><td>Default canvas when no video</td></tr><tr><td>Background mid</td><td><span class="dot" style="background:#111827"></span>#111827</td><td>Card backgrounds, overlays</td></tr><tr><td>Primary text</td><td><span class="dot" style="background:#f0f4ff"></span>#f0f4ff</td><td>All body text, captions</td></tr><tr><td>Accent blue</td><td><span class="dot" style="background:#3b82f6"></span>#3b82f6</td><td>Highlights, CTA buttons, number callouts</td></tr><tr><td>Accent cyan</td><td><span class="dot" style="background:#06b6d4"></span>#06b6d4</td><td>Code syntax, stat accents</td></tr><tr><td>Accent purple</td><td><span class="dot" style="background:#8b5cf6"></span>#8b5cf6</td><td>Secondary accents, gradients</td></tr><tr><td>Muted text</td><td><span class="dot" style="background:#64748b"></span>#64748b</td><td>Labels, secondary info</td></tr><tr><td>Code green</td><td><span class="dot" style="background:#22c55e"></span>#22c55e</td><td>Terminal output, success states</td></tr><tr><td>Code red</td><td><span class="dot" style="background:#ef4444"></span>#ef4444</td><td>Errors, warnings</td></tr><tr><td>Overlay tint</td><td><span class="dot" style="background:rgba(59, 130, 246, 0.04)"></span>rgba(59, 130, 246, 0.04)</td><td>Subtle blue cast over video</td></tr><tr><td>Glass card bg</td><td><span class="dot" style="background:rgba(17, 24, 39, 0.85)"></span>rgba(17, 24, 39, 0.85)</td><td>Overlay card backgrounds</td></tr><tr><td>Glass card border</td><td><span class="dot" style="background:rgba(59, 130, 246, 0.2)"></span>rgba(59, 130, 246, 0.2)</td><td>Card borders</td></tr></table><h2>Typography</h2><table><tr><th>Role</th><th>Font</th><th>Weight</th><th>Size (1080p)</th></tr><tr><td>Display / hook title</td><td>Inter</td><td>800 (ExtraBold)</td><td>72–96px</td></tr><tr><td>Body / stat label</td><td>Inter</td><td>500 (Medium)</td><td>32–40px</td></tr><tr><td>Caption text</td><td>Inter</td><td>600 (SemiBold)</td><td>28–34px</td></tr><tr><td>Code (inline)</td><td>JetBrains Mono</td><td>400</td><td>28–36px</td></tr><tr><td>Code (block)</td><td>JetBrains Mono</td><td>400</td><td>22–28px</td></tr><tr><td>Number / KPI</td><td>Inter</td><td>900 (Black)</td><td>80–120px</td></tr></table><h2>Motion language</h2><table><tr><th>Name</th><th>Value</th><th>Use case</th></tr><tr><td>Fast snap</td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Element enters</td></tr><tr><td>Elastic settle</td><td>cubic-bezier(0.34, 1.56, 0.64, 1)</td><td>Number counters, emphasis</td></tr><tr><td>Smooth exit</td><td>cubic-bezier(0.4, 0, 1, 1)</td><td>Element exits</td></tr><tr><td>Linear</td><td>cubic-bezier(0, 0, 1, 1)</td><td>Progress bars, sweeps</td></tr></table><pre>- Element enter: `0.4s`
+- Element exit: `0.25s`
+- Transition between beats: `0.6s`
+- Number count-up: `1.2s`
+- Sweep/scan effect: `0.8s`
+---</pre><h2>Color grade</h2><pre>Applied as a CSS filter on the base video layer (or passed to EditPlan.colorGrading).
+
+```css
+filter: contrast(1.12) saturate(0.95) brightness(1.02) hue-rotate(8deg);
+```
+
+Additional blue overlay: `rgba(59, 130, 246, 0.04)` at full frame, `mix-blend-mode: screen`.
+
+Remotion EditPlan fields:
+```json
+{
+  "look": "none",
+  "colorGrading": {
+    "contrast": 1.12,
+    "saturate": 0.95,
+    "brightness": 1.02,
+    "hueRotate": 8
+  }
+}
+```
+
+---</pre><h2>Banned</h2><pre>- Warm color tones (orange, red gradients) — that's Life niche
+- Heavy grain overlay — that's Poetry niche
+- Emoji in captions
+- All-caps body text (titles/KPIs only)
+- Comic Sans, Papyrus, Courier New
+- Anything that looks like a Google Slides default</pre>
+<footer class="ds-foot">Systems A (brand kit) / B (video bibles) / C (worksheet shell) are intentionally divergent palettes. Mirror only — do NOT reconcile. Edit repo sources, never this project.</footer>
+</body>
+</html>

@@ -1,3 +1,10 @@
+---
+type: buffer
+niche: data_science_tech
+slug: complete-python-course-2026-beginner-to-advance-tutorial-110
+platform: youtube
+tags: [content/buffer, niche/data_science_tech]
+---
 ```
 SHOW: Breath of Data Science
 EPISODE TITLE (working): Why Your Python Setup Matters More Than Your First Program

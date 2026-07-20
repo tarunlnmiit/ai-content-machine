@@ -1,3 +1,9 @@
+---
+title: "Medium SEO — how stories rank on Google"
+type: doc
+slug: medium-seo
+tags: [content/doc]
+---
 # Medium SEO — how stories rank on Google
 
 *Added 2026-06-26. Source: official Medium video (https://www.youtube.com/watch?v=tClbPH94q44).*

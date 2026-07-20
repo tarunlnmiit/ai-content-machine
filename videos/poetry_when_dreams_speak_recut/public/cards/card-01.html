@@ -1,0 +1,39 @@
+<div class="card" data-card-id="card-01">
+  <style>
+    .card[data-card-id="card-01"] .root {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: transparent;
+      font-family: 'Inter', ui-sans-serif, sans-serif;
+    }
+    .card[data-card-id="card-01"] .panel {
+      position: absolute; left: 84px; top: 96px; max-width: 1100px;
+      display: flex; flex-direction: column; gap: 22px;
+    }
+    .card[data-card-id="card-01"] .kicker {
+      align-self: flex-start; padding: 10px 20px;
+      background: rgba(14, 16, 24, 0.82); color: #f1e8d5;
+      font: 700 18px/1 'Inter', sans-serif; letter-spacing: 0.28em;
+    }
+    .card[data-card-id="card-01"] .title {
+      margin: 0; font: italic 800 112px/1.02 ui-serif, 'Times New Roman', serif;
+      color: #fffdf6;
+      text-shadow: 0 4px 40px rgba(0, 0, 0, 0.65), 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+    .card[data-card-id="card-01"] .title .first { color: #ff3a2d; }
+    .card[data-card-id="card-01"] .rule {
+      width: 0; height: 6px; background: #ff3a2d; border-radius: 3px;
+    }
+    .card[data-card-id="card-01"] .detail {
+      margin: 0; font: 400 30px/1.4 ui-serif, serif; color: #f6efe1;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+    }
+  </style>
+  <div class="root">
+    <div class="panel">
+      <span class="kicker" data-anim="fade-in" data-anim-at="0.1" data-anim-duration="0.4">BREATH OF POETRY</span>
+      <h1 class="title" id="card-01-title" data-anim="blur-in" data-anim-at="0.4" data-anim-duration="0.8"><span class="first">When Dreams</span><br />Speak of Love</h1>
+      <div class="rule" id="card-01-rule" data-anim="grow-x" data-anim-at="1.1" data-anim-duration="0.5" data-anim-target-w="420"></div>
+      <p class="detail" data-anim="fade-in" data-anim-at="1.4" data-anim-duration="0.5">on loving someone safe — and alive</p>
+    </div>
+  </div>
+</div>

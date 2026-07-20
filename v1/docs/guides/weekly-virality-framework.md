@@ -1,3 +1,9 @@
+---
+title: "Weekly Virality Framework"
+type: doc
+slug: weekly-virality-framework
+tags: [content/doc]
+---
 # Weekly Virality Framework
 *End-to-end playbook for applying virality to every platform, every content type, every niche*
 

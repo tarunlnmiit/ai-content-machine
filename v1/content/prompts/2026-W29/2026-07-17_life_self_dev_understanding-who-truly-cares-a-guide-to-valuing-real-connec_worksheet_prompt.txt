@@ -1,0 +1,41 @@
+Create a reflective worksheet PDF (A4, portrait) for "Run the Numbers on Who You're Actually Choosing"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 4 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Count the Messages
+   - Scroll to a chat thread with someone you're chasing. Count your messages vs. theirs — write the actual ratio down.
+   - Now open a thread with someone who's asked about your week twice and you never replied. When did you last respond to them?
+   - What's the emotional word you'd use for the first person's silence — and is 'exciting' or 'anxious' closer to the truth?
+   - Name one specific unremarkable thing the second person did for you that you brushed past at the time.
+
+2. Check If It's Them or the Chase
+   - Think of a time an unavailable person suddenly became available. Did your interest in them survive past a few weeks? What actually happened to it?
+   - Write down what you're chasing in one sentence — is it their company, or the moment they finally text back?
+   - What's the 'open loop' here — the specific question their silence keeps leaving unanswered in your head?
+   - If they replied to everything tomorrow with total warmth, what would you talk about? If you're stuck, that's the answer.
+
+3. Find the Boring, Reliable Ones
+   - List two or three people who've shown up for something inconvenient — a bad week, a hospital visit, a stressful project — without you asking.
+   - For each, when did you last give them your full attention instead of a distracted reply?
+   - The blog's test: 'wait and watch what they actually do over time.' Pick one person you're unsure about — what have their actions actually shown you in the last month, regardless of what they've said?
+   - What's one thing you could do this week that isn't just a thank-you text, but actually matches the effort they've put in?
+
+4. Find the Role You're Auditioning People For
+   - Have you cut off an unavailable person before and found a near-identical dynamic within a few months? Name the pattern if so.
+   - Whose approval currently feels like it would 'prove' something about you? Write down what exactly it would prove.
+   - Why does affection from people who already love you feel like it 'doesn't count' — where did that discount come from?
+   - What's one place you already get real evidence of your own worth that has nothing to do with anyone's approval?
+
+
+Footer: "Reply with your answers — your reflections help others find their entry point."
+
+Optional: Soft watercolor accent in corner.

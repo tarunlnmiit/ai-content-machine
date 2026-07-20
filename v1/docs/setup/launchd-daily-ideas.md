@@ -1,3 +1,9 @@
+---
+title: "launchd — Daily Ideas Pipeline"
+type: doc
+slug: launchd-daily-ideas
+tags: [content/doc]
+---
 # launchd — Daily Ideas Pipeline
 
 Daily 6am pull from all free trending sources → rescore → `data/ideas/weekly_ideas.md`.

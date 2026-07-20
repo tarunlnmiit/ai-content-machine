@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Skill Behind Every Trusted Voice in the Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+  /* ─── Design System Tokens (Breath Network) ─── */
+  :root {
+    --ink:        #1C1C2E;
+    --ink-700:    #2A2A40;
+    --ink-600:    #3A3A52;
+    --bone:       #E8E0D5;
+    --bone-100:   #FAF6EF;
+    --bone-200:   #F1ECE2;
+    --bone-300:   #E8E0D5;
+    --bone-400:   #D6CCBC;
+    --bone-500:   #B8AC97;
+    --sky:        #7C9CB0;
+    --sky-300:    #B0C4D2;
+    --sky-700:    #557083;
+    --ochre:      #C9A96E;
+    --ochre-300:  #E2CDA1;
+    --ember:      #E8745A;
+    --font-sans:  'Montserrat', ui-sans-serif, system-ui, sans-serif;
+    --font-ed:    'Instrument Serif', 'Times New Roman', Georgia, serif;
+    --font-mono:  ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html, body {
+    width: 297mm;
+    height: 210mm;
+    overflow: hidden;
+    background: var(--bone-100);
+    font-family: var(--font-sans);
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─── PAGE SHELL ─── */
+  .page {
+    width: 297mm;
+    height: 210mm;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bone-100);
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    height: 39mm;
+    flex-shrink: 0;
+    background: var(--ink);
+    display: flex;
+    align-items: stretch;
+  }
+
+  .header-accent {
+    width: 3mm;
+    background: var(--sky);
+    flex-shrink: 0;
+  }
+
+  .header-body {
+    flex: 1;
+    padding: 7mm 9mm 7mm 8mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.5mm;
+  }
+
+  .header-eyebrow {
+    font-size: 6.5pt;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sky);
+  }
+
+  .header-title {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 15.5pt;
+    color: var(--bone);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  .header-title em {
+    font-family: var(--font-ed);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre-300);
+  }
+
+  .header-tagline {
+    font-size: 7.5pt;
+    font-weight: 400;
+    color: rgba(232,224,213,0.5);
+    line-height: 1.5;
+    max-width: 175mm;
+  }
+
+  .header-fields {
+    width: 60mm;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3.5mm;
+    padding: 7mm 9mm 7mm 6mm;
+    border-left: 0.5px solid rgba(231,224,213,0.1);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 1mm;
+  }
+
+  .field-label {
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(232,224,213,0.3);
+  }
+
+  .field-line {
+    border-bottom: 0.5px solid rgba(232,224,213,0.22);
+    height: 4.5mm;
+  }
+
+  /* ─── SECTIONS CONTAINER ─── */
+  .sections {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 9mm 5mm 0;
+    overflow: hidden;
+  }
+
+  /* ─── INDIVIDUAL SECTION ─── */
+  .section {
+    flex: 1;
+    display: flex;
+    border-bottom: 0.5px solid var(--bone-400);
+    overflow: hidden;
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  /* Left number bar */
+  .section-num-bar {
+    width: 11mm;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 4mm;
+    padding-left: 2.5mm;
+  }
+
+  .num-badge {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--sky);
+    color: #fff;
+    font-size: 6.5pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  /* Content column */
+  .section-content {
+    flex: 0 0 61%;
+    padding: 4mm 5mm 3mm 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    border-right: 0.5px solid var(--bone-400);
+    overflow: hidden;
+  }
+
+  .section-title {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  .prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+  }
+
+  .prompt {
+    font-size: 7pt;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.48;
+    padding-left: 8px;
+    position: relative;
+    text-wrap: pretty;
+  }
+
+  .prompt::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 0.5px;
+    color: var(--sky);
+    font-size: 6pt;
+    font-family: var(--font-sans);
+  }
+
+  .prompt strong {
+    font-weight: 700;
+  }
+
+  .prompt em {
+    font-family: var(--font-ed);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre);
+    font-size: 7.5pt;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    background: var(--bone-200);
+    padding: 0 2.5px;
+    border-radius: 2px;
+    color: var(--ink-700);
+  }
+
+  .code-block {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    background: var(--bone-200);
+    color: var(--ink-700);
+    padding: 2mm 3mm;
+    border-left: 1.5px solid var(--sky);
+    border-radius: 0 2px 2px 0;
+    line-height: 1.6;
+    white-space: pre;
+    margin-top: 0.5mm;
+  }
+
+  /* Notes column */
+  .section-notes {
+    flex: 1;
+    padding: 4mm 0 3mm 5mm;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    overflow: hidden;
+  }
+
+  .notes-label {
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bone-500);
+    flex-shrink: 0;
+  }
+
+  .ruled {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .ruled-line {
+    flex: 1;
+    border-bottom: 0.5px solid var(--bone-400);
+    min-height: 3mm;
+  }
+
+  /* ─── SCREEN-ONLY WRAPPER (centers A4 for display) ─── */
+  @media screen {
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #888;
+      overflow: auto;
+    }
+
+    .page {
+      box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+    }
+  }
+
+  @media print {
+    html, body {
+      width: 297mm;
+      height: 210mm;
+      background: var(--bone-100);
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-accent"></div>
+    <div class="header-body">
+      <div class="header-eyebrow">Say The Hard Thing · Keep The Trust</div>
+      <h1 class="header-title">The Skill Behind Every <em>Trusted</em> Voice in the Room</h1>
+      <p class="header-tagline">Four moves to spot the unspoken truth, name it kindly, and check it's not just your ego talking.</p>
+    </div>
+    <div class="header-fields">
+      <div class="field">
+        <span class="field-label">Name</span>
+        <div class="field-line"></div>
+      </div>
+      <div class="field">
+        <span class="field-label">Date</span>
+        <div class="field-line"></div>
+      </div>
+      <div class="field">
+        <span class="field-label">Person / Room</span>
+        <div class="field-line"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ SECTIONS ═══ -->
+  <main class="sections">
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">1</div></div>
+      <div class="section-content">
+        <div class="section-title">Find Your Silent Room</div>
+<div class="prompts"><p class="prompt">Recall meeting where all nodded, room felt <strong>tense underneath</strong>. What number, risk, truth did everyone see but nobody name?</p><p class="prompt">Whose glance or body language told real story that day?</p><p class="prompt">What silence cost team after — missed deadline, redo, blown launch?</p><p class="prompt">Write exact sentence you'd say with nerve: <em>"The real number is closer to ___."</em></p></div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">The unsaid thing</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">2</div></div>
+      <div class="section-content">
+        <div class="section-title">Check If It's the Junior Analyst Move</div>
+<div class="prompts"><p class="prompt">Anyone whose struggle you're <strong>quietly fixing</strong> instead of naming?</p><p class="prompt">What story tell yourself about why silence feels "kinder" now?</p><p class="prompt">Stay unsaid 4 more months — what blindsided moment follows?</p><p class="prompt">What would <em>"why did nobody tell me"</em> sound like from them? Change urgency?</p></div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">Who you're protecting</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">3</div></div>
+      <div class="section-content">
+        <div class="section-title">Draft the Sentence Using the Two Moves</div>
+<div class="prompts"><p class="prompt">Shared-problem framing: swap <code>"you didn't"</code> for <em>"we set this up wrong — can we look at what happened."</em></p><p class="prompt">Plain-and-owned version: <em>"I'm going to say the thing nobody's saying, and I might be wrong: ___."</em></p><p class="prompt">Read both aloud. Which still true if you're wrong on details?</p><p class="prompt">Type final sentence into notes app <strong>now</strong> — not rehearsed in head.</p></div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">Your draft sentence</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">4</div></div>
+      <div class="section-content">
+        <div class="section-title">Run the Ego Gut-Check</div>
+<div class="prompts"><p class="prompt">Would you still want this said if you later learned you misread it?</p><p class="prompt">Any part about needing to be <strong>right</strong>, needing to win, needing credit?</p><p class="prompt">Quiet reluctant feeling vs loud urgent feeling — which is this, really?</p><p class="prompt">Name one moment last year you chased <em>being right</em> over <em>being useful</em>.</p></div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">Ego or work?</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

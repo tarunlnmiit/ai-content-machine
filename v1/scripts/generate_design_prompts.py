@@ -29,7 +29,7 @@ NICHE_PATTERNS = {
 
 def call_claude_pro(prompt: str) -> str:
     result = subprocess.run(
-        ["claude", "-p", prompt],
+        ["claude", "-p", "--", prompt],
         capture_output=True,
         text=True,
         timeout=600,

@@ -1,3 +1,9 @@
+---
+title: "Viral Reel Formula (project / build-in-public)"
+type: kb
+slug: viral-reel-formula
+tags: [content/kb]
+---
 # Viral Reel Formula (project / build-in-public)
 
 Reusable recipe for short-form product/dev reels, reverse-engineered from the

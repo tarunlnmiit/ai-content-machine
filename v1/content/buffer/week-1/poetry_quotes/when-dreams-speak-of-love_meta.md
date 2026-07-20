@@ -1,3 +1,10 @@
+---
+title: "When Dreams Speak of Love"
+type: buffer
+niche: poetry_quotes
+slug: when-dreams-speak-of-love-meta
+tags: [content/buffer, niche/poetry_quotes]
+---
 # When Dreams Speak of Love
 
 **Niche:** Poetry/Quotes

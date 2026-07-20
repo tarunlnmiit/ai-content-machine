@@ -1,3 +1,9 @@
+---
+title: "Buffer Decision Guide"
+type: doc
+slug: buffer-decision
+tags: [content/doc]
+---
 # Buffer Decision Guide
 
 ## Push current production to buffer?

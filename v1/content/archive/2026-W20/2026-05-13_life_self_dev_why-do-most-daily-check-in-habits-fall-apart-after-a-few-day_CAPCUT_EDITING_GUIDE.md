@@ -1,3 +1,12 @@
+---
+title: "Life & Self-Dev Video — CapCut Editing Guide"
+type: archive
+niche: life_self_dev
+date: 2026-05-13
+week: 2026-W20
+slug: why-do-most-daily-check-in-habits-fall-apart-after-a-few-day
+tags: [content/archive, niche/life_self_dev, week/2026-W20]
+---
 # Life & Self-Dev Video — CapCut Editing Guide
 **Video:** `2026-05-13_life_self_dev_why-do-most-daily-check-in-habits-fall-apart-after-a-few-day`
 

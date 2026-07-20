@@ -1,3 +1,12 @@
+---
+type: script
+niche: life_self_dev
+date: 2026-06-10
+week: 2026-W24
+slug: the-simple-habit-that-changed-my-pr
+platform: yt
+tags: [content/script, niche/life_self_dev, week/2026-W24]
+---
 ```
 SHOW: Breath of Life
 EPISODE TITLE (working): 7 Simple Habits That Quietly Rewired My Productivity

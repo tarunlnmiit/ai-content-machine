@@ -1,3 +1,9 @@
+---
+title: "Thumbnail Replacement Backlog"
+type: doc
+slug: thumbnail-replacement-backlog
+tags: [content/doc]
+---
 # Thumbnail Replacement Backlog
 
 Generated: 2026-06-18 (YouTube audit)

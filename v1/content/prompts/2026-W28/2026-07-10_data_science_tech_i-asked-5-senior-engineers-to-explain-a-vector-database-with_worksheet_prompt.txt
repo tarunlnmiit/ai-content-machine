@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "The Vector DB Readiness Checklist: Count, Build, Audit"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Count Your Vectors Before You Provision Anything
+   Count how many documents/chunks you actually plan to embed for your project. If it's under roughly 100k, write the NumPy top-k function from the post (normalize, one matmul, argpartition) and benchmark it against your own embedded data instead of spinning up Pinecone or a hosted index. Record the latency you get at your actual row count and compare it to what a managed vector DB would cost you monthly for the same job.
+
+2. Build the 'WHERE Clause' Test
+   Take three real queries your users would type. For each one, write out whether it could be answered with a plain SQL WHERE clause or LIKE match (an order number, an exact error code, a date range) versus whether it requires matching on meaning (a vague complaint, a rephrased question). Sort them into two buckets — this is the test from the post for deciding if you need embeddings at all.
+
+3. Reproduce the Checkout/Cart Failure
+   Pick one ambiguous query from your own data — something where two related-but-different concepts could plausibly cluster together (like the post's 'checkout' vs 'cart' vs 'payments' confusion). Run it through your retrieval pipeline, then manually read the actual top-5 chunks that came back and write one sentence on whether cosine similarity gave you 'about the same thing' or 'the exact thing' you needed.
+
+4. Add One Hybrid Filter
+   Identify one hard constraint in your retrieval use case — a date, an ID, a status code, an exact term — and add a keyword/metadata filter on top of your vector search for it, the way the post describes running keyword filter for hard constraints plus vectors for fuzzy meaning. Test the same query with and without the filter and note what changed in the results.
+
+5. Log and Read Your Retrieved Chunks
+   Set up logging so every RAG answer your system gives also saves the raw chunks that were retrieved for it. Pull the last 5 answers your system produced, read the chunks behind each one, and flag any case where the answer sounded confident but the underlying chunks don't actually support it — the same failure mode as the Q3 migration example in the post.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"

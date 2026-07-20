@@ -1,3 +1,9 @@
+---
+title: "Instagram Virality Patterns"
+type: archive
+slug: ig-virality-patterns
+tags: [content/archive]
+---
 # Instagram Virality Patterns
 > Synthesized from saved collection "Social Media with AI" — June 2026
 > 11 posts analysed. Use this to inform reel scripts, captions, hooks, and CTAs.

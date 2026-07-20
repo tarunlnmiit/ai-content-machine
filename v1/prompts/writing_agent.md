@@ -1,3 +1,9 @@
+---
+title: "Writing Agent Prompt"
+type: prompt
+slug: writing-agent
+tags: [content/prompt]
+---
 # Writing Agent Prompt
 
 ## Role

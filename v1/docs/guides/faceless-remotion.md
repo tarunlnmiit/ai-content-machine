@@ -1,3 +1,9 @@
+---
+title: "Faceless reel (Remotion) — `v1/remotion/`"
+type: doc
+slug: faceless-remotion
+tags: [content/doc]
+---
 # Faceless reel (Remotion) — `v1/remotion/`
 
 Fully-generated, faceless reel rendered with **Remotion** (React → video). No talking

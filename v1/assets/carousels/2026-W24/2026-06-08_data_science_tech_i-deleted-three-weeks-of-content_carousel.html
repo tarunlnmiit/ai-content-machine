@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Data Science — Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-primary:#6B8FA8;
+    --brand-light:#96BAD0;
+    --brand-dark:#3D5F75;
+    --light-bg:#EDE8DC;
+    --light-border:#D6D0C4;
+    --dark-bg:#1E1B2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Space Grotesk',sans-serif;
+    background:#0c0c10;
+    display:flex;
+    justify-content:center;
+    padding:40px 16px;
+  }
+  .ig-frame{
+    width:420px;
+    background:#000;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  }
+  .ig-header{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 14px;
+    background:#000;
+  }
+  .ig-avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:linear-gradient(165deg,#3D5F75 0%,#6B8FA8 50%,#96BAD0 100%);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;color:#fff;font-size:15px;
+    border:2px solid #1E1B2E;
+  }
+  .ig-handle{color:#fff;font-size:13px;font-weight:600;}
+  .ig-sub{color:#8a8a8a;font-size:11px;}
+  .ig-more{margin-left:auto;color:#fff;font-size:18px;}
+
+  .carousel-viewport{
+    width:420px;height:525px;
+    overflow:hidden;
+    position:relative;
+    touch-action:pan-y;
+    cursor:grab;
+  }
+  .carousel-track{
+    display:flex;
+    width:max-content;
+    height:525px;
+    transition:transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .slide{
+    width:420px;height:525px;
+    flex-shrink:0;
+    position:relative;
+    overflow:hidden;
+  }
+  .slide.light{ background-color:var(--light-bg);
+    background-image:repeating-linear-gradient(0deg, transparent 0 27px, var(--light-border) 27px 28px);
+  }
+  .slide.dark{ background-color:var(--dark-bg);
+    background-image:repeating-linear-gradient(0deg, transparent 0 27px, #2b2740 27px 28px);
+  }
+  .slide.cta{
+    background:linear-gradient(165deg,#3D5F75 0%,#6B8FA8 50%,#96BAD0 100%);
+  }
+
+  /* progress row */
+  .progress-row{
+    position:absolute; top:0; left:0; right:0;
+    display:flex; gap:5px;
+    padding:12px 14px 0 14px;
+    z-index:20;
+  }
+  .progress-seg{flex:1; height:3px; border-radius:2px; background:rgba(0,0,0,0.18); overflow:hidden;}
+  .slide.dark .progress-seg, .slide.cta .progress-seg{background:rgba(255,255,255,0.25);}
+  .progress-seg .fill{height:100%; width:0%; background:var(--brand-dark);}
+  .slide.dark .progress-seg .fill, .slide.cta .progress-seg .fill{background:#fff;}
+
+  /* fixed overlay elements */
+  .badge{
+    position:absolute; top:18px; left:18px;
+    background:rgba(30,27,46,0.85); color:#fff;
+    font-size:10px; font-weight:600; letter-spacing:.03em;
+    padding:4px 9px; border-radius:20px; z-index:15;
+  }
+  .slide.light .badge{background:rgba(61,95,117,0.9);}
+
+  .follow-tag{
+    position:absolute; top:18px; right:18px;
+    background:rgba(255,255,255,0.92); color:var(--brand-dark);
+    font-size:10px; font-weight:600;
+    padding:4px 10px; border-radius:20px; z-index:15;
+  }
+  .slide.dark .follow-tag{background:rgba(255,255,255,0.12); color:#fff; border:1px solid rgba(255,255,255,0.3);}
+
+  .swipe-arrow{
+    position:absolute; top:50%; right:18px; transform:translateY(-50%);
+    width:34px; height:34px; border-radius:50%;
+    background:rgba(255,255,255,0.9);
+    display:flex;align-items:center;justify-content:center;
+    z-index:15; box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  }
+  .slide.dark .swipe-arrow{background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);}
+  .swipe-arrow svg{width:14px;height:14px;}
+
+  .save-tag{
+    position:absolute; bottom:18px; right:18px;
+    background:rgba(30,27,46,0.85); color:#fff;
+    font-size:9.5px; font-weight:600; letter-spacing:.02em;
+    padding:5px 10px; border-radius:20px; z-index:15;
+  }
+  .slide.light .save-tag{background:rgba(61,95,117,0.92);}
+
+  /* doodles */
+  .doodle{position:absolute; opacity:.55; z-index:5;}
+  .slide.dark .doodle path, .slide.dark .doodle circle{stroke:#96BAD0;}
+  .slide.light .doodle path, .slide.light .doodle circle{stroke:#3D5F75;}
+
+  /* highlight block */
+  .hl{background:#F4B942; color:#1E1B2E; padding:2px 7px; border-radius:3px; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .hl.orange{background:#E8734A; color:#fff;}
+  .hl.blue{background:var(--brand-primary); color:#fff;}
+
+  /* rotated cards */
+  .card{
+    background:#fff; border-radius:8px;
+    box-shadow:0 18px 34px rgba(0,0,0,0.28);
+    padding:16px 18px;
+  }
+  .slide.dark .card{background:#2b2740; color:#EDE8DC;}
+  .washi{
+    position:absolute; width:52px; height:16px;
+    background:rgba(150,186,208,0.65);
+    transform:rotate(-8deg);
+  }
+
+  .content{
+    position:relative; z-index:10;
+    padding:0 36px;
+    height:100%;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .content.bottom{ justify-content:flex-end; padding:0 36px 52px; }
+
+  .kicker{
+    font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--brand-dark); margin-bottom:10px;
+  }
+  .slide.dark .kicker, .slide.cta .kicker{color:var(--brand-light);}
+
+  .headline{ font-size:32px; font-weight:700; line-height:1.15; color:var(--dark-bg); }
+  .slide.dark .headline, .slide.cta .headline{color:#fff;}
+
+  .body-text{ font-size:16px; line-height:1.55; color:#3a3a3a; font-weight:500; }
+  .slide.dark .body-text, .slide.cta .body-text{color:#EDE8DC;}
+
+  .step-num{
+    font-size:13px; font-weight:700; color:var(--brand-light);
+    letter-spacing:.05em; margin-bottom:6px;
+  }
+
+  .cta-btn{
+    display:inline-block; margin-top:22px;
+    background:#fff; color:var(--brand-dark);
+    font-weight:700; font-size:15px;
+    padding:14px 26px; border-radius:30px;
+    box-shadow:0 12px 24px rgba(0,0,0,0.25);
+  }
+
+  .ig-actions{
+    display:flex; align-items:center; gap:14px;
+    padding:12px 14px 6px;
+  }
+  .ig-actions svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:1.8;}
+  .ig-actions .spacer{flex:1;}
+  .ig-dots{ display:flex; justify-content:center; gap:5px; padding:2px 0 8px; }
+  .ig-dots span{ width:5px;height:5px;border-radius:50%; background:#3a3a3a; }
+  .ig-dots span.active{ background:#6B8FA8; }
+  .ig-caption{
+    padding:0 14px 18px;
+    color:#e5e5e5; font-size:12.5px; line-height:1.5;
+  }
+  .ig-caption b{color:#fff;}
+</style>
+</head>
+<body>
+
+<!-- reusable doodle sprite sheet -->
+<svg style="display:none">
+  <symbol id="d-star" viewBox="0 0 40 40" fill="none" stroke-width="1.6">
+    <path d="M20 4 L23 16 L34 16 L25 23 L28 34 L20 27 L12 34 L15 23 L6 16 L17 16 Z" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="d-arrow" viewBox="0 0 60 40" fill="none" stroke-width="2">
+    <path d="M3 30 Q20 5 40 15 Q50 20 45 8" stroke-linecap="round"/>
+    <path d="M38 6 L46 8 L44 16" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="d-dots" viewBox="0 0 40 16" fill="none">
+    <circle cx="4" cy="8" r="3"/><circle cx="20" cy="8" r="3"/><circle cx="36" cy="8" r="3"/>
+  </symbol>
+</svg>
+
+<div class="ig-frame">
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">breathofdatascience</div>
+      <div class="ig-sub">Original audio</div>
+    </div>
+    <div class="ig-more">⋯</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">1 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" stroke="#3D5F75" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></div>
+        <svg class="doodle d-star" style="width:34px;top:80px;left:24px;"><use href="#d-star"/></svg>
+        <svg class="doodle" style="width:50px;bottom:110px;left:30px;"><use href="#d-arrow"/></svg>
+        <div class="content">
+          <div class="kicker">True story</div>
+          <div class="headline">I <span class="hl">deleted</span> three weeks of content with <span class="hl orange">one</span> git command.</div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">2 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" stroke="#1E1B2E" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></div>
+        <svg class="doodle" style="width:40px;top:70px;right:30px;"><use href="#d-dots"/></svg>
+        <div class="content">
+          <div class="kicker">What happened</div>
+          <div class="card" style="transform:rotate(-2deg); margin-bottom:18px;">
+            <div class="body-text" style="font-size:14px; font-family:monospace; color:#1E1B2E;">git filter-branch --index-filter<br>'git rm -rf --cached assets/'</div>
+          </div>
+          <div class="body-text">Wrong path. It wiped <span class="hl blue">assets/</span> from <b>every commit</b> in history. Then I pushed. <code></code><br><br><span class="hl">188MB gone.</span> git status showed nothing wrong.</div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+      </div>
+
+      <!-- SLIDE 3 — CREDIBILITY -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">3 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" stroke="#3D5F75" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></div>
+        <svg class="doodle" style="width:36px;bottom:120px;left:26px;"><use href="#d-star"/></svg>
+        <div class="content">
+          <div class="kicker">10 years in data science</div>
+          <div class="headline" style="font-size:26px;">I know git well enough to have <span class="hl">done this to myself.</span></div>
+          <div class="washi" style="top:150px; left:40px;"></div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+      </div>
+
+      <!-- SLIDE 4 — STEP 1: reflog -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">4 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" stroke="#1E1B2E" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></div>
+        <svg class="doodle" style="width:44px;top:60px;right:26px;"><use href="#d-arrow"/></svg>
+        <div class="content">
+          <div class="step-num">STEP 1</div>
+          <div class="headline" style="font-size:26px;">Claude's first move: <span class="hl">git reflog.</span></div>
+          <div class="card" style="transform:rotate(1.5deg); margin-top:16px;">
+            <div class="body-text" style="font-size:13.5px;">Found the last commit before filter-branch ran — <b>186MB</b> came back in one checkout.</div>
+          </div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+      </div>
+
+      <!-- SLIDE 5 — STEP 2: fsck --dangling -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">5 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" stroke="#3D5F75" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></div>
+        <svg class="doodle" style="width:40px;bottom:100px;right:28px;"><use href="#d-dots"/></svg>
+        <div class="content">
+          <div class="step-num" style="color:var(--brand-dark);">STEP 2</div>
+          <div class="headline" style="font-size:26px;">2 files still missing. <span class="hl orange">Reflog didn't have them.</span></div>
+          <div class="card" style="transform:rotate(-1.5deg); margin-top:16px;">
+            <div class="body-text" style="font-size:13.5px; color:#1E1B2E;"><b>git fsck --dangling</b> surfaced an orphaned commit still holding both PDFs.</div>
+          </div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+      </div>
+
+      <!-- SLIDE 6 — STEP 3: blob extraction -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">6 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" stroke="#1E1B2E" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></div>
+        <svg class="doodle" style="width:34px;top:70px;left:26px;"><use href="#d-star"/></svg>
+        <div class="content">
+          <div class="step-num">STEP 3</div>
+          <div class="headline" style="font-size:26px;">Pull the file straight from its <span class="hl">blob hash.</span></div>
+          <div class="card" style="transform:rotate(2deg); margin-top:16px;">
+            <div class="body-text" style="font-size:12.5px; font-family:monospace; color:#1E1B2E;">git cat-file blob f2725aac... > worksheet1.pdf</div>
+          </div>
+          <div class="body-text" style="margin-top:14px; font-weight:700;">Byte-perfect. Full recovery. <span class="hl blue" style="color:#fff;">188MB.</span></div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+      </div>
+
+      <!-- SLIDE 7 — RECAP -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">7 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="swipe-arrow"><svg viewBox="0 0 24 24" stroke="#3D5F75" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></div>
+        <svg class="doodle" style="width:50px;bottom:130px;left:28px;"><use href="#d-arrow"/></svg>
+        <div class="content">
+          <div class="kicker">The part worth sitting with</div>
+          <div class="headline" style="font-size:24px; line-height:1.3;">Claude wasn't <span class="hl orange">smarter.</span> It just wasn't <span class="hl">panicking.</span></div>
+        </div>
+        <span class="save-tag">SAVE THIS ↓</span>
+      </div>
+
+      <!-- SLIDE 8 — CTA -->
+      <div class="slide cta">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div><div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="badge">8 / 8</div>
+        <svg class="doodle" style="width:36px;top:70px;right:30px;"><use href="#d-star"/></svg>
+        <svg class="doodle" style="width:40px;bottom:160px;left:26px;"><use href="#d-dots"/></svg>
+        <div class="content">
+          <div class="kicker">Want the exact commands?</div>
+          <div class="headline" style="font-size:28px;">Comment <span class="hl">REFLOG</span> — I'll DM you the full recovery sequence.</div>
+          <div class="cta-btn">Comment "REFLOG" ↓</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-actions">
+    <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0112 5.5 5.5 5.5 0 0121.5 12c-2.5 4.5-9.5 9-9.5 9z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 01-8.5 8.5H4l2-4.2A8.5 8.5 0 1121 11.5z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    <div class="spacer"></div>
+    <svg viewBox="0 0 24 24"><path d="M5 3h14v18l-7-5-7 5V3z"/></svg>
+  </div>
+  <div class="ig-dots" id="dots"></div>
+  <div class="ig-caption">
+    <b>breathofdatascience</b> I ran one git command and wiped 3 weeks of production content from every commit in the repo's history. Comment <b>REFLOG</b> and I'll send you the exact recovery sequence — reflog, fsck --dangling, blob extraction, all of it.
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('viewport');
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const N = slides.length;
+  let current = 0;
+
+  for (let i=0;i<N;i++){
+    const d = document.createElement('span');
+    if (i===0) d.className='active';
+    dotsEl.appendChild(d);
+  }
+
+  function render(){
+    track.style.transform = `translateX(${-current*420}px)`;
+    [...dotsEl.children].forEach((d,i)=>d.className = i===current?'active':'');
+    slides.forEach((s,i)=>{
+      s.querySelectorAll('.progress-seg .fill').forEach((f,segIdx)=>{
+        f.style.width = segIdx<=i ? '100%':'0%';
+      });
+    });
+  }
+
+  let startX=0, dragging=false;
+  viewport.addEventListener('pointerdown', e=>{dragging=true; startX=e.clientX; viewport.style.cursor='grabbing';});
+  viewport.addEventListener('pointerup', e=>{
+    if(!dragging) return;
+    const dx = e.clientX - startX;
+    if (dx < -50 && current < N-1) current++;
+    else if (dx > 50 && current > 0) current--;
+    dragging=false; viewport.style.cursor='grab';
+    render();
+  });
+  viewport.addEventListener('pointerleave', ()=>{dragging=false; viewport.style.cursor='grab';});
+
+  render();
+</script>
+</body>
+</html>

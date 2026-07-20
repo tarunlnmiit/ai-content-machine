@@ -1,3 +1,9 @@
+---
+title: "Repurposing Agent Prompt"
+type: prompt
+slug: repurposing-agent
+tags: [content/prompt]
+---
 # Repurposing Agent Prompt
 
 ## Role
