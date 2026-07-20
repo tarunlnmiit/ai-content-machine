@@ -40,15 +40,15 @@
 </style>
 </head>
 <body>
-<h1>Carousel Slide Archetypes — Poetry</h1><p class="sub">Breath of Poetry · tokens from brand_kit.yaml, structure from generate_carousel.py (.ig-frame / .slide, 1080×1350 exported via Playwright).</p><style>
+<h1>Carousel Slide Archetypes — Poetry</h1><p class="sub">Breath of Poetry · Collage Visual System (2026-07-16): softer literary notebook texture, subtle rotation, quiet doodles — no screenshots or photos. Per generate_carousel.py CAROUSEL_SYSTEM. Structure from .ig-frame / .slide, 1080×1350 exported via Playwright.</p><style>
   .slides{display:flex;gap:20px;flex-wrap:wrap}
   .slide{width:324px;height:405px;border-radius:12px;overflow:hidden;position:relative;
          display:flex;flex-direction:column;padding:26px 24px;
          font-family:'DM Sans','Playfair Display',sans-serif}
   .slide .label{position:absolute;top:8px;right:12px;font-size:10px;opacity:.55;
-                text-transform:uppercase;letter-spacing:.1em}
-  .slide.light{background:#EDE8DC;color:#1E1B2E}
-  .slide.dark{background:#1E1B2E;color:#EDE8DC}
+                text-transform:uppercase;letter-spacing:.1em;z-index:2}
+  .slide.light{background:repeating-linear-gradient(0deg, transparent 0 22px, rgba(138,110,48,.14) 22px 23px), #EDE8DC;color:#1E1B2E}
+  .slide.dark{background:repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,.06) 22px 23px), #1E1B2E;color:#EDE8DC}
   .slide.grad{background:linear-gradient(165deg, #8A6E30 0%, #B89850 50%, #D4BC7A 100%);color:#fff}
   .hook{font-family:'Playfair Display',sans-serif;font-weight:700;font-size:27px;
         line-height:1.15;letter-spacing:-0.02em;margin-top:auto}
@@ -59,7 +59,26 @@
   .cta{margin-top:auto;align-self:flex-start;background:#fff;color:#8A6E30;
        font-weight:700;font-size:14px;padding:10px 20px;border-radius:24px}
   .bar{height:3px;border-radius:2px;background:#B89850;width:38%;margin-bottom:14px}
-</style><div class="slides"><div class="slide light"><span class="label">Hook</span><div class="bar"></div><span class="kicker">Hook slide</span><div class="hook">Bold claim that stops the scroll goes here.</div></div><div class="slide dark"><span class="label">Body</span><span class="kicker">Body slide</span><div class="body-txt">One idea per slide. Short lines. Progress bar up top, badge + follow chip in the real export. Dark slides alternate with light for rhythm.</div></div><div class="slide grad"><span class="label">CTA</span><span class="kicker">CTA slide</span><div class="hook">Save this. Follow for the next one.</div><div class="cta">Follow @mistakenlyhuman</div></div></div>
+  .card{background:#F7F2E6;border-radius:10px;box-shadow:0 10px 20px rgba(0,0,0,.18);
+        padding:18px 20px;transform:rotate(-1.5deg);margin-top:auto}
+  .hl{background:#B89850;color:#fff;padding:1px 6px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .doodle-wave{position:absolute;top:34px;left:22px;width:56px;opacity:.6;z-index:1}
+</style><div class="slides">
+  <div class="slide light">
+    <span class="label">Hook</span><div class="bar"></div><span class="kicker">Hook slide</span>
+    <svg class="doodle-wave" viewBox="0 0 70 20" fill="none" stroke="#8A6E30" stroke-width="2" stroke-linecap="round"><path d="M2 10 Q17 2 32 10 T62 10"/></svg>
+    <div class="card"><div class="hook" style="margin-top:0;font-size:24px">Grief does not <span class="hl">end</span>.</div></div>
+  </div>
+  <div class="slide dark">
+    <span class="label">Body</span><span class="kicker">Body slide</span>
+    <div class="body-txt" style="margin-top:auto">Quiet notebook texture, subtle card rotation (-1.5° to 1.5°), 1-2 doodles max per slide — purely typographic, no screenshots or photos for this niche.</div>
+  </div>
+  <div class="slide grad">
+    <span class="label">CTA</span><span class="kicker">CTA slide</span>
+    <div class="hook">Save this. Follow for the next one.</div>
+    <div class="cta">Follow @breathofpoetry</div>
+  </div>
+</div>
 
 </body>
 </html>

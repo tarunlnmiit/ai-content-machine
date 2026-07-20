@@ -40,16 +40,19 @@
 </style>
 </head>
 <body>
-<h1>Carousel Slide Archetypes — Life</h1><p class="sub">Breath of Life · tokens from brand_kit.yaml, structure from generate_carousel.py (.ig-frame / .slide, 1080×1350 exported via Playwright).</p><style>
+<h1>Carousel Slide Archetypes — Life</h1><p class="sub">Breath of Life · Collage Visual System (2026-07-16): real photo background + rotated sticker-highlight text, per generate_carousel.py CAROUSEL_SYSTEM. Photo shown here as a placeholder gradient — the real .slide-photo-bg class holds a base64-injected photo, never embedded in this mirror card. Structure from .ig-frame / .slide, 1080×1350 exported via Playwright.</p><style>
   .slides{display:flex;gap:20px;flex-wrap:wrap}
   .slide{width:324px;height:405px;border-radius:12px;overflow:hidden;position:relative;
          display:flex;flex-direction:column;padding:26px 24px;
          font-family:'Nunito Sans','Lora',sans-serif}
   .slide .label{position:absolute;top:8px;right:12px;font-size:10px;opacity:.55;
-                text-transform:uppercase;letter-spacing:.1em}
+                text-transform:uppercase;letter-spacing:.1em;z-index:2}
   .slide.light{background:#EDE8DC;color:#1E1B2E}
   .slide.dark{background:#1E1B2E;color:#EDE8DC}
   .slide.grad{background:linear-gradient(165deg, #B34A38 0%, #E8705A 50%, #EF9585 100%);color:#fff}
+  .slide.photo{background:linear-gradient(160deg,#8a7060 0%,#5b463b 55%,#332720 100%);color:#fff}
+  .slide.photo::after{content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(20,14,10,.15) 0%, transparent 30%, transparent 65%, rgba(20,14,10,.4) 100%)}
   .hook{font-family:'Lora',sans-serif;font-weight:700;font-size:27px;
         line-height:1.15;letter-spacing:-0.02em;margin-top:auto}
   .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
@@ -59,7 +62,30 @@
   .cta{margin-top:auto;align-self:flex-start;background:#fff;color:#B34A38;
        font-weight:700;font-size:14px;padding:10px 20px;border-radius:24px}
   .bar{height:3px;border-radius:2px;background:#E8705A;width:38%;margin-bottom:14px}
-</style><div class="slides"><div class="slide light"><span class="label">Hook</span><div class="bar"></div><span class="kicker">Hook slide</span><div class="hook">Bold claim that stops the scroll goes here.</div></div><div class="slide dark"><span class="label">Body</span><span class="kicker">Body slide</span><div class="body-txt">One idea per slide. Short lines. Progress bar up top, badge + follow chip in the real export. Dark slides alternate with light for rhythm.</div></div><div class="slide grad"><span class="label">CTA</span><span class="kicker">CTA slide</span><div class="hook">Save this. Follow for the next one.</div><div class="cta">Follow @mistakenlyhuman</div></div></div>
+  .sticker{position:relative;z-index:1;font-weight:800;padding:5px 12px;border-radius:8px;
+           box-shadow:0 8px 16px rgba(0,0,0,.25);display:inline-block;margin-bottom:8px}
+  .s1{background:#E8705A;color:#fff;transform:rotate(-2.5deg)}
+  .s2{background:#EF9585;color:#1E1B2E;transform:rotate(2deg)}
+</style><div class="slides">
+  <div class="slide photo">
+    <span class="label">Hook / CTA</span><span class="kicker" style="color:#EF9585">Photo-bg slide</span>
+    <div style="margin-top:auto">
+      <div class="sticker s1">Your gut</div><br>
+      <div class="sticker s2">is lying to you</div>
+    </div>
+  </div>
+  <div class="slide dark">
+    <span class="label">Body</span><span class="kicker">Body slide</span>
+    <div class="body-txt" style="margin-top:auto">One idea per slide, kraft/cream or dark collage — no photo needed here, photo is reserved for hook + CTA only. Rotated card layer still applies.</div>
+  </div>
+  <div class="slide photo">
+    <span class="label">CTA</span><span class="kicker" style="color:#EF9585">CTA slide (photo, not gradient)</span>
+    <div style="margin-top:auto">
+      <div class="sticker s1">Save this. Follow for the next one.</div><br>
+      <div class="cta" style="position:relative;z-index:1">Comment "DECIDE" ↓</div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
