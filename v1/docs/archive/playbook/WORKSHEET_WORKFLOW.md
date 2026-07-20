@@ -1,3 +1,9 @@
+---
+title: "Worksheet Workflow — IG Lead Magnet + Email Collection"
+type: doc
+slug: worksheet-workflow
+tags: [content/doc]
+---
 # Worksheet Workflow — IG Lead Magnet + Email Collection
 
 Generate actionable PDF worksheets from blogs. Convert readers into email subscribers via a single self-hosted, email-gated download link (Vercel + Kit/ConvertKit) — no per-blog landing page.

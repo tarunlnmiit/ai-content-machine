@@ -1,3 +1,9 @@
+---
+title: "Sunday Batch — Optional One-Sitting Playbook"
+type: doc
+slug: sunday-batch
+tags: [content/doc]
+---
 # Sunday Batch — Optional One-Sitting Playbook
 
 Use this **only when free Sunday available**. If busy, skip — daily guides (mon.md…sat.md) still work. No guilt.

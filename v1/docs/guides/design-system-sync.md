@@ -1,3 +1,9 @@
+---
+title: "Design-system mirror (`v1/design-system/`)"
+type: doc
+slug: design-system-sync
+tags: [content/doc]
+---
 # Design-system mirror (`v1/design-system/`)
 
 Read-only preview bundle that mirrors the repo's three token systems into 26
@@ -21,6 +27,13 @@ System pane auto-indexes it. 26 cards across 4 groups:
   (ds/life/poetry/layout-catalogue), worksheet × 1
 - **components** (15) — carousel archetypes × 3, carousel samples × 2, worksheet
   shell + samples × 3, social × 3, deck × 1, thumbnail × 3
+
+**Prompt grounding (added 2026-07-10):** `generate_carousel.py` and
+`generate_worksheet_html.py` append a compact "DESIGN SYSTEM REFERENCE" block to their
+Claude prompts via `v1/scripts/lib/design_system_ref.py` — archetype spine + gradient
+formula (carousel) and shell token vocabulary (worksheet). Grounding only, not an input
+coupling: the block is built from `brand_kit.yaml` / `worksheet_shell.html` directly and
+fails soft to an empty string when `v1/design-system/` is absent.
 
 ## The three token systems
 

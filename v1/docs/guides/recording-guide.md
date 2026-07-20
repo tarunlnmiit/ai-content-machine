@@ -1,3 +1,9 @@
+---
+title: "Recording Guide — Talking-Head Videos (Life, Poetry, DS)"
+type: doc
+slug: recording-guide
+tags: [content/doc]
+---
 # Recording Guide — Talking-Head Videos (Life, Poetry, DS)
 
 ## Physical Setup

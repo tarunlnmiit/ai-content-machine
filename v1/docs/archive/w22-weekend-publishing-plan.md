@@ -1,3 +1,9 @@
+---
+title: "W22 Weekend Publishing Plan"
+type: doc
+slug: w22-weekend-publishing-plan
+tags: [content/doc]
+---
 # W22 Weekend Publishing Plan
 **Date:** June 20–22, 2026 (Sat/Sun)
 **Goal:** Schedule and post W22 content (3 pieces, 3 reels) before Monday.

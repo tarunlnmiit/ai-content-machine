@@ -1,3 +1,9 @@
+---
+title: "Medium Blog Repurposing — Weekly Workflow"
+type: doc
+slug: medium-repurposing-guide
+tags: [content/doc]
+---
 # Medium Blog Repurposing — Weekly Workflow
 
 **Created:** 2026-05-12  

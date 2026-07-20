@@ -1,3 +1,9 @@
+---
+title: "Video Production Guide — Record → Manual Edit → Publish"
+type: doc
+slug: video-production-guide
+tags: [content/doc]
+---
 # Video Production Guide — Record → Manual Edit → Publish
 
 Record talking head. Prepare transcription + b-roll. Edit manually in DaVinci.

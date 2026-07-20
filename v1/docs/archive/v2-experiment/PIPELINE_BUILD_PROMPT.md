@@ -1,3 +1,9 @@
+---
+title: "Content Machine v2 — Claude Code Build Prompt"
+type: doc
+slug: pipeline-build-prompt
+tags: [content/doc]
+---
 # Content Machine v2 — Claude Code Build Prompt
 
 Paste this entire file into Claude Code as your first message when starting the build session.

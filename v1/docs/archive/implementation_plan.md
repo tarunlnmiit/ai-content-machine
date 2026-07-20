@@ -1,3 +1,9 @@
+---
+title: "Implementation Plan: Professional Video Pipeline V2"
+type: doc
+slug: implementation-plan
+tags: [content/doc]
+---
 # Implementation Plan: Professional Video Pipeline V2
 
 **Goal:** Record → fully automated, unattended pipeline → MP4 output at 10-year experienced video editor quality for all three niches (DS, Life, Poetry).  

@@ -1,3 +1,9 @@
+---
+title: "Weekly Steps TODO — 2026-05-25 (Sunday catchup)"
+type: doc
+slug: weekly-steps-todo
+tags: [content/doc]
+---
 # Weekly Steps TODO — 2026-05-25 (Sunday catchup)
 All content from 2026-05-21 week. Do in order.
 

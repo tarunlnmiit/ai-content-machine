@@ -1,3 +1,9 @@
+---
+title: "B-roll Ken Burns montage renderer (`lib/broll_montage.py`)"
+type: doc
+slug: broll-montage
+tags: [content/doc]
+---
 # B-roll Ken Burns montage renderer (`lib/broll_montage.py`)
 
 Renders a voiceover-lane EditPlan's `brollCues` into a finished montage MP4 with

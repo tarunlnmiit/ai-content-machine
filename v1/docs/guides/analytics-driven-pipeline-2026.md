@@ -1,3 +1,9 @@
+---
+title: "Analytics-Driven Content Pipeline 2026"
+type: doc
+slug: analytics-driven-pipeline-2026
+tags: [content/doc]
+---
 # Analytics-Driven Content Pipeline 2026
 
 **Generated:** June 18, 2026  

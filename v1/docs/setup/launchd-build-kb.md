@@ -1,3 +1,9 @@
+---
+title: "launchd: build_knowledge_base Weekly Job"
+type: doc
+slug: launchd-build-kb
+tags: [content/doc]
+---
 # launchd: build_knowledge_base Weekly Job
 
 Plist: `~/Library/LaunchAgents/com.contentmachine.buildkb.plist`  

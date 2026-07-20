@@ -1,3 +1,9 @@
+---
+title: "Implementation: Self-Contained Short-Form Repurposing"
+type: doc
+slug: implementation-plan-self-contained-shorts
+tags: [content/doc]
+---
 # Implementation: Self-Contained Short-Form Repurposing
 
 **For the executing agent (Haiku):** Follow these steps exactly. Make ONLY the

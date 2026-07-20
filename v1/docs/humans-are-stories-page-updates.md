@@ -1,3 +1,9 @@
+---
+title: "Humans Are Stories — page update copy (2026-06-26)"
+type: doc
+slug: humans-are-stories-page-updates
+tags: [content/doc]
+---
 # Humans Are Stories — page update copy (2026-06-26)
 
 Paste-ready copy for two live pages. Scope change: broaden from *poetry + shortform only* to **all life- and poetry-related writing**; explicitly **exclude technical/tech news**.

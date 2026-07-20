@@ -1,3 +1,9 @@
+---
+title: "Instagram Profile Audit: Applied Content Machine Analysis"
+type: doc
+slug: instagram-profile-audit-2026
+tags: [content/doc]
+---
 # Instagram Profile Audit: Applied Content Machine Analysis
 **Date:** June 2026  
 **Profiles reviewed:** @breathofdatascience · @mistakenlyhuman  

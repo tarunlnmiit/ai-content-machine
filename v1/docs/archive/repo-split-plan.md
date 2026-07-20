@@ -1,3 +1,9 @@
+---
+title: "Repo Split Plan: content-machine → content-machine + course-machine"
+type: doc
+slug: repo-split-plan
+tags: [content/doc]
+---
 # Repo Split Plan: content-machine → content-machine + course-machine
 
 **Status:** ✅ Executed 2026-06-11 — course-machine repo live at `tarunlnmiit/course-machine`  

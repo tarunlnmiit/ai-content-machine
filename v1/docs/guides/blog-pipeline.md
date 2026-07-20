@@ -1,3 +1,9 @@
+---
+title: "Blog Pipeline — one command (derivatives + media)"
+type: doc
+slug: blog-pipeline
+tags: [content/doc]
+---
 # Blog Pipeline — one command (derivatives + media)
 
 *Added 2026-06-21.* Once a blog exists, **one command** produces every non-video derivative.
@@ -47,6 +53,24 @@ Niche + ISO week are auto-derived from the blog slug.
 | 4 | Stage to scheduler | `load_posts.py --week` | scheduling DB → auto-publish daemon |
 
 > Steps 3 (slide deck), 4 (IG reel brief), 6 (worksheet) in `run_blog_pipeline.py` are now **also run inside `repurpose_blog.py` Phase 2** — they skip idempotently if output already exists. Running `run_blog_pipeline.py` still works fine.
+
+> **`produce_blog.py` also builds the IG carousel directly** (Step 5, all niches, non-fatal, skip with
+> `--no-carousel`) — same `generate_carousel.py --blog … --export` call as Phase 2 step 2e. The overlap
+> is safe: `generate_carousel.py` self-skips when the output HTML exists, so whichever entry point runs
+> second is a no-op. Both `generate_carousel.py` and `generate_worksheet_html.py` prompts now append a
+> compact **DESIGN SYSTEM REFERENCE** grounding block (`lib/design_system_ref.py`, fail-soft) — see
+> [design-system-sync.md](design-system-sync.md).
+
+> **Carousel output layout & UI contract** (`generate_carousel.py`):
+> - HTML: `assets/carousels/{slug}_carousel.html` (flat — referenced flat by `repurpose_blog.py`,
+>   `generate_social_images.py`, `load_posts.py`).
+> - Exported PNGs: `assets/carousels/slides/{week}/{slug}/slide_N.png` — **nested under the ISO
+>   week** (`get_iso_week(slug[:10])`); one PNG per slide at 1080×1350.
+> - Required per-slide UI (mandated in `CAROUSEL_SYSTEM`): a `.progress-row` of `.progress-seg`/`.fill`
+>   segments; the Playwright export **bakes each slide's fill from its own slide index** (do not rely on
+>   in-page scroll/JS state — export bypasses page JS). Plus rendered `.follow-tag` ("Tap to follow") on
+>   every slide except the last, and `.save-tag` ("Save this") on content slides — as real elements, not
+>   CSS-only. The last slide drops the follow tag and carries the comment-a-keyword CTA button.
 
 ## Stays manual (by design)
 
@@ -120,6 +144,9 @@ Notes:
   with a tailored email CTA from `EMAIL_CTA_TARGET`.
 - `--dry-run` works in either mode: it runs the whole flow and saves the draft but prints
   "DRY RUN — nothing staged or published."
+- `--no-worksheet` / `--no-carousel` skip the companion worksheet (DS/Life) and IG carousel
+  (all niches) steps respectively; both steps are non-fatal and drop a retry command into
+  `manual_steps.md` on failure.
 
 Interview logic lives in `scripts/lib/interview.py`; `produce_blog.py` just calls it.
 

@@ -1,3 +1,9 @@
+---
+title: "Pipeline Polish Plan — HyperFrames + Remotion"
+type: doc
+slug: implementation-plan
+tags: [content/doc]
+---
 # Pipeline Polish Plan — HyperFrames + Remotion
 
 > Created 2026-07-01. Goal: raise the quality of the V2 video output (long-form + reels)
