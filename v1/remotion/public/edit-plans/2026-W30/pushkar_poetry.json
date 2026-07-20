@@ -1,0 +1,43 @@
+{
+  "slug": "pushkar_poetry",
+  "niche": "poetry",
+  "kind": "voiceover",
+  "audioFile": "audio/2026-W30/pushkar_poetry.m4a",
+  "durationSec": 49.0,
+  "silenceTrimStartSec": 0.0,
+  "silenceTrimEndSec": 49.0,
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "birds/rooftop lake pan — opening + body lines 1-2 (0-8s)",
+      "clipFile": "broll/2026-W30/pushkar_poetry/cue-0.mp4",
+      "startSec": 0.0,
+      "durationSec": 8.0
+    },
+    {
+      "id": "cue-1",
+      "description": "koi feeding, tilt to skyline — body + turn lines 3-10 (8-31s), hold-extended from 16.1s raw",
+      "clipFile": "broll/2026-W30/pushkar_poetry/cue-1-ext.mp4",
+      "startSec": 8.0,
+      "durationSec": 23.0
+    },
+    {
+      "id": "cue-2",
+      "description": "ghat/sadhu evening light — turn + closing lines 11-14 + hold (31-49s), hold-extended from 4.4s raw",
+      "clipFile": "broll/2026-W30/pushkar_poetry/cue-2-ext.mp4",
+      "startSec": 31.0,
+      "durationSec": 18.0
+    }
+  ],
+  "captionsFile": "",
+  "showSubtitles": false,
+  "colorGrading": {
+    "saturate": 1.16,
+    "hueRotate": -3,
+    "contrast": 1.03,
+    "brightness": 1.04,
+    "overlayColor": "rgba(255, 180, 120, 0.10)"
+  },
+  "look": "poetry",
+  "outputSize": "9x16"
+}

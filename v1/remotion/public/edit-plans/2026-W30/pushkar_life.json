@@ -1,0 +1,85 @@
+{
+  "slug": "pushkar_life",
+  "niche": "life",
+  "kind": "voiceover",
+  "audioFile": "audio/2026-W30/pushkar_life.m4a",
+  "durationSec": 48.52,
+  "silenceTrimStartSec": 0.0,
+  "silenceTrimEndSec": 48.52,
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "market walk — HOOK",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-0.mp4",
+      "startSec": 0.0,
+      "durationSec": 6.0
+    },
+    {
+      "id": "cue-1",
+      "description": "walk transition — into PROBLEM",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-3.mp4",
+      "startSec": 6.0,
+      "durationSec": 2.6
+    },
+    {
+      "id": "cue-2",
+      "description": "candy-stall cutaway — PROBLEM insert",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-4.mp4",
+      "startSec": 8.6,
+      "durationSec": 1.0
+    },
+    {
+      "id": "cue-3",
+      "description": "market walk (reuse) — PROBLEM tail",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-0.mp4",
+      "startSec": 9.6,
+      "durationSec": 6.6
+    },
+    {
+      "id": "cue-4",
+      "description": "ravanhatta musician — TURN (folk musician was playing / no amp no crowd)",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-1.mp4",
+      "startSec": 16.2,
+      "durationSec": 8.18
+    },
+    {
+      "id": "cue-5",
+      "description": "dholak musicians under tree — TURN (instrument looked older...)",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-2.mp4",
+      "startSec": 24.38,
+      "durationSec": 4.62
+    },
+    {
+      "id": "cue-6",
+      "description": "ravanhatta musician (reuse) — TURN close (wasn't filming or checking the time)",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-1.mp4",
+      "startSec": 29.0,
+      "durationSec": 5.0
+    },
+    {
+      "id": "cue-7",
+      "description": "rooftop pan — PAYOFF",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-5.mp4",
+      "startSec": 34.0,
+      "durationSec": 8.04
+    },
+    {
+      "id": "cue-8",
+      "description": "rooftop pan (reuse) — CTA close",
+      "clipFile": "broll/2026-W30/pushkar_life/cue-5.mp4",
+      "startSec": 42.04,
+      "durationSec": 6.48
+    }
+  ],
+  "captionsFile": "captions/2026-W30/pushkar_life.captions.json",
+  "showSubtitles": false,
+  "colorGrading": {
+    "saturate": 1.18,
+    "hueRotate": -3,
+    "contrast": 1.06,
+    "brightness": 1.02,
+    "overlayColor": "rgba(255, 180, 120, 0.05)"
+  },
+  "look": "none",
+  "outputSize": "9x16"
+}

@@ -1,0 +1,78 @@
+{
+  "slug": "pushkar_life_v2",
+  "niche": "life",
+  "kind": "voiceover",
+  "audioFile": "/Users/tarungupta/Making It Big/Claude/content-machine/v1/assets/audio/2026-W30/pushkar_life_voicememo_clean.wav",
+  "durationSec": 48.52,
+  "silenceTrimStartSec": 0.0,
+  "silenceTrimEndSec": 48.52,
+  "brollCues": [
+    {
+      "id": "cue-0",
+      "description": "IMG_5079 street-walk photo, Ken Burns push-in — HOOK (\"best part of Pushkar wasn't a place\")",
+      "clipFile": "broll/2026-W30/pushkar_life_v2/photo_A_5079_hook.mp4",
+      "startSec": 0.0,
+      "durationSec": 6.44
+    },
+    {
+      "id": "cue-1",
+      "description": "IMG_5081 street-walk photo, Ken Burns pull-out (opposite direction) — PROBLEM (\"could not stop trying to make the trip useful\")",
+      "clipFile": "broll/2026-W30/pushkar_life_v2/photo_B_5081_problem.mp4",
+      "startSec": 6.44,
+      "durationSec": 4.56
+    },
+    {
+      "id": "cue-2",
+      "description": "candy-stall cutaway — PROBLEM insert (\"every walk felt like it needed to become a memory\")",
+      "clipFile": "broll/2026-W30/pushkar_life_v2/video_candy.mp4",
+      "startSec": 11.0,
+      "durationSec": 1.0
+    },
+    {
+      "id": "cue-3",
+      "description": "IMG_5079 alternate crop (shifted right, new framing) — PROBLEM tail (\"a photo or a story\")",
+      "clipFile": "broll/2026-W30/pushkar_life_v2/photo_D_5079_altcrop.mp4",
+      "startSec": 12.0,
+      "durationSec": 4.2
+    },
+    {
+      "id": "cue-4",
+      "description": "D0EA262D ravanhatta musician take 2, full clip — TURN (\"folk musician was playing... no amp no crowd\")",
+      "clipFile": "broll/2026-W30/pushkar_life_v2/video_musician_take2.mp4",
+      "startSec": 16.2,
+      "durationSec": 10.64
+    },
+    {
+      "id": "cue-5",
+      "description": "dholak musicians under tree, trimmed to fit — TURN close (\"instrument looked older / I just stood there\")",
+      "clipFile": "broll/2026-W30/pushkar_life_v2/video_dholak_segA.mp4",
+      "startSec": 26.84,
+      "durationSec": 7.16
+    },
+    {
+      "id": "cue-6",
+      "description": "IMG_8460 hilltop panorama, Ken Burns wide slow push, center-cropped 9:16 — PAYOFF (\"stopped asking what I was getting out of it\")",
+      "clipFile": "broll/2026-W30/pushkar_life_v2/photo_G_8460_payoff.mp4",
+      "startSec": 34.0,
+      "durationSec": 7.5
+    },
+    {
+      "id": "cue-7",
+      "description": "IMG_8461 sunset-through-trees, Ken Burns gentle push — CTA + close (\"comment Pushkar\")",
+      "clipFile": "broll/2026-W30/pushkar_life_v2/photo_H_8461_cta.mp4",
+      "startSec": 41.5,
+      "durationSec": 7.02
+    }
+  ],
+  "captionsFile": "captions/2026-W30/pushkar_life.captions.json",
+  "showSubtitles": false,
+  "colorGrading": {
+    "saturate": 1.18,
+    "hueRotate": -3,
+    "contrast": 1.06,
+    "brightness": 1.02,
+    "overlayColor": "rgba(255, 180, 120, 0.05)"
+  },
+  "look": "none",
+  "outputSize": "9x16"
+}
