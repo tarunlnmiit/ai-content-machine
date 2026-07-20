@@ -1,8 +1,8 @@
-# Weekly Analytics — 2026-W24
-*Generated: 2026-06-21 20:00*
+# Weekly Analytics — 2026-W27
+*Generated: 2026-07-12 11:37*
 
 ## Summary
-Summary unavailable — Ollama failed.
+Summary unavailable — claude summariser failed.
 
 ---
 
@@ -10,51 +10,51 @@ Summary unavailable — Ollama failed.
 
 ### Breath of Data Science
 - Subscribers: 161
-- Total views: 15,185
-- Videos: 27
+- Total views: 15,799
+- Videos: 29
 
 Recent videos:
-  - [2026-06-21] Python Errors Are Feedback. Read Them Like This. — 135 views, 0 likes
-  - [2026-06-20] Your Code Ran. But Can You Recreate It? — 150 views, 0 likes
-  - [2026-06-20] One Line That Will Save Your Data Science Projects — 137 views, 1 likes
-  - [2026-06-19] Skip Hello World. Write This Instead. — 52 views, 0 likes
-  - [2026-06-19] You'll Write This Pattern 1,000 Times in Data Science — 47 views, 1 likes
+  - [2026-06-22] Python Gave Me a WRONG Answer With No Error (Here's Why) | Python for Data Science #2 — 56 views, 0 likes
+  - [2026-06-21] Why Simple Python Scripts Scale Further Than You Think — 19 views, 0 likes
+  - [2026-06-21] Python Errors Are Feedback. Read Them Like This. — 138 views, 0 likes
+  - [2026-06-20] Your Code Ran. But Can You Recreate It? — 155 views, 0 likes
+  - [2026-06-20] One Line That Will Save Your Data Science Projects — 138 views, 1 likes
 
 ### Breath of Life
 - Subscribers: 39
-- Total views: 898
-- Videos: 24
+- Total views: 912
+- Videos: 25
 
 Recent videos:
+  - [2026-06-24] Why 40% of Men Won't Admit They're Struggling (And What It's Costing Them) — 13 views, 0 likes
   - [2026-06-18] A Good System Needs Less Willpower, Not More — 11 views, 0 likes
   - [2026-06-17] The Sunday Question That Improves Your Whole Week — 0 views, 0 likes
   - [2026-06-17] Three Habit Categories That Actually Work — 5 views, 0 likes
   - [2026-06-16] Here's What Nobody Tells You About Discipline — 0 views, 0 likes
-  - [2026-06-16] My habits weren't helping — they were amplifying — 210 views, 1 likes
 
 ### Breath of Poetry
 - Subscribers: 8
-- Total views: 897
-- Videos: 30
+- Total views: 901
+- Videos: 31
 
 Recent videos:
+  - [2026-06-26] When Love Becomes a Hangover You Can't Sleep Off | Intoxicated Senses (Original Poem) — 0 views, 0 likes
   - [2026-06-18] Safe Doesn't Mean Unchanged. Alive Doesn't Mean Reckless. — 4 views, 0 likes
-  - [2026-06-17] When Love Becomes Real in Your Family's Eyes — 9 views, 0 likes
-  - [2026-06-17] The Person Your Whole World Would Also Choose — 1 views, 0 likes
+  - [2026-06-17] When Love Becomes Real in Your Family's Eyes — 10 views, 0 likes
+  - [2026-06-17] The Person Your Whole World Would Also Choose — 2 views, 0 likes
   - [2026-06-16] Embarrassment Is the Key to Love — 3 views, 0 likes
-  - [2026-06-16] What Love Stories Get Wrong About Longing — 65 views, 1 likes
 
 ### Breath of Relaxing
 - Subscribers: 0
-- Total views: 7
-- Videos: 5
+- Total views: 774
+- Videos: 47
 
 Recent videos:
-  - [2022-09-05] White Noise for More than an Hour with Rainstorm Sounds for Relaxation, Focus, or Sleep — 1 views, 0 likes
-  - [2022-09-01] Rain & Thunder Epic | White Noise 1+ Hour | Rainstorm Sounds For Unwinding, Concentrating, or Sleep — 2 views, 0 likes
-  - [2022-08-26] Rainstorm Sounds For Relaxing, Focus or Sleep | Rain & Thunder Epic |  White Noise 1+ Hour — 1 views, 0 likes
-  - [2022-08-22] Study Session 📚 - lofi hip hop/chill beats | beats to relax/study to — 3 views, 0 likes
-  - [2022-08-16] Epic Rain & Thunder | Rainstorm Sounds For Relaxing, Focus or Sleep | White Noise 1+ Hour — 0 views, 0 likes
+  - [2026-07-11] Rain Sounds for Sleeping | 3 Hours #Shorts — 9 views, 0 likes
+  - [2026-07-11] Rain Sounds for Sleeping | 3 Hours — 0 views, 0 likes
+  - [2026-07-10] Lofi 🎧 | Relaxing | 25 Minutes — 0 views, 0 likes
+  - [2026-07-09] Rain Sounds for Relaxing 🌧️ — 1 Hour — 0 views, 0 likes
+  - [2026-07-09] Flowing River No Music | 8 Hours #Shorts — 4 views, 0 likes
 
 ---
 
@@ -87,4 +87,4 @@ Noth
 ---
 
 ## GitHub (project repos)
-- **tarunlnmiit/autopilot-jobhunt**: 82 ⭐ (no 7d baseline yet), 22 forks, 0 open issues
+- **tarunlnmiit/autopilot-jobhunt**: 158 ⭐ (+76 this week), 43 forks, 1 open issues

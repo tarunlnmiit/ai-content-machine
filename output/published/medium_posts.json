@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Everyone Building RAG Is Getting Vector Databases Wrong — Here's the Explanation That Finally Clicks",
+    "medium_url": "https://medium.com/@tarun-gupta/dfb2706068a1",
+    "medium_id": "dfb2706068a1",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "/Users/tarungupta/Making It Big/Claude/content-machine/v1/content/blogs/2026-W28/2026-07-10_data_science_tech_i-asked-5-senior-engineers-to-explain-a-vector-database-with.md",
+    "status": "draft",
+    "tags": [
+      "data-science",
+      "technology",
+      "artificial-intelligence",
+      "programming",
+      "writing"
+    ],
+    "published_at": "2026-07-10T07:00:36.425973+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "You Don't Need Mastodon.py to Automate Toots — Just `requests` and 40 Lines",
+    "medium_url": "https://medium.com/@tarun-gupta/e43cd7dc9d1d",
+    "medium_id": "e43cd7dc9d1d",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "v1/content/blogs/2026-W29/2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli.md",
+    "status": "draft",
+    "tags": [
+      "programming",
+      "python",
+      "technology",
+      "productivity",
+      "self-improvement"
+    ],
+    "published_at": "2026-07-16T12:39:55.919811+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "Ten Years Of Independence Taught Me Two Things I Blame My Parents For. I Can Only Write One.",
+    "medium_url": "https://medium.com/@tarun-gupta/af812b212af0",
+    "medium_id": "af812b212af0",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "v1/content/blogs/2026-W29/2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat.md",
+    "status": "draft",
+    "tags": [
+      "life",
+      "self-improvement",
+      "mental-health",
+      "writing",
+      "productivity"
+    ],
+    "published_at": "2026-07-16T12:41:03.051985+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "Your \"Production\" MLOps Pipeline Has a Silent Failure You Haven't Noticed Yet",
+    "medium_url": "https://medium.com/@tarun-gupta/1e612f081b18",
+    "medium_id": "1e612f081b18",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "v1/content/blogs/2026-W29/2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit.md",
+    "status": "draft",
+    "tags": [
+      "technology",
+      "data-science",
+      "programming",
+      "artificial-intelligence",
+      "productivity"
+    ],
+    "published_at": "2026-07-16T12:43:50.819971+00:00",
+    "token_used": "personal"
+  },
+  {
+    "title": "Stop Trusting Your Gut: The Case for Making Decisions Under Pressure Without It",
+    "medium_url": "https://medium.com/@tarun-gupta/a591a021c2f9",
+    "medium_id": "a591a021c2f9",
+    "canonical_url": null,
+    "publication": null,
+    "source_file": "v1/content/blogs/2026-W29/2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru.md",
+    "status": "draft",
+    "tags": [
+      "life",
+      "self-improvement",
+      "mental-health",
+      "productivity",
+      "writing"
+    ],
+    "published_at": "2026-07-16T12:46:57.121940+00:00",
+    "token_used": "personal"
+  }
+]
