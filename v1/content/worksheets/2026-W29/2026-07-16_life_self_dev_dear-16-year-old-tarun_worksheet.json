@@ -1,0 +1,46 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "The Letter You'd Write Your 16-Year-Old Self",
+  "sections": [
+    {
+      "title": "Trace Your Own 'First Blame'",
+      "prompt": [
+        "Name one path (art, business, trade, sport) you never dreamed of at 16 — simply because no one put it in front of you.",
+        "Who was your only role model growing up, and whose ambitions did you 'catch like a fever' once you left that bubble?",
+        "What's the mediocre-but-peaceful life you sometimes wonder if you'd have been happier living?",
+        "Write one sentence you'd say to your parents about a choice they made for you without meaning harm."
+      ]
+    },
+    {
+      "title": "Map Where Love Became Your Engine",
+      "prompt": [
+        "List the ambitions in your life driven by love, unrequited love, or heartbreak rather than pure ambition.",
+        "Describe one time your love 'was not reciprocated' — what did it build in you instead of break?",
+        "Where has self-doubt or self-criticism gotten dangerously loud in your head? Name the moment.",
+        "What would you make (write, build, start) out of your next heartbreak instead of just surviving it?"
+      ]
+    },
+    {
+      "title": "Find Your 'Writing Articles Online' Moment",
+      "prompt": [
+        "What's the small, unglamorous starting point (lyrics for songs that don't exist, a journal, a half-built app) you're underrating right now?",
+        "Name one 'two cents' you have to offer the world that you haven't shared yet.",
+        "What decision — like moving to Germany with a hidden second agenda — could you make that serves a practical need AND your real pursuit?",
+        "Who are the 1,000 people who'd follow your story if you started telling it publicly? Describe one of them."
+      ]
+    },
+    {
+      "title": "Name Your Castle and Its Monsters",
+      "prompt": [
+        "Where do you feel loneliness even while surrounded by people — and what wall did you build there?",
+        "Name one person you let in who brought chaos, and what letting go of them actually looked like.",
+        "Who are the few people who've 'kept the sanctity of your castle intact'? Have you told them that?",
+        "Write one line of the letter your future self, ten years from now, would send back to you today."
+      ]
+    }
+  ],
+  "cta": "Reply with the one line from your own 'Dear younger me' letter — the sentence you'd want your future self to have written down before it was too late.",
+  "blog_file": "content/blogs/2026-W29/2026-07-16_life_self_dev_dear-16-year-old-tarun.md",
+  "slug": "2026-07-16_life_self_dev_dear-16-year-old-tarun"
+}

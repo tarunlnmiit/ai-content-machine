@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "Build Your Own Two-Endpoint API Wrapper"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Map the API Before You Import Anything
+   Pick an API you already use through a wrapper library (requests to Twitter, Notion, Slack — whatever's in your stack). Open that library's docs or source and find the actual HTTP endpoints it's calling under the hood for the one feature you use most. Write down the method, path, and required headers, the same way this post reduced Mastodon.py to POST /api/v1/media and POST /api/v1/statuses.
+
+2. Write the Bare-Metal Function
+   Using the post_toot() function as your template, write a single Python function that hits your chosen API with plain requests — no wrapper library imported. Include the bearer token header pattern and a two-step flow if your API needs one (upload, then reference the returned ID in a second call, like Mastodon's media_ids[]).
+
+3. Add the Failure Case On Purpose
+   Generate a token with only partial scopes (or intentionally omit one required permission) and run your function against it. Confirm you get a silent partial success rather than a crash — then add a raise_for_status() or explicit status_code check so the failure surfaces the server's actual error JSON instead of posting incomplete data.
+
+4. Wrap It in Streamlit
+   Turn your function from Section 2 into a Streamlit form with st.text_input(type='password') for the token, st.text_area() for the main content, and an st.file_uploader() if your API accepts media. Run streamlit run yourfile.py and confirm the success state prints a live, clickable link pulled from the API's response body — not a hardcoded checkmark.
+
+5. Count What You Didn't Install
+   List every method the full wrapper library exposes (timelines, streaming, following users, DMs) versus the two or three endpoints your tool actually calls. Write one sentence stating the dependency weight you avoided — lines of code, or number of transitive packages — by going straight to requests.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"

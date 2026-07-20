@@ -1,0 +1,41 @@
+Create a reflective worksheet PDF (A4, portrait) for "The Pre-Mortem Worksheet: Decide Before the Pressure Hits"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 4 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Size of the Number vs. Shape of the Work
+   - Think of a decision in front of you right now that feels exciting. Write down exactly what your gut is reacting to — the number, the title, the applause — separate from the actual day-to-day work involved.
+   - List the honest reasons for each option on paper, the way the writer did with his job offer. Does the growth you want already live where you are, dressed up as something you'd have to leave to get?
+   - If you stripped away the flashy label, would you still choose this option based on the work itself?
+   - Name one past decision where your gut was reading the size of the number instead of the shape of the work. What did it cost you?
+
+2. Build Your Scored Rubric
+   - Pick one recurring decision in your life or work — hiring, dating, buying, choosing projects — and write 4-5 criteria that actually predict success, not charisma.
+   - Weight each criterion and set a hard cutoff number, the way the writer used 75 as his line.
+   - Recall a time you went with instinct over evidence on a decision like this. Run the math: what did that decision actually cost you in time, money, or energy?
+   - Who or what in your life is 'sharp in the interview' but might score low on your rubric if you graded it honestly?
+
+3. Write Your Pre-Mortem
+   - Name one specific situation you know will spike your adrenaline in the next few months — a hard conversation, a public failure, a moment you'll be put on the spot.
+   - While you're calm right now, write the decision you want the panicked version of you to execute when it happens.
+   - What has 'just slow down and think clearly' failed to do for you in the moment before? Be specific about the last time it didn't work.
+   - Write your own one-line operating principle, the way the writer keeps 'hope for the best, prepare for the worst.'
+
+4. The Wrongness Question
+   - Take a decision you feel certain about today. Write down what you would have to see to know you're wrong.
+   - Go look for that evidence now, before reality forces the question on you. What did you find?
+   - Remember the churn model story — the leaked data that looked brilliant until it wasn't. What's a corner you might be cutting right now because it 'feels' done?
+   - Does the certainty you're feeling come from evidence, or from wanting the work to already be finished?
+
+
+Footer: "Reply with your answers — your reflections help others find their entry point."
+
+Optional: Soft watercolor accent in corner.

@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "Audit Your Own MLOps Pipeline Before It Silently Lies to You"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Count Your Real Traffic
+   Pull your actual prediction volume for the last 7 days (from logs, a database table, or an API gateway dashboard) and divide by 7 to get predictions/day. Write that number down next to a one-line note on what infrastructure you're currently running (Kubernetes, managed endpoint, cron job) and decide honestly whether the machinery matches the number.
+
+2. Find Your Own Relative-Path Trap
+   Grep your training and serving code for every place a path, config value, or environment variable is set without an absolute path or explicit env var (like MLflow's `./mlruns` default). List each one, then write the one-line assert that would catch it firing from the wrong working directory, following the pattern in the post's `ARTIFACT_ROOT` example.
+
+3. Rewrite Your Cron Line
+   Open your actual crontab (or systemd timer unit) for any scheduled training or retraining job and check it against the two rules from the post: full path to your venv's Python binary, and a MAILTO or webhook on failure. Rewrite the line to fix whichever is missing, and test it once with `run-parts` or manually invoking it from `$HOME` to confirm it still resolves correctly.
+
+4. Pick Your Tool Swaps
+   Go through your current stack orchestrator, tracking, serving, monitoring, and for each one you're paying for or over-provisioning, name the free swap from the post (Prefect for Airflow, self-hosted MLflow for a capped free tier, FastAPI+Uvicorn for a managed endpoint, Evidently for Arize/Fiddler) and estimate the monthly dollar difference.
+
+5. Decide What You're Allowed to Skip
+   List one monitoring or safety check you're currently skipping (or tempted to skip), like the post's Parquet-log-instead-of-Evidently choice on a low-stakes home project, and write the specific condition that would force you to build it for real (e.g. 'the day a bad prediction costs a customer, not just a squint at a chart').
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"

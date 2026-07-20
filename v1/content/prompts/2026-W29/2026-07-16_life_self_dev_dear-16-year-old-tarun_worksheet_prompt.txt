@@ -1,0 +1,41 @@
+Create a reflective worksheet PDF (A4, portrait) for "The Letter You'd Write Your 16-Year-Old Self"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 4 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Trace Your Own 'First Blame'
+   - Name one path (art, business, trade, sport) you never dreamed of at 16 — simply because no one put it in front of you.
+   - Who was your only role model growing up, and whose ambitions did you 'catch like a fever' once you left that bubble?
+   - What's the mediocre-but-peaceful life you sometimes wonder if you'd have been happier living?
+   - Write one sentence you'd say to your parents about a choice they made for you without meaning harm.
+
+2. Map Where Love Became Your Engine
+   - List the ambitions in your life driven by love, unrequited love, or heartbreak rather than pure ambition.
+   - Describe one time your love 'was not reciprocated' — what did it build in you instead of break?
+   - Where has self-doubt or self-criticism gotten dangerously loud in your head? Name the moment.
+   - What would you make (write, build, start) out of your next heartbreak instead of just surviving it?
+
+3. Find Your 'Writing Articles Online' Moment
+   - What's the small, unglamorous starting point (lyrics for songs that don't exist, a journal, a half-built app) you're underrating right now?
+   - Name one 'two cents' you have to offer the world that you haven't shared yet.
+   - What decision — like moving to Germany with a hidden second agenda — could you make that serves a practical need AND your real pursuit?
+   - Who are the 1,000 people who'd follow your story if you started telling it publicly? Describe one of them.
+
+4. Name Your Castle and Its Monsters
+   - Where do you feel loneliness even while surrounded by people — and what wall did you build there?
+   - Name one person you let in who brought chaos, and what letting go of them actually looked like.
+   - Who are the few people who've 'kept the sanctity of your castle intact'? Have you told them that?
+   - Write one line of the letter your future self, ten years from now, would send back to you today.
+
+
+Footer: "Reply with your answers — your reflections help others find their entry point."
+
+Optional: Soft watercolor accent in corner.

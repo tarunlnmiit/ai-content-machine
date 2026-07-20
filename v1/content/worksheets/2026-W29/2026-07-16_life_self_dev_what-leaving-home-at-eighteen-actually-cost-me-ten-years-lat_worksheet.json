@@ -1,0 +1,47 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "The Inventory Audit: What Your Ambitions Are Really Made Of",
+  "sections": [
+    {
+      "title": "Map Your Generation Lag",
+      "prompt": [
+        "Name one topic where you sprinted ahead of your parents fast enough that a conversation now feels like 'a bad phone line.' What is it?",
+        "Write the last argument you had with a parent. Strip out blame — what's the actual lag underneath (exposure gap, not malice)?",
+        "What did your parents spend their energy building instead of running the race beside you? Name the specific thing.",
+        "Does naming this as 'structural, not personal' change how angry you feel right now? Write one sentence either way."
+      ]
+    },
+    {
+      "title": "Price What Your Education Actually Bought",
+      "prompt": [
+        "Finish this: 'If I had a smaller education, I would have been happy with ___.' Be specific — a job, a street, a Sunday.",
+        "Name one person whose life you envy precisely because they stayed small — what does their ordinary Tuesday look like?",
+        "What door did your education open that you can never close again, even though you wish you sometimes could?",
+        "Would you trade the exposure back for the peace? Answer honestly, no resolution required."
+      ]
+    },
+    {
+      "title": "Trace Your Ambition Back to Its Source",
+      "prompt": [
+        "Before you 'caught' your current ambitions, what was your one visible option growing up — the thing you mistook for a calling?",
+        "Name the first specific person who showed you an ambition you'd never been offered. What was it, and what did it do to you that week?",
+        "List two things nobody ever put in front of you as a kid (art, travel, a trade, entrepreneurship — anything). How would your inventory look different if they had?",
+        "Is the goal you're chasing right now actually yours, or is it borrowed from someone you stood near at the right moment?"
+      ]
+    },
+    {
+      "title": "Find the Love Underneath the Ambition",
+      "prompt": [
+        "Under your current hustle — career, fitness, content, whatever — name the actual want driving it: recognition, love returned, proving something to someone specific.",
+        "Write about one time you gave something (love, effort, loyalty) with open arms and it didn't come back. What wall did you build afterward?",
+        "Which of your walls are protection you still need, and which have outlived the threat that built them?",
+        "What has your own version of 'lyrics for songs that don't exist yet' been — the small, half-embarrassing outlet where your unspent love actually goes?"
+      ]
+    }
+  ],
+  "cta": "Reply with your finished sentence from Section 2 — 'If I had a smaller education, I would have been happy with ___' — I want to read what your inventory looks like.",
+  "engage_potential": "high",
+  "blog_file": "content/blogs/2026-W29/2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat.md",
+  "slug": "2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat"
+}
