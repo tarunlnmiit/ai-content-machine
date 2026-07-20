@@ -33,6 +33,13 @@ venv/
 *~
 
 # ============================================
+# IDE/MCP caches
+# ============================================
+.playwright-mcp/
+vault/.obsidian/
+vault/.trash/
+
+# ============================================
 # Generated Caches & Indexes
 # ============================================
 graphify-out/
@@ -65,7 +72,6 @@ assets/hyperframes/
 assets/reels_video/
 assets/stories_video/
 assets/stories/
-content/blogs/*/
 
 # ============================================
 # Tool caches & ephemeral data
@@ -143,3 +149,12 @@ v1/.hf_beat_cache/
 experiments/
 v1/assets/test/
 *.bak
+
+# Carousel-derived video playbook + reel formula — LOCAL ONLY (user directive; third-party carousel refs)
+v1/data/kb/reels/07_carousel_structure_playbook.md
+v1/data/kb/reels/08_carousel_reel_formula.md
+
+# inbox-to-action carousel deck — LOCAL ONLY (user directive; not for the public assets/ set)
+v1/assets/carousels/2026-W28/inbox-to-action_carousel.html
+v1/assets/carousels/2026-W28/inbox-to-action_export.py
+v1/assets/carousels/slides/inbox-to-action/
