@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Data Science — Carousel: Interview Feedback Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-primary:#6B8FA8;
+    --brand-light:#96BAD0;
+    --brand-dark:#3D5F75;
+    --light-bg:#EDE8DC;
+    --light-border:#D6D0C4;
+    --dark-bg:#1E1B2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Space Grotesk',sans-serif;
+    background:#0c0a14;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:40px 0;
+  }
+
+  /* ---------- IG FRAME ---------- */
+  .ig-frame{
+    width:420px;
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 30px 60px rgba(0,0,0,.5);
+    border:1px solid #e2e2e2;
+  }
+  .ig-header{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 14px;
+  }
+  .ig-avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:linear-gradient(165deg,#3D5F75 0%,#6B8FA8 50%,#96BAD0 100%);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:700;font-size:15px;
+    flex-shrink:0;
+  }
+  .ig-handle{font-size:13px;font-weight:600;color:#111;}
+  .ig-sub{font-size:11px;color:#8a8a8a;}
+  .ig-dots{margin-left:auto;font-weight:700;color:#444;font-size:18px;}
+
+  /* ---------- VIEWPORT / TRACK ---------- */
+  .carousel-viewport{
+    width:420px;height:525px;
+    overflow:hidden;
+    position:relative;
+    background:#000;
+    touch-action:pan-y;
+    cursor:grab;
+  }
+  .carousel-viewport:active{cursor:grabbing;}
+  .carousel-track{
+    display:flex;
+    width:calc(420px * 8);
+    height:525px;
+    transition:transform .35s cubic-bezier(.22,.61,.36,1);
+    will-change:transform;
+  }
+
+  /* ---------- SLIDE BASE ---------- */
+  .slide{
+    width:420px;height:525px;
+    flex-shrink:0;
+    position:relative;
+    overflow:hidden;
+    background-color:var(--light-bg);
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0 27px, var(--light-border) 27px 28px);
+  }
+  .slide.dark{
+    background-color:var(--dark-bg);
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0 27px, rgba(255,255,255,.045) 27px 28px);
+  }
+  .slide.grad{
+    background:linear-gradient(165deg,#3D5F75 0%,#6B8FA8 50%,#96BAD0 100%);
+  }
+
+  /* ---------- OVERLAY: BADGE / FOLLOW / ARROW / SAVE ---------- */
+  .badge{
+    position:absolute;top:18px;left:18px;
+    background:rgba(30,27,46,.88);
+    color:#EDE8DC;
+    font-size:11px;font-weight:600;
+    padding:5px 10px;border-radius:20px;
+    letter-spacing:.03em;
+    z-index:5;
+  }
+  .slide.dark .badge, .slide.grad .badge{
+    background:rgba(237,232,220,.92);
+    color:#1E1B2E;
+  }
+  .follow-tag{
+    position:absolute;top:18px;right:18px;
+    font-size:10.5px;font-weight:600;
+    color:var(--brand-dark);
+    background:rgba(255,255,255,.75);
+    padding:5px 10px;border-radius:20px;
+    letter-spacing:.02em;
+    z-index:5;
+  }
+  .slide.dark .follow-tag{
+    color:var(--light-bg);
+    background:rgba(255,255,255,.12);
+  }
+  .arrow{
+    position:absolute;top:50%;right:18px;
+    transform:translateY(-50%);
+    width:38px;height:38px;border-radius:50%;
+    background:var(--brand-dark);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:700;
+    box-shadow:0 8px 18px rgba(0,0,0,.3);
+    z-index:5;
+  }
+  .slide.dark .arrow{background:var(--brand-light);color:#1E1B2E;}
+  .save-tag{
+    position:absolute;bottom:18px;right:18px;
+    font-size:10px;font-weight:600;
+    color:var(--brand-dark);
+    background:rgba(255,255,255,.8);
+    padding:5px 9px;border-radius:6px;
+    letter-spacing:.03em;
+    z-index:5;
+  }
+  .slide.dark .save-tag{color:var(--light-bg);background:rgba(255,255,255,.1);}
+
+  /* ---------- PROGRESS ---------- */
+  .progress-row{
+    position:absolute;top:0;left:0;right:0;
+    display:flex;gap:4px;
+    padding:8px 12px 0;
+    z-index:6;
+  }
+  .progress-seg{
+    flex:1;height:3px;border-radius:2px;
+    background:rgba(0,0,0,.15);
+    overflow:hidden;
+  }
+  .slide.dark .progress-seg, .slide.grad .progress-seg{background:rgba(255,255,255,.22);}
+  .progress-seg .fill{
+    height:100%;width:0%;
+    background:var(--brand-dark);
+    border-radius:2px;
+  }
+  .slide.dark .progress-seg .fill, .slide.grad .progress-seg .fill{background:#fff;}
+
+  /* ---------- CONTENT ---------- */
+  .content{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:0 36px;
+  }
+  .content.bottom{justify-content:flex-end;padding:0 36px 52px;}
+  .kicker{
+    font-size:11px;font-weight:700;letter-spacing:.14em;
+    color:var(--brand-dark);
+    margin-bottom:14px;
+  }
+  .slide.dark .kicker{color:var(--brand-light);}
+  .slide.grad .kicker{color:rgba(255,255,255,.85);}
+  .headline{
+    font-size:29px;line-height:1.28;font-weight:700;
+    color:#1E1B2E;
+  }
+  .slide.dark .headline, .slide.grad .headline{color:#EDE8DC;}
+  .body-copy{
+    margin-top:16px;font-size:14.5px;line-height:1.55;
+    color:#4a4536;font-weight:500;
+  }
+  .slide.dark .body-copy{color:#c9c4d6;}
+
+  .hl{
+    background:var(--brand-primary);color:#fff;
+    padding:2px 6px;border-radius:3px;
+    box-decoration-break:clone;
+    -webkit-box-decoration-break:clone;
+  }
+  .hl.orange{background:var(--brand-dark);color:#fff;}
+  .slide.dark .hl{background:var(--brand-light);color:#1E1B2E;}
+  .slide.dark .hl.orange{background:#EDE8DC;color:#1E1B2E;}
+
+  /* ---------- CARD LAYER ---------- */
+  .card{
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 18px 34px rgba(0,0,0,.22);
+    padding:16px 18px;
+    position:relative;
+  }
+  .card.rot-l{transform:rotate(-2.5deg);}
+  .card.rot-r{transform:rotate(2.2deg);}
+  .slide.dark .card{background:#2a2640;}
+  .tape{
+    position:absolute;top:-10px;left:26px;
+    width:56px;height:18px;
+    background:rgba(150,186,208,.55);
+    border:1px solid rgba(255,255,255,.4);
+    transform:rotate(-4deg);
+  }
+  .stat-num{font-size:38px;font-weight:700;color:var(--brand-dark);line-height:1;}
+  .slide.dark .stat-num{color:var(--brand-light);}
+  .stat-label{font-size:11px;font-weight:600;color:#6a6555;margin-top:6px;letter-spacing:.03em;}
+  .slide.dark .stat-label{color:#a9a4bd;}
+  .quote-line{font-size:15px;font-style:italic;color:#2a2640;font-weight:600;}
+  .quote-tag{font-size:10.5px;color:#847f6f;margin-top:8px;font-weight:600;}
+
+  /* ---------- DOODLES ---------- */
+  .doodle{position:absolute;opacity:.35;z-index:1;pointer-events:none;}
+  .slide.dark .doodle{opacity:.28;}
+
+  /* ---------- CTA ---------- */
+  .cta-btn{
+    display:inline-block;margin-top:22px;
+    background:#1E1B2E;color:#EDE8DC;
+    font-size:14px;font-weight:700;
+    padding:14px 22px;border-radius:8px;
+    letter-spacing:.01em;
+    box-shadow:0 12px 26px rgba(0,0,0,.3);
+  }
+  .cta-handle{
+    position:absolute;bottom:52px;left:36px;
+    font-size:12px;font-weight:600;color:rgba(255,255,255,.85);
+    letter-spacing:.03em;
+  }
+
+  /* ---------- IG FOOTER ---------- */
+  .ig-actions{
+    display:flex;align-items:center;gap:14px;
+    padding:12px 14px 4px;font-size:20px;color:#222;
+  }
+  .ig-actions .spacer{margin-left:auto;}
+  .ig-likes{padding:2px 14px 4px;font-size:13px;font-weight:600;color:#111;}
+  .ig-caption{
+    padding:0 14px 16px;font-size:13px;line-height:1.5;color:#222;
+  }
+  .ig-caption b{font-weight:700;}
+  .ig-caption .cta-word{color:var(--brand-dark);font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">breathofdatascience</div>
+      <div class="ig-sub">Original audio</div>
+    </div>
+    <div class="ig-dots">⋯</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK -->
+      <div class="slide" data-index="0">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+        </div>
+        <div class="badge">1 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:230px;left:24px;width:34px;" viewBox="0 0 24 24" fill="none" stroke="#3D5F75" stroke-width="1.6"><path d="M12 2l2.4 6.9L21 11l-6.6 2.1L12 20l-2.4-6.9L3 11l6.6-2.1L12 2z"/></svg>
+        <div class="content">
+          <div class="kicker">40+ HIRING LOOPS</div>
+          <div class="card rot-l">
+            <div class="tape"></div>
+            <h1 class="headline">The <span class="hl">one sentence</span> that killed the most hires I ever watched interview.</h1>
+          </div>
+          <div class="body-copy">Six words in my notes. Not a wrong answer — a tell.</div>
+        </div>
+        <div class="arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM / REFRAME -->
+      <div class="slide dark" data-index="1">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+        </div>
+        <div class="badge">2 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:60px;right:70px;width:30px;" viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="1.6"><path d="M3 12c4-8 14-8 18 0M3 12c4 8 14 8 18 0"/></svg>
+        <div class="content">
+          <div class="kicker">WHAT'S ACTUALLY BEING GRADED</div>
+          <div class="card rot-r">
+            <h2 class="headline">You prepped to prove you can <span class="hl">build it</span>. They scored whether you'd know <span class="hl orange">when not to</span>.</h2>
+          </div>
+        </div>
+        <div class="arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 3 — CREDIBILITY -->
+      <div class="slide" data-index="2">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+        </div>
+        <div class="badge">3 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="bottom:120px;left:20px;width:26px;" viewBox="0 0 24 24" fill="#3D5F75"><circle cx="4" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="20" cy="12" r="2"/></svg>
+        <div class="content">
+          <div class="kicker">WHO'S TELLING YOU THIS</div>
+          <div class="card rot-l" style="margin-bottom:16px;">
+            <div class="stat-num">40+</div>
+            <div class="stat-label">DEBRIEFS I'VE WRITTEN, INTERVIEWER SIDE</div>
+          </div>
+          <div class="body-copy">10 years as a data scientist. Every line ahead is copied straight from real feedback docs — mine.</div>
+        </div>
+        <div class="arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 4 — VALUE: THE TWO LINES -->
+      <div class="slide dark" data-index="3">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+        </div>
+        <div class="badge">4 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <div class="content">
+          <div class="kicker">THE LINE THAT SANK HIM</div>
+          <div class="card rot-l" style="margin-bottom:14px;">
+            <div class="quote-line">"It usually works well."</div>
+            <div class="quote-tag">Why logistic regression over a tree — asked once, no tradeoff, loop over.</div>
+          </div>
+          <div class="kicker" style="margin-top:6px;">THE LINE THAT SAVED HER</div>
+          <div class="card rot-r">
+            <div class="quote-line">"The AUC looked too good — I suspect leakage from the join."</div>
+            <div class="quote-tag">Volunteered before I asked. Got the offer over a stronger resume.</div>
+          </div>
+        </div>
+        <div class="arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 5 — VALUE: WRONG EXAM -->
+      <div class="slide" data-index="4">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+        </div>
+        <div class="badge">5 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:70px;left:26px;width:28px;" viewBox="0 0 24 24" fill="none" stroke="#3D5F75" stroke-width="1.6"><path d="M12 2l2.4 6.9L21 11l-6.6 2.1L12 20l-2.4-6.9L3 11l6.6-2.1L12 2z"/></svg>
+        <div class="content">
+          <div class="kicker">THE WRONG EXAM</div>
+          <div class="card rot-r" style="margin-bottom:14px;">
+            <h2 class="headline" style="font-size:24px;">Candidates rehearse <span class="hl">model choice</span>. Feedback docs argue whether the model should <span class="hl orange">exist at all</span>.</h2>
+          </div>
+          <div class="body-copy">One candidate built a beautiful churn pipeline and never asked what churn cost the company. "Strong engineer — not sure he'd know when to stop."</div>
+        </div>
+        <div class="arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 6 — VALUE: 1 IN 5 FLIP -->
+      <div class="slide dark" data-index="5">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+        </div>
+        <div class="badge">6 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="bottom:150px;right:70px;width:30px;" viewBox="0 0 24 24" fill="none" stroke="#96BAD0" stroke-width="1.6"><path d="M3 12c4-8 14-8 18 0M3 12c4 8 14 8 18 0"/></svg>
+        <div class="content">
+          <div class="kicker">1 IN 5 DEBRIEFS FLIP</div>
+          <div class="card rot-l">
+            <div class="stat-num">"I didn't learn anything watching that."</div>
+            <div class="stat-label" style="margin-top:10px;">THE LINE THAT KILLED A TECHNICALLY-CORRECT ANSWER</div>
+          </div>
+          <div class="body-copy">The flip never runs on correctness. It runs on whether you made the room think <span class="hl">with</span> you.</div>
+        </div>
+        <div class="arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 7 — RECAP / THESIS -->
+      <div class="slide" data-index="6">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:0%"></div></div>
+        </div>
+        <div class="badge">7 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="top:64px;right:26px;width:26px;" viewBox="0 0 24 24" fill="#3D5F75"><circle cx="4" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="20" cy="12" r="2"/></svg>
+        <div class="content">
+          <div class="kicker">BEFORE YOUR NEXT LOOP</div>
+          <div class="card rot-r" style="margin-bottom:12px;">
+            <div class="quote-line" style="font-style:normal;">Ask one real question about the work — not perks.</div>
+          </div>
+          <div class="card rot-l">
+            <div class="quote-line" style="font-style:normal;">Go find the story of the time you were <span class="hl">wrong</span>, and tell it without flinching.</div>
+          </div>
+        </div>
+        <div class="arrow">→</div>
+        <span class="save-tag">Save this ↓</span>
+      </div>
+
+      <!-- SLIDE 8 — CTA -->
+      <div class="slide grad" data-index="7">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+          <div class="progress-seg"><div class="fill" style="width:100%"></div></div>
+        </div>
+        <div class="badge">8 / 8</div>
+        <div class="content">
+          <div class="kicker">FREE WORKSHEET</div>
+          <h2 class="headline">The exact questions that separate <span class="hl">"watched him type"</span> from <span class="hl orange">"I'd sit next to them."</span></h2>
+          <span class="cta-btn">Comment "FEEDBACK" — I'll DM it to you</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-actions">
+    <span>♡</span><span>💬</span><span>✈</span>
+    <span class="spacer">🔖</span>
+  </div>
+  <div class="ig-likes">Liked by data_curious and 1,204 others</div>
+  <div class="ig-caption">
+    <b>breathofdatascience</b> What actually gets written in your feedback doc after you leave the room. Comment <span class="cta-word">"FEEDBACK"</span> and I'll send the worksheet — the questions that separate a "yes" from a "no" in 40+ loops.
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('viewport');
+  const SLIDE_W = 420;
+  const TOTAL = 8;
+  let current = 0;
+  let startX = 0, dragging = false, deltaX = 0;
+
+  function render(){
+    track.style.transform = `translateX(${-current * SLIDE_W}px)`;
+    document.querySelectorAll('.slide').forEach((s, i) => {
+      s.querySelectorAll('.progress-seg .fill').forEach((f, j) => {
+        f.style.width = j <= current ? '100%' : '0%';
+      });
+    });
+  }
+
+  viewport.addEventListener('pointerdown', e => {
+    dragging = true; startX = e.clientX; deltaX = 0;
+    track.style.transition = 'none';
+  });
+  window.addEventListener('pointermove', e => {
+    if(!dragging) return;
+    deltaX = e.clientX - startX;
+    track.style.transform = `translateX(${-current * SLIDE_W + deltaX}px)`;
+  });
+  window.addEventListener('pointerup', () => {
+    if(!dragging) return;
+    dragging = false;
+    track.style.transition = '';
+    if(deltaX < -60 && current < TOTAL - 1) current++;
+    else if(deltaX > 60 && current > 0) current--;
+    render();
+  });
+
+  render();
+</script>
+
+</body>
+</html>

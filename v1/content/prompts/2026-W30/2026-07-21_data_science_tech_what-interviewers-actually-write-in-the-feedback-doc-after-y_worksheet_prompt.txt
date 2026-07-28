@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "The Feedback Doc Rehearsal: Prep the Judgment Questions, Not the Model Answers"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Write Your Own 'Why Not' Line
+   Pick a project where you chose a specific model or method (e.g. logistic regression, a particular imputation strategy, a chosen metric). Write one sentence explaining why you picked it over the next-best alternative — the tradeoff, not just 'it worked well.' If you can't name the alternative you rejected and why, that's the gap an interviewer would flag.
+
+2. Find Your Leakage Story
+   Recall a model or analysis where a result looked suspiciously good, or where you caught a mistake before it shipped (a leaked feature, a bad join, an inflated AUC). Write it as a 3-sentence story: what looked wrong, how you caught it, what you did next. This is the story to have ready when asked 'tell me about a time your analysis was wrong.'
+
+3. Business-Cost the Metric
+   Take a project where you optimized a metric (accuracy, AUC, RMSE, churn rate). Write down what that metric actually cost or saved the business in dollars, time, or users — the number a stakeholder would care about. If you can't fill this in, go find out before your next interview; 'I didn't ask what churn cost the company' is the exact line that ends loops.
+
+4. Draft Your One Real Question
+   Write one specific question you'd ask an interviewing team about their actual work — not perks or WFH policy. Model it on 'What's the messiest dataset the team is fighting right now?' or 'Where does this model actually break in production?' Rehearse asking it out loud once.
+
+5. Pressure-Test an Underspecified Prompt
+   Take a vague data question you might get in an interview (e.g. 'build a model to predict churn'). Before touching any code or query, write down the clarifying question you'd ask first — the one that interrogates what decision the number is feeding. Compare it against your first instinct to just start building; that gap is what the feedback doc is scoring.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"
