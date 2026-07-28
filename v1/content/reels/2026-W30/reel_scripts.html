@@ -1,0 +1,372 @@
+<title>DS Reel Scripts — inbox-to-action · statusline-plus</title>
+<style>
+  :root {
+    --bg: #f4f6fb;
+    --bg-mid: #ffffff;
+    --bg-raised: #eceff7;
+    --border: #d9deec;
+    --text: #0a0e1a;
+    --text-muted: #5b6479;
+    --accent-blue: #2563eb;
+    --accent-cyan: #0891b2;
+    --accent-purple: #7c3aed;
+    --code-green: #15803d;
+    --code-red: #dc2626;
+    --shadow: 0 1px 2px rgba(10,14,26,0.04), 0 8px 24px -12px rgba(10,14,26,0.12);
+    --sans: -apple-system, "SF Pro Display", "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "JetBrains Mono", "Fira Code", "Roboto Mono", "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0a0e1a;
+      --bg-mid: #10151f;
+      --bg-raised: #111827;
+      --border: #232c40;
+      --text: #f0f4ff;
+      --text-muted: #8a93ab;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-purple: #8b5cf6;
+      --code-green: #22c55e;
+      --code-red: #ef4444;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px -16px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0a0e1a; --bg-mid: #10151f; --bg-raised: #111827; --border: #232c40;
+    --text: #f0f4ff; --text-muted: #8a93ab;
+    --accent-blue: #3b82f6; --accent-cyan: #06b6d4; --accent-purple: #8b5cf6;
+    --code-green: #22c55e; --code-red: #ef4444;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px -16px rgba(0,0,0,0.6);
+  }
+  :root[data-theme="light"] {
+    --bg: #f4f6fb; --bg-mid: #ffffff; --bg-raised: #eceff7; --border: #d9deec;
+    --text: #0a0e1a; --text-muted: #5b6479;
+    --accent-blue: #2563eb; --accent-cyan: #0891b2; --accent-purple: #7c3aed;
+    --code-green: #15803d; --code-red: #dc2626;
+    --shadow: 0 1px 2px rgba(10,14,26,0.04), 0 8px 24px -12px rgba(10,14,26,0.12);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 40px 24px 96px; }
+
+  .eyebrow {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent-cyan); margin: 0 0 10px;
+  }
+  h1 { font-size: clamp(26px, 4vw, 34px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
+  .lede { color: var(--text-muted); font-size: 15px; margin: 0 0 28px; max-width: 62ch; }
+
+  .tabs {
+    display: flex; gap: 6px; border-bottom: 1px solid var(--border);
+    margin-bottom: 28px; overflow-x: auto;
+  }
+  .tab {
+    font-family: var(--sans); font-size: 13.5px; font-weight: 600; color: var(--text-muted);
+    background: none; border: none; padding: 11px 16px; cursor: pointer;
+    border-bottom: 2px solid transparent; white-space: nowrap; display: flex; align-items: center; gap: 8px;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--accent-cyan); }
+  .tab .status {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 2px 6px; border-radius: 4px; background: var(--bg-raised); color: var(--text-muted);
+  }
+  .tab .status.done { color: var(--code-green); }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .doc-title { font-size: 21px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 4px; text-wrap: balance; }
+  .doc-sub { color: var(--text-muted); font-size: 13.5px; margin: 0 0 20px; }
+
+  .meta {
+    background: var(--bg-mid); border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 24px;
+    display: grid; gap: 10px; font-size: 13.5px;
+  }
+  .meta-row { display: grid; grid-template-columns: 108px 1fr; gap: 12px; align-items: baseline; }
+  .meta-row dt { color: var(--text-muted); font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .meta-row dd { margin: 0; color: var(--text); }
+  .meta-row code, .meta a { color: var(--accent-cyan); }
+  .meta a { text-decoration: none; }
+  .meta a:hover { text-decoration: underline; }
+  .prod-note {
+    border-top: 1px dashed var(--border); margin-top: 4px; padding-top: 12px;
+    color: var(--text-muted); font-size: 13px;
+  }
+  .prod-note strong { color: var(--text); }
+
+  h2.sec {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--accent-purple); margin: 32px 0 14px; padding-top: 4px;
+  }
+
+  .hooks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .hooks li {
+    background: var(--bg-mid); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; font-size: 14px; display: grid; grid-template-columns: 22px 1fr; gap: 10px;
+  }
+  .hooks li.pick { border-color: var(--accent-cyan); background: color-mix(in srgb, var(--accent-cyan) 6%, var(--bg-mid)); }
+  .hooks .rank { color: var(--text-muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .hooks .pick .rank { color: var(--accent-cyan); }
+  .hooks .htext { color: var(--text); }
+  .hooks .hmeta { display: block; color: var(--text-muted); font-size: 12px; margin-top: 3px; }
+  .driver-note { font-size: 13px; color: var(--text-muted); margin: 10px 2px 0; }
+
+  .beats-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); }
+  table.beats { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+  table.beats th {
+    text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--text-muted); background: var(--bg-raised); padding: 10px 14px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+  }
+  table.beats td {
+    padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text);
+  }
+  table.beats tr:last-child td { border-bottom: none; }
+  table.beats .beat-name { font-weight: 700; white-space: nowrap; }
+  table.beats .beat-time { font-variant-numeric: tabular-nums; color: var(--accent-cyan); white-space: nowrap; font-family: var(--mono); font-size: 12px; }
+  table.beats .beat-onscreen code { color: var(--accent-purple); }
+  table.beats .beat-cue { color: var(--text-muted); }
+
+  .codeblock {
+    background: var(--bg-mid); border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: var(--shadow); padding: 18px 20px; font-family: var(--mono); font-size: 13px;
+    white-space: pre-wrap; color: var(--text); line-height: 1.6;
+  }
+  .codeblock .kw { color: var(--code-green); font-weight: 700; }
+  .codeblock .tag { color: var(--accent-purple); }
+
+  .cap-footer { display: grid; gap: 6px; margin-top: 10px; font-size: 13px; color: var(--text-muted); }
+  .cap-footer b { color: var(--text); }
+  .cap-footer code { color: var(--accent-cyan); font-family: var(--mono); font-size: 12px; word-break: break-all; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 620px) { .two-col { grid-template-columns: 1fr; } }
+  .thumb {
+    background: var(--bg-mid); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+    font-family: var(--mono); font-size: 13px; box-shadow: var(--shadow);
+  }
+  .thumb .label { font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 6px; }
+
+  .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+  .checklist li {
+    display: grid; grid-template-columns: 18px 1fr; gap: 10px; font-size: 13.5px;
+    color: var(--text); align-items: start;
+  }
+  .checklist li::before {
+    content: ""; width: 15px; height: 15px; margin-top: 2px; border-radius: 4px;
+    border: 1.5px solid var(--text-muted); display: block;
+  }
+  .checklist li.gs::before { border-color: var(--accent-cyan); }
+  .checklist li b { color: var(--accent-cyan); font-weight: 700; }
+
+  .yt-note {
+    font-size: 13.5px; color: var(--text-muted); background: var(--bg-raised);
+    border-radius: 8px; padding: 12px 14px; border: 1px solid var(--border);
+  }
+
+  footer.credit { margin-top: 48px; font-size: 12px; color: var(--text-muted); text-align: center; }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Breath of Data Science · Build-in-public reels</p>
+  <h1>2 Reel Scripts</h1>
+  <p class="lede">DS/Tech 5-beat Instagram Reel scripts, viral_reel_formula.md format. Switch tabs to view each — hooks, beat-by-beat VO/on-screen/cue, caption, thumbnail text, and the recording checklist.</p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="inbox" role="tab">inbox-to-action <span class="status done">W30 · script</span></button>
+    <button class="tab" data-tab="statusline" role="tab">statusline-plus <span class="status done">W30 · script</span></button>
+  </div>
+
+  <!-- ===================== INBOX-TO-ACTION ===================== -->
+  <section class="panel active" id="inbox">
+    <p class="doc-title">"It reads your inbox. It never sends anything."</p>
+    <p class="doc-sub">Recorded on: 2026-07-20 · Week 2026-W30 · Platform: Instagram</p>
+
+    <dl class="meta">
+      <div class="meta-row"><dt>Source</dt><dd><a href="https://github.com/tarunlnmiit/inbox-to-action" target="_blank" rel="noopener">github.com/tarunlnmiit/inbox-to-action</a> — <code>pip install inbox-to-action</code>. Registry key <code>inbox_to_action</code>. No source blog — consistent with the existing W28 carousel.</dd></div>
+      <div class="meta-row"><dt>Formula</dt><dd><code>viral_reel_formula.md</code> (5-beat) + <code>reels/06_mavgpt_caption_formula.md</code> — the caption IS the product.</dd></div>
+      <div class="meta-row"><dt>Length</dt><dd>~40s target. Format: 9:16 talking-head + terminal screen-record B-roll.</dd></div>
+      <div class="meta-row"><dt>CTA</dt><dd>Keyword <b>INBOX</b> → auto-DM repo link (UTM-tagged). Repo link also pinned in first comment.</dd></div>
+      <div class="meta-row"><dt>Angle</dt><dd><code>angle_rotation[0]</code> — a real inbox triaged live (unread mail → tasks + drafts).</dd></div>
+      <div class="prod-note"><strong>Production note — green screen:</strong> Shot against a physical green screen, fixed framing, composited via <code>composite_greenscreen.py --niche ds</code> onto <code>ds_studio_portrait.png</code>. Shoot this and statusline-plus in the <strong>same session, same setup</strong> — one key calibration for both. Test-key a ~5s clip and check edges/spill before real takes. Framing/lighting identical across every take. Beat 3's terminal footage is captured separately.</div>
+    </dl>
+
+    <h2 class="sec">Hooks — 5 variants</h2>
+    <ol class="hooks">
+      <li class="pick"><span class="rank">1</span><span class="htext">"One command just read my inbox, drafted four replies, and sent none of them." <b>✓ picked</b><span class="hmeta">Result + tension: what it did vs. what it withheld</span></span></li>
+      <li><span class="rank">2</span><span class="htext">"I built a tool that triages my Gmail inbox. It's not allowed to hit send. Literally — there's no send code."<span class="hmeta">Bold Declaration + honesty hook</span></span></li>
+      <li><span class="rank">3</span><span class="htext">"Six unread emails. One command. Four drafts, two calendar flags, zero sent."<span class="hmeta">Data/Mechanism, concrete count</span></span></li>
+      <li><span class="rank">4</span><span class="htext">"Stop touching the same email four times. One command reads it, drafts it, and flags your calendar."<span class="hmeta">Problem-first, carries the carousel's opening line</span></span></li>
+      <li><span class="rank">5</span><span class="htext">"I gave an AI agent read access to my inbox. Here's the one thing it's not allowed to do."<span class="hmeta">Curiosity gap, safety-forward</span></span></li>
+    </ol>
+    <p class="driver-note"><b>Driver:</b> Result + honesty tension. Hook 2's "no send code" claim must land on-screen in beat 3 as actual proof (grep/test output), not just spoken.</p>
+
+    <h2 class="sec">5-beat shot plan</h2>
+    <div class="beats-scroll">
+      <table class="beats">
+        <thead><tr><th>Beat</th><th>Time</th><th>VO</th><th>On-screen</th><th>Cue</th></tr></thead>
+        <tbody>
+          <tr><td class="beat-name">1. Hook</td><td class="beat-time">0–3s</td><td>"One command read my inbox, drafted 4 replies, and sent zero."</td><td class="beat-onscreen"><code>1 COMMAND → 4 DRAFTS, 0 SENT</code></td><td class="beat-cue">Face to camera, hard cut in. Re-record 5×, keep the sharpest.</td></tr>
+          <tr><td class="beat-name">2. Problem</td><td class="beat-time">3–8s</td><td>"You open the email. Read it again. Half-remember what it's asking. Close the tab. Come back later and do it all over."</td><td class="beat-onscreen"><code>open · re-read · forget · re-open</code> (strikethrough in sequence)</td><td class="beat-cue">B-roll: a seeded/decoy inbox (not real personal mail), cursor clicking the same thread open and closed twice.</td></tr>
+          <tr><td class="beat-name">3. Reveal+Proof</td><td class="beat-time">8–28s</td><td>"So I built inbox-to-action. One command sorts your inbox: tells you what matters, sums up long threads, pulls out tasks with deadlines, drafts the replies. It never hits send — there's no send code, a test checks that. And you pick the AI, six options, even a fully local one."</td><td class="beat-onscreen">1) <code>pip install inbox-to-action</code><br>2) <code>inbox-to-action run --since 24h</code> on a seeded demo inbox: 6 unread → 4 drafts + 2 calendar flags<br>3) Gmail Drafts folder — the 4 drafts (demo inbox, no real mail)<br>4) <code>grep -r "send" src/</code> or test scroll — proving no send scope<br>5) Provider list: OpenRouter · Claude · Ollama (local)</td><td class="beat-cue">CodeAnnotation over the command; burn-in: CLASSIFY · SUMMARIZE · DRAFT · NEVER SEND.</td></tr>
+          <tr><td class="beat-name">4. Payoff</td><td class="beat-time">28–34s</td><td>"Your inbox, actually handled — minus the one thing you never wanted an AI touching."</td><td class="beat-onscreen"><code>Drafts ready. Nothing sent. You decide.</code></td><td class="beat-cue">Back to face, confident close.</td></tr>
+          <tr><td class="beat-name">5. CTA</td><td class="beat-time">34–40s</td><td>"It's free and open source. Comment INBOX and I'll DM you the repo and the setup."</td><td class="beat-onscreen"><code>Comment "INBOX" → repo in your DMs · pip install in caption ↓</code></td><td class="beat-cue">Loop: end frame = Drafts folder shot (result, not "bye") → invites rewatch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="sec">Caption</h2>
+    <div class="codeblock">Comment "INBOX" and I'll send you the repo + setup 👆
+
+One command triages your inbox in a single pass — classifies what matters, extracts tasks with deadlines, drafts replies, flags what needs calendar time.
+
+It never sends anything. No send scope in the codebase — enforced by a test, not a promise.
+
+BYOK across 6 LLM providers, including fully-local Ollama — nothing has to leave your machine.
+
+1. Classify unread mail
+2. Extract tasks + deadlines
+3. Draft the replies (never sent)
+4. Flag what needs calendar time
+
+pip install inbox-to-action · open source
+
+#claude #claudecode #ai #python #datascience #opensource #devproductivity #aitools #buildinpublic</div>
+    <div class="cap-footer">
+      <div><b>Keyword:</b> INBOX</div>
+      <div><b>DM payload:</b> <code>https://github.com/tarunlnmiit/inbox-to-action?utm_source=instagram&utm_medium=dm&utm_campaign=inbox_to_action</code></div>
+      <div><b>Pinned first comment:</b> Repo (free, open source): same UTM link + "Comment INBOX if the DM tool misses you."</div>
+    </div>
+
+    <div class="two-col" style="margin-top:24px;">
+      <div class="thumb"><div class="label">Thumbnail text</div>It read my inbox and drafted 4 replies. Sent 0 🤯<br><span style="color:var(--text-muted)">Alt: 1 command. 4 drafts. 0 sent 😳</span></div>
+      <div class="yt-note"><b>YT Shorts delta</b><br>Same footage. CTA swap: "Repo's in the description — free, pip install inbox-to-action. Subscribe for the next build." #Shorts in title.</div>
+    </div>
+
+    <h2 class="sec">Checklist</h2>
+    <ul class="checklist">
+      <li>Hook recorded 5×, winner picked</li>
+      <li>Terminal B-roll captured: install, <code>run --since 24h</code> live output, Drafts folder, no-send-scope proof, provider list (zoomed)</li>
+      <li>Captions burned in word-by-word; no clip &gt; 4s; ~150 wpm</li>
+      <li>Honesty guardrail: "never sends anything" backed on-screen by the no-send-scope proof in beat 3; default provider (OpenRouter) is cloud — only ollama/claude keep mail local</li>
+      <li>Comment→DM tool armed with keyword INBOX + UTM link</li>
+      <li>Loop ends on Drafts-folder frame</li>
+      <li class="gs"><b>Green screen</b> — test-key clip composited and edges/spill inspected before real takes</li>
+      <li class="gs"><b>Green screen</b> — wardrobe has no green/teal/yellow-green; check hair/shoulder edges in the test composite</li>
+      <li class="gs"><b>Green screen</b> — this reel and statusline-plus shot in the same session/setup; no framing/lighting change across any take</li>
+      <li><b>Demo inbox</b> seeded to match hook numbers (6 unread → 4 drafts, 2 flags); no real personal mail visible anywhere on screen</li>
+      <li>Screen-record B-roll captured in a separate sitting — not coupled to the greenscreen session</li>
+    </ul>
+  </section>
+
+  <!-- ===================== STATUSLINE-PLUS ===================== -->
+  <section class="panel" id="statusline">
+    <p class="doc-title">"One line. Every number that matters."</p>
+    <p class="doc-sub">Recorded on: 2026-07-20 · Week 2026-W30 · Platform: Instagram</p>
+
+    <dl class="meta">
+      <div class="meta-row"><dt>Source</dt><dd><a href="https://github.com/tarunlnmiit/statusline-plus" target="_blank" rel="noopener">github.com/tarunlnmiit/statusline-plus</a> — Claude Code plugin, not yet in projects.json (add before a recurring cadence). No source blog — news-timed launch reel.</dd></div>
+      <div class="meta-row"><dt>Formula</dt><dd><code>viral_reel_formula.md</code> (5-beat) + <code>reels/06_mavgpt_caption_formula.md</code> — the caption IS the product.</dd></div>
+      <div class="meta-row"><dt>Length</dt><dd>~38s target. Format: 9:16 talking-head + terminal screen-record B-roll.</dd></div>
+      <div class="meta-row"><dt>CTA</dt><dd>Keyword <b>LINE</b> → auto-DM repo link (UTM once wired). Repo link also pinned in first comment.</dd></div>
+      <div class="prod-note"><strong>Production note — green screen:</strong> Shot against a physical green screen, fixed framing, composited via <code>composite_greenscreen.py --niche ds</code> onto <code>ds_studio_portrait.png</code>. Shoot this and inbox-to-action in the <strong>same session, same setup</strong> — one key calibration for both. Test-key a ~5s clip and check edges/spill before real takes. Framing/lighting identical across every take. Beat 3's terminal footage is captured separately.</div>
+    </dl>
+
+    <h2 class="sec">Hooks — 5 variants</h2>
+    <ol class="hooks">
+      <li class="pick"><span class="rank">1</span><span class="htext">"I was blind to my own cost and rate limits until I built this one line." <b>✓ picked</b><span class="hmeta">Personal stakes + result</span></span></li>
+      <li><span class="rank">2</span><span class="htext">"Claude Code doesn't tell you your cost, your rate limit, or your git branch — until you build this."<span class="hmeta">Problem-first, specific gaps</span></span></li>
+      <li><span class="rank">3</span><span class="htext">"One jq pass. One line. Model, cost, context, rate limits, git branch — all of it."<span class="hmeta">Data/Mechanism, concrete list</span></span></li>
+      <li><span class="rank">4</span><span class="htext">"I kept hitting my 5-hour limit blind. So I built a status line that never lets that happen again."<span class="hmeta">Story + pain</span></span></li>
+      <li><span class="rank">5</span><span class="htext">"Three themes. One status line. Everything Claude Code hides from you by default."<span class="hmeta">Contrarian — default is hiding info</span></span></li>
+    </ol>
+    <p class="driver-note"><b>Driver:</b> Personal stakes + result. Beat 3 must show the actual rendered status line on-screen (not a mockup); the "single jq pass" claim needs the real script/theme file visible.</p>
+
+    <h2 class="sec">5-beat shot plan</h2>
+    <div class="beats-scroll">
+      <table class="beats">
+        <thead><tr><th>Beat</th><th>Time</th><th>VO</th><th>On-screen</th><th>Cue</th></tr></thead>
+        <tbody>
+          <tr><td class="beat-name">1. Hook</td><td class="beat-time">0–3s</td><td>"I couldn't see my cost or rate limits — so I built this one line."</td><td class="beat-onscreen"><code>1 LINE → COST · LIMITS · BRANCH · CONTEXT</code></td><td class="beat-cue">Face to camera, hard cut in. Deliver straight to lens — don't point/gesture at "this one line," it only exists post-composite; the burn-in carries that job. Re-record 5×.</td></tr>
+          <tr><td class="beat-name">2. Problem</td><td class="beat-time">3–8s</td><td>"You're deep in a session. No idea how close you are to your limit. No idea what it's costing you. No idea which branch you're even on."</td><td class="beat-onscreen"><code>cost? · rate limit? · branch? · ¯\_(ツ)_/¯</code></td><td class="beat-cue">B-roll: default terminal, bare prompt, no status line — feels empty next to what's coming.</td></tr>
+          <tr><td class="beat-name">3. Reveal+Proof</td><td class="beat-time">8–27s</td><td>"So I built statusline-plus. Two commands to install. It reads the status line once and shows your model, cost, context, your 5-hour and 7-day limits, and your git branch — all on one line. Three themes: minimal, full, power. Switch with one command."</td><td class="beat-onscreen">1) <code>/plugin marketplace add tarunlnmiit/statusline-plus</code><br>2) <code>/plugin install statusline-plus@statusline-plus</code><br>3) <code>/statusline-install</code> → status line appears live<br>4) Close-up pan: full theme (model · cost · context · 5h · branch)<br>5) <code>/statusline power</code> → power theme (tokens + 7d + duration)</td><td class="beat-cue">CodeAnnotation over the three commands; burn-in: 1 JQ PASS · 3 THEMES · MERGE-SAFE.</td></tr>
+          <tr><td class="beat-name">4. Payoff</td><td class="beat-time">27–33s</td><td>"Same terminal. Same session. Now you can see exactly what you're spending, and how close you are to the wall."</td><td class="beat-onscreen"><code>Every number, one glance.</code></td><td class="beat-cue">Back to face, confident close.</td></tr>
+          <tr><td class="beat-name">5. CTA</td><td class="beat-time">33–38s</td><td>"It's free and open source. Comment LINE and I'll DM you the repo and the install steps."</td><td class="beat-onscreen"><code>Comment "LINE" → repo in your DMs · install steps in caption ↓</code></td><td class="beat-cue">Loop: end frame = the rendered full theme status line (result, not "bye") → invites rewatch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="sec">Caption</h2>
+    <div class="codeblock">Comment "LINE" and I'll send you the repo + install steps 👆
+
+Claude Code doesn't show you your cost, your rate limits, or your git branch by default. This free plugin puts all of it on one line — read in a single jq pass, not once per segment.
+
+Install (Claude Code):
+1. /plugin marketplace add tarunlnmiit/statusline-plus
+2. /plugin install statusline-plus@statusline-plus
+3. /statusline-install
+
+3 themes, switch anytime with /statusline &lt;name&gt;:
+1. minimal — model · context · folder
+2. full — + cost, git branch, 5-hour limit, reset time (daily driver)
+3. power — + tokens, 7-day limit, duration, PR state, everything
+
+Merge-safe install — patches your settings.json without touching anything else. Uninstall anytime with /statusline-uninstall.
+
+Free · open source · MIT.
+
+#claude #claudecode #ai #devtools #datascience</div>
+    <div class="cap-footer">
+      <div><b>Keyword:</b> LINE</div>
+      <div><b>DM payload:</b> <code>https://github.com/tarunlnmiit/statusline-plus</code> (add UTM once registered in projects.json)</div>
+      <div><b>Pinned first comment:</b> Repo (free, MIT): same link + "Comment LINE if the DM tool misses you."</div>
+    </div>
+
+    <div class="two-col" style="margin-top:24px;">
+      <div class="thumb"><div class="label">Thumbnail text</div>Claude Code was hiding my cost & limits 😳 1 line fixes it<br><span style="color:var(--text-muted)">Alt: I built the status line Claude Code should've shipped with 🤯</span></div>
+      <div class="yt-note"><b>YT Shorts delta</b><br>Same footage. CTA swap: "Repo's in the description — it's free. Subscribe for the next build." #Shorts in title.</div>
+    </div>
+
+    <h2 class="sec">Checklist</h2>
+    <ul class="checklist">
+      <li>Hook recorded 5×, winner picked</li>
+      <li>Terminal B-roll captured: 3 install/wire commands, live status line appearing, theme close-up, power switch (zoomed)</li>
+      <li>Captions burned in word-by-word; no clip &gt; 4s; ~150 wpm</li>
+      <li>Honesty guardrail: it's a read-only display of Claude Code's own status-line JSON — never imply it "monitors" or "controls" Claude</li>
+      <li>Before a recurring cadence: add <code>statusline_plus</code> to projects.json (dm_keyword, UTM template, honesty_guardrail) — this reel is a one-off launch</li>
+      <li>Comment→DM tool armed with keyword LINE + UTM link (once repo entry exists)</li>
+      <li>Loop ends on the rendered full theme frame</li>
+      <li class="gs"><b>Green screen</b> — test-key clip composited and edges/spill inspected before real takes</li>
+      <li class="gs"><b>Green screen</b> — wardrobe has no green/teal/yellow-green; check hair/shoulder edges in the test composite</li>
+      <li class="gs"><b>Green screen</b> — this reel and inbox-to-action shot in the same session/setup; no framing/lighting change across any take</li>
+      <li>Beat 3's full/power close-ups show real cost + rate-limit numbers — confirm you're fine with those legible at zoom before recording</li>
+      <li>Screen-record B-roll captured in a separate sitting — not coupled to the greenscreen session</li>
+    </ul>
+  </section>
+
+  <footer class="credit">v1/content/reels/2026-W30 · viral_reel_formula.md · Breath of Data Science</footer>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+</script>
