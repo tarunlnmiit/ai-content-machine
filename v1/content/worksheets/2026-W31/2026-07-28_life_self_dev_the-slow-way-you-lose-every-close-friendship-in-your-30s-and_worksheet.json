@@ -1,0 +1,46 @@
+{
+  "type": "action_guide",
+  "niche": "life_self_dev",
+  "title": "The Friendship Fade Audit: Find Who You're Losing Before It's Final",
+  "sections": [
+    {
+      "title": "Check Your Silent Ledger",
+      "prompt": [
+        "Name three people you've quietly decided 'should reach out first.' What's the unspoken math you're running - why is it their turn and not yours?",
+        "When did you start treating your own outreach as spending and their outreach as earning? Try to date it, even roughly.",
+        "Which friendship are you currently explaining away with 'life's just hectic right now' when the truer story is that you stopped paying into it?",
+        "If you added up the balance on that ledger today, who owes whom - and does that framing even make sense once you say it out loud?"
+      ]
+    },
+    {
+      "title": "Find Your 'Next Sunday'",
+      "prompt": [
+        "Do you have, or did you have, a standing ritual with someone - a weekly call, a lunch, a running joke? Name the person and the ritual.",
+        "Recall the first time you told them 'swamped this week, let's do it next [day]' instead of showing up. What was the actual reason, versus the excuse you gave?",
+        "What happened the second time it slipped - did either of you name it, or did the silence just get quietly accepted as normal?",
+        "Looking back, was there a single moment that ritual became 'interruptible'? What was happening in your life right then that made you treat it as optional?"
+      ]
+    },
+    {
+      "title": "Depth vs. Frequency Autopsy",
+      "prompt": [
+        "Name one friendship you assumed could survive six months of silence because it was 'real.' Has it actually survived, or has it quietly expired?",
+        "Name one relationship that's stayed alive purely on frequency - a dumb voice note, a meme, a Tuesday text with no agenda. What's the small, low-effort thing that keeps it going?",
+        "Which friendships right now are you protecting with the 'depth alone will hold it' belief, and which one is most at risk of that belief being wrong?"
+      ]
+    },
+    {
+      "title": "Send the Specific-Memory Text",
+      "prompt": [
+        "Pick the one person you suspect is in a slow fade right now. Write down one hyper-specific shared memory with them - not 'we should catch up,' but the exact bug, trip, joke, or moment only the two of you would recognize.",
+        "Draft the actual text you'd send: either that specific-memory opener, or the direct version - 'I feel like we've drifted, and I don't want to. Can we get on a call this week?' Which fits this person and why?",
+        "Name the real fear underneath not sending it - hearing 'yeah, we have,' hearing nothing back, or something else?",
+        "Pick a day this week you'll actually send it. Put it on the calendar right now."
+      ]
+    }
+  ],
+  "cta": "Send me the exact text you drafted for the person you picked (names blanked out if you'd rather) - I want to see the specific memory you chose and whether you sent it.",
+  "engage_potential": "very_high",
+  "blog_file": "content/blogs/2026-W31/2026-07-28_life_self_dev_the-slow-way-you-lose-every-close-friendship-in-your-30s-and.md",
+  "slug": "2026-07-28_life_self_dev_the-slow-way-you-lose-every-close-friendship-in-your-30s-and"
+}

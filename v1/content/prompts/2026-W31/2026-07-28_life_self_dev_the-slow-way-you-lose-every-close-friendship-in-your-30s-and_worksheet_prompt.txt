@@ -1,0 +1,40 @@
+Create a reflective worksheet PDF (A4, portrait) for "The Friendship Fade Audit: Find Who You're Losing Before It's Final"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 4 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Check Your Silent Ledger
+   - Name three people you've quietly decided 'should reach out first.' What's the unspoken math you're running - why is it their turn and not yours?
+   - When did you start treating your own outreach as spending and their outreach as earning? Try to date it, even roughly.
+   - Which friendship are you currently explaining away with 'life's just hectic right now' when the truer story is that you stopped paying into it?
+   - If you added up the balance on that ledger today, who owes whom - and does that framing even make sense once you say it out loud?
+
+2. Find Your 'Next Sunday'
+   - Do you have, or did you have, a standing ritual with someone - a weekly call, a lunch, a running joke? Name the person and the ritual.
+   - Recall the first time you told them 'swamped this week, let's do it next [day]' instead of showing up. What was the actual reason, versus the excuse you gave?
+   - What happened the second time it slipped - did either of you name it, or did the silence just get quietly accepted as normal?
+   - Looking back, was there a single moment that ritual became 'interruptible'? What was happening in your life right then that made you treat it as optional?
+
+3. Depth vs. Frequency Autopsy
+   - Name one friendship you assumed could survive six months of silence because it was 'real.' Has it actually survived, or has it quietly expired?
+   - Name one relationship that's stayed alive purely on frequency - a dumb voice note, a meme, a Tuesday text with no agenda. What's the small, low-effort thing that keeps it going?
+   - Which friendships right now are you protecting with the 'depth alone will hold it' belief, and which one is most at risk of that belief being wrong?
+
+4. Send the Specific-Memory Text
+   - Pick the one person you suspect is in a slow fade right now. Write down one hyper-specific shared memory with them - not 'we should catch up,' but the exact bug, trip, joke, or moment only the two of you would recognize.
+   - Draft the actual text you'd send: either that specific-memory opener, or the direct version - 'I feel like we've drifted, and I don't want to. Can we get on a call this week?' Which fits this person and why?
+   - Name the real fear underneath not sending it - hearing 'yeah, we have,' hearing nothing back, or something else?
+   - Pick a day this week you'll actually send it. Put it on the calendar right now.
+
+
+Footer: "Reply with your answers — your reflections help others find their entry point."
+
+Optional: Soft watercolor accent in corner.
