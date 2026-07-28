@@ -36,14 +36,14 @@ BANNED WORDS: "In conclusion", "Dive into", "Leverage", "Game-changer", "Synergy
 # Current model ids (see CLAUDE.md / claude-api skill).
 FABLE = "claude-fable-5"    # Mythos-class, above Opus — premium limits, minutes-long turns
 OPUS = "claude-opus-4-8"
+OPUS_5 = "claude-opus-5"    # current Opus — drop-in upgrade from 4.8 at the same pricing
 SONNET = "claude-sonnet-5"  # near-Opus coding/agentic quality at Sonnet-tier limits
-SONNET_46 = "claude-sonnet-4-6"
 HAIKU = "claude-haiku-4-5-20251001"
 
 # Task → model routing (Max 5x). Override per-call where a script needs to.
 # Opus 4.8 on quality-critical LOW-VOLUME tasks (burns limits fast, long turns).
 MODEL_BY_TASK = {
-    "hero_blog": OPUS,         # produce_blog, ghostwrite — flagship long-form, weekly, quality-critical
+    "hero_blog": OPUS_5,       # produce_blog, ghostwrite — flagship long-form, weekly, quality-critical
     "buffer": SONNET,          # bulk drafts, lower stakes
     "repurpose": SONNET,       # mechanical transform of existing text
     "html_asset": SONNET,      # slides / carousel / social / thumbnail
@@ -63,7 +63,7 @@ MODEL_BY_TASK = {
 def model_for(task: str, niche: Optional[str] = None) -> str:
     """Return the model id for a pipeline task.
 
-    Everything follows MODEL_BY_TASK (hero_blog included — Opus 4.8).
+    Everything follows MODEL_BY_TASK (hero_blog included — Opus 5).
     Unknown tasks fall back to Sonnet.
     """
     return MODEL_BY_TASK.get(task, SONNET)
