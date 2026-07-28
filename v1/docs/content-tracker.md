@@ -71,9 +71,9 @@ linkedin.url:     —
 carousel.status:  none
 carousel.url:     —
 reel.ref:         —
-reel.status:      none
+reel.status:      rendered
 reel.cta:         —
-reel.ig:          —
+reel.ig:          created
 reel.yt:          —
 longform.ref:     —
 longform.status:  none
@@ -84,6 +84,8 @@ source_draft:     —
 flags:            —
 notes: |
   ✅ PUBLISHED. DSC not accepting new writers (confirmed 2026-07-03) — pulled. AI in Plain English skipped — W27 piece already queued there. HackerNoon ruled out — off Medium (confirmed 2026-07-03). Routed to DataDrivenInvestor — career/hiring angle fits, already contributing.
+  brag video: plan drafted, tone=wrycontrarian, hook=Contrarian + Authority reversal
+  reel: 2026-07-27 selected for today's IG reel (Haiku explore + Fable advisory) — asset at v1/assets/brag_videos/2026-W26/2026-06-26_data_science_tech_what-hiring-managers-think-when-they-see-your-ds-github-2026_brag.mp4
 
 ## 2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years_betterhumans
 title:            How to Build a Wake-Up Ritual That Survives Real Life
@@ -142,6 +144,7 @@ source_draft:     —
 flags:            —
 notes: |
   Decision: all poetry goes to his own pub — no external poetry-pub gatekeeping or dead-pub hunting.
+  brag video: plan drafted, tone=restrained, hook=Hyper-specificity + Pattern interrupt
 
 ## 2026-06-30_data_science_tech_the-free-local-ai-setup-that-replaced-my-200month-data-scien
 title:            The Free Local AI Setup That Replaced My $200/Month Data Science Stack
@@ -171,6 +174,7 @@ source_draft:     —
 flags:            —
 notes: |
   ✅ PUBLISHED 2026-06-30. First piece live via the In Plain English network (unlocks Python/JS/AI in Plain English + Stackademic for future DS posts). DSC W26 still pending — not re-submitted there.
+  brag video: plan drafted, tone=yc-parody, hook=Contrarian + Timeframe tension
 
 ## 2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten
 title:            The 3 Hours You Spend on Self-Help Content Are Making You Worse at Self-Improvement
@@ -187,9 +191,9 @@ linkedin.url:     —
 carousel.status:  none
 carousel.url:     —
 reel.ref:         —
-reel.status:      none
+reel.status:      rendered
 reel.cta:         —
-reel.ig:          —
+reel.ig:          created
 reel.yt:          —
 longform.ref:     —
 longform.status:  none
@@ -200,6 +204,7 @@ source_draft:     —
 flags:            —
 notes: |
   ✅ PUBLISHED. Curious found dead (2026-07-06) — pulled. Resubmitted to ILLUMINATION, contrarian self-improvement essay fits.
+  reel: 2026-07-27 selected for today's IG reel (Haiku explore + Fable advisory), best of 5 rendered variants ("quiet-admission" deadpan take) — asset at v1/assets/brag_videos/2026-W27/2026-06-30_life_self_dev_the-5-minute-habit-that-replaced-3-hours-of-self-help-conten_brag.mp4
 
 ## 2026-07-01_data_science_tech_i-tracked-every-data-science-job-posting-for-30-days-heres-t
 title:            I Scraped 1,003 Data Science Job Postings — 87% Want This One Thing, and Most Candidates Still…
@@ -229,6 +234,7 @@ source_draft:     —
 flags:            —
 notes: |
   ✅ PUBLISHED 2026-07-07 (verified via Medium submissions outbox 2026-07-16). Data-heavy job-market piece (1,003 postings scraped). Network home already unlocked via the 06-30 published piece. DSC W26 still pending.
+  brag video: plan drafted, tone=cinematic, hook=Hyper-specificity + Numbered list
 
 ## 2026-07-01_life_self_dev_i-tracked-90-days-of-productive-mornings-data-show-real-trig
 title:            I Woke at 6AM Every Day for 90 Days. The Data Said Wake Time Was Never the Point.
@@ -287,6 +293,7 @@ source_draft:     —
 flags:            —
 notes: |
   ✅ PUBLISHED 2026-07-06 (verified via Medium submissions outbox 2026-07-16). AI Advances declined + zipBoard dead (07-06) — resubmitted to Technology Hits.
+  brag video: plan drafted, tone=deadpan, hook=Contradiction + Hyper-specificity
 
 ## 2026-07-06_life_self_dev_your-overloaded-self-improvement-schedule-is-slowly-making-y
 title:            Your Self-Improvement Schedule Is Slowly Making You Someone You Don't Recognize
@@ -316,6 +323,7 @@ source_draft:     33
 flags:            —
 notes: |
   Pending review on Medium (verified via submissions outbox 2026-07-16). Be Yourself confirmed dead (no posts since 2025) — pulled, resubmitted to Write A Catalyst (productivity/self-growth crossover).
+  brag video: plan drafted, tone=yc-parody, hook=Contradiction + Authority reversal
 
 ## 2026-07-10_data_science_tech_i-asked-5-senior-engineers-to-explain-a-vector-database-with
 title:            Everyone Building RAG Is Getting Vector Databases Wrong
@@ -345,6 +353,7 @@ source_draft:     —
 flags:            —
 notes: |
   ✅ PUBLISHED 2026-07-12 (verified via Medium submissions outbox 2026-07-16). Technology Hits already holds W28 DS submission (07-06) — avoided stacking, routed to secured-but-unused SYNERGY. Worksheet: The Vector DB Readiness Checklist.
+  brag video: plan drafted, tone=polished, hook=Curiosity gap + Contrarian
 
 ## 2026-07-10_life_self_dev_high-emotional-intelligence-at-work-isnt-about-being-nice-it
 title:            The Skill Every High-Performer Has That Nobody Taught You in Any Meeting
@@ -374,6 +383,7 @@ source_draft:     32
 flags:            —
 notes: |
   Pending review on Medium (verified via submissions outbox 2026-07-16). Write A Catalyst already holds W28 Life submission (07-06) — avoided stacking, routed to secured-but-unused Mind Cafe. Worksheet: The Ten-Second Rule.
+  brag video: plan drafted, tone=deadpan, hook=Cold open + Contrarian
 
 ## 2026-06-08_data_science_tech_i-deleted-three-weeks-of-content
 title:            I Deleted Three Weeks of Content
@@ -403,6 +413,7 @@ source_draft:     —
 flags:            —
 notes: |
   ✅ PUBLISHED 2026-06-08. Reclassified Life→DS/Tech (2026-07-16): content is a git/dev-tools recovery story, not self-dev — carousel/reel regenerated under DS niche.
+  brag video: plan drafted, tone=cinematic, hook=Cold open + Negativity bias
 
 ## 2026-05-31_data_science_tech_the-one-skill-that-makes-you-good-at-ai
 title:            The One Skill That Makes You Good at AI (It's Not What You Think)
@@ -433,6 +444,7 @@ flags:            —
 notes: |
   ✅ PUBLISHED 2026-05-31.
   https://payhip.com/NovelPromptCo
+  brag video: plan drafted, tone=polished, hook=Contrarian + Curiosity gap
 
 ## 2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli
 title:            You Don't Need Mastodon.py to Automate Toots — Just `requests` and 40 Lines
@@ -462,6 +474,7 @@ source_draft:     2
 flags:            —
 notes: |
   Submitted as Medium draft 2026-07-16. From drafts-completion batch (source Medium draft: 'Building a Mastodon Automation Bot Using Python and Streamlit'); worksheet live.
+  brag video: plan drafted, tone=yc-parody, hook=Contrarian + Hyper-specificity
 
 ## 2026-07-16_life_self_dev_what-leaving-home-at-eighteen-actually-cost-me-ten-years-lat
 title:            Ten Years Of Independence Taught Me Two Things I Blame My Parents For. I Can Only Write One.
@@ -520,6 +533,7 @@ source_draft:     —
 flags:            —
 notes: |
   Produced 2026-07-14, not yet submitted. Secured pub SYNERGY last used 07-10 — avoids stacking with Mastodon piece (proposed Technology Hits).
+  brag video: plan drafted, tone=deadpan, hook=Negativity bias + Curiosity gap
 
 ## 2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru
 title:            How to Make Better Decisions Under Pressure Without Ever Truly Trusting Yourself
@@ -549,6 +563,7 @@ source_draft:     —
 flags:            —
 notes: |
   Produced 2026-07-14, not yet submitted. Write A Catalyst last used 07-06, productivity/self-growth fit — avoids stacking with Mind Cafe (pending) and Know Thyself Heal Thyself (used 07-14).
+  brag video: plan drafted, tone=cinematicdata, hook=Contrarian + Hyper-specificity
 
 ## 2026-07-17_life_self_dev_understanding-who-truly-cares-a-guide-to-valuing-real-connec
 title:            The Person You're Begging To Notice You Isn't The Problem. This Is.
@@ -578,6 +593,7 @@ source_draft:     34
 flags:            —
 notes: |
   Submitted 2026-07-17. Produced same day from Medium drafts-completion batch (row 34, source draft: 'Understanding Who Truly Cares: A Guide to Valuing Real Connections'); carousel live, worksheet generated but not yet deployed (Vercel push pending — 404 as of 07-17). Mind Cafe + Write A Catalyst ruled out — each already had a piece pending review. ILLUMINATION already used W29 (Ten Years piece, published). First piece submitted to Thoughts And Ideas (26K followers) — new secured home, unused before this.
+  brag video: plan drafted, tone=cinematic, hook=Hyper-specificity + Authority reversal
 
 ## 2026-06-16_data_science_tech_ai-prompt-anatomy-travel
 title:            I Stopped Googling Travel Guides. I Interrogated an AI Instead — Here's the Exact Prompt That Worked
@@ -607,6 +623,7 @@ source_draft:     —
 flags:            ? niche conflict — tracker says Life, blog file slug says data_science_tech. Confirm with Tarun.
 notes: |
   ✅ PUBLISHED 2026-06-16.
+  brag video: plan drafted, tone=app-store, hook=POV + Hyper-specificity
 
 ## ORPHAN:safe-and-alive
 title:            Safe and Alive
@@ -868,6 +885,7 @@ source_draft:     —
 flags:            —
 notes: |
   https://worksheets-thebreathnetwork.vercel.app/get-worksheet?slug=python-for-data-science-tutorial-210&source=post_page-----2393bcab9c79---------------------------------------
+  brag video: plan drafted, tone=deadpan, hook=Negativity bias + Pattern interrupt
 
 ## 2026-05-26_life_self_dev_mental-health-openness-and-breaking-stigmas
 title:            The Lie We Inherited About Strength
@@ -925,7 +943,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            ? title sourced from YAML frontmatter `title:` field — file has no markdown H1 (`# `) line.
 notes: |
-  —
+  brag video: plan drafted, tone=cinematic, hook=Cold open + Contradiction
 
 ## 2026-06-01_data_science_tech_python-for-data-science-tutorial-310
 title:            Python for Data Science: Tutorial 3/10 — NumPy and the Art of Thinking in Arrays
@@ -954,7 +972,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            —
 notes: |
-  —
+  brag video: plan drafted, tone=default, hook=Transformation evidence + Timeframe tension
 
 ## 2026-06-01_life_self_dev_the-cost-of-carrying-things-nobody-sees
 title:            The Cost of Carrying Things Nobody Sees
@@ -983,7 +1001,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            —
 notes: |
-  —
+  brag video: plan drafted, tone=polished, hook=POV + Curiosity gap
 
 ## 2026-06-01_poetry_quotes_looking-at-the-world-through-a-reflective-lens
 title:            Only to Make Themselves Happy
@@ -1012,7 +1030,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            ? title sourced from YAML frontmatter `title:` field — file has no markdown H1 (`# `) line.
 notes: |
-  —
+  brag video: plan drafted, tone=deadpan, hook=Contrarian + Negativity bias
 
 ## 2026-06-08_life_self_dev_the-simple-habit-that-changed-my-productivity
 title:            7 Simple Habits That Quietly Rewired My Productivity
@@ -1041,7 +1059,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            —
 notes: |
-  —
+  brag video: plan drafted, tone=app-store, hook=Numbered list + Contrarian
 
 ## 2026-06-08_poetry_quotes_poetry-dips-its-fingers-in-every-colour
 title:            Every Colour Has a Feeling
@@ -1070,7 +1088,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            ? title sourced from YAML frontmatter `title:` field — file has no markdown H1 (`# `) line.
 notes: |
-  —
+  brag video: plan drafted, tone=polished, hook=Authority reversal + Transformation evidence
 
 ## 2026-06-10_data_science_tech_python-for-data-science-tutorial-4-pandas-for-data-analysis
 title:            Python for Data Science: Tutorial 4/10 — Pandas for Data Analysis
@@ -1099,7 +1117,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            —
 notes: |
-  —
+  brag video: plan drafted, tone=polished, hook=Transformation evidence
 
 ## 2026-06-16_data_science_tech_python-for-data-science-tutorial-5-out-of-10-for-visualizati
 title:            Python for Data Science — Tutorial 5/10: Making Your Data Tell a Story with Matplotlib and Seaborn
@@ -1128,7 +1146,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            —
 notes: |
-  —
+  brag video: plan drafted, tone=default, hook=Authority reversal + Negativity bias
 
 ## 2026-06-16_life_self_dev_recursive-self-improvement
 title:            5 Loops That Make Self-Improvement Self-Sustaining
@@ -1157,7 +1175,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            —
 notes: |
-  —
+  brag video: plan drafted, tone=systemsdiagram, hook=Curiosity gap + Contrarian
 
 ## 2026-06-16_poetry_quotes_you-have-gotta-dance-like-there-is-nobody-watching
 title:            Dance When the Playlist Ends
@@ -1186,7 +1204,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            ? title sourced from YAML frontmatter `title:` field — file has no markdown H1 (`# `) line.
 notes: |
-  —
+  brag video: plan drafted, tone=kinetic, hook=POV + Cold open
 
 ## 2026-06-23_ds_the-ml-skill-agentic-ai-bootcamps-wont-teach-you-but-re
 title:            The ML Skill Agentic AI Bootcamps Won't Teach You (But Replaces You If You Skip It)
@@ -1215,7 +1233,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            —
 notes: |
-  —
+  brag video: plan drafted, tone=ominous, hook=Negativity bias + Hyper-specificity
 
 ## 2026-06-26_life_self_dev_ive-done-the-same-3-step-morning-routine-for-2-years
 title:            I've Done the Same 3-Step Morning Routine for 2 Years. Here's Why I'll Never Change It.
@@ -1244,7 +1262,7 @@ worksheet.url:    —
 source_draft:     —
 flags:            —
 notes: |
-  —
+  brag video: plan drafted, tone=cinematic, hook=Hyper-specificity + Pattern interrupt
 
 ## ORPHAN:inbox-to-action
 title:            Inbox to Action
@@ -1260,8 +1278,8 @@ linkedin.status:  —
 linkedin.url:     —
 carousel.status:  none
 carousel.url:     —
-reel.ref:         —
-reel.status:      none
+reel.ref:         2026-07-20_ds_tech_inbox-to-action
+reel.status:      script
 reel.cta:         —
 reel.ig:          —
 reel.yt:          —
@@ -1623,6 +1641,35 @@ flags:            ? not in spec's known ORPHAN list — found via listing. Possi
 notes: |
   —
 
+## ORPHAN:statusline-plus
+title:            statusline-plus
+week:             W30
+niche:            ds
+date:             2026-07-20
+medium.pub:       —
+medium.status:    —
+medium.submitted: —
+medium.url:       —
+medium.method:    —
+linkedin.status:  —
+linkedin.url:     —
+carousel.status:  none
+carousel.url:     —
+reel.ref:         2026-07-20_ds_tech_statusline-plus
+reel.status:      script
+reel.cta:         —
+reel.ig:          —
+reel.yt:          —
+longform.ref:     —
+longform.status:  none
+longform.url:     —
+worksheet.status: —
+worksheet.url:    —
+source_draft:     —
+flags:            ? reel-only artifact — no blog, no Medium row (news-timed build-in-public reel per script header: github.com/tarunlnmiit/statusline-plus). Not yet in data/kb/projects.json — add project entry before scheduling a recurring cadence.
+notes: |
+  —
+
 ## ORPHAN:pushkar-musician-reel
 title:            The Best Part of Pushkar Wasn't a Place
 week:             W30
@@ -1637,10 +1684,10 @@ linkedin.status:  —
 linkedin.url:     —
 carousel.status:  none
 carousel.url:     —
-reel.ref:         v1/content/scripts/2026-W30/2026-07-21_life_pushkar_voice-memo-script.md
-reel.status:      script
+reel.ref:         v1/assets/hyperframes/2026-07-20_2026-W30_life_pushkar-voice-memo_FINAL.mp4
+reel.status:      cancelled
 reel.cta:         PUSHKAR
-reel.ig:          —
+reel.ig:          not publishing — creator decision 2026-07-20
 reel.yt:          —
 longform.ref:     —
 longform.status:  none
