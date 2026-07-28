@@ -2,12 +2,18 @@
 
 ## 2026-W30
 
+- [[Content/reels/2026-W30/2026-07-20_ds_tech_inbox-to-action_ig_reel|IG Reel Script — DS/Tech · "It reads your inbox. It never sends anything."]] (reel)
+- [[Content/reels/2026-W30/2026-07-20_ds_tech_statusline-plus_ig_reel|IG Reel Script — DS/Tech · "One line. Every number that matters."]] (reel)
+- [[Content/derivatives/2026-W30/2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less/manual_steps|Manual steps — `2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less`]] (derivative)
+- [[Content/derivatives/2026-W30/2026-07-21_data_science_tech_what-interviewers-actually-write-in-the-feedback-doc-after-y/manual_steps|Manual steps — `2026-07-21_data_science_tech_what-interviewers-actually-write-in-the-feedback-doc-after-y`]] (derivative)
 - [[Content/derivatives/2026-W30/2026-07-21_life_self_dev_pushkar-musician-reel/manual_steps|Manual steps — `2026-07-21_life_self_dev_pushkar-musician-reel`]] (derivative)
 - [[Content/derivatives/2026-W30/2026-07-23_poetry_quotes_pushkar-fish-poem/manual_steps|Manual steps — `2026-07-23_poetry_quotes_pushkar-fish-poem`]] (derivative)
 - [[Content/derivatives/2026-W30/2026-07-25_life_self_dev_pushkar-photo-carousel/manual_steps|Manual steps — `2026-07-25_life_self_dev_pushkar-photo-carousel`]] (derivative)
 - [[Content/scripts/2026-W30/2026-07-23_poetry_pushkar_poem|Pushkar Poem — Text-over-B-roll Poetry Reel]] (script)
 - [[Content/scripts/2026-W30/2026-07-25_life_pushkar_carousel-copy|Pushkar Trip — Life Carousel Copy]] (script)
 - [[Content/scripts/2026-W30/2026-07-21_life_pushkar_voice-memo-script|Pushkar Voice-Memo Script — Life Reel]] (script)
+- [[Content/blogs/2026-W30/2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less|The Career-Killing Meeting Habit You Think Makes You Look Engaged]] (blog)
+- [[Content/blogs/2026-W30/2026-07-21_data_science_tech_what-interviewers-actually-write-in-the-feedback-doc-after-y|What Interviewers Actually Write in the Feedback Doc After You Leave the Room]] (blog)
 
 ## 2026-W29
 

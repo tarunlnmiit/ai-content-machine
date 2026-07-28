@@ -2,6 +2,10 @@
 
 ## data_science_tech
 
+- [[Content/reels/2026-W30/2026-07-20_ds_tech_inbox-to-action_ig_reel|IG Reel Script — DS/Tech · "It reads your inbox. It never sends anything."]] (reel)
+- [[Content/reels/2026-W30/2026-07-20_ds_tech_statusline-plus_ig_reel|IG Reel Script — DS/Tech · "One line. Every number that matters."]] (reel)
+- [[Content/derivatives/2026-W30/2026-07-21_data_science_tech_what-interviewers-actually-write-in-the-feedback-doc-after-y/manual_steps|Manual steps — `2026-07-21_data_science_tech_what-interviewers-actually-write-in-the-feedback-doc-after-y`]] (derivative)
+- [[Content/blogs/2026-W30/2026-07-21_data_science_tech_what-interviewers-actually-write-in-the-feedback-doc-after-y|What Interviewers Actually Write in the Feedback Doc After You Leave the Room]] (blog)
 - [[Content/reels/2026-W29/2026-07-13_ds_tech_fable-mode-plugin_ig_reel|IG Reel Script — DS/Tech · "117 tokens bring back Fable 5"]] (reel)
 - [[Content/derivatives/2026-W29/2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit/manual_steps|Manual steps — `2026-07-14_data_science_tech_i-built-a-production-grade-mlops-pipeline-in-one-weekend-wit`]] (derivative)
 - [[Content/derivatives/2026-W29/2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli/manual_steps|Manual steps — `2026-07-16_data_science_tech_building-a-mastodon-automation-bot-using-python-and-streamli`]] (derivative)
@@ -65,6 +69,7 @@
 - [[Docs/setup/daily/thursday-ds|Thursday — DS Track (~1.5 hrs)]] (doc)
 - [[Docs/setup/daily/tuesday-ds|Tuesday — DS Track (~1 hr)]] (doc)
 - [[Docs/setup/daily/wednesday-ds|Wednesday — DS Track (~2.5 hrs)]] (doc)
+- [[Docs/brag-batch-tones-ds|brag-batch-tones-ds]] (doc)
 - [[Content/buffer/week-1/data_science_tech/complete-python-course-2026-beginner-to-advance-tutorial-110_social_copy|complete-python-course-2026-beginner-to-advance-tutorial-110_social_copy]] (buffer)
 - [[Content/buffer/week-1/data_science_tech/complete-python-course-2026-beginner-to-advance-tutorial-110_youtube_script|complete-python-course-2026-beginner-to-advance-tutorial-110_youtube_script]] (buffer)
 - [[Content/buffer/week-2/data_science_tech/python-for-data-science-tutorial-210_social_copy|python-for-data-science-tutorial-210_social_copy]] (buffer)
@@ -72,10 +77,12 @@
 
 ## life_self_dev
 
+- [[Content/derivatives/2026-W30/2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less/manual_steps|Manual steps — `2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less`]] (derivative)
 - [[Content/derivatives/2026-W30/2026-07-21_life_self_dev_pushkar-musician-reel/manual_steps|Manual steps — `2026-07-21_life_self_dev_pushkar-musician-reel`]] (derivative)
 - [[Content/derivatives/2026-W30/2026-07-25_life_self_dev_pushkar-photo-carousel/manual_steps|Manual steps — `2026-07-25_life_self_dev_pushkar-photo-carousel`]] (derivative)
 - [[Content/scripts/2026-W30/2026-07-25_life_pushkar_carousel-copy|Pushkar Trip — Life Carousel Copy]] (script)
 - [[Content/scripts/2026-W30/2026-07-21_life_pushkar_voice-memo-script|Pushkar Voice-Memo Script — Life Reel]] (script)
+- [[Content/blogs/2026-W30/2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less|The Career-Killing Meeting Habit You Think Makes You Look Engaged]] (blog)
 - [[Content/reels/2026-W29/2026-07-17_life_self_dev_the-person-youre-begging-to-notice_ig_reel|IG Reel Script — Life · "41 from me. 9 from him. 6 were a thumbs-up."]] (reel)
 - [[Content/derivatives/2026-W29/2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru/manual_steps|Manual steps — `2026-07-14_life_self_dev_how-to-make-better-decisions-under-pressure-without-ever-tru`]] (derivative)
 - [[Content/derivatives/2026-W29/2026-07-16_life_self_dev_dear-16-year-old-tarun/manual_steps|Manual steps — `2026-07-16_life_self_dev_dear-16-year-old-tarun`]] (derivative)
@@ -127,6 +134,7 @@
 - [[Docs/setup/daily/thursday-life|Thursday — Life Track (~1 hr)]] (doc)
 - [[Docs/setup/daily/tuesday-life|Tuesday — Life Track (~55 min)]] (doc)
 - [[Docs/setup/daily/wednesday-life|Wednesday — Life Track (~1.5 hrs)]] (doc)
+- [[Docs/brag-batch-tones-life|brag-batch-tones-life]] (doc)
 - [[Content/buffer/week-1/life_self_dev/how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals_social_copy|how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals_social_copy]] (buffer)
 - [[Content/buffer/week-1/life_self_dev/how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals_youtube_script|how-i-turned-my-habits-into-an-engine-to-get-me-to-my-goals_youtube_script]] (buffer)
 - [[Content/buffer/week-1/life_self_dev/how-i-turned-my-habits-into-an-engine_social_copy|how-i-turned-my-habits-into-an-engine_social_copy]] (buffer)
@@ -170,6 +178,7 @@
 - [[Content/buffer/week-3/poetry_quotes/looking-at-the-world-through-a-reflective-lens_substack_post|Waking Up to What We've Built]] (buffer)
 - [[Docs/setup/daily/wednesday-poetry|Wednesday — Poetry Track (~1.5 hrs)]] (doc)
 - [[Content/buffer/week-1/poetry_quotes/when-dreams-speak-of-love_meta|When Dreams Speak of Love]] (buffer)
+- [[Docs/brag-batch-tones-poetry|brag-batch-tones-poetry]] (doc)
 - [[Content/buffer/week-2/poetry_quotes/intoxicated-senses_substack_post|intoxicated-senses_substack_post]] (buffer)
 - [[Content/buffer/week-2/poetry_quotes/intoxicated-senses_youtube_script|intoxicated-senses_youtube_script]] (buffer)
 - [[Content/buffer/week-3/poetry_quotes/looking-at-the-world-through-a-reflective-lens_youtube_script|looking-at-the-world-through-a-reflective-lens_youtube_script]] (buffer)

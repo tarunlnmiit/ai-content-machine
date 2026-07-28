@@ -7,11 +7,11 @@ Edits to generated files will be overwritten.
 
 ## Quick Stats
 
-- **Blogs:** 33
-- **Reels:** 21
-- **Data Science/Tech:** 67
-- **Life & Self-Development:** 62
-- **Poetry & Quotes:** 38
+- **Blogs:** 35
+- **Reels:** 23
+- **Data Science/Tech:** 72
+- **Life & Self-Development:** 65
+- **Poetry & Quotes:** 39
 
 ## Index
 
