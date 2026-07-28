@@ -33,17 +33,17 @@ tags: [content/reel, niche/data_science_tech, week/2026-W29]
 ## 5-Beat Script
 
 ### BEAT 1 — HOOK (0–3s)
-- **VO:** "One hundred seventeen tokens bring back Fable 5. Anthropic just pulled it from subscriptions."
+- **VO:** "Fable 5 just got pulled from Claude. 117 tokens bring it back."
 - **On-screen (burn-in):** `117 TOKENS → FABLE 5 BEHAVIOR, BACK`
 - **Cue:** Face to camera, hard cut in. Re-record 5×, keep the sharpest.
 
 ### BEAT 2 — PROBLEM (3–9s)
-- **VO:** "If you code with Claude, your plan just lost its smartest model. And the answers you get now feel wordier, more timid, and half-checked."
+- **VO:** "If you code with Claude, you just lost your best model. Answers feel longer, more unsure, less checked."
 - **On-screen:** `wordy · asks permission · "should work" ✅` *(strikethrough on the fake checkmark)*
 - **Cue:** B-roll: side-by-side chat — rambling preamble answer vs. one-line fix answer.
 
 ### BEAT 3 — REVEAL + PROOF (9–27s) — *screen-record, real terminal*
-- **VO:** "Here's the thing: most of what made Fable feel different wasn't raw intelligence. It was discipline. Lead with the answer. Cover the whole request. Act instead of asking permission. Never claim untested code works. So I distilled that into a free open-source plugin: fable-mode. Two commands. It injects the ruleset into every session — one hundred seventeen tokens — and Sonnet, Opus, even Haiku pick up the habits."
+- **VO:** "Turns out Fable wasn't smarter — it just had better habits. Answer first. Cover the whole task. Act, don't ask. Never fake a fix. I packed those habits into a free plugin: fable-mode. Two commands, 117 tokens, and Sonnet, Opus, even Haiku pick them up."
 - **On-screen / B-roll sequence (3–5s clips, zoomed for mobile):**
   1. `/plugin marketplace add tarunlnmiit/fable-mode`
   2. `/plugin install fable-mode@fable-mode`
@@ -52,12 +52,12 @@ tags: [content/reel, niche/data_science_tech, week/2026-W29]
 - **Cue:** `CodeAnnotation` over the two commands; burn-in single words: `DISCIPLINE` · `2 COMMANDS` · `117 TOKENS`.
 
 ### BEAT 4 — PAYOFF (27–33s)
-- **VO:** "Same subscription. Same models. Fable-class answers. And on the hard problems, it even offers to pull in a stronger model for advice."
+- **VO:** "Same plan. Same models. Better answers. On hard problems, it even asks a stronger model for help."
 - **On-screen:** `Same plan. Fable-class discipline.`
 - **Cue:** Back to face, confident.
 
 ### BEAT 5 — CTA (33–38s)
-- **VO:** "It's free, open source, no catch. Comment FABLE and I'll DM you the repo. The install commands are in the caption too."
+- **VO:** "It's free, open source, no catch. Comment FABLE and I'll DM you the link. Commands are in the caption too."
 - **On-screen:** `Comment "FABLE" → repo in your DMs · commands in caption ↓`
 - **Loop:** end frame = the `FABLE MODE ACTIVE` terminal shot (result, not "bye") → invites rewatch.
 

@@ -1,3 +1,12 @@
+---
+title: "The Career-Killing Meeting Habit You Think Makes You Look Engaged"
+type: blog
+niche: life_self_dev
+date: 2026-07-20
+week: 2026-W30
+slug: why-the-most-emotionally-intelligent-people-at-work-say-less
+tags: [content/blog, niche/life_self_dev, week/2026-W30]
+---
 # The Career-Killing Meeting Habit You Think Makes You Look Engaged
 
 *The people who get promoted talk less than you'd think. Their silence is doing the work.*

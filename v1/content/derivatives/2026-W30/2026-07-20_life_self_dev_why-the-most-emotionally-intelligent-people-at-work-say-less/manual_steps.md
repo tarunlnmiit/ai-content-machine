@@ -1,3 +1,11 @@
+---
+title: "Manual steps — `2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less`"
+type: derivative
+niche: life_self_dev
+week: 2026-W30
+slug: manual-steps
+tags: [content/derivative, niche/life_self_dev, week/2026-W30]
+---
 # Manual steps — `2026-07-20_life_self_dev_why-the-most-emotionally-intelligent-people-at-work-say-less`
 
 _Generated 2026-07-20. Everything below is a human action; the blog body stays clean._

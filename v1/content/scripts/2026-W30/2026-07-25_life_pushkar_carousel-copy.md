@@ -64,7 +64,7 @@ They were the koi taking bread from my hand. A musician nobody photographed. A s
 
 None of that was on the itinerary. That's probably why it stayed.
 
-I still make the itinerary — noticing a habit doesn't kill it. [PERSONAL_INSERT: what actually changed, or didn't, going into the next trip]. Tell me the part of your last trip you didn't plan for and loved anyway.
+I still make the itinerary — noticing a habit doesn't kill it. What changed is what I do with the slack: I stopped filling every open hour, so there was room for a market shop or a stranger's music to happen. Tell me the part of your last trip you didn't plan for and loved anyway.
 
 Word count: ~135. Zero hashtags.
 

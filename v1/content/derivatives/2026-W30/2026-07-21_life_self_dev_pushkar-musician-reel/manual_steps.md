@@ -8,7 +8,7 @@ tags: [content/derivative, niche/life_self_dev, week/2026-W30]
 ---
 # Manual steps — `2026-07-21_life_self_dev_pushkar-musician-reel`
 
-_Generated 2026-07-19. Recording is pending — nothing below can happen until the voice memo exists._
+> **CANCELLED 2026-07-20 — do not post.** Creator decided to publish only the poetry reel and carousel from this Pushkar batch. The reel was fully built and gated (`v1/assets/hyperframes/2026-07-20_2026-W30_life_pushkar-voice-memo_FINAL.mp4` exists) but will not go out. Everything below is historical, kept for reference only.
 
 ## Script
 
