@@ -46,6 +46,17 @@ Manual steps remain: recording video, ~10-min content approval, thumbnail Canva 
 
 - **Output location override for this repo:** the `/brag` plugin skill defaults to writing `brag-output/` (or a timestamped variant) at the current working directory. In this repo, after Step 4 renders `brag.mp4`/`brag.jpg`/`brag-plan.md`/`share-copy.txt`, move those four files into `v1/assets/brag_videos/<ISO-week>/<blog-slug>_brag.{mp4,jpg}`, `<blog-slug>_brag-plan.md`, `<blog-slug>_share-copy.txt` (ISO week = the week folder the source blog lives under in `v1/content/blogs/`) and delete the leftover `brag-output*/` scratch directory (its `composition/` build source is not kept). If multiple takes are produced for the same blog, the canonical pick keeps the bare `_brag.*` name; other takes get `_brag-alt-<tag>.*`.
 
+**Quality rules (2026 research-validated, IG-focused):**
+- Seamless loop: punchline's final frame must visually match the hook's opening frame (same layout/palette/position) — farms the rewatch signal.
+- Hook: pattern-interrupt or bold-claim, 5-8 words max, kinetic text entrance on screen within 1.5s. Never a calm static title-card open.
+- Music: first beat lands within 2-3s — no fade-in intros; beat-sync cues from the skill's cue metadata.
+- Duration: default 15-18s; up to 25s only when the punchline genuinely needs it.
+- CTA: punchline card or share-copy includes a "send this to a friend" or comment-a-keyword CTA (DM-sends are the top share signal).
+- Cover: `brag.jpg` poster frame keeps all critical text/graphics inside the central 1080x1080 safe zone (IG grid crops 3:4).
+- Kinetic text everywhere: no static-holding text cards; every key text element animates in/out — applies to ALL tone presets, including polished/default.
+- Grounding artifact: every video includes at least one REAL artifact — blog-essay subjects get a screenshot of the published page/headline; tools get a real UI frame — never 100% abstract graphics.
+- Essay-subject adaptation: when the subject is a blog essay (not an app), skip the skill's user-flow lane; build from pull-quote cards + the published-headline proof card + the grounding screenshot.
+
 ## Claude usage rules
 
 - **All pipeline Claude calls = `claude -p` CLI subprocess on subscription OAuth (no API key).** Python callers use `v1/scripts/lib/claude_cli.py` (disk cache `.cache/claude/`); new shell callers use `v1/scripts/headless_claude.sh`. The API-key path is retired (2026-07): `idea_scorer.py` now goes through `claude_cli.call_claude`. Only `generate_viral_reel_brief.py` still imports the raw `anthropic` SDK with `ANTHROPIC_API_KEY_FREE` — that key is no longer in `.env`, so the script is currently non-functional.
