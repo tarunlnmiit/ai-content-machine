@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "Build the Repo That Gets an LLM Engineer Hired"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Hand-Label a 30-Case Golden Dataset
+   Pick one real task from your own work (a support ticket router, a doc classifier, a Q&A bot) and hand-label 30 cases yourself. Then have a second person label the same 30 independently. List every case where your labels disagree, write down why in one sentence each, and resolve it to a final answer. Count your agreement rate before resolution — that number is your baseline for 'vibes-good' versus 'actually-good.'
+
+2. Run Your Own Chunking Ablation
+   Take one document you'd retrieve from (a policy doc, a README, a spec) and split it two ways: fixed 512-token chunks, and structure-aware chunks that keep tables, numbered lists, and sections intact. Write 10 questions whose answers span a table or multi-step instruction. Run retrieval against both chunk sets and record the hit-rate for each — the percentage of questions where the correct chunk actually got retrieved.
+
+3. Diagram One Agent's Failure Modes
+   Sketch a diagram (boxes and arrows, on paper or in a tool) of one agent workflow you've built or want to build. Annotate three things directly on the diagram: where it retries, where it falls back to a cheaper model, and your target p95 latency plus per-run token cost. If you don't have real numbers yet, write down your target ceiling for each and what you'd measure to check it.
+
+4. Try Context Before Fine-Tuning
+   Pick a classification or routing problem you'd normally reach for fine-tuning to solve. Before touching a training loop, put the taxonomy and 5-6 labeled examples directly into a prompt's context window and test it against 20 held-out cases. Record the accuracy and the time spent. Only then decide whether fine-tuning would have been worth the extra weeks — write one sentence on what you'd have needed to see to justify it.
+
+5. Ship the route_ticket.py Pattern on Your Own Data
+   Adapt the route_ticket.py structure from the post to a task from your own job: write a function that calls an LLM to classify and explain, build a gold.jsonl of 50 examples you labeled by hand, and write an evaluate() function that prints your own match rate against those labels. Push it as a public repo with a README someone else could clone and run in one command — no notebook-only version counts.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"

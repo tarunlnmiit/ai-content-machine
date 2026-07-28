@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LLM Application Engineer — Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-primary:#6B8FA8;
+    --brand-light:#96BAD0;
+    --brand-dark:#3D5F75;
+    --light-bg:#EDE8DC;
+    --light-border:#D6D0C4;
+    --dark-bg:#1E1B2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#0e0d14;font-family:'Space Grotesk',sans-serif;padding:40px 0;}
+
+  .ig-frame{
+    width:420px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;
+    box-shadow:0 24px 70px rgba(0,0,0,0.35);
+  }
+  .ig-header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #EFEFEF;}
+  .ig-avatar{
+    width:34px;height:34px;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(165deg,var(--brand-dark) 0%,var(--brand-primary) 50%,var(--brand-light) 100%);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;
+  }
+  .ig-handle{font-weight:600;font-size:13.5px;color:var(--dark-bg);}
+  .ig-sub{font-size:11px;color:#8a8a8a;}
+
+  .carousel-viewport{width:420px;height:525px;overflow:hidden;position:relative;cursor:grab;touch-action:pan-y;}
+  .carousel-viewport:active{cursor:grabbing;}
+  .carousel-track{display:flex;width:calc(420px * 8);height:525px;transition:transform .35s cubic-bezier(.2,.8,.3,1);}
+
+  .slide{width:420px;height:525px;position:relative;flex-shrink:0;overflow:hidden;}
+  .slide.light{background-color:var(--light-bg);
+    background-image:repeating-linear-gradient(0deg,transparent 0 27px,var(--light-border) 27px 28px);}
+  .slide.dark{background-color:var(--dark-bg);
+    background-image:repeating-linear-gradient(0deg,transparent 0 27px,rgba(107,143,168,.14) 27px 28px);}
+  .slide.cta{background:linear-gradient(165deg,var(--brand-dark) 0%,var(--brand-primary) 50%,var(--brand-light) 100%);}
+
+  /* ---- mandatory overlays ---- */
+  .progress-row{position:absolute;top:0;left:0;right:0;display:flex;gap:4px;padding:12px 16px 0;z-index:6;}
+  .progress-seg{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden;}
+  .progress-seg .fill{height:100%;width:0%;background:var(--brand-primary);}
+
+  .slide-badge{position:absolute;top:18px;left:18px;z-index:5;
+    background:rgba(30,27,46,.82);color:var(--light-bg);font-size:11px;font-weight:600;
+    padding:4px 9px;border-radius:20px;letter-spacing:.02em;}
+  .follow-tag{position:absolute;top:18px;right:18px;z-index:5;
+    background:rgba(30,27,46,.82);color:var(--light-bg);font-size:11px;font-weight:600;
+    padding:4px 10px;border-radius:20px;white-space:nowrap;}
+  .swipe-arrow{position:absolute;top:50%;right:18px;transform:translateY(-50%);z-index:5;
+    width:38px;height:38px;border-radius:50%;background:var(--brand-dark);color:var(--light-bg);
+    display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;
+    box-shadow:0 10px 22px rgba(0,0,0,.3);border:none;}
+  .save-tag{position:absolute;bottom:18px;right:18px;z-index:5;
+    background:rgba(30,27,46,.82);color:var(--light-bg);font-size:11px;font-weight:600;
+    padding:4px 10px;border-radius:20px;white-space:nowrap;}
+
+  /* ---- content ---- */
+  .slide-content{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 36px;}
+  .slide-content.bottom{justify-content:flex-end;padding:0 36px 52px;}
+  .kicker{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:14px;}
+  .kicker.on-dark{color:var(--brand-light);}
+  .kicker.on-light{color:var(--brand-dark);}
+  .kicker.on-cta{color:var(--light-bg);opacity:.85;}
+  .headline{font-size:33px;line-height:1.18;font-weight:700;color:var(--dark-bg);}
+  .headline.on-dark{color:var(--light-bg);}
+  .headline.on-cta{color:var(--light-bg);}
+  .body-copy{font-size:17px;line-height:1.55;font-weight:500;color:var(--dark-bg);}
+  .body-copy.on-dark{color:var(--light-bg);}
+  .body-copy.on-cta{color:var(--light-bg);}
+  .sub-line{font-size:16px;line-height:1.5;font-weight:500;margin-top:14px;color:var(--brand-dark);}
+
+  .hl{background:var(--brand-primary);color:var(--dark-bg);padding:2px 6px;border-radius:3px;font-weight:700;}
+  .hl.orange{background:var(--brand-dark);color:var(--light-bg);padding:2px 6px;border-radius:3px;font-weight:700;}
+  .hl.cta{background:var(--light-bg);color:var(--dark-bg);padding:2px 6px;border-radius:3px;font-weight:700;}
+
+  .card{background:var(--light-bg);border:1px solid var(--light-border);border-radius:10px;
+    padding:16px 20px;box-shadow:0 20px 38px rgba(0,0,0,.24);position:relative;z-index:3;}
+  .card.r1{transform:rotate(-2deg);}
+  .card.r2{transform:rotate(2deg);}
+  .card.r3{transform:rotate(-3deg);}
+  .card-line{font-size:14.5px;font-weight:600;color:var(--dark-bg);line-height:1.5;}
+  .card-line + .card-line{margin-top:6px;padding-top:6px;border-top:1px dashed var(--light-border);}
+  .washi{position:absolute;top:-9px;left:24px;width:56px;height:16px;background:rgba(107,143,168,.55);
+    transform:rotate(-4deg);border-radius:2px;}
+
+  .doodle{position:absolute;stroke:var(--brand-dark);fill:none;stroke-width:1.6;opacity:.55;z-index:1;}
+  .doodle.on-dark{stroke:var(--brand-light);opacity:.4;}
+
+  .cta-btn{display:inline-block;margin-top:22px;background:var(--dark-bg);color:var(--light-bg);
+    font-weight:700;font-size:15px;padding:13px 22px;border-radius:8px;text-align:center;
+    box-shadow:0 14px 28px rgba(0,0,0,.35);}
+  .cta-handle{margin-top:16px;font-size:12.5px;color:var(--light-bg);opacity:.8;font-weight:600;}
+
+  /* ---- IG chrome below the carousel ---- */
+  .ig-dots{display:flex;justify-content:center;gap:5px;padding:9px 0;}
+  .ig-dot{width:5px;height:5px;border-radius:50%;background:#D9D9D9;}
+  .ig-dot.active{background:var(--brand-dark);}
+  .ig-actions{display:flex;align-items:center;gap:14px;padding:10px 14px 4px;color:var(--dark-bg);}
+  .ig-actions .spacer{flex:1;}
+  .ig-actions svg{width:23px;height:23px;stroke:var(--dark-bg);fill:none;stroke-width:1.7;}
+  .ig-likes{padding:2px 14px 0;font-size:13px;font-weight:600;color:var(--dark-bg);}
+  .ig-caption{padding:8px 14px 18px;font-size:13px;line-height:1.55;color:var(--dark-bg);}
+  .ig-caption b{font-weight:700;}
+</style>
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="doodle-star" viewBox="0 0 24 24">
+    <path d="M12 2 L14.6 9.2 L22 9.6 L16 14.6 L18.2 22 L12 17.4 L5.8 22 L8 14.6 L2 9.6 L9.4 9.2 Z"/>
+  </symbol>
+  <symbol id="doodle-arrow" viewBox="0 0 24 24">
+    <path d="M3 15 C 7 4, 16 3, 20 10"/>
+    <path d="M15 8 L20.5 10 L18 15.5"/>
+  </symbol>
+  <symbol id="doodle-dots" viewBox="0 0 24 24">
+    <circle cx="4" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+    <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+    <circle cx="20" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+  </symbol>
+</svg>
+
+<div class="ig-frame">
+
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-handle">breathofdatascience</div>
+      <div class="ig-sub">Original audio</div>
+    </div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="slide-badge">1 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="width:34px;height:34px;top:70px;left:30px;"><use href="#doodle-star"/></svg>
+        <svg class="doodle" style="width:40px;height:40px;bottom:150px;left:22px;"><use href="#doodle-arrow"/></svg>
+        <button class="swipe-arrow" onclick="goTo(1)">→</button>
+        <span class="save-tag">Save this ↓</span>
+        <div class="slide-content">
+          <div class="kicker on-light">Careers / Data Science</div>
+          <div class="card r1" style="margin-bottom:0;">
+            <div class="washi"></div>
+            <div class="headline">A <span class="hl">JUNIOR</span> beat a 10-year ML veteran for this job.</div>
+          </div>
+          <div class="sub-line">Because of <span class="hl orange">one question</span> he never asked.</div>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 — PROBLEM / REFRAME -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="slide-badge">2 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle on-dark" style="width:30px;height:30px;top:64px;right:70px;"><use href="#doodle-dots"/></svg>
+        <button class="swipe-arrow" onclick="goTo(2)">→</button>
+        <span class="save-tag">Save this ↓</span>
+        <div class="slide-content">
+          <div class="kicker on-dark">The Shift Nobody Named</div>
+          <div class="body-copy on-dark">
+            Her old title ran on <span class="hl">scikit-learn</span> and AUC. The new req —
+            <span class="hl orange">LLM Application Engineer</span> — didn't mention either.
+            It didn't exist 18 months ago.
+          </div>
+          <div class="card r2" style="margin-top:20px;">
+            <div class="card-line">OLD JOB: build the model.</div>
+            <div class="card-line">NEW JOB: build everything around a model you rent by the token.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 — CREDIBILITY -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="slide-badge">3 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="width:36px;height:36px;bottom:110px;left:26px;"><use href="#doodle-star"/></svg>
+        <button class="swipe-arrow" onclick="goTo(3)">→</button>
+        <span class="save-tag">Save this ↓</span>
+        <div class="slide-content">
+          <div class="kicker on-light">I watched this decide a hire</div>
+          <div class="body-copy">
+            Two finalists, one senior. He reached straight for fine-tuning. She asked for the eval set first —
+            <span class="hl">we didn't have one</span> — and built 15 adversarial tests before touching a prompt.
+          </div>
+          <div class="card r3" style="margin-top:20px;">
+            <div class="card-line">That was the whole interview.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 — SKILL 1 -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="slide-badge">4 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle on-dark" style="width:38px;height:38px;bottom:130px;right:66px;"><use href="#doodle-arrow"/></svg>
+        <button class="swipe-arrow" onclick="goTo(4)">→</button>
+        <span class="save-tag">Save this ↓</span>
+        <div class="slide-content">
+          <div class="kicker on-dark">Skill 1 / 3 — Eval Harness Design</div>
+          <div class="body-copy on-dark">
+            Show a golden dataset: <span class="hl orange">200 hand-labeled cases</span>, disagreements
+            resolved and documented. Proof that "vibes-good" and "actually-good" are different things.
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5 — SKILL 2 -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="slide-badge">5 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="width:30px;height:30px;top:66px;right:70px;"><use href="#doodle-dots"/></svg>
+        <button class="swipe-arrow" onclick="goTo(5)">→</button>
+        <span class="save-tag">Save this ↓</span>
+        <div class="slide-content">
+          <div class="kicker on-light">Skill 2 / 3 — Retrieval Architecture</div>
+          <div class="body-copy">
+            Anyone can <span class="hl">pip install</span> a vector DB. Bring the ablation: "semantic
+            chunking beat fixed-token chunking by <span class="hl orange">14 points</span> on my eval set."
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6 — SKILL 3 -->
+      <div class="slide dark">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="slide-badge">6 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle on-dark" style="width:34px;height:34px;bottom:120px;left:28px;"><use href="#doodle-star"/></svg>
+        <button class="swipe-arrow" onclick="goTo(6)">→</button>
+        <span class="save-tag">Save this ↓</span>
+        <div class="slide-content">
+          <div class="kicker on-dark">Skill 3 / 3 — Agent Orchestration</div>
+          <div class="body-copy on-dark">
+            Ship a diagram with failure modes annotated — retries, fallbacks, p95 latency, cost per run.
+            The question was never "can it do it." It was <span class="hl orange">"for 4 cents in under 3 seconds."</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7 — RECAP / THE NUMBER -->
+      <div class="slide light">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="slide-badge">7 / 8</div>
+        <span class="follow-tag">Tap to follow →</span>
+        <svg class="doodle" style="width:38px;height:38px;top:70px;left:28px;"><use href="#doodle-arrow"/></svg>
+        <button class="swipe-arrow" onclick="goTo(7)">→</button>
+        <span class="save-tag">Save this ↓</span>
+        <div class="slide-content">
+          <div class="kicker on-light">The Receipt</div>
+          <div class="body-copy">
+            Our RAG bot's hit-rate sat at <span class="hl">61%</span>. Structure-aware chunking pushed it
+            to <span class="hl orange">89%</span> — hallucination dropped from 22% to 7%.
+          </div>
+          <div class="card r1" style="margin-top:20px;">
+            <div class="card-line">Bring receipts, not vocabulary.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8 — CTA -->
+      <div class="slide cta">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="slide-badge">8 / 8</div>
+        <div class="slide-content">
+          <div class="kicker on-cta">Free worksheet</div>
+          <div class="headline on-cta">Want the golden-dataset template?</div>
+          <div class="body-copy on-cta" style="margin-top:14px;">
+            Comment <span class="hl cta">EVAL</span> and I'll DM you the exact checklist I use to build these
+            repos — free.
+          </div>
+          <div class="cta-btn">Comment "EVAL" below ↓</div>
+          <div class="cta-handle">@breathofdatascience</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dots" id="dots">
+    <div class="ig-dot active"></div><div class="ig-dot"></div><div class="ig-dot"></div>
+    <div class="ig-dot"></div><div class="ig-dot"></div><div class="ig-dot"></div>
+    <div class="ig-dot"></div><div class="ig-dot"></div>
+  </div>
+
+  <div class="ig-actions">
+    <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.9-10-9.2C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.8 19.5 16.1 12 21 12 21z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.9 7.2L3 20l1.3-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9z"/></svg>
+    <div class="spacer"></div>
+    <svg viewBox="0 0 24 24"><path d="M6 2h12v20l-6-4-6 4V2z"/></svg>
+  </div>
+  <div class="ig-likes">Liked by 1,204 others</div>
+  <div class="ig-caption">
+    <b>breathofdatascience</b> The job title "LLM Application Engineer" didn't exist 18 months ago.
+    It's already filling — and the skills that get you hired aren't fine-tuning, they're eval harnesses,
+    retrieval ablations, and agent orchestration under a cost budget.<br><br>
+    Comment <b>EVAL</b> and I'll send you the golden-dataset template + eval checklist, free.
+  </div>
+
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const dots = document.querySelectorAll('.ig-dot');
+  const SLIDE_W = 420;
+  const TOTAL = 8;
+  let current = 0;
+  let startX = 0;
+  let dragging = false;
+
+  function render(){
+    track.style.transform = `translateX(-${current * SLIDE_W}px)`;
+    dots.forEach((d,i)=>d.classList.toggle('active', i===current));
+  }
+  function goTo(i){
+    current = Math.max(0, Math.min(TOTAL-1, i));
+    render();
+  }
+
+  const viewport = document.getElementById('viewport');
+  viewport.addEventListener('pointerdown', e=>{ dragging=true; startX=e.clientX; track.style.transition='none'; });
+  window.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    const dx = e.clientX - startX;
+    track.style.transform = `translateX(${-(current*SLIDE_W)+dx}px)`;
+  });
+  window.addEventListener('pointerup', e=>{
+    if(!dragging) return;
+    dragging = false;
+    track.style.transition = '';
+    const dx = e.clientX - startX;
+    if (dx < -60) current = Math.min(TOTAL-1, current+1);
+    else if (dx > 60) current = Math.max(0, current-1);
+    render();
+  });
+</script>
+</body>
+</html>
