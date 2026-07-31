@@ -45,3 +45,8 @@ def spinner(description: str = "Working...") -> Progress:
         console=console,
         transient=False,
     )
+
+
+def step(number: int, total: int, label: str) -> None:
+    """Print a numbered step banner."""
+    console.print(f"\n[bold]─ {number}/{total} · {label} ─[/bold]")

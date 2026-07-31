@@ -83,6 +83,7 @@ def generate_questions(
     topic: str,
     trend_context: str,
     cfg: dict[str, str],
+    extra_instruction: str = "",
 ) -> tuple[str, list[str]]:
     """Returns (suggested_angle, questions)."""
     prompt = render_template("question_generator.md", {
@@ -91,6 +92,8 @@ def generate_questions(
         "NICHE": cfg["NICHE"],
         "AUDIENCE": cfg["AUDIENCE"],
     })
+    if extra_instruction:
+        prompt += f"\n\n{extra_instruction}"
     raw = run_claude(prompt, timeout=120, description="Generating interview questions...")
     return _parse_questions(raw)
 

@@ -12,7 +12,7 @@ import urllib.request
 from datetime import date, timedelta
 from pathlib import Path
 
-from _console import console, spinner
+from _console import console, spinner, step
 
 REPO = Path(__file__).parent.parent
 NICHES = {"ds": "data_science_tech", "life": "life_self_dev", "poetry": "poetry_quotes"}
@@ -58,12 +58,22 @@ RESEARCH_CONFIG: dict[str, dict] = {
     "ds": {
         "label": "Data Science / Tech",
         "google_seeds": [
-            "data science career 2026", "machine learning for data scientists",
-            "python data engineering", "AI tools for analysts", "Claude for data science",
-            "LLM agents in production", "data science interview preparation 2026",
-            "MLOps best practices", "SQL vs python for analytics",
-            "AI automation for small business", "vector databases explained",
-            "prompt engineering for data work",
+            "Claude Code workflow tips", "Claude vs ChatGPT for coding",
+            "reduce AI token costs", "LLM API cost optimization",
+            "vibe coding with AI", "coding with AI assistant mistakes",
+            "AI coding assistant comparison", "practical uses of AI at work",
+            "AI downsides and limitations", "Python for AI engineering",
+            "AI engineer roadmap 2026", "ML engineer vs data scientist",
+            "MLOps best practices", "making money with AI skills",
+            "prompt engineering techniques", "agentic AI in production",
+            "AI agent frameworks compared",
+            "best free AI tools", "paid AI tools worth it",
+            "freemium AI tools comparison", "AI tool pricing comparison",
+            "AI video generation tools", "AI content generation tools",
+            "AI image generation tools", "AI voice and TTS tools",
+            "local AI tools setup", "Ollama local LLM",
+            "run LLM locally on laptop", "open source AI alternatives",
+            "self-hosted AI stack",
         ],
         "medium_feeds": [
             "https://medium.com/feed/tag/data-science",
@@ -79,20 +89,23 @@ RESEARCH_CONFIG: dict[str, dict] = {
     "life": {
         "label": "Life & Self-Development",
         "google_seeds": [
-            "productivity habits 2025", "self improvement morning routine",
-            "focus and deep work tips", "personal growth mindset", "discipline vs motivation",
-            "how to build better relationships", "career growth mindset shift",
-            "sleep and energy management tips", "journaling for self reflection",
-            "minimalism and decluttering life", "emotional intelligence at work",
-            "how to make better decisions",
+            "managing difficult emotions", "emotional regulation in everyday life",
+            "why people don't understand emotions", "mental health daily habits",
+            "toxic relationship signs", "abusive relationship signs",
+            "healthy romantic relationship habits", "marriage communication problems",
+            "adult friendships drifting apart", "life lessons learned the hard way",
+            "stoic philosophy everyday life", "philosophy of living well",
+            "journaling prompts for self reflection", "fiction writing craft advice",
+            "poetry for beginners", "building a reading habit",
+            "books that changed how I think", "how to get better at life",
         ],
         "medium_feeds": [
             "https://medium.com/feed/tag/self-improvement",
-            "https://medium.com/feed/tag/productivity",
+            "https://medium.com/feed/tag/relationships",
             "https://medium.com/feed/tag/self-help",
             "https://medium.com/feed/tag/motivation",
             "https://medium.com/feed/tag/mindfulness",
-            "https://medium.com/feed/tag/habits",
+            "https://medium.com/feed/tag/books",
             "https://medium.com/feed/tag/mental-health",
             "https://medium.com/feed/tag/psychology",
         ],
@@ -108,6 +121,12 @@ RESEARCH_CONFIG: dict[str, dict] = {
         ],
     },
 }
+
+
+LISTICLE_QUERY_RE = re.compile(
+    r"\b(best|top\s*\d+|(?:\d+\s*)?(ways|tips|tools|mistakes|examples|alternatives|things|habits|signs|reasons|secrets|steps|hacks|rules?|lessons|routines|questions|myths)|alternatives\s+to)\b",
+    re.IGNORECASE,
+)
 
 
 # Type-specific Google seed overrides for DS (applied when --type is set).
@@ -138,46 +157,89 @@ def _get(url: str, timeout: int = 6) -> str:
         return ""
 
 
-def _daily_sample(pool: list[str], k: int) -> list[str]:
-    """Date-seeded sample: same subset within a day (reproducible reruns),
-    rotates across days so consecutive runs pull fresh signal."""
-    rng = random.Random(date.today().toordinal())
-    return rng.sample(pool, min(k, len(pool)))
+RESEARCH_CACHE = REPO / ".cache" / "research"
 
 
-def fetch_google_signals(niche: str, seeds_override: list[str] | None = None) -> list[str]:
+def _cached_signals(key: str, build: "callable", force: bool = False) -> list[str]:
+    """Day-keyed disk cache for the raw research fetches. Autocomplete and RSS
+    barely move within a day, and a full-seed run is ~38 HTTP requests — enough
+    to risk throttling when a blog is drafted or retried several times."""
+    path = RESEARCH_CACHE / f"{key}_{date.today().isoformat()}.json"
+    if not force and path.exists():
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            pass
+    values = build()
+    if values:
+        try:
+            RESEARCH_CACHE.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(values), encoding="utf-8")
+        except OSError:
+            pass
+    return values
+
+
+def _interleave(groups: list[list[str]]) -> list[str]:
+    """Round-robin flatten: one item from each group, then the next, and so on.
+    Callers slice the head of the result, so this keeps every group represented
+    instead of letting the first few fill the whole slice."""
+    out: list[str] = []
+    for i in range(max((len(g) for g in groups), default=0)):
+        for g in groups:
+            if i < len(g):
+                out.append(g[i])
+    return out
+
+
+def fetch_google_signals(niche: str, seeds_override: list[str] | None = None,
+                         force: bool = False) -> list[str]:
+    key = f"google_{niche}" if seeds_override is None else f"google_{niche}_override"
+    return _cached_signals(key, lambda: _fetch_google_signals(niche, seeds_override), force)
+
+
+def _fetch_google_signals(niche: str, seeds_override: list[str] | None = None) -> list[str]:
     seeds = seeds_override or RESEARCH_CONFIG[niche]["google_seeds"]
     seen: set[str] = set()
-    results: list[str] = []
-    for seed in _daily_sample(seeds, 3):
+    per_seed: list[list[str]] = []
+    for seed in seeds:
         q = urllib.parse.quote_plus(seed)
         raw = _get(f"https://suggestqueries.google.com/complete/search?client=firefox&q={q}")
+        group: list[str] = []
         try:
             data = json.loads(raw)
             for s in (data[1] if len(data) > 1 else []):
                 if s not in seen:
                     seen.add(s)
-                    results.append(s)
+                    group.append(s)
         except Exception:
             pass
-    return results[:15]
+        per_seed.append(group)
+    return _interleave(per_seed)
 
 
-def fetch_medium_titles(niche: str) -> list[str]:
+def fetch_medium_titles(niche: str, force: bool = False) -> list[str]:
+    return _cached_signals(f"medium_{niche}", lambda: _fetch_medium_titles(niche), force)
+
+
+def _fetch_medium_titles(niche: str) -> list[str]:
     feeds = RESEARCH_CONFIG[niche]["medium_feeds"]
-    titles: list[str] = []
-    for url in _daily_sample(feeds, 3):
+    seen: set[str] = set()
+    per_feed: list[list[str]] = []
+    for url in feeds:
         raw = _get(url, timeout=8)
         feed_titles: list[str] = []
         for m in re.findall(r"<title><!\[CDATA\[(.+?)\]\]></title>", raw):
-            if m not in titles and m not in feed_titles:
+            if m not in seen:
+                seen.add(m)
                 feed_titles.append(m)
         for m in re.findall(r"<title>(.+?)</title>", raw):
             clean = re.sub(r"<[^>]+>", "", m).strip()
-            if clean and clean not in titles and clean not in feed_titles and "Medium" not in clean:
+            if clean and clean not in seen and "Medium" not in clean:
+                seen.add(clean)
                 feed_titles.append(clean)
-        titles.extend(feed_titles[1:])  # per-feed skip of the feed-level title
-    return titles[:25]
+        per_feed.append(feed_titles[1:])  # per-feed skip of the feed-level title
+    return _interleave(per_feed)
 
 
 def get_recent_titles(niche: str, days: int = 90) -> list[str]:
@@ -220,12 +282,32 @@ def get_recent_titles(niche: str, days: int = 90) -> list[str]:
     return titles
 
 
+def load_listicle_signals(niche: str, n: int) -> dict | None:
+    """Load today's /research-listicle-trends artifact for this niche, if any.
+
+    `n` is accepted for signature stability and logging only — the artifact is
+    one-per-niche-per-day and serves any listicle count.
+    """
+    path = REPO / "data" / "ideas" / f"listicle_trends_{niche}_{date.today().isoformat()}.json"
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
+    if not data.get("topics"):
+        return None
+    return data
+
+
 def suggest_topics(
     niche: str,
     google: list[str],
     medium: list[str],
     recent: list[str],
     blog_type: str | None = None,
+    listicle_n: int | None = None,
+    listicle_signals: dict | None = None,
 ) -> list[str]:
     cfg = RESEARCH_CONFIG[niche]
     recent_block = (
@@ -233,8 +315,8 @@ def suggest_topics(
         + "\n".join(f"  - {t}" for t in recent[:20])
         if recent else "No recent posts found."
     )
-    google_block = "\n".join(f"  - {s}" for s in google[:12]) or "  (unavailable)"
-    medium_block = "\n".join(f"  - {t}" for t in medium[:10]) or "  (unavailable)"
+    google_block = "\n".join(f"  - {s}" for s in google[:40]) or "  (unavailable)"
+    medium_block = "\n".join(f"  - {t}" for t in medium[:25]) or "  (unavailable)"
     trigger_block = ", ".join(trigger_lexicon(niche))
 
     type_directive = ""
@@ -253,12 +335,40 @@ def suggest_topics(
             ),
         }.get(blog_type, "")
 
+    listicle_block = ""
+    if listicle_n and listicle_signals:
+        ranked = []
+        for i, t in enumerate(listicle_signals["topics"], 1):
+            queries = "\n".join(
+                f"      - {q.get('source', '?')}: {q.get('query', '')}"
+                for q in t.get("supporting_queries", [])
+            )
+            ranked.append(
+                f"  {i}. {t.get('topic', '')} (demand_score: {t.get('demand_score', '?')})\n"
+                f"     {t.get('decomposability_note', '')}\n"
+                f"{queries}"
+            )
+        listicle_block = (
+            f"\nLISTICLE TREND RESEARCH — live signals for Top {listicle_n} candidates, ranked by demand:\n"
+            + "\n".join(ranked)
+            + f"\nThese came from live trend research; prefer and sharpen these 5 rather than inventing new "
+            f"ones. Every returned topic must decompose into exactly {listicle_n} distinct, non-overlapping "
+            f"items. The 90-day avoid list below still applies.\n"
+        )
+    elif listicle_n:
+        listicle_block = (
+            f"\nLISTICLE MODE — no live trend data available. Every topic must still be listicle-shaped "
+            f"(best X / top N / N ways / N tools / N mistakes / N examples / alternatives to X) and must "
+            f"decompose into exactly {listicle_n} distinct, non-overlapping items.\n"
+        )
+
     prompt = f"""\
 You are a content strategist for Tarun Gupta — a 10-year data scientist and creator.
 Niche: {cfg['label']}
 Voice: analytical but warm, personal examples, no jargon without context.
 Banned words: "In conclusion", "Dive into", "Leverage", "Game-changer", "Synergy"
 {type_directive}
+{listicle_block}
 {recent_block}
 
 Google search signals (what people are actively searching right now):
@@ -350,6 +460,7 @@ def answer_on_behalf(
     niche_label: str = "",
     question: str = "",
     options: list[str] | None = None,
+    listicle: int | None = None,
 ) -> str:
     """Generate an answer as Tarun when the creator types 'skip'.
 
@@ -372,13 +483,23 @@ def answer_on_behalf(
         raw = run_claude(prompt, timeout=90, description=f"Claude choosing a {label} on your behalf…")
         return _match_option(raw, opts)
     if kind == "creator_input":
-        prompt = (
-            f"{_PERSONA}{kb}\n\nNiche: {niche_label}\nTopic: {topic}\n\n"
-            "Speaking as yourself, give the personal angle for this blog: the specific stories, "
-            "opinions, lived examples, and point of view you would bring. Write 5–9 first-person "
-            "sentences of raw substance (not polished prose — the article gets written from this). "
-            "No preamble, just your take."
-        )
+        if listicle:
+            body = (
+                f"Speaking as yourself, give the raw material for a Top {listicle} listicle on this "
+                f"topic. Name exactly {listicle} DISTINCT items. For each one write 2–4 first-person "
+                "sentences: what it is, a specific moment or example from your own experience, and "
+                "what makes it different from the others. Number them 1 to "
+                f"{listicle}. Raw substance, not polished prose — the article gets written from this. "
+                "No preamble."
+            )
+        else:
+            body = (
+                "Speaking as yourself, give the personal angle for this blog: the specific stories, "
+                "opinions, lived examples, and point of view you would bring. Write 5–9 first-person "
+                "sentences of raw substance (not polished prose — the article gets written from this). "
+                "No preamble, just your take."
+            )
+        prompt = f"{_PERSONA}{kb}\n\nNiche: {niche_label}\nTopic: {topic}\n\n{body}"
         return run_claude(prompt, timeout=120, description="Claude writing your angle on your behalf…").strip()
     if kind == "interview":
         prompt = (
@@ -413,11 +534,17 @@ def select_topic(topics: list[str], niche_label: str, master_brief: str = "") ->
         console.print(f"  [warn]Enter a number between 1 and {len(topics)}, or 'skip'.[/warn]")
 
 
-def get_creator_input(topic: str, niche_label: str, master_brief: str = "") -> str:
+def get_creator_input(topic: str, niche_label: str, master_brief: str = "",
+                      listicle: int | None = None) -> str:
     console.print(f"\n[bold]── Your thoughts  ·  {niche_label} ──[/bold]")
     console.print(f"  Topic confirmed: [bold]{topic}[/bold]")
+    ask = (
+        f"  Name your {listicle} items — for each, what it is plus a real example of yours."
+        if listicle else
+        "  Add your personal angle, examples, opinions, or stories."
+    )
     console.print(
-        "  Add your personal angle, examples, opinions, or stories.\n"
+        f"{ask}\n"
         "  Claude will polish the language but preserve every idea.\n"
         "  [Press Enter twice to finish · type 'skip' to let Claude write your angle on your behalf]\n"
     )
@@ -431,7 +558,8 @@ def get_creator_input(topic: str, niche_label: str, master_brief: str = "") -> s
         if line.strip().lower() == SKIP_TOKEN and not lines:
             console.print("  [info]Skipped — Claude is writing your angle on your behalf…[/info]")
             return answer_on_behalf(
-                "creator_input", master_brief=master_brief, topic=topic, niche_label=niche_label
+                "creator_input", master_brief=master_brief, topic=topic,
+                niche_label=niche_label, listicle=listicle,
             )
         if line == "":
             blank_count += 1
@@ -450,6 +578,7 @@ def suggest_titles(
     creator_input: str,
     google: list[str],
     blog_type: str | None = None,
+    listicle_n: int | None = None,
 ) -> list[str]:
     cfg = RESEARCH_CONFIG[niche]
     top_keywords = ", ".join(google[:6]) or "(unavailable)"
@@ -471,6 +600,14 @@ def suggest_titles(
             ),
         }.get(blog_type, "")
 
+    listicle_ctx = ""
+    if listicle_n:
+        listicle_ctx = (
+            f"Post type: LISTICLE — every one of the 7 titles MUST start with "
+            f"\"Top {listicle_n}\" or \"{listicle_n} \" (e.g. \"{listicle_n} Ways to...\"), "
+            f"matching the required Top-{listicle_n} structure."
+        )
+
     prompt = f"""\
 Generate 7 maximum-clickbait-but-credible blog title options for this creator.
 
@@ -478,6 +615,7 @@ Niche:    {cfg['label']}
 Topic:    {topic}
 {creator_ctx}
 {type_ctx}
+{listicle_ctx}
 Keywords with real search demand: {top_keywords}
 
 Each title must use a DIFFERENT emotion lever — prefix each line with its lever in brackets:
@@ -559,6 +697,20 @@ def select_option(options: list[str], header: str, on_skip=None) -> str:
         console.print(f"  [warn]Enter a number between 1 and {len(options)}.[/warn]")
 
 
+def build_listicle_question_directive(n: int) -> str:
+    """Call-1 counterpart to build_listicle_directive. The article directive shapes
+    structure; this shapes what the interview has to extract, so the author is asked
+    for N discrete items instead of one broad answer that can't be split into N."""
+    return (
+        f"LISTICLE MODE — the finished article will be a Top {n} listicle.\n"
+        f"Your questions must therefore surface exactly {n} DISTINCT items the author can "
+        f"speak to from direct experience. Ask for one concrete item at a time: what it is, "
+        f"a specific example or moment, and what makes it different from the others.\n"
+        f"Do NOT ask broad thematic questions that produce a single long answer — those cannot "
+        f"be split into {n} sections later. Prefer {n} focused questions over 5 sweeping ones."
+    )
+
+
 def run_interview_flow(
     niche: str,
     topic: str,
@@ -566,6 +718,7 @@ def run_interview_flow(
     medium: list[str],
     niche_label: str = "",
     master_brief: str = "",
+    listicle: int | None = None,
 ) -> tuple[str, str]:
     """Two-call interview path. Returns (blog_markdown, chosen_title)."""
     cfg = interview_flow.load_interview_config(niche)
@@ -579,9 +732,14 @@ def run_interview_flow(
     trend_bits = [s for s in (google[:6] + medium[:4]) if s]
     trend_context = "; ".join(trend_bits)
 
+    listicle_directive = build_listicle_directive(listicle, topic, niche) if listicle else ""
+    if listicle:
+        console.print(f"[info]Listicle mode:[/info] interview will gather {listicle} distinct items")
+
     # CALL 1 — questions
     angle, questions = interview_flow.generate_questions(
         run_claude, topic=topic, trend_context=trend_context, cfg=cfg,
+        extra_instruction=build_listicle_question_directive(listicle) if listicle else "",
     )
     if not questions:
         sys.exit("Interview engine returned no questions — aborting (try re-running).")
@@ -592,13 +750,17 @@ def run_interview_flow(
     qa_pairs = interview_flow.run_interview(questions, on_skip=answer_question)
 
     # CALL 2 — article
-    parsed = interview_flow.write_article(run_claude, topic=topic, qa_pairs=qa_pairs, cfg=cfg)
+    parsed = interview_flow.write_article(
+        run_claude, topic=topic, qa_pairs=qa_pairs, cfg=cfg,
+        extra_instruction=listicle_directive,
+    )
     blog_md = interview_flow.assemble_markdown(parsed["title_options"][0] if parsed["title_options"] else "Draft", parsed)
     if "[IMAGE_INSERT" not in blog_md:
         console.print("[warn]No IMAGE_INSERT in article — retrying with enforcement...[/warn]")
+        image_rule = "CRITICAL: You MUST include at least 1 [IMAGE_INSERT: search term | caption] marker in the article body."
         parsed = interview_flow.write_article(
             run_claude, topic=topic, qa_pairs=qa_pairs, cfg=cfg,
-            extra_instruction="CRITICAL: You MUST include at least 1 [IMAGE_INSERT: search term | caption] marker in the article body.",
+            extra_instruction=f"{listicle_directive}\n\n{image_rule}" if listicle_directive else image_rule,
         )
     chosen_title = select_option(parsed["title_options"], "Pick a title", on_skip=pick_title)
     blog_md = interview_flow.assemble_markdown(chosen_title, parsed)
@@ -768,6 +930,44 @@ Rules:
 
 Topic to listify: {topic}
 """
+
+
+def extract_listicle_outline(blog_text: str, n: int, chosen_title: str) -> str | None:
+    """Pull a carousel outline (HOOK / ITEM 1..n / CTA) out of a rendered listicle blog.
+
+    Requires exactly n `## k. <item>` headings, numbered 1..n contiguously in order —
+    the exact shape `build_listicle_directive` instructs the writer to emit. Returns
+    None on any deviation so the carousel falls back to content-driven slides instead
+    of shipping a wrong outline.
+    """
+    matches = list(re.finditer(r"^##\s+(\d+)\.\s+(.+)$", blog_text, re.MULTILINE))
+    if len(matches) != n or [int(m.group(1)) for m in matches] != list(range(1, n + 1)):
+        return None
+
+    def _clean(text: str) -> str:
+        text = re.sub(r"\[(PERSONAL_INSERT|IMAGE_INSERT|CODE_INSERT|QUOTABLE)[^\]]*\]", "", text)
+        text = re.sub(r"\*\*|\*|__|_", "", text)
+        return re.sub(r"\s+", " ", text).strip()
+
+    def _first_sentence(body: str) -> str:
+        cleaned = _clean(body)
+        m = re.search(r"[^.!?]*[.!?]", cleaned)
+        sentence = (m.group(0) if m else cleaned).strip()
+        if len(sentence) > 140:
+            sentence = sentence[:140].rsplit(" ", 1)[0] + "…"
+        return sentence
+
+    lines = [f"1. HOOK — {chosen_title}"]
+    for i, m in enumerate(matches):
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(blog_text)
+        lines.append(f"{i + 2}. ITEM {i + 1}: {_clean(m.group(2))} — {_first_sentence(blog_text[m.end():end])}")
+
+    closing = blog_text[matches[-1].end():].strip()
+    closing_paras = [p for p in re.split(r"\n\s*\n", closing) if p.strip() and not p.strip().startswith("#")]
+    cta = _first_sentence(closing_paras[-1]) if closing_paras else ""
+    lines.append(f"{n + 2}. CTA — {cta or 'Share this post with someone who needs it.'}")
+
+    return "\n".join(lines)
 
 
 def build_prompt(
@@ -1017,7 +1217,7 @@ def main():
     writing_agent = load(REPO / "prompts" / "writing_agent.md")
     master_brief  = load(REPO / "data" / "kb" / "master_brief.md")
 
-    # ── Step 1: Topic ────────────────────────────────────────────────────────
+    step(1, 11, "Research signals")
     google: list[str] = []
     medium: list[str] = []
     niche_label = RESEARCH_CONFIG[args.niche]["label"]
@@ -1026,9 +1226,12 @@ def main():
 
     if args.topic:
         topic = args.topic
-        console.print(f"Topic: [bold]{topic}[/bold]")
         # Still fetch Google signals for title generation
         google = fetch_google_signals(args.niche, seeds_override=ds_seeds)
+        console.print(f"  Google signals: {len(google)} found")
+        step(2, 11, "Topic selection")
+        console.print(f"  [dim]skipped — topic supplied via --topic[/dim]")
+        console.print(f"Topic: [bold]{topic}[/bold]")
     else:
         console.print("\n[info]Fetching research signals...[/info]")
         recent = get_recent_titles(args.niche)
@@ -1037,34 +1240,53 @@ def main():
         console.print(f"  Google signals: {len(google)} found")
         medium = fetch_medium_titles(args.niche)
         console.print(f"  Medium titles: {len(medium)} found")
-        topics = suggest_topics(args.niche, google, medium, recent, blog_type=args.blog_type)
+        listicle_signals = load_listicle_signals(args.niche, args.listicle) if args.listicle else None
+        if args.listicle and not listicle_signals:
+            console.print("[warn]No listicle trend research for today — run "
+                          f"`/research-listicle-trends --niche {args.niche} --listicle {args.listicle}` "
+                          "first. Falling back to standard research signals.[/warn]")
+        step(2, 11, "Topic selection")
+        topics = suggest_topics(
+            args.niche, google, medium, recent, blog_type=args.blog_type,
+            listicle_n=args.listicle, listicle_signals=listicle_signals,
+        )
         topic  = select_topic(topics, niche_label, master_brief=master_brief)
         console.print(f"\nTopic: [bold]{topic}[/bold]")
 
-    # ── Steps 2–5: Draft ──────────────────────────────────────────────────────
     if args.niche == "poetry" and not args.interview:
         # Poetry mode: paste or generate poem + 2-3 line intro/outro only.
+        step(3, 11, "Creator input")
+        console.print("  [dim]folded into poem mode[/dim]")
+        step(4, 11, "Title selection")
+        step(5, 11, "Draft generation")
         blog_text, chosen_title = run_poem_mode(topic, niche_label=niche_label, master_brief=master_brief)
         console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
     elif args.interview:
         # Two-call interview flow replaces creator-input + title + draft generation.
-        if args.listicle or args.blog_type:
-            console.print("[warn]--listicle/--type are ignored in --interview mode.[/warn]")
+        if args.blog_type:
+            console.print("[warn]--type is ignored in --interview mode.[/warn]")
+        step(3, 11, "Creator input")
+        console.print("  [dim]folded into the two-call interview flow[/dim]")
+        step(4, 11, "Title selection")
+        step(5, 11, "Draft generation")
         blog_text, chosen_title = run_interview_flow(
             args.niche, topic, google, medium,
             niche_label=niche_label, master_brief=master_brief,
+            listicle=args.listicle,
         )
         console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
     else:
-        # ── Step 2: Creator input ──────────────────────────────────────────────
-        creator_input = get_creator_input(topic, niche_label, master_brief=master_brief)
+        step(3, 11, "Creator input")
+        creator_input = get_creator_input(topic, niche_label, master_brief=master_brief,
+                                          listicle=args.listicle)
 
-        # ── Step 3: Title selection ────────────────────────────────────────────
-        titles       = suggest_titles(args.niche, topic, creator_input, google, blog_type=args.blog_type)
+        step(4, 11, "Title selection")
+        titles       = suggest_titles(args.niche, topic, creator_input, google,
+                                       blog_type=args.blog_type, listicle_n=args.listicle)
         chosen_title = select_title(titles, topic, master_brief=master_brief)
         console.print(f"\nTitle locked: [bold]{chosen_title}[/bold]\n")
 
-        # ── Step 4: Build prompt ───────────────────────────────────────────────
+        step(5, 11, "Draft generation")
         combined_prompt = build_prompt(
             writing_agent, master_brief, topic, args.niche,
             listicle=args.listicle, project_key=args.project,
@@ -1088,15 +1310,15 @@ def main():
             if "[IMAGE_INSERT" not in blog_text:
                 console.print("[warn]⚠ Still no IMAGE_INSERT after retry. Proceeding anyway.[/warn]")
 
-    # Step 1b — humanize (optional)
     if args.humanize:
+        step(6, 11, "Humanize (remove AI tells)")
         blog_text = run_claude(
             HUMANIZE_PROMPT + blog_text,
             timeout=300,
             description="Humanizing (removing AI tells)...",
         )
 
-    # Step 2 — save
+    step(7, 11, "Save blog file")
     today = date.today().isoformat()
     slug  = slugify(topic)  # use the local `topic` var, not args.topic (which can be None)
     filename = f"{today}_{NICHES[args.niche]}_{slug}.md"
@@ -1139,8 +1361,8 @@ def main():
             f"\n- {image_inserts} `[IMAGE_INSERT]`\n\n`grep -rn 'INSERT' content/blogs/{week}/{filename}`",
         ))
 
-    # ── Step 3 — image strategy: AI vs stock ──────────────────────────────────
     if image_inserts:
+        step(8, 11, "Image strategy (AI vs stock)")
         markers = parse_markers(blog_text)
         decision = decide_image(
             blog_text, args.niche, markers,
@@ -1165,8 +1387,8 @@ def main():
                 if result.returncode != 0:
                     console.print("[warn]Image fetch failed — fill [IMAGE_INSERT] markers manually.[/warn]")
 
-    # ── Step 4 — companion worksheet (DS/Life): Claude-designed HTML → PDF ─────
     if args.niche in WORKSHEET_NICHES and not args.no_worksheet:
+        step(9, 11, "Worksheet (Claude-designed HTML → PDF)")
         try:
             console.print("\n[info]Building companion worksheet (Claude-designed → PDF)...[/info]")
             subprocess.run(
@@ -1184,16 +1406,23 @@ def main():
             console.print(f"[warn]Worksheet step failed: {e}[/warn]")
             manual.append(("Worksheet", f"⚠️ generation failed: {e}\nRetry: `python3 scripts/generate_worksheet_html.py -i {rel}`"))
 
-    # ── Step 5 — Instagram carousel (all niches): Claude-designed HTML + PNG export ──
-    # repurpose_blog.py also runs this in the full pipeline; generate_carousel.py
-    # self-skips when the output exists, so the overlap is an idempotent no-op.
     if not args.no_carousel:
+        step(10, 11, "Instagram carousel (Claude-designed HTML + PNG export)")
         try:
             console.print("\n[info]Building Instagram carousel...[/info]")
             carousel_cmd = [sys.executable, str(Path(__file__).parent / "generate_carousel.py"),
                             "--blog", str(out_path), "--export"]
             if args.project:
                 carousel_cmd += ["--project", args.project]
+            if args.listicle:
+                outline_md = extract_listicle_outline(blog_text, args.listicle, chosen_title)
+                if outline_md:
+                    outline_path = slug_dir / "carousel_outline.md"
+                    outline_path.write_text(outline_md, encoding="utf-8")
+                    carousel_cmd += ["--outline", str(outline_path), "--slides", str(args.listicle + 2)]
+                else:
+                    console.print("[warn]Listicle heading count mismatch — carousel falls back to "
+                                  "content-driven slides.[/warn]")
             subprocess.run(carousel_cmd, check=True)
             console.print("  [success]✓ Carousel ready[/success]")
             manual.append(("Carousel", f"Generated: `assets/carousels/{week}/{full_slug}_carousel.html` (+ exported slide PNGs)."))
@@ -1201,7 +1430,7 @@ def main():
             console.print(f"[warn]Carousel step failed: {e}[/warn]")
             manual.append(("Carousel", f"⚠️ generation failed: {e}\nRetry: `python3 scripts/generate_carousel.py --blog {rel} --export`"))
 
-    # ── SEO + publish → sidecar (Medium API can't set SEO title/description) ───
+    step(11, 11, "Manual steps (SEO + publish)")
     seo_steps = seo_manual_steps(extract_seo(blog_text))
     if seo_steps:
         manual.append(("SEO — set manually on Medium", seo_steps))
