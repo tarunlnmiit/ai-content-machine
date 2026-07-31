@@ -1,0 +1,3 @@
+Every dashboard was green for a full day while my "production" pipeline trained models into a dead directory.
+cron runs from $HOME; my MLflow artifact path was relative — so it wrote a second mlruns tree nothing read from.
+It was never a crash. It was silence. I wrote the whole post-mortem down.

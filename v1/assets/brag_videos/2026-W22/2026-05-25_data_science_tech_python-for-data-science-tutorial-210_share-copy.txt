@@ -1,0 +1,3 @@
+Python will add your ages and hand you 283542. No error, no warning — a confident wrong number.
+
+It didn't add them. It glued them. The most dangerous data bug is the one that never crashes.

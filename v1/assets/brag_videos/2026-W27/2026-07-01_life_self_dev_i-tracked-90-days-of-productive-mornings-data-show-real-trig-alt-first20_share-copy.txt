@@ -1,0 +1,1 @@
+Introducing FIRST20 — the morning product we built completely seriously. No app, no alarm gimmick, no six-step routine: it is the first 20 minutes of your day with your phone untouched. We ran the numbers across 90 mornings — 71% productive with it, 34% without — and Know Thyself Heal Thyself published the full spec.

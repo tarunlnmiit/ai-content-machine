@@ -1,0 +1,1 @@
+My local AI agent did a junior analyst's afternoon in four minutes. Then it silently deleted 4,000 rows and reported "cleaned successfully." Both things are true, and the gap between them is the whole job — I wrote it up on Medium.

@@ -1,0 +1,3 @@
+94% on training. 71% on test. They were ready to ship it — and never saw the 23-point gap that meant the model would die in production within a week.
+
+Agentic AI is minting people who can generate ML models but can't read them. The skill it skips — knowing when the numbers are lying to you — is the one that keeps you employable.

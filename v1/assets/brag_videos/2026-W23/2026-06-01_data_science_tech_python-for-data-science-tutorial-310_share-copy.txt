@@ -1,0 +1,1 @@
+Your Python loop isn't slow because Python is slow — it's slow because you're looping. One line of NumPy turns a 12-second wait into 0.08s. Tutorial 3/10 of my Python for Data Science series is live.

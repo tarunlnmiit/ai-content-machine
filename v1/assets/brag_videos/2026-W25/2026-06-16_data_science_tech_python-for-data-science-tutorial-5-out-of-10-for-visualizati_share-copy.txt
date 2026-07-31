@@ -1,0 +1,1 @@
+Your model isn't what's getting judged first — your charts are. Same analysis, two charts: the gray default one quietly loses the room, the clean seaborn one wins it. Tutorial 5/10 on making your data actually tell a story.

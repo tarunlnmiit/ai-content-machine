@@ -1,0 +1,1 @@
+We cancelled $200/month of AI subscriptions and shipped Local AI Stack: a free Ollama bot that scores job listings against your resume at 2am while you sleep. $0/month, 0 API calls out, 100% of your data stays on your machine. The best argument for local AI was never the cost — it's what you build when cost stops being a constraint.

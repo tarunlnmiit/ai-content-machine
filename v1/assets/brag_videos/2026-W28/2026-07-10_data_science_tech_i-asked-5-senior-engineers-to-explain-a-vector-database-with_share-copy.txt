@@ -1,0 +1,1 @@
+I asked 5 senior engineers to explain a vector database. Four stacked fancier jargon; the fifth said "the one library shelf nobody alphabetized — similar books are neighbors." That's the whole thing — and if 40k vectors fit in memory, you don't need Pinecone.

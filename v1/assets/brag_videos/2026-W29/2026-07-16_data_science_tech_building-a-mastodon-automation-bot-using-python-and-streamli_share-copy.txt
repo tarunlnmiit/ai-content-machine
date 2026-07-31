@@ -1,0 +1,1 @@
+I almost imported a 4,000-line library to post one toot with an image. Then I read the API — it's two HTTP endpoints. The whole bot is 40 lines of `requests`: POST /api/v1/media, POST /api/v1/statuses, done. Forty lines you wrote beat four thousand you imported — every time you debug them at 2 a.m.

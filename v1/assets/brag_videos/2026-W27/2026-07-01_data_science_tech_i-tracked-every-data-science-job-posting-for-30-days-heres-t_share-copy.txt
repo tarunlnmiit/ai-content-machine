@@ -1,0 +1,1 @@
+I scraped 1,003 data science job postings over 30 days. 87% wanted the same "boring" skill — strong Python + ML fundamentals — while LangChain, hyped for two straight years, showed up in exactly 3%. The gap between what's loud on Twitter and what's actually in the requisition is where most job searches quietly go wrong.

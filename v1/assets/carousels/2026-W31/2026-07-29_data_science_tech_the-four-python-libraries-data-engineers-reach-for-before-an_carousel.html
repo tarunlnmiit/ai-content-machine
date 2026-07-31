@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath of Data Science — Pandas vs Polars vs DuckDB Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-primary:#6B8FA8;
+    --brand-light:#96BAD0;
+    --brand-dark:#3D5F75;
+    --light-bg:#EDE8DC;
+    --light-border:#D6D0C4;
+    --dark-bg:#1E1B2E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#0d0d12;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    font-family:'Space Grotesk',sans-serif;
+  }
+
+  /* ===== Instagram frame chrome ===== */
+  .ig-frame{
+    width:420px;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  .ig-header{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 14px;
+  }
+  .ig-avatar{
+    width:34px;height:34px;border-radius:50%;
+    background:linear-gradient(165deg,#3D5F75 0%,#6B8FA8 50%,#96BAD0 100%);
+    display:flex;align-items:center;justify-content:center;
+    color:#EDE8DC;font-weight:700;font-size:15px;
+    flex-shrink:0;
+  }
+  .ig-uname{font-weight:700;font-size:13.5px;color:#1E1B2E;line-height:1.2;}
+  .ig-sub{font-size:11px;color:#8a8a8a;}
+  .ig-menu{margin-left:auto;font-weight:700;color:#1E1B2E;letter-spacing:2px;}
+
+  /* ===== Carousel mechanics ===== */
+  .carousel-viewport{
+    width:420px;height:525px;overflow:hidden;position:relative;
+    cursor:grab;
+    background:var(--light-bg);
+  }
+  .carousel-viewport:active{cursor:grabbing;}
+  .carousel-track{
+    display:flex;
+    width:calc(420px * 8);
+    height:525px;
+    transition:transform .38s cubic-bezier(0.16,1,0.3,1);
+    will-change:transform;
+  }
+  .slide{
+    width:420px;height:525px;position:relative;overflow:hidden;flex-shrink:0;
+    padding:0 36px;
+  }
+
+  /* dot pagination under image */
+  .ig-dots{display:flex;justify-content:center;gap:5px;padding:10px 0 4px;}
+  .ig-dot{width:5px;height:5px;border-radius:50%;background:#D6D0C4;}
+  .ig-dot.active{background:#3D5F75;width:6px;height:6px;}
+
+  /* action icon row */
+  .ig-actions{display:flex;align-items:center;gap:14px;padding:6px 14px 0;}
+  .ig-actions svg{width:23px;height:23px;stroke:#1E1B2E;fill:none;stroke-width:1.8;}
+  .ig-actions .save{margin-left:auto;}
+  .ig-likes{padding:8px 14px 0;font-size:13px;font-weight:700;color:#1E1B2E;}
+  .ig-caption{padding:6px 14px 16px;font-size:12.5px;line-height:1.55;color:#1E1B2E;}
+  .ig-caption b{font-weight:700;}
+  .ig-caption .more{color:#8a8a8a;}
+
+  /* ===== Shared slide overlay chrome (light-ground variant, DS only variant) ===== */
+  .progress-row{position:absolute;top:0;left:0;right:0;display:flex;gap:4px;padding:8px 12px 0;z-index:20;}
+  .progress-seg{flex:1;height:3px;border-radius:2px;background:rgba(0,0,0,.12);overflow:hidden;}
+  .progress-seg .fill{height:100%;border-radius:2px;background:rgba(0,0,0,.42);width:0%;}
+  .counter-chip{position:absolute;top:18px;left:18px;background:rgba(30,27,46,.88);color:#EDE8DC;font-size:11px;font-weight:600;padding:5px 10px;border-radius:20px;letter-spacing:.03em;z-index:20;font-family:'Space Grotesk',sans-serif;}
+  .follow-tag{position:absolute;top:18px;right:18px;font-size:10.5px;font-weight:600;color:#3D5F75;background:rgba(255,255,255,.75);padding:5px 10px;border-radius:20px;letter-spacing:.02em;z-index:20;font-family:'Space Grotesk',sans-serif;}
+  .swipe-arrow{position:absolute;top:50%;right:18px;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:#3D5F75;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;box-shadow:0 8px 18px rgba(0,0,0,.3);z-index:20;}
+  .save-tag{position:absolute;bottom:18px;right:18px;font-size:10px;font-weight:600;color:#3D5F75;background:rgba(255,255,255,.75);padding:5px 9px;border-radius:6px;letter-spacing:.03em;z-index:20;font-family:'Space Grotesk',sans-serif;}
+  .cliffhanger{position:absolute;bottom:17px;left:0;right:0;text-align:center;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;z-index:20;font-family:'Space Grotesk',sans-serif;color:#3D5F75;opacity:.85;padding:0 36px;}
+
+  /* ===== Grounds ===== */
+  .slide.ledger{background-color:#EDE8DC;background-image:repeating-linear-gradient(0deg,transparent 0 27px,#D6D0C4 27px 28px);}
+  .slide.terminal{background-color:#EDE8DC;background-image:linear-gradient(rgba(61,95,117,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(61,95,117,.09) 1px,transparent 1px);background-size:26px 26px;}
+
+  /* doodles */
+  .doodle{position:absolute;opacity:.28;stroke:#3D5F75;fill:none;z-index:2;}
+
+  /* ===== Archetype 1: Verdict Page (hook + CTA-derived) ===== */
+  .stamp{position:absolute;top:64px;left:18px;right:18px;font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.12em;color:#3D5F75;border:1.5px solid #3D5F75;display:inline-block;padding:4px 10px;border-radius:3px;transform:rotate(-1.5deg);width:fit-content;}
+  .verdict{position:absolute;top:150px;left:18px;right:18px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;line-height:1.16;color:#1E1B2E;}
+  .verdict .u{border-bottom:5px solid #6B8FA8;padding-bottom:2px;}
+  .margin-note{position:absolute;top:352px;left:18px;right:70px;font-family:'Space Grotesk',sans-serif;font-size:12px;line-height:1.5;color:#3D5F75;font-weight:500;}
+  .cta-btn{position:absolute;bottom:70px;left:18px;right:18px;background:#3D5F75;color:#EDE8DC;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;text-align:center;padding:14px;border-radius:6px;letter-spacing:.02em;}
+
+  /* ===== Archetype 3: Corkboard Stack ===== */
+  .cork-card{position:absolute;background:#F6F1E4;border:1px solid #D6D0C4;box-shadow:0 10px 22px rgba(30,27,46,.16);border-radius:2px;padding:16px 18px;font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.4;color:#1E1B2E;}
+  .pin{position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;background:#3D5F75;box-shadow:0 2px 4px rgba(0,0,0,.3);}
+  .c1{top:110px;left:24px;right:96px;transform:rotate(-3deg);}
+  .c2{top:228px;left:56px;right:40px;transform:rotate(2deg);}
+  .c3{top:342px;left:24px;right:110px;transform:rotate(-1.5deg);}
+
+  /* ===== Archetype 4: Case File Quote ===== */
+  .card{position:absolute;top:96px;left:18px;right:70px;background:#F6F1E4;border:1px solid #D6D0C4;box-shadow:0 14px 30px rgba(30,27,46,.16);transform:rotate(-1.1deg);padding:20px 18px;border-radius:2px;}
+  .tape{position:absolute;top:-12px;left:32px;width:60px;height:22px;background:rgba(150,186,208,.55);transform:rotate(-6deg);box-shadow:0 2px 6px rgba(0,0,0,.08);}
+  .label{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;color:#3D5F75;margin-bottom:8px;}
+  .quote{font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.5;color:#1E1B2E;position:relative;margin-bottom:6px;}
+  .redact{background:#3D5F75;color:#3D5F75;border-radius:2px;padding:0 3px;}
+  .sub{font-family:'Space Grotesk',sans-serif;font-size:11px;line-height:1.5;color:#5b5648;margin-bottom:16px;}
+  .divider{height:1px;background:#D6D0C4;margin:12px 0;}
+  .hl{background:#96BAD0;padding:0 4px;border-radius:2px;}
+
+  /* ===== Archetype 7: Diff Stack (terminal) ===== */
+  .diffcard{position:absolute;left:18px;right:18px;border-radius:6px;padding:16px 18px;font-family:'JetBrains Mono',monospace;}
+  .d1{top:112px;background:#3D5F75;color:#EDE8DC;}
+  .d2{top:266px;right:70px;background:#96BAD0;color:#1E1B2E;}
+  .difftag{font-size:10px;font-weight:700;letter-spacing:.08em;margin-bottom:8px;opacity:.85;}
+  .diffqt{font-size:13.5px;line-height:1.5;}
+  .arrowdown{position:absolute;top:220px;left:38px;font-size:20px;color:#3D5F75;font-weight:700;}
+
+  /* ===== Archetype 5: Field Notes Checklist ===== */
+  .strip{position:absolute;left:18px;right:18px;background:#F6F1E4;border:1px solid #D6D0C4;box-shadow:0 8px 18px rgba(30,27,46,.14);padding:14px 16px;font-family:'Space Grotesk',sans-serif;font-size:13.5px;color:#1E1B2E;display:flex;gap:10px;align-items:baseline;clip-path:polygon(0 0,100% 2%,99% 100%,1% 98%);}
+  .num{font-family:'JetBrains Mono',monospace;font-weight:700;color:#3D5F75;font-size:12px;}
+  .s1{top:116px;transform:rotate(-1.5deg);}
+  .s2{top:238px;transform:rotate(1deg);}
+  .s3{top:360px;transform:rotate(-0.8deg);}
+
+  /* ===== Archetype 9: Comment-Line Quote (terminal) ===== */
+  .comment-line{position:absolute;top:210px;left:18px;right:18px;font-family:'JetBrains Mono',monospace;font-size:17px;line-height:1.5;color:#1E1B2E;transform:rotate(-1.5deg);}
+  .comment-line .slash{color:#6B8FA8;font-weight:700;}
+  .bracket{position:absolute;top:280px;left:34px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#3D5F75;transform:rotate(-1.5deg);}
+
+  /* ===== Archetype 6: Ledger Recap ===== */
+  .mini-cork{position:absolute;width:96px;background:#F6F1E4;border:1px solid #D6D0C4;box-shadow:0 8px 16px rgba(30,27,46,.16);border-radius:2px;padding:12px 10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13.5px;color:#3D5F75;text-align:center;}
+  .m1{top:150px;left:24px;transform:rotate(-4deg);}
+  .m2{top:140px;right:26px;transform:rotate(3deg);}
+  .m3{top:290px;left:56px;transform:rotate(2deg);}
+  .m4{top:300px;right:44px;transform:rotate(-3deg);}
+  .recap-lede{position:absolute;top:70px;left:18px;right:18px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;color:#3D5F75;text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<div class="ig-frame">
+
+  <div class="ig-header">
+    <div class="ig-avatar">B</div>
+    <div>
+      <div class="ig-uname">breathofdatascience</div>
+      <div class="ig-sub">Original audio</div>
+    </div>
+    <div class="ig-menu">&bull;&bull;&bull;</div>
+  </div>
+
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- SLIDE 1 — HOOK: Verdict Page -->
+      <div class="slide ledger">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="counter-chip">1 / 8</div>
+        <div class="swipe-arrow">&rarr;</div>
+        <div class="save-tag">Save this &darr;</div>
+
+        <div class="stamp">TWO DAYS BLAMING MY OWN CODE</div>
+        <div class="verdict">An 800MB file <span class="u">killed my 16GB machine</span></div>
+        <div class="margin-note">It wasn't the data size. It was the shape.</div>
+
+        <svg class="doodle" style="top:410px;left:24px;width:34px;height:34px;" viewBox="0 0 40 40"><path d="M20 4 L23 16 L36 16 L26 24 L29 36 L20 28 L11 36 L14 24 L4 16 L17 16 Z" stroke-width="1.4"/></svg>
+
+        <div class="cliffhanger">Next: what actually broke (it's not what you think)</div>
+      </div>
+
+      <!-- SLIDE 2 — Corkboard Stack -->
+      <div class="slide ledger">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="counter-chip">2 / 8</div>
+        <div class="swipe-arrow">&rarr;</div>
+
+        <div class="cork-card c1"><div class="pin"></div>Expected 2GB in memory. Got 11GB, then a dead kernel.</div>
+        <div class="cork-card c2"><div class="pin"></div>Two string columns — session IDs, URLs — were 9 of those 11GB.</div>
+        <div class="cork-card c3"><div class="pin"></div>60 million rows wasn't the problem. Width was.</div>
+
+        <svg class="doodle" style="top:60px;right:20px;width:30px;height:30px;" viewBox="0 0 40 40"><path d="M6 30 Q20 6 34 20" stroke-width="1.6"/><path d="M28 16 L34 20 L30 26" stroke-width="1.6"/></svg>
+
+        <div class="cliffhanger">Next: the two days I wasted chasing the wrong bug</div>
+      </div>
+
+      <!-- SLIDE 3 — Case File Quote -->
+      <div class="slide ledger">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="counter-chip">3 / 8</div>
+        <div class="swipe-arrow">&rarr;</div>
+
+        <div class="card">
+          <div class="tape"></div>
+          <div class="label">THE TWO DAYS THAT DIDN'T HELP</div>
+          <div class="quote">&ldquo;I blamed a merge I was sure <span class="redact">was fanning out</span></div>
+          <div class="sub">The memory was already gone before my code ever ran.</div>
+          <div class="divider"></div>
+          <div class="label">THE ONE LINE THAT FOUND IT</div>
+          <div class="quote"><span class="hl">memory_usage(deep=True)</span> — 2 columns, 9 of 11GB</div>
+          <div class="sub">Ten minutes would've saved two days.</div>
+        </div>
+
+        <div class="cliffhanger">Next: the same fix, breaking again six months later</div>
+      </div>
+
+      <!-- SLIDE 4 — Diff Stack (terminal) -->
+      <div class="slide terminal">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="counter-chip">4 / 8</div>
+        <div class="swipe-arrow">&rarr;</div>
+
+        <div class="diffcard d1"><div class="difftag">&minus; 52 MIN, 58GB PEAK</div><div class="diffqt">&ldquo;Pandas: chunked reads, constant babysitting, still OOM'd weekly&rdquo;</div></div>
+        <div class="arrowdown">&darr;</div>
+        <div class="diffcard d2"><div class="difftag">+ 4:10, 11GB PEAK</div><div class="diffqt">&ldquo;Polars lazy API: same groupbys, 340 lines down to 90&rdquo;</div></div>
+
+        <div class="cliffhanger">Next: the tell for each library, before production finds it</div>
+      </div>
+
+      <!-- SLIDE 5 — Field Notes Checklist -->
+      <div class="slide ledger">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="counter-chip">5 / 8</div>
+        <div class="swipe-arrow">&rarr;</div>
+
+        <div class="strip s1"><span class="num">01</span>PANDAS — one dataframe crosses ~20% of RAM</div>
+        <div class="strip s2"><span class="num">02</span>POLARS — lazy scan still can't fit one box</div>
+        <div class="strip s3"><span class="num">03</span>DUCKDB — two writers collide, you need a real warehouse</div>
+
+        <div class="cliffhanger">Next: the signal that runs backward</div>
+      </div>
+
+      <!-- SLIDE 6 — Comment-Line Quote (terminal) -->
+      <div class="slide terminal">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="counter-chip">6 / 8</div>
+        <div class="swipe-arrow">&rarr;</div>
+
+        <div class="comment-line"><span class="slash">// </span>&ldquo;40 seconds of real compute. 3 minutes of JVM.&rdquo;</div>
+        <div class="bracket">&#9492;&#9472; over-provisioned</div>
+
+        <svg class="doodle" style="bottom:90px;right:26px;width:26px;height:26px;" viewBox="0 0 40 40"><circle cx="8" cy="20" r="3"/><circle cx="20" cy="20" r="3"/><circle cx="32" cy="20" r="3"/></svg>
+
+        <div class="cliffhanger">Next: the four-word version of everything above</div>
+      </div>
+
+      <!-- SLIDE 7 — Ledger Recap -->
+      <div class="slide ledger">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="counter-chip">7 / 8</div>
+        <div class="swipe-arrow">&rarr;</div>
+
+        <div class="recap-lede">10 years, 4 libraries, same lesson</div>
+        <div class="mini-cork m1">SHAPE<br>&gt; SIZE</div>
+        <div class="mini-cork m2">SCHEMA<br>= TRUST</div>
+        <div class="mini-cork m3">WATCH<br>THE CURVE</div>
+        <div class="mini-cork m4">PHYSICS<br>NOT TASTE</div>
+
+        <div class="cliffhanger">Next: comment for the decision tree</div>
+      </div>
+
+      <!-- SLIDE 8 — CTA (derived from hook, same register) -->
+      <div class="slide ledger">
+        <div class="progress-row">
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+          <div class="progress-seg"><div class="fill"></div></div>
+        </div>
+        <div class="counter-chip">8 / 8</div>
+        <div class="follow-tag">Tap to follow &rarr;</div>
+
+        <div class="stamp">10 YEARS. 4 LIBRARIES. ONE RULE.</div>
+        <div class="verdict">Comment <span class="u">SWITCH</span> for the decision tree</div>
+        <div class="margin-note">The exact checklist I run before picking a library for a pipeline job.</div>
+        <div class="cta-btn">Comment SWITCH &rarr; I'll DM it @breathofdatascience</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ig-dots">
+    <span class="ig-dot active"></span><span class="ig-dot"></span><span class="ig-dot"></span><span class="ig-dot"></span>
+    <span class="ig-dot"></span><span class="ig-dot"></span><span class="ig-dot"></span><span class="ig-dot"></span>
+  </div>
+
+  <div class="ig-actions">
+    <svg viewBox="0 0 24 24"><path d="M20.8 4.6c-1.7-1.7-4.5-1.7-6.2 0L12 7.2 9.4 4.6c-1.7-1.7-4.5-1.7-6.2 0-1.7 1.7-1.7 4.5 0 6.2L12 19.4l8.8-8.6c1.7-1.7 1.7-4.5 0-6.2z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 9 9 0 0 1-3.6-.7L3 21l1.9-5.1a8.3 8.3 0 0 1-.9-3.9A8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+    <svg class="save" viewBox="0 0 24 24"><path d="M19 21 12 16l-7 5V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1z"/></svg>
+  </div>
+
+  <div class="ig-likes">Liked by tessa.fairbrook and 2,148 others</div>
+  <div class="ig-caption">
+    <b>breathofdatascience</b> An 800MB file crashed a 16GB machine. Not the data size — two string columns broke pandas' memory model, and it hid for two days before <code>memory_usage(deep=True)</code> found it in ten minutes.<br><br>
+    This is the switching signal for each library — pandas, Polars, DuckDB, PySpark — so you catch it before production does, at 2am.<br><br>
+    Comment <b>SWITCH</b> and I'll DM the decision tree I run before picking a library for a pipeline job. <span class="more">more</span>
+  </div>
+
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const viewport = document.getElementById('viewport');
+  const dots = document.querySelectorAll('.ig-dot');
+  const SLIDE_W = 420;
+  const SLIDE_COUNT = 8;
+  let current = 0;
+  let startX = 0;
+  let dragging = false;
+  let deltaX = 0;
+
+  function goTo(i){
+    current = Math.max(0, Math.min(SLIDE_COUNT - 1, i));
+    track.style.transform = `translateX(${-current * SLIDE_W}px)`;
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+  }
+
+  function pointerDown(x){ dragging = true; startX = x; track.style.transition = 'none'; }
+  function pointerMove(x){
+    if(!dragging) return;
+    deltaX = x - startX;
+    track.style.transform = `translateX(${-current * SLIDE_W + deltaX}px)`;
+  }
+  function pointerUp(){
+    if(!dragging) return;
+    dragging = false;
+    track.style.transition = 'transform .38s cubic-bezier(0.16,1,0.3,1)';
+    if(deltaX < -60) goTo(current + 1);
+    else if(deltaX > 60) goTo(current - 1);
+    else goTo(current);
+    deltaX = 0;
+  }
+
+  viewport.addEventListener('mousedown', e => pointerDown(e.clientX));
+  window.addEventListener('mousemove', e => pointerMove(e.clientX));
+  window.addEventListener('mouseup', pointerUp);
+  viewport.addEventListener('touchstart', e => pointerDown(e.touches[0].clientX));
+  viewport.addEventListener('touchmove', e => pointerMove(e.touches[0].clientX));
+  viewport.addEventListener('touchend', pointerUp);
+
+  goTo(0);
+</script>
+
+</body>
+</html>

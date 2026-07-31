@@ -1,0 +1,1 @@
+My first real dataset ate two weeks — "N/A", "na", "None" and a dash all meaning the same thing, "approx 50k" sitting in a revenue column. Four Pandas moves later, any messy dataset is workable in under an hour. Tutorial 4 of the Python for Data Science series.

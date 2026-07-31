@@ -1,0 +1,1 @@
+I misread one git path and wiped 188MB of unbacked-up content from every commit in my repo's history. `git status` said everything was fine. Here's how reflog, a dangling commit, and blob extraction brought all of it back — byte-perfect.
