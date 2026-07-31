@@ -37,6 +37,29 @@ python3 scripts/repurpose_blog.py --input content/blogs/{week}/{slug}.md --step 
 python3 scripts/repurpose_blog.py --input content/blogs/{week}/{slug}.md --step yt-script
 ```
 
+### Carousel standalone commands
+
+`generate_carousel.py` runs automatically inside `run_blog_pipeline.py` and `repurpose_blog.py --step carousel`. For direct calls:
+
+```bash
+# From existing blog (auto-detects niche)
+python3 scripts/generate_carousel.py --blog content/blogs/{week}/{slug}.md
+
+# From topic + niche
+python3 scripts/generate_carousel.py --topic "Your topic here" --niche ds|life|poetry
+
+# Authoritative slide-by-slide plan (overrides auto slide count + structure)
+python3 scripts/generate_carousel.py --blog content/blogs/{week}/{slug}.md \
+  --outline path/to/outline.md
+
+# Re-export existing carousel HTML to 1080×1350 PNGs (2x supersampled)
+python3 scripts/generate_carousel.py --export-only assets/carousels/{week}/{slug}_carousel.html
+```
+
+**Slide count:** content-driven, **5–12 slides**, sweet spot **8–10 for educational/framework content.** Each slide = one idea; never pad or merge to hit a round number.
+
+**Export:** Playwright renders at 2× density (2160×2700) and downscales to 1080×1350 for sharpness. One PNG per slide to `assets/carousels/slides/{week}/{slug}/slide_N.png`.
+
 > **`--type` is DS-only.** `--type tutorial` = code-first post with runnable Python; `--type news` = editorial/opinion piece with no code. Rejected for Life and Poetry.
 
 Niche + ISO week are auto-derived from the blog slug.
@@ -62,15 +85,16 @@ Niche + ISO week are auto-derived from the blog slug.
 > [design-system-sync.md](design-system-sync.md).
 
 > **Carousel output layout & UI contract** (`generate_carousel.py`):
-> - HTML: `assets/carousels/{slug}_carousel.html` (flat — referenced flat by `repurpose_blog.py`,
->   `generate_social_images.py`, `load_posts.py`).
-> - Exported PNGs: `assets/carousels/slides/{week}/{slug}/slide_N.png` — **nested under the ISO
->   week** (`get_iso_week(slug[:10])`); one PNG per slide at 1080×1350.
-> - Required per-slide UI (mandated in `CAROUSEL_SYSTEM`): a `.progress-row` of `.progress-seg`/`.fill`
->   segments; the Playwright export **bakes each slide's fill from its own slide index** (do not rely on
->   in-page scroll/JS state — export bypasses page JS). Plus rendered `.follow-tag` ("Tap to follow") on
->   every slide except the last, and `.save-tag` ("Save this") on content slides — as real elements, not
->   CSS-only. The last slide drops the follow tag and carries the comment-a-keyword CTA button.
+> - HTML: `assets/carousels/{week}/{slug}_carousel.html`; referenced by `repurpose_blog.py`,
+>   `generate_social_images.py`, `load_posts.py`.
+> - Exported PNGs: `assets/carousels/slides/{week}/{slug}/slide_N.png` (one per slide, 1080×1350,
+>   rendered at 2× density for sharpness).
+> - **No per-carousel `_export.py` files are generated** — export is always run via Playwright
+>   (`--export` flag, on by default; use `--no-export` to skip).
+> - Required per-slide UI: `.progress-row` of `.progress-seg`/`.fill` segments (Playwright export
+>   **bakes each slide's fill from slide index**). Plus `.follow-tag` ("Tap to follow") on final CTA
+>   slide only, `.save-tag` ("Save this") on hook slide only, and `.cliffhanger` ("Next: …") on
+>   every slide except the last — as real DOM elements, not CSS-only.
 
 ## Stays manual (by design)
 
@@ -139,7 +163,14 @@ they finish. Parsing/rendering lives in `scripts/lib/seo.py`. Full rules:
 | Per-run overrides | env vars `INTERVIEW_NICHE` · `INTERVIEW_AUDIENCE` · `INTERVIEW_AUTHOR_VOICE` · `INTERVIEW_EMAIL_CTA_TARGET` |
 
 Notes:
-- `--interview` ignores `--listicle` / `--type` (those shape the classic writing-agent path).
+- **`--interview` and `--listicle N` now combine** (2026-07-31). Passing both makes call 1
+  ask for `N` discrete items instead of broad thematic questions, and call 2 applies the same
+  Top-N structure override the classic path uses. This is the strongest combination available:
+  the listicle supplies a validated structure, the interview supplies your real examples for
+  each item — which is what stops a listicle reading as seven paragraphs of generic advice.
+  The two directives are separate on purpose (`build_listicle_question_directive` shapes what
+  the interview extracts; `build_listicle_directive` shapes how the article is written).
+- `--interview` still ignores `--type` (that shapes the classic writing-agent prompt only).
 - In interview mode the worksheet CTA is **not** auto-appended — the article already ends
   with a tailored email CTA from `EMAIL_CTA_TARGET`.
 - `--dry-run` works in either mode: it runs the whole flow and saves the draft but prints
@@ -155,6 +186,46 @@ Interview logic lives in `scripts/lib/interview.py`; `produce_blog.py` just call
 `produce_blog.py` reads `output/trackers/annual-tracker-2026.xlsx` as the primary 90-day angle-dedup source before suggesting topics (CLAUDE.md: "TRACKER FIRST"). Falls back to scanning `content/blogs/` if tracker is absent.
 
 `load_posts.py` marks rows `Scheduled` when a slug is staged. `scheduler.py` marks them `Published` after each successful post via `lib/tracker.py:mark_published()`.
+
+## Listicle research (`--listicle N`)
+
+*Added 2026-07-30.* `--listicle N` now changes the **research phase** of `produce_blog.py`,
+not just the writing prompt. When set, topic suggestion is grounded in live listicle-demand
+research instead of the default Google Suggest + Medium RSS signals used for topic mode.
+
+**Prerequisite — run first, in a Claude Code agent session:**
+
+```bash
+/research-listicle-trends --niche <ds|life|poetry> --listicle <N>
+```
+
+`.claude/commands/research-listicle-trends.md` drives Chrome across Google Trends, YouTube,
+Instagram, and X, applies a listicle-shape regex prefilter, ranks survivors on demand +
+decomposability, and writes `data/ideas/listicle_trends_<niche>_<YYYY-MM-DD>.json`.
+
+> This is a separate slash command, not a `produce_blog.py` code path: `produce_blog.py` is a
+> plain Python script and cannot call Claude-in-Chrome MCP tools — those exist only inside a
+> Claude Code agent session.
+
+**Freshness:** the artifact is valid for today's date only. `N` is stored inside the file, not
+the filename, so one research run per niche per day serves any `--listicle N`.
+
+**Graceful degradation:** if no artifact exists for today, `produce_blog.py` prints a warning
+naming the exact command to run and falls back to standard research with a listicle-shape
+nudge — it never blocks. Instagram and X may be skipped on login walls during research; the
+run continues with whatever surfaces responded.
+
+**Downstream effects:** titles are forced to lead with "Top N" or "N …"; the IG carousel step
+receives a generated `carousel_outline.md` derived from the blog's `## 1.` … `## N.` headings,
+passed to `generate_carousel.py --outline --slides N+2`.
+
+```bash
+# research first (agent session)
+/research-listicle-trends --niche ds --listicle 7
+
+# then write the blog, grounded in that research
+python3 scripts/produce_blog.py --niche ds --listicle 7
+```
 
 ## Idempotency
 

@@ -57,6 +57,10 @@ Manual steps remain: recording video, ~10-min content approval, thumbnail Canva 
 - Grounding artifact: every video includes at least one REAL artifact — blog-essay subjects get a screenshot of the published page/headline; tools get a real UI frame — never 100% abstract graphics.
 - Essay-subject adaptation: when the subject is a blog essay (not an app), skip the skill's user-flow lane; build from pull-quote cards + the published-headline proof card + the grounding screenshot.
 
+## Carousels (/carousel skill)
+
+- Interactive IG carousel designer at `.claude/skills/carousel/SKILL.md` — walks hook choice (3 candidates, different playbook drivers) → outline approval → `generate_carousel.py --outline` → export → tracker update. Use it instead of calling `generate_carousel.py` blind.
+
 ## Claude usage rules
 
 - **All pipeline Claude calls = `claude -p` CLI subprocess on subscription OAuth (no API key).** Python callers use `v1/scripts/lib/claude_cli.py` (disk cache `.cache/claude/`); new shell callers use `v1/scripts/headless_claude.sh`. The API-key path is retired (2026-07): `idea_scorer.py` now goes through `claude_cli.call_claude`. Only `generate_viral_reel_brief.py` still imports the raw `anthropic` SDK with `ANTHROPIC_API_KEY_FREE` — that key is no longer in `.env`, so the script is currently non-functional.
