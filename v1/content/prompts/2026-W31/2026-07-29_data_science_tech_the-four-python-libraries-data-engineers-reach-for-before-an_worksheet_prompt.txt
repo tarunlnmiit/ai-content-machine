@@ -1,0 +1,29 @@
+Create a professional worksheet PDF (A4, landscape) for "Find Your Own 11GB Moment Before Production Does"
+
+Layout:
+- Header (top 20%): Title + tagline about the topic
+- 5 sections in vertical stack, each with:
+  - Section number + title (bold, #1-5)
+  - Bulleted prompts or template code
+  - Space for handwritten notes on right side
+
+Colors: Dark blue (#1E3A8A) headers, light gray background, monospace font for code
+
+Sections:
+1. Run the Column Audit, Not df.info()
+   Pick the largest dataframe in your current pipeline and run `df.memory_usage(deep=True).sort_values(ascending=False) / 1e9` instead of trusting df.info(). Note the top 2 columns and what fraction of total memory they eat — in the post's case, two high-cardinality string columns were 9 of 11 GB. If any single dataframe crosses roughly a fifth of your machine's RAM, write down which columns are the culprits and whether casting them to category would help.
+
+2. Hunt the Silent Merge That's Already Wrong
+   Go to one recurring merge or join in your codebase and check both sides' dtypes with `df.dtypes` before the merge — specifically looking for an int64 column on one side matched against a float64 or object column on the other. The post's real incident: a null-heavy upstream column got inferred as object, joined against an int64, and silently dropped 8% of rows for 11 days with no error. Report whether you find a type mismatch, and if you do, what percentage of rows a quick row-count-before/after check reveals it dropped.
+
+3. Race Pandas Against Polars on Your Own Job
+   Take one groupby-heavy job you already have in pandas and rewrite just the aggregation logic using Polars' lazy API (`pl.scan_parquet` + `.group_by()` + `.collect()`). Time both versions on the same input and record runtime and peak memory for each — the post's benchmark went from 52 minutes / 58 GB peak to 4 minutes 10 seconds / 11 GB peak on the same clickstream job. Note your own before/after numbers, even if the improvement is smaller.
+
+4. Match Your Job to Its Switching Signal
+   Read the four switching signals from the post — pandas (memory_usage crossing ~20% of RAM), Polars (scan_parquet still can't finish, or you're calling .to_pandas() repeatedly mid-pipeline), DuckDB (lock contention from concurrent writers), PySpark (JVM startup + shuffle time exceeding actual compute time, visible in the Spark UI). Pick one job you run regularly, name which signal it's closest to hitting right now, and what tool it should move to next if that signal fires.
+
+5. Start the One-Line Runtime Log
+   For one recurring job, add a single logged line per run: timestamp, runtime, and input row count — no dashboard, no monitoring stack, just an appended row. After 5-10 runs, plot runtime against row count and check whether the curve is still a straight line or has started bending upward, which is the exact signal the post says should trigger a library switch before an OOM does it for you at 2 a.m.
+
+
+Footer: "🔗 Get the full guide + practice exercises at the link in bio"

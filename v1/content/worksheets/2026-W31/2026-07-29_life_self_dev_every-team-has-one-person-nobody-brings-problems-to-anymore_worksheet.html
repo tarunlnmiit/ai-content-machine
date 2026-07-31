@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Are They Still Bringing You the Real Problems?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+
+<style>
+  /* ─── Design System Tokens (Breath Network) ─── */
+  :root {
+    --ink:        #1C1C2E;
+    --ink-700:    #2A2A40;
+    --ink-600:    #3A3A52;
+    --bone:       #E8E0D5;
+    --bone-100:   #FAF6EF;
+    --bone-200:   #F1ECE2;
+    --bone-300:   #E8E0D5;
+    --bone-400:   #D6CCBC;
+    --bone-500:   #B8AC97;
+    --sky:        #7C9CB0;
+    --sky-300:    #B0C4D2;
+    --sky-700:    #557083;
+    --ochre:      #C9A96E;
+    --ochre-300:  #E2CDA1;
+    --ember:      #E8745A;
+    --font-sans:  'Montserrat', ui-sans-serif, system-ui, sans-serif;
+    --font-ed:    'Instrument Serif', 'Times New Roman', Georgia, serif;
+    --font-mono:  ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html, body {
+    width: 297mm;
+    height: 210mm;
+    overflow: hidden;
+    background: var(--bone-100);
+    font-family: var(--font-sans);
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─── PAGE SHELL ─── */
+  .page {
+    width: 297mm;
+    height: 210mm;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bone-100);
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    height: 39mm;
+    flex-shrink: 0;
+    background: var(--ink);
+    display: flex;
+    align-items: stretch;
+  }
+
+  .header-accent {
+    width: 3mm;
+    background: var(--sky);
+    flex-shrink: 0;
+  }
+
+  .header-body {
+    flex: 1;
+    padding: 7mm 9mm 7mm 8mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.5mm;
+  }
+
+  .header-eyebrow {
+    font-size: 6.5pt;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sky);
+  }
+
+  .header-title {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 15.5pt;
+    color: var(--bone);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  .header-title em {
+    font-family: var(--font-ed);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre-300);
+  }
+
+  .header-tagline {
+    font-size: 7.5pt;
+    font-weight: 400;
+    color: rgba(232,224,213,0.5);
+    line-height: 1.5;
+    max-width: 175mm;
+  }
+
+  .header-fields {
+    width: 60mm;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3.5mm;
+    padding: 7mm 9mm 7mm 6mm;
+    border-left: 0.5px solid rgba(231,224,213,0.1);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 1mm;
+  }
+
+  .field-label {
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(232,224,213,0.3);
+  }
+
+  .field-line {
+    border-bottom: 0.5px solid rgba(232,224,213,0.22);
+    height: 4.5mm;
+  }
+
+  /* ─── SECTIONS CONTAINER ─── */
+  .sections {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 9mm 5mm 0;
+    overflow: hidden;
+  }
+
+  /* ─── INDIVIDUAL SECTION ─── */
+  .section {
+    flex: 1;
+    display: flex;
+    border-bottom: 0.5px solid var(--bone-400);
+    overflow: hidden;
+  }
+
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  /* Left number bar */
+  .section-num-bar {
+    width: 11mm;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 4mm;
+    padding-left: 2.5mm;
+  }
+
+  .num-badge {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--sky);
+    color: #fff;
+    font-size: 6.5pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  /* Content column */
+  .section-content {
+    flex: 0 0 61%;
+    padding: 4mm 5mm 3mm 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    border-right: 0.5px solid var(--bone-400);
+    overflow: hidden;
+  }
+
+  .section-title {
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  .prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5px;
+  }
+
+  .prompt {
+    font-size: 7pt;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.48;
+    padding-left: 8px;
+    position: relative;
+    text-wrap: pretty;
+  }
+
+  .prompt::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 0.5px;
+    color: var(--sky);
+    font-size: 6pt;
+    font-family: var(--font-sans);
+  }
+
+  .prompt strong {
+    font-weight: 700;
+  }
+
+  .prompt em {
+    font-family: var(--font-ed);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ochre);
+    font-size: 7.5pt;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    background: var(--bone-200);
+    padding: 0 2.5px;
+    border-radius: 2px;
+    color: var(--ink-700);
+  }
+
+  .code-block {
+    font-family: var(--font-mono);
+    font-size: 6.5pt;
+    background: var(--bone-200);
+    color: var(--ink-700);
+    padding: 2mm 3mm;
+    border-left: 1.5px solid var(--sky);
+    border-radius: 0 2px 2px 0;
+    line-height: 1.6;
+    white-space: pre;
+    margin-top: 0.5mm;
+  }
+
+  /* Notes column */
+  .section-notes {
+    flex: 1;
+    padding: 4mm 0 3mm 5mm;
+    display: flex;
+    flex-direction: column;
+    gap: 2mm;
+    overflow: hidden;
+  }
+
+  .notes-label {
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bone-500);
+    flex-shrink: 0;
+  }
+
+  .ruled {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .ruled-line {
+    flex: 1;
+    border-bottom: 0.5px solid var(--bone-400);
+    min-height: 3mm;
+  }
+
+  /* ─── SCREEN-ONLY WRAPPER (centers A4 for display) ─── */
+  @media screen {
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #888;
+      overflow: auto;
+    }
+
+    .page {
+      box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+    }
+  }
+
+  @media print {
+    html, body {
+      width: 297mm;
+      height: 210mm;
+      background: var(--bone-100);
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header-accent"></div>
+    <div class="header-body">
+      <div class="header-eyebrow">The Tense Test For Trust</div>
+      <h1 class="header-title">Are They Still Bringing You the <em>Real</em> Problems?</h1>
+      <p class="header-tagline">Four checks to see whether your team escalates to you or quietly routes around you — plus the exact repair that brings the messy drafts back.</p>
+    </div>
+    <div class="header-fields">
+      <div class="field">
+        <span class="field-label">Name</span>
+        <div class="field-line"></div>
+      </div>
+      <div class="field">
+        <span class="field-label">Date</span>
+        <div class="field-line"></div>
+      </div>
+      <div class="field">
+        <span class="field-label">Role / Team</span>
+        <div class="field-line"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ SECTIONS ═══ -->
+  <main class="sections">
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">1</div></div>
+      <div class="section-content">
+        <div class="section-title">Run the Tense Test on This Week's Messages</div>
+<div class="prompts">
+  <p class="prompt">Pull your last <strong>10–15 questions</strong> from Slack or email. Mark each one <em>future/conditional</em> ("Should we cut it this way?") or <em>past tense</em> ("We went with X, FYI").</p>
+  <p class="prompt">Count the ratio. More than half past tense means you're being <strong>informed, not consulted</strong>.</p>
+  <p class="prompt">Take one past-tense message and rewrite the <em>future-tense version</em> it should have been.</p>
+  <p class="prompt">Check this week's meeting invites: were you added while the analysis was <strong>still open</strong>, or after it hit the deck?</p>
+</div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">Tense Ratio Notes</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">2</div></div>
+      <div class="section-content">
+        <div class="section-title">Audit the Last Five 'Small' Problems Someone Brought You</div>
+<div class="prompts">
+  <p class="prompt">List the last <strong>five small asks</strong> someone brought you. Note the response time and tone for each.</p>
+  <p class="prompt">Did the person ever learn <em>how it got resolved</em> — or did it disappear into your queue?</p>
+  <p class="prompt">Look for a <strong>small question testing a bigger one</strong> — like the date-filter ask that was really about the quarterly review.</p>
+  <p class="prompt">Name one ask you answered too fast. What would a <em>slower, more curious</em> reply have looked like?</p>
+</div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">Five Asks Log</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">3</div></div>
+      <div class="section-content">
+        <div class="section-title">Check Your Own Mechanism</div>
+<div class="prompts">
+  <p class="prompt">Recall the last rough draft someone brought you. Did you <strong>ask questions first</strong>, or start <em>fixing mid-sentence</em>?</p>
+  <p class="prompt">Do you ever open with "<strong>good catch, thanks</strong>" — or does your first line sound like a <em>cross-examination</em>?</p>
+  <p class="prompt">Think of the colleague who says "sorry, I know you're busy, but—". What has your pattern <strong>taught them</strong> it costs?</p>
+  <p class="prompt">Write your actual opening line from last time. Would you want to <em>hear it</em> if you were them?</p>
+</div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">Opening-Line Notes</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-num-bar"><div class="num-badge">4</div></div>
+      <div class="section-content">
+        <div class="section-title">Do the Repair (No Announcement)</div>
+<div class="prompts">
+  <p class="prompt">Ask two or three people directly: <em>"What did I do last time that made it not worth bringing me something half-finished?"</em></p>
+  <p class="prompt">Next rough problem: commit to <strong>asking questions for ten minutes</strong> before offering a fix. Write down what you asked.</p>
+  <p class="prompt">Define your own <em>"drafts get rougher"</em> metric — what would earlier, messier work look like from them?</p>
+  <p class="prompt">Name the <strong>one problem</strong> you're currently being routed around on. What's the ten-foot walk to fix it?</p>
+</div>
+      </div>
+      <div class="section-notes">
+        <div class="notes-label">Repair Commitments</div>
+        <div class="ruled">
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+          <div class="ruled-line"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

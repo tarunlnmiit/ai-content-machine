@@ -1,0 +1,30 @@
+{
+  "type": "practice_guide",
+  "niche": "data_science_tech",
+  "title": "Find Your Own 11GB Moment Before Production Does",
+  "sections": [
+    {
+      "title": "Run the Column Audit, Not df.info()",
+      "prompt": "Pick the largest dataframe in your current pipeline and run `df.memory_usage(deep=True).sort_values(ascending=False) / 1e9` instead of trusting df.info(). Note the top 2 columns and what fraction of total memory they eat — in the post's case, two high-cardinality string columns were 9 of 11 GB. If any single dataframe crosses roughly a fifth of your machine's RAM, write down which columns are the culprits and whether casting them to category would help."
+    },
+    {
+      "title": "Hunt the Silent Merge That's Already Wrong",
+      "prompt": "Go to one recurring merge or join in your codebase and check both sides' dtypes with `df.dtypes` before the merge — specifically looking for an int64 column on one side matched against a float64 or object column on the other. The post's real incident: a null-heavy upstream column got inferred as object, joined against an int64, and silently dropped 8% of rows for 11 days with no error. Report whether you find a type mismatch, and if you do, what percentage of rows a quick row-count-before/after check reveals it dropped."
+    },
+    {
+      "title": "Race Pandas Against Polars on Your Own Job",
+      "prompt": "Take one groupby-heavy job you already have in pandas and rewrite just the aggregation logic using Polars' lazy API (`pl.scan_parquet` + `.group_by()` + `.collect()`). Time both versions on the same input and record runtime and peak memory for each — the post's benchmark went from 52 minutes / 58 GB peak to 4 minutes 10 seconds / 11 GB peak on the same clickstream job. Note your own before/after numbers, even if the improvement is smaller."
+    },
+    {
+      "title": "Match Your Job to Its Switching Signal",
+      "prompt": "Read the four switching signals from the post — pandas (memory_usage crossing ~20% of RAM), Polars (scan_parquet still can't finish, or you're calling .to_pandas() repeatedly mid-pipeline), DuckDB (lock contention from concurrent writers), PySpark (JVM startup + shuffle time exceeding actual compute time, visible in the Spark UI). Pick one job you run regularly, name which signal it's closest to hitting right now, and what tool it should move to next if that signal fires."
+    },
+    {
+      "title": "Start the One-Line Runtime Log",
+      "prompt": "For one recurring job, add a single logged line per run: timestamp, runtime, and input row count — no dashboard, no monitoring stack, just an appended row. After 5-10 runs, plot runtime against row count and check whether the curve is still a straight line or has started bending upward, which is the exact signal the post says should trigger a library switch before an OOM does it for you at 2 a.m."
+    }
+  ],
+  "cta": "Reply with the actual number you found — the GB your top 2 columns ate, the % of rows a silent merge dropped, or the before/after runtime from your pandas-to-Polars rewrite — I want to see real numbers from your own pipeline, not mine.",
+  "blog_file": "content/blogs/2026-W31/2026-07-29_data_science_tech_the-four-python-libraries-data-engineers-reach-for-before-an.md",
+  "slug": "2026-07-29_data_science_tech_the-four-python-libraries-data-engineers-reach-for-before-an"
+}

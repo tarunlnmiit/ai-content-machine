@@ -1,0 +1,78 @@
+{
+  "slug": "2026-07-29_life_self_dev_every-team-has-one-person-nobody-brings-problems-to-anymore",
+  "niche": "life",
+  "generated_at": "2026-07-29T12:46:40.707057+05:30",
+  "long_form": {
+    "platform": "youtube",
+    "publish_at": "2026-08-11T14:00:00+05:30",
+    "channel": "Breath of Life"
+  },
+  "blog": {
+    "substack_publish_at": "2026-08-04T14:00:00+05:30",
+    "medium_publish_at": "2026-08-04T14:05:00+05:30"
+  },
+  "social": {
+    "linkedin_publish_at": "2026-08-10T12:00:00+05:30",
+    "twitter_publish_at": "2026-08-10T13:00:00+05:30",
+    "ig_fb_publish_at": "2026-08-11T08:00:00+05:30",
+    "threads_publish_at": "2026-08-11T20:00:00+05:30"
+  },
+  "shorts": [
+    {
+      "slot": 0,
+      "publish_at": "2026-08-10T10:00:00+05:30"
+    },
+    {
+      "slot": 1,
+      "publish_at": "2026-08-10T20:00:00+05:30"
+    },
+    {
+      "slot": 2,
+      "publish_at": "2026-08-11T10:00:00+05:30"
+    },
+    {
+      "slot": 3,
+      "publish_at": "2026-08-11T20:00:00+05:30"
+    },
+    {
+      "slot": 4,
+      "publish_at": "2026-08-12T10:00:00+05:30"
+    },
+    {
+      "slot": 5,
+      "publish_at": "2026-08-12T20:00:00+05:30"
+    },
+    {
+      "slot": 6,
+      "publish_at": "2026-08-13T10:00:00+05:30"
+    },
+    {
+      "slot": 7,
+      "publish_at": "2026-08-13T20:00:00+05:30"
+    },
+    {
+      "slot": 8,
+      "publish_at": "2026-08-14T10:00:00+05:30"
+    },
+    {
+      "slot": 9,
+      "publish_at": "2026-08-14T20:00:00+05:30"
+    },
+    {
+      "slot": 10,
+      "publish_at": "2026-08-15T10:00:00+05:30"
+    },
+    {
+      "slot": 11,
+      "publish_at": "2026-08-15T20:00:00+05:30"
+    },
+    {
+      "slot": 12,
+      "publish_at": "2026-08-16T10:00:00+05:30"
+    },
+    {
+      "slot": 13,
+      "publish_at": "2026-08-16T20:00:00+05:30"
+    }
+  ]
+}

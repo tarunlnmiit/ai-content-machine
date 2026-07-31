@@ -1,0 +1,41 @@
+Create a reflective worksheet PDF (A4, portrait) for "The Tense Audit: Find Out If Your Team Stopped Bringing You Problems"
+
+Layout:
+- Header (top 15%): Soft gradient background. Title + subtitle about personal growth.
+- 4 sections vertically stacked, each with:
+  - Section title (warm orange or teal accent)
+  - Reflective prompt in italics
+  - Blank space for handwritten response (30-50% of section height)
+  - Dividing line between sections
+
+Colors: Warm cream background (#FFFBF0), teal accents (#0D9488), dark gray text
+
+Sections:
+1. Run the Tense Test on This Week's Messages
+   - Pull up your last 10-15 Slack/email questions from your team. For each one, mark it future/conditional tense ("Should we cut it this way?") or past tense ("We went with X, FYI").
+   - What's the ratio? If more than half are past-tense, you're being informed, not consulted.
+   - Pick one past-tense message. Rewrite what the future-tense version of that same question would have looked like if they'd trusted you with it earlier.
+   - Check your meeting invites from this week: were you added while the analysis was still open, or after it was already in the deck?
+
+2. Audit the Last Five 'Small' Problems Someone Brought You
+   - List the last five low-stakes questions or quick asks someone brought you. For each, how long did it take you to respond, and in what tone?
+   - Did the person who raised each one ever find out how it was resolved, or did it disappear into your queue?
+   - Think about the PM's date-filter question in the piece — a small ask masking a bigger decision underneath. Is there a 'small' question sitting in your inbox right now that's actually testing whether you're safe for the real one?
+   - Name one small ask you answered too fast or too dismissively. What would a slower, more curious response have looked like?
+
+3. Check Your Own Mechanism
+   - Recall the last time someone brought you a problem or a rough draft. Did you start asking questions, or did you start explaining/fixing before they finished the sentence?
+   - Do you ever open with something like "ugh, good catch, thanks" before diagnosing — or does your first reaction always sound like a cross-examination?
+   - Think of a colleague who prefaces requests with 'sorry, I know you're busy, but—'. What has your past response pattern taught them about the cost of asking you?
+   - Write down your actual opening line the last time someone brought you something half-finished. Would you want to hear that line if you were them?
+
+4. Do the Repair (No Announcement)
+   - Pick two or three specific people. Ask them directly: 'The last time you brought me something half-finished, what did I do that made it not worth it?'
+   - Next time someone brings you something rough, commit to asking questions for the first ten minutes before offering a fix or opinion — write down what you asked instead of said.
+   - Define your own version of 'the drafts get rougher over time' metric: what would it look like, specifically, for people to bring you earlier and messier work again?
+   - Identify one problem you're currently being routed around on. What's the ten-foot walk you need to make happen again?
+
+
+Footer: "Reply with your answers — your reflections help others find their entry point."
+
+Optional: Soft watercolor accent in corner.

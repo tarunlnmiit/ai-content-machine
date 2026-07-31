@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-28T09:13:37.309Z",
-  "count": 28,
+  "generatedAt": "2026-07-29T09:54:07.858Z",
+  "count": 30,
   "worksheets": {
     "python-for-data-science-tutorial-210": {
       "title": "The Silent Bug Audit: Catch Type Errors Before They Poison Your Analysis",
@@ -169,6 +169,18 @@
       "niche": "life_self_dev",
       "date": "2026-07-28",
       "pdfPath": "output/worksheets/2026-W31/2026-07-28_life_self_dev_the-slow-way-you-lose-every-close-friendship-in-your-30s-and_worksheet.pdf"
+    },
+    "the-four-python-libraries-data-engineers-reach-for-before-an": {
+      "title": "Find Your Own 11GB Moment Before Production Does",
+      "niche": "data_science_tech",
+      "date": "2026-07-29",
+      "pdfPath": "output/worksheets/2026-W31/2026-07-29_data_science_tech_the-four-python-libraries-data-engineers-reach-for-before-an_worksheet.pdf"
+    },
+    "every-team-has-one-person-nobody-brings-problems-to-anymore": {
+      "title": "The Tense Audit: Find Out If Your Team Stopped Bringing You Problems",
+      "niche": "life_self_dev",
+      "date": "2026-07-29",
+      "pdfPath": "output/worksheets/2026-W31/2026-07-29_life_self_dev_every-team-has-one-person-nobody-brings-problems-to-anymore_worksheet.pdf"
     }
   }
 }
