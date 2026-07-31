@@ -37,16 +37,22 @@ _HEADER = "## DESIGN SYSTEM REFERENCE (grounding — tokens are law, no off-pale
 
 _COLLAGE_SKIN_NOTE = {
     "data_science_tech": (
-        "notebook/kraft-paper texture with torn-edge screenshot proof-cards "
-        "(rotated, drop-shadowed, washi-tape accent) — reads technical/credible"
+        "Fieldwork Ledger base (notebook/kraft-paper texture, torn-edge exhibit cards, "
+        "stamped verdicts) blended with Terminal Marginalia's Diff Stack, Prompt Statement, "
+        "and Comment-Line Quote archetypes for technical before/after posts — reads "
+        "technical/credible"
     ),
     "life_self_dev": (
-        "personal-photo background on hook/CTA slides with rotated sticker-highlight "
-        "text blocks — reads personal/narrative"
+        "Kitchen Table Confessional base (personal-photo hook/CTA slides, rotated "
+        "sticker-highlight text, text-thread bubbles) blended with Quiet Hour's The Letter "
+        "and Underlined Excerpt archetypes for heavier essay beats — reads "
+        "personal/narrative"
     ),
     "poetry_quotes": (
-        "softer literary notebook texture, no screenshots or photos, subtle rotation "
-        "and quiet doodles — stays purely typographic"
+        "Illuminated Manuscript base (gold-leaf drop caps, parchment texture, no "
+        "screenshots or photos) blended with Darkroom Elegy's Light Leak Fragment and "
+        "Contact Print archetypes as occasional dark-mode variants — stays purely "
+        "typographic"
     ),
 }
 

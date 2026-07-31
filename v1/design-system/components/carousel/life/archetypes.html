@@ -3,88 +3,140 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Carousel Archetypes — Life</title>
+<title>Carousel Archetypes — Life (Kitchen Table Confessional + Quiet Hour)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Lora:ital@0;1&family=Nunito+Sans:wght@400;700&family=Playfair+Display:ital@0;1&family=DM+Sans:wght@400;700&family=Inter:wght@400;600;800&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;600;800&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#1E1B2E;color:#EDE8DC;font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+  body{background:#1E1B2E;color:#EDE8DC;font-family:'Nunito Sans',sans-serif;
        padding:36px;line-height:1.5}
-  h1{font-size:26px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
-  h2{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;
-      opacity:.55;margin:28px 0 12px}
-  .sub{font-size:13px;opacity:.6;margin-bottom:8px}
-  .grid{display:flex;flex-wrap:wrap;gap:14px}
-  .swatch{width:150px;border-radius:10px;overflow:hidden;
-           border:1px solid rgba(255,255,255,.12)}
-  .swatch .chip{height:74px}
-  .swatch .meta{padding:8px 10px;background:rgba(255,255,255,.05);font-size:11px}
-  .swatch .meta b{display:block;font-size:12px;margin-bottom:2px}
-  .swatch .meta code{font-family:'JetBrains Mono',monospace;opacity:.75}
-  table{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:8px}
-  th,td{text-align:left;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-  th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.5}
-  td code,pre{font-family:'JetBrains Mono',monospace;font-size:12px}
-  pre{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);
-      border-radius:8px;padding:14px;overflow:auto;white-space:pre-wrap}
-  .dot{display:inline-block;width:13px;height:13px;border-radius:3px;
-        vertical-align:-2px;margin-right:7px;border:1px solid rgba(255,255,255,.25)}
-  .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;
-       background:rgba(255,255,255,.09);margin:0 6px 6px 0}
-  .warn{border:1px solid #E8745A;background:rgba(232,116,90,.08);border-radius:10px;
-        padding:12px 16px;font-size:13px;margin:16px 0}
-  .specimen{font-size:30px;margin:6px 0 14px}
-  .ds-foot{margin-top:36px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);
-           font-size:11px;opacity:.55}
+  h1{font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-bottom:6px}
+  .sub{font-size:13px;opacity:.6;margin-bottom:26px;max-width:720px}
+  .grid{display:flex;flex-wrap:wrap;gap:18px}
+  .tile{width:172px}
+  .tile .mini{width:172px;height:215px;border-radius:8px;overflow:hidden;position:relative;
+              box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .tile .name{font-size:12.5px;font-weight:700;margin-top:9px}
+  .tile .desc{font-size:10.5px;opacity:.6;margin-top:2px;line-height:1.4}
+  .blend-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.06em;
+             text-transform:uppercase;color:#EF9585;background:rgba(239,149,133,.14);
+             padding:2px 6px;border-radius:4px;margin-top:4px}
+  .section-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+                 opacity:.5;margin:26px 0 12px;width:100%}
+
+  .m-photo{background:radial-gradient(120% 90% at 40% 30%,#4a3428 0%,#241a16 55%,#120d0b 100%)}
+  .m-cream{background:#EDE8DC;color:#1E1B2E}
+  .m-dusk{background:#2b1c17;color:#f3e9d2}
+
+  /* 1. Full-Bleed Confession */
+  .m-fullbleed .line{position:absolute;bottom:14px;left:12px;right:12px;font-family:'Lora',serif;
+                      font-style:italic;font-weight:600;font-size:15px;line-height:1.35;color:#fff;
+                      text-shadow:0 2px 8px rgba(0,0,0,.4)}
+  .m-fullbleed .eyebrow{position:absolute;top:14px;left:12px;font-size:8px;font-weight:800;
+                        letter-spacing:.1em;text-transform:uppercase;color:#EF9585}
+
+  /* 2. Fridge-Note Stack */
+  .m-fridge .n{position:absolute;background:#E8705A;color:#fff;border-radius:6px;padding:8px 10px;
+              font-size:9.5px;font-weight:600;box-shadow:0 6px 12px rgba(0,0,0,.2)}
+  .m-fridge .n1{top:34px;left:14px;transform:rotate(-3deg);width:120px}
+  .m-fridge .n2{top:82px;left:30px;transform:rotate(2deg);background:#EF9585;width:110px}
+  .m-fridge .n3{top:130px;left:16px;transform:rotate(-1.5deg);width:120px}
+
+  /* 3. Text-Thread Confession */
+  .m-thread .b{position:absolute;left:14px;padding:7px 10px;border-radius:12px;font-size:9px;
+              max-width:78%;line-height:1.3}
+  .m-thread .r{background:#fff;color:#1E1B2E;border:1px solid #D6D0C4;border-bottom-left-radius:3px}
+  .m-thread .s{left:auto;right:14px;background:#E8705A;color:#fff;border-bottom-right-radius:3px}
+  .m-thread .b1{top:30px}
+  .m-thread .b2.s{top:66px}
+  .m-thread .b3{top:100px}
+
+  /* 4. Polaroid Proof */
+  .m-polaroid .frame{position:absolute;top:24px;left:26px;right:26px;background:#fff;
+                     box-shadow:0 10px 20px rgba(0,0,0,.28);transform:rotate(-3deg);padding:10px 10px 22px}
+  .m-polaroid .photo{width:100%;height:120px;background:#8b7264;border-radius:2px}
+  .m-polaroid .cap{font-size:8px;color:#333;margin-top:6px;font-family:'Lora',serif;font-style:italic}
+
+  /* 5. Torn-List Practice */
+  .m-torn .strip{position:absolute;left:18px;right:24px;background:#fff;padding:6px 8px;font-size:9px;
+                box-shadow:0 4px 8px rgba(0,0,0,.15);border-radius:2px;color:#1E1B2E}
+  .m-torn .s1{top:34px;transform:rotate(-2deg)}
+  .m-torn .s2{top:66px;transform:rotate(1.5deg)}
+  .m-torn .s3{top:98px;transform:rotate(-1deg)}
+
+  /* 6. Scrapbook Recap */
+  .m-scrap .corner{position:absolute;width:70px;height:70px;background:#8b7264;border-radius:3px;
+                   box-shadow:0 6px 12px rgba(0,0,0,.2)}
+  .m-scrap .c1{top:24px;left:14px;transform:rotate(-4deg)}
+  .m-scrap .c2{top:34px;right:16px;transform:rotate(3deg)}
+  .m-scrap .note{position:absolute;bottom:34px;left:24px;background:#EF9585;color:#fff;font-size:9px;
+                 padding:6px 9px;border-radius:5px;transform:rotate(-2deg)}
+
+  /* 7. The Letter (blend) */
+  .m-letter .paper{position:absolute;top:24px;left:16px;right:16px;bottom:24px;background:#f3e9d2;
+                   box-shadow:0 14px 28px rgba(0,0,0,.4);transform:rotate(-0.8deg);padding:14px 12px;
+                   font-family:'Lora',serif}
+  .m-letter .dateline{font-style:italic;font-size:9.5px;color:#8a6a4f;margin-bottom:8px}
+  .m-letter .body{font-size:9.5px;line-height:1.5;color:#3a2b1c}
+  .m-letter .sign{margin-top:10px;font-style:italic;font-size:9px;color:#8a6a4f}
+
+  /* 8. Underlined Excerpt (blend) */
+  .m-underline .line{position:absolute;top:80px;left:16px;right:16px;font-family:'Lora',serif;
+                     font-size:12.5px;line-height:1.5;color:#f3e9d2;text-align:center}
+  .m-underline .u{border-bottom:2px solid #B34A38;padding-bottom:1px}
 </style>
 </head>
 <body>
-<h1>Carousel Slide Archetypes — Life</h1><p class="sub">Breath of Life · Collage Visual System (2026-07-16): real photo background + rotated sticker-highlight text, per generate_carousel.py CAROUSEL_SYSTEM. Photo shown here as a placeholder gradient — the real .slide-photo-bg class holds a base64-injected photo, never embedded in this mirror card. Structure from .ig-frame / .slide, 1080×1350 exported via Playwright.</p><style>
-  .slides{display:flex;gap:20px;flex-wrap:wrap}
-  .slide{width:324px;height:405px;border-radius:12px;overflow:hidden;position:relative;
-         display:flex;flex-direction:column;padding:26px 24px;
-         font-family:'Nunito Sans','Lora',sans-serif}
-  .slide .label{position:absolute;top:8px;right:12px;font-size:10px;opacity:.55;
-                text-transform:uppercase;letter-spacing:.1em;z-index:2}
-  .slide.light{background:#EDE8DC;color:#1E1B2E}
-  .slide.dark{background:#1E1B2E;color:#EDE8DC}
-  .slide.grad{background:linear-gradient(165deg, #B34A38 0%, #E8705A 50%, #EF9585 100%);color:#fff}
-  .slide.photo{background:linear-gradient(160deg,#8a7060 0%,#5b463b 55%,#332720 100%);color:#fff}
-  .slide.photo::after{content:"";position:absolute;inset:0;
-      background:linear-gradient(180deg, rgba(20,14,10,.15) 0%, transparent 30%, transparent 65%, rgba(20,14,10,.4) 100%)}
-  .hook{font-family:'Lora',sans-serif;font-weight:700;font-size:27px;
-        line-height:1.15;letter-spacing:-0.02em;margin-top:auto}
-  .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-          color:#E8705A}
-  .slide.dark .kicker,.slide.grad .kicker{color:#EF9585}
-  .body-txt{font-size:15px;line-height:1.5;margin-top:12px}
-  .cta{margin-top:auto;align-self:flex-start;background:#fff;color:#B34A38;
-       font-weight:700;font-size:14px;padding:10px 20px;border-radius:24px}
-  .bar{height:3px;border-radius:2px;background:#E8705A;width:38%;margin-bottom:14px}
-  .sticker{position:relative;z-index:1;font-weight:800;padding:5px 12px;border-radius:8px;
-           box-shadow:0 8px 16px rgba(0,0,0,.25);display:inline-block;margin-bottom:8px}
-  .s1{background:#E8705A;color:#fff;transform:rotate(-2.5deg)}
-  .s2{background:#EF9585;color:#1E1B2E;transform:rotate(2deg)}
-</style><div class="slides">
-  <div class="slide photo">
-    <span class="label">Hook / CTA</span><span class="kicker" style="color:#EF9585">Photo-bg slide</span>
-    <div style="margin-top:auto">
-      <div class="sticker s1">Your gut</div><br>
-      <div class="sticker s2">is lying to you</div>
-    </div>
-  </div>
-  <div class="slide dark">
-    <span class="label">Body</span><span class="kicker">Body slide</span>
-    <div class="body-txt" style="margin-top:auto">One idea per slide, kraft/cream or dark collage — no photo needed here, photo is reserved for hook + CTA only. Rotated card layer still applies.</div>
-  </div>
-  <div class="slide photo">
-    <span class="label">CTA</span><span class="kicker" style="color:#EF9585">CTA slide (photo, not gradient)</span>
-    <div style="margin-top:auto">
-      <div class="sticker s1">Save this. Follow for the next one.</div><br>
-      <div class="cta" style="position:relative;z-index:1">Comment "DECIDE" ↓</div>
-    </div>
-  </div>
+<h1>Carousel Slide Archetypes — Life</h1>
+<p class="sub">Breath of Life · Kitchen Table Confessional base blended with two Quiet Hour
+archetypes for heavier essay beats (2026-07-28). Same Collage Visual System mechanics
+(sticker-pill highlight + rotated paper elements + reused doodle set) per
+generate_carousel.py CAROUSEL_SYSTEM and design-system/components/carousel/life/skin.md.</p>
+
+<div class="grid">
+  <div class="tile"><div class="mini m-photo m-fullbleed"><div class="eyebrow">what nobody tells you</div>
+    <div class="line">She said nothing. Then she ended the fight.</div></div>
+    <div class="name">1. Full-Bleed Confession</div><div class="desc">One full-bleed photo, minimal scrim, a single short Lora line set large and low. No card.</div></div>
+
+  <div class="tile"><div class="mini m-cream m-fridge">
+    <div class="n n1">14 active streaks.</div>
+    <div class="n n2">She asked to watch a movie.</div>
+    <div class="n n3">I opened Notion instead.</div></div>
+    <div class="name">2. Fridge-Note Stack</div><div class="desc">2-3 sticky-note fragments, independently rotated, scattered rather than stacked.</div></div>
+
+  <div class="tile"><div class="mini m-cream m-thread">
+    <div class="b r b1">"Speak up more."</div>
+    <div class="b s b2">that's not the same as visible</div>
+    <div class="b r b3">wait... what do you mean</div></div>
+    <div class="name">3. Text-Thread Confession</div><div class="desc">iMessage-style bubble exchange, plain background — pure dialogue, no photo, no card.</div></div>
+
+  <div class="tile"><div class="mini m-cream m-polaroid"><div class="frame">
+    <div class="photo"></div><div class="cap">the morning it clicked</div></div></div>
+    <div class="name">4. Polaroid Proof</div><div class="desc">Polaroid-framed photo, white border, tiny handwritten caption — the "moment that happened" beat.</div></div>
+
+  <div class="tile"><div class="mini m-cream m-torn">
+    <div class="strip s1">1. Name the feeling first</div>
+    <div class="strip s2">2. Say it out loud once</div>
+    <div class="strip s3">3. Let the silence answer</div></div>
+    <div class="name">5. Torn-List Practice</div><div class="desc">Numbered list as a torn notebook strip, pinned at a candid angle — the how-to/practice beat.</div></div>
+
+  <div class="tile"><div class="mini m-cream m-scrap">
+    <div class="corner c1"></div><div class="corner c2"></div>
+    <div class="note">save this ↓</div></div>
+    <div class="name">6. Scrapbook Recap</div><div class="desc">Loose collage of 2 photo corners + a sticky note + CTA — a scrapbook corner, not a clean grid.</div></div>
+
+  <div class="section-label">Blended from Quiet Hour</div>
+
+  <div class="tile"><div class="mini m-dusk m-letter"><div class="paper">
+    <div class="dateline">Dear self,</div>
+    <div class="body">Before you speak — ask what decision this feeds.</div>
+    <div class="sign">— a note to carry in</div></div></div>
+    <div class="name">7. The Letter <span class="blend-tag">blend</span></div><div class="desc">Handwritten note on aged paper, addressed, one paragraph. No photo, no sticker — for a heavier line.</div></div>
+
+  <div class="tile"><div class="mini m-photo m-underline">
+    <div class="line">not missing anything <span class="u">anyone can name</span>.</div></div>
+    <div class="name">8. Underlined Excerpt <span class="blend-tag">blend</span></div><div class="desc">Journal-excerpt line with a hand-drawn double-underline under the operative phrase — quieter than a sticker.</div></div>
 </div>
 
 </body>

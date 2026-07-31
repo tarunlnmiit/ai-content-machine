@@ -3,16 +3,21 @@
 
 Reads brand kit from data/brand/brand_kit.yaml.
 Outputs a self-contained HTML to assets/carousels/{week}/{slug}_carousel.html.
-Export to 1080×1350 PNGs via --export (requires playwright).
+Export to 1080×1350 PNGs via --export (requires playwright; rendered at 2x density and
+downscaled with Pillow/sips for sharper output).
 
 Usage:
   python3 scripts/generate_carousel.py --blog content/blogs/2026-05-21_data_science_tech_X.md
   python3 scripts/generate_carousel.py --topic "5 Python tricks for data scientists" --niche ds
   python3 scripts/generate_carousel.py --blog path/to/blog.md --export
   python3 scripts/generate_carousel.py --blog path/to/blog.md --slides 7
+  python3 scripts/generate_carousel.py --blog path/to/blog.md --outline path/to/outline.md
+  python3 scripts/generate_carousel.py --export-only assets/carousels/2026-W30/slug_carousel.html
 
-Slide count defaults to model-decided (5-10, based on content depth) — pass --slides N to
-force an exact count. Export always emits exactly as many PNGs as slides exist in the HTML.
+Slide count defaults to content-driven (5-12, sweet spot 8-10 for educational content) — pass
+--slides N to force an exact count, or --outline PATH for a fully authored slide-by-slide plan
+that overrides both. Export always emits exactly as many PNGs as slides exist in the HTML.
+--export-only skips generation and re-exports an existing carousel HTML file.
 
 Niche shortcuts: ds | life | poetry
 """
@@ -21,6 +26,7 @@ import argparse
 import base64
 import json
 import re
+import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -30,7 +36,7 @@ import yaml
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
-from _console import console  # noqa: E402
+from _console import console, step  # noqa: E402
 from lib.claude_cli import call_claude  # noqa: E402
 from lib.design_system_ref import carousel_reference  # noqa: E402
 from lib.niche_config import NICHE_MAP, load_brand_base, model_for  # noqa: E402
@@ -130,13 +136,22 @@ The carousel must:
 ## actually be placed in the markup on every applicable slide)
 
 - `<span class="follow-tag">Tap to follow →</span>` (wording may vary) — pinned top-right.
-  Render this element on EVERY slide EXCEPT the last.
+  Render this element ONLY on the final CTA slide (the follow ask lands after the value has
+  already been delivered, not before it) — do NOT place it on any other slide.
 - `<span class="save-tag">Save this post for later</span>` (or "SAVE THIS ↓") — pinned
-  bottom-right. Render this element on every content slide.
-- Final-slide comment-a-keyword CTA button, per the Carousel Playbook's CTA mechanics (§6).
+  bottom-right. Render this element ONLY on the hook slide (slide 1) — do NOT place it on any
+  other slide.
+- `<span class="cliffhanger">...</span>` — a small teaser micro-line ("Next: ..." or a
+  deliberately unresolved phrase) pulling the viewer to swipe. Render this on EVERY slide EXCEPT
+  the last (the last slide resolves into the CTA instead).
+- Final-slide comment-a-keyword CTA button, per the Carousel Playbook's CTA mechanics (§6) —
+  CTA copy must be specific (comment-keyword → DM mechanic, or a concrete "save this for when
+  ..."), never a bare generic like/follow ask. This slide's palette and type treatment must
+  visually match the hook slide's — same collage skin, same typographic hierarchy — it is the
+  payoff of the same designed object, not a different-looking "ad" slide.
 
-Defining `.follow-tag`/`.save-tag` CSS but never placing the elements is a failure — both the
-CSS rule AND the rendered element on the applicable slides are required.
+Defining `.follow-tag`/`.save-tag`/`.cliffhanger` CSS but never placing the elements is a
+failure — both the CSS rule AND the rendered element on the applicable slides are required.
 
 ### Fixed overlay positions (MANDATORY — applies identically to LIGHT and DARK slides)
 
@@ -145,15 +160,30 @@ EXACT corners with an inset of at least 18px, and NO TWO of them may share a cor
 
 - Slide counter badge (e.g. "3 / 8"): **TOP-LEFT** — `top:18px; left:18px;`
 - `.follow-tag` ("Tap to follow →"): **TOP-RIGHT** — `top:18px; right:18px;` (opposite corner
-  from the badge). Present every slide except the last.
+  from the badge). Present ONLY on the final CTA slide.
 - Swipe arrow (the → circle): **vertically CENTERED on the RIGHT edge** —
   `top:50%; transform:translateY(-50%); right:18px;`. NEVER place it in a bottom corner — that
   frees the bottom-right for the save tag. Present every slide except the last.
-- `.save-tag` ("Save this ↓"): **BOTTOM-RIGHT** — `bottom:18px; right:18px;`
+- `.save-tag` ("Save this ↓"): **BOTTOM-RIGHT** — `bottom:18px; right:18px;`. Present ONLY on
+  the hook slide (slide 1).
+- `.cliffhanger`: **BOTTOM-CENTER**, sitting just above the progress bar row —
+  `bottom:44px; left:50%; transform:translateX(-50%);` (adjust the offset only as needed to clear
+  the progress row). Present every slide except the last.
 
-Badge (top-left) and follow-tag (top-right) sit in opposite top corners; the swipe arrow is
-center-right so it never collides with the bottom-right save-tag. These exact anchors are
-required on both light and dark backgrounds.
+Badge (top-left) sits opposite whichever of follow-tag/save-tag applies to that slide (they never
+co-occur — follow-tag is CTA-slide-only, save-tag is hook-slide-only); the swipe arrow is
+center-right so it never collides with the bottom-right corner or the bottom-center cliffhanger.
+These exact anchors are required on both light and dark backgrounds.
+
+### Per-slide copy rules (MANDATORY)
+
+- **Hook slide headline:** 5-8 words, hard cap. It is the largest element on the slide and makes
+  one concrete promise — not a vague teaser.
+- **Body copy (every slide):** under 30 words. One idea per slide — never merge two ideas onto
+  one slide, never split one idea across two.
+- **Legibility:** body text renders no smaller than ~16px at this 420px design width (it is later
+  exported/upscaled to 1080px). Maintain contrast of at least 4.5:1 for body text and 3:1 for
+  large/headline text against whatever collage/photo background sits behind it.
 
 ## Slide sequence ({slide_count_label} slides)
 
@@ -165,7 +195,16 @@ law + 6-driver hook taxonomy (§2-3), and its CTA mechanics (§6). {slide_count_
 Visual rhythm (not content): see the Collage Visual System below — it replaces flat LIGHT_BG/
 DARK_BG fills with textured/photo collage slides. The final CTA slide (no swipe arrow there) uses
 the brand gradient by default — EXCEPT where the niche skin below specifies a different CTA
-treatment (Life uses its photo background + scrim on the CTA slide instead of the gradient).
+treatment (Life uses its photo background + scrim on the CTA slide instead of the gradient). In
+every case the CTA slide's palette and type treatment must visually match the hook slide's — it
+reads as the payoff of the same designed object, never a different-looking "ad" slide.
+
+**Archetype variety (mandatory):** the niche skin below defines an archetype library — pick a
+DIFFERENT archetype from that library for each slide than the archetype used on the slide
+immediately before and after it (no two adjacent slides may share an archetype). The hook slide
+and the CTA slide use whichever archetype the skin designates for hook/CTA treatment so they
+visually match each other; body slides in between draw varied archetypes from the rest of the
+library.
 
 ## Components to use
 
@@ -198,6 +237,19 @@ Two techniques, used together on every slide:
    slide, in different corners/positions. A small reused set reads as a system; scattering random
    clip-art reads as clutter.
 
+### Niche skin below — MANDATORY LOCKED TEMPLATES, not descriptive prose
+
+The skin that follows is not a mood-board description for you to reinterpret — it is a set of
+complete, ready-to-use HTML/CSS templates (a hook template, a CTA template, and a full archetype
+library) built from an already-approved design mockup. REUSE their markup and CSS EXACTLY, slide
+after slide; the ONLY thing you change is the content inside each `<!-- SLOT: ... -->` comment.
+Do not simplify, thin out, omit, or re-invent any signature element the templates contain (stamps,
+tape, torn edges, drop caps, redaction bars, scrims, sprockets, light leaks, letters, whatever that
+archetype's template shows) — shipping a plainer version of a template is the single failure mode
+that produced the previous, rejected round of output. If a slide's content doesn't fit an
+archetype's slot count, pick a different archetype from the library rather than stripping slots
+out of the one you chose.
+
 {visual_skin}
 
 {asset_instructions}
@@ -207,13 +259,6 @@ and progress-bar structure from the sections above are UNCHANGED by this collage
 collage layer sits *inside* each `.slide`, on top of or alongside the mandatory overlay elements,
 never replacing or covering them.
 
-## Export script
-
-After the HTML, include a fenced Python code block containing the Playwright export script
-that exports each slide as 1080×1350px PNG using device_scale_factor=1080/420, targeting the
-`assets/carousels/slides/` directory. This is code TEXT for the caller to save — do not run it
-or write any files yourself.
-
 ## Task
 
 {slide_count_task_line}
@@ -221,14 +266,46 @@ Output the complete, copy-pasteable HTML directly in your reply as text — no p
 tool use, no file writes, no asking questions.
 """
 
-# Playbook-recommended slide-count range (floor/ceiling — see 07 §1/§4).
-MIN_SLIDES, MAX_SLIDES = 5, 10
+# Playbook-recommended slide-count range (floor/ceiling — see 07 §1/§4). Content-driven: the
+# model picks within this band based on how many one-idea slides the source genuinely supports;
+# SWEET_SPOT is guidance for educational/framework content, not a target to hit by default.
+MIN_SLIDES, MAX_SLIDES = 5, 12
+SWEET_SPOT = "8-10"
 
-# Per-niche collage "skin" — validated against 3 reference IG carousels + 2 proof slides
-# (2026-07-16): DS = notebook/torn-card/screenshot style, Life = personal-photo/sticker style,
+# Per-niche skin spec files — the blended-philosophy design direction (2026-07-28): each
+# niche's base philosophy (Fieldwork Ledger / Kitchen Table Confessional / Illuminated
+# Manuscript) plus 2-3 archetypes folded in from its sibling philosophy. Loaded at runtime
+# from v1/design-system/components/carousel/{ds,life,poetry}/skin.md by _load_niche_skin();
+# _FALLBACK_SKINS below is used only if a skin.md file is missing.
+NICHE_SKIN_DIRS = {
+    "data_science_tech": "ds",
+    "life_self_dev": "life",
+    "poetry_quotes": "poetry",
+}
+SKIN_DIR = REPO / "design-system" / "components" / "carousel"
+
+
+def _load_niche_skin(niche_key: str, brand: dict) -> str:
+    """Load the niche's blended skin spec from disk; fall back to the inline text."""
+    dir_name = NICHE_SKIN_DIRS.get(niche_key)
+    if dir_name:
+        skin_path = SKIN_DIR / dir_name / "skin.md"
+        try:
+            return skin_path.read_text(encoding="utf-8")
+        except OSError:
+            pass
+    console.print(
+        f"[warn]design-system skin.md not found for {niche_key} — "
+        "falling back to inline _FALLBACK_SKINS text[/warn]"
+    )
+    return _FALLBACK_SKINS.get(niche_key, _FALLBACK_SKINS["life_self_dev"]).format(**brand)
+
+
+# Fallback only (2026-07-16 originals) — used if the design-system skin.md file for a niche
+# is missing. DS = notebook/torn-card/screenshot style, Life = personal-photo/sticker style,
 # Poetry = softer literary notebook variant. Same underlying mechanic (highlight-block + rotated
 # cards + doodle set from the Collage Visual System above), different skin per niche.
-VISUAL_SKINS = {
+_FALLBACK_SKINS = {
     "data_science_tech": """### Niche skin: notebook + torn-card proof (DS)
 
 Background: kraft/notebook paper texture — `repeating-linear-gradient(0deg, transparent 0 27px,
@@ -273,15 +350,17 @@ def _slide_count_strings(slides: int | None) -> dict:
     """
     if slides is None:
         return {
-            "slide_count_label": f"{MIN_SLIDES}-{MAX_SLIDES}, model-selected",
+            "slide_count_label": f"{MIN_SLIDES}-{MAX_SLIDES}, content-driven",
             "slide_count_target_line": (
-                f"Choose the slide count ({MIN_SLIDES}-{MAX_SLIDES}) that best fits how much "
-                "this content needs — a quick tip earns fewer slides than a full framework. "
-                "Don't default to a round number just because it's common."
+                f"Choose the slide count ({MIN_SLIDES}-{MAX_SLIDES}, sweet spot {SWEET_SPOT} for "
+                "educational/framework content) based on how many distinct ONE-IDEA slides the "
+                "source genuinely supports — a quick tip earns fewer slides than a full "
+                "framework. NEVER pad to hit a round number by splitting one idea across two "
+                "slides, and NEVER merge two ideas onto one slide just to hit a lower count."
             ),
             "slide_count_task_line": (
-                f"Create an Instagram carousel with the slide count ({MIN_SLIDES}-{MAX_SLIDES}) "
-                "that best fits the content below."
+                f"Create an Instagram carousel with the slide count ({MIN_SLIDES}-{MAX_SLIDES}, "
+                f"sweet spot {SWEET_SPOT}) that best fits the content below — one idea per slide."
             ),
         }
     return {
@@ -356,12 +435,13 @@ def build_prompt(brand: dict, content: str, slides: int | None,
                  niche_key: str = "life_self_dev", project_key: str | None = None,
                  master_brief: str | None = None, playbook: str | None = None,
                  design_system_ref: str | None = None,
-                 proof_count: int = 0, has_bg_photo: bool = False) -> str:
+                 proof_count: int = 0, has_bg_photo: bool = False,
+                 outline: str | None = None) -> str:
     system = CAROUSEL_SYSTEM.format(
         **brand,
         **_slide_count_strings(slides),
         initial=brand["brand_name"][0].upper(),
-        visual_skin=VISUAL_SKINS.get(niche_key, VISUAL_SKINS["life_self_dev"]).format(**brand),
+        visual_skin=_load_niche_skin(niche_key, brand),
         asset_instructions=_asset_instructions(niche_key, proof_count, has_bg_photo),
     )
     # When the playbook is present it OWNS hook/structure/tone/caption/CTA, so suppress the
@@ -380,6 +460,16 @@ def build_prompt(brand: dict, content: str, slides: int | None,
             "does NOT override: factual honesty about the subject — never claim a feature "
             "that doesn't exist.\n\n"
             + playbook
+        )
+    if outline:
+        parts.append(
+            "## Slide-by-slide Outline — AUTHORITATIVE (overrides structure & slide count)\n\n"
+            "This is the exact slide plan for this carousel — follow its slide count, per-slide "
+            "headline/kicker/body/cliffhanger, and CTA copy exactly. You still design the visuals "
+            "(collage treatment, cards, doodles per the skin below) but do NOT invent, merge, "
+            "drop, or reorder slides relative to this plan, and IGNORE the content-driven "
+            "slide-count guidance elsewhere in this prompt — this outline's slide count wins.\n\n"
+            + outline
         )
     parts.append(system)
     if design_system_ref:
@@ -474,13 +564,19 @@ def _inject_assets(html: str, bg_photo: Path | None, proof_images: list[Path]) -
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Generate Instagram carousel HTML")
-    src = ap.add_mutually_exclusive_group(required=True)
+    src = ap.add_mutually_exclusive_group()
     src.add_argument("--blog", type=Path, help="Path to existing blog markdown file")
     src.add_argument("--topic", type=str, help="Topic string (no existing blog)")
     ap.add_argument("--niche", choices=list(NICHE_MAP.keys()), help="Niche (auto-detected from blog path)")
     ap.add_argument("--slides", type=int, default=None,
                      help=f"Number of slides (default: model decides, {MIN_SLIDES}-{MAX_SLIDES} based on content)")
+    ap.add_argument("--outline", type=Path, default=None,
+                     help="Markdown file with an authoritative slide-by-slide plan (hook, per-slide "
+                          "copy, CTA) that overrides model-chosen structure and slide count")
     ap.add_argument("--export", action=argparse.BooleanOptionalAction, default=True, help="Run Playwright export after generation (default: on, use --no-export to skip)")
+    ap.add_argument("--export-only", type=Path, default=None, dest="export_only",
+                     help="Skip generation entirely; run the Playwright export on an existing "
+                          "carousel HTML file")
     ap.add_argument("--force", action="store_true", help="Overwrite existing output")
     ap.add_argument("--project", default=None, help="Build-in-public project key (data/kb/projects.json)")
     ap.add_argument("--proof-image", type=Path, action="append", default=[], dest="proof_images",
@@ -491,6 +587,26 @@ def main() -> None:
                           "use --no-bg-photo to disable)")
     ap.add_argument("--no-bg-photo", action="store_true", help="Disable the Life-niche photo background even if default photos exist")
     args = ap.parse_args()
+
+    if args.export_only:
+        if args.blog or args.topic:
+            ap.error("--export-only cannot be combined with --blog/--topic")
+        if not args.export_only.exists():
+            ap.error(f"--export-only file not found: {args.export_only}")
+        slug = args.export_only.stem
+        if slug.endswith("_carousel"):
+            slug = slug[: -len("_carousel")]
+        _run_playwright_export(args.export_only, slug, args.slides)
+        return
+
+    if not args.blog and not args.topic:
+        ap.error("one of --blog, --topic, or --export-only is required")
+
+    outline_text: str | None = None
+    if args.outline:
+        if not args.outline.exists():
+            ap.error(f"--outline not found: {args.outline}")
+        outline_text = args.outline.read_text(encoding="utf-8")
 
     if args.project and args.project not in project_keys():
         ap.error(f"--project must be one of: {', '.join(project_keys()) or '(none defined)'}")
@@ -533,8 +649,14 @@ def main() -> None:
         console.print(f"[warn]Exists (use --force to overwrite): {out_path.relative_to(REPO)}[/warn]")
         return
 
+    step(1, 3, "Carousel generation")
     console.print(f"[bold]Generating carousel[/bold] — {brand['label']}")
-    slides_desc = args.slides if args.slides is not None else f"model-decided ({MIN_SLIDES}-{MAX_SLIDES})"
+    if outline_text:
+        slides_desc = f"outline-driven ({args.outline.name})"
+    elif args.slides is not None:
+        slides_desc = str(args.slides)
+    else:
+        slides_desc = f"content-driven ({MIN_SLIDES}-{MAX_SLIDES}, sweet spot {SWEET_SPOT})"
     console.print(f"  Niche: {niche_key} | Slides: {slides_desc} | Temp: {brand['temperature']}")
 
     master_brief_path = REPO / "data" / "kb" / "master_brief.md"
@@ -557,7 +679,8 @@ def main() -> None:
     prompt = build_prompt(brand, content, args.slides, niche_key=niche_key,
                           project_key=args.project, master_brief=master_brief, playbook=playbook,
                           design_system_ref=ds_ref,
-                          proof_count=len(args.proof_images), has_bg_photo=bg_photo is not None)
+                          proof_count=len(args.proof_images), has_bg_photo=bg_photo is not None,
+                          outline=outline_text)
 
     console.print(f"  Prompt: {len(prompt):,} chars")
     html = call_claude(
@@ -588,25 +711,34 @@ def main() -> None:
     if "```python" in html_content:
         html_content = html_content[: html_content.index("```python")].rstrip()
 
+    step(2, 3, "Asset injection & save")
     html_content = _inject_assets(html_content, bg_photo=bg_photo, proof_images=args.proof_images)
 
     out_path.write_text(html_content, encoding="utf-8")
     console.print(f"[green]Saved:[/green] {out_path.relative_to(REPO)}")
 
-    # Extract and save export script if present
-    if "```python" in html:
-        try:
-            py_start = html.index("```python") + 9
-            py_end = html.index("```", py_start)
-            export_script = html[py_start:py_end].strip()
-            export_path = week_dir / f"{slug}_export.py"
-            export_path.write_text(export_script, encoding="utf-8")
-            console.print(f"[green]Export script:[/green] {export_path.relative_to(REPO)}")
-        except ValueError:
-            pass
-
     if args.export:
+        step(3, 3, "Export to PNG slides")
         _run_playwright_export(out_path, slug, args.slides)
+
+
+def _downscale_png(path: Path, width: int, height: int) -> None:
+    """Downscale an oversampled export PNG in place (2x-density render -> target size).
+
+    Pillow (LANCZOS) is the primary path; falls back to macOS `sips` if Pillow isn't
+    installed in this environment.
+    """
+    try:
+        from PIL import Image
+        with Image.open(path) as img:
+            img.resize((width, height), Image.LANCZOS).save(path)
+        return
+    except ImportError:
+        pass
+    subprocess.run(
+        ["sips", "-z", str(height), str(width), str(path)],
+        check=True, capture_output=True,
+    )
 
 
 def _run_playwright_export(html_path: Path, slug: str, requested_slides: int | None) -> None:
@@ -622,7 +754,10 @@ def _run_playwright_export(html_path: Path, slug: str, requested_slides: int | N
     slides_dir.mkdir(parents=True, exist_ok=True)
 
     VIEW_W, VIEW_H = 420, 525
-    SCALE = 1080 / 420
+    TARGET_W, TARGET_H = 1080, 1350
+    # Render at 2x the final density, then downscale each PNG — sharper text/edges than
+    # rendering straight at 1080x1350 (2026-07-28 export-quality update).
+    SCALE = 2 * TARGET_W / VIEW_W
 
     async def _export() -> None:
         async with async_playwright() as p:
@@ -699,6 +834,7 @@ def _run_playwright_export(html_path: Path, slug: str, requested_slides: int | N
                     path=str(out_file),
                     clip={"x": 0, "y": 0, "width": VIEW_W, "height": VIEW_H},
                 )
+                _downscale_png(out_file, TARGET_W, TARGET_H)
                 console.print(f"  [green]Exported slide {i+1}/{total_slides}[/green]")
 
             await browser.close()

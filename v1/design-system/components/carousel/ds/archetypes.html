@@ -3,90 +3,149 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Carousel Archetypes — DS</title>
+<title>Carousel Archetypes — DS (Fieldwork Ledger + Terminal Marginalia)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Lora:ital@0;1&family=Nunito+Sans:wght@400;700&family=Playfair+Display:ital@0;1&family=DM+Sans:wght@400;700&family=Inter:wght@400;600;800&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;600;800&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#1E1B2E;color:#EDE8DC;font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+  body{background:#1E1B2E;color:#EDE8DC;font-family:'Space Grotesk',sans-serif;
        padding:36px;line-height:1.5}
-  h1{font-size:26px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
-  h2{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;
-      opacity:.55;margin:28px 0 12px}
-  .sub{font-size:13px;opacity:.6;margin-bottom:8px}
-  .grid{display:flex;flex-wrap:wrap;gap:14px}
-  .swatch{width:150px;border-radius:10px;overflow:hidden;
-           border:1px solid rgba(255,255,255,.12)}
-  .swatch .chip{height:74px}
-  .swatch .meta{padding:8px 10px;background:rgba(255,255,255,.05);font-size:11px}
-  .swatch .meta b{display:block;font-size:12px;margin-bottom:2px}
-  .swatch .meta code{font-family:'JetBrains Mono',monospace;opacity:.75}
-  table{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:8px}
-  th,td{text-align:left;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-  th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.5}
-  td code,pre{font-family:'JetBrains Mono',monospace;font-size:12px}
-  pre{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);
-      border-radius:8px;padding:14px;overflow:auto;white-space:pre-wrap}
-  .dot{display:inline-block;width:13px;height:13px;border-radius:3px;
-        vertical-align:-2px;margin-right:7px;border:1px solid rgba(255,255,255,.25)}
-  .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;
-       background:rgba(255,255,255,.09);margin:0 6px 6px 0}
-  .warn{border:1px solid #E8745A;background:rgba(232,116,90,.08);border-radius:10px;
-        padding:12px 16px;font-size:13px;margin:16px 0}
-  .specimen{font-size:30px;margin:6px 0 14px}
-  .ds-foot{margin-top:36px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);
-           font-size:11px;opacity:.55}
+  h1{font-size:24px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px}
+  .sub{font-size:13px;opacity:.6;margin-bottom:26px;max-width:720px}
+  .grid{display:flex;flex-wrap:wrap;gap:18px}
+  .tile{width:172px}
+  .tile .mini{width:172px;height:215px;border-radius:8px;overflow:hidden;position:relative;
+              box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .tile .name{font-size:12.5px;font-weight:700;margin-top:9px}
+  .tile .desc{font-size:10.5px;opacity:.6;margin-top:2px;line-height:1.4}
+  .blend-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.06em;
+             text-transform:uppercase;color:#96BAD0;background:rgba(150,186,208,.14);
+             padding:2px 6px;border-radius:4px;margin-top:4px}
+  .section-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+                 opacity:.5;margin:26px 0 12px;width:100%}
+
+  /* --- shared mini-slide base --- */
+  .m-kraft{background:repeating-linear-gradient(0deg,transparent 0 14px,#D6D0C4 14px 15px),#EDE8DC;color:#1E1B2E}
+  .m-grid{background:linear-gradient(rgba(61,95,117,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(61,95,117,.14) 1px,transparent 1px),#EDE8DC;background-size:13px 13px;color:#1E1B2E}
+  .m-stamp{position:absolute;top:14px;left:14px;font-size:8px;font-weight:700;letter-spacing:.1em;
+           color:#3D5F75;border:1px solid #3D5F75;border-radius:3px;padding:2px 6px;transform:rotate(-2deg)}
+
+  /* 1. Exhibit Page */
+  .m-exhibit .photo{position:absolute;top:22px;left:12px;right:12px;bottom:44px;background:#8b98a3;
+                     border-radius:4px;transform:rotate(-2deg);box-shadow:0 10px 18px rgba(0,0,0,.3)}
+  .m-exhibit .cap{position:absolute;bottom:14px;left:12px;right:12px;font-size:9px;font-weight:700;
+                   letter-spacing:.06em;background:#3D5F75;color:#EDE8DC;padding:4px 8px;border-radius:2px}
+
+  /* 2. Verdict Page */
+  .m-verdict .v{position:absolute;top:60px;left:14px;right:14px;font-size:20px;font-weight:700;line-height:1.15}
+  .m-verdict .u{border-bottom:3px solid #6B8FA8}
+
+  /* 3. Corkboard Stack */
+  .m-cork .c{position:absolute;background:#fff;border-radius:3px;box-shadow:0 6px 12px rgba(0,0,0,.22);
+             padding:8px;font-size:9px;width:110px}
+  .m-cork .c1{top:34px;left:16px;transform:rotate(-3deg)}
+  .m-cork .c2{top:84px;left:34px;transform:rotate(2deg)}
+  .m-cork .c3{top:134px;left:14px;transform:rotate(-1deg)}
+
+  /* 4. Case File Quote */
+  .m-case .card{position:absolute;top:40px;left:12px;right:12px;background:#F6F1E4;border-radius:3px;
+                box-shadow:0 8px 16px rgba(0,0,0,.25);padding:12px;transform:rotate(-1deg)}
+  .m-case .redact{background:#3D5F75;color:#3D5F75;border-radius:2px;padding:0 3px;font-size:9px}
+  .m-case .q{font-family:'JetBrains Mono',monospace;font-size:9.5px;line-height:1.4}
+  .m-case .hl{background:#96BAD0;padding:0 3px;border-radius:2px}
+
+  /* 5. Field Notes Checklist */
+  .m-fields .strip{position:absolute;left:20px;right:26px;background:#F6F1E4;padding:6px 8px;
+                    font-size:9px;box-shadow:0 4px 8px rgba(0,0,0,.18);border-radius:2px}
+  .m-fields .s1{top:34px;transform:rotate(-2deg)}
+  .m-fields .s2{top:66px;transform:rotate(1.5deg)}
+  .m-fields .s3{top:98px;transform:rotate(-1deg)}
+
+  /* 6. Ledger Recap */
+  .m-recap .n{position:absolute;width:64px;height:44px;background:#F6F1E4;border-radius:3px;
+              box-shadow:0 4px 8px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;
+              font-weight:700;font-size:13px;color:#3D5F75}
+  .m-recap .n1{top:30px;left:14px;transform:rotate(-3deg)}
+  .m-recap .n2{top:30px;right:14px;transform:rotate(2deg)}
+  .m-recap .n3{top:100px;left:20px;transform:rotate(1deg)}
+  .m-recap .n4{top:100px;right:20px;transform:rotate(-2deg)}
+
+  /* 7. Diff Stack */
+  .m-diff .d1{position:absolute;top:36px;left:12px;right:12px;background:#3D5F75;color:#EDE8DC;
+              border-radius:4px;padding:8px 10px;font-size:9px}
+  .m-diff .d2{position:absolute;top:100px;left:12px;right:12px;background:#96BAD0;color:#1E1B2E;
+              border-radius:4px;padding:8px 10px;font-size:9px}
+  .m-diff .arr{position:absolute;top:78px;left:20px;font-size:12px;color:#3D5F75;font-weight:700}
+
+  /* 8. Prompt Statement */
+  .m-prompt .p{position:absolute;top:80px;left:12px;right:12px;font-family:'JetBrains Mono',monospace;
+               font-weight:700;font-size:13px;color:#1E1B2E}
+  .m-prompt .p .sym{color:#6B8FA8}
+  .m-prompt .p .out{display:block;margin-top:4px;color:#3D5F75;font-size:11px;font-weight:500}
+  .m-prompt .cursor{display:inline-block;width:6px;height:11px;background:#6B8FA8;vertical-align:-2px;margin-left:2px}
+
+  /* 9. Comment-Line Quote */
+  .m-comment .q{position:absolute;top:80px;left:14px;right:14px;font-family:'JetBrains Mono',monospace;
+                font-size:11px;color:#3D5F75;transform:rotate(-2deg);line-height:1.4}
+  .m-comment .bracket{position:absolute;top:120px;left:20px;font-size:16px;color:#6B8FA8}
 </style>
 </head>
 <body>
-<h1>Carousel Slide Archetypes — DS</h1><p class="sub">Breath of Data Science · Collage Visual System (2026-07-16): notebook/kraft texture + torn-card screenshot proof, per generate_carousel.py CAROUSEL_SYSTEM. Structure from .ig-frame / .slide, 1080×1350 exported via Playwright.</p><style>
-  .slides{display:flex;gap:20px;flex-wrap:wrap}
-  .slide{width:324px;height:405px;border-radius:12px;overflow:hidden;position:relative;
-         display:flex;flex-direction:column;padding:26px 24px;
-         font-family:'Space Grotesk','Space Grotesk',sans-serif}
-  .slide .label{position:absolute;top:8px;right:12px;font-size:10px;opacity:.55;
-                text-transform:uppercase;letter-spacing:.1em;z-index:2}
-  .slide.light{background:repeating-linear-gradient(0deg, transparent 0 20px, #D6D0C4 20px 21px), #EDE8DC;color:#1E1B2E}
-  .slide.dark{background:repeating-linear-gradient(0deg, transparent 0 20px, rgba(255,255,255,.08) 20px 21px), #1E1B2E;color:#EDE8DC}
-  .slide.grad{background:linear-gradient(165deg, #3D5F75 0%, #6B8FA8 50%, #96BAD0 100%);color:#fff}
-  .hook{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:27px;
-        line-height:1.15;letter-spacing:-0.02em;margin-top:auto}
-  .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-          color:#6B8FA8}
-  .slide.dark .kicker,.slide.grad .kicker{color:#96BAD0}
-  .body-txt{font-size:15px;line-height:1.5;margin-top:12px}
-  .cta{margin-top:auto;align-self:flex-start;background:#fff;color:#3D5F75;
-       font-weight:700;font-size:14px;padding:10px 20px;border-radius:24px}
-  .bar{height:3px;border-radius:2px;background:#6B8FA8;width:38%;margin-bottom:14px}
-  .hl{background:#6B8FA8;color:#fff;padding:1px 6px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-  .doodle-star{position:absolute;top:34px;left:22px;width:20px;opacity:.55;z-index:1}
-  .card{position:absolute;left:22px;top:150px;width:250px;background:#fff;border-radius:6px;
-        box-shadow:0 12px 24px rgba(0,0,0,.28);transform:rotate(-2.5deg);padding:5px;z-index:1}
-  .card .bar-mock{height:110px;background:#0d1117;border-radius:4px;position:relative;overflow:hidden}
-  .card .bar-mock .b{position:absolute;bottom:6px;width:8%;background:linear-gradient(180deg,#58a6ff,#1f6feb);border-radius:2px 2px 0 0}
-  .tape{position:absolute;top:-8px;left:70px;width:50px;height:16px;background:rgba(107,143,168,.55);transform:rotate(-4deg);z-index:2}
-</style><div class="slides">
-  <div class="slide light">
-    <span class="label">Hook</span><div class="bar"></div><span class="kicker">Hook slide</span>
-    <svg class="doodle-star" viewBox="0 0 40 40" fill="none" stroke="#3D5F75" stroke-width="2"><path d="M20 4 L23 16 L36 16 L25 23 L29 35 L20 27 L11 35 L15 23 L4 16 L17 16 Z"/></svg>
-    <div class="hook">Bold claim with a <span class="hl">highlighted</span> word — highlight-block ranks emphasis, not just size.</div>
-  </div>
-  <div class="slide dark">
-    <span class="label">Body / Proof</span><span class="kicker">Torn-card proof slide</span>
-    <div class="card"><div class="tape"></div><div class="bar-mock">
-      <div class="b" style="left:8%;height:30%"></div><div class="b" style="left:20%;height:45%"></div>
-      <div class="b" style="left:32%;height:38%"></div><div class="b" style="left:44%;height:60%"></div>
-      <div class="b" style="left:56%;height:55%"></div><div class="b" style="left:68%;height:75%"></div>
-      <div class="b" style="left:80%;height:88%"></div>
-    </div></div>
-    <div class="body-txt" style="margin-top:auto">Real screenshot/dashboard proof, base64-injected server-side into a rotated torn-edge card (never generated by Claude — see asset-marker contract in generate_carousel.py).</div>
-  </div>
-  <div class="slide grad">
-    <span class="label">CTA</span><span class="kicker">CTA slide</span>
-    <div class="hook">Save this. Follow for the next one.</div>
-    <div class="cta">Follow @breathofdatascience</div>
-  </div>
+<h1>Carousel Slide Archetypes — DS</h1>
+<p class="sub">Breath of Data Science · Fieldwork Ledger base blended with three Terminal
+Marginalia archetypes (2026-07-28). Same Collage Visual System mechanics (highlight-block +
+rotated card + reused doodle set) per generate_carousel.py CAROUSEL_SYSTEM and
+design-system/components/carousel/ds/skin.md. No two adjacent slides in a real deck share an
+archetype.</p>
+
+<div class="grid">
+  <div class="tile"><div class="mini m-kraft m-exhibit"><div class="m-stamp">EXHIBIT A</div>
+    <div class="photo"></div><div class="cap">40+ HIRING LOOPS</div></div>
+    <div class="name">1. Exhibit Page</div><div class="desc">Full-bleed torn/taped exhibit photo, stamped caption strip — the image is the statement.</div></div>
+
+  <div class="tile"><div class="mini m-kraft m-verdict"><div class="m-stamp">VERDICT</div>
+    <div class="v">One sentence <span class="u">killed the hire.</span></div></div>
+    <div class="name">2. Verdict Page</div><div class="desc">No card — one giant 5-8 word verdict, single blue underline, whisper-scale margin note.</div></div>
+
+  <div class="tile"><div class="mini m-kraft m-cork">
+    <div class="c c1">Asked once, no tradeoff.</div>
+    <div class="c c2">Volunteered the caveat.</div>
+    <div class="c c3">Got the offer.</div></div>
+    <div class="name">3. Corkboard Stack</div><div class="desc">2-3 pinned index cards, overlapping, varying rotation — the evidence-board read.</div></div>
+
+  <div class="tile"><div class="mini m-kraft m-case"><div class="card">
+    <div class="q">&ldquo;It usually works well.&rdquo; <span class="redact">xxxxxxx</span></div><br>
+    <div class="q">&ldquo;AUC looked <span class="hl">too good</span>.&rdquo;</div></div></div>
+    <div class="name">4. Case File Quote</div><div class="desc">Typewriter transcript in a redaction-bar frame — deposition-style attribution.</div></div>
+
+  <div class="tile"><div class="mini m-kraft m-fields">
+    <div class="strip s1">1. Name the assumption</div>
+    <div class="strip s2">2. Ask for the tradeoff</div>
+    <div class="strip s3">3. Check the caveat</div></div>
+    <div class="name">5. Field Notes Checklist</div><div class="desc">Torn notebook strips, numbered, each pinned at its own angle — sequential/how-to beats.</div></div>
+
+  <div class="tile"><div class="mini m-kraft m-recap">
+    <div class="n n1">40+</div><div class="n n2">1</div>
+    <div class="n n3">6wk</div><div class="n n4">✓</div></div>
+    <div class="name">6. Ledger Recap</div><div class="desc">Small corkboard grid of 3-4 miniature pinned notes — flip-back-through-the-notebook close.</div></div>
+
+  <div class="section-label">Blended from Terminal Marginalia</div>
+
+  <div class="tile"><div class="mini m-grid m-diff">
+    <div class="d1">− SANK IT: "It usually works."</div>
+    <div class="arr">↓</div>
+    <div class="d2">+ SAVED IT: "I suspect leakage."</div></div>
+    <div class="name">7. Diff Stack <span class="blend-tag">blend</span></div><div class="desc">Dark-blue "before" / light-blue "after" cards, thin arrow — restrained to brand blues, no red/green.</div></div>
+
+  <div class="tile"><div class="mini m-grid m-prompt">
+    <div class="p"><span class="sym">$</span> the_verdict<span class="out">&gt; one sentence killed the hire<span class="cursor"></span></span></div></div>
+    <div class="name">8. Prompt Statement <span class="blend-tag">blend</span></div><div class="desc">Full-bleed grid ground, one giant monospace terminal-prompt headline, blinking cursor. No card.</div></div>
+
+  <div class="tile"><div class="mini m-grid m-comment">
+    <div class="q">// "the AUC looked too good"</div>
+    <div class="bracket">⌐</div></div>
+    <div class="name">9. Comment-Line Quote <span class="blend-tag">blend</span></div><div class="desc">Quote set as a code comment, tilted, monospace, bracket annotation pointing at the key phrase.</div></div>
 </div>
 
 </body>

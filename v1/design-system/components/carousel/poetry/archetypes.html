@@ -3,81 +3,130 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Carousel Archetypes — Poetry</title>
+<title>Carousel Archetypes — Poetry (Illuminated Manuscript + Darkroom Elegy)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Lora:ital@0;1&family=Nunito+Sans:wght@400;700&family=Playfair+Display:ital@0;1&family=DM+Sans:wght@400;700&family=Inter:wght@400;600;800&family=JetBrains+Mono&family=Instrument+Serif:ital@0;1&family=Montserrat:wght@400;600;800&family=Cormorant+Garamond:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#1E1B2E;color:#EDE8DC;font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+  body{background:#1E1B2E;color:#EDE8DC;font-family:'DM Sans',sans-serif;
        padding:36px;line-height:1.5}
-  h1{font-size:26px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
-  h2{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;
-      opacity:.55;margin:28px 0 12px}
-  .sub{font-size:13px;opacity:.6;margin-bottom:8px}
-  .grid{display:flex;flex-wrap:wrap;gap:14px}
-  .swatch{width:150px;border-radius:10px;overflow:hidden;
-           border:1px solid rgba(255,255,255,.12)}
-  .swatch .chip{height:74px}
-  .swatch .meta{padding:8px 10px;background:rgba(255,255,255,.05);font-size:11px}
-  .swatch .meta b{display:block;font-size:12px;margin-bottom:2px}
-  .swatch .meta code{font-family:'JetBrains Mono',monospace;opacity:.75}
-  table{border-collapse:collapse;width:100%;font-size:13px;margin-bottom:8px}
-  th,td{text-align:left;padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
-  th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;opacity:.5}
-  td code,pre{font-family:'JetBrains Mono',monospace;font-size:12px}
-  pre{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);
-      border-radius:8px;padding:14px;overflow:auto;white-space:pre-wrap}
-  .dot{display:inline-block;width:13px;height:13px;border-radius:3px;
-        vertical-align:-2px;margin-right:7px;border:1px solid rgba(255,255,255,.25)}
-  .tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;
-       background:rgba(255,255,255,.09);margin:0 6px 6px 0}
-  .warn{border:1px solid #E8745A;background:rgba(232,116,90,.08);border-radius:10px;
-        padding:12px 16px;font-size:13px;margin:16px 0}
-  .specimen{font-size:30px;margin:6px 0 14px}
-  .ds-foot{margin-top:36px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);
-           font-size:11px;opacity:.55}
+  h1{font-size:24px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px}
+  .sub{font-size:13px;opacity:.6;margin-bottom:26px;max-width:720px}
+  .grid{display:flex;flex-wrap:wrap;gap:18px}
+  .tile{width:172px}
+  .tile .mini{width:172px;height:215px;border-radius:8px;overflow:hidden;position:relative;
+              box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .tile .name{font-size:12.5px;font-weight:700;margin-top:9px}
+  .tile .desc{font-size:10.5px;opacity:.6;margin-top:2px;line-height:1.4}
+  .blend-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.06em;
+             text-transform:uppercase;color:#D4BC7A;background:rgba(212,188,122,.14);
+             padding:2px 6px;border-radius:4px;margin-top:4px}
+  .section-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+                 opacity:.5;margin:26px 0 12px;width:100%}
+
+  .m-parch{background:#EDE8DC;color:#1E1B2E}
+  .m-shadow{background:radial-gradient(120% 90% at 35% 30%,#2a2318 0%,#161219 55%,#0c0a10 100%);color:#efe9dc}
+  .m-black{background:#0b090e;color:#f4e9d2}
+
+  /* 1. Illuminated Drop Cap */
+  .m-dropcap .cap{position:absolute;top:44px;left:12px;font-family:'Playfair Display',serif;
+                  font-weight:700;font-size:56px;line-height:.82;color:#B89850}
+  .m-dropcap .stanza{position:absolute;top:62px;left:66px;right:14px;font-family:'Playfair Display',serif;
+                     font-style:italic;font-size:11px;line-height:1.5}
+  .m-dropcap .title{position:absolute;top:16px;left:12px;right:12px;font-size:8px;font-weight:700;
+                    letter-spacing:.12em;text-transform:uppercase;color:#8A6E30}
+
+  /* 2. Bordered Psalter Page */
+  .m-psalter .frame{position:absolute;top:20px;left:14px;right:14px;bottom:20px;border:1.5px solid #B89850}
+  .m-psalter .inner{position:absolute;inset:5px;border:.5px solid #D4BC7A}
+  .m-psalter .line{position:absolute;top:0;bottom:0;left:20px;right:20px;display:flex;align-items:center;
+                   justify-content:center;text-align:center;font-family:'Playfair Display',serif;
+                   font-style:italic;font-size:11.5px;line-height:1.6}
+
+  /* 3. Marginal Gloss */
+  .m-gloss .stanza{position:absolute;top:30px;left:14px;width:100px;font-family:'Playfair Display',serif;
+                   font-style:italic;font-size:12px;line-height:1.5}
+  .m-gloss .note{position:absolute;top:100px;right:12px;width:48px;font-size:8px;color:#8A6E30;
+                 font-family:'DM Sans',sans-serif;line-height:1.4}
+
+  /* 4. Gold Leaf Fragment */
+  .m-leaf .word{position:absolute;top:70px;left:10px;right:10px;font-family:'Playfair Display',serif;
+               font-weight:700;font-size:30px;line-height:1;text-align:center;
+               background:linear-gradient(160deg,#D4BC7A,#8A6E30);-webkit-background-clip:text;
+               background-clip:text;color:transparent}
+
+  /* 5. Ribbon Colophon */
+  .m-ribbon .banner{position:absolute;bottom:60px;left:24px;right:24px;border:1px solid #B89850;
+                    border-radius:2px;padding:10px 8px;text-align:center;font-family:'Playfair Display',serif;
+                    font-style:italic;font-size:10.5px}
+
+  /* 6. Facing-Leaves Recap */
+  .m-facing .leaf{position:absolute;top:20px;bottom:20px;width:70px;font-family:'Playfair Display',serif;
+                  font-style:italic;font-size:9.5px;line-height:1.5;padding:4px}
+  .m-facing .l1{left:14px}
+  .m-facing .l2{right:14px}
+  .m-facing .gutter{position:absolute;top:20px;bottom:20px;left:50%;width:1px;background:#B89850}
+
+  /* 7. Light Leak Fragment (blend) */
+  .m-leak .leak{position:absolute;top:-40px;right:-40px;width:170px;height:170px;border-radius:50%;
+               background:radial-gradient(circle,rgba(184,152,80,.85) 0%,rgba(184,152,80,.28) 40%,rgba(184,152,80,0) 70%)}
+  .m-leak .phrase{position:absolute;top:130px;left:16px;right:20px;font-family:'Playfair Display',serif;
+                  font-style:italic;font-weight:600;font-size:12.5px;line-height:1.5}
+
+  /* 8. Contact Print (blend) */
+  .m-contact .title{position:absolute;top:28px;left:26px;right:14px;font-size:8px;letter-spacing:.12em;
+                    text-transform:uppercase;color:rgba(212,188,122,.55)}
+  .m-contact .grease{position:absolute;bottom:26px;left:26px;right:14px;font-family:'Playfair Display',serif;
+                     font-style:italic;font-size:11.5px;line-height:1.5;color:#efe9dc}
+  .m-contact .sprockets{position:absolute;top:28px;bottom:28px;left:10px;width:6px;display:flex;
+                        flex-direction:column;justify-content:space-between}
+  .m-contact .sprocket{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.18)}
 </style>
 </head>
 <body>
-<h1>Carousel Slide Archetypes — Poetry</h1><p class="sub">Breath of Poetry · Collage Visual System (2026-07-16): softer literary notebook texture, subtle rotation, quiet doodles — no screenshots or photos. Per generate_carousel.py CAROUSEL_SYSTEM. Structure from .ig-frame / .slide, 1080×1350 exported via Playwright.</p><style>
-  .slides{display:flex;gap:20px;flex-wrap:wrap}
-  .slide{width:324px;height:405px;border-radius:12px;overflow:hidden;position:relative;
-         display:flex;flex-direction:column;padding:26px 24px;
-         font-family:'DM Sans','Playfair Display',sans-serif}
-  .slide .label{position:absolute;top:8px;right:12px;font-size:10px;opacity:.55;
-                text-transform:uppercase;letter-spacing:.1em;z-index:2}
-  .slide.light{background:repeating-linear-gradient(0deg, transparent 0 22px, rgba(138,110,48,.14) 22px 23px), #EDE8DC;color:#1E1B2E}
-  .slide.dark{background:repeating-linear-gradient(0deg, transparent 0 22px, rgba(255,255,255,.06) 22px 23px), #1E1B2E;color:#EDE8DC}
-  .slide.grad{background:linear-gradient(165deg, #8A6E30 0%, #B89850 50%, #D4BC7A 100%);color:#fff}
-  .hook{font-family:'Playfair Display',sans-serif;font-weight:700;font-size:27px;
-        line-height:1.15;letter-spacing:-0.02em;margin-top:auto}
-  .kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-          color:#B89850}
-  .slide.dark .kicker,.slide.grad .kicker{color:#D4BC7A}
-  .body-txt{font-size:15px;line-height:1.5;margin-top:12px}
-  .cta{margin-top:auto;align-self:flex-start;background:#fff;color:#8A6E30;
-       font-weight:700;font-size:14px;padding:10px 20px;border-radius:24px}
-  .bar{height:3px;border-radius:2px;background:#B89850;width:38%;margin-bottom:14px}
-  .card{background:#F7F2E6;border-radius:10px;box-shadow:0 10px 20px rgba(0,0,0,.18);
-        padding:18px 20px;transform:rotate(-1.5deg);margin-top:auto}
-  .hl{background:#B89850;color:#fff;padding:1px 6px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-  .doodle-wave{position:absolute;top:34px;left:22px;width:56px;opacity:.6;z-index:1}
-</style><div class="slides">
-  <div class="slide light">
-    <span class="label">Hook</span><div class="bar"></div><span class="kicker">Hook slide</span>
-    <svg class="doodle-wave" viewBox="0 0 70 20" fill="none" stroke="#8A6E30" stroke-width="2" stroke-linecap="round"><path d="M2 10 Q17 2 32 10 T62 10"/></svg>
-    <div class="card"><div class="hook" style="margin-top:0;font-size:24px">Grief does not <span class="hl">end</span>.</div></div>
-  </div>
-  <div class="slide dark">
-    <span class="label">Body</span><span class="kicker">Body slide</span>
-    <div class="body-txt" style="margin-top:auto">Quiet notebook texture, subtle card rotation (-1.5° to 1.5°), 1-2 doodles max per slide — purely typographic, no screenshots or photos for this niche.</div>
-  </div>
-  <div class="slide grad">
-    <span class="label">CTA</span><span class="kicker">CTA slide</span>
-    <div class="hook">Save this. Follow for the next one.</div>
-    <div class="cta">Follow @breathofpoetry</div>
-  </div>
+<h1>Carousel Slide Archetypes — Poetry</h1>
+<p class="sub">Breath of Poetry · Illuminated Manuscript base blended with two Darkroom Elegy
+archetypes as occasional dark-mode variants (2026-07-28). Same Collage Visual System
+mechanics (gold-leaf `.hl` phrase emphasis + reused doodle set) per generate_carousel.py
+CAROUSEL_SYSTEM and design-system/components/carousel/poetry/skin.md.</p>
+
+<div class="grid">
+  <div class="tile"><div class="mini m-parch m-dropcap"><div class="title">The Room No One Entered</div>
+    <div class="cap">I</div><div class="stanza">pass the salt before they ask.<br>I laugh at the right moment.</div></div>
+    <div class="name">1. Illuminated Drop Cap</div><div class="desc">Oversized ornamented gold drop-cap letter, verse set small and quiet beside it; wide margins.</div></div>
+
+  <div class="tile"><div class="mini m-parch m-psalter"><div class="frame"><div class="inner"></div></div>
+    <div class="line">There's a version of me still mid-sentence.</div></div>
+    <div class="name">2. Bordered Psalter Page</div><div class="desc">Full decorative gold-leaf border frame enclosing one short centered line, nothing else.</div></div>
+
+  <div class="tile"><div class="mini m-parch m-gloss">
+    <div class="stanza">pass the salt<br>before they ask</div>
+    <div class="note">gloss: the fluency of disappearing</div></div>
+    <div class="name">3. Marginal Gloss</div><div class="desc">Main verse column with a hand-lettered gold annotation in the margin — a scribe's commentary.</div></div>
+
+  <div class="tile"><div class="mini m-parch m-leaf"><div class="word">unnamed</div></div>
+    <div class="name">4. Gold Leaf Fragment</div><div class="desc">One word rendered enormous in gradient leafed gold, filling most of the frame — the relic read.</div></div>
+
+  <div class="tile"><div class="mini m-parch m-ribbon"><div class="banner">— The Room No One Entered</div></div>
+    <div class="name">5. Ribbon Colophon</div><div class="desc">Scroll/ribbon banner holding the attribution or closing line, gold-bordered, centered low.</div></div>
+
+  <div class="tile"><div class="mini m-parch m-facing"><div class="gutter"></div>
+    <div class="leaf l1">I know which mug<br>is whose.</div>
+    <div class="leaf l2">Still mid-sentence<br>in the room.</div></div>
+    <div class="name">6. Facing-Leaves Recap</div><div class="desc">Two narrow parchment pages side by side, divided by a thin gold gutter — the "open book" close.</div></div>
+
+  <div class="section-label">Blended from Darkroom Elegy</div>
+
+  <div class="tile"><div class="mini m-black m-leak"><div class="leak"></div>
+    <div class="phrase">not missing anything<br>anyone can name.</div></div>
+    <div class="name">7. Light Leak Fragment <span class="blend-tag">blend</span></div><div class="desc">Near-total darkness, one warm gold light-leak glow lighting a single phrase. Nothing else.</div></div>
+
+  <div class="tile"><div class="mini m-shadow m-contact"><div class="sprockets">
+      <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div></div>
+    <div class="title">frame 07 · the room no one entered</div>
+    <div class="grease">&hellip;in a room<br>no one entered.</div></div>
+    <div class="name">8. Contact Print <span class="blend-tag">blend</span></div><div class="desc">Dark grainy vignette, sprocket-hole edge, grease-pencil verse line low in the frame. No card.</div></div>
 </div>
 
 </body>
