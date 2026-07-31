@@ -6,16 +6,18 @@ An autonomous, single-operator content studio: ideation → production (blog + v
 
 ## What it does
 
+```mermaid
+flowchart LR
+    A["<b>Ideate</b><br/>idea scorer<br/>32-file virality KB<br/>90-day no-repeat tracker"]
+    B["<b>Generate</b><br/>Claude CLI subprocesses<br/>per-task model routing<br/>150 Python scripts"]
+    C["<b>Render</b><br/>storyboard → HyperFrames<br/>→ FFmpeg composite<br/>word-synced captions"]
+    D["<b>Schedule</b><br/>APScheduler daemon<br/>SQLite queue → launchd"]
+    E["<b>Learn</b><br/>analytics ingest<br/>UTM star attribution"]
+    A --> B --> C --> D --> E
+    E -. "feeds next week's scoring" .-> A
 ```
-Ideate ──────► Generate ──────► Render ──────► Schedule ──────► Learn
-idea scorer     Claude CLI       V2 video       APScheduler      analytics +
-weekly reels    per-task         pipeline:      daemon fires     UTM star
-32-file         model routing    storyboard →   pending posts    attribution
-virality KB     (4 model tiers)  HyperFrames →  from SQLite      feeds next
-90-day          150 Python       FFmpeg,        launchd          week's ideas
-no-repeat       scripts          word-synced    automation
-tracker                          captions
-```
+
+*One blog run fans out into every derivative — platform posts, carousel, deck, reel brief, thumbnail, worksheet — and the analytics loop closes back onto idea scoring, so what performed last week changes what gets written next week.*
 
 ## Architecture highlights
 
@@ -32,7 +34,7 @@ Python · Claude CLI (model-routed) · HyperFrames · FFmpeg · APScheduler · S
 
 ## Related tools
 
-- [autopilot-jobhunt](https://github.com/tarunlnmiit/autopilot-jobhunt) — autonomous job-search agent (100+ ⭐, PyPI, MCP)
+- [autopilot-jobhunt](https://github.com/tarunlnmiit/autopilot-jobhunt) — autonomous job-search agent ![Stars](https://img.shields.io/github/stars/tarunlnmiit/autopilot-jobhunt?style=flat&label=%E2%98%85) · PyPI · MCP
 - [inbox-to-action](https://github.com/tarunlnmiit/inbox-to-action) — one-pass agentic inbox triage (PyPI, MCP)
 
 ## Author
