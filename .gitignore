@@ -158,3 +158,12 @@ v1/data/kb/reels/08_carousel_reel_formula.md
 v1/assets/carousels/2026-W28/inbox-to-action_carousel.html
 v1/assets/carousels/2026-W28/inbox-to-action_export.py
 v1/assets/carousels/slides/inbox-to-action/
+
+# Agent-Reach / agent tooling install state — machine-local, ~90MB of vendored skills
+.agents/
+v1/.agents/
+.claude-flow/
+skills-lock.json
+
+# Daily listicle research artifacts — regenerated per niche per day, same-day validity only
+v1/data/ideas/listicle_trends_*.json
