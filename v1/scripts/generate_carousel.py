@@ -153,27 +153,51 @@ The carousel must:
 Defining `.follow-tag`/`.save-tag`/`.cliffhanger` CSS but never placing the elements is a
 failure — both the CSS rule AND the rendered element on the applicable slides are required.
 
-### Fixed overlay positions (MANDATORY — applies identically to LIGHT and DARK slides)
+### Overlay element contract — two tiers: what must exist vs. where it goes
 
-Every `.slide` is `position:relative`. The overlay elements below are ABSOLUTELY positioned at
-EXACT corners with an inset of at least 18px, and NO TWO of them may share a corner or overlap:
+**Tier 1 — NON-NEGOTIABLE (exporter contract; unchanged by any skin or direction):**
 
-- Slide counter badge (e.g. "3 / 8"): **TOP-LEFT** — `top:18px; left:18px;`
-- `.follow-tag` ("Tap to follow →"): **TOP-RIGHT** — `top:18px; right:18px;` (opposite corner
-  from the badge). Present ONLY on the final CTA slide.
+- `.carousel-track` (the sliding row) and `.slide` (each frame) — structural, required for the
+  export pipeline to locate and index slides.
+- `.progress-row` > `.progress-seg` > `.fill` — one segment per slide in the deck, repeated
+  identically on every slide (see the Progress bar spec above).
+- The slide counter text (e.g. "3 / 8") rendered somewhere in the top strip of the slide — exact
+  placement is not fixed, but it must be present and legible.
+- `<span class="follow-tag">...</span>` — present ONLY on the final CTA slide.
+- `<span class="save-tag">...</span>` — present ONLY on the hook slide (slide 1).
+- `<span class="cliffhanger">...</span>` — present on every slide EXCEPT the last.
+
+These literal class names are load-bearing for the export pipeline — never rename them, and never
+fold an element's content into another tag without keeping its class on something actually
+rendered.
+
+**Tier 2 — PLACEMENT (how/where each Tier-1 element appears):**
+
+If the direction pack below contains a **CHROME MAPPING** (or "Chrome mapping") section, that
+section governs where and how each Tier-1 element appears on the slide — follow it exactly,
+including re-skinning it into native chrome for that world (e.g. the counter folded into a chat
+header, a cliffhanger wrapped around a typing-indicator bubble). The Tier-1 class name stays on
+the rendered element even when its position, styling, or container is native to that skin rather
+than a generic four-corner overlay.
+
+Only if the direction pack has **no** CHROME MAPPING section does this fallback layout apply.
+Every `.slide` is `position:relative`; the elements are ABSOLUTELY positioned at exact corners,
+inset at least 18px, no two sharing a corner or overlapping — identically on LIGHT and DARK
+slides:
+
+- Slide counter badge: **TOP-LEFT** — `top:18px; left:18px;`
+- `.follow-tag`: **TOP-RIGHT** — `top:18px; right:18px;` (opposite the badge). CTA slide only.
 - Swipe arrow (the → circle): **vertically CENTERED on the RIGHT edge** —
-  `top:50%; transform:translateY(-50%); right:18px;`. NEVER place it in a bottom corner — that
-  frees the bottom-right for the save tag. Present every slide except the last.
-- `.save-tag` ("Save this ↓"): **BOTTOM-RIGHT** — `bottom:18px; right:18px;`. Present ONLY on
-  the hook slide (slide 1).
-- `.cliffhanger`: **BOTTOM-CENTER**, sitting just above the progress bar row —
+  `top:50%; transform:translateY(-50%); right:18px;`. Never a bottom corner — that frees the
+  bottom-right for the save tag. Every slide except the last.
+- `.save-tag`: **BOTTOM-RIGHT** — `bottom:18px; right:18px;`. Hook slide only.
+- `.cliffhanger`: **BOTTOM-CENTER**, just above the progress bar row —
   `bottom:44px; left:50%; transform:translateX(-50%);` (adjust the offset only as needed to clear
-  the progress row). Present every slide except the last.
+  the progress row). Every slide except the last.
 
-Badge (top-left) sits opposite whichever of follow-tag/save-tag applies to that slide (they never
-co-occur — follow-tag is CTA-slide-only, save-tag is hook-slide-only); the swipe arrow is
-center-right so it never collides with the bottom-right corner or the bottom-center cliffhanger.
-These exact anchors are required on both light and dark backgrounds.
+Badge sits opposite whichever of follow-tag/save-tag applies to that slide (they never co-occur);
+the swipe arrow is center-right so it never collides with the bottom-right corner or the
+bottom-center cliffhanger.
 
 ### Per-slide copy rules (MANDATORY)
 
@@ -237,9 +261,10 @@ Two techniques, used together on every slide:
    slide, in different corners/positions. A small reused set reads as a system; scattering random
    clip-art reads as clutter.
 
-### Niche skin below — MANDATORY LOCKED TEMPLATES, not descriptive prose
+### Direction pack below — MANDATORY LOCKED TEMPLATES, not descriptive prose
 
-The skin that follows is not a mood-board description for you to reinterpret — it is a set of
+The direction pack that follows (the niche's routed design direction, or its skin.md fallback) is
+not a mood-board description for you to reinterpret — it is a set of
 complete, ready-to-use HTML/CSS templates (a hook template, a CTA template, and a full archetype
 library) built from an already-approved design mockup. REUSE their markup and CSS EXACTLY, slide
 after slide; the ONLY thing you change is the content inside each `<!-- SLOT: ... -->` comment.
@@ -285,9 +310,21 @@ NICHE_SKIN_DIRS = {
 SKIN_DIR = REPO / "design-system" / "components" / "carousel"
 
 
-def _load_niche_skin(niche_key: str, brand: dict) -> str:
-    """Load the niche's blended skin spec from disk; fall back to the inline text."""
+def _load_niche_skin(niche_key: str, brand: dict, direction: str | None = None) -> str:
+    """Load the routed direction pack from disk; fall back to skin.md, then inline text.
+
+    direction=None (or the file missing) falls back to the pre-direction-routing skin.md,
+    preserving current behavior for callers that don't route.
+    """
     dir_name = NICHE_SKIN_DIRS.get(niche_key)
+    if dir_name and direction:
+        direction_path = SKIN_DIR / dir_name / "directions" / f"{direction}.md"
+        try:
+            return direction_path.read_text(encoding="utf-8")
+        except OSError:
+            console.print(
+                f"[warn]{direction_path.relative_to(REPO)} not found — falling back to skin.md[/warn]"
+            )
     if dir_name:
         skin_path = SKIN_DIR / dir_name / "skin.md"
         try:
@@ -299,6 +336,75 @@ def _load_niche_skin(niche_key: str, brand: dict) -> str:
         "falling back to inline _FALLBACK_SKINS text[/warn]"
     )
     return _FALLBACK_SKINS.get(niche_key, _FALLBACK_SKINS["life_self_dev"]).format(**brand)
+
+
+def _direction_readme_path(niche_key: str) -> Path | None:
+    dir_name = NICHE_SKIN_DIRS.get(niche_key)
+    return SKIN_DIR / dir_name / "directions" / "README.md" if dir_name else None
+
+
+def _direction_title(niche_key: str, direction: str) -> str | None:
+    """First markdown heading in directions/{direction}.md, used as a human-readable label."""
+    dir_name = NICHE_SKIN_DIRS.get(niche_key)
+    if not dir_name:
+        return None
+    try:
+        text = (SKIN_DIR / dir_name / "directions" / f"{direction}.md").read_text(encoding="utf-8")
+    except OSError:
+        return None
+    for line in text.splitlines():
+        line = line.strip()
+        if line.startswith("#"):
+            return line.lstrip("#").strip()
+    return None
+
+
+def _parse_stated_default(readme_text: str) -> str | None:
+    """Grep the routing rubric for its stated default direction (a line mentioning "default")."""
+    for line in readme_text.splitlines():
+        if "default" in line.lower():
+            match = re.search(r"\bd[1-4]\b", line.lower())
+            if match:
+                return match.group(0)
+    return None
+
+
+def _route_direction(niche_key: str, content: str) -> tuple[str, str]:
+    """Pick a design direction (d1-d4) via the niche's routing rubric.
+
+    Makes one cheap Haiku call against directions/README.md's rubric. Returns
+    (direction, source) where source is "routed" (the model picked it) or "default"
+    (missing README, failed call, or an unparseable reply — never blocks generation).
+    """
+    readme_path = _direction_readme_path(niche_key)
+    if readme_path is None or not readme_path.exists():
+        console.print(f"[warn]directions/README.md not found for {niche_key} — defaulting to d1[/warn]")
+        return "d1", "default"
+
+    rubric = readme_path.read_text(encoding="utf-8")
+    fallback = _parse_stated_default(rubric) or "d1"
+
+    prompt = (
+        f"{rubric}\n\n---\n\nPost content (excerpt):\n\n{content[:2500]}\n\n"
+        "Which direction does this post route to? Reply with exactly one token: d1, d2, d3, or d4."
+    )
+    try:
+        reply = call_claude(
+            prompt, cache=True, model=model_for("metadata"), timeout=60,
+            progress_label="Routing carousel direction",
+        )
+    except Exception as e:  # routing must never block generation
+        console.print(f"[warn]direction routing call failed ({e}) — falling back to default {fallback}[/warn]")
+        return fallback, "default"
+
+    match = re.search(r"\bd[1-4]\b", reply.strip().lower())
+    if not match:
+        console.print(
+            f"[warn]direction routing reply unparseable ({reply.strip()[:60]!r}) — "
+            f"falling back to default {fallback}[/warn]"
+        )
+        return fallback, "default"
+    return match.group(0), "routed"
 
 
 # Fallback only (2026-07-16 originals) — used if the design-system skin.md file for a niche
@@ -436,12 +542,12 @@ def build_prompt(brand: dict, content: str, slides: int | None,
                  master_brief: str | None = None, playbook: str | None = None,
                  design_system_ref: str | None = None,
                  proof_count: int = 0, has_bg_photo: bool = False,
-                 outline: str | None = None) -> str:
+                 outline: str | None = None, direction: str | None = None) -> str:
     system = CAROUSEL_SYSTEM.format(
         **brand,
         **_slide_count_strings(slides),
         initial=brand["brand_name"][0].upper(),
-        visual_skin=_load_niche_skin(niche_key, brand),
+        visual_skin=_load_niche_skin(niche_key, brand, direction),
         asset_instructions=_asset_instructions(niche_key, proof_count, has_bg_photo),
     )
     # When the playbook is present it OWNS hook/structure/tone/caption/CTA, so suppress the
@@ -573,6 +679,9 @@ def main() -> None:
     ap.add_argument("--outline", type=Path, default=None,
                      help="Markdown file with an authoritative slide-by-slide plan (hook, per-slide "
                           "copy, CTA) that overrides model-chosen structure and slide count")
+    ap.add_argument("--direction", choices=["d1", "d2", "d3", "d4"], default=None,
+                     help="Explicit design direction (skips routing); default: auto-routed via "
+                          "directions/README.md's rubric, one cheap Haiku call")
     ap.add_argument("--export", action=argparse.BooleanOptionalAction, default=True, help="Run Playwright export after generation (default: on, use --no-export to skip)")
     ap.add_argument("--export-only", type=Path, default=None, dest="export_only",
                      help="Skip generation entirely; run the Playwright export on an existing "
@@ -676,11 +785,20 @@ def main() -> None:
     else:
         console.print("[info]Design system mirror not found — prompt runs without grounding block[/info]")
 
+    if args.direction:
+        direction, direction_source = args.direction, "forced"
+    else:
+        routing_text = f"{outline_text}\n\n{content}" if outline_text else content
+        direction, direction_source = _route_direction(niche_key, routing_text)
+    direction_title = _direction_title(niche_key, direction)
+    direction_label = f"{direction} ({direction_title})" if direction_title else direction
+    console.print(f"  Direction: {direction_label} — {direction_source}")
+
     prompt = build_prompt(brand, content, args.slides, niche_key=niche_key,
                           project_key=args.project, master_brief=master_brief, playbook=playbook,
                           design_system_ref=ds_ref,
                           proof_count=len(args.proof_images), has_bg_photo=bg_photo is not None,
-                          outline=outline_text)
+                          outline=outline_text, direction=direction)
 
     console.print(f"  Prompt: {len(prompt):,} chars")
     html = call_claude(
