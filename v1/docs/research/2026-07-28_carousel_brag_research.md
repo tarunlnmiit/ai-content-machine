@@ -1,3 +1,11 @@
+---
+title: "Carousel + Brag-Video Research (2026-07-28)"
+type: doc
+date: 2026-07-28
+week: 2026-W31
+slug: carousel-brag-research
+tags: [content/doc, week/2026-W31]
+---
 # Carousel + Brag-Video Research (2026-07-28)
 
 Sources: three parallel research agents (2 Sonnet, 1 Haiku) covering carousel visual design/hooks/structure/algorithm facts, carousel generation tooling, and short launch/brag-video best practices — 2025-2026 web research, IG-only (LinkedIn dropped per Tarun). Full agent reports appended verbatim as appendices.

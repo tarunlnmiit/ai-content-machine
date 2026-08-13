@@ -52,11 +52,27 @@ python3 scripts/generate_carousel.py --topic "Your topic here" --niche ds|life|p
 python3 scripts/generate_carousel.py --blog content/blogs/{week}/{slug}.md \
   --outline path/to/outline.md
 
+# Force a design direction (skips routing)
+python3 scripts/generate_carousel.py --blog content/blogs/{week}/{slug}.md --direction d3
+
 # Re-export existing carousel HTML to 1080×1350 PNGs (2x supersampled)
 python3 scripts/generate_carousel.py --export-only assets/carousels/{week}/{slug}_carousel.html
 ```
 
 **Slide count:** content-driven, **5–12 slides**, sweet spot **8–10 for educational/framework content.** Each slide = one idea; never pad or merge to hit a round number.
+
+**Direction routing:** each niche has 4 locked design directions at
+`design-system/components/carousel/{ds,life,poetry}/directions/{d1,d2,d3,d4}.md`, plus a routing
+rubric at `directions/README.md` (4 "route here when the post is..." entries + a stated default).
+`--direction {d1,d2,d3,d4}` forces a direction and skips routing entirely. Without it,
+`generate_carousel.py` makes one cheap Haiku call (`model_for("metadata")`) against the rubric +
+the first ~2500 chars of the content (outline text included when `--outline` is used) to pick a
+direction; on a missing README, a failed call, or an unparseable reply it falls back to the
+rubric's stated default (or `d1` if that can't be parsed either) — routing never blocks
+generation. The console prints `Direction: d3 (Root Access) — routed|forced|default`. If a
+niche's `directions/` folder or a specific `{d}.md` file doesn't exist yet, generation falls back
+to that niche's `skin.md`, then the inline `_FALLBACK_SKINS` — same fallback chain as before
+directions existed.
 
 **Export:** Playwright renders at 2× density (2160×2700) and downscales to 1080×1350 for sharpness. One PNG per slide to `assets/carousels/slides/{week}/{slug}/slide_N.png`.
 
@@ -180,6 +196,41 @@ Notes:
   `manual_steps.md` on failure.
 
 Interview logic lives in `scripts/lib/interview.py`; `produce_blog.py` just calls it.
+
+## Answering on your behalf (claude-mem grounded)
+
+Typing `skip` at the "your thoughts" step or at any interview question hands the answer to
+`answer_on_behalf()` in `produce_blog.py`, which replies in first person as Tarun. *Added
+2026-08-11:* for those two kinds (`creator_input` and `interview`, all niches) the subprocess
+is given **claude-mem search**, so the answer is grounded in your real session history —
+what you actually built, broke, decided — instead of plausible invention. Topic/title `skip`
+picks are unchanged (no memory; the model only chooses among strings you already have).
+
+How it's wired: `run_claude(..., memory=True)` appends `_claude_mem_flags()` to the
+`claude -p` command —
+
+```
+--mcp-config '{"mcpServers":{"mcp-search":{"type":"stdio","command":"…/thedotmack/plugin/scripts/mcp-server.cjs"}}}'
+--strict-mcp-config
+--allowedTools mcp__mcp-search__search,mcp__mcp-search__get_observations
+--max-turns 8
+```
+
+- `--strict-mcp-config` keeps the repo's own `.mcp.json` servers (Substack/Twitter) out of
+  the subprocess; only read-only memory search is exposed.
+- The `_RECALL` block sits **between the context and the task** (`_persona_answer(head, body)`)
+  so the model's last instruction is still the output shape. It tells the model to search 2–3
+  queries first, **never invent a project, date, or event memory didn't show it**, and never
+  mention the search — this text feeds straight into CALL 2, so meta-narration would land in
+  the article prompt.
+- Timeouts for these two calls are 240s (was 120s) to cover the tool round trips; a grounded
+  answer typically lands in ~20–35s.
+- **Never kills a run.** The memory call is agentic, so it can fail in ways a plain text call
+  can't — a `--max-turns` overrun exits non-zero, for instance. Both calls run with
+  `strict=False`, so a failure retries once unaided and then returns `""`;
+  `interview.py` records `[skipped]` rather than losing the answers already typed.
+- Degrades quietly: if the claude-mem plugin isn't installed (dim notice printed), or you set
+  `NO_CLAUDE_MEM=1`, the flags are dropped and answers come from `master_brief.md` alone.
 
 ## Tracker integration
 
